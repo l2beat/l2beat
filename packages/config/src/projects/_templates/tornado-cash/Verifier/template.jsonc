@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Verifier",
+  "description": "Groth16 verifier contract used by Tornado Cash pool withdrawal proofs."
+}

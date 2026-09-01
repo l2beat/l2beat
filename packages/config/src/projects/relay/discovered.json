@@ -1,0 +1,288 @@
+{
+  "name": "relay",
+  "timestamp": 1786715187,
+  "configHash": "0x6cbc123c631eb9379a0acf079d7dc0b3d03f769f4dfaa5e131ca9eed1f85c8f4",
+  "entries": [
+    {
+      "address": "base:0x463cB782c8dd0a1887b77336DfF74D60F006F56E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RelayDepository",
+      "address": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
+      "type": "Contract",
+      "template": "relay/RelayDepository",
+      "sourceHashes": [
+        "0x281d315ac3205109f23443477e22edf4e539f2c024cf6537bc0db513c038ba8a"
+      ],
+      "proxyType": "immutable",
+      "description": "Escrow entry point of the Relay settlement protocol: user deposits for crosschain intents are parked here, tagged only by an event that attributes them to an order id. The contract keeps no balance accounting and does not verify orders or fills - all accounting happens offchain and on the Hub contract on the Relay Chain. Funds leave the contract exclusively through execute(), which performs arbitrary external calls authorized by a single signature of the current allocator (replay-protected by nonce and expiration).",
+      "ignoreInWatchMode": ["callRequests"],
+      "deployerAddress": "base:0xf3d63166F0Ca56C3c1A3508FcE03Ff0Cf3Fb691e",
+      "sinceTimestamp": 1751019781,
+      "sinceBlock": 32115217,
+      "values": {
+        "_CALL_REQUEST_TYPEHASH": "0x1dcae8e357e31cf00a7777284e6f769bb6d19654688c9665de5fea6f35f5357c",
+        "_CALL_TYPEHASH": "0xd5395b56326912498477b4b3e987bcd306e0ea8d9f9e41e3563c6176a7bc2f65",
+        "$immutable": true,
+        "allocator": "base:0x63C1d3E9C646184529C5694630a01C00dF171b56",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "RelayDepository",
+          "version": "1",
+          "chainId": 8453,
+          "verifyingContract": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "owner": "base:0xF61A305199fa1135d76FFaB3752D42F55cBd775A"
+      },
+      "fieldMeta": {
+        "allocator": {
+          "description": "The address whose signature (ECDSA or ERC-1271) authorizes arbitrary calls from this contract via execute(). According to Relay, this key is managed via the NEAR MPC ('chain signatures') network and only signs withdrawals up to a solver's balance on the Relay Chain Hub, but none of this is verifiable or enforced onchain here."
+        }
+      },
+      "implementationNames": {
+        "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31": "RelayDepository"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "base:0x63C1d3E9C646184529C5694630a01C00dF171b56",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RelayReceiver",
+      "address": "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934",
+      "type": "Contract",
+      "template": "relay/RelayReceiver",
+      "sourceHashes": [
+        "0x0cec0be080a08f9973ba6d991a7cf1986136f51a1c366fa0d8247c21ba264fd4"
+      ],
+      "proxyType": "immutable",
+      "description": "Passthrough deposit contract of the legacy Relay flow: any native tokens sent to it are immediately forwarded to a solver address hardcoded at deployment, and the attached calldata is only emitted as an event that commits the payment to a Relay order id. The contract holds no funds and enforces nothing about the order - after the forward, the user's outcome depends entirely on the solver. ERC20 payments in this flow do not even touch this contract and are transferred to the solver directly.",
+      "deployerAddress": "base:0xf3d63166F0Ca56C3c1A3508FcE03Ff0Cf3Fb691e",
+      "sinceTimestamp": 1714474919,
+      "sinceBlock": 13842786,
+      "values": {
+        "$immutable": true,
+        "solver": "base:0xf70da97812CB96acDF810712Aa562db8dfA3dbEF"
+      },
+      "fieldMeta": {
+        "solver": {
+          "description": "The immutable solver address that receives all funds sent to this contract."
+        }
+      },
+      "implementationNames": {
+        "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934": "RelayReceiver"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RelayRouterV3",
+      "address": "base:0xb92fe925DC43a0ECdE6c8b1a2709c170Ec4fFf4f",
+      "type": "Contract",
+      "template": "relay/RelayRouterV3",
+      "sourceHashes": [
+        "0x819305d155c8736b040f3efa0cd83279f958a4c61aa5758676956d9a4f991181"
+      ],
+      "proxyType": "immutable",
+      "description": "Stateless multicall router used to atomically execute the calls of a Relay quote (swaps, bridge deposits, transfers to the solver). It has no owner and no privileged roles, and it is not supposed to hold funds between transactions: anyone can sweep balances left in it via the public cleanup functions.",
+      "ignoreInWatchMode": ["getBlockNumber", "getCurrentBlockTimestamp"],
+      "deployerAddress": "base:0xf3d63166F0Ca56C3c1A3508FcE03Ff0Cf3Fb691e",
+      "sinceTimestamp": 1762344583,
+      "sinceBlock": 37777618,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "base:0xb92fe925DC43a0ECdE6c8b1a2709c170Ec4fFf4f": "RelayRouterV3"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "RelayApprovalProxyV3",
+      "address": "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE",
+      "type": "Contract",
+      "template": "relay/RelayApprovalProxyV3",
+      "sourceHashes": [
+        "0x922007e5c3c9e21448981277742c2be3408475b8f6249d07d6654d2a29c0b8df"
+      ],
+      "proxyType": "immutable",
+      "description": "ERC20 entry point of the Relay v3 flow: it pulls user tokens (via direct approvals or EIP-2612 / ERC-3009 / Permit2 signatures) and forwards them to the RelayRouterV3, where the calls of the Relay quote are executed atomically. Token pulls are only possible from msg.sender or with the token owner's signature, so user approvals to this contract cannot be spent by its owner.",
+      "deployerAddress": "base:0xf3d63166F0Ca56C3c1A3508FcE03Ff0Cf3Fb691e",
+      "sinceTimestamp": 1762344585,
+      "sinceBlock": 37777619,
+      "values": {
+        "_CALL3VALUE_TYPEHASH": "0xfd3926a097b5d365885a8c0afe16fa80ed4d377e8627017476dfe9729e8a6cde",
+        "_RELAYER_WITNESS_TYPE_STRING": "RelayerWitness witness)Call3Value(address target,bool allowFailure,uint256 value,bytes callData)RelayerWitness(address relayer,address refundTo,address nftRecipient,bytes metadata,Call3Value[] call3Values)TokenPermissions(address token,uint256 amount)",
+        "_RELAYER_WITNESS_TYPEHASH": "0x4b21a98ca11613e848d71d25db5eb5a6ee6e910560d8f8eebeff8ea5168af917",
+        "$immutable": true,
+        "owner": "base:0x463cB782c8dd0a1887b77336DfF74D60F006F56E"
+      },
+      "implementationNames": {
+        "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE": "RelayApprovalProxyV3"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "base:0xF61A305199fa1135d76FFaB3752D42F55cBd775A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xf70da97812CB96acDF810712Aa562db8dfA3dbEF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31": [
+      "constructor(address _owner, address _allocator)",
+      "error AddressCannotBeZero()",
+      "error AlreadyInitialized()",
+      "error CallFailed(bytes returnData)",
+      "error CallRequestAlreadyUsed()",
+      "error CallRequestExpired()",
+      "error InvalidSignature()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error Unauthorized()",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event RelayCallExecuted(bytes32 id, tuple(address to, bytes data, uint256 value, bool allowFailure) call)",
+      "event RelayErc20Deposit(address from, address token, uint256 amount, bytes32 id)",
+      "event RelayNativeDeposit(address from, uint256 amount, bytes32 id)",
+      "function _CALL_REQUEST_TYPEHASH() view returns (bytes32)",
+      "function _CALL_TYPEHASH() view returns (bytes32)",
+      "function allocator() view returns (address)",
+      "function callRequests(bytes32) view returns (bool)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function depositErc20(address depositor, address token, bytes32 id)",
+      "function depositErc20(address depositor, address token, uint256 amount, bytes32 id)",
+      "function depositNative(address depositor, bytes32 id) payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execute(tuple(tuple(address to, bytes data, uint256 value, bool allowFailure)[] calls, uint256 nonce, uint256 expiration) request, bytes signature) returns (tuple(bool success, bytes returnData)[] results)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function setAllocator(address _allocator)",
+      "function transferOwnership(address newOwner) payable"
+    ],
+    "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934": [
+      "constructor(address solver)",
+      "error CallFailed()",
+      "error NativeTransferFailed()",
+      "error Unauthorized()",
+      "event FundsForwardedWithData(bytes data)",
+      "function forward(bytes data) payable",
+      "function makeCalls(tuple(address to, bytes data, uint256 value)[] calls) payable"
+    ],
+    "base:0xb92fe925DC43a0ECdE6c8b1a2709c170Ec4fFf4f": [
+      "constructor()",
+      "error ArrayLengthsMismatch()",
+      "error CallFailed()",
+      "error InvalidMsgSender(address storedSender, address actualSender)",
+      "error InvalidRecipient(address recipient)",
+      "error NativeTransferFailed()",
+      "error NoRecipientSet()",
+      "event FundsMovement(address from, address to, address currency, uint256 amount, bytes metadata)",
+      "event SolverCallExecuted(address to, bytes data, uint256 amount)",
+      "event SolverNativeTransfer(address to, uint256 amount)",
+      "function cleanupErc20s(address[] tokens, address[] recipients, uint256[] amounts, bytes metadata)",
+      "function cleanupErc20sViaCall(address[] tokens, address[] tos, bytes[] datas, uint256[] amounts)",
+      "function cleanupNative(uint256 amount, address recipient, bytes metadata)",
+      "function cleanupNativeViaCall(uint256 amount, address to, bytes data)",
+      "function multicall(tuple(address target, bool allowFailure, uint256 value, bytes callData)[] calls, address refundTo, address nftRecipient, bytes metadata) payable returns (tuple(bool success, bytes returnData)[] returnData)",
+      "function onERC1155BatchReceived(address, address, uint256[] _ids, uint256[] _values, bytes _data) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256 _id, uint256 _value, bytes _data) returns (bytes4)",
+      "function onERC721Received(address, address, uint256 _tokenId, bytes _data) returns (bytes4)"
+    ],
+    "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE": [
+      "constructor(address _owner, address _router, address _permit2)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AlreadyInitialized()",
+      "error ArrayLengthsMismatch()",
+      "error FailedInnerCall()",
+      "error NativeTransferFailed()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error RefundToCannotBeZeroAddress()",
+      "error SafeERC20FailedOperation(address token)",
+      "error Unauthorized()",
+      "event FundsMovement(address from, address to, address currency, uint256 amount, bytes metadata)",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "function _CALL3VALUE_TYPEHASH() view returns (bytes32)",
+      "function _RELAYER_WITNESS_TYPEHASH() view returns (bytes32)",
+      "function _RELAYER_WITNESS_TYPE_STRING() view returns (string)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function permit2TransferAndMulticall(address user, tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address target, bool allowFailure, uint256 value, bytes callData)[] calls, address refundTo, address nftRecipient, bytes metadata, bytes permitSignature) payable returns (tuple(bool success, bytes returnData)[] returnData)",
+      "function permit3009TransferAndMulticall(tuple(address from, uint256 value, uint256 validAfter, uint256 validBefore, uint8 v, bytes32 r, bytes32 s)[] permits, address[] tokens, tuple(address target, bool allowFailure, uint256 value, bytes callData)[] calls, address refundTo, address nftRecipient, bytes metadata) payable returns (tuple(bool success, bytes returnData)[] returnData)",
+      "function permitTransferAndMulticall(tuple(address token, address owner, uint256 value, uint256 nonce, uint256 deadline, uint8 v, bytes32 r, bytes32 s)[] permits, tuple(address target, bool allowFailure, uint256 value, bytes callData)[] calls, address refundTo, address nftRecipient, bytes metadata) payable returns (tuple(bool success, bytes returnData)[] returnData)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function transferAndMulticall(address[] tokens, uint256[] amounts, tuple(address target, bool allowFailure, uint256 value, bytes callData)[] calls, address refundTo, address nftRecipient, bytes metadata) payable returns (tuple(bool success, bytes returnData)[] returnData)",
+      "function transferOwnership(address newOwner) payable",
+      "function withdraw(address token)"
+    ]
+  },
+  "usedTemplates": {
+    "relay/RelayApprovalProxyV3": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "relay/RelayDepository": "0x36ccdc6fa203495d255adc75ca0f63966e6da70e808850c57bfa6f3e17c124dd",
+    "relay/RelayReceiver": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "relay/RelayRouterV3": "0x049fbaf102429afdd380204496e7d58fc9629baef7742f72b31a8d94b111a21c"
+  },
+  "usedBlockNumbers": { "base": 49962920 },
+  "permissionsConfigHash": "0x30f51cc7797a54ec328f2826bd71b34b4bb0e5910109d21f538e9bbf2049c778",
+  "permissions": {
+    "base:0x463cB782c8dd0a1887b77336DfF74D60F006F56E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE",
+          "description": "withdraw funds stuck in the RelayApprovalProxyV3 (not user approvals).",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0x63C1d3E9C646184529C5694630a01C00dF171b56": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
+          "description": "sign arbitrary CallRequests that the RelayDepository executes, which moves any funds escrowed in it.",
+          "role": ".allocator"
+        }
+      ]
+    },
+    "base:0xF61A305199fa1135d76FFaB3752D42F55cBd775A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
+          "description": "replace the allocator of the RelayDepository at any time and without delay, taking control of all funds escrowed in it.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934",
+          "description": "receive all user funds deposited through the RelayReceiver, with no onchain obligation to fill the associated orders.",
+          "role": ".solver"
+        }
+      ]
+    }
+  }
+}

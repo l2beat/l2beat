@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1773663853,
-  "configHash": "0x934720a7c40bc5be49c63e385d21b232a3346e4be45c3c7e8f662422a67783c9",
+  "timestamp": 1787644553,
+  "configHash": "0x7535f307db7d5daa11ff39c8d306fe96291ce75c824e5f948bbfe1bf1e8ccd6d",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -9,10 +9,11 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -31,10 +32,11 @@
       "template": "polygon-cdk/AgglayerGateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x3e98abe94ddfb10602e8ecfe755bcbc2ef664b24dbdf25c9231ac726af8d7da7"
+        "0x283e15d7157ad798b631629ce8ce14b94d78742771d1dba85a7b2ec67b2a0525"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
+      "deployerAddress": "eth:0xfcFC415D6D21660b90c0545CA0e91E68172B8650",
       "sinceTimestamp": 1750087643,
       "sinceBlock": 22717971,
       "values": {
@@ -105,6 +107,12 @@
               "selector": "0x000a0001",
               "newVKey": "0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70"
             }
+          ],
+          "0x000b0001": [
+            {
+              "selector": "0x000b0001",
+              "newVKey": "0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"
+            }
           ]
         },
         "aggchainVKeysUpdated": {},
@@ -139,20 +147,27 @@
               "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "pessimisticVKey": "0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639"
             }
+          ],
+          "0x0000000e": [
+            {
+              "selector": "0x0000000e",
+              "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+              "pessimisticVKey": "0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"
+            }
           ]
         },
         "version": "v1.1.0"
       },
       "fieldMeta": {
         "aggchainVKeys": {
-          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
         },
         "aggchainVKeysUpdated": {
           "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
           "severity": "HIGH",
-          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
+          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
         },
         "aggchainMultisigHash": { "severity": "HIGH" }
       },
@@ -171,28 +186,7 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-          "role": "admin"
-        }
-      ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653103,
       "sinceBlock": 16896716,
       "values": {
@@ -206,14 +200,12 @@
     {
       "address": "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "role": ".trustedAggregatorAC"
-        }
-      ]
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x21887c89368bf918346c62460e0c339113801C28",
@@ -227,165 +219,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
-          "role": ".addPpRouteAC",
-          "via": [
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors.",
-          "role": ".aggchainDefaultVKeyAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "change the aggchainSigners and threshold (a multisig used for permissioned state transitions).",
-          "role": ".alMultisigAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
-          "role": ".freezePpRouteAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
-          "role": ".proxiedTokensManager",
-          "via": [
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
-          "role": ".createRollupAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
-          "role": ".defaultAdminAC",
-          "via": [
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
-          "role": ".tweakParametersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 259200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)",
-          "via": [
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 259200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 259200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 259200,
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
       "sinceTimestamp": 1678956815,
       "sinceBlock": 16839348,
       "values": {
@@ -394,12 +232,12 @@
         "$members": [
           "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
           "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
-          "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
+          "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2",
           "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
           "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
           "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
           "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
-          "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
+          "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
           "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
         ],
         "$threshold": 5,
@@ -407,7 +245,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 99,
+        "nonce": 105,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -422,11 +260,12 @@
       "template": "polygon-cdk/AgglayerBridge",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xb40fddae6c645a55f315f2543ba01f6f0129babd6c85689e32e56f2d5d4b5b4a"
+        "0x163489b29ed2cad3ce21f82ec45c140c55e1f1a2f62404cd0df47fb5942cd38e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
       "ignoreInWatchMode": ["getRoot"],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
       "values": {
@@ -461,7 +300,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x35dfef9e49c8f6e3e8a7e58f5b2008e567437f544fc36639440f79916ce91de6",
+        "getRoot": "0x27c2d40f4116a7fdefc56073bae152d7663bb4421da4068f6223daaf56324b0f",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -504,6 +343,7 @@
       ],
       "proxyType": "immutable",
       "description": "Extension contract of the AgglayerBridge for asset metadata..",
+      "deployerAddress": "eth:0xaFec0EE6D714EBe2dDf732799EEbA9F553394bE8",
       "sinceTimestamp": 1759503191,
       "sinceBlock": 23497972,
       "values": { "$immutable": true },
@@ -518,18 +358,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
-          "role": ".emergencyCouncilAdminAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x00Eb6d3334282401E59cC438bC9D7B9496c42f55",
       "sinceTimestamp": 1678429487,
       "sinceBlock": 16795950,
       "values": {
@@ -580,7 +413,7 @@
       "template": "polygon-cdk/AgglayerManager",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xc090b472b887aea0913f1a8fd38eec84d8a0faf5a90a03114035ebe5401c3d1f"
+        "0xded7a37131f5b2c19e94e461e4e7f20ad8d83291e41f834b6bdc3f67db715ae4"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
@@ -590,6 +423,7 @@
         "totalSequencedBatches",
         "totalVerifiedBatches"
       ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653163,
       "sinceBlock": 16896721,
       "values": {
@@ -651,10 +485,7 @@
           },
           "TRUSTED_AGGREGATOR": {
             "adminRole": "TRUSTED_AGGREGATOR_ADMIN",
-            "members": [
-              "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
-              "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
-            ]
+            "members": ["eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"]
           },
           "ADD_ROLLUP_TYPE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -720,17 +551,17 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x66de575e660c36a21b204312e1ace3f246eb060a66dd59bae86c3a067964aa49",
+        "getRollupExitRoot": "0xf413d8f604fc20c1290a8de600fc7d42a1ffd8dc4c3c5047ddd462119f85bd29",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1773661067,
+        "lastAggregationTimestamp": 1787641355,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
-          14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1
+          14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1, 16, 28
         ],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "v1.0.0",
-        "rollupCount": 27,
+        "rollupCount": 28,
         "rollupsDataV2": [
           {
             "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -870,10 +701,10 @@
           {
             "rollupContract": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
             "chainID": 3344,
-            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            "forkID": 12,
-            "rollupTypeID": 7,
-            "rollupVerifierType": 0,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
@@ -969,6 +800,15 @@
           {
             "rollupContract": "eth:0x5DdF600b83eaa5eC7F8e89315F9D8CaC5E7406b4",
             "chainID": 13371,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xB07134fF28e74a90667Ab5e3F7271a542D6E0358",
+            "chainID": 3377,
             "verifier": "eth:0x0000000000000000000000000000000000000000",
             "forkID": 0,
             "rollupTypeID": 14,
@@ -1091,11 +931,10 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 864378,
-        "totalVerifiedBatches": 863902,
+        "totalSequencedBatches": 889220,
+        "totalVerifiedBatches": 888752,
         "trustedAggregatorAC": [
-          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
-          "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
+          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
         ],
         "tweakParametersAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
         "version": "v1.0.0"
@@ -1134,11 +973,12 @@
       "template": "polygon-cdk/AgglayerGER",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x0691e028b98db8d6bfadf2704505338eeea6f915426cadc2422a6b034b81e2fb"
+        "0xcb5d2f1ec788697db9d2a7628390cd232b83a0c2ba74315ee95e419ab5a6417c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
       "ignoreInWatchMode": ["getRoot", "depositCount"],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653151,
       "sinceBlock": 16896720,
       "values": {
@@ -1173,9 +1013,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 95278,
+        "depositCount": 120796,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0xdf50c113a7d4f8f3246cb8c9d6c964ec11dedc1912343685ab73cf831b368d49",
+        "getRoot": "0x50c6529662c7ef9f2f2bf1462afde1ff5d2274e2b47fb80a56fb09d01f59e1da",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -1196,11 +1036,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1216,24 +1051,40 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SP1Verifier",
+      "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1776172415,
+      "sinceBlock": 24878258,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
+      }
+    },
+    {
       "name": "PolygonCreateRollupMultisig",
       "address": "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
-          "role": ".createRollupAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
       "sinceTimestamp": 1722533147,
       "sinceBlock": 20435175,
       "values": {
@@ -1251,25 +1102,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "role": ".trustedAggregatorAC"
-        }
-      ]
     },
     {
       "address": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
@@ -1292,60 +1131,16 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Timelock",
       "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
       "type": "Contract",
       "template": "polygon-cdk/Timelock",
       "sourceHashes": [
-        "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
+        "0x67f85a797c33748d0cf0e92068621982669b7239a53ca2136d5bcd3ff78973f5"
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 259200,
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
-          "role": ".addPpRouteAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
-          "role": ".proxiedTokensManager"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 259200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        }
-      ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653187,
       "sinceBlock": 16896723,
       "values": {
@@ -2046,6 +1841,18 @@
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"
+          },
+          {
+            "target": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+            "value": "0",
+            "function": "addPessimisticVKeyRoute",
+            "inputs": {
+              "pessimisticVKeySelector": "0x0000000e",
+              "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+              "pessimisticVKey": "0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
           }
         ],
         "timelockAdminAC": [
@@ -2057,6 +1864,11 @@
         "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "PolygonZkEVMTimelock"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
@@ -2418,6 +2230,18 @@
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
       "function version() pure returns (string)"
     ],
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
       "constructor(address _singleton)"
     ],
@@ -2590,6 +2414,261 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24670039 },
-  "permissionsConfigHash": "0x9eb29e5f133bc51998ce999ef857b10bb5193d840210fa50d898a8da2ef355da"
+  "usedBlockNumbers": { "ethereum": 25830854 },
+  "permissionsConfigHash": "0x61a614b98b28ecc0720623091e627e99a8890dd1e625374cb22672db40e4e70d",
+  "permissions": {
+    "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "Permissioned to post new state roots and global exit roots accompanied by ZK proofs.",
+          "role": ".trustedAggregatorAC"
+        }
+      ]
+    },
+    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".addPpRouteAC",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors.",
+          "role": ".aggchainDefaultVKeyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "change the aggchainSigners and threshold (a multisig used for permissioned state transitions).",
+          "role": ".alMultisigAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".freezePpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
+          "role": ".createRollupAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
+          "role": ".tweakParametersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ]
+    },
+    "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
+          "role": ".emergencyCouncilAdminAC"
+        }
+      ]
+    },
+    "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
+          "role": ".createRollupAC"
+        }
+      ]
+    },
+    "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".addPpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ]
+    }
+  }
 }

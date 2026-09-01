@@ -1,133 +1,132 @@
 {
   "Optimism_Adapter": {
-    "hash": "0x59784b70d01278196c00fbfe1f237b01ec891dca28b0542cdf8dcc9e672b3849",
+    "hash": "0x1a4bb516b4009e39c9430c7af256a43c1ef9c8bd6bfbbadf540694cb6d59ceb1",
     "address": "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
     "blockNumber": 22867011
   },
   "Ethereum_Adapter": {
-    "hash": "0x14afbe84cefefdcb06132c680d267b8892f0834a39fc23ca0ea563758653a21a",
+    "hash": "0xaa57840bcec6253310d5736266a04eff14edb6cbdaca4c5f76392054eefa4edc",
     "address": "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
     "blockNumber": 22867011
   },
   "DoctorWho_Adapter": {
-    "hash": "0x26a48559a60b482a96526e1ee27fef2111bb46e40395ee2122284141ffc30e14",
+    "hash": "0x1101747e5caac2b7904a4afb32f441d24a8e3902abba5e00ecf9fd8a03f1c8b9",
     "address": "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
     "blockNumber": 22867011
   },
   "Polygon_Adapter": {
-    "hash": "0xf598be4ed345b6b3e83e04dff2cb5472dc4df0b8476f8f74a4c75c473dee6347",
+    "hash": "0x6a345c718da4322398bca0a363f2ac3f3820419452fb29a9e3bad39c2eaa8ee7",
     "address": "eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
     "blockNumber": 22867011
   },
   "ZkStack_CustomGasToken_Adapter": {
-    "hash": "0x949e41ae655aafeb048cfa1c491186b6582bd4f6028227ed0ce17a012456e675",
+    "hash": "0x85648815e28158a5c0659f1200fa6f486406f3ef69fb2c045129c5ab14653f75",
     "address": "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf",
     "blockNumber": 22867011
   },
   "Boba_Adapter": {
-    "hash": "0x9f8b082009430546d55daaa8e166eca77ef9ca17f7831f03de4635bdc4a32b31",
+    "hash": "0x55d31f2397d3b9176e0f464294848cb9c966ca1da16222ae071cf9367a3e5f5c",
     "address": "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
     "blockNumber": 22867011
   },
   "ZkStack_Adapter": {
-    "hash": "0x6b9289adba88945bc716d68cbdde1a68c52429766cef73d7c17fe4ca6dd7cc59",
+    "hash": "0x682cb05b3efe79182019e10819d06cd3425fafd36baacb22c8956266be9b2ac2",
     "address": "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f",
     "blockNumber": 22867011
   },
   "WorldChain_Adapter": {
-    "hash": "0x1cb72676cfb98558060e29bb95cd793731c85797f35025b1f2dfb383499f55a3",
+    "hash": "0x2b7b6e36efba9662d0c39439d22db847b7e6f11785852339ee909ac40034dede",
     "address": "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
     "blockNumber": 22867011
   },
   "Redstone_Adapter": {
-    "hash": "0x0c32a0cfde3cb87843b5521bf184be1dd2b0031a8e91c2bc7885a2e10db010c1",
+    "hash": "0x00fd9d43c84d1b6249b59aa9283d8b5cd089cc0e27c0132b771c2d75510ea385",
     "address": "eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
     "blockNumber": 22867011
   },
   "Lisk_Adapter": {
-    "hash": "0x9c8e20215aa548a11ed98c8333dbfbaa36143263b4de43d8f73a57b19ec7cea6",
+    "hash": "0x65964e3465492ca227697477da67612af5dcb04548a7c1c36a5910c35be03bfc",
     "address": "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b",
     "blockNumber": 22867011
   },
   "Soneium_Adapter": {
-    "hash": "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008",
+    "hash": "0x6b7ccdb0b5af87e3b9ed000233ff71fa303f55dc611d3d720ee0c3f121fc8f3e",
     "address": "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2",
     "blockNumber": 22867011
   },
   "Base_Adapter": {
-    "hash": "0x172a1f27f0fecf665d90a6adc1287223f05a73acd9ed19d9c446972880ccce0f",
+    "hash": "0xb30291efbc5991b8225d21d8b0eb3f9a084d8f2474382de308e2817b2591c198",
     "address": "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
     "blockNumber": 22867011
   },
   "Mode_Adapter": {
-    "hash": "0x1b1b271fd3f736024fda7dd869d78943819efee5dcbf6f4075af9647cfb16cac",
+    "hash": "0xee47b40b9c392b198c1743ea54b8555ee0ef775ea685b4eb3d6d78ab6244b6a6",
     "address": "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0",
     "blockNumber": 22867011
   },
   "Alephzero_Adapter": {
-    "hash": "0x1ccce681c671e5131c390787ccaa619eb4c4ee20d444e73484078b4770b12ea1",
+    "hash": "0xca3522b17a94cef6f519f34ec72ca7a7294b884761d47a60eedba59e7cf38b9d",
     "address": "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
     "blockNumber": 22867011
   },
   "Arbitrum_Adapter": {
-    "hash": "0x9f6b3eb8d2e2f04dbfa536018999afb7482a88d8ada0182ab2a2a9b8ca5c79f6",
+    "hash": "0x2daf56c1a0e87b69284683f57711769a50afeeeeaad25fcfbbe53994c64824fc",
     "address": "eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C",
     "blockNumber": 23145942
   },
   "Linea_Adapter": {
-    "hash": "0x0252bdb116e29cf6cc0b6de4ebf9589fcc53281458cb80f4db7a91a866d9eb46",
+    "hash": "0x320f883f620cbb7a377265c28d963349af796f667b09d772c6c22c00f98fb136",
     "address": "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
     "blockNumber": 22867011
   },
   "Blast_Adapter": {
-    "hash": "0x596bdc0b39f0ff19cde625424cdc037dd3e79355ee2c845bd8a6e5e42b3bc332",
+    "hash": "0x0bf8ebe511d302a267fa925c315521d6c6b61b8219e8e97669ea100052df4309",
     "address": "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
     "blockNumber": 22867011
   },
   "Scroll_Adapter": {
-    "hash": "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e",
+    "hash": "0x93ccb0e337fe5516163e1356eccae360ca8812a86c40056e16ab8cd83580eb65",
     "address": "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8",
     "blockNumber": 22867011
   },
   "Zora_Adapter": {
-    "hash": "0x6d9e4b79712a4e81c51941fb986f4c55774da36be108106577ca01ccb35a0f87",
+    "hash": "0x4f6390935976074a5e55dd19deba114be9e108c6f2dc9e185d1f379eaa9b702b",
     "address": "eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
     "blockNumber": 22867011
   },
   "Solana_Adapter": {
-    "hash": "0xd9ba616630e494fc819ca66efe5c5ed40e5ed274cb568c605ecf8a609d88f738",
+    "hash": "0x64f26bb547fa35dd225c9d4dcdf35c6525bbc7bd5e99671f2135f4dde392f0b6",
     "address": "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3",
     "blockNumber": 22867011
   },
   "Polygon_Adapter_2": {
-    "hash": "0x6e7fdec1dea08a851a5c7c7d013648db8f07fcd751548a002281e712f89f6c49",
+    "hash": "0x19f838047a4ea9f6166087f42d798199893dae3be4bae6c5ec8ce33e0ab17674",
     "address": "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0",
     "blockNumber": 23238901
   },
   "DoctorWho_Adapter_v2.sol": {
-    "hash": "0x4fed24508db075cc7ece3f2b393b38baa14d83cb16b7435622c6b3b7a2af178f",
+    "hash": "0xc313ad89f863c556da5ab53674479545a49178f3feb38c1d8babb8a8180673b4",
     "address": "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1",
     "blockNumber": 23533560
   },
   "Optimism_Adapter_v2.sol": {
-    "hash": "0xbc0e9c23007f3c3c61476c843d07e2734aef4507d5180c4e849a4f48580101b7",
+    "hash": "0xb49a294f23bb8fae981af2f32df9760968a529b61ce5814fdcd2955d4c2ddb5e",
     "address": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
     "blockNumber": 23533560
   },
   "Base_Adapter_v2.sol": {
-    "hash": "0x235e6017ab764deb7de4cf894fc0b8d15bebacad6ff219fc122864ee964bf523",
+    "hash": "0xacd8d420b2b79b9a74f15259c503b84e2dc0b2d54e116aeae0d204e23e79aea7",
     "address": "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f",
     "blockNumber": 23533560
   },
   "Arbitrum_Adapter_v2.sol": {
-    "hash": "0x6ca9ce1725f28d3a737cdadeddcf98fdfee47b324e779a5cdbab51cea361d883",
+    "hash": "0x0f257a2a35947505fb4b62f1d968f46a1522d7a71417215d1d1d6834fcd09149",
     "address": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
     "blockNumber": 23533560
   },
   "OP_Adapter_MEGAETH.sol": {
-    "hash": "0xbfd7166e5dce4fc403bfc9d03712390154e5aa737cb65ab10796605b28dc9e9e",
+    "hash": "0xd09d0d28995e5980f3ef0e5ae1c9d4b28d5d70043610e8cb52e5dd5e9b60e916",
     "address": "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac",
-    "chain": "ethereum",
     "blockNumber": 24268070
   }
 }

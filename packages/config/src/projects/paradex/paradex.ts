@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -26,7 +26,11 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getSHARPBootloaderHashes } from '../starknet/starknet'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
+import {
+  getAcceptedSHARPVerifierChain,
+  getSHARPBootloaderHashes,
+} from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('paradex')
 
@@ -53,7 +57,7 @@ function formatMaxTotalBalanceString(
   maxTotalBalance: number,
   decimals: number,
 ) {
-  return `The current bridge cap is ${formatLargeNumber(
+  return `The current bridge cap is ${formatNumber(
     maxTotalBalance / 10 ** decimals,
   )} ${ticker}.`
 }
@@ -83,6 +87,7 @@ export const paradex: ScalingProject = {
     BADGES.DA.DAC,
     BADGES.Stack.SNStack,
     BADGES.Infra.SHARP,
+    BADGES.RaaS.Karnot,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
@@ -113,7 +118,7 @@ export const paradex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stwo'),
+    zkCatalogIds: [ProjectId('stwo')],
   },
   chainConfig: {
     name: 'paradex',
@@ -171,6 +176,7 @@ export const paradex: ScalingProject = {
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: UnixTime(1689850631),
+          untilTimestamp: UnixTime(1710428663), // last call: https://etherscan.io/tx/0x3230dafe64b826cfddf3ad1326effc46324c092e5c04a69b06d859cb6a5ecec3
         },
       },
       {
@@ -249,7 +255,11 @@ export const paradex: ScalingProject = {
   technology: {
     dataAvailability: {
       name: 'Encrypted blobs via privacy council',
-      description: `Data is posted as encrypted blobs on Ethereum using a random symmetric key per state update. Such symmetric key is also posted, but encrypted to the privacy council members public keys. Each member can recover the symmetric key and decrypt the data. The council has ${privacyCouncil.membersCount} members and at least one is required to disclose the decryption keys to reconstruct the L2 state. Users cannot independently reconstruct the L2 state without relying on the council members.`,
+      description: readProjectMarkdown(
+        'paradex',
+        'technologyDataAvailability',
+        { membersCount: privacyCouncil.membersCount },
+      ),
       risks: [
         {
           category: 'Funds can be frozen if',
@@ -279,6 +289,8 @@ export const paradex: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
     programHashes: paradexProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // stwo verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: getAcceptedSHARPVerifierChain().factRegistries,
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

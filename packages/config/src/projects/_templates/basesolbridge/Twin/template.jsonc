@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Implementation contract for Twin accounts: each Solana address gets a deterministic Twin beacon proxy on Base that executes arbitrary calls on its behalf when instructed via bridge messages from Solana. Only the Bridge can call it."
+}

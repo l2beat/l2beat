@@ -456,7 +456,7 @@ describe(CatchingUpState.name, () => {
       const transaction = makeRpcTransaction({
         hash: txHash,
         type: 118n,
-        to: null,
+        to: undefined,
         input: undefined,
         value: undefined,
         calls: [

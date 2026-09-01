@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { HttpClient } from '@l2beat/shared'
+import type { HttpClient, RpcMetricsAggregator } from '@l2beat/shared'
 import type { DiscoveryChainConfig } from '../config/types'
 import { AddressAnalyzer } from './analysis/AddressAnalyzer'
 import { TemplateService } from './analysis/TemplateService'
@@ -17,8 +17,15 @@ export function getDiscoveryEngine(
   cache: DiscoveryCache,
   http: HttpClient,
   logger: Logger,
+  rpcMetricsAggregator?: RpcMetricsAggregator,
 ) {
-  const allProviders = new AllProviders(chainConfigs, http, cache, logger)
+  const allProviders = new AllProviders(
+    chainConfigs,
+    http,
+    cache,
+    logger,
+    rpcMetricsAggregator,
+  )
 
   const proxyDetector = new ProxyDetector()
   const sourceCodeService = new SourceCodeService()

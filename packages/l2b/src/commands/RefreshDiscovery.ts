@@ -9,8 +9,8 @@ import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
-import { AdaptiveTimePredictor } from '../implementations/common/AdaptiveTimePredictor'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
+import { TimePredictor } from '../implementations/common/TimePredictor'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 import { Separated } from './types'
 
@@ -50,12 +50,6 @@ export const RefreshDiscovery = command({
       description:
         'Message that will be written in the description section of diffHistory.md.',
     }),
-    group: option({
-      type: optional(string),
-      long: 'group',
-      short: 'g',
-      description: 'group of projects to refresh.',
-    }),
     overwriteCache: flag({
       type: boolean,
       long: 'overwrite-cache',
@@ -74,13 +68,8 @@ export const RefreshDiscovery = command({
     const templateService = new TemplateService(paths.discovery)
     const logger = getPlainLogger(args.concise ? 'WARN' : 'INFO')
 
-    const projects = args.group
-      ? configReader.getProjectsInGroup(args.group)
-      : null
-
     const projectChain = configReader
       .readAllDiscoveredProjects()
-      .filter((project) => (projects ? projects.includes(project) : true))
       .filter((project) =>
         args.excludeProjects ? !args.excludeProjects.includes(project) : true,
       )
@@ -130,24 +119,31 @@ export const RefreshDiscovery = command({
       logger.info(
         `\nOverall ${toRefresh.length} projects need discovery refresh.`,
       )
-      const predictor = new AdaptiveTimePredictor()
+      const predictor = new TimePredictor()
+      const failedProjects: { name: string; message: string }[] = []
       if (args.confirmed || keyInYN('Do you want to continue?')) {
         for (const [i, { config }] of toRefresh.entries()) {
+          let failureMessage: string | undefined
           const startTime = performance.now()
-          await discoverAndUpdateDiffHistory(
-            {
-              project: config.name,
-              dev: true,
-              overwriteCache: args.overwriteCache,
-            },
-            {
-              description: args.message,
-              configReader,
-              templateService,
-              paths,
-              logger,
-            },
-          )
+          try {
+            await discoverAndUpdateDiffHistory(
+              {
+                project: config.name,
+                dev: true,
+                overwriteCache: args.overwriteCache,
+              },
+              {
+                description: args.message,
+                configReader,
+                templateService,
+                paths,
+                logger,
+              },
+            )
+          } catch (error) {
+            failureMessage = getErrorMessage(error)
+            failedProjects.push({ name: config.name, message: failureMessage })
+          }
 
           reportStatus(
             logger,
@@ -155,8 +151,18 @@ export const RefreshDiscovery = command({
             i + 1,
             toRefresh.length,
             performance.now() - startTime,
-            `${config.name}`,
+            config.name,
+            failureMessage !== undefined ? chalk.red('FAILED') : undefined,
           )
+        }
+
+        if (failedProjects.length > 0) {
+          logger.error(
+            `Discovery failed for ${failedProjects.length} project(s):`,
+          )
+          for (const { name, message } of failedProjects) {
+            logger.error(`- ${name}: ${message}`)
+          }
         }
       }
     }
@@ -165,11 +171,12 @@ export const RefreshDiscovery = command({
 
 function reportStatus(
   logger: Logger,
-  predictor: AdaptiveTimePredictor,
+  predictor: TimePredictor,
   finishedCount: number,
   count: number,
   runTime: number,
   project: string,
+  note?: string,
 ) {
   const bar = chalk.cyan(asciiProgressBar(finishedCount, count))
   const timeLeft = formatSeconds(
@@ -182,10 +189,15 @@ function reportStatus(
     finishedCount,
     count,
   )
-  const status = `${counter} ${project}`
+  const status = `${counter} ${project}${note ? ` (${note})` : ''}`
 
   const report = [bar, eta, status]
   logger.warn(report.join(' | '))
+}
+
+function getErrorMessage(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error)
+  return message.split('\n')[0]
 }
 
 function colorMap(toColor: string, value: number, multiplier = 1): string {

@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "loopring",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
@@ -33,13 +34,6 @@
       "fields": {
         "loopringV3": {
           "handler": { "type": "storage", "slot": 5, "returnType": "address" }
-        },
-        "shutdownTriggered": {
-          "handler": {
-            "type": "event",
-            "select": "timestamp",
-            "add": { "event": "Shutdown" }
-          }
         }
       }
     },

@@ -44,8 +44,15 @@ export function createDecoderModule(
     config.chains,
   )
 
-  const controller = new ApiController(decoder, alchemyClient, config.chains)
-  const router = createDecoderRouter(controller)
+  const controller = new ApiController(
+    decoder,
+    signatureService,
+    addressService,
+    alchemyClient,
+    config.chains,
+    config.hashes,
+  )
+  const router = createDecoderRouter(config.chains, controller)
 
   return {
     start: () => {},

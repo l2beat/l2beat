@@ -36,7 +36,8 @@ export function getProjectPastUpgrades(
       const explorerUrl = contract.url
         ? new URL(contract.url).origin
         : 'https://etherscan.io'
-      const key = `${upgrade.transactionHash}-${upgrade.timestamp}-${proxyAddress}`
+      const implementationsKey = upgrade.implementations.join(',')
+      const key = `${upgrade.transactionHash}-${upgrade.timestamp}-${proxyAddress}-${implementationsKey}`
 
       if (!seenPastUpgrades.has(key)) {
         seenPastUpgrades.add(key)

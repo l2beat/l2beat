@@ -1,10 +1,11 @@
 import type { Project } from '@l2beat/config'
 import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
 import { getProgramHashes } from '../../contracts-and-permissions/getProgramHashes'
 import { getDiagramParams } from '../../getDiagramParams'
-import { getProverInfo } from './getProverInfo'
+import type { ProjectWithPageMetadata } from '../../getProjectUrl'
+import { getProverInfos } from './getProverInfo'
 
 export function getStateValidationSection(
   project: Project<
@@ -14,7 +15,7 @@ export function getStateValidationSection(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: ProjectWithPageMetadata[],
   allProjectsWithContracts: Project<'contracts'>[],
 ):
   | Omit<StateValidationSectionProps, 'id' | 'title' | 'sectionOrder'>
@@ -30,7 +31,7 @@ export function getStateValidationSection(
     isUnderReview:
       !!project.statuses.reviewStatus ||
       !!project.scalingTechnology.stateValidation.isUnderReview,
-    proverInfo: getProverInfo(
+    proverInfos: getProverInfos(
       project,
       zkCatalogProjects,
       contractUtils,
@@ -43,5 +44,6 @@ export function getStateValidationSection(
       allProjectsWithContracts,
       tvs,
     ),
+    programHashesDescription: project.contracts?.programHashesDescription,
   }
 }

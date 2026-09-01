@@ -60,7 +60,7 @@ export class MulticallClient {
         this.rpcClient.call(
           {
             to: request.address,
-            data: request.data,
+            input: request.input,
           },
           blockNumber,
         ),
@@ -81,7 +81,7 @@ export class MulticallClient {
   ): Promise<MulticallResponse[]> {
     const encoded = config.encodeBatch(requests)
     const result = await this.rpcClient.call(
-      { to: config.address, data: encoded },
+      { to: config.address, input: encoded },
       blockNumber,
     )
     return config.decodeBatch(result)

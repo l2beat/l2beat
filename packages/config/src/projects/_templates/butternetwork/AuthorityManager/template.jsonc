@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Butter AuthorityManager",
+  "category": "gov",
+  "description": "OpenZeppelin AccessManager-derived authority for Butter's restricted Bridge and FeeService functions. Its role configuration controls who can change bridge validation dependencies, relay and token settings, fee parameters, pause state, and implementation upgrades.",
+  "fields": {
+    "adminRole": {
+      "description": "Members of ADMIN_ROLE can reconfigure the AuthorityManager itself, including role membership and the function-to-role mappings that govern attached Butter contracts.",
+      "severity": "HIGH",
+      "handler": { "type": "call", "method": "getRoleMembers", "args": [0] },
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke roles, change role and target permissions, and execute the restricted management functions of the attached Butter contracts."
+        }
+      ]
+    }
+  }
+}

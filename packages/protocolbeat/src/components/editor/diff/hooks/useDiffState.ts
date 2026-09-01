@@ -8,7 +8,7 @@ export function useDiffState(
   leftAddress: string,
   rightAddress: string,
   removeUnchanged: boolean,
-  removeComments: boolean,
+  ignoreComments: boolean,
   swapped: boolean,
 ) {
   const [diff, setDiff] = useState<Diff | undefined>(undefined)
@@ -26,9 +26,9 @@ export function useDiffState(
       actualLeftCode,
       actualRightCode,
       removeUnchanged,
-      removeComments,
+      ignoreComments,
     )
-  }, [actualLeftCode, actualRightCode, removeUnchanged, removeComments])
+  }, [actualLeftCode, actualRightCode, removeUnchanged, ignoreComments])
 
   return {
     diff,

@@ -1,8 +1,7 @@
 {
   "Aztec.sol": {
-    "hash": "0xd5b487c2f69097daa1e35d596189814c087e6c52d35f2808b8c2f542821105b5",
+    "hash": "0x6018c4d73b9151449ab94fa44cb69a1f9d6eaa71dbf36cbf9f262a54b77e20da",
     "address": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-    "chain": "ethereum",
     "blockNumber": 23834069
   }
 }

@@ -58,6 +58,15 @@ describe(UnixTime.name, () => {
     })
   })
 
+  describe(UnixTime.periodToSeconds.name, () => {
+    it('returns period durations in seconds', () => {
+      expect(UnixTime.periodToSeconds('minute')).toEqual(UnixTime.MINUTE)
+      expect(UnixTime.periodToSeconds('hour')).toEqual(UnixTime.HOUR)
+      expect(UnixTime.periodToSeconds('six hours')).toEqual(UnixTime.SIX_HOURS)
+      expect(UnixTime.periodToSeconds('day')).toEqual(UnixTime.DAY)
+    })
+  })
+
   describe(UnixTime.toStartOf.name, () => {
     it('day', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
@@ -165,12 +174,12 @@ describe(UnixTime.name, () => {
       expect(UnixTime.isFull(time, 'minute')).toEqual(false)
     })
 
-    it('full sixHourly', () => {
+    it('full six hours', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T06:00:00Z'))
       expect(UnixTime.isFull(time, 'six hours')).toEqual(true)
     })
 
-    it('not full sixHourly', () => {
+    it('not full six hours', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T06:01:01Z'))
       expect(UnixTime.isFull(time, 'six hours')).toEqual(false)
     })

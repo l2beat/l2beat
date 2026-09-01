@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Entrypoint",
+  "category": "core",
+  "description": "Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.",
+  "ignoreInWatchMode": ["latestRoot"],
+  "ignoreMethods": [
+    "proxiableUUID",
+    "rootByIndex",
+    "scopeToPool",
+    "usedPrecommitments",
+    "associationSets"
+  ],
+  "ignoreRelatives": ["accessControl"],
+  "fields": {
+    "accessControl": {
+      "description": "Current role membership map for the Entrypoint's owner and postman roles.",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e": "OWNER_ROLE",
+          "0xfc84ade01695dae2ade01aa4226dc40bdceaf9d5dbd3bf8630b1dd5af195bbc5": "ASP_POSTMAN"
+        }
+      }
+    },
+    "associationSets": {
+      "description": "History of association-set roots and IPFS CIDs published by ASP_POSTMAN. Withdrawals must validate against the latest root from this list.",
+      "type": "EXTERNAL"
+    },
+    "registeredPools": {
+      "description": "Current set of pool contracts registered in the Entrypoint, derived from PoolRegistered and PoolRemoved events.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "_pool",
+        "add": { "event": "PoolRegistered" },
+        "remove": { "event": "PoolRemoved" }
+      }
+    },
+    "ownerRoleMembers": {
+      "description": "Addresses with OWNER_ROLE.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e": "OWNER_ROLE",
+          "0xfc84ade01695dae2ade01aa4226dc40bdceaf9d5dbd3bf8630b1dd5af195bbc5": "ASP_POSTMAN"
+        },
+        "pickRoleMembers": "OWNER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authorize UUPS upgrades to the Entrypoint implementation."
+        },
+        {
+          "type": "interact",
+          "description": "register and remove pools, update per-asset minimum deposits and fee caps, and wind down pools."
+        },
+        {
+          "type": "interact",
+          "description": "grant and revoke OWNER_ROLE and ASP_POSTMAN."
+        },
+        {
+          "type": "interact",
+          "description": "withdraw fees held in the Entrypoint."
+        }
+      ]
+    },
+    "aspPostmen": {
+      "description": "Addresses with ASP_POSTMAN.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e": "OWNER_ROLE",
+          "0xfc84ade01695dae2ade01aa4226dc40bdceaf9d5dbd3bf8630b1dd5af195bbc5": "ASP_POSTMAN"
+        },
+        "pickRoleMembers": "ASP_POSTMAN"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "publish new association-set roots and IPFS CIDs used by withdrawals."
+        }
+      ]
+    }
+  }
+}

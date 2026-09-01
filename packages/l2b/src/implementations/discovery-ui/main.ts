@@ -6,21 +6,35 @@ import {
   TemplateService,
   UserHandlers,
 } from '@l2beat/discovery'
+import { DiffHistoryParser } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
+import { config as dotenv } from 'dotenv'
 import express from 'express'
+import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
+import { getCodePaths } from '../discovery/getCodePaths'
+import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
+import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
-import { getCode, getCodePaths } from './getCode'
+import {
+  getCodeFromDisk,
+  getCodeFromEtherscan,
+  toCodeDeclarations,
+} from './getCode'
 import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { getTvl } from './getTvl'
+import { attachLayoutRouter } from './layouts/router'
+import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
+import { TvlCache } from './TvlCache'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -39,8 +53,20 @@ export const projectParamsSchema = z.object({
   project: safeStringSchema,
 })
 
+const projectQuerySchema = z.object({
+  maxDepth: z
+    .string()
+    .check((v) => /^\d+$/.test(v), 'maxDepth must be a non-negative integer')
+    .transform((v) => Number(v))
+    .optional(),
+})
+
 const projectAddressParamsSchema = z.object({
   project: safeStringSchema,
+  address: ethereumAddressSchema,
+})
+
+const addressParamsSchema = z.object({
   address: ethereumAddressSchema,
 })
 
@@ -61,11 +87,27 @@ const matchFlatQuerySchema = z.object({
   against: z.enum(['templates', 'projects']),
 })
 
-const findMintersSchema = z.object({
-  address: ethereumAddressSchema,
+const nonNegativeIntFromString = z
+  .string()
+  .check((v) => /^\d+$/.test(v), 'must be a non-negative integer')
+  .transform((v) => Number(v))
+
+const positiveIntFromString = z
+  .string()
+  .check((v) => /^\d+$/.test(v) && Number(v) > 0, 'must be a positive integer')
+  .transform((v) => Number(v))
+
+const tvlQuerySchema = z.object({
+  top: positiveIntFromString.optional(),
+})
+
+const diffHistoryQuerySchema = z.object({
+  offset: nonNegativeIntFromString.optional(),
+  limit: positiveIntFromString.optional(),
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
+  dotenv()
   const app = express()
   const port = process.env.PORT ?? 2021
 
@@ -77,7 +119,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
 
-  const diffoveryController = new DiffoveryController()
+  const providerCache = new ProviderCache()
+  const tvlCache = new TvlCache()
+
+  const diffHistoryParser = new DiffHistoryParser()
+  const flatSourceClient = new FlatSourceClient()
+  const diffoveryController = new DiffoveryController(flatSourceClient)
 
   app.use(express.json())
 
@@ -86,7 +133,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   })
 
   app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader, readonly)
+    const response = getProjects(configReader)
     res.json(response)
   })
 
@@ -96,9 +143,20 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       res.status(400).json({ errors: paramsValidation.message })
       return
     }
+    const queryValidation = projectQuerySchema.safeParse(req.query)
+    if (!queryValidation.success) {
+      res.status(400).json({ errors: queryValidation.message })
+      return
+    }
     const { project } = paramsValidation.data
+    const { maxDepth } = queryValidation.data
 
-    const response = getProject(configReader, templateService, project)
+    const response = getProject(
+      configReader,
+      templateService,
+      project,
+      maxDepth,
+    )
     res.json(response)
   })
 
@@ -114,7 +172,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/api/projects/:project/code/:address', (req, res) => {
+  app.get('/api/projects/:project/code/:address', async (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
       res.status(400).json({ errors: paramsValidation.message })
@@ -122,9 +180,21 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     }
     const { project, address } = paramsValidation.data
 
-    const checkFlatCode = readonly === false
-    const response = getCode(configReader, project, address, checkFlatCode)
-    res.json(response)
+    const isLocal = readonly === false
+    try {
+      const response = isLocal
+        ? getCodeFromDisk(configReader, project, address)
+        : await getCodeFromEtherscan(
+            configReader,
+            project,
+            address,
+            flatSourceClient,
+          )
+      res.json(toCodeDeclarations(response))
+    } catch (e) {
+      console.error(e)
+      res.status(500).json({ error: 'Failed to fetch code' })
+    }
   })
 
   app.get('/api/template-files', (req, res) => {
@@ -170,31 +240,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
-  app.get('/api/config/sync-status', (_, res) => {
-    templateService.reload()
-    const allProjects = configReader.readAllDiscoveredProjects()
-
-    const reasons = allProjects.flatMap((project) => {
-      const discovery = configReader.readDiscovery(project)
-      const config = configReader.readConfig(project)
-
-      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
-
-      if (reasons.length === 0) {
-        return []
-      }
-
-      return {
-        project,
-        reasons,
-      }
-    })
-
-    res.json({
-      reasons,
-    })
-  })
-
   app.get('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
 
@@ -210,11 +255,42 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
+  app.get('/api/projects/:project/diff-history', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const queryValidation = diffHistoryQuerySchema.safeParse(req.query)
+    if (!queryValidation.success) {
+      res.status(400).json({ errors: queryValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+    const offset = queryValidation.data.offset ?? 0
+    const limit = queryValidation.data.limit ?? 10
+
+    const projectPath = configReader.getProjectPath(project)
+    const filePath = path.join(projectPath, 'diffHistory.md')
+    if (!existsSync(filePath)) {
+      res.json({ total: 0, entries: [] })
+      return
+    }
+    const content = readFileSync(filePath, 'utf-8')
+    const entries = diffHistoryParser.parse(content)
+    res.json({
+      total: entries.length,
+      entries: entries.slice(offset, offset + limit),
+    })
+  })
+
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
+  attachLayoutRouter(app, configReader, readonly)
 
   if (!readonly) {
+    attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
 
@@ -301,7 +377,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
 
     app.get('/api/terminal/find-minters', (req, res) => {
-      const queryValidation = findMintersSchema.safeParse(req.query)
+      const queryValidation = addressParamsSchema.safeParse(req.query)
       if (!queryValidation.success) {
         res.status(400).json({ errors: queryValidation.message })
         return
@@ -312,6 +388,29 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         `cd ${path.dirname(paths.discovery)}/../../backend && l2b minters ${address}`,
         res,
       )
+    })
+
+    app.get('/api/projects/tvl/:address', async (req, res) => {
+      const paramsValidation = addressParamsSchema.safeParse(req.params)
+      if (!paramsValidation.success) {
+        res.status(400).json({ errors: paramsValidation.message })
+        return
+      }
+      const queryValidation = tvlQuerySchema.safeParse(req.query)
+      if (!queryValidation.success) {
+        res.status(400).json({ errors: queryValidation.message })
+        return
+      }
+      const { address } = paramsValidation.data
+      const { top } = queryValidation.data
+
+      try {
+        const response = await getTvl(providerCache, tvlCache, address, top)
+        res.json(response)
+      } catch (e) {
+        console.error(e)
+        res.status(500).json({ error: 'Failed to estimate TVL' })
+      }
     })
   }
 

@@ -1,7 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { Command as CommandPrimitive } from 'cmdk'
-import fuzzysort from 'fuzzysort'
-import groupBy from 'lodash/groupBy'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Command,
@@ -18,13 +17,14 @@ import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
-import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
-import { api } from '~/trpc/React'
+import type { SearchBarProject } from '~/server/features/search-bar/types'
+import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { searchBarPages } from './searchBarPages'
+import { groupSearchResults, searchEntries } from './searchBarResults'
 import type { AnySearchBarEntry } from './types'
 
 interface Props {
@@ -32,6 +32,7 @@ interface Props {
 }
 
 export function SearchBarDialog({ recentlyAdded }: Props) {
+  const trpc = useTRPC()
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
   const [value, setValue] = useState('')
@@ -41,38 +42,27 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
-  const { data: allProjects, isFetching } = api.projects.searchBar.useQuery(
-    debouncedValue,
-    {
+  const { data: searchResults, isFetching } = useQuery(
+    trpc.searchBar.search.queryOptions(debouncedValue, {
       enabled: debouncedValue !== '',
-    },
+    }),
   )
 
   useEffect(() => {
     if (debouncedValue === '') return
-    track('searchBarSearched', {
-      props: { value: debouncedValue },
-    })
+    track('searchBarSearched', { value: debouncedValue })
   }, [debouncedValue, track])
 
   const filteredPages = useMemo(
-    () =>
-      fuzzysort
-        .go(debouncedValue, searchBarPages, {
-          keys: ['name', (e) => e.tags?.join() ?? ''],
-        })
-        .flatMap((match) => match.obj)
-        .sort((a, b) => a.index - b.index),
-
+    () => searchEntries(debouncedValue, searchBarPages),
     [debouncedValue],
   )
 
   const grouped = useMemo(() => {
-    if (!allProjects) return []
-    return Object.entries(
-      groupBy([...allProjects, ...filteredPages], (p) => p.category),
-    )
-  }, [allProjects, filteredPages])
+    if (!searchResults) return []
+
+    return groupSearchResults([...searchResults, ...filteredPages])
+  }, [searchResults, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()
@@ -85,13 +75,13 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   function onItemSelect(item: SearchBarProject | AnySearchBarEntry) {
     setOpen(false)
-    setValue('')
     router.push(item.href)
     track('searchBarProjectSelected', {
-      props: {
-        name: item.name,
-      },
+      name: item.name,
     })
+    // Clear after the dialog's close animation (duration-200) so the input
+    // doesn't visibly reset and flash the "Recently added" list mid-close.
+    setTimeout(() => setValue(''), 200)
   }
 
   // Hide virtual keyboard on touch start
@@ -155,11 +145,9 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                       <div className="font-medium text-sm leading-none tracking-[-1%]">
                         {project.name}
                       </div>
-                      {project.scalingCategory && (
+                      {project.l2Category && (
                         <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                          {project.isUpcoming
-                            ? 'Upcoming'
-                            : project.scalingCategory}
+                          {project.l2Category}
                         </div>
                       )}
                     </div>
@@ -193,11 +181,15 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                           : entryToValue(item)
                       }
                     >
-                      {item.type === 'project' && (
+                      {item.type !== 'page' && (
                         <img
                           src={item.iconUrl}
-                          alt={`${item.name} logo`}
-                          className="rounded-sm"
+                          alt={`${item.name} ${item.type === 'token' ? 'icon' : 'logo'}`}
+                          className={
+                            item.type === 'token'
+                              ? 'rounded-full'
+                              : 'rounded-sm'
+                          }
                           width={20}
                           height={20}
                         />
@@ -206,11 +198,14 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                         <div className="font-medium text-sm leading-none tracking-[-1%]">
                           {item.name}
                         </div>
-                        {item.type === 'project' && item.scalingCategory && (
+                        {item.type === 'project' && item.l2Category && (
                           <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                            {item.isUpcoming
-                              ? 'Upcoming'
-                              : item.scalingCategory}
+                            {item.l2Category}
+                          </div>
+                        )}
+                        {item.type === 'token' && item.issuer && (
+                          <div className="font-medium text-2xs text-secondary capitalize leading-none tracking-[-1%]">
+                            {item.issuer}
                           </div>
                         )}
                       </div>
@@ -269,11 +264,17 @@ function entryToValue(entry: AnySearchBarEntry) {
     return `${entry.category}-${entry.name}-${entry.type}`
   }
 
+  if (entry.type === 'token') {
+    return `${entry.category}-${entry.id}-${entry.type}`
+  }
+
   return `${entry.category}-${entry.id}-${entry.type}-${entry.kind}`
 }
 
 function entryToLabel(entry: AnySearchBarEntry) {
   if (entry.type === 'page') return 'Page'
+  if (entry.type === 'token') return 'Token'
+
   switch (entry.kind) {
     case 'layer2':
       return 'Layer 2'
@@ -287,6 +288,10 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'ZK Project'
     case 'ecosystem':
       return 'Ecosystem'
+    case 'privacy':
+      return 'Privacy'
+    case 'defi':
+      return 'DeFi'
     default:
       assertUnreachable(entry.kind)
   }

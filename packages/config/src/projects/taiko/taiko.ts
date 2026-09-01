@@ -8,7 +8,7 @@ import {
   UnixTime,
   // formatSeconds,
 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import { formatUnits } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -17,71 +17,119 @@ import {
   DATA_ON_CHAIN,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { PROGRAM_HASHES } from '../../common/programHashes'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('taiko')
 
-const taikoL1ContractAddress = discovery.getContract('TaikoL1').address
+const mainnetInboxAddress = ChainSpecificAddress.address(
+  discovery.getContract('MainnetInbox').address,
+)
+const preShastaInboxAddress = EthereumAddress(
+  '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
+)
+const mainnetInboxActivationTimestamp = UnixTime(
+  discovery.getContractValue<number>('MainnetInbox', 'activationTimestamp'),
+)
+const mainnetInboxSourceUrl =
+  'https://etherscan.io/address/0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f#code'
+const proverWhitelistSourceUrl =
+  'https://etherscan.io/address/0xEa798547d97e345395dA071a0D7ED8144CD612Ae#code'
 
-interface PacayaConfig extends Record<string, ContractValue> {
-  chainId: number
-  maxUnverifiedBatches: number
-  batchRingBufferSize: number
-  maxBatchesToVerify: number
-  blockMaxGasLimit: number
-
-  livenessBondBase: string
-  livenessBondPerBlock: string
-
-  stateRootSyncInternal: number
-  maxAnchorHeightOffset: number
-
-  baseFeeConfig: {
-    adjustmentQuotient: number
-    sharingPctg: number
-    gasIssuancePerSecond: number
-    minGasExcess: number
-    maxGasIssuancePerBlock: number
-  }
-
+interface MainnetInboxConfig extends Record<string, ContractValue> {
+  minBond: number
+  livenessBond: number
   provingWindow: number
-  cooldownWindow: number
-  maxSignalsToReceive: number
-  maxBlocksPerBatch: number
-
-  forkHeights: {
-    ontake: number
-    pacaya: number
-    shasta: number
-    unzen: number
-  }
+  forcedInclusionDelay: number
+  forcedInclusionFeeInGwei: number
+  forcedInclusionFeeDoubleThreshold: number
+  permissionlessInclusionMultiplier: number
 }
 
-const taikoChainConfig = discovery.getContractValue<PacayaConfig>(
-  'TaikoL1',
-  'pacayaConfig',
+interface MultisigConfig extends Record<string, ContractValue> {
+  destinationProposalDuration: number
+}
+
+interface OptimisticGovernanceConfig extends Record<string, ContractValue> {
+  timelockPeriod: number
+}
+
+const mainnetInboxConfig = discovery.getContractValue<MainnetInboxConfig>(
+  'MainnetInbox',
+  'getConfig',
+)
+const forcedInclusionDelay = formatSeconds(
+  mainnetInboxConfig.forcedInclusionDelay,
+)
+const forcedInclusionBaseFee = `${formatUnits(
+  mainnetInboxConfig.forcedInclusionFeeInGwei,
+  'gwei',
+)} ETH`
+const configuredPermissionlessInclusionDelay = formatSeconds(
+  mainnetInboxConfig.forcedInclusionDelay *
+    mainnetInboxConfig.permissionlessInclusionMultiplier,
+  { preventRoundingUp: true },
 )
 
-const livenessBond = utils.formatEther(taikoChainConfig.livenessBondBase)
-
-const inclusionDelay = discovery.getContractValue<PacayaConfig>(
-  'ForcedInclusionStore',
-  'inclusionDelay',
-)
-
-const whitelistedOperatorsCount = discovery.getContractValue<PacayaConfig>(
+const whitelistedOperatorsCount = discovery.getContractValue<number>(
   'PreconfWhitelist',
-  'registeredOperators',
-).length
+  'operatorCount',
+)
+const whitelistedProverCount = discovery.getContractValue<number>(
+  'ProverWhitelist',
+  'proverCount',
+)
 
 const chainId = 167000
+
+const proverPlural = whitelistedProverCount === 1 ? '' : 's'
+const taikoMultisigStats = discovery.getMultisigStats('Taiko Multisig')
+const securityCouncilMembersCount = discovery.getContractValue<number>(
+  'SignerList (Security Council)',
+  'addresslistLength',
+)
+const standardProposalThreshold = discovery.getContractValue<number>(
+  'Multisig',
+  'minApprovals',
+)
+const standardProposalDurationSeconds =
+  discovery.getContractValue<MultisigConfig>(
+    'Multisig',
+    'multisigSettings',
+  ).destinationProposalDuration
+const timelockPeriodSeconds =
+  discovery.getContractValue<OptimisticGovernanceConfig>(
+    'OptimisticTokenVotingPlugin',
+    'governanceSettings',
+  ).timelockPeriod
+const standardProposalDuration = formatSeconds(standardProposalDurationSeconds)
+const timelockPeriod = formatSeconds(timelockPeriodSeconds)
+const standardUpgradeDelay = formatSeconds(
+  standardProposalDurationSeconds + timelockPeriodSeconds,
+)
+const minVetoPercent = discovery.getContractValue<number>(
+  'OptimisticTokenVotingPlugin',
+  'minVetoPercent',
+)
+const emergencyProposalThreshold = discovery.getContractValue<number>(
+  'EmergencyMultisig',
+  'minApprovals',
+)
+const securityCouncilStats = `${emergencyProposalThreshold}/${securityCouncilMembersCount}`
+const taikoTotalSupply = Number(
+  formatUnits(
+    discovery.getContractValue<string>('Taiko Token', 'totalSupply'),
+    discovery.getContractValue<number>('Taiko Token', 'decimals'),
+  ),
+).toLocaleString('en-US')
 
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
@@ -97,14 +145,16 @@ export const taiko: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     // BADGES.Other.BasedSequencing, // NOTE: add this back when preconfs whitelist is removed
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  proofSystem: undefined,
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogIds: [ProjectId('sp1hypercube'), ProjectId('risc0')],
+  },
   display: {
     name: 'Taiko Alethia',
     slug: 'taiko',
     stacks: ['Taiko'],
     description:
-      'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
+      'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko combines a preconfirmation-based sequencing mechanism with a multi-proof system using SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
     links: {
       websites: ['https://taiko.xyz'],
@@ -126,7 +176,7 @@ export const taiko: ScalingProject = {
     },
     liveness: {
       explanation:
-        'Taiko posts blocks of L2 transaction data directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly settled after a cooldown period.',
+        'Taiko posts proposals containing one or more L2 blocks to Ethereum using blobs. For a transaction to be considered final, the proposal containing it has to be proven on L1. State updates happen in two steps: proposals are submitted to MainnetInbox and later proven on L1.',
     },
   },
   config: {
@@ -155,12 +205,23 @@ export const taiko: ScalingProject = {
       {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: EthereumAddress('0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a'),
+        sinceBlock: 19945276, // first proposeBlock on the pre-Shasta inbox
+        untilBlock: 24792175, // Shasta MainnetInbox activation, last BatchProposed @ 24792119
+        inbox: preShastaInboxAddress,
         sequencers: [],
         topics: [
           '0xefe9c6c0b5cbd9c0eed2d1e9c00cfc1a010d6f1aff50f7facd665a639b622b26', // BlockProposedV2
           '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', // BatchProposed
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 24792175, // first Proposed on the Shasta MainnetInbox
+        inbox: mainnetInboxAddress,
+        sequencers: [],
+        topics: [
+          '0x7c4c4523e17533e451df15762a093e0693a2cd8b279fe54c6cd3777ed5771213', // Proposed
         ],
       },
     ],
@@ -172,7 +233,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0xef16e845',
           functionSignature:
             'function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)',
@@ -187,7 +248,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0x648885fb',
           functionSignature:
             'function proposeBlockV2(bytes _params, bytes _txList) returns (tuple meta_)',
@@ -202,7 +263,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0x0c8f4a10',
           functionSignature:
             'function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple[] metaArr_)',
@@ -217,7 +278,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0x47faad14',
           functionSignature:
             'function proposeBatch(bytes _params, bytes _txList) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info_, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_)',
@@ -225,6 +286,7 @@ export const taiko: ScalingProject = {
             '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', //BatchProposed
           ],
           sinceTimestamp: UnixTime(1747823664),
+          untilTimestamp: mainnetInboxActivationTimestamp,
         },
       },
       {
@@ -234,7 +296,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0xc939ac47',
           functionSignature:
             'function proposeBatchWithExpectedLastBlockId(bytes _params, bytes _txList, uint96 _expectedLastBlockId) returns (tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_, uint64 lastBlockId_)',
@@ -242,6 +304,23 @@ export const taiko: ScalingProject = {
             '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', //BatchProposed
           ],
           sinceTimestamp: UnixTime(1756244927),
+          untilTimestamp: mainnetInboxActivationTimestamp,
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: mainnetInboxAddress,
+          selector: '0x9791e644',
+          functionSignature: 'function propose(bytes _lookahead, bytes _data)',
+          topics: [
+            '0x7c4c4523e17533e451df15762a093e0693a2cd8b279fe54c6cd3777ed5771213', // Proposed
+          ],
+          sinceTimestamp: mainnetInboxActivationTimestamp,
         },
       },
       {
@@ -251,7 +330,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0x10d008bd',
           functionSignature:
             'function proveBlock(uint64 _blockId, bytes _input)',
@@ -266,7 +345,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0x440b6e18',
           functionSignature:
             'function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)',
@@ -281,7 +360,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0xc9cc2843',
           functionSignature:
             'function proveBatches(bytes _params, bytes _proof)',
@@ -289,16 +368,34 @@ export const taiko: ScalingProject = {
             '0xc99f03c7db71a9e8c78654b1d2f77378b413cc979a02fa22dc9d39702afa92bc', //BatchesProved
           ],
           sinceTimestamp: UnixTime(1747815696),
+          untilTimestamp: mainnetInboxActivationTimestamp,
         },
       },
       {
         uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
-          address: ChainSpecificAddress.address(taikoL1ContractAddress),
+          address: preShastaInboxAddress,
           selector: '0x0cc62b42',
           functionSignature: 'function verifyBatches(uint64 _length)',
           sinceTimestamp: UnixTime(1747823664),
+          untilTimestamp: mainnetInboxActivationTimestamp,
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: mainnetInboxAddress,
+          selector: '0xea191743',
+          functionSignature: 'function prove(bytes _data, bytes _proof)',
+          topics: [
+            '0xa274dcaff3629ec7d69d144038e97732516ff306fcbf8a2bc9423d106779a2f0', // Proved
+          ],
+          sinceTimestamp: mainnetInboxActivationTimestamp,
         },
       },
     ],
@@ -321,11 +418,10 @@ export const taiko: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description:
-        'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
-      sentiment: 'bad',
-      value: 'Multi-proofs',
-      executionDelay: taikoChainConfig.cooldownWindow,
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      description: `Every proposal range is verified by exactly two proofs chosen from SGX (Geth), SGX (Reth), SP1 and RISC0, with at least one SP1 or RISC0 proof required. Proof submission is gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural}. This can affect liveness but does not allow finalizing invalid state.`,
+      value: 'Validity proofs',
+      executionDelay: 0,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -336,22 +432,27 @@ export const taiko: ScalingProject = {
       sentiment: 'bad',
       value: 'None',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
       description:
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS.description +
-        ' Proofs can only be submitted for blocks sequenced by whitelisted operators. Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the initial proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
+        RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description +
+        ` An inclusion becomes due after ${forcedInclusionDelay}. From then on, a whitelisted proposer cannot publish another proposal without processing up to ten due inclusions.`,
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      description:
+        RISK_VIEW.PROPOSER_CANNOT_WITHDRAW.description +
+        ' Proposing is gated by PreconfWhitelist, which selects a single active operator for the current epoch and has no permissionless fallback.',
     },
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: false,
+        stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
@@ -378,21 +479,74 @@ export const taiko: ScalingProject = {
     categories: [
       {
         title: 'Validity proofs',
-        description: `Taiko uses a multi-proof system to validate state transitions. The system requires two proofs among four available verifiers: SGX (Geth), SGX (Reth), SP1, and RISC0. The use of SGX (Geth) is mandatory, while the other three can be used interchangeably. This means that a block can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together. Batch proposers are required to stake a liveness bond of ${livenessBond} TAIKO, half of which is forfeited if they fail to prove the block within the proving window of ${formatSeconds(taikoChainConfig.provingWindow)}. The multi-proof system allows to detect bugs in the verifiers if they produce different results for the same block. If such a bug is detected, the system gets automatically paused.`,
+        description: readProjectMarkdown(
+          'taiko',
+          'stateValidationValidityProofs',
+          {
+            provingWindow: formatSeconds(mainnetInboxConfig.provingWindow),
+            whitelistedProverCount,
+            proverPlural,
+            minBond: mainnetInboxConfig.minBond,
+            livenessBond: mainnetInboxConfig.livenessBond,
+          },
+        ),
         references: [
           {
-            title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0xB0600e011e02eD35A142B45B506B16A35493c3F5#code',
+            title:
+              'MainnetInbox.sol - Etherscan source code, getConfig function',
+            url: mainnetInboxSourceUrl,
           },
-        ],
-        risks: [
           {
-            category: 'Funds can be stolen if',
-            text: 'a malicious block is proven by compromised SGX instances.',
+            title: 'MainnetInbox.sol - Etherscan source code, prove function',
+            url: mainnetInboxSourceUrl,
+          },
+          {
+            title: 'ProverWhitelist.sol - Etherscan source code',
+            url: proverWhitelistSourceUrl,
+          },
+          {
+            title: 'ZkRequiredVerifier.sol - Etherscan source code',
+            url: 'https://etherscan.io/address/0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec#code',
           },
         ],
+        risks: [],
       },
     ],
+  },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('taiko', 'upgradesAndGovernance', {
+      securityCouncilStats,
+      taikoMultisigStats,
+      standardProposalThreshold,
+      standardProposalDuration,
+      timelockPeriod,
+      minVetoPercent,
+      emergencyProposalThreshold,
+    }),
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${standardProposalThreshold}/${securityCouncilMembersCount} standard · ${emergencyProposalThreshold}/${securityCouncilMembersCount} emergency** — ${securityCouncilMembersCount}-member signer set shared by custom Aragon OSx standard and emergency multisig plugins. Members were appointed by the Taiko team rather than elected and include Taiko Labs employees. Members can appoint EOA agents to act for them.`,
+        'Members public': `**Mapped** — Taiko publishes a [member wallet-to-entity mapping](https://github.com/taikoxyz/dao-ui-mono/blob/main/packages/ui/src/data/security-council-profiles.json). The ${securityCouncilMembersCount} current onchain members are Aragon, Chainbound, Drew Van der Werff, Gattaca, Taiko Labs, Halborn, L2BEAT, Nethermind, and Toni Wahrstätter. Each member wallet is mapped to its voting agent onchain.`,
+        Charter:
+          '**No public charter** — the [DAO values](https://dao-docs.taiko.xyz/understanding-the-dao/taiko-dao-values/) define the council’s security mission and principles, while the [proposal guidelines](https://dao-docs.taiko.xyz/understanding-the-dao/proposal-guidelines/) restrict emergency proposals to protocol-security and integrity matters. Council selection, terms, conflicts, and accountability are not defined in a public charter.',
+        'Can bypass DAO?': `**Yes, for emergencies** — ${emergencyProposalThreshold} Security Council approvals execute an encrypted proposal immediately, with no TAIKO-holder veto or delay. Standard proposals require ${standardProposalThreshold} approvals and remain vetoable. The council controls most core upgrades but no longer has permissions over Treasury funds.`,
+        'DAO can override SC?': `**No** — ${minVetoPercent}% of eligible TAIKO can block a standard proposal but never an emergency one. Token holders cannot create proposals, approve payloads, remove council members, or block emergency proposals; changing the signer list requires another council-approved proposal.`,
+      },
+      upgrades: {
+        'Normal upgrade path': `Security Council member creates a public executable payload → ${standardProposalThreshold} council approvals → **${standardProposalDuration} token-holder veto period** → if less than ${minVetoPercent}% of eligible TAIKO vetoes, **${timelockPeriod} timelock** → permissionless execution of the approved onchain actions.`,
+        'Emergency upgrade path': `**${emergencyProposalThreshold} Security Council approvals, instant** — proposal metadata and actions stay encrypted while approvals are collected. A council member decrypts the payload, which is integrity-checked against the approved ciphertext and executed without a token-holder veto or timelock; its contents become public upon execution or expiry.`,
+        'Exit window': `**${standardUpgradeDelay} standard · 0 emergency** — the standard path provides ${standardProposalDuration} of public vetoing followed by a ${timelockPeriod} timelock. Emergency proposals bypass both.`,
+      },
+      tokenGovernance: {
+        'Governance token': `\`TAIKO\` on Ethereum — ${taikoTotalSupply} total supply, all minted at initialization; the current implementation has no further mint function. One delegated TAIKO equals one veto vote, snapshotted when the proposal is created. The Foundation treasury, DAO controller, canonical ERC20 vault, and zero address are excluded from eligible supply.`,
+        'Voting venue':
+          '[Taiko DAO](https://dao.taiko.xyz/) for onchain vetoes; proposals and temperature checks are discussed on the [Taiko forum](https://community.taiko.xyz/c/formal-governance-proposals-including-temperature-checks-drafts-and-proposals-for-on-chain-voting/9).',
+        'Proposal threshold':
+          '**No TAIKO threshold** — only a Security Council member can create an onchain proposal. Community members can submit forum proposals, but a council member must sponsor the idea and supply the executable payload.',
+        Quorum: `**No approval quorum; ${minVetoPercent}% veto threshold.** Standard proposals pass optimistically unless at least ${minVetoPercent}% of eligible TAIKO at the proposal snapshot vetoes. Unused and undelegated eligible tokens still count in the denominator.`,
+        'Execution model': `**Council-gated optimistic veto + permissionless execution.** The Security Council approves the exact onchain actions. Token holders can only veto; if the threshold is not reached and the ${timelockPeriod} timelock expires, anyone can call \`execute()\`. Emergency proposals skip the veto and delay.`,
+      },
+    },
   },
   technology: {
     dataAvailability: {
@@ -403,37 +557,54 @@ export const taiko: ScalingProject = {
       risks: [],
     },
     operator: {
-      name: 'The system uses whitelist-based rotating operators',
-      description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers (or the fallback operator) can sequence Taiko L2 blocks by proposing them on the TaikoL1 contract.
-        The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} active operators registered.
-        The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the ${formatSeconds(taikoChainConfig.provingWindow)} proving window.
-        Currently, proving a block requires the block proposer to run a SGX instance with Geth, plus either SGX (Reth), SP1, or RISC0 to prove the block.
-        Unless the block proposer proves the block within the proving window, it will forfeit half of its liveness bond to the TaikoL1 smart contract.`,
+      name: 'The system uses whitelist-based sequencing and proving',
+      description: readProjectMarkdown('taiko', 'technologyOperator', {
+        whitelistedOperatorsCount,
+        whitelistedProverCount,
+        proverPlural,
+        minBond: mainnetInboxConfig.minBond,
+        livenessBond: mainnetInboxConfig.livenessBond,
+      }),
       references: [
         {
-          title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
-          url: 'https://etherscan.io/address/0xB0600e011e02eD35A142B45B506B16A35493c3F5#code',
+          title: 'MainnetInbox.sol - Etherscan source code, propose function',
+          url: mainnetInboxSourceUrl,
+        },
+        {
+          title: 'MainnetInbox.sol - Etherscan source code, prove function',
+          url: mainnetInboxSourceUrl,
         },
         {
           title: 'PreconfWhitelist.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0xFD019460881e6EeC632258222393d5821029b2ac#code',
+          url: 'https://etherscan.io/address/0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149#code',
+        },
+        {
+          title: 'ProverWhitelist.sol - Etherscan source code',
+          url: proverWhitelistSourceUrl,
         },
       ],
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      name: 'Users can force any transaction via L1',
-      description: `Users can submit a blob containing a standalone transaction by calling the \`storeForcedInclusion()\` function on the \`ForcedInclusionStore\` contract. 
-        This forced transaction mechanism allows users to submit a transaction without running a prover.
-        This mechanism ensures that at least one forced transaction from the queue is processed every ${inclusionDelay} batches. However, if many transactions (k) are added to the queue, an individual transaction could experience a worst-case delay of up to k * ${inclusionDelay} batches while waiting for its turn. Also, right now there is no mechanism that forces L2 Sequencer to include transactions from the queue in an L2 block, since L1 batches submission is permissioned behind a whitelist.`,
+      ...FORCE_TRANSACTIONS.ENQUEUE,
+      description: readProjectMarkdown('taiko', 'technologyForceTransactions', {
+        forcedInclusionDelay,
+        forcedInclusionBaseFee,
+        forcedInclusionFeeDoubleThreshold:
+          mainnetInboxConfig.forcedInclusionFeeDoubleThreshold,
+        configuredPermissionlessInclusionDelay,
+      }),
       references: [
         {
           title:
-            'ForcedInclusionStore.sol - Etherscan source code, storeForcedInclusion function',
-          url: 'https://etherscan.io/address/0xcdb25e201ad3fdcfe16730a6ca2cc0b1ce2137a2#code',
+            'MainnetInbox.sol - Etherscan source code, saveForcedInclusion function',
+          url: mainnetInboxSourceUrl,
+        },
+        {
+          title: 'MainnetInbox.sol - Etherscan source code, propose function',
+          url: mainnetInboxSourceUrl,
         },
       ],
-      risks: [...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks],
     },
     exitMechanisms: [
       // TODO: double check exit mechanism
@@ -449,9 +620,27 @@ export const taiko: ScalingProject = {
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    programHashes: getTaikoVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
+    {
+      title: 'Unzen upgrade: validity rollup',
+      url: 'https://etherscan.io/tx/0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7',
+      date: '2026-08-03T00:00:00Z',
+      description:
+        'Every proven proposal range now requires at least one SP1 or RISC0 validity proof.',
+      type: 'general',
+    },
+    {
+      title: 'Proof system exploit',
+      url: 'https://x.com/taikoxyz/status/2068857506718515320',
+      date: '2026-06-22T00:00:00.00Z',
+      description:
+        'An attacker exploits a vulnerability in the SGX proof system and steals USD ~1.7M.',
+      type: 'incident',
+    },
     {
       title: 'Preconfs introduction',
       url: 'https://taiko.mirror.xyz/rbgD_KM06QkDe1t0Gw1wI_MLvwobTS1PqEIfstZRo48',
@@ -507,4 +696,25 @@ export const taiko: ScalingProject = {
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getTaikoVKeys(): string[] {
+  const sp1Programs = discovery.getContractValue<string[]>(
+    'TaikoSP1Verifier',
+    'trustedPrograms',
+  )
+  return sp1Programs.concat(
+    discovery.getContractValue<string[]>('TaikoRisc0Verifier', 'trustedImages'),
+  )
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const result: ChainSpecificAddress[] = getSP1Verifiers(discovery)
+  result.push(
+    ...discovery
+      .getContracts()
+      .filter((contract) => contract.name === 'RiscZeroGroth16Verifier')
+      .map((contract) => contract.address),
+  )
+  return result
 }

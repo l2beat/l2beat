@@ -6,8 +6,9 @@ import {
 } from '@l2beat/shared'
 import {
   assert,
-  ChainSpecificAddress,
+  type ChainSpecificAddress,
   EthereumAddress,
+  notUndefined,
   type ProjectId,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -139,7 +140,6 @@ describe('getProjects', () => {
       // It can be squashed, but it's more readable this way
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
-          !project.isUpcoming &&
           !project.reviewStatus &&
           !project.archivedAt &&
           // It makes no sense to list them on the DA-BEAT
@@ -153,7 +153,14 @@ describe('getProjects', () => {
           asArray(project.dataAvailability).every((da) => {
             const bridgeProjId = da.bridge.projectId
             if (bridgeProjId === undefined) return true
-            daBridges.map((x) => x.id).includes(bridgeProjId)
+            return daBridges.map((x) => x.id).includes(bridgeProjId)
+          }) &&
+          // an L2 can be the DA layer of an L3, and scaling projects are not
+          // listed on the DA-BEAT
+          asArray(project.dataAvailability).every((da) => {
+            const layerProjId = da.layer.projectId
+            if (layerProjId === undefined) return true
+            return daLayers.map((x) => x.id).includes(layerProjId)
           }) &&
           // Will be listed on the DA-BEAT automatically
           !project.customDa,
@@ -172,6 +179,22 @@ describe('getProjects', () => {
 
       // Array comparison to have a better error message with actual names
       expect(projectsWithoutDaBeatEntry).toEqual([])
+    })
+
+    it('each referenced DA bridge project exists', () => {
+      const daBridgeIds = projects
+        .filter((x) => x.daBridge !== undefined)
+        .map((x) => x.id)
+
+      const dangling = [...layer2s, ...layer3s].flatMap((project) =>
+        asArray(project.dataAvailability)
+          .map((da) => da.bridge.projectId)
+          .filter(notUndefined)
+          .filter((bridgeProjId) => !daBridgeIds.includes(bridgeProjId))
+          .map((bridgeProjId) => `${project.id} -> ${bridgeProjId}`),
+      )
+
+      expect(dangling).toEqual([])
     })
   })
 
@@ -215,6 +238,24 @@ describe('getProjects', () => {
 
   describe('zk catalog', async () => {
     const usageMap = getUsageMap(projects)
+    const currentZkCatalogsByTvsProject = new Map<ProjectId, ProjectId[]>()
+
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+
+      for (const tvsProject of project.zkCatalogInfo.projectsForTvs ?? []) {
+        if (tvsProject.untilTimestamp) continue
+
+        const zkCatalogs = currentZkCatalogsByTvsProject.get(
+          tvsProject.projectId,
+        )
+        if (zkCatalogs) {
+          zkCatalogs.push(project.id)
+        } else {
+          currentZkCatalogsByTvsProject.set(tvsProject.projectId, [project.id])
+        }
+      }
+    }
 
     for (const project of projects) {
       describe(project.id, () => {
@@ -228,11 +269,24 @@ describe('getProjects', () => {
         const usedInVerifiers = uniq(
           project.zkCatalogInfo.verifierHashes.flatMap((v) =>
             v.knownDeployments.flatMap(
-              (d) =>
-                d.overrideUsedIn ?? usageMap.get(`${d.chain}-${d.address}`),
+              (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
             ),
           ),
-        ).filter((p) => p !== undefined)
+        ).filter((p): p is ProjectId => {
+          if (p === undefined) return false
+
+          // Archived projects can keep historical verifier deployments, but
+          // they do not have to be listed as current TVS projects. Shared
+          // verifier deployments can also be attributed to another current
+          // zk catalog entry.
+          if (projectsById.get(p)?.archivedAt !== undefined) return false
+
+          const currentZkCatalogs = currentZkCatalogsByTvsProject.get(p)
+          return (
+            currentZkCatalogs === undefined ||
+            currentZkCatalogs.includes(project.id)
+          )
+        })
         const usedInVerifiersSet = new Set(usedInVerifiers)
 
         for (const usedIn of usedInVerifiers) {
@@ -259,6 +313,93 @@ describe('getProjects', () => {
             expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
           })
         }
+      })
+    }
+  })
+
+  describe('every proofSystem zkCatalogIds entry references a zk catalog project', () => {
+    for (const project of projects) {
+      const zkCatalogIds = project.scalingInfo?.proofSystem?.zkCatalogIds
+      if (!zkCatalogIds || zkCatalogIds.length === 0) continue
+
+      it(project.id, () => {
+        assert(
+          new Set(zkCatalogIds).size === zkCatalogIds.length,
+          `${project.id} proofSystem.zkCatalogIds has duplicates`,
+        )
+        for (const zkCatalogId of zkCatalogIds) {
+          assert(
+            projectsById.get(zkCatalogId)?.zkCatalogInfo !== undefined,
+            `${project.id} proofSystem references unknown zk catalog project: ${zkCatalogId}`,
+          )
+        }
+      })
+    }
+  })
+
+  describe('scaling project zkVerifiers are configured in zk catalog', () => {
+    const zkCatalogAddresses = new Set<ChainSpecificAddress>()
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+      for (const verifierHash of project.zkCatalogInfo.verifierHashes) {
+        for (const deployment of verifierHash.knownDeployments) {
+          zkCatalogAddresses.add(deployment.address)
+        }
+      }
+    }
+
+    for (const project of projects) {
+      if (!project.scalingInfo || !project.contracts?.zkVerifiers) continue
+      for (const verifier of project.contracts.zkVerifiers) {
+        it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
+          expect(zkCatalogAddresses.has(verifier)).toEqual(true)
+        })
+      }
+    }
+  })
+
+  describe('zk catalog projects are archived when all their projects are archived', () => {
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+
+      const tvsProjects = project.zkCatalogInfo.projectsForTvs ?? []
+      if (tvsProjects.length === 0) continue
+
+      const allTvsProjectsArchived = tvsProjects.every((tvsProject) => {
+        const tvsProjectConfig = projectsById.get(tvsProject.projectId)
+        return tvsProjectConfig?.archivedAt !== undefined
+      })
+
+      if (!allTvsProjectsArchived) continue
+
+      it(`${project.id} should be archived because all projects using it are archived`, () => {
+        expect(project.archivedAt).not.toEqual(undefined)
+      })
+    }
+  })
+
+  describe('externalDependencies', () => {
+    for (const project of projects) {
+      if (!project.externalDependencies) continue
+
+      for (const dependency of project.externalDependencies) {
+        if (dependency.type !== 'tracked') continue
+
+        it(`${project.id} tracked dependency ${dependency.projectId} exists`, () => {
+          expect(projectsById.has(dependency.projectId)).toEqual(true)
+        })
+      }
+    }
+  })
+
+  describe('privacy projects', () => {
+    for (const project of projects) {
+      if (!project.privacyInfo) continue
+
+      it(`${project.id} has at most one zk catalog trusted setup entry`, () => {
+        expect(
+          project.zkCatalogInfo?.trustedSetups.length ?? 0,
+        ).toBeLessThanOrEqual(1)
       })
     }
   })
@@ -374,7 +515,7 @@ describe('getProjects', () => {
     it('every name is equal to projectId', () => {
       // in many places chain name and project id are used interchangeably so we need them to be the same
       // do not add new projects here!
-      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7']
+      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7', 'apexomni', 'apexpro']
 
       for (const chain of chains) {
         if (KNOWN_EXCEPTIONS.includes(chain.name)) continue
@@ -653,6 +794,26 @@ describe('getProjects', () => {
       }
     })
 
+    // The backend compares these raw strings against tx to/from addresses,
+    // so a chain-prefixed address (e.g. 'eth:0x...') silently matches nothing
+    describe('every ethereum inbox and sequencer is a plain unprefixed address', () => {
+      for (const project of projects) {
+        if (project.daTrackingConfig) {
+          it(project.id, () => {
+            assert(project.daTrackingConfig) // type issue
+            for (const config of project.daTrackingConfig) {
+              if (config.type === 'ethereum') {
+                expect(() => EthereumAddress(config.inbox)).not.toThrow()
+                for (const sequencer of config.sequencers ?? []) {
+                  expect(() => EthereumAddress(sequencer)).not.toThrow()
+                }
+              }
+            }
+          })
+        }
+      }
+    })
+
     describe('every appId is unique for Avail projects', () => {
       const appIds = new Map<string, string>()
       for (const project of projects) {
@@ -698,11 +859,7 @@ describe('getProjects', () => {
 
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
-      return (
-        p.isScaling === true &&
-        p.archivedAt === undefined &&
-        p.isUpcoming !== true
-      )
+      return p.scalingInfo && p.archivedAt === undefined
     }
 
     const filteredProjects = projects.filter(
@@ -756,10 +913,10 @@ describe('getProjects', () => {
 
 // This is simpler version of getContractUtils that we have in FE. It's used only for testing.
 function getUsageMap(projects: BaseProject[]) {
-  const usageMap = new Map<`${string}-${EthereumAddress}`, ProjectId[]>()
+  const usageMap = new Map<`${ChainSpecificAddress}`, ProjectId[]>()
 
-  function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
-    const key = `${chain}-${address}` as const
+  function addUsage(address: ChainSpecificAddress, usage: ProjectId) {
+    const key = `${address}` as const
     const uses = usageMap.get(key)
     if (!uses) {
       usageMap.set(key, [usage])
@@ -771,19 +928,17 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!(project.isScaling || project.daBridge) || !project.contracts) continue
+    if (
+      !(project.scalingInfo || project.daBridge || project.privacyInfo) ||
+      !project.contracts
+    )
+      continue
 
-    for (const [chain, contracts] of Object.entries(
-      project.contracts.addresses,
-    )) {
+    for (const [, contracts] of Object.entries(project.contracts.addresses)) {
       for (const contract of contracts) {
-        addUsage(
-          chain,
-          ChainSpecificAddress.address(contract.address),
-          project.id,
-        )
+        addUsage(contract.address, project.id)
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+          addUsage(impl, project.id)
         }
       }
     }

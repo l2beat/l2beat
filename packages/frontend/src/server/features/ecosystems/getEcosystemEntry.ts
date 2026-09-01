@@ -4,7 +4,7 @@ import type {
   ProjectCustomColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -17,21 +17,16 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
+import { getActivityLatestUops } from '../layer2s/activity/getActivityLatestTps'
+import { getApprovedOngoingAnomalies } from '../layer2s/liveness/getApprovedOngoingAnomalies'
+import {
+  getL2SummaryEntry,
+  type L2SummaryEntry,
+} from '../layer2s/summary/getL2SummaryEntries'
+import type { ProjectSevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
+import { getTvsTableData } from '../layer2s/tvs/getTvsTableData'
+import { getTvsSyncWarning } from '../layer2s/tvs/utils/syncStatus'
 import { getProjectsChangeReport } from '../projects-change-report/getProjectsChangeReport'
-import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
-import { getApprovedOngoingAnomalies } from '../scaling/liveness/getApprovedOngoingAnomalies'
-import {
-  getScalingSummaryEntry,
-  type ScalingSummaryEntry,
-} from '../scaling/summary/getScalingSummaryEntries'
-import {
-  get7dTvsBreakdown,
-  type ProjectSevenDayTvsBreakdown,
-} from '../scaling/tvs/get7dTvsBreakdown'
-import {
-  getScalingUpcomingEntry,
-  type ScalingUpcomingEntry,
-} from '../scaling/upcoming/getScalingUpcomingEntries'
 import { type BlobsData, getBlobsData } from './getBlobsData'
 import { getEcosystemLogo } from './getEcosystemLogo'
 import type { EcosystemProjectsCountData } from './getEcosystemProjectsChartData'
@@ -64,9 +59,8 @@ export interface EcosystemEntry {
   badges: BadgeWithParams[]
   colors: ProjectCustomColors
   liveProjects: EcosystemProjectEntry[]
-  upcomingProjects: ScalingUpcomingEntry[]
   projectsChartData: EcosystemProjectsCountData
-  allScalingProjects: {
+  allL2Projects: {
     tvs: {
       withRwaRestricted: number
       withoutRwaRestricted: number
@@ -110,12 +104,16 @@ export interface EcosystemEntry {
   ecosystemMilestones: EcosystemMilestone[]
 }
 
-export interface EcosystemProjectEntry extends ScalingSummaryEntry {
+export interface EcosystemProjectEntry extends L2SummaryEntry {
   ecosystemInfo: ProjectEcosystemInfo
   gasTokens?: string[]
   tvsData: {
     withRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
     withoutRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
+  }
+  tvsSyncWarning: {
+    withoutRwaRestricted: string | undefined
+    withRwaRestricted: string | undefined
   }
 }
 
@@ -133,10 +131,10 @@ export async function getEcosystemEntry(
     return undefined
   }
 
-  const [allScalingProjects, projects, zkCatalogProjects] = await Promise.all([
+  const [allL2Projects, projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      where: ['scalingInfo'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: [
@@ -154,11 +152,10 @@ export async function getEcosystemEntry(
         'chainConfig',
         'milestones',
         'archivedAt',
-        'isUpcoming',
         'hasTestnet',
         'contracts',
       ],
-      where: ['isScaling'],
+      where: ['scalingInfo'],
     }),
     ps.getProjects({
       select: ['zkCatalogInfo'],
@@ -169,10 +166,9 @@ export async function getEcosystemEntry(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
 
-  const upcomingProjects = ecosystemProjects.filter((p) => p.isUpcoming)
   const archivedProjects = ecosystemProjects.filter((p) => !!p.archivedAt)
   const liveProjects = ecosystemProjects
-    .filter((p) => !p.isUpcoming && !p.archivedAt)
+    .filter((p) => !p.archivedAt)
     .toSorted((a, b) => a.id.localeCompare(b.id))
 
   const [
@@ -185,28 +181,30 @@ export async function getEcosystemEntry(
     token,
   ] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    get7dTvsBreakdown({ type: 'layer2', excludeRwaRestrictedTokens: false }),
-    getActivityLatestUops(allScalingProjects),
+    getTvsTableData({ type: 'layer2' }),
+    getTvsTableData({ type: 'layer2', excludeRwaRestrictedTokens: false }),
+    getActivityLatestUops(allL2Projects),
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
-    helpers.activity.chart.prefetch({
-      range: optionToRange('1y', { offset: -UnixTime.DAY }),
-      filter: {
-        type: 'projects',
-        projectIds: liveProjects.map((project) => project.id),
-      },
-    }),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.chart.queryOptions({
+        range: optionToRange('1y'),
+        filter: {
+          type: 'projects',
+          projectIds: liveProjects.map((project) => project.id),
+        },
+      }),
+    ),
   ])
 
   const hasRwaRestrictedTvs = liveProjects.some(
     (project) =>
-      (tvsWithRwasRestricted.projects[project.id]?.breakdown.rwaRestricted ??
-        0) > 0,
+      (tvsWithRwasRestricted.projects[project.id.toString()]?.breakdown
+        .rwaRestricted ?? 0) > 0,
   )
 
-  const allScalingProjectsUops = allScalingProjects.reduce(
+  const allL2ProjectsUops = allL2Projects.reduce(
     (acc, curr) =>
       acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
@@ -227,12 +225,12 @@ export async function getEcosystemEntry(
       ecosystemUpdate: getEcosystemUpdateLink(ecosystem),
     },
     hasRwaRestrictedTvs,
-    allScalingProjects: {
+    allL2Projects: {
       tvs: {
         withoutRwaRestricted: tvs.total,
         withRwaRestricted: tvsWithRwasRestricted.total,
       },
-      uops: allScalingProjectsUops,
+      uops: allL2ProjectsUops,
     },
     tvsByStage: {
       withoutRwaRestricted: getTvsByStage(liveProjects, tvs),
@@ -248,7 +246,7 @@ export async function getEcosystemEntry(
     token,
     projectsChartData: getEcosystemProjectsChartData(
       [...archivedProjects, ...liveProjects],
-      allScalingProjects.length,
+      allL2Projects.length,
       tvs.projects,
       projectsActivity,
       ecosystem.ecosystemConfig.startedAt,
@@ -258,7 +256,7 @@ export async function getEcosystemEntry(
       secondBanner: ecosystem.ecosystemConfig.secondBanner,
     },
     liveProjects: liveProjects.map((project) => {
-      const entry = getScalingSummaryEntry(
+      const entry = getL2SummaryEntry(
         project,
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id.toString()],
@@ -267,6 +265,9 @@ export async function getEcosystemEntry(
         zkCatalogProjects,
       )
 
+      const tvsWithoutRwaRestricted = tvs.projects[project.id.toString()]
+      const tvsWithRwaRestricted =
+        tvsWithRwasRestricted.projects[project.id.toString()]
       const result: EcosystemProjectEntry = {
         ...entry,
         gasTokens: project.chainConfig?.gasTokens,
@@ -281,16 +282,18 @@ export async function getEcosystemEntry(
           ) ?? []),
         ]),
         tvsData: {
-          withoutRwaRestricted: tvs.projects[project.id.toString()],
-          withRwaRestricted:
-            tvsWithRwasRestricted.projects[project.id.toString()],
+          withoutRwaRestricted: tvsWithoutRwaRestricted,
+          withRwaRestricted: tvsWithRwaRestricted,
+        },
+        tvsSyncWarning: {
+          withoutRwaRestricted: getTvsSyncWarning(
+            tvsWithoutRwaRestricted?.syncState,
+          ),
+          withRwaRestricted: getTvsSyncWarning(tvsWithRwaRestricted?.syncState),
         },
       }
       return result
     }),
-    upcomingProjects: upcomingProjects.map((p) =>
-      getScalingUpcomingEntry(p, zkCatalogProjects),
-    ),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
     images: {

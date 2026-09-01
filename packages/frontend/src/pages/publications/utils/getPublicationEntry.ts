@@ -46,6 +46,33 @@ export function getPublicationEntryFromGovernance(
   }
 }
 
+export function getPublicationEntryFromOtherPublication(
+  otherPublication: CollectionEntry<'other-publications'>,
+): PublicationEntry {
+  const thumbnail = getImageParams(
+    `/meta-images/publications/${otherPublication.id}.png`,
+  )
+  if (!thumbnail) {
+    throw new Error(`Thumbnail not found for ${otherPublication.id}`)
+  }
+  return {
+    id: otherPublication.id,
+    title: otherPublication.data.title,
+    thumbnail,
+    shortTitle: otherPublication.data.shortTitle,
+    description: otherPublication.data.description,
+    publishedOn: UnixTime.fromDate(otherPublication.data.publishedOn),
+    url: `/publications/${otherPublication.id}`,
+    tag: otherPublication.data.tag,
+    filterable: [
+      {
+        id: 'contentCategory',
+        value: otherPublication.data.tag,
+      },
+    ],
+  }
+}
+
 export function getPublicationEntryFromMonthlyUpdate(
   monthlyUpdate: CollectionEntry<'monthly-updates'>,
 ): PublicationEntry {

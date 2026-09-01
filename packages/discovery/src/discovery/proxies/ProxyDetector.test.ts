@@ -8,7 +8,7 @@ describe(ProxyDetector.name, () => {
   const address = ChainSpecificAddress.random()
   const implementation = ChainSpecificAddress.random()
   const provider = mockObject<IProvider>({
-    getBytecode: mockFn().returns(Bytes.fromHex('0xdeadbeef')),
+    getBytecode: mockFn().returns(Bytes.fromHex('0xdeadbeeff4')),
     getDeployment: mockFn().returns(undefined),
   })
 
@@ -29,10 +29,10 @@ describe(ProxyDetector.name, () => {
   }
 
   it('detects eoa when no code', async () => {
-    const detector = new ProxyDetector([
-      async () => undefined,
-      async () => undefined,
-    ])
+    const detector = new ProxyDetector(
+      [async () => undefined, async () => undefined],
+      [],
+    )
 
     const provider = mockObject<IProvider>({
       getBytecode: mockFn().returns(Bytes.EMPTY),
@@ -49,10 +49,10 @@ describe(ProxyDetector.name, () => {
   })
 
   it('detects EIP7702 eoa', async () => {
-    const detector = new ProxyDetector([
-      async () => undefined,
-      async () => undefined,
-    ])
+    const detector = new ProxyDetector(
+      [async () => undefined, async () => undefined],
+      [],
+    )
 
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
@@ -78,10 +78,10 @@ describe(ProxyDetector.name, () => {
   })
 
   it('detects no proxy as immutable', async () => {
-    const detector = new ProxyDetector([
-      async () => undefined,
-      async () => undefined,
-    ])
+    const detector = new ProxyDetector(
+      [async () => undefined, async () => undefined],
+      [],
+    )
     const result = await detector.detectProxy(provider, address)
 
     expect(result).toEqual({
@@ -93,12 +93,10 @@ describe(ProxyDetector.name, () => {
   })
 
   it('detects the first proxy', async () => {
-    const detector = new ProxyDetector([
-      async () => undefined,
-      async () => FIRST_DETAILS,
-      async () => undefined,
-      async () => SECOND_DETAILS,
-    ])
+    const detector = new ProxyDetector(
+      [async () => undefined, async () => FIRST_DETAILS],
+      [async () => undefined, async () => SECOND_DETAILS],
+    )
 
     const result = await detector.detectProxy(provider, address)
 
@@ -110,7 +108,7 @@ describe(ProxyDetector.name, () => {
   })
 
   it('detects a manual proxy', async () => {
-    const detector = new ProxyDetector([], {
+    const detector = new ProxyDetector([], [], {
       ...MANUAL_DETECTORS,
       'call implementation proxy': async () => FIRST_DETAILS,
     })

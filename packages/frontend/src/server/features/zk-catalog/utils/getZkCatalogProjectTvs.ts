@@ -3,12 +3,12 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { getTvsTargetTimestamp } from '../../scaling/tvs/utils/getTvsTargetTimestamp'
+import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
+import { getTvsTargetTimestamp } from '../../layer2s/tvs/utils/getTvsTargetTimestamp'
 
 export function getZkCatalogProjectTvs(
   project: Project<'zkCatalogInfo'>,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ) {
   const target = getTvsTargetTimestamp()
@@ -38,6 +38,7 @@ export function getZkCatalogProjectTvs(
     tvs: projectTvs,
     numberOfProjects: projectsForTodayTvs.length,
     change: calculatePercentageChange(projectTvs, tvs7d),
+    changePeriod: '7D' as const,
   }
 }
 
@@ -64,7 +65,7 @@ function getLiveProjectsAtTimestamp(
 
 function getProjectsForTvs(
   projectIds: ProjectId[],
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ) {
   return uniq(
     projectIds.flatMap((tp) => {

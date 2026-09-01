@@ -36,7 +36,7 @@ describe('interopTransaction', () => {
           type: 118n,
           input: undefined,
           value: undefined,
-          to: null,
+          to: undefined,
           calls: [
             {
               to: EthereumAddress(ADDRESS_3),
@@ -124,7 +124,7 @@ describe('interopTransaction', () => {
           type: 118n,
           input: '0x1234',
           value: undefined,
-          to: null,
+          to: undefined,
           calls: [
             {
               to: EthereumAddress(ADDRESS_3),
@@ -154,7 +154,7 @@ describe('interopTransaction', () => {
               type: 118n,
               input: undefined,
               value: undefined,
-              to: null,
+              to: undefined,
               calls: [
                 {
                   to: EthereumAddress(ADDRESS_3),

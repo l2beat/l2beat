@@ -7,11 +7,30 @@
     "eth:0x2901dA832a4D0297FF0691100A8E496626cc626D"
   ],
   "overrides": {
+    // OPContractsManagerV2 (shared Karst upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
     "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {
-        "proposerFromDGF": { "permissions": [{ "type": "propose" }] },
-        "challengerFromDGF": { "permissions": [{ "type": "challenge" }] }
+        "proposerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challengerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     }
   }

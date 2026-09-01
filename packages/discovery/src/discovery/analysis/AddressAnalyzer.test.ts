@@ -1,7 +1,6 @@
 import {
   Bytes,
   ChainSpecificAddress,
-  EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -86,6 +85,7 @@ describe(AddressAnalyzer.name, () => {
       const implementation = ChainSpecificAddress.random()
       const admin = ChainSpecificAddress.random()
       const owner = ChainSpecificAddress.random()
+      const deployer = ChainSpecificAddress.random()
 
       const sources: ContractSources = {
         name: 'Test',
@@ -102,6 +102,7 @@ describe(AddressAnalyzer.name, () => {
             address: address,
             source: {
               name: 'Proxy1',
+              rootFile: 'Foo.sol',
               isVerified: true,
               abi: ['function foo()'],
               solidityVersion: '0.8.0',
@@ -117,6 +118,7 @@ describe(AddressAnalyzer.name, () => {
             address: implementation,
             source: {
               name: 'Impl1',
+              rootFile: 'Bar.sol',
               isVerified: true,
               abi: ['function bar()'],
               solidityVersion: '0.8.0',
@@ -145,7 +147,7 @@ describe(AddressAnalyzer.name, () => {
             deployment: {
               timestamp: UnixTime(1234),
               blockNumber: 9876,
-              deployer: EthereumAddress.random(),
+              deployer,
               transactionHash: Hash256.random(),
             },
             addresses: [],
@@ -174,6 +176,7 @@ describe(AddressAnalyzer.name, () => {
         address,
         name: 'Test',
         isVerified: true,
+        deployerAddress: deployer,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
@@ -201,6 +204,7 @@ describe(AddressAnalyzer.name, () => {
       const implementation = ChainSpecificAddress.random()
       const admin = ChainSpecificAddress.random()
       const owner = ChainSpecificAddress.random()
+      const deployer = ChainSpecificAddress.random()
 
       const sources: ContractSources = {
         name: 'Test',
@@ -216,6 +220,7 @@ describe(AddressAnalyzer.name, () => {
             address,
             source: {
               name: 'Test',
+              rootFile: 'Foo.sol',
               isVerified: true,
               abi: ['function foo()'],
               solidityVersion: '0.8.0',
@@ -231,6 +236,7 @@ describe(AddressAnalyzer.name, () => {
             address: implementation,
             source: {
               name: 'Test2',
+              rootFile: '',
               isVerified: false,
               abi: [],
               constructorArguments: '',
@@ -259,7 +265,7 @@ describe(AddressAnalyzer.name, () => {
             deployment: {
               timestamp: UnixTime(1234),
               blockNumber: 9876,
-              deployer: EthereumAddress.random(),
+              deployer,
               transactionHash: Hash256.random(),
             },
             addresses: [],
@@ -288,6 +294,7 @@ describe(AddressAnalyzer.name, () => {
         name: 'Test',
         address,
         isVerified: false,
+        deployerAddress: deployer,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
@@ -331,6 +338,7 @@ describe(AddressAnalyzer.name, () => {
             address,
             source: {
               name: 'Test',
+              rootFile: 'Foo.sol',
               isVerified: true,
               abi: ['function foo()'],
               solidityVersion: '0.8.0',
@@ -346,6 +354,7 @@ describe(AddressAnalyzer.name, () => {
             address,
             source: {
               name: 'Test',
+              rootFile: 'Bar.sol',
               isVerified: true,
               abi: ['function bar()'],
               solidityVersion: '0.8.0',

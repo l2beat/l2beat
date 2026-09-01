@@ -6,6 +6,7 @@ export const avalanche: BaseProject = {
   slug: 'avalanche',
   name: 'Avalanche',
   shortName: undefined,
+  aliases: ['AVAX'],
   addedAt: UnixTime(1662628329),
   statuses: {
     yellowWarning: undefined,
@@ -21,6 +22,8 @@ export const avalanche: BaseProject = {
     badges: [],
   },
   interopConfig: {
+    description:
+      'Canonical EOA-bridge between Ethereum and Avalanche without any onchain validation logic.',
     durationSplit: {
       lockAndMint: [
         {

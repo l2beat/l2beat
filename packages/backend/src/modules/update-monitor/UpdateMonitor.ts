@@ -6,12 +6,14 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
+  entriesForDiff,
   generateStructureHash,
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import shuffle from 'lodash/shuffle'
 import type { Clock } from '../../tools/Clock'
+import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { WorkerPool } from './createWorkers'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
@@ -86,13 +88,16 @@ export class UpdateMonitor {
         id: project,
         name: `Update project ${project}`,
       },
-      job: async () => {
-        await this.updateProject(this.runner, project, timestamp)
-        await this.updateDiffer?.runForProject(project, timestamp)
-      },
+      job: () => this.updateProject(this.runner, project, timestamp),
     }))
 
     const results = await this.workerPool.runInPool(tasks)
+    const failedProjects = results.errors.map((error) => error.identity.id)
+
+    await this.updateDiffer?.run(
+      enabledProjects.filter((project) => !failedProjects.includes(project)),
+      timestamp,
+    )
 
     const updateEnd = UnixTime.now()
     const updateDuration = updateEnd - updateStart
@@ -108,7 +113,6 @@ export class UpdateMonitor {
       failedCount: results.errors.length,
       totalCount: tasks.length,
     })
-    const failedProjects = results.errors.map((error) => error.identity.id)
 
     const reminders = this.generateDailyReminder()
     await this.updateNotifier.sendDailyReminder(
@@ -139,7 +143,10 @@ export class UpdateMonitor {
 
       const committed = this.configReader.readDiscovery(projectConfig.name)
 
-      const diff = diffDiscovery(committed.entries, discovery.entries)
+      const diff = diffDiscovery(
+        entriesForDiff(committed),
+        entriesForDiff(discovery),
+      )
       const severityCounts = countSeverities(diff)
 
       if (diff.length > 0) {
@@ -151,6 +158,18 @@ export class UpdateMonitor {
   }
 
   async updateProject(
+    runner: DiscoveryRunner,
+    project: string,
+    timestamp: UnixTime,
+  ) {
+    return await withCoreFeatureRpcMetricsContext(
+      'updateMonitor.discovery',
+      { project },
+      () => this._updateProject(runner, project, timestamp),
+    )
+  }
+
+  private async _updateProject(
     runner: DiscoveryRunner,
     project: string,
     timestamp: UnixTime,
@@ -175,9 +194,8 @@ export class UpdateMonitor {
 
       const runResult = await runner.run(
         projectConfig,
-        timestamp,
+        UnixTime.now(),
         this.logger,
-        'useCurrentTimestamp', // for dependent discoveries
       )
 
       // read previous state (committed vs DB) and prime flat sources if needed
@@ -210,8 +228,8 @@ export class UpdateMonitor {
       const sanitizedDiscovery = sanitizeDiscoveryOutput(discovery)
 
       const diff = diffDiscovery(
-        prevSanitizedDiscovery.entries,
-        sanitizedDiscovery.entries,
+        entriesForDiff(prevSanitizedDiscovery),
+        entriesForDiff(sanitizedDiscovery),
         unverifiedEntries,
       )
 
@@ -300,7 +318,6 @@ export class UpdateMonitor {
       projectConfig,
       previousDiscovery.timestamp,
       this.logger,
-      previousDiscovery.dependentDiscoveries,
     )
     const { discovery, flatSources } = runResult
 

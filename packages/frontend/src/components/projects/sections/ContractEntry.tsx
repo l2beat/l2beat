@@ -16,6 +16,7 @@ import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
 import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
+import { GroupedActorAddresses } from './permissions/GroupedActorAddresses'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
@@ -25,6 +26,7 @@ import { ReferenceList } from './ReferenceList'
 
 export interface TechnologyContract {
   id: string
+  additionalAnchorIds?: string[]
   name: string
   addresses: TechnologyContractAddress[]
   admins: TechnologyContractAddress[]
@@ -39,6 +41,7 @@ export interface TechnologyContract {
   impactfulChange: boolean
   pastUpgrades?: PastUpgradesData
   escrow?: TechnologyContractEscrow
+  groupCount?: number
 }
 
 export interface TechnologyContractAddress {
@@ -46,6 +49,7 @@ export interface TechnologyContractAddress {
   href: string
   address: string
   verificationStatus: VerificationStatus
+  anchorId?: string
 }
 
 export interface TechnologyContractEscrow {
@@ -62,9 +66,14 @@ interface TechnologyContractEscrowToken {
 interface ContractEntryProps {
   contract: TechnologyContract
   className?: string
+  expandableAddresses?: boolean
 }
 
-export function ContractEntry({ contract, className }: ContractEntryProps) {
+export function ContractEntry({
+  contract,
+  className,
+  expandableAddresses = false,
+}: ContractEntryProps) {
   const sharedProxies = contract.usedInProjects?.filter(
     (c) => c.type === 'proxy',
   )
@@ -88,39 +97,60 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
           <div className="flex flex-wrap items-center gap-x-2 text-paragraph-15 md:text-paragraph-16">
             <strong
               id={contract.id}
-              className="word-break-word scroll-mt-14 md:scroll-mt-10"
+              className="word-break-word relative scroll-mt-14 md:scroll-mt-10"
             >
+              {contract.additionalAnchorIds?.map((anchorId) => (
+                <span
+                  key={anchorId}
+                  id={anchorId}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute top-0 left-0 size-px scroll-mt-14 md:scroll-mt-10"
+                />
+              ))}
               {contract.name}
             </strong>
+            {contract.groupCount && contract.groupCount > 1 ? (
+              <Badge type="gray" size="small">
+                {contract.groupCount} instances
+              </Badge>
+            ) : null}
             {contract.escrow && (
               <EscrowBadge isCustom={contract.escrow.isCustom} />
             )}
-            {entries.map((address, i) => (
-              <HighlightableLink
-                key={i}
-                variant={
-                  address.verificationStatus === 'unverified'
-                    ? 'danger'
-                    : undefined
-                }
-                href={address.href}
-                address={address.address}
-                className="flex items-center gap-0.5"
-              >
-                {address.verificationStatus === 'unverified' &&
-                color !== 'red' ? (
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <UnverifiedIcon className="fill-red-300" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      This contract is not verified
-                    </TooltipContent>
-                  </Tooltip>
-                ) : null}
-                {address.name}
-              </HighlightableLink>
-            ))}
+            {expandableAddresses ? (
+              <GroupedActorAddresses
+                addresses={contract.addresses}
+                className="basis-full"
+              />
+            ) : (
+              entries.map((address, i) => (
+                <HighlightableLink
+                  key={i}
+                  id={address.anchorId}
+                  variant={
+                    address.verificationStatus === 'unverified'
+                      ? 'danger'
+                      : undefined
+                  }
+                  href={address.href}
+                  address={address.address}
+                  className="flex scroll-mt-14 items-center gap-0.5 md:scroll-mt-10"
+                >
+                  {address.verificationStatus === 'unverified' &&
+                  color !== 'red' ? (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <UnverifiedIcon className="fill-red-300" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        This contract is not verified
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : null}
+                  {address.name}
+                </HighlightableLink>
+              ))
+            )}
           </div>
           {contract.pastUpgrades?.upgrades &&
             contract.pastUpgrades.upgrades.length > 0 && (
@@ -298,6 +328,7 @@ export function technologyContractKey(contract: TechnologyContract) {
 export function ContractsWithImpactfulChanges(props: {
   contracts: TechnologyContract[]
   type: 'contracts' | 'permissions'
+  expandableAddresses?: boolean
 }) {
   return (
     <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3 text-paragraph-15 md:text-paragraph-16">
@@ -310,6 +341,9 @@ export function ContractsWithImpactfulChanges(props: {
           key={technologyContractKey(contract)}
           contract={contract}
           className="my-4 p-0"
+          expandableAddresses={
+            props.expandableAddresses && contract.addresses.length > 1
+          }
         />
       ))}
     </div>

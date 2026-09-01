@@ -3,7 +3,13 @@ import {
   type DiscoveryOutput,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
+import { join } from 'path'
+
+interface RawEntrypointsFile {
+  entrypoints?: Record<string, { project: string }>
+}
 
 describe('discovery config.jsonc', () => {
   const paths = getDiscoveryPaths()
@@ -22,6 +28,38 @@ describe('discovery config.jsonc', () => {
     assert(discovery)
     return discovery
   }
+
+  it('has exactly one owner project for each entrypoint address', () => {
+    const owners = new Map<string, string>()
+
+    for (const project of configReader.readAllDiscoveredProjects().sort()) {
+      const filePath = join(
+        configReader.getProjectPath(project),
+        'entrypoints.json',
+      )
+      if (!existsSync(filePath)) continue
+
+      const file = JSON.parse(
+        readFileSync(filePath, 'utf8'),
+      ) as RawEntrypointsFile
+      for (const [rawAddress, entrypoint] of Object.entries(
+        file.entrypoints ?? {},
+      )) {
+        const address = ChainSpecificAddress(rawAddress)
+        assert(
+          entrypoint.project === project,
+          `Entrypoint ${address} in ${project} claims project ${entrypoint.project}`,
+        )
+
+        const owner = owners.get(address)
+        assert(
+          owner === undefined,
+          `Entrypoint ${address} is claimed by both ${owner} and ${project}`,
+        )
+        owners.set(address, project)
+      }
+    }
+  })
 
   it("doesn't discover any entrypoint that should only be referenced", () => {
     for (const c of configs ?? []) {
@@ -47,8 +85,7 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  // TODO: Enable this test once all .sharedModules are converted to entrypoints
-  it.skip("doesn't reference legacy or not existing entrypoints", () => {
+  it("doesn't reference legacy or not existing entrypoints", () => {
     for (const c of configs ?? []) {
       const discovery = getDiscovery(c.name)
       const entrypoints = c.structure.entrypoints ?? {}
@@ -67,6 +104,17 @@ describe('discovery config.jsonc', () => {
             [
               `In project ${c.name}, contract ${entry.name ?? ''}(${entry.address})`,
               "is a reference but it's a legacy entrypoint",
+            ].join(' '),
+          )
+          // A stale targetProject makes readDiscoveryWithReferences read a
+          // project that does not own the address, or throw when it no longer
+          // exists at all.
+          assert(
+            entry.targetProject === existingEntrypoint.project,
+            [
+              `In project ${c.name}, contract ${entry.name ?? ''}(${entry.address})`,
+              `references project ${entry.targetProject}`,
+              `but the entrypoint is owned by ${existingEntrypoint.project}`,
             ].join(' '),
           )
         }

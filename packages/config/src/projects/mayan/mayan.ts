@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
+import { WORMHOLE_DETAILED_DESCRIPTION } from '../wormhole/shared'
 
 export const mayan: BaseProject = {
   id: ProjectId('mayan'),
@@ -8,6 +9,30 @@ export const mayan: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1771847938),
   interopConfig: {
+    description: 'Intent framework using the Wormhole message bridge.',
+    detailedDescription: WORMHOLE_DETAILED_DESCRIPTION,
+    intent: {
+      color: '#EC4899',
+      intentModel: {
+        value: 'Intent framework',
+        description: 'Solvers compete to fill cross-chain swap intents.',
+      },
+      userRecovery: {
+        value: 'Request refund',
+        sentiment: 'bad',
+        description:
+          'There is no onchain refund option. Unfulfilled Swift orders can be refunded from the source contract with a Wormhole or refund-verifier message.',
+      },
+      solverAccess: {
+        value: 'Permissionless',
+        description: 'Drivers compete in Mayan auctions.',
+      },
+      settlement: {
+        value: 'Wormhole messaging',
+        description:
+          'Mayan uses Wormhole messages to prove destination fulfillment or refunds and unlock source-chain funds.',
+      },
+    },
     plugins: [
       {
         plugin: 'mayan-swift',
@@ -16,5 +41,4 @@ export const mayan: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

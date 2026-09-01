@@ -11,6 +11,7 @@ import { IconShare } from '../../../icons/IconShare'
 import { IconSplit } from '../../../icons/IconSplit'
 import { IconSwap } from '../../../icons/IconSwap'
 import { IconTick } from '../../../icons/IconTick'
+import { setIgnoreComments } from '../diff/customDiffProvider'
 import { DiffEditorComponent } from '../diff/DiffEditorComponent'
 import { useDiffEditorSettings } from '../diff/hooks/useDiffEditorSettings'
 import { LineSelector } from '../diff/plugins/lineSelector'
@@ -30,13 +31,13 @@ export function DiffView(props: DiffViewProps) {
     initialSelection,
     fold,
     removeUnchanged,
-    removeComments,
+    ignoreComments,
     diff,
     url,
     setSelection,
     toggleFold,
     toggleRemoveUnchanged,
-    toggleRemoveComments,
+    toggleIgnoreComments,
     setDiff,
     swapSides,
     leftAddress,
@@ -68,10 +69,23 @@ export function DiffView(props: DiffViewProps) {
     editor?.setFolding(fold)
   }, [fold, editor])
 
-  editor?.onComputedDiff(setDiff)
-  editor?.onComputedDiff(() => {
-    editor?.getPlugin(LineSelector)?.scrollToSelection()
-  })
+  useEffect(() => {
+    setIgnoreComments(ignoreComments)
+  }, [ignoreComments])
+
+  useEffect(() => {
+    if (!editor) {
+      return
+    }
+    const diffDisposable = editor.onComputedDiff(setDiff)
+    const scrollDisposable = editor.onComputedDiff(() => {
+      editor.getPlugin(LineSelector)?.scrollToSelection()
+    })
+    return () => {
+      diffDisposable.dispose()
+      scrollDisposable.dispose()
+    }
+  }, [editor, setDiff])
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -110,12 +124,12 @@ export function DiffView(props: DiffViewProps) {
           <button
             className={clsx(
               'rounded p-1.5 transition-colors',
-              removeComments
+              ignoreComments
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
             )}
             title="Toggle comments"
-            onClick={toggleRemoveComments}
+            onClick={toggleIgnoreComments}
           >
             <IconComment className="size-4" />
           </button>

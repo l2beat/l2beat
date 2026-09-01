@@ -5,10 +5,15 @@ import { useTimeout } from '~/hooks/useTimeout'
 import { CopyIcon } from '~/icons/Copy'
 import { SatisfiedIcon } from '~/icons/Satisfied'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from './core/tooltip/Tooltip'
 
 interface CopyButtonProps {
-  toCopy: string
+  toCopy: string | (() => string)
   className?: string
   iconClassName?: string
   copyText?: string
@@ -26,7 +31,7 @@ export function CopyButton({
   useTimeout(() => setCopied(false), copied ? 1400 : null)
 
   function copyToClipboard() {
-    copy(toCopy)
+    copy(typeof toCopy === 'function' ? toCopy() : toCopy)
       .then(() => setCopied(true))
       .catch(() => setCopied(false))
     setCopied(true)
@@ -49,12 +54,15 @@ export function CopyButton({
           <CopyIcon className={cn('fill-current', iconClassName)} />
         )}
       </TooltipTrigger>
-      <TooltipContent
-        hideWhenDetached
-        onPointerDownOutside={(event) => event.preventDefault()}
-      >
-        {copied ? 'Copied!' : copyText}
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent
+          className="z-1000"
+          hideWhenDetached
+          onPointerDownOutside={(event) => event.preventDefault()}
+        >
+          {copied ? 'Copied!' : copyText}
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

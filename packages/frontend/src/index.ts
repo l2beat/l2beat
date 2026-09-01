@@ -2,8 +2,6 @@
 import './dotenv'
 
 import express from 'express'
-import { env } from './env'
-import { createCacheWarmer } from './server/cacheWarmer'
 import { createServer } from './server/server'
 import { getLogger } from './server/utils/logger'
 import { render } from './ssr/ServerEntry'
@@ -18,10 +16,6 @@ function main() {
     app,
     render,
   })
-
-  if (env.REDIS_URL && env.DEPLOYMENT_ENV === 'production') {
-    createCacheWarmer(logger)
-  }
 }
 
 main()

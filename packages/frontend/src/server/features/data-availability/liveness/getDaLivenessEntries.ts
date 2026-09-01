@@ -3,19 +3,20 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { getLowestSyncedUntil } from '../../layer2s/liveness/getL2LivenessEntries'
+import { getLiveness } from '../../layer2s/liveness/getLiveness'
+import type {
+  LivenessAnomaly,
+  LivenessResponse,
+} from '../../layer2s/liveness/types'
+import { getHasTrackedContractChanged } from '../../layer2s/liveness/utils/getHasTrackedContractChanged'
+import { getLivenessSyncWarning } from '../../layer2s/liveness/utils/isLivenessSynced'
 import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getLiveness } from '../../scaling/liveness/getLiveness'
-import { getLowestSyncedUntil } from '../../scaling/liveness/getScalingLivenessEntries'
-import type {
-  LivenessAnomaly,
-  LivenessResponse,
-} from '../../scaling/liveness/types'
-import { getHasTrackedContractChanged } from '../../scaling/liveness/utils/getHasTrackedContractChanged'
-import { getLivenessSyncWarning } from '../../scaling/liveness/utils/isLivenessSynced'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
@@ -25,7 +26,7 @@ export async function getDaLivenessEntries(): Promise<
 > {
   const [layers, bridges] = await Promise.all([
     ps.getProjects({
-      select: ['daLayer', 'statuses'],
+      select: ['daLayer', 'statuses', 'display'],
       whereNot: ['archivedAt'],
     }),
     ps.getProjects({
@@ -80,7 +81,7 @@ export interface DaBridgeLivenessEntry
 }
 
 function getDaLivenessEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<
     'daBridge' | 'statuses' | 'trackedTxsConfig',
     'livenessInfo' | 'contracts'
@@ -108,10 +109,10 @@ function getDaLivenessEntry(
         slug: b.slug,
         href: `/data-availability/projects/${layer.slug}/${b.slug}#da-bridge-liveness`,
         statuses: {
-          verificationWarnings: getProjectVerificationWarnings(
+          verificationWarnings: getProjectVerification(
             b,
             projectsChangeReport.getChanges(b.id),
-          ),
+          ).warnings,
           underReview:
             layer.statuses.reviewStatus || b.statuses.reviewStatus
               ? 'config'
@@ -120,7 +121,7 @@ function getDaLivenessEntry(
                 : undefined,
           syncWarning,
           ongoingAnomaly: bridgeLiveness.anomalies.some(
-            (a) => a.end === undefined,
+            (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
           ),
         },
         relayerType: b.daBridge.relayerType,

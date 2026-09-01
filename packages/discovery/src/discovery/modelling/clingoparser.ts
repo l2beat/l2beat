@@ -1,61 +1,26 @@
+/**
+ * Grammar (EBNF-ish) of the Clingo fact subset accepted by this parser.
+ * Whitespace (space, tab, CR, LF) is permitted between any two tokens
+ * and is never significant.
+ *
+ *   Fact      ::= Ident '(' ParamList ')'         ; Ident must not be "cons"
+ *   ParamList ::= (Param (',' Param)*)?           ; may be empty
+ *   Param     ::= String
+ *               | Number
+ *               | ConsList
+ *               | Fact                            ; Ident followed by '('
+ *               | Atom                            ; bare Ident
+ *   ConsList  ::= 'cons' '(' Param ',' Param ')'  ; tail must be ConsList or 'nil';
+ *                                                 ; denotes a list [head, ...tail]
+ *   Atom      ::= Ident                           ; "nil" denotes the empty list /
+ *                                                 ; absent value; "cons" is reserved
+ *   Ident     ::= [A-Za-z0-9_]+                   ; no internal whitespace
+ *   String    ::= '"' ( '\"' | <any char except '"'> )* '"'
+ *                                                 ; only \" is recognized as an escape
+ *   Number    ::= '-'? [0-9]+ ('.' [0-9]+)?
+ */
+
 import { type Parser, v } from '@l2beat/validate'
-import { grammar, type Node } from 'ohm-js'
-
-// In Ohm grammar, uppercase ids are for syntactic rules
-// which allow spaces in-between tokens.
-// Lowercase ids are for lexical rules, which do not allow spaces.
-const clingoFactGrammar = grammar(String.raw`
-  ClingoFact {
-    Fact      = atom "(" ParamList ")"
-    ParamList = Param ("," Param)*  -- multiple
-              |                     -- empty
-    Param     = ConsList | Fact | String | Number | atom
-    String    = "\"" ("\\\"" | ~"\"" any)* "\""
-    Number    = "-"? digit+ ("." digit+)?
-    atom      = "nil" | ~keyword<"cons"> (alnum | "_" )+
-    ConsList  = "cons" "(" Param "," Param ")"
-    keyword<word> = word ~(alnum | "_")
-  }
-`)
-
-// Cast properly formed `cons lists` to arrays, and `nil` to `undefined`.
-const semantics = clingoFactGrammar.createSemantics().addOperation('toValue', {
-  Fact(atom, _open, paramList, _close) {
-    return {
-      atom: atom.toValue(),
-      params: paramList.toValue(),
-    }
-  },
-
-  Param(inner) {
-    return inner.toValue()
-  },
-
-  ParamList_multiple(first, _comma, rest) {
-    const params = [first.toValue(), ...rest.toValue()]
-    return params
-  },
-
-  String(_open, chars, _close) {
-    return chars.sourceString.replace(/\\"/g, '"')
-  },
-
-  Number(_maybeMinus, _digits, _maybeDot, _maybeDecimal) {
-    return Number.parseFloat(this.sourceString)
-  },
-
-  atom(_chars) {
-    return this.sourceString === 'nil' ? undefined : this.sourceString
-  },
-
-  ConsList(_cons, _open, head, _comma, tail, _close) {
-    return [head.toValue(), ...(tail.toValue() ?? [])]
-  },
-
-  _iter(...children) {
-    return children.map((child: Node) => child.toValue())
-  },
-})
 
 export type ClingoValue =
   | string
@@ -87,9 +52,154 @@ export const ClingoFact: Parser<ClingoFact> = v.object({
 })
 
 export function parseClingoFact(fact: string): ClingoFact {
-  const parsed = clingoFactGrammar.match(fact, 'Fact')
-  if (parsed.failed()) {
-    throw new Error(parsed.message)
+  const parser = new ClingoFactParser(fact)
+  const result = parser.parseFact()
+  parser.skipWhitespace()
+  if (!parser.eof()) parser.fail('expected end of input')
+  return ClingoFact.parse(result)
+}
+
+class ClingoFactParser {
+  pos = 0
+  constructor(private readonly src: string) {}
+
+  eof(): boolean {
+    return this.pos >= this.src.length
   }
-  return ClingoFact.parse(semantics(parsed).toValue())
+
+  peek(): string {
+    return this.src[this.pos] ?? ''
+  }
+
+  skipWhitespace(): void {
+    while (this.pos < this.src.length) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      const ch = this.src[this.pos]!
+      if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
+        this.pos++
+      } else break
+    }
+  }
+
+  expect(ch: string): void {
+    this.skipWhitespace()
+    if (this.src[this.pos] !== ch) this.fail(`expected '${ch}'`)
+    this.pos++
+  }
+
+  fail(msg: string): never {
+    const ctx = JSON.stringify(this.src.slice(this.pos, this.pos + 20))
+    throw new Error(`Parse error at ${this.pos}: ${msg}, got ${ctx}`)
+  }
+
+  parseFact(): ClingoFact {
+    this.skipWhitespace()
+    const atom = this.parseIdent()
+    if (atom === undefined) this.fail('expected atom')
+    if (atom === 'cons') this.fail("'cons' is reserved")
+    if (atom === 'nil') this.fail("'nil' cannot be used as a fact name")
+    this.expect('(')
+    const params = this.parseParamList()
+    this.expect(')')
+    return { atom, params }
+  }
+
+  parseParamList(): ClingoValue[] {
+    this.skipWhitespace()
+    if (this.peek() === ')') return []
+    const params: ClingoValue[] = [this.parseParam()]
+    this.skipWhitespace()
+    while (this.peek() === ',') {
+      this.pos++
+      params.push(this.parseParam())
+      this.skipWhitespace()
+    }
+    return params
+  }
+
+  parseParam(): ClingoValue {
+    this.skipWhitespace()
+    const ch = this.peek()
+    if (ch === '"') return this.parseString()
+    if (ch === '-' || (ch >= '0' && ch <= '9')) return this.parseNumber()
+    const ident = this.parseIdent()
+    if (ident === undefined) this.fail('expected param')
+    this.skipWhitespace()
+    if (this.peek() !== '(') {
+      if (ident === 'cons') this.fail("'cons' is reserved")
+      return ident === 'nil' ? undefined : ident
+    }
+    this.pos++
+    if (ident === 'cons') {
+      const head = this.parseParam()
+      this.expect(',')
+      const tail = this.parseParam()
+      this.expect(')')
+      return [head, ...((tail as ClingoValue[]) ?? [])]
+    }
+    if (ident === 'nil') this.fail("'nil' cannot be used as a fact name")
+    const params = this.parseParamList()
+    this.expect(')')
+    return { atom: ident, params }
+  }
+
+  parseIdent(): string | undefined {
+    const start = this.pos
+    while (this.pos < this.src.length) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      const ch = this.src[this.pos]!
+      const isAlnum =
+        (ch >= 'a' && ch <= 'z') ||
+        (ch >= 'A' && ch <= 'Z') ||
+        (ch >= '0' && ch <= '9')
+      if (isAlnum || ch === '_') this.pos++
+      else break
+    }
+    return this.pos === start ? undefined : this.src.slice(start, this.pos)
+  }
+
+  parseString(): string {
+    this.pos++
+    let result = ''
+    while (this.pos < this.src.length) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      const ch = this.src[this.pos]!
+      if (ch === '\\' && this.src[this.pos + 1] === '"') {
+        result += '"'
+        this.pos += 2
+      } else if (ch === '"') {
+        this.pos++
+        return result
+      } else {
+        result += ch
+        this.pos++
+      }
+    }
+    this.fail('unterminated string')
+  }
+
+  parseNumber(): number {
+    const start = this.pos
+    if (this.peek() === '-') this.pos++
+    const digitsStart = this.pos
+    while (this.pos < this.src.length) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      const ch = this.src[this.pos]!
+      if (ch >= '0' && ch <= '9') this.pos++
+      else break
+    }
+    if (this.pos === digitsStart) this.fail('expected digit')
+    if (this.peek() === '.') {
+      this.pos++
+      const fracStart = this.pos
+      while (this.pos < this.src.length) {
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
+        const ch = this.src[this.pos]!
+        if (ch >= '0' && ch <= '9') this.pos++
+        else break
+      }
+      if (this.pos === fracStart) this.fail('expected digit after decimal')
+    }
+    return Number.parseFloat(this.src.slice(start, this.pos))
+  }
 }

@@ -1,0 +1,133 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeQuoter",
+  "description": "Fee oracle and price registry for CCIP. Holds the per-destination-chain fee config (size and gas limits, gas overheads, flat per-byte gas rate, flat network fee, LINK fee multiplier percent, chain-family selector), the per-(destChain, token) flat transfer fee overrides, and the USD price tables for tokens and destination gas pushed by authorized callers through updatePrices(). Prices are not staleness-checked: quoting only requires that a price was set at least once. Exposes both the CCIP 2.0 quoting interface (quoteGasForExec, getTokenTransferFee, resolveLegacyArgs) and the legacy 1.6 one (getValidatedFee, processMessageArgs), so both ramp generations can use it.",
+  "category": "core",
+  "ignoreRelatives": ["owner", "getFeeTokens"],
+  "ignoreMethods": ["getAllDestChainConfigs", "getAllTokenTransferFeeConfigs"],
+  "types": {
+    "CCIPChainFamily": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0x2812d52c": "EVM",
+        "0x1e10bdc4": "SVM",
+        "0xac77ffec": "APTOS",
+        "0xc4e05953": "SUI",
+        "0x647e2ba9": "TVM"
+      }
+    }
+  },
+  "fields": {
+    "getStaticConfig": {
+      "description": "Immutable config: maximum fee that can be charged for a single message (in juels) and the LINK token address."
+    },
+    "getFeeTokens": {
+      "description": "Tokens accepted as CCIP fee payment. A token is added automatically when an authorized caller first prices it through updatePrices(); only the owner can remove one (removal also deletes its stored price)."
+    },
+    "getAllAuthorizedCallers": {
+      "description": "Accounts authorized to push token and destination-gas USD prices through updatePrices(). Because pricing a token also registers it as an accepted fee token, these accounts control the fee token list.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+        }
+      ]
+    },
+    "destChainConfigs": {
+      "description": "Per-destination-chain fee config (isEnabled, max message size and gas limit, gas overheads, flat per-byte gas rate, chain-family selector, default token transfer fee, flat network fee, LINK fee multiplier percent). Quoting reverts for chains not enabled here. Replayed from DestChainAdded / DestChainConfigUpdated events; keys are destination chain names, value is the latest DestChainConfig set for that chain.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": "destChainConfig",
+        "set": [
+          {
+            "event": "event DestChainAdded(uint64 indexed destChainSelector, (bool isEnabled, uint32 maxDataBytes, uint32 maxPerMsgGasLimit, uint32 destGasOverhead, uint8 destGasPerPayloadByteBase, bytes4 chainFamilySelector, uint16 defaultTokenFeeUSDCents, uint32 defaultTokenDestGasOverhead, uint32 defaultTxGasLimit, uint16 networkFeeUSDCents, uint8 linkFeeMultiplierPercent) destChainConfig)"
+          },
+          {
+            "event": "event DestChainConfigUpdated(uint64 indexed destChainSelector, (bool isEnabled, uint32 maxDataBytes, uint32 maxPerMsgGasLimit, uint32 destGasOverhead, uint8 destGasPerPayloadByteBase, bytes4 chainFamilySelector, uint16 defaultTokenFeeUSDCents, uint32 defaultTokenDestGasOverhead, uint32 defaultTxGasLimit, uint16 networkFeeUSDCents, uint8 linkFeeMultiplierPercent) destChainConfig)"
+          }
+        ]
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "shape",
+            "isEnabled",
+            "maxDataBytes",
+            "maxPerMsgGasLimit",
+            "destGasOverhead",
+            "destGasPerPayloadByteBase",
+            ["chainFamilySelector", ["format", "CCIPChainFamily"]],
+            "defaultTokenFeeUSDCents",
+            "defaultTokenDestGasOverhead",
+            "defaultTxGasLimit",
+            "networkFeeUSDCents",
+            "linkFeeMultiplierPercent"
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "tokenTransferFeeConfig": {
+      "description": "Per-(destChain, token) transfer fee overrides: flat feeUSDCents plus destGasOverhead and destBytesOverhead. When no override exists for a (destChain, token), the DestChainConfig defaults apply. Replayed from TokenTransferFeeConfigUpdated / TokenTransferFeeConfigDeleted events; outer keys are destination chain names, latest config per (chain, token) wins.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "dedupBy": "token",
+        "select": ["token", "tokenTransferFeeConfig"],
+        "add": {
+          "event": "event TokenTransferFeeConfigUpdated(uint64 indexed destChainSelector, address indexed token, (uint32 feeUSDCents, uint32 destGasOverhead, uint32 destBytesOverhead, bool isEnabled) tokenTransferFeeConfig)"
+        },
+        "remove": {
+          "event": "event TokenTransferFeeConfigDeleted(uint64 indexed destChainSelector, address indexed token)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "map",
+            [
+              "set",
+              "tokenTransferFeeConfig",
+              [
+                "shape",
+                "feeUSDCents",
+                "destGasOverhead",
+                "destBytesOverhead",
+                "isEnabled"
+              ]
+            ]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove accepted fee tokens and delete their stored prices (tokens are added implicitly when authorized callers price them)."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove addresses in the authorized whitelist that can update prices."
+        },
+        {
+          "type": "interact",
+          "description": "add destination chains and update per-chain fee config (size and gas limits, gas overheads, network fee, LINK fee multiplier)."
+        },
+        {
+          "type": "interact",
+          "description": "set or delete per-(destChain, token) transfer fee overrides."
+        }
+      ]
+    }
+  }
+}

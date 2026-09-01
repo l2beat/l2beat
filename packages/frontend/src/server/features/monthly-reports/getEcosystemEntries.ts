@@ -7,8 +7,8 @@ import type {
 import { assert, type ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { EcosystemUpdate } from '~/content/monthly-updates'
-import type { ActivityLatestUopsData } from '~/server/features/scaling/activity/getActivityLatestTps'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { ActivityLatestUopsData } from '~/server/features/layer2s/activity/getActivityLatestTps'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
@@ -41,7 +41,7 @@ export interface EcosystemMonthlyUpdateEntry
   colors: ProjectCustomColors
   projects: ProjectId[]
   bannerImg?: string
-  allScalingProjects: {
+  allL2Projects: {
     tvs: number
     uops: number
   }
@@ -70,7 +70,7 @@ export interface EcosystemMonthlyUpdateEntry
 
 export async function getEcosystemMonthlyUpdateEntries(
   ecosystemUpdateEntries: EcosystemUpdate[],
-  allScalingProjects: Project<'isScaling'>[],
+  allL2Projects: Project<'scalingInfo'>[],
   tvs: SevenDayTvsBreakdown,
   activity: ActivityLatestUopsData,
   from: UnixTime,
@@ -79,8 +79,8 @@ export async function getEcosystemMonthlyUpdateEntries(
   const [projects, ecosystems, newProjects] = await Promise.all([
     ps.getProjects({
       select: ['ecosystemInfo'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      where: ['scalingInfo'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: ['ecosystemConfig', 'colors'],
@@ -110,7 +110,7 @@ export async function getEcosystemMonthlyUpdateEntries(
     ),
   ])
 
-  const allScalingProjectsUops = allScalingProjects.reduce(
+  const allL2ProjectsUops = allL2Projects.reduce(
     (acc, curr) => acc + (activity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
   )
@@ -129,7 +129,7 @@ export async function getEcosystemMonthlyUpdateEntries(
       projects,
       tvs,
       activity,
-      allScalingProjectsUops,
+      allL2ProjectsUops,
       newProjects,
       tvsLeaderboard,
       activityLeaderboard,
@@ -143,7 +143,7 @@ function getEcosystemMonthlyUpdateEntry(
   projects: Project<'ecosystemInfo'>[],
   tvs: SevenDayTvsBreakdown,
   activity: ActivityLatestUopsData,
-  allScalingProjectsUops: number,
+  allL2ProjectsUops: number,
   newProjects: Project<'scalingStage' | 'display' | 'scalingInfo'>[],
   tvsLeaderboardData: TvsLeaderboard,
   activityLeaderboardData: ActivityLeaderboard,
@@ -192,9 +192,9 @@ function getEcosystemMonthlyUpdateEntry(
         }
       }) ?? [],
     colors: ecosystem.colors,
-    allScalingProjects: {
+    allL2Projects: {
       tvs: tvs.total,
-      uops: allScalingProjectsUops,
+      uops: allL2ProjectsUops,
     },
     projects: ecosystemProjects.map((project) => project.id),
     tvsLeaderboard,

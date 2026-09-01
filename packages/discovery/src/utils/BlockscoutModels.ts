@@ -111,11 +111,26 @@ export const ContractSource = v.object({
   EVMVersion: v.string(),
   CompilerSettings: v
     .object({
-      libraries: v.record(v.string(), v.string()),
+      libraries: v.record(v.string(), v.record(v.string(), v.string())),
       optimizer: v.object({
         enabled: v.boolean(),
         runs: v.number(),
       }),
+      evmVersion: v.string().optional(),
+      viaIR: v.boolean().optional(),
+      metadata: v
+        .object({
+          bytecodeHash: v.string().optional(),
+          useLiteralContent: v.boolean().optional(),
+          appendCBOR: v.boolean().optional(),
+        })
+        .optional(),
+      debug: v
+        .object({
+          revertStrings: v.string(),
+          debugInfo: v.array(v.string()).optional(),
+        })
+        .optional(),
       remappings: v.array(v.string()).optional(),
     })
     .optional(),

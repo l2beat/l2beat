@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CallProxy",
+  "description": "Anyone can call this contract to execute scheduled transactions that have passed the delay.",
+  "category": "gov",
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "target": {
+      "description": "Immutable target contract that every call to this proxy is forwarded to.",
+      "copy": "constructorArgs",
+      "edit": ["get", "target"]
+    }
+  }
+}

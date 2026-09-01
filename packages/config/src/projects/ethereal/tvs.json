@@ -1,0 +1,69 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "ethereal",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "ethereal-USDe",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "arbitrum",
+        "escrowAddress": "0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
+        "decimals": 18,
+        "sinceTimestamp": 1758570590
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1758570590
+        },
+        "priceId": "ethena-usde"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ethereal-WUSDe",
+      "priceId": "ethena-usde",
+      "symbol": "WUSDe",
+      "name": "Wrapped USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",
+        "chain": "ethereal",
+        "decimals": 18,
+        "sinceTimestamp": 1760534427
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 (OrbitNativeOFT)",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ]
+}

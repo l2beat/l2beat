@@ -1,4 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier."
+  "description": "Permissionless commitment calculator and registry used by the Solidity STARK verifiers. Anyone may submit a public-memory page and interaction elements; the contract computes its hash and cumulative product and registers the fact key committing to them, which the CPU verifier must bind to the proof. It is part of the proof verifier, not an application-level program registry. A malicious or nonconforming implementation can break public-memory soundness; binding to a different honest registry generally causes a liveness failure instead.",
+  "category": "shared"
 }

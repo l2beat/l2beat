@@ -33,7 +33,8 @@
       "severity": "HIGH",
       "permissions": [
         {
-          "type": "propose"
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
         }
       ]
     },
@@ -41,7 +42,8 @@
       "severity": "HIGH",
       "permissions": [
         {
-          "type": "challenge"
+          "type": "interact",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer."
         }
       ]
     },

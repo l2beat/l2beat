@@ -79,21 +79,23 @@
         "select": ["assetIndex", "tokenAddress"],
         "add": { "event": ["RegisterAssetConfig"] }
       }
-    },
-    "l2AssetRegistrations": {
-      "handler": {
-        "type": "event",
-        "select": ["symbol"],
-        "add": { "event": ["RegisterAsset"] }
-      }
-    },
-    "l2AssetConfigUpdates": {
-      "handler": {
-        "type": "event",
-        "select": ["params"],
-        "add": { "event": ["UpdateAsset"] }
-      }
     }
+    // Now the events below are not emitted, so I disable tracking this:
+
+    // "l2AssetRegistrations": {
+    //   "handler": {
+    //     "type": "event",
+    //     "select": ["symbol"],
+    //     "add": { "event": ["RegisterAsset"] }
+    //   }
+    // },
+    // "l2AssetConfigUpdates": {
+    //   "handler": {
+    //     "type": "event",
+    //     "select": ["params"],
+    //     "add": { "event": ["UpdateAsset"] }
+    //   }
+    // }
   },
   "ignoreRelatives": ["assetConfigUSDC", "registeredAssets"]
 }

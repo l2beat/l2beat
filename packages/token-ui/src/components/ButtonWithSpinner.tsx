@@ -7,6 +7,7 @@ export function ButtonWithSpinner({
   isLoading,
   children,
   className,
+  spinnerClassName,
   disabled,
   ...props
 }: { isLoading: boolean; spinnerClassName?: string } & React.ComponentProps<
@@ -19,10 +20,18 @@ export function ButtonWithSpinner({
       disabled={debouncedIsLoading || disabled}
       {...props}
     >
-      <span className={cn(debouncedIsLoading && 'opacity-0')}>{children}</span>
+      <span
+        className={cn(
+          'inline-flex items-center justify-center gap-1.5',
+          debouncedIsLoading && 'opacity-0',
+        )}
+      >
+        {children}
+      </span>
       <Spinner
         className={cn(
           '-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 size-5 fill-white opacity-0',
+          spinnerClassName,
           debouncedIsLoading && 'opacity-100',
         )}
       />

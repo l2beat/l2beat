@@ -67,12 +67,11 @@ export function contractFlatteningHash(
     }))
     .filter((e) => e.path.endsWith('.sol'))
 
+  const { name, rootFile, remappings } = source
   const hash =
     input.length === 0
       ? sha2_256bit(Object.values(source.files).join('\n'))
-      : flatteningHash(
-          flattenStartingFrom(source.name, input, source.remappings),
-        )
+      : flatteningHash(flattenStartingFrom(name, rootFile, input, remappings))
 
   return hash
 }

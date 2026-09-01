@@ -5,31 +5,31 @@
   "scripts": {
     "build": "tsc",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:public-api",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build *.tsbuildinfo",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "start": "node build/index.js",
-    "dev": "node -r esbuild-register --watch src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
-    "@l2beat/dal": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "express": "^5.0.0",
     "lodash": "^4.17.21",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@l2beat/config": "workspace:*",
-    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.4",
-    "@types/swagger-ui-express": "^4.1.8"
+    "@types/swagger-ui-express": "^4.1.8",
+    "tsx": "^4.9.3"
   }
 }

@@ -1,46 +1,59 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { cva, type VariantProps } from 'class-variance-authority'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
+import { cn } from '~/utils/cn'
 
-type TopItem = {
+export type TopItem = {
   id?: string
   displayName: string
   issuer?: string | null
   iconUrl: string
   volume: number | null
+  href?: string
 }
 
-type InteropTopItemsCellProps = {
-  topItems: TopItems<TopItem>
-  setIsOpen: (isOpen: boolean) => void
-}
+type InteropTopItemsCellProps =
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog: true
+      setIsOpen?: never
+    }
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog?: false
+      setIsOpen: (isOpen: boolean) => void
+    }
 
-const buttonVariants = cva('group/dialog-trigger', {
+const buttonVariants = cva('group/dialog-trigger flex items-center', {
   variants: {
     type: {
-      default: 'flex items-center gap-2',
-      cell: 'grid grid-cols-[46px_30px] items-center gap-1',
+      default: 'gap-2',
+      cell: 'gap-1',
     },
   },
 })
 
-const remainingCountVariants = cva(
-  'font-bold group-hover/dialog-trigger:underline',
-  {
-    variants: {
-      type: {
-        default: 'text-label-value-13',
-        cell: 'text-label-value-15',
-      },
+const remainingCountVariants = cva('font-bold', {
+  variants: {
+    type: {
+      default: 'text-label-value-13',
+      cell: 'text-label-value-15',
+    },
+    hideDialog: {
+      false: 'group-hover/dialog-trigger:underline',
     },
   },
-)
+  defaultVariants: {
+    hideDialog: false,
+  },
+})
 
 const iconVariants = cva('rounded-full bg-white', {
   variants: {
@@ -56,10 +69,39 @@ export function InteropTopItems({
   setIsOpen,
   className,
   type = 'default',
+  hideDialog,
   ...rest
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
   VariantProps<typeof buttonVariants>) {
+  const content = (
+    <>
+      <div className="flex items-center">
+        {topItems.items.map((item, i) => (
+          <ItemIconWithTooltip
+            key={item.id}
+            item={item}
+            index={i}
+            type={type}
+            href={item.href}
+            className={cn(i !== topItems.items.length - 1 && '-mr-1.5')}
+          />
+        ))}
+      </div>
+      {topItems.remainingCount > 0 && (
+        <RemainingCount
+          topItems={topItems}
+          type={type}
+          hideDialog={hideDialog}
+        />
+      )}
+    </>
+  )
+
+  if (hideDialog) {
+    return <div className={buttonVariants({ type, className })}>{content}</div>
+  }
+
   return (
     <button
       type="button"
@@ -67,19 +109,7 @@ export function InteropTopItems({
       onClick={() => setIsOpen(true)}
       {...rest}
     >
-      <div className="-space-x-1.5 flex items-center">
-        {topItems.items.map((item, i) => (
-          <ItemIconWithTooltip
-            key={item.id}
-            item={item}
-            index={i}
-            type={type}
-          />
-        ))}
-      </div>
-      {topItems.remainingCount > 0 && (
-        <RemainingCount topItems={topItems} type={type} />
-      )}
+      {content}
     </button>
   )
 }
@@ -87,11 +117,12 @@ export function InteropTopItems({
 function RemainingCount({
   topItems,
   type,
+  hideDialog,
 }: {
   topItems: TopItems<TopItem>
 } & VariantProps<typeof remainingCountVariants>) {
   return (
-    <span className={remainingCountVariants({ type })}>
+    <span className={remainingCountVariants({ type, hideDialog })}>
       +{topItems.remainingCount}
       {type === 'default' ? ' more' : ''}
     </span>
@@ -102,32 +133,42 @@ function ItemIconWithTooltip({
   item,
   index,
   type,
+  href,
+  className,
 }: {
   item: TopItem
   index: number
+  href?: string
+  className?: string
 } & VariantProps<typeof iconVariants>) {
+  const icon = (
+    <img
+      key={item.id}
+      src={item.iconUrl}
+      alt={item.displayName}
+      className={iconVariants({ type, className })}
+      style={{ zIndex: 5 - index }}
+    />
+  )
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <img
-          key={item.id}
-          src={item.iconUrl}
-          alt={item.displayName}
-          className={iconVariants({ type })}
-          style={{ zIndex: 5 - index }}
-        />
+        {href ? <a href={href}>{icon}</a> : icon}
       </TooltipTrigger>
-      <TooltipContent>
-        <p className="font-bold text-label-value-15">{item.displayName}</p>
-        {item.issuer && (
+      <TooltipPortal>
+        <TooltipContent>
+          <p className="font-bold text-label-value-15">{item.displayName}</p>
+          {item.issuer && (
+            <p className="text-label-value-13 text-secondary">
+              Issued by <span className="capitalize">{item.issuer}</span>
+            </p>
+          )}
           <p className="text-label-value-13 text-secondary">
-            Issued by <span className="capitalize">{item.issuer}</span>
+            {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
           </p>
-        )}
-        <p className="text-label-value-13 text-secondary">
-          {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
-        </p>
-      </TooltipContent>
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

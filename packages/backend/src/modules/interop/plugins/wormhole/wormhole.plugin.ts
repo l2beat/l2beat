@@ -1,15 +1,10 @@
-import {
-  Address32,
-  assert,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { CCTPV1Config, CCTPV2Config } from '../cctp/cctp.config'
 import { findParsedAfter, findTransferLogBefore } from '../logScan'
 import {
   findMayanCircleDestinationChain,
   isMayanCircleSender,
-  isMayanSwiftSender,
   MAYAN_FORWARDER_TX_EVENT_SIGNATURES,
 } from '../mayan-wormhole'
 import {
@@ -20,7 +15,11 @@ import {
   type LogToCapture,
 } from '../types'
 import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
-import { WormholeConfig } from './wormhole.config'
+import {
+  findWormholeChain,
+  getWormholeCoreAddresses,
+  WormholeConfig,
+} from './wormhole.config'
 
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
@@ -55,17 +54,7 @@ export class WormholePlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     const networks = this.configs.get(WormholeConfig) ?? []
-    const coreContractAddresses: ChainSpecificAddress[] = []
-    for (const network of networks) {
-      if (!network.coreContract) continue
-      try {
-        coreContractAddresses.push(
-          ChainSpecificAddress.fromLong(network.chain, network.coreContract),
-        )
-      } catch {
-        // Chain not supported by ChainSpecificAddress, skip
-      }
-    }
+    const coreContractAddresses = getWormholeCoreAddresses(networks)
 
     return [
       {
@@ -102,33 +91,27 @@ export class WormholePlugin implements InteropPluginResyncable {
 
     const senderAddress = EthereumAddress(parsed.sender)
 
-    // Skip Mayan Swift settlement messages - they are handled by mayan-swift.ts and
-    // mayan-swift-settlement.ts which create SettlementSent events with extracted order keys
-    // for matching with OrderUnlocked. If we captured them here as LogMessagePublished,
-    // they would remain unmatched since the settlement matching uses SettlementSent.
-    if (isMayanSwiftSender(senderAddress)) {
-      return
-    }
-
-    // Mayan Circle (MCTP) messages: extract $dstChain from the companion Mayan Forwarder
-    // event in the same tx. Source-side messages always have a ForwardedERC20/ForwardedEth.
-    // Destination-side confirmations (bridgeWithLockedFee) have no forwarder event and are
-    // never matchable, so we skip them.
+    // Mayan Circle (MCTP) messages usually expose $dstChain through a companion
+    // Mayan Forwarder event. Destination-side confirmations have no forwarder,
+    // so keep the event with an unsupported placeholder chain.
     if (isMayanCircleSender(senderAddress)) {
-      const $dstChain = findMayanCircleDestinationChain(input.txLogs, networks)
-      if ($dstChain) {
-        return [
-          LogMessagePublished.create(input, {
-            payload: parsed.payload,
-            sequence: parsed.sequence,
-            wormholeChainId: network.wormholeChainId,
-            sender: senderAddress,
-            $dstChain,
-          }),
-        ]
-      }
-      // No forwarder event found — destination-side confirmation, skip capture
-      return
+      const cctpNetworks = [
+        ...(this.configs.get(CCTPV1Config) ?? []),
+        ...(this.configs.get(CCTPV2Config) ?? []),
+      ]
+      const $dstChain =
+        findMayanCircleDestinationChain(input.txLogs, networks, cctpNetworks) ??
+        'Unknown_mayanCircle'
+
+      return [
+        LogMessagePublished.create(input, {
+          payload: parsed.payload,
+          sequence: parsed.sequence,
+          wormholeChainId: network.wormholeChainId,
+          sender: senderAddress,
+          $dstChain,
+        }),
+      ]
     }
 
     const logIndex = input.log.logIndex
@@ -159,8 +142,7 @@ export class WormholePlugin implements InteropPluginResyncable {
     ) {
       const toChainId = extractTokenBridgeDestChain(parsed.payload)
       if (toChainId !== undefined) {
-        const dstNetwork = networks.find((n) => n.wormholeChainId === toChainId)
-        $dstChain = dstNetwork?.chain ?? `Unknown_${toChainId}`
+        $dstChain = findWormholeChain(networks, toChainId)
       }
     }
 

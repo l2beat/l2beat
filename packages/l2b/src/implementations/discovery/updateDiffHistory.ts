@@ -13,6 +13,7 @@ import {
   DiscoveryRegistry,
   diffDiscovery,
   discoveryDiffToMarkdown,
+  entriesForDiff,
   getDiscoveryPaths,
   modelPermissions,
   TemplateService,
@@ -101,21 +102,19 @@ export async function updateDiffHistoryForChain(
     )
     codeDiff = rerun.codeDiff
 
-    diff = diffDiscovery(
-      rerun.prevDiscovery?.entries ?? [],
-      curDiscovery.entries,
-    )
+    const prevEntries = entriesForDiff(rerun.prevDiscovery)
+    diff = diffDiscovery(prevEntries, entriesForDiff(curDiscovery))
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.entries ?? [],
-      rerun.prevDiscovery?.entries ?? [],
+      entriesForDiff(discoveryFromMainBranch),
+      prevEntries,
     )
   } else {
     logger.info(
       'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.entries ?? [],
-      curDiscovery?.entries ?? [],
+      entriesForDiff(discoveryFromMainBranch),
+      entriesForDiff(curDiscovery),
     )
   }
 
@@ -217,35 +216,16 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
 
   const discoveries = new DiscoveryRegistry()
   // We rediscover on the past block number, but with current configs and dependencies
-  const dependencies: string[] = [projectName]
-
-  for (const dependency of dependencies) {
-    // TODO(radomski): Remove the duplication after the PR containing this code is merged
-    let timestamp =
-      discoveryFromMainBranch.dependentDiscoveries?.[dependency]?.timestamp
-
-    if (dependency === projectName) {
-      timestamp = discoveryFromMainBranch.timestamp
-    }
-
-    if (timestamp === undefined) {
-      // We rediscover on the past block number, but with current configs and dependencies.
-      // Those dependencies might not have been referenced in the old discovery.
-      // In that case we don't fail - the diff will show all those "added".
-      logger.info(
-        `No block number found for dependency ${dependency}, skipping its rediscovery.`,
-      )
-      continue
-    }
-
-    const prevStructure = await rediscoverStructureOnBlock(
-      dependency,
-      { blockNumber: undefined, timestamp } as Timing,
-      saveSources,
-      overwriteCache,
-    )
-    discoveries.set(prevStructure.name, prevStructure)
-  }
+  const prevStructure = await rediscoverStructureOnBlock(
+    projectName,
+    {
+      blockNumber: undefined,
+      timestamp: discoveryFromMainBranch.timestamp,
+    } as Timing,
+    saveSources,
+    overwriteCache,
+  )
+  discoveries.set(prevStructure.name, prevStructure)
 
   const discoveryPaths = getDiscoveryPaths()
   const templateService = new TemplateService(discoveryPaths.discovery)
@@ -274,18 +254,6 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   )
 
   return { prevDiscovery, codeDiff: flatDiff === '' ? undefined : flatDiff }
-}
-
-function getMainBranchName(): 'main' | 'master' {
-  try {
-    execSync('git show-ref --verify refs/heads/master', {
-      stdio: 'ignore',
-    })
-    return 'master'
-  } catch {
-    // If error, it means 'master' doesn't exist, so we'll stick with 'main'
-    return 'main'
-  }
 }
 
 function shellQuote(p: string): string {
@@ -326,7 +294,6 @@ function getFileVersionOnMainBranch(
   content: string
   mainBranchHash: string
 } {
-  const mainBranch = getMainBranchName()
   try {
     // NOTE(radomski): Node when starting a process reserves a buffer of around
     // 200KB for STDIO output. This is not enough in cases where the
@@ -342,13 +309,10 @@ function getFileVersionOnMainBranch(
     // characters like parentheses or spaces. We also escape any single quotes
     // inside the path (extremely unlikely in our repo layout).
     const quotedPath = shellQuote(filePath)
-    const content = execSync(
-      `git show ${mainBranch}:${quotedPath} 2>/dev/null`,
-      { maxBuffer: BUFFER_SIZE },
-    ).toString()
-    const mainBranchHash = execSync(`git rev-parse ${mainBranch}`)
-      .toString()
-      .trim()
+    const content = execSync(`git show main:${quotedPath} 2>/dev/null`, {
+      maxBuffer: BUFFER_SIZE,
+    }).toString()
+    const mainBranchHash = execSync('git rev-parse main').toString().trim()
     return { content, mainBranchHash }
   } catch {
     logger.info(`No previous version of ${filePath} found`)
@@ -378,7 +342,6 @@ function generateDiffHistoryMarkdown(
   description?: string,
 ): string {
   const result = []
-  const mainBranch = getMainBranchName()
 
   const now = new Date().toUTCString()
   result.push(`${FIRST_SECTION_PREFIX} ${now}:`)
@@ -387,7 +350,7 @@ function generateDiffHistoryMarkdown(
   result.push(`- author: ${name} (<${email}>)`)
   if (timestampFromMainBranchDiscovery !== undefined) {
     result.push(
-      `- comparing to: ${mainBranch}@${mainBranchHash} block: ${timestampFromMainBranchDiscovery}`,
+      `- comparing to: main@${mainBranchHash} block: ${timestampFromMainBranchDiscovery}`,
     )
   }
   result.push(`- current timestamp: ${timestamp}`)

@@ -377,6 +377,39 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     },
   )
 
+  describe(
+    AggregatedLivenessRepository.prototype.getFirstTimestampByProjectAndSubtype
+      .name,
+    () => {
+      it('returns the earliest timestamp for a project and subtype', async () => {
+        const result = await repository.getFirstTimestampByProjectAndSubtype(
+          PROJECT_A,
+          'batchSubmissions',
+        )
+
+        expect(result).toEqual(START - 3 * UnixTime.HOUR)
+      })
+
+      it('is scoped to the given subtype', async () => {
+        const result = await repository.getFirstTimestampByProjectAndSubtype(
+          PROJECT_A,
+          'stateUpdates',
+        )
+
+        expect(result).toEqual(START - 2 * UnixTime.HOUR)
+      })
+
+      it('returns undefined when there are no matching records', async () => {
+        const result = await repository.getFirstTimestampByProjectAndSubtype(
+          PROJECT_B,
+          'batchSubmissions',
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(AggregatedLivenessRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

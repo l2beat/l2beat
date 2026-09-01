@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2Timelock",
+  "category": "gov",
+  "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
+  "ignoreMethods": [
+    "CANCELLER_ROLE",
+    "DEFAULT_ADMIN_ROLE",
+    "EXECUTOR_ROLE",
+    "PROPOSER_ROLE",
+    "TIMELOCK_ADMIN_ROLE"
+  ],
+  "fields": {
+    "timelockAdminAC": {
+      // assuming they also have PROPOSER_ROLE, EXECUTOR_ROLE, CANCELLER_ROLE roles
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "{{getMinDelay}}",
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "type": "act",
+          "delay": "{{getMinDelay}}",
+          "condition": "(no delay if in emergency state)"
+        }
+      ]
+    },
+    "getMinDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "polygonZkEVM": {
+      "severity": "HIGH",
+      "description": "This is immutably the 0 address in this particular contract, which means emergency mode is never active"
+    },
+    "scheduledTransactionsDecoded": {
+      "handler": {
+        "type": "polygoncdkScheduledTransactions"
+      }
+    }
+  }
+}

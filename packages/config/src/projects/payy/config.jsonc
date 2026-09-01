@@ -1,5 +1,34 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "payy",
-  "import": ["../globalConfig.jsonc"]
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+    "eth:0x14DACD534ddc676601B27f41Eb541a7951524a2F"
+  ],
+  "names": {
+    "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f": "PayyMultisig"
+  },
+  "overrides": {
+    "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270": {
+      "fields": {
+        // the prover was registered in initialize() which emits no ProverAdded
+        // event, so it is not covered by the event-based `provers` field
+        // (set in tx 0x8d002955fe594ded0ee57519c15a7c9dcf52e759be1fdd628eaf810dc2558abd)
+        "initialProver": {
+          "description": "Prover registered at initialization (not covered by ProverAdded events).",
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x5343B904Bf837Befb2f5A256B0CD5fbF30503D38"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can submit state updates (new state roots) via verifyRollup(), providing an aggregated ZK proof and validator signatures."
+            }
+          ]
+        }
+      }
+    }
+  }
 }

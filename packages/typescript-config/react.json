@@ -4,10 +4,9 @@
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "target": "ESNext",
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
     "noUncheckedIndexedAccess": true,
-    "module": "ESNext",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {

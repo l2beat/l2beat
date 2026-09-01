@@ -96,6 +96,49 @@ describe(executeBlip.name, () => {
     })
   })
 
+  describe('less-than comparisons', () => {
+    it('compares the current value against a single argument', () => {
+      expect(executeBlip(1, ['<', 2])).toEqual(true)
+      expect(executeBlip(2, ['<', 2])).toEqual(false)
+      expect(executeBlip(3, ['<', 2])).toEqual(false)
+    })
+
+    it('checks that the first argument is less than the rest', () => {
+      expect(executeBlip({}, ['<', 1, 2, 3])).toEqual(true)
+      expect(executeBlip({}, ['<', 1, 2, 0])).toEqual(false)
+    })
+
+    it('compares strings lexicographically', () => {
+      expect(executeBlip('a', ['<', 'b'])).toEqual(true)
+      expect(executeBlip('b', ['<', 'a'])).toEqual(false)
+    })
+
+    it('throws when operands are not both numbers or both strings', () => {
+      expect(() => executeBlip(1, ['<', 'a'])).toThrow(
+        'Comparison requires two numbers or two strings',
+      )
+    })
+  })
+
+  describe('greater-than comparisons', () => {
+    it('compares the current value against a single argument', () => {
+      expect(executeBlip(3, ['>', 2])).toEqual(true)
+      expect(executeBlip(2, ['>', 2])).toEqual(false)
+      expect(executeBlip(1, ['>', 2])).toEqual(false)
+    })
+
+    it('checks that the first argument is greater than the rest', () => {
+      expect(executeBlip({}, ['>', 3, 2, 1])).toEqual(true)
+      expect(executeBlip({}, ['>', 3, 2, 4])).toEqual(false)
+    })
+
+    it('works inside a pipe after get', () => {
+      expect(executeBlip({ n: 10 }, ['pipe', ['get', 'n'], ['>', 5]])).toEqual(
+        true,
+      )
+    })
+  })
+
   it('negates boolean values', () => {
     expect(executeBlip({}, ['not', true])).toEqual(false)
     expect(executeBlip({}, ['not', false])).toEqual(true)
@@ -713,6 +756,73 @@ describe(executeBlip.name, () => {
       expect(
         executeBlip(arr, ['map', ['and', ['=', 1], ['not', false]]]),
       ).toEqual([true, false, false])
+    })
+  })
+
+  describe('sort operations', () => {
+    it('sorts numbers ascending', () => {
+      expect(executeBlip([3, 1, 2], ['sort'])).toEqual([1, 2, 3])
+    })
+
+    it('sorts strings lexicographically', () => {
+      expect(executeBlip(['0x33', '0x11', '0x22'], ['sort'])).toEqual([
+        '0x11',
+        '0x22',
+        '0x33',
+      ])
+    })
+
+    it('sorts objects by a key expression', () => {
+      expect(
+        executeBlip(
+          [{ id: 'b' }, { id: 'a' }, { id: 'c' }],
+          ['sort', ['get', 'id']],
+        ),
+      ).toEqual([{ id: 'a' }, { id: 'b' }, { id: 'c' }])
+    })
+
+    it('sorts nested arrays by index (e.g. DON nodes by p2pId)', () => {
+      expect(
+        executeBlip(
+          [
+            ['0x22', 'y'],
+            ['0x11', 'x'],
+            ['0x33', 'z'],
+          ],
+          ['sort', ['get', 0]],
+        ),
+      ).toEqual([
+        ['0x11', 'x'],
+        ['0x22', 'y'],
+        ['0x33', 'z'],
+      ])
+    })
+
+    it('is stable for equal keys', () => {
+      expect(
+        executeBlip(
+          [
+            { k: 1, v: 'a' },
+            { k: 1, v: 'b' },
+            { k: 0, v: 'c' },
+          ],
+          ['sort', ['get', 'k']],
+        ),
+      ).toEqual([
+        { k: 0, v: 'c' },
+        { k: 1, v: 'a' },
+        { k: 1, v: 'b' },
+      ])
+    })
+
+    it('handles empty arrays', () => {
+      expect(executeBlip([], ['sort'])).toEqual([])
+    })
+
+    it('throws when input is not an array', () => {
+      expect(() => executeBlip({}, ['sort'])).toThrow(
+        'sort requires an array input',
+      )
     })
   })
 

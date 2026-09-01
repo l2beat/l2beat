@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.",
+  "description": "L2 -> L1 message passer at the OP Stack predeploy address, used by L1Bridge-style canonical bridges to relay withdrawal requests from L2 to L1.",
   "ignoreRelatives": [],
   "category": "bridge-canonical"
 }

@@ -39,11 +39,17 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
             arbitrum: env.string('API_KEY_ARBITRUM'),
             agglayer: env.string('API_KEY_AGGLAYER'),
             theElasticNetwork: env.string('API_KEY_THE_ELASTIC_NETWORK'),
+            pulseKit: env.string('API_KEY_PULSEKIT'),
           },
         },
     openapi: {
       url: env.string('BACKEND_URL', 'http://localhost:3000'),
     },
+    analytics: options.isLocal
+      ? false
+      : {
+          clientId: env.optionalString('OPENPANEL_CLIENT_ID'),
+        },
     cacheEnabled:
       (env.optionalString('DEPLOYMENT_ENV') === 'production' ||
         env.optionalString('DEPLOYMENT_ENV') === 'staging') &&

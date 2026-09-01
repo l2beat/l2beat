@@ -37,9 +37,9 @@
   ],
   "scripts": {
     "test": "mocha",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc",
-    "start": "node -r esbuild-register src/",
+    "start": "tsx src/index.ts",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
@@ -56,7 +56,6 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "@sinonjs/fake-timers": "^11.1.0",
-    "@types/sinonjs__fake-timers": "^8.1.2"
+    "tsx": "^4.9.3"
   }
 }

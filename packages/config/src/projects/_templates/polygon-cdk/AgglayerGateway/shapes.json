@@ -1,11 +1,11 @@
 {
   "AgglayerGateway": {
-    "hash": "0xcff13dcdde38e51b46f4031f59890897a98923c5e1bc777cca891e310c188dba",
+    "hash": "0xde749e5c613fdc07763f2a97e80f1bfec0bc55d0dfb98f3bb5766f5337fdd58a",
     "address": "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346",
     "blockNumber": 22768020
   },
   "AgglayerGateway_v035.sol": {
-    "hash": "0x3e98abe94ddfb10602e8ecfe755bcbc2ef664b24dbdf25c9231ac726af8d7da7",
+    "hash": "0x283e15d7157ad798b631629ce8ce14b94d78742771d1dba85a7b2ec67b2a0525",
     "address": "eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49",
     "blockNumber": 23695831
   }

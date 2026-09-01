@@ -11,7 +11,12 @@
         "select": "disperser",
         "add": { "event": "DisperserAdded" }
       },
-      "permissions": [{ "type": "disperse" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators."
+        }
+      ]
     }
   }
 }

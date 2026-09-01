@@ -1,19 +1,17 @@
 {
   "ValidatorTimelock": {
-    "hash": "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d",
+    "hash": "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c",
     "address": "gateway:0x717CAC5204650f10b713A06E230829FCC841425e",
     "blockNumber": 75862
   },
   "ValidatorTimelock_post29_ADI": {
-    "hash": "0x61d15f463b4112c36915d9f1a8016942addb43b4300b197971ab5d4e00eeb2d6",
+    "hash": "0x52b6f8c8274978f901b0ff5de0f389fdb214515e3ed08aefabd1dc3c821383cc",
     "address": "eth:0x406f329645E323B1bd1C020a219e30E6DAf4f899",
-    "chain": "ethereum",
     "blockNumber": 24038982
   },
   "ValidatorTimelock_v30_0_ADI": {
-    "hash": "0x48e14ef8734c4e2891920ea10bac8fb0c1d36e0a18c1e38ec85253ee2be5056d",
+    "hash": "0x7d22e1a2eba7299ad6a85ae50e1b8e5d29df70b1b2b0b19d32e8a1f0705db1b1",
     "address": "eth:0x6CB28384f21B18924FA312AA2E10D4E813e66263",
-    "chain": "ethereum",
     "blockNumber": 24275768
   }
 }

@@ -6,11 +6,20 @@ import {
   type InteropConfig,
   type ProjectService,
 } from '@l2beat/config'
-import type { InteropFeatureConfig } from '../Config'
+import type { InteropFeatureConfig, InteropPromotionConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
-export interface InteropAggregationConfig extends InteropConfig {
+export type InteropAggregationConfig = InteropConfig & {
   id: string
+}
+
+function parsePromotionMode(value: string): InteropPromotionConfig['mode'] {
+  if (value === 'off' || value === 'shadow' || value === 'enforce') {
+    return value
+  }
+  throw new Error(
+    `Invalid INTEROP_PROMOTION_MODE "${value}" (expected off | shadow | enforce)`,
+  )
 }
 
 export async function getInteropFeatureConfig(
@@ -26,7 +35,19 @@ export async function getInteropFeatureConfig(
 
   return {
     aggregation: flags.isEnabled('interop', 'aggregation')
-      ? { configs: await getInteropAggregationConfigs(ps) }
+      ? {
+          configs: await getInteropAggregationConfigs(ps),
+          promotion: {
+            mode: parsePromotionMode(
+              env.string('INTEROP_PROMOTION_MODE', 'shadow'),
+            ),
+            failClosed: env.boolean('INTEROP_PROMOTION_FAIL_CLOSED', true),
+            maxLaneVolumeUsd: env.integer(
+              'INTEROP_PROMOTION_MAX_LANE_VOLUME_USD',
+              1_000_000_000,
+            ),
+          },
+        }
       : false,
     capture: {
       enabled: flags.isEnabled('interop', 'capture'),
@@ -34,6 +55,7 @@ export async function getInteropFeatureConfig(
         flags.isEnabled('interop', 'capture', chain.id),
       ),
     },
+    knownChains: INTEROP_CHAINS.map((chain) => chain.id),
     matching: flags.isEnabled('interop', 'matching'),
     cleaner: flags.isEnabled('interop', 'cleaner'),
     dangerousOperationsEnabled: env.boolean(
@@ -56,6 +78,15 @@ export async function getInteropFeatureConfig(
       enabled: flags.isEnabled('interop', 'financials'),
       tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
       tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
+      maxTokenPriceUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TOKEN_PRICE_USD',
+        1_000_000,
+      ),
+      maxTransferValueUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TRANSFER_VALUE_USD',
+        1_000_000_000,
+      ),
+      batchSize: env.integer('INTEROP_FINANCIALS_BATCH_SIZE', 10_000),
     },
     config: {
       enabled: flags.isEnabled('interop', 'config'),
@@ -67,8 +98,20 @@ export async function getInteropFeatureConfig(
         12 * 60 * 60 * 1000, // 12 hours
       ),
     },
+    relay: {
+      batchSize: env.integer('INTEROP_RELAY_BATCH_SIZE', 60),
+      maxRequestsPerUpdate: env.integer(
+        'INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE',
+        10_000,
+      ),
+      safeTimeOffset: env.integer('INTEROP_RELAY_SAFE_TIME_OFFSET', 10),
+    },
     inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
-    oneSidedChains: [...INTEROP_ONE_SIDED_CHAINS],
+    oneSidedChains: [
+      ...INTEROP_ONE_SIDED_CHAINS.filter((chain) =>
+        flags.isEnabled('interop', 'oneSidedChain', chain),
+      ),
+    ],
   }
 }
 

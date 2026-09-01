@@ -1,0 +1,204 @@
+import type { ActivityTotals } from '@l2beat/database'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
+import { env } from '~/env'
+import { getDb } from '~/server/database'
+import { ChartRange } from '~/utils/range/range'
+import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
+import {
+  type ActivityProjectChartStats,
+  buildActivityProjectChartStats,
+} from './buildActivityProjectChartStats'
+import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
+import { getActivityProjects } from './utils/getActivityProjects'
+import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
+import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
+import {
+  ActivityProjectFilter,
+  createActivityProjectsFilter,
+} from './utils/projectFilterUtils'
+
+export type ActivityChartParams = v.infer<typeof ActivityChartParams>
+export const ActivityChartParams = v.object({
+  filter: ActivityProjectFilter,
+  range: ChartRange,
+})
+
+type ActivityChartDataPoint = [
+  timestamp: number,
+  projectsTxCount: number | null,
+  ethereumTxCount: number | null,
+  projectsUopsCount: number | null,
+  ethereumUopsCount: number | null,
+]
+
+export type ActivityChartData = {
+  data: ActivityChartDataPoint[]
+  syncWarning: string | undefined
+  syncedUntil: UnixTime
+  stats: ActivityProjectChartStats | undefined
+}
+/**
+ * A function that computes values for chart data of the activity over time.
+ * @returns [timestamp, projectsTxCount, ethereumTxCount, projectsUopsCount, ethereumUopsCount][] - all numbers
+ */
+export async function getActivityChart({
+  filter,
+  range,
+}: ActivityChartParams): Promise<ActivityChartData> {
+  if (env.MOCK) {
+    return getMockActivityChart({ filter, range })
+  }
+
+  const db = getDb()
+  const projects = (await getActivityProjects())
+    .filter(createActivityProjectsFilter(filter))
+    .map((p) => p.id)
+    .concat(ProjectId.ETHEREUM)
+  const projectId = projects.length === 2 ? projects[0] : undefined
+  const adjustedRange = await getFullySyncedActivityRange(range)
+
+  const [entries, maxCounts, activityTotals] = await Promise.all([
+    db.activity.getByProjectsAndTimeRange(projects, adjustedRange),
+    db.activity.getMaxCountsForProjects(),
+    projectId
+      ? db.activity.getActivityTotalsForProjects([projectId])
+      : undefined,
+  ])
+
+  // By default, we assume we're always synced...
+  let syncedUntil = adjustedRange[1]
+  let syncWarning = undefined
+
+  // ...but if we are looking at a single project, we check the last day we have data for,
+  // and use that as the cutoff.
+  if (projectId) {
+    const syncInfo = await getActivitySyncInfo(projectId, adjustedRange[1])
+    if (!syncInfo.hasSyncData) {
+      return {
+        data: [],
+        syncWarning,
+        syncedUntil: adjustedRange[1],
+        stats: undefined,
+      }
+    }
+    syncedUntil = syncInfo.syncedUntil
+    syncWarning = syncInfo.syncWarning
+  }
+
+  const projectDataStart =
+    entries.find((e) => e.projectId === projectId && e.count > 0)?.timestamp ??
+    0
+
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: adjustedRange[0],
+    firstProjectTimestamp: projectId
+      ? activityTotals?.[projectId]?.sinceTimestamp
+      : undefined,
+    dataStart: projectDataStart,
+    resolution: 'day',
+  })
+
+  const aggregatedEntries = aggregateActivityRecords(entries, {
+    startTimestamp,
+  })
+  if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
+    return { data: [], syncWarning, syncedUntil, stats: undefined }
+  }
+
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedRange[1]],
+    'day',
+  )
+
+  const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
+    const isSynced = syncedUntil >= timestamp
+    const fallbackValue = isSynced ? 0 : null
+    const projectFallback = projectId ? fallbackValue : null
+
+    const entry = aggregatedEntries[timestamp]
+    if (!entry || !isSynced) {
+      return [
+        timestamp,
+        projectFallback,
+        entry?.ethereumCount ?? fallbackValue,
+        projectFallback,
+        entry?.ethereumUopsCount ?? fallbackValue,
+      ]
+    }
+
+    return [
+      timestamp,
+      entry.count ?? fallbackValue,
+      entry.ethereumCount ?? fallbackValue,
+      entry.uopsCount ?? fallbackValue,
+      entry.ethereumUopsCount ?? fallbackValue,
+    ]
+  })
+
+  const stats = projectId
+    ? getActivityChartStats(
+        data,
+        syncedUntil,
+        maxCounts[projectId],
+        activityTotals?.[projectId],
+      )
+    : undefined
+
+  return {
+    data,
+    syncWarning,
+    syncedUntil,
+    stats,
+  }
+}
+
+function getActivityChartStats(
+  data: ActivityChartDataPoint[],
+  syncedUntil: UnixTime,
+  maxCounts:
+    | {
+        uopsCount: number
+        uopsTimestamp: number
+        count: number
+        countTimestamp: number
+      }
+    | undefined,
+  totals: ActivityTotals | undefined,
+): ActivityProjectChartStats | undefined {
+  if (!maxCounts) return undefined
+
+  const currentData = data.find(([timestamp]) => timestamp === syncedUntil)
+  const sevenDaysAgoData = data.find(
+    ([timestamp]) => timestamp === syncedUntil - 7 * UnixTime.DAY,
+  )
+
+  const pastDaySumTps = currentData?.[1] ?? null
+  const pastDaySumUops = currentData?.[3] ?? pastDaySumTps
+  const sevenDaysAgoTps = sevenDaysAgoData?.[1] ?? 0
+  const sevenDaysAgoUops = sevenDaysAgoData?.[3] ?? sevenDaysAgoTps
+
+  return buildActivityProjectChartStats({
+    pastDayCount: pastDaySumTps,
+    pastDayUopsCount: pastDaySumUops,
+    sevenDaysAgoCount: sevenDaysAgoTps,
+    sevenDaysAgoUopsCount: sevenDaysAgoUops,
+    maxCounts,
+    totals,
+  })
+}
+
+function getMockActivityChart({
+  range,
+}: ActivityChartParams): ActivityChartData {
+  const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
+  const timestamps = generateTimestamps(adjustedRange, 'day')
+
+  return {
+    data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),
+    syncWarning: undefined,
+    syncedUntil: adjustedRange[1],
+    stats: undefined,
+  }
+}

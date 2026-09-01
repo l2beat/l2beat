@@ -3,13 +3,12 @@ import type {
   BlobClient,
   BlobsInBlock,
   CelestiaApiClient,
+  CelestiaEvent,
   CoingeckoClient,
 } from '@l2beat/shared'
-import type { CelestiaEvent } from '@l2beat/shared/build/clients/api-celestia/types'
 import type {
   Bytes,
   ChainSpecificAddress,
-  EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -22,7 +21,7 @@ import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { IStatelessProvider } from './IStatelessProvider'
 
 export interface ContractDeployment {
-  deployer: EthereumAddress
+  deployer: ChainSpecificAddress
   transactionHash: Hash256
   blockNumber: number
   timestamp: UnixTime

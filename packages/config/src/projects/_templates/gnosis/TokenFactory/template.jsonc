@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Factory used by Omnibridge to deploy wrapped tokens representing assets native to the other chain.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the token implementation used for newly deployed Omnibridge wrapped tokens."
+        }
+      ]
+    },
+    "tokenImage": {
+      "description": "Template implementation cloned for newly deployed Omnibridge wrapped tokens.",
+      "severity": "HIGH"
+    }
+  },
+  "ignoreRelatives": ["tokenImage"]
+}

@@ -1,14 +1,12 @@
 {
   "ATPWithdrawableAndClaimableStaker.sol": {
-    "hash": "0x6cdddad2a112371b78cb13598f05b4842407285d49ef85ac10aaa8e4c4a5a970",
+    "hash": "0xe3f9d730e85c98706df1db86e1682d4a69ea607c47c8ff342ef9eab52f948071",
     "address": "eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42",
-    "chain": "ethereum",
     "blockNumber": 23867964
   },
   "ATPWithdrawableAndClaimableStakerV2.sol": {
-    "hash": "0xdbe19cd7f53b8c978b7b4fdb849f158f916d347912ce37296c14163a8c0c7296",
+    "hash": "0xdedad47dc80d82e89d8c6cd872c622e045234f9096fe5a384d21e54c4bc4ce8e",
     "address": "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95",
-    "chain": "ethereum",
     "blockNumber": 24283306
   }
 }

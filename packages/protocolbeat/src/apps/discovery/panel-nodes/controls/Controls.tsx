@@ -1,37 +1,41 @@
+import { AlignControls } from './AlignControls'
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
+import { ControlGroup } from './ControlGroup'
+import { GroupControls } from './GroupControls'
 import { HideButton } from './HideButton'
-import { HideUnknownsButton } from './HideUnknowns'
+import { HideNodesButton } from './HideNodesButton'
+import { LayoutLibrary } from './LayoutLibrary'
+import { RedoButton } from './RedoButton'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'
+import { UndoButton } from './UndoButton'
 import { ValuesButton } from './ValuesButton'
 
 export function Controls() {
   return (
-    <div className="-translate-x-1/2 absolute bottom-8 left-1/2 flex select-none items-center gap-1 rounded bg-black p-2 shadow-[0_10px_20px_-10px_#00000088]">
-      <div className="flex flex-col gap-2">
-        <ClusterLayoutButton />
-        <StackLayoutButton />
-      </div>
-      <span className="text-coffee-600">|</span>
-      <div className="flex flex-col gap-2">
-        <ShowButton />
-        <div className="flex gap-1">
-          <HideUnknownsButton />
-          <Settings />
-        </div>
-      </div>
-      <span className="text-coffee-600">|</span>
-
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1">
+    <div className="absolute inset-x-2 bottom-4 z-10 flex justify-center">
+      <div className="flex max-w-full flex-wrap justify-center gap-2 pb-1">
+        <AlignControls />
+        <ControlGroup>
+          <UndoButton />
+          <RedoButton />
+          <ClusterLayoutButton />
+          <StackLayoutButton />
+        </ControlGroup>
+        <ControlGroup>
+          <ShowButton />
+          <HideNodesButton />
+        </ControlGroup>
+        <ControlGroup>
+          <GroupControls />
           <HideButton />
           <ColorButton />
-        </div>
-        <div className="flex gap-1">
           <ValuesButton />
-        </div>
+          <Settings className="px-2.5" />
+          <LayoutLibrary className="px-2.5" />
+        </ControlGroup>
       </div>
     </div>
   )

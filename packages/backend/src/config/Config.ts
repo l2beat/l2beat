@@ -3,6 +3,7 @@ import type {
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
+import type { CleanableRepoName } from '@l2beat/database'
 import type {
   ConfigReader,
   DiscoveryChainConfig,
@@ -10,6 +11,8 @@ import type {
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { createRemoteJWKSet } from 'jose'
+import type { PrivacyConfig } from '../modules/privacy/types'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -17,6 +20,7 @@ import type {
   PriceConfig,
   ProjectTvsConfig,
 } from '../modules/tvs/types'
+import type { Configuration } from '../tools/uif/multi/types'
 import type { ChainApi } from './chain/ChainApi'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { InteropAggregationConfig } from './features/interop'
@@ -52,7 +56,10 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
+
+  readonly backoffice: BackofficeFeatureConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -85,8 +92,6 @@ export interface DatabaseConfig {
 export interface ClockConfig {
   readonly minBlockTimestamp: UnixTime
   readonly safeTimeOffsetSeconds: number
-  readonly hourlyCutoffDays: number
-  readonly sixHourlyCutoffDays: number
 }
 
 export interface TvsConfig {
@@ -95,6 +100,11 @@ export interface TvsConfig {
   readonly prices: PriceConfig[]
   readonly chains: string[]
   readonly blockTimestamps: BlockTimestampConfig[]
+  readonly cleaner: false | Configuration<TvsCleanerConfig>[]
+}
+
+export type TvsCleanerConfig = {
+  name: CleanableRepoName
 }
 
 export interface TrackedTxProject {
@@ -147,7 +157,6 @@ export interface ChainTvlConfig {
 }
 
 export interface HealthConfig {
-  readonly releasedAt?: string
   readonly startedAt: string
   readonly commitSha: string
 }
@@ -186,6 +195,8 @@ export interface UpdateMonitorConfig {
   }
 }
 
+export type DeploymentEnvironment = 'local' | 'staging' | 'production'
+
 export interface NotificationsConfig {
   readonly updateMonitor:
     | {
@@ -200,6 +211,7 @@ export interface NotificationsConfig {
   readonly interop:
     | {
         discordWebhookUrl: string
+        backofficeEnvironment: DeploymentEnvironment
       }
     | false
   readonly ethereumBlobs:
@@ -213,10 +225,20 @@ export interface AnomaliesConfig {
   readonly anomaliesMinDuration: number
 }
 
+export interface InteropPromotionConfig {
+  /** 'off' = always promote; 'shadow' = evaluate + record, never block/alert; 'enforce' = live gate. */
+  mode: 'off' | 'shadow' | 'enforce'
+  /** On engine error: block (true) or promote anyway (false). */
+  failClosed: boolean
+  /** A single lane's volume may not exceed this. */
+  maxLaneVolumeUsd: number
+}
+
 export interface InteropFeatureConfig {
   aggregation:
     | {
         configs: InteropAggregationConfig[]
+        promotion: InteropPromotionConfig
       }
     | false
   capture: {
@@ -226,6 +248,7 @@ export interface InteropFeatureConfig {
       type: 'evm'
     }[]
   }
+  knownChains: string[]
   matching: boolean
   cleaner: boolean
   dangerousOperationsEnabled: boolean
@@ -240,14 +263,37 @@ export interface InteropFeatureConfig {
     enabled: boolean
     tokenDbApiUrl: string
     tokenDbAuthToken?: string
+    maxTokenPriceUsd: number
+    maxTransferValueUsd: number
+    batchSize: number
   }
   config: {
     enabled: boolean
     chains: { id: number; name: string }[]
     configIntervalMs: number
   }
+  relay: {
+    batchSize: number
+    maxRequestsPerUpdate: number
+    safeTimeOffset: number
+  }
   inMemoryEventCap: number
   oneSidedChains: string[]
+}
+
+export interface BackofficeFeatureConfig {
+  auth: BackofficeAuthConfig | false
+}
+
+export interface BackofficeAuthConfig {
+  zeroTrust: BackofficeZeroTrustAuthConfig
+  authToken?: string
+}
+
+export interface BackofficeZeroTrustAuthConfig {
+  JWKS: ReturnType<typeof createRemoteJWKSet>
+  aud: string
+  teamDomain: string
 }
 
 export interface DaBeatConfig {
@@ -257,7 +303,7 @@ export interface DaBeatConfig {
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
-  readonly availWsUrl: string
+  readonly availRpcUrl: string
   readonly espressoApiUrl: string
 }
 
@@ -307,6 +353,7 @@ export type BlockLayerDaTrackingConfig = {
   name: string
   url: string
   callsPerMinute: number
+  timeout?: number
   batchSize: number
   startingBlock: number
 }

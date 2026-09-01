@@ -181,6 +181,16 @@ describe(StorageHandler.name, () => {
 
       expect(handler.dependencies).toEqual(['bar', 'foo', 'baz'])
     })
+
+    it('detects the base field of a nested reference', () => {
+      const handler = new StorageHandler('someName', {
+        type: 'storage',
+        slot: [1, '{{ constructorArgs._slot }}'],
+        offset: '{{ owner }}',
+      })
+
+      expect(handler.dependencies).toEqual(['owner', 'constructorArgs'])
+    })
   })
 
   describe('computing the slot', () => {

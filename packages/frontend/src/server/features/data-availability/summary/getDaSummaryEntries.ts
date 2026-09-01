@@ -14,14 +14,16 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { getLiveness } from '../../layer2s/liveness/getLiveness'
+import type { LivenessResponse } from '../../layer2s/liveness/types'
 import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getLiveness } from '../../scaling/liveness/getLiveness'
-import type { LivenessResponse } from '../../scaling/liveness/types'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -31,13 +33,14 @@ import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import { shouldHaveNoBridgePage } from '../utils/shouldHaveNoBridgePage'
 
 export async function getDaSummaryEntries(): Promise<
   TabbedDaEntries<DaSummaryEntry>
 > {
   const [layers, bridges, dacs] = await Promise.all([
     ps.getProjects({
-      select: ['daLayer', 'statuses'],
+      select: ['daLayer', 'statuses', 'display'],
       whereNot: ['archivedAt'],
     }),
     ps.getProjects({
@@ -45,7 +48,7 @@ export async function getDaSummaryEntries(): Promise<
       optional: ['contracts'],
     }),
     ps.getProjects({
-      select: ['customDa', 'statuses'],
+      select: ['customDa', 'statuses', 'display'],
       whereNot: ['archivedAt'],
     }),
   ])
@@ -94,6 +97,7 @@ export interface DaSummaryEntry extends CommonDaEntry {
   tvs: {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   }
   bridges: DaBridgeSummaryEntry[]
 }
@@ -103,6 +107,7 @@ export interface DaBridgeSummaryEntry
   tvs: {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   }
   risks: RosetteValue[]
   usedIn: UsedInProjectWithIcon[]
@@ -116,12 +121,13 @@ export interface DaBridgeSummaryEntry
 }
 
 function getDaSummaryEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessResponse,
@@ -133,10 +139,10 @@ function getDaSummaryEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarnings: getProjectVerificationWarnings(
+        verificationWarnings: getProjectVerification(
           b,
           projectsChangeReport.getChanges(b.id),
-        ),
+        ).warnings,
         underReview:
           !!layer.statuses.reviewStatus || !!b.statuses.reviewStatus
             ? 'config'
@@ -144,7 +150,7 @@ function getDaSummaryEntry(
               ? 'impactful-change'
               : undefined,
         ongoingAnomaly: bridgeLiveness?.anomalies.some(
-          (a) => a.end === undefined,
+          (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
         ),
       },
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
@@ -154,13 +160,13 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: manifest.getUrl(`/icons/${project.slug}.png`),
-          url: `/scaling/projects/${project.slug}`,
+          url: `/layer2s/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     }
   })
 
-  if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
+  if (shouldHaveNoBridgePage(layer.daLayer, bridges.length)) {
     daBridges.unshift({
       name: 'No Bridge',
       slug: 'no-bridge',
@@ -175,7 +181,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: manifest.getUrl(`/icons/${project.slug}.png`),
-          url: `/scaling/projects/${project.slug}`,
+          url: `/layer2s/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     })
@@ -206,10 +212,11 @@ function getDaSummaryEntry(
 }
 
 function getDacEntry(
-  project: Project<'customDa' | 'statuses'>,
+  project: Project<'customDa' | 'statuses' | 'display'>,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
 ): DaSummaryEntry {
   const usedIn: UsedInProject[] = [
@@ -233,7 +240,7 @@ function getDacEntry(
   const bridgeEntry: DaBridgeSummaryEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,
     slug: project.slug,
-    href: `/scaling/projects/${project.slug}`,
+    href: `/layer2s/projects/${project.slug}`,
     statuses: {},
     tvs,
     risks: mapBridgeRisksToRosetteValues(project.customDa.risks),
@@ -241,7 +248,7 @@ function getDacEntry(
     usedIn: usedIn.map((project) => ({
       ...project,
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
-      url: `/scaling/projects/${project.slug}`,
+      url: `/layer2s/projects/${project.slug}`,
     })),
   }
 
@@ -257,12 +264,13 @@ function getDacEntry(
 }
 
 function getEthereumEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge' | 'statuses'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
     sevenDaysAgo: number
+    changePeriod: PercentageChangePeriod
   },
 ): DaSummaryEntry {
   const bridge = bridges[0]
@@ -274,6 +282,7 @@ function getEthereumEntry(
     icon: manifest.getUrl(`/icons/${layer.slug}.png`),
     name: layer.name,
     nameSecondLine: layer.daLayer.type,
+    description: layer.display.description,
     href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     backgroundColor: 'blue',
     statuses: {},
@@ -294,7 +303,7 @@ function getEthereumEntry(
           .map((project) => ({
             ...project,
             icon: manifest.getUrl(`/icons/${project.slug}.png`),
-            url: `/scaling/projects/${project.slug}`,
+            url: `/layer2s/projects/${project.slug}`,
           })),
       },
     ],

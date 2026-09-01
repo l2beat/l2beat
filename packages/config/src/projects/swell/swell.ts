@@ -31,8 +31,40 @@ export const swell = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1734566400), // 2024-12-19T00:00:00Z
+  archivedAt: UnixTime(1785940019), // 2026-08-05T14:26:59Z
   discovery,
   genesisTimestamp,
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21278355, // first batch posted to the inbox
+      untilBlock: 22204309, // last batch of this sequencer
+      inbox: EthereumAddress('0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0'),
+      sequencers: [
+        EthereumAddress('0xf854cd5B26bfd73d51236c0122798907Ed65B1f2'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 22204309,
+      untilBlock: 25247844, // last batch of this sequencer
+      inbox: EthereumAddress('0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0'),
+      sequencers: [
+        EthereumAddress('0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 25247844,
+      inbox: EthereumAddress('0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0'),
+      sequencers: [
+        EthereumAddress('0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9'),
+      ],
+    },
+  ],
   additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Restaking'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -65,6 +97,7 @@ export const swell = opStackL2({
     name: 'swell',
     chainId: 1923,
     sinceTimestamp: UnixTime(1732696703),
+    untilTimestamp: UnixTime(1785940019),
     coingeckoPlatform: 'swellchain',
     apis: [
       {

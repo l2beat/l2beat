@@ -1,0 +1,176 @@
+import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
+import { Badge } from '~/components/core/Badge'
+import type { PluginStatusRow } from '../types'
+import {
+  compareOptionalBigIntStrings,
+  formatDistanceFromNow,
+  formatTimestamp,
+} from './utils'
+
+const columnHelper = createColumnHelper<PluginStatusRow>()
+
+export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
+  columnHelper.accessor('pluginName', {
+    header: 'Plugin',
+    meta: {
+      csvHeader: 'Plugin',
+      filter: { kind: 'select' },
+    },
+  }),
+  columnHelper.accessor('chain', {
+    header: 'Chain',
+    cell: ({ getValue }) => (
+      <span className="font-mono text-xs">{getValue()}</span>
+    ),
+    meta: {
+      csvHeader: 'Chain',
+      filter: { kind: 'select' },
+    },
+  }),
+  columnHelper.accessor('chainStatus', {
+    header: 'Chain status',
+    cell: ({ getValue }) => {
+      const value = getValue()
+      const variant =
+        value === 'active'
+          ? 'secondary'
+          : value === 'disabled'
+            ? 'outline'
+            : 'destructive'
+
+      return (
+        <Badge
+          variant={variant}
+          title={
+            value === 'disabled'
+              ? 'Chain is known but capture is disabled; sync state is kept for re-enable'
+              : value === 'stale'
+                ? 'Chain or plugin no longer exists; this row will be removed by the cleaner'
+                : undefined
+          }
+        >
+          {value}
+        </Badge>
+      )
+    },
+    meta: {
+      csvHeader: 'Chain status',
+      filter: { kind: 'select' },
+    },
+  }),
+  columnHelper.accessor((row) => row.syncMode ?? 'none', {
+    id: 'syncMode',
+    header: 'Sync mode',
+    cell: ({ row }) =>
+      row.original.syncMode ? (
+        <Badge variant="outline">{row.original.syncMode}</Badge>
+      ) : (
+        <span className="text-muted-foreground">—</span>
+      ),
+    meta: {
+      csvHeader: 'Sync mode',
+      filter: { kind: 'select' },
+    },
+  }),
+  columnHelper.accessor('toTimestamp', {
+    header: 'Distance from now',
+    enableGlobalFilter: false,
+    invertSorting: true,
+    cell: ({ getValue }) => {
+      const value = getValue()
+
+      return (
+        <span
+          className="font-mono text-xs"
+          title={
+            value !== undefined ? `${formatTimestamp(value)} UTC` : undefined
+          }
+        >
+          {value !== undefined ? formatDistanceFromNow(value) : 'n/a'}
+        </span>
+      )
+    },
+    meta: {
+      csvHeader: 'Distance from now',
+      getCsvValue: ({ row }) =>
+        row.original.toTimestamp !== undefined
+          ? `${formatTimestamp(row.original.toTimestamp)} UTC`
+          : 'n/a',
+    },
+  }),
+  columnHelper.accessor((row) => (row.blocksAggregation ? 'yes' : 'no'), {
+    id: 'blocksAggregation',
+    header: 'Blocks aggregation',
+    enableGlobalFilter: false,
+    cell: ({ getValue }) => {
+      const value = getValue()
+
+      return (
+        <Badge variant={value === 'yes' ? 'destructive' : 'secondary'}>
+          {value === 'yes' ? 'Yes' : 'No'}
+        </Badge>
+      )
+    },
+    meta: {
+      csvHeader: 'Blocks aggregation',
+      filter: { kind: 'select' },
+    },
+  }),
+  columnHelper.accessor('toBlock', {
+    header: 'To block',
+    sortingFn: (rowA, rowB, columnId) =>
+      compareOptionalBigIntStrings(
+        rowA.getValue<string | undefined>(columnId),
+        rowB.getValue<string | undefined>(columnId),
+      ),
+    cell: ({ getValue }) => (
+      <span className="font-mono text-xs">{getValue() ?? 'n/a'}</span>
+    ),
+    meta: {
+      csvHeader: 'To block',
+      getCsvValue: ({ row }) => row.original.toBlock ?? 'n/a',
+    },
+  }),
+  columnHelper.accessor((row) => row.lastError ?? '', {
+    id: 'lastError',
+    header: 'Last error',
+    cell: ({ row }) =>
+      row.original.lastError ? (
+        <div className="max-w-xl whitespace-normal break-all font-mono text-xs">
+          {row.original.lastError}
+        </div>
+      ) : (
+        <span className="text-muted-foreground">None</span>
+      ),
+    meta: {
+      csvHeader: 'Last error',
+      getCsvValue: ({ row }) => row.original.lastError ?? '',
+    },
+  }),
+  columnHelper.accessor('resyncRequestedFrom', {
+    header: 'Resync from',
+    enableGlobalFilter: false,
+    invertSorting: true,
+    cell: ({ getValue }) => {
+      const value = getValue()
+
+      return (
+        <span
+          className="font-mono text-xs"
+          title={
+            value !== undefined ? `${formatTimestamp(value)} UTC` : undefined
+          }
+        >
+          {value !== undefined ? formatDistanceFromNow(value) : '-'}
+        </span>
+      )
+    },
+    meta: {
+      csvHeader: 'Resync from',
+      getCsvValue: ({ row }) =>
+        row.original.resyncRequestedFrom !== undefined
+          ? `${formatTimestamp(row.original.resyncRequestedFrom)} UTC`
+          : '',
+    },
+  }),
+]

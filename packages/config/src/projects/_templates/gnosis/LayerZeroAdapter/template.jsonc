@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["endpoint", "LAYER_ZERO_ENDPOINT"],
+  "description": "Hashi adapter that receives message-hash batches over LayerZero and stores them under the configured source chain for later Hashi aggregation.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change which LayerZero source endpoint IDs and reporter addresses are allowed to write hashes into the adapter."
+        }
+      ]
+    },
+    "LAYER_ZERO_ENDPOINT": {
+      "description": "LayerZero endpoint that is allowed to call `lzReceive` on this adapter.",
+      "severity": "HIGH"
+    }
+  }
+}

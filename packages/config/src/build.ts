@@ -8,16 +8,18 @@ async function main() {
   await db.init()
 
   const projects = getProjects()
-  for (const project of projects) {
-    await db.saveProject(project)
-  }
-
   const chains = projects
     .map((p) => p.chainConfig)
     .filter((c) => c !== undefined)
 
   const tokenList = getTokenList(chains)
-  for (const token of tokenList) {
-    await db.saveToken(token)
-  }
+  await db.transaction(async () => {
+    for (const project of projects) {
+      await db.saveProject(project)
+    }
+
+    for (const token of tokenList) {
+      await db.saveToken(token)
+    }
+  })
 }

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -17,6 +17,7 @@ export const karak: ScalingProject = opStackL2({
   ],
   display: {
     name: 'K2',
+    aliases: ['Karak', 'OpenGDP'],
     slug: 'k2',
     description:
       'K2 is a general-purpose L2, which rebranded to the OpenGDP Network to soon become an asset tokenization-focused L1.',
@@ -46,10 +47,14 @@ export const karak: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp: UnixTime(1703226695), //First sequencer transaction
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
+    },
+  ],
   isNodeAvailable: true,
   milestones: [
     {

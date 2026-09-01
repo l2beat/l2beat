@@ -45,7 +45,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
       </div>
       <VerticalSeparator className="h-[30px]" />
       <button
-        className="flex h-full items-center justify-center rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+        className="flex h-full items-center justify-center text-nowrap rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
         onClick={() => {
           dispatch({
             type: 'setInversed',

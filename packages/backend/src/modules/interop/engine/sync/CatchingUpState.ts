@@ -129,7 +129,7 @@ export class CatchingUpState implements TimeloopState {
       rangeData.fullRange,
     )
 
-    this.logger.info('New range synced', {
+    this.logger.debug('New range synced', {
       chain: this.syncer.chain,
       pluginName: this.syncer.cluster.name,
       range: rangeData.nextRange,
@@ -145,12 +145,13 @@ export class CatchingUpState implements TimeloopState {
   ): Promise<RpcLog[]> {
     const addresses =
       logQuery.addresses === '*' ? undefined : Array.from(logQuery.addresses)
-    this.logger.info('Getting logs', {
+    this.logger.debug('Getting logs', {
       chain,
       from: range.from,
       to: range.to,
-      addresses: logQuery.addresses === '*' ? 'all' : addresses,
-      topics: [logQuery.topic0s],
+      addressCount:
+        logQuery.addresses === '*' ? 'all' : (addresses?.length ?? 0),
+      topic0Count: logQuery.topic0s.size,
     })
 
     const filter: Parameters<InteropEventSyncer['getLogs']>[0] = {

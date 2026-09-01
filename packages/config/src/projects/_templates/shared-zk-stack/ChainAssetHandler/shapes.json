@@ -1,13 +1,12 @@
 {
   "ChainAssetHandler.sol": {
-    "hash": "0x0ae09698e3bbec162b9457ba33b3184a082d0d89367f001764f8b8b22a1f950d",
+    "hash": "0xf493716caf97cc5a5945395a8c671ba30336e0bfd1f625310252ba29f4ee1377",
     "address": "eth:0xaa180C70126f751C164465638770B865965A744B",
     "blockNumber": 23588465
   },
   "L1ChainAssetHandler_ADI": {
-    "hash": "0x83f8c9ede14521155f78bb0c1f93ba0244f9a7e693b6c1f668568efa3b243b0a",
+    "hash": "0x2d180ed196a27c14059bb8f0e0b19dd37fbef3fa98f255eb7fa382bcb5b0f318",
     "address": "eth:0x0C06695f21B118a9A10101D303f00575A566D1A0",
-    "chain": "ethereum",
     "blockNumber": 24038982
   }
 }

@@ -9,13 +9,13 @@ import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
 import { SettingsDialog } from './SettingsDialog'
-import { useMultiViewStore } from './store'
+import { addPanel, useDockingStore } from './store'
 
 export function TopBar(props: { project: string }) {
-  const layouts = useMultiViewStore((state) => state.layouts)
-  const selectedLayout = useMultiViewStore((state) => state.selectedLayout)
-  const loadLayout = useMultiViewStore((state) => state.loadLayout)
-  const addPanel = useMultiViewStore((state) => state.addPanel)
+  const layouts = useDockingStore((state) => state.layouts)
+  const selectedLayout = useDockingStore((state) => state.selectedLayout)
+  const loadLayout = useDockingStore((state) => state.loadLayout)
+  const resetLayout = useDockingStore((state) => state.resetLayout)
   const { command } = useTerminalStore()
   const { killCommand, discover } = useDiscoveryCommand()
 
@@ -23,7 +23,7 @@ export function TopBar(props: { project: string }) {
   const useDevMode = true
 
   return (
-    <div className="flex h-10 select-none items-center justify-between px-2">
+    <div className="select-none items-center justify-between px-2 max-md:invisible md:flex md:h-10">
       <div className="hidden items-center gap-2 md:flex">
         <Link to="/ui">
           <img className="-top-[3px] relative h-[20px]" src="/logo.svg" />
@@ -82,6 +82,14 @@ export function TopBar(props: { project: string }) {
           >
             <IconPlus />
             <span className="max-lg:hidden">Panel</span>
+          </Button>
+          <Button
+            size="small"
+            className="rounded-sm"
+            onClick={() => resetLayout()}
+            title="Reset to default layout"
+          >
+            <span>Reset</span>
           </Button>
         </div>
 

@@ -1,8 +1,7 @@
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 
 interface Props {
   newProjects: EcosystemMonthlyUpdateEntry['newProjects']
@@ -38,9 +37,14 @@ function NewProject({
         <div className="grid grid-cols-5 items-center text-sm">
           <a
             className="flex w-fit items-center gap-2 rounded-[4px] p-1 hover:bg-primary/10"
-            href={`/scaling/projects/${project.slug}`}
+            href={`/layer2s/projects/${project.slug}`}
           >
-            <img src={project.iconUrl} className="size-5" />
+            <img
+              src={project.iconUrl}
+              alt={project.name}
+              loading="lazy"
+              className="size-5"
+            />
             <span className="font-bold text-sm">{project.name}</span>
           </a>
           <span className="font-medium">{project.category}</span>
@@ -72,7 +76,12 @@ function NewProject({
       {/* Mobile */}
       <div className="md:hidden">
         <div className="flex items-center gap-2">
-          <img src={project.iconUrl} className="size-5" />
+          <img
+            src={project.iconUrl}
+            alt={project.name}
+            loading="lazy"
+            className="size-5"
+          />
           <span className="font-bold text-sm">{project.name}</span>
         </div>
         {project.badges.length > 0 && (

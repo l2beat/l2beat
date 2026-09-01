@@ -1,15 +1,39 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
+import { attachPermissions } from './attachPermissions'
 import { diffContracts, type FieldDiff } from './diffContracts'
-import type { EntryParameters, StructureEntry } from './types'
+import type { DiscoveryOutput, EntryParameters, StructureEntry } from './types'
 
 export interface DiscoveryDiff {
   name?: string
   address: ChainSpecificAddress
   addressType: StructureEntry['type']
   description?: string
+  template?: string
   diff?: FieldDiff[]
   type?: 'created' | 'deleted'
+}
+
+// Permissions are stored outside `entries`, so folding them in is what keeps a
+// permission change visible in a diff at all. Unlike the read path this joins
+// onto a copy: callers diff discoveries that are afterwards written to the
+// database and to disk, where permissions must stay out of the entries.
+export function entriesForDiff(
+  discovery: DiscoveryOutput | undefined,
+): EntryParameters[] {
+  if (discovery === undefined) {
+    return []
+  }
+  if (discovery.permissions === undefined) {
+    return discovery.entries
+  }
+
+  const copy = {
+    ...discovery,
+    entries: discovery.entries.map((entry) => ({ ...entry })),
+  }
+  attachPermissions([copy])
+  return copy.entries
 }
 
 export function diffDiscovery(
@@ -30,6 +54,7 @@ export function diffDiscovery(
           address: previousContract.address,
           addressType: previousContract.type,
           description: previousContract.description,
+          template: previousContract.template,
           type: 'deleted',
         })
       }
@@ -61,6 +86,7 @@ export function diffDiscovery(
         address: currentContract.address,
         addressType: currentContract.type,
         description: currentContract.description,
+        template: currentContract.template,
         diff,
       })
     }
@@ -79,6 +105,7 @@ export function diffDiscovery(
           address: currentContract.address,
           addressType: currentContract.type,
           description: currentContract.description,
+          template: currentContract.template,
           type: 'created',
         })
       }

@@ -3,7 +3,82 @@
   "name": "katana",
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 200,
-  "sharedModules": ["shared-polygon-cdk"],
+  "types": {
+    "OpSuccinctRollupConfigHash": {
+      "typeCaster": "Mapping",
+      "arg": {
+        // Reproduce future rollup config hashes before adding them to this mapping:
+        // 1. Checkout agglayer/op-succinct tag v3.12.0-agglayer, commit
+        //    32f9cfbe9067a1c97ec26e117bd958f5ece2975b.
+        // 2. Query Katana's OP node with optimism_rollupConfig and deserialize the result as
+        //    kona_genesis::RollupConfig from the checked-out revision.
+        // 3. Pretty-serialize the parsed struct with serde_json::to_string_pretty and hash the
+        //    resulting bytes with SHA-256, as implemented by hash_rollup_config in
+        //    utils/client/src/boot.rs. The config binary performs these steps when run as
+        //    cargo run --release --bin config -- --env-file <PATH_TO_ENV_FILE>.
+        // 4. Compare the result with AggchainFEP.opSuccinctConfigs(...).rollupConfigHash and add
+        //    a label only after they match. Unknown mapping values deliberately remain visible.
+        // Expected hash for the current Katana config:
+        // 0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09.
+        // Exact pretty-serialized RollupConfig preimage:
+        // {
+        //   "genesis": {
+        //     "l1": {
+        //       "number": 22441727,
+        //       "hash": "0x89600a4ddfb87a2cc4cfa75a35a0201531f5c4a37189515d7bef0d616770390d"
+        //     },
+        //     "l2": {
+        //       "number": 0,
+        //       "hash": "0x2d28253bc3362fb71336e4f45ba058a24167ef8f43aa2527d5ed9ecfa1d2d3d6"
+        //     },
+        //     "l2_time": 1746742811,
+        //     "system_config": {
+        //       "batcherAddr": "0x1ffda89c755f6d4af069897d77ccabb580fd412a",
+        //       "overhead": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        //       "scalar": "0x010000000000000000000000000000000000000000000000000c5fc500000558",
+        //       "gasLimit": 60000000,
+        //       "baseFeeScalar": null,
+        //       "blobBaseFeeScalar": null,
+        //       "eip1559Denominator": 0,
+        //       "eip1559Elasticity": 0,
+        //       "operatorFeeScalar": 0,
+        //       "operatorFeeConstant": 0,
+        //       "minBaseFee": 0,
+        //       "daFootprintGasScalar": 0
+        //     }
+        //   },
+        //   "block_time": 1,
+        //   "max_sequencer_drift": 600,
+        //   "seq_window_size": 3600,
+        //   "channel_timeout": 300,
+        //   "granite_channel_timeout": 50,
+        //   "l1_chain_id": 1,
+        //   "l2_chain_id": "katana",
+        //   "regolith_time": 0,
+        //   "canyon_time": 0,
+        //   "delta_time": 0,
+        //   "ecotone_time": 0,
+        //   "fjord_time": 0,
+        //   "granite_time": 0,
+        //   "holocene_time": 0,
+        //   "isthmus_time": 1746806401,
+        //   "jovian_time": 1773066601,
+        //   "karst_time": 1790179201,
+        //   "batch_inbox_address": "0x000d4411cdeb152378626b5c5e33fd5d6808939a",
+        //   "deposit_contract_address": "0x250d30c523104bf0a06825e7eade4dc46edfe40e",
+        //   "l1_system_config_address": "0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+        //   "alt_da": null,
+        //   "chain_op_config": {
+        //     "eip1559Elasticity": 6,
+        //     "eip1559Denominator": 50,
+        //     "eip1559DenominatorCanyon": 250
+        //   }
+        // }
+        "0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4": "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)",
+        "0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09": "Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)"
+      }
+    }
+  },
   "initialAddresses": [
     "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E", // l1crossdomainmessenger
     "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666", // aggchainFEP
@@ -12,10 +87,37 @@
     "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
     "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
     "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
-    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
+    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+    "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+    "katana:0x4200000000000000000000000000000000000010",
+    "katana:0x4200000000000000000000000000000000000016",
+    "katana:0x4200000000000000000000000000000000000014",
+    "katana:0x4200000000000000000000000000000000000011",
+    "katana:0x4200000000000000000000000000000000000012",
+    "katana:0x4200000000000000000000000000000000000017",
+    "katana:0x4200000000000000000000000000000000000015",
+    "katana:0x420000000000000000000000000000000000000F",
+    "katana:0x4200000000000000000000000000000000000002",
+    "katana:0x4200000000000000000000000000000000000013",
+    "katana:0x4200000000000000000000000000000000000019",
+    "katana:0x420000000000000000000000000000000000001A",
+    "katana:0x4200000000000000000000000000000000000042",
+    "katana:0x4200000000000000000000000000000000000020",
+    "katana:0x4200000000000000000000000000000000000021",
+    "katana:0x420000000000000000000000000000000000001b"
   ],
   "overrides": {
-    // name generic vaultBridge tokens
+    "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666": {
+      "fields": {
+        "selectedOpSuccinctConfig": {
+          "edit": [
+            "set",
+            "rollupConfigHash",
+            ["format", "OpSuccinctRollupConfigHash"]
+          ]
+        }
+      }
+    },
     "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F": {
       "displayName": "vbWBTC"
     },
@@ -31,7 +133,6 @@
     "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": {
       "displayName": "vbETH"
     },
-    // hide unused op stack contracts
     "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
       "category": "spam"
     },
@@ -55,6 +156,70 @@
     },
     "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E": {
       "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000010": {
+      "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000014": {
+      "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000012": {
+      "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000017": {
+      "category": "spam"
+    },
+    "katana:0x420000000000000000000000000000000000001A": {
+      "description": "Collects the L1 portion of the L2 transaction fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    },
+    "katana:0x4200000000000000000000000000000000000019": {
+      "description": "Collects EIP-1559 base fees",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    },
+    "katana:0x4200000000000000000000000000000000000011": {
+      "description": "Collects the sequencer fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "katana:0x420000000000000000000000000000000000001b": {
+    "description": "Collects the sequencer fees.",
+    "fields": {
+      "recipient": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "receive fees."
+          }
+        ]
+      }
     }
   }
 }

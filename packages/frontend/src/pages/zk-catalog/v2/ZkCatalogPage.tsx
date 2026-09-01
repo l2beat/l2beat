@@ -19,7 +19,7 @@ export function ZkCatalogPage({ ...props }: Props) {
       <SideNavLayout>
         <ZkCatalogHeader />
         <TableFilterContextProvider>
-          <div className="mr-4 mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+          <div className="mb-4 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 max-md:mt-4 max-md:px-4">
             <TableFilters entries={props.entries} />
             <TrustedSetupFrameworkLink />
           </div>
@@ -39,7 +39,7 @@ function TrustedSetupFrameworkLink() {
       rel="noreferrer"
       className={cn(
         'flex items-center gap-1 rounded-lg bg-linear-to-r from-purple-100 to-pink-100 font-semibold text-sm text-white',
-        'h-8 w-fit px-2 py-1 max-md:ml-4',
+        'h-8 w-fit px-2 py-1',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
       )}
       onClick={() => {

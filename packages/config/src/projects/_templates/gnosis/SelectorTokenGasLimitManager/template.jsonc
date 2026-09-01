@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Module used by HomeOmnibridge to choose default, selector-specific, and token-specific gas limits for cross-chain Omnibridge message execution.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change default, selector-specific, and token-specific gas limits used by HomeOmnibridge cross-chain messages."
+        }
+      ]
+    },
+    "bridge": {
+      "description": "AMB bridge that reads gas limits from this manager for HomeOmnibridge messages.",
+      "severity": "HIGH"
+    },
+    "requestGasLimit": {
+      "description": "Default gas limit used for Omnibridge message execution on Ethereum unless a selector-specific or token-specific override is configured.",
+      "severity": "HIGH"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -24,6 +24,7 @@ export const ancient: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Ancient8',
+    aliases: ['Ancient 8'],
     slug: 'ancient8',
     warning:
       'The fault proof system is deployed but is not functional. The chain ID is not included in the op-program superchain registry, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
@@ -58,10 +59,14 @@ export const ancient: ScalingProject = opStackL2({
   },
   genesisTimestamp: UnixTime(1705985147),
   isNodeAvailable: 'UnderReview',
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg=',
+    },
+  ],
   milestones: [
     {
       title: 'Ancient8 Network Launch',

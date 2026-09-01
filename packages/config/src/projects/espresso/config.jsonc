@@ -5,7 +5,9 @@
   "initialAddresses": ["eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"],
   "names": {
     "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "HotShotLightClient",
-    "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": "EspressoMultisig"
+    "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": "EspressoMultisig",
+    "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock",
+    "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB": "EspressoOpsMultisig"
   },
   "overrides": {
     "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": {

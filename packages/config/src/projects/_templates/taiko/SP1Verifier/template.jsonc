@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TaikoSP1Verifier",
+  "description": "Gating router contract to verify batches using SP1.",
+  "category": "core",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage trusted SP1 program verification keys."
+        }
+      ]
+    },
+    "trustedPrograms": {
+      "description": "Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "programVKey",
+        "add": { "event": "ProgramTrusted", "where": ["=", "#trusted", true] },
+        "remove": {
+          "event": "ProgramTrusted",
+          "where": ["=", "#trusted", false]
+        }
+      }
+    }
+  }
+}

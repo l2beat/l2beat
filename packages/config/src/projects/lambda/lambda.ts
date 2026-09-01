@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('lambda')
 
@@ -11,13 +11,12 @@ export const lambda: ScalingProject = opStackL2({
   addedAt: UnixTime(1718703383), // 2024-06-18T09:36:23Z
   archivedAt: UnixTime(1739145600), // 2025-02-10T00:00:00.000Z,
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19674409 })],
   additionalPurposes: ['Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Lambda Chain',
     slug: 'lambda',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and -availability.',
     links: {

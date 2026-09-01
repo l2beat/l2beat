@@ -1,7 +1,8 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const espressoprover: BaseProject = {
   id: ProjectId('espressoprover'),
@@ -40,11 +41,7 @@ export const espressoprover: BaseProject = {
         ZK_CATALOG_TAGS.Other.CustomCircuits,
       ],
     },
-    proofSystemInfo: `
-    ## Description
-
-    Espresso proof system implements a light client of HotShot consensus of Espresso network, i.e. it verifies that a sufficient number of Espresso nodes have correctly signed consensus message. It is implemented by a [Jellyfish Plonk](https://github.com/EspressoSystems/jellyfish) proof system on a [custom circuit](https://github.com/EspressoSystems/espresso-network/blob/2c166fe13a730733d18198d3989d3be2b4c42da8/hotshot-state-prover/src/v3/circuit.rs) that checks all necessary conditions. Jellyfish is a Rust implementation of [Plonk system](https://eprint.iacr.org/2019/953.pdf) without significant modifications. [This code](https://github.com/EspressoSystems/espresso-network/blob/2c166fe13a730733d18198d3989d3be2b4c42da8/contracts/rust/gen-vk-contract/src/main.rs) generates a Solidity verifier to check zk proofs within EVM.
-    `,
+    proofSystemInfo: readProjectMarkdown('espressoprover', 'proofSystemInfo'),
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
@@ -80,10 +77,10 @@ export const espressoprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x098c593361d12dd638ce7dbf34c8c6a655f8274c',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

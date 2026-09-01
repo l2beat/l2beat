@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Receives committee-consensus reports of Lido's Beacon Chain balances, validator state, withdrawals, and staking-module accounting data, then drives the stETH accounting rebase and related protocol updates.",
+  "category": "core",
+  "ignoreMethods": ["getLastProcessingRefSlot"],
+  "ignoreInWatchMode": [
+    "getConsensusReport",
+    "getCurrentFrame",
+    "getProcessingState"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke every AccountingOracle role."
+        }
+      ]
+    },
+    "consensusContractManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_CONSENSUS_CONTRACT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the HashConsensus contract that supplies accepted accounting report hashes."
+        }
+      ]
+    },
+    "consensusVersionManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_CONSENSUS_VERSION_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the consensus version that accounting reports must use."
+        }
+      ]
+    },
+    "dataSubmitters": {
+      "copy": "accessControl",
+      "edit": ["get", "SUBMIT_DATA_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit accounting report data and extra-data batches whose hashes have reached oracle consensus."
+        }
+      ]
+    }
+  }
+}

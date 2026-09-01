@@ -1,6 +1,6 @@
 {
   "StarkPerpetualEdgeX": {
-    "hash": "0xd2cfc40f85f0171f0b9b5a88fc7638bbb2af49fb1b87cf13a11d58f32403c598",
+    "hash": "0x7cd422f025b0fd3210c5dd5116401aea5673db49cd24c6a040b7b148d25dc7f4",
     "address": [
       "eth:0x8C43C9bec15d82D153C52518030e0a9590ABD35d",
       "eth:0x540Ad8576d2F90f28994ab001622F964945854A8",
@@ -11,7 +11,7 @@
     "blockNumber": 22188285
   },
   "StarkPerpetualUSDT": {
-    "hash": "0xd44985473645ee33ac39b971c16c6b06bbada1d7c54ae7aa1e106e020fc3f4c1",
+    "hash": "0xcf0ce6605c3fb6262ab3bd6dcc022c17b07991a65c45c0a2a2d97ed59da1a36e",
     "address": [
       "eth:0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",
       "eth:0x5a50e280883B1FB39Aa04Eb263BCA47630D17D8E",

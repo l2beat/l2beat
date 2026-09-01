@@ -1,0 +1,12 @@
+{
+  "DualGovernanceV2": {
+    "hash": "0x8923bda086d38da489840dcd7157b305452170106195da75c6d2cbd9db31473a",
+    "address": "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E",
+    "blockNumber": 25624347
+  },
+  "DualGovernanceV1": {
+    "hash": "0x59c219cf8f7e3ce3d15cdca0ba40f9df98481eaf24f447dde5e5acd526138b81",
+    "address": "eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db",
+    "blockNumber": 25624347
+  }
+}

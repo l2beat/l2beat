@@ -1,16 +1,16 @@
 {
   "rollup": {
-    "hash": "0xd216d1bc3ddc27353a122901c9226323aaff4c9ca1da61b91c7e1baf40b4c9b1",
+    "hash": "0xa08cf562bfb5eba5ffdf33e37e75490c86761ab2d1c0a2337d723fc94af2f850",
     "address": "eth:0x101e853255f3a0cA1dd3772d00893A103A6d0261",
     "blockNumber": 22880502
   },
   "rollupV2": {
-    "hash": "0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e",
+    "hash": "0xb781c24662607c1c245a223b792104be489be3eef4d16d3e3ec476eac4c6a032",
     "address": "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D",
     "blockNumber": 22980731
   },
   "Rollup_bluebird": {
-    "hash": "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732",
+    "hash": "0x18a889e730255386b3ecf5a44ea1cdcc2a4ecbd02908aa838976646eb02a9681",
     "address": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
     "blockNumber": 23088587
   }

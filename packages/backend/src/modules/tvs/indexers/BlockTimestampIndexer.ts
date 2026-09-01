@@ -1,15 +1,16 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
-import {
-  assert,
-  type Configuration,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
+} from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { BlockTimestampConfig } from '../types'
 
@@ -53,69 +54,92 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
     to: number,
     configurations: Configuration<BlockTimestampConfig>[],
   ) {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
-    if (timestamp > to) {
-      this.logger.info('Timestamp out of range', {
-        from,
-        to,
-        timestamp,
-      })
-      return () => Promise.resolve(to)
-    }
+    return await withCoreFeatureRpcMetricsContext(
+      'tvs.blockTimestamp',
+      { chain: configurations[0].properties.chainName },
+      async () => {
+        const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+        if (timestamp > to) {
+          this.logger.info('Timestamp out of range', {
+            from,
+            to,
+            timestamp,
+          })
+          return () => Promise.resolve(to)
+        }
 
-    this.logger.info('Fetching block number for timestamp', {
-      timestamp: timestamp,
-    })
+        this.logger.info('Fetching block number for timestamp', {
+          timestamp: timestamp,
+        })
 
-    const blockNumber =
-      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        timestamp,
-        configurations[0].properties.chainName,
-      )
+        const blockNumber =
+          await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+            timestamp,
+            configurations[0].properties.chainName,
+          )
 
-    this.logger.info('Fetched block number for timestamp', {
-      timestamp: timestamp,
-      blockNumber,
-    })
-
-    assert(
-      blockNumber >= this.blockHeight,
-      `Block number cannot be smaller than previously fetched: ${blockNumber} < ${this.blockHeight}`,
-    )
-
-    this.blockHeight = blockNumber
-
-    return async () => {
-      await this.$.db.tvsBlockTimestamp.upsertMany([
-        {
-          configurationId: configurations[0].id,
-          chain: configurations[0].properties.chainName,
-          timestamp,
+        this.logger.info('Fetched block number for timestamp', {
+          timestamp: timestamp,
           blockNumber,
-        },
-      ])
-      this.logger.info('Saved block number into DB', {
-        timestamp: timestamp,
-        blockNumber,
+        })
+
+        assert(
+          blockNumber >= this.blockHeight,
+          'Block number cannot be smaller',
+          {
+            blockNumber,
+            blockHeight: this.blockHeight,
+          },
+        )
+
+        this.blockHeight = blockNumber
+
+        return async () => {
+          await this.$.db.tvsBlockTimestamp.upsertMany([
+            {
+              configurationId: configurations[0].id,
+              chain: configurations[0].properties.chainName,
+              timestamp,
+              blockNumber,
+            },
+          ])
+          this.logger.info('Saved block number into DB', {
+            timestamp: timestamp,
+            blockNumber,
+          })
+          return timestamp
+        }
+      },
+    )
+  }
+
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const deletedRecords = await this.$.db.tvsBlockTimestamp.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
       })
-      return timestamp
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
     for (const configuration of configurations) {
+      const [from, to] = configuration.range
       const deletedRecords =
         await this.$.db.tvsBlockTimestamp.deleteByConfigInTimeRange(
           configuration.id,
-          UnixTime(configuration.from),
-          UnixTime(configuration.to),
+          from,
+          to,
         )
 
       if (deletedRecords > 0) {
-        this.logger.info('Deleted records for configuration', {
+        this.logger.info('Trimmed records for configuration', {
           id: configuration.id,
-          from: configuration.from,
-          to: configuration.to,
+          from,
+          to,
           deletedRecords,
         })
       }

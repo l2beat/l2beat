@@ -36,7 +36,10 @@ export function MarkdownSection({
         </figure>
       ) : null}
       <Markdown
-        className={cn(mdClassName, 'text-paragraph-15 md:text-paragraph-16')}
+        className={cn(
+          mdClassName,
+          'break-words text-paragraph-15 md:text-paragraph-16',
+        )}
       >
         {content}
       </Markdown>

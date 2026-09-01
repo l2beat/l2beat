@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Configuration contract that tells bridge contracts how to use Hashi as an additional message-validation layer.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the configured reporters, adapters, thresholds, Yaho or Yaru endpoints, and the remote target routing used for Hashi validation."
+        }
+      ]
+    },
+    "targetAddress": {
+      "description": "Remote bridge contract whose messages are being validated through this HashiManager.",
+      "severity": "HIGH"
+    },
+    "adapters": {
+      "description": "Remote adapter contracts whose stored hashes are aggregated by Hashi during message validation.",
+      "severity": "HIGH"
+    },
+    "reporters": {
+      "description": "Reporter contracts used when forwarding Yaho-dispatched hashes toward the remote adapters. Some adapters use `address(0)` because they verify Yaho events directly.",
+      "severity": "HIGH"
+    },
+    "threshold": {
+      "description": "Minimum number of adapters that must agree on a hash for Hashi validation to pass.",
+      "severity": "HIGH"
+    },
+    "expectedThreshold": {
+      "description": "Expected adapter threshold encoded in incoming Hashi messages before the bridge accepts them.",
+      "severity": "HIGH"
+    },
+    "expectedAdaptersHash": {
+      "description": "Keccak256 hash of the adapter set expected in incoming Hashi messages.",
+      "severity": "HIGH"
+    },
+    "targetChainId": {
+      "description": "Chain ID of the remote chain whose messages this HashiManager validates.",
+      "severity": "HIGH"
+    },
+    "yaho": {
+      "description": "Outbound Hashi dispatcher used to commit and relay message hashes from this chain.",
+      "severity": "HIGH"
+    },
+    "yaru": {
+      "description": "Inbound Hashi executor used to consume validated message hashes on this chain.",
+      "severity": "HIGH"
+    }
+  },
+  "category": "bridge-external"
+}

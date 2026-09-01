@@ -1,11 +1,11 @@
 {
   "L1StandardBridge": {
-    "hash": "0xe2afd35e21cefc5b6eda770f7082c3916b8353d50c158a857cfc2ada89027f5b",
+    "hash": "0x891879c732f55e4a1e0b74849ecdfab6087b9b5badb67f47471297015dede183",
     "address": "eth:0x3d20b96e5635CfCFF58c9CE66017F2240313B47C",
     "blockNumber": 22188285
   },
   "L1StandardBridge2": {
-    "hash": "0x31171ab8eadf4234ec9b516f45a99b4ba57e9270edb7dd669d39db328abe95eb",
+    "hash": "0x4e5886534493cca2b7663bf55924a64094f905426f547997ca167c4de5d78362",
     "address": "eth:0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A",
     "blockNumber": 22188285
   }

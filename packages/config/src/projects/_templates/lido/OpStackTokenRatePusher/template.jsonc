@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Pushes the current wstETH token rate to the token rate oracle on Optimism via the canonical OP Stack messenger whenever a rebase is reported.",
+  "category": "core",
+  "ignoreRelatives": ["MESSENGER", "L2_TOKEN_RATE_ORACLE"]
+}

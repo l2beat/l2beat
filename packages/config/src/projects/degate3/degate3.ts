@@ -21,7 +21,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -136,18 +136,12 @@ export const degate3: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('loopringprover'),
+    zkCatalogIds: [ProjectId('loopringprover')],
   },
   chainConfig: {
     name: 'degate3',
     chainId: undefined,
-    apis: [
-      {
-        type: 'degate3',
-        url: 'https://v1-mainnet-backend.degate.com/order-book-api',
-        callsPerMinute: 120,
-      },
-    ],
+    apis: [],
   },
   config: {
     associatedTokens: ['DG'],
@@ -221,7 +215,7 @@ export const degate3: ScalingProject = {
     ),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -441,6 +435,8 @@ export const degate3: ScalingProject = {
       ],
     },
     risks: [],
+    // project is archived so we don't bother with verifiers
+    // zkVerifiers: [discovery.getContractValue<ChainSpecificAddress>('LoopringV3', 'blockVerifierAddress')],
   },
   milestones: [
     {

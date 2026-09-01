@@ -1,9 +1,9 @@
+import { formatNumber } from '@l2beat/shared-pure'
 import type { ReactElement } from 'react'
 import { DivContainer } from '../DivContainer'
 import { IndicatorContainer } from '../IndicatorContainer'
 import { ProjectName } from '../ProjectName'
 import type { DiscoLupeProject } from './model'
-import { formatNumber } from './utils'
 
 export type ColumnId = (typeof AVAILABLE_COLUMNS_RAW)[number]['id']
 
@@ -63,8 +63,7 @@ const AVAILABLE_COLUMNS_RAW = [
     header: 'Is Live',
     id: 'zz',
     align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      !project.isUpcoming && !project.isArchived ? 'Yes' : 'No',
+    fn: (project: DiscoLupeProject) => (!project.isArchived ? 'Yes' : 'No'),
     displayFn: IndicatorContainer,
   },
   {
@@ -72,13 +71,6 @@ const AVAILABLE_COLUMNS_RAW = [
     id: 'zk',
     align: 'right',
     fn: (project: DiscoLupeProject) => (project.isUnderReview ? 'Yes' : 'No'),
-    displayFn: IndicatorContainer,
-  },
-  {
-    header: 'Is Upcoming',
-    id: 'mk',
-    align: 'right',
-    fn: (project: DiscoLupeProject) => (project.isUpcoming ? 'Yes' : 'No'),
     displayFn: IndicatorContainer,
   },
   {

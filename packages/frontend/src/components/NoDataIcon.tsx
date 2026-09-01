@@ -7,10 +7,6 @@ interface Props {
 }
 
 export function NoDataIcon({ content, className }: Props) {
-  if (!content) {
-    return null
-  }
-
   return (
     <Tooltip>
       <TooltipTrigger className={className}>

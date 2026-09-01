@@ -11,7 +11,7 @@ export interface MulticallConfigEntry {
 
 export interface MulticallRequest {
   address: EthereumAddress
-  data: Bytes
+  input: Bytes
 }
 
 export interface MulticallResponse {

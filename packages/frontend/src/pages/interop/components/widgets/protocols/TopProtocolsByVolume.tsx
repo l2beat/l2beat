@@ -1,5 +1,5 @@
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { formatCurrency } from '@l2beat/shared-pure'
+import type { InteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 
 export function TopProtocolsByVolume({

@@ -1,3 +1,4 @@
+import FakeTimers from '@sinonjs/fake-timers'
 import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import { describe } from 'mocha'
 import type { ElasticSearchClient } from './ElasticSearchClient'
@@ -11,7 +12,10 @@ import {
 const flushInterval = 10
 const id = 'some-id'
 const indexPrefix = 'logs'
-const indexName = createIndexName()
+/** Fixed instant so `createIndex()` and assertions share the same index name. */
+const fixedNow = new Date('2024-04-24T12:00:00.000Z')
+const expectedIndexName = `${indexPrefix}-${formatDate(fixedNow)}`
+
 const log = {
   '@timestamp': '2024-04-24T21:02:30.916Z',
   log: {
@@ -20,27 +24,62 @@ const log = {
   message: 'Update started',
 }
 
+/** Equal UTF-8 size per serialized log so byte overflow math is predictable. */
+function ecsSerializedLog(i: number): string {
+  return JSON.stringify({
+    ...log,
+    message: String(i).padStart(10, '0'),
+  })
+}
+
 describe(ElasticSearchTransport.name, () => {
+  let clock: FakeTimers.InstalledClock
+  let savedConsoleLog: typeof console.log
+
+  beforeEach(() => {
+    savedConsoleLog = console.log
+    console.log = () => {}
+    clock = FakeTimers.install({ now: fixedNow, shouldClearNativeTimers: true })
+  })
+
+  afterEach(() => {
+    console.log = savedConsoleLog
+    clock.uninstall()
+  })
+
   it("creates index if doesn't exist", async () => {
     const clientMock = createClientMock(false)
     const transportMock = createTransportMock(clientMock)
 
     transportMock.push(JSON.stringify(log))
 
-    // wait for log flus
-    await delay(flushInterval + 10)
+    await clock.tickAsync(flushInterval + 1)
 
-    expect(clientMock.indexExist).toHaveBeenOnlyCalledWith(indexName)
-    expect(clientMock.indexCreate).toHaveBeenOnlyCalledWith(indexName)
+    expect(clientMock.indexExist).toHaveBeenOnlyCalledWith(expectedIndexName)
+    expect(clientMock.indexCreate).toHaveBeenOnlyCalledWith(expectedIndexName)
   })
 
   it('does nothing if buffer is empty', async () => {
     const clientMock = createClientMock(false)
+    createTransportMock(clientMock)
 
-    // wait for log flush
-    await delay(flushInterval + 10)
+    await clock.tickAsync(flushInterval + 1)
 
     expect(clientMock.bulk).not.toHaveBeenCalled()
+  })
+
+  it('flush() sends buffered logs without advancing the flush interval timer', async () => {
+    const clientMock = createClientMock(false)
+    const transportMock = createTransportMock(clientMock)
+
+    transportMock.push(JSON.stringify(log))
+
+    await transportMock.flush()
+
+    expect(clientMock.bulk).toHaveBeenOnlyCalledWith(
+      [{ id, ...log }],
+      expectedIndexName,
+    )
   })
 
   it('pushes logs to ES if there is something in the buffer', async () => {
@@ -49,79 +88,271 @@ describe(ElasticSearchTransport.name, () => {
 
     transportMock.push(JSON.stringify(log))
 
-    // wait for log flush
-    await delay(flushInterval + 10)
+    await clock.tickAsync(flushInterval + 1)
 
     expect(clientMock.bulk).toHaveBeenOnlyCalledWith(
       [{ id, ...log }],
-      indexName,
+      expectedIndexName,
     )
   })
 
-  it('merges flushFailureContext into the diagnostic log when bulk fails', async () => {
-    const clientMock = createFailThenSucceedClientMock()
+  it('sends CRITICAL when buffer UTF-8 size exceeds budget but still ships all buffered items', async () => {
+    const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
+    const bufferAlertBytes = itemBytes * 2
+    const clientMock = createClientMockWithTrackedIndex()
+    const transportMock = createTransportMock(clientMock, { bufferAlertBytes })
 
-    const transport = createTransportMock(clientMock, {
-      flushFailureContext: (batch) => ({
-        correlationSample: batch.length,
+    transportMock.push(ecsSerializedLog(0))
+    transportMock.push(ecsSerializedLog(1))
+    transportMock.push(ecsSerializedLog(2))
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+    // `await reportBufferOverflow` runs `createIndex` before the main try block.
+    expect(clientMock.indexExist).toHaveBeenCalledTimes(2)
+    expect(clientMock.indexCreate).toHaveBeenCalledTimes(1)
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      1,
+      [
+        expect.subset({
+          id,
+          log: { level: 'CRITICAL' },
+          message: 'Elastic Search transport buffer exceeds byte budget',
+          parameters: {
+            bufferedBytes: itemBytes * 3,
+            bufferItemCount: 3,
+            bufferAlertBytes,
+          },
+        }),
+      ],
+      expectedIndexName,
+    )
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      2,
+      [
+        { id, ...log, message: '0000000000' },
+        { id, ...log, message: '0000000001' },
+        { id, ...log, message: '0000000002' },
+      ],
+      expectedIndexName,
+    )
+  })
+
+  it('awaits CRITICAL overflow report then sends full bulk (no trimming)', async () => {
+    const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
+    const maxItems = 20_000
+    const bufferAlertBytes = maxItems * itemBytes
+    const clientMock = createClientMockWithTrackedIndex()
+    const transportMock = createTransportMock(clientMock, { bufferAlertBytes })
+
+    for (let i = 0; i <= maxItems; i++) {
+      transportMock.push(ecsSerializedLog(i))
+    }
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+    expect(clientMock.indexExist).toHaveBeenCalledTimes(2)
+    expect(clientMock.indexCreate).toHaveBeenCalledTimes(1)
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      1,
+      [
+        expect.subset({
+          id,
+          log: { level: 'CRITICAL' },
+          message: 'Elastic Search transport buffer exceeds byte budget',
+          parameters: {
+            bufferedBytes: itemBytes * (maxItems + 1),
+            bufferItemCount: maxItems + 1,
+            bufferAlertBytes,
+          },
+        }),
+      ],
+      expectedIndexName,
+    )
+
+    const [documents] = clientMock.bulk.calls[1]!.args
+    expect(documents).toHaveLength(maxItems + 1)
+    expect(documents[0]).toEqual({ id, ...log, message: '0000000000' })
+    expect(documents[maxItems]).toEqual({
+      id,
+      ...log,
+      message: '0000020000',
+    })
+  })
+
+  it('does not trim logs when buffer stays within the configured byte budget', async () => {
+    const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
+    const clientMock = createClientMock(false)
+    const transportMock = createTransportMock(clientMock, {
+      bufferAlertBytes: itemBytes * 10,
+    })
+
+    transportMock.push(
+      JSON.stringify({
+        ...log,
+        message: 'first',
+      }),
+    )
+    transportMock.push(
+      JSON.stringify({
+        ...log,
+        message: 'second',
+      }),
+    )
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenOnlyCalledWith(
+      [
+        { id, ...log, message: 'first' },
+        { id, ...log, message: 'second' },
+      ],
+      expectedIndexName,
+    )
+  })
+
+  it('runs recovery bulk with ERROR ECS log when primary bulk reports failures', async () => {
+    const failedDocuments = [{ reason: 'test' }]
+    const clientMock = createClientMock(false, [
+      { isSuccess: false as const, failedDocuments },
+      { isSuccess: true as const },
+    ])
+    const transportMock = createTransportMock(clientMock)
+
+    transportMock.push(JSON.stringify(log))
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      1,
+      [{ id, ...log }],
+      expectedIndexName,
+    )
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      2,
+      [
+        expect.subset({
+          id,
+          log: { level: 'ERROR' },
+          message: 'Failed to push some logs to Elastic Search node',
+          parameters: {
+            cause: {
+              failedDocuments: JSON.stringify(failedDocuments),
+            },
+          },
+        }),
+      ],
+      expectedIndexName,
+    )
+  })
+
+  it('runs recovery bulk when a buffer item is not valid JSON', async () => {
+    const clientMock = createClientMock(false, [{ isSuccess: true as const }])
+    const transportMock = createTransportMock(clientMock)
+
+    transportMock.push('not valid json')
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(1)
+
+    const [recoveryDocs] = clientMock.bulk.calls[0]!.args
+    expect(recoveryDocs).toHaveLength(1)
+
+    const recoveryDoc = recoveryDocs[0] as Record<string, unknown>
+    expect(recoveryDoc.id).toEqual(id)
+    const ecs = recoveryDoc as { log: { level: string }; message: string }
+    expect(ecs.log.level).toEqual('ERROR')
+    expect(ecs.message).toMatchRegex(/not valid JSON|Unexpected token/i)
+  })
+
+  it('swallows errors from recovery bulk after primary bulk failure', async () => {
+    let bulkCalls = 0
+    const clientMock = mockObject<ElasticSearchClient>({
+      indexExist: mockFn(async (): Promise<boolean> => false),
+      indexCreate: mockFn(async (): Promise<void> => {}),
+      bulk: mockFn(async () => {
+        bulkCalls++
+        if (bulkCalls === 1) {
+          return {
+            isSuccess: false as const,
+            failedDocuments: [{ reason: 'test' }],
+          }
+        }
+        throw new Error('recovery failed')
       }),
     })
 
-    transport.push(JSON.stringify(log))
-    transport.push(JSON.stringify(log))
+    const transportMock = createTransportMock(clientMock)
 
-    await transport.flush()
+    transportMock.push(JSON.stringify(log))
 
-    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
-    const diagnosticDoc = clientMock.bulk.calls[1]!.args[0][0] as {
-      parameters?: { correlationSample?: number; batchLogCount?: number }
-    }
-    expect(diagnosticDoc.parameters?.correlationSample).toEqual(2)
-    expect(diagnosticDoc.parameters?.batchLogCount).toEqual(2)
-  })
-
-  it('still sends diagnostic log when flushFailureContext throws', async () => {
-    const clientMock = createFailThenSucceedClientMock()
-
-    const transport = createTransportMock(clientMock, {
-      flushFailureContext: () => {
-        throw new Error('callback bug')
-      },
-    })
-
-    transport.push(JSON.stringify(log))
-
-    await transport.flush()
+    await clock.tickAsync(flushInterval + 1)
 
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
-    const diagnosticDoc = clientMock.bulk.calls[1]!.args[0][0] as {
-      parameters?: { batchLogCount?: number }
-    }
-    expect(diagnosticDoc.parameters?.batchLogCount).toEqual(1)
   })
 })
 
-function createFailThenSucceedClientMock() {
-  let bulkCalls = 0
+/**
+ * Index missing until first `indexCreate`, then exists — matches real ES behavior when
+ * `createIndex` runs twice in one flush (`await` CRITICAL bulk, then main bulk).
+ */
+function createClientMockWithTrackedIndex(
+  bulkResponses?: Array<
+    | { isSuccess: true }
+    | { isSuccess: false; failedDocuments: Record<string, unknown>[] }
+  >,
+) {
+  let indexExists = false
+  const queue =
+    bulkResponses !== undefined
+      ? [...bulkResponses]
+      : [{ isSuccess: true as const }]
+
   return mockObject<ElasticSearchClient>({
-    indexExist: mockFn(async (_: string): Promise<boolean> => false),
-    indexCreate: mockFn(async (_: string): Promise<void> => {}),
+    indexExist: mockFn(async (_: string): Promise<boolean> => indexExists),
+    indexCreate: mockFn(async (_: string): Promise<void> => {
+      indexExists = true
+    }),
     bulk: mockFn(async () => {
-      bulkCalls++
-      if (bulkCalls === 1) {
-        return { isSuccess: false as const, errors: [] }
+      const next = queue.shift()
+      if (next === undefined) {
+        return { isSuccess: true as const }
       }
-      return { isSuccess: true as const }
+      return next
     }),
   })
 }
 
-function createClientMock(indexExist = true) {
+function createClientMock(
+  indexExist = true,
+  bulkResponses?: Array<
+    | { isSuccess: true }
+    | { isSuccess: false; failedDocuments: Record<string, unknown>[] }
+  >,
+) {
+  const queue =
+    bulkResponses !== undefined
+      ? [...bulkResponses]
+      : [{ isSuccess: true as const }]
+
   return mockObject<ElasticSearchClient>({
     indexExist: mockFn(async (_: string): Promise<boolean> => indexExist),
     indexCreate: mockFn(async (_: string): Promise<void> => {}),
-    bulk: mockFn().resolvesTo({
-      isSuccess: true,
+    bulk: mockFn(async () => {
+      const next = queue.shift()
+      if (next === undefined) {
+        return { isSuccess: true as const }
+      }
+      return next
     }),
   })
 }
@@ -141,12 +372,4 @@ function createTransportMock(
   }
 
   return new ElasticSearchTransport(options, clientMock, uuidProviderMock)
-}
-
-function createIndexName() {
-  return `${indexPrefix}-${formatDate(new Date())}`
-}
-
-async function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
 }

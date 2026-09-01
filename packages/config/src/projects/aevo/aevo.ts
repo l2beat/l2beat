@@ -1,14 +1,13 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import {
+  EIGENDA_DA_PROVIDER,
+  getOpStackDaTracking,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('aevo')
 
@@ -25,6 +24,7 @@ export const aevo: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Aevo',
+    aliases: ['Ribbon Finance'],
     slug: 'aevo',
     warning:
       'The fault proof system is deployed but is not functional. The chain ID is not included in the op-program superchain registry, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
@@ -70,20 +70,8 @@ export const aevo: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
+  daTracking: [
+    getOpStackDaTracking(discovery, { sinceBlock: 16858818 }),
     {
       type: 'celestia',
       daLayer: ProjectId('celestia'),

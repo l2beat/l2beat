@@ -1,0 +1,146 @@
+import type {
+  ProjectAssociatedToken,
+  WarningWithSentiment,
+} from '@l2beat/config'
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import {
+  AdditionalTrustAssumptionsBanner,
+  AdditionalTrustAssumptionsText,
+} from '~/components/breakdown/AdditionalTrustAssumptions'
+import {
+  ValueSecuredBreakdown,
+  ValueSecuredBreakdownTooltipContent,
+} from '~/components/breakdown/ValueSecuredBreakdown'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { PercentageChangeTooltipContent } from '~/components/PercentChange'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
+import { TableLink } from '~/components/table/TableLink'
+import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+
+interface TotalCellProps {
+  breakdown:
+    | {
+        total: number
+        canonical: number
+        external: number
+        native: number
+        associated: number
+      }
+    | undefined
+  additionalTrustAssumptionsPercentage: number | undefined
+  associatedTokens: ProjectAssociatedToken[]
+  syncWarning: string | undefined
+  href: string
+  change?: number
+  changePeriod?: PercentageChangePeriod
+  tvsWarnings?: WarningWithSentiment[]
+}
+
+export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
+  const tvsWarnings = props.tvsWarnings ?? []
+  const anyBadWarnings = tvsWarnings.some((w) => w.sentiment === 'bad')
+  const anyWarningWarnings = tvsWarnings.some((w) => w.sentiment === 'warning')
+
+  const icon = tvsWarnings.length ? (
+    <RoundedWarningIcon
+      className="mr-1 size-4"
+      sentiment={
+        anyBadWarnings ? 'bad' : anyWarningWarnings ? 'warning' : 'neutral'
+      }
+    />
+  ) : null
+
+  if (props.breakdown?.total === undefined && tvsWarnings.length > 0) {
+    return (
+      <Tooltip>
+        <TooltipTrigger className="inline-flex items-center">
+          {icon}
+          <NoDataBadge />
+        </TooltipTrigger>
+        <TooltipContent className="space-y-2">
+          <span>Data is not available for this project.</span>
+          {tvsWarnings.map((warning, i) => (
+            <WarningBar
+              key={`tvs-warning-${i}`}
+              icon={RoundedWarningIcon}
+              text={warning.value}
+              color={sentimentToWarningBarColor(warning.sentiment)}
+              // Cell itself is a href.
+              // Markdown might contain links - nesting them in a tooltip
+              // breaks semantics apart causing significant layout shifts.
+              ignoreMarkdown
+            />
+          ))}
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
+
+  if (props.breakdown?.total === undefined) {
+    return <NoDataBadge />
+  }
+
+  const totalTvs = props.breakdown.total
+
+  return (
+    <Tooltip>
+      <TooltipTrigger disabledOnMobile className="h-full" asChild>
+        <TableLink href={props.href}>
+          <SyncStatusWrapper isSynced={!props.syncWarning}>
+            <div className="flex flex-col items-end max-md:py-1">
+              <div className="flex items-center">
+                {icon}
+                <ValueWithPercentageChange
+                  change={props.change}
+                  changePeriod={props.changePeriod}
+                >
+                  {formatDollarValueNumber(totalTvs)}
+                </ValueWithPercentageChange>
+              </div>
+              <div className="inline-flex flex-col items-end gap-1">
+                <ValueSecuredBreakdown
+                  canonical={props.breakdown.canonical}
+                  external={props.breakdown.external}
+                  native={props.breakdown.native}
+                />
+                {props.additionalTrustAssumptionsPercentage !== undefined && (
+                  <AdditionalTrustAssumptionsText
+                    percentage={props.additionalTrustAssumptionsPercentage}
+                  />
+                )}
+              </div>
+            </div>
+          </SyncStatusWrapper>
+        </TableLink>
+      </TooltipTrigger>
+      <TooltipContent className="flex flex-col gap-2">
+        <ValueSecuredBreakdownTooltipContent
+          canonical={props.breakdown.canonical}
+          external={props.breakdown.external}
+          native={props.breakdown.native}
+          change={props.change}
+          tvsWarnings={tvsWarnings}
+          syncWarning={props.syncWarning}
+        />
+        {props.additionalTrustAssumptionsPercentage !== undefined && (
+          <AdditionalTrustAssumptionsBanner
+            percentage={props.additionalTrustAssumptionsPercentage}
+          />
+        )}
+        {props.change !== undefined && props.changePeriod !== undefined && (
+          <p>
+            <PercentageChangeTooltipContent period={props.changePeriod} />
+          </p>
+        )}
+      </TooltipContent>
+    </Tooltip>
+  )
+}

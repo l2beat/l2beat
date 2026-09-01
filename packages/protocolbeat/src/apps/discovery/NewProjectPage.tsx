@@ -9,7 +9,6 @@ import { Loader } from '../../components/Loader'
 import { Title } from '../../components/Title'
 import { DiscoveryLookup } from './components/DiscoveryLookup'
 import { InitialAddressesInput } from './components/InitialAddressesInput'
-import { TypeTile } from './components/ProjectTypeTile'
 import { useTerminalStore } from './panel-terminal/store'
 
 export function NewProjectPage() {
@@ -19,7 +18,6 @@ export function NewProjectPage() {
   const { discover, setDevMode, killCommand } = useTerminalStore()
 
   const [title, setTitle] = useState('')
-  const [type, setType] = useState<'project' | 'token'>('project')
   const [initialAddresses, setInitialAddresses] = useState<string[]>([])
 
   const [overwrite, setOverwrite] = useState(false)
@@ -33,7 +31,6 @@ export function NewProjectPage() {
     mutationFn: async () => {
       await createConfigFile(
         title,
-        type,
         initialAddresses,
         overwrite,
         useCustomDepth ? maxDepth : undefined,
@@ -57,29 +54,6 @@ export function NewProjectPage() {
     <>
       <Title title={`DiscoUI - ${!title ? 'New project' : title}`} />
       <div className="mx-auto max-w-screen-md space-y-6 p-4">
-        <div className="flex flex-col gap-2">
-          <h1 className="font-bold leading-none">I'd like to discover...</h1>
-          <div className="flex items-stretch justify-center gap-2">
-            <TypeTile
-              type="Project"
-              active={type === 'project'}
-              onClick={() => setType('project')}
-              disabled={createConfigFileMutation.isPending}
-            >
-              Regular discovery. Project will be put in the root folder.
-            </TypeTile>
-            <TypeTile
-              type="Token"
-              active={type === 'token'}
-              onClick={() => setType('token')}
-              disabled={createConfigFileMutation.isPending}
-            >
-              Will be put under <span className="font-mono">(tokens)</span>{' '}
-              folder group. Each initial address will have{' '}
-              <span className="font-mono">ERC20Data</span> handler assigned.
-            </TypeTile>
-          </div>
-        </div>
         <div>
           <div className="mb-1 flex items-stretch text-sm">
             <div className="whitespace-nowrap">Project title</div>

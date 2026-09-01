@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { Database, TokenMetadataRecord } from '@l2beat/database'
-import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -10,6 +10,7 @@ import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
 import { TokenValueIndexer } from './indexers/TokenValueIndexer'
+import { TvsCleaner } from './indexers/TvsCleaner'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
@@ -36,6 +37,7 @@ export function initTvsModule({
     prices: config.tvs.prices.length,
     amounts: config.tvs.amounts.length,
     chains: config.tvs.chains.length,
+    tvsCleaner: config.tvs.cleaner,
     maxSources: config.tvs.projects.reduce(
       (prev, curr) =>
         prev < curr.amountSources.length ? curr.amountSources.length : prev,
@@ -57,14 +59,6 @@ export function initTvsModule({
             (!t.untilTimestamp || t.untilTimestamp >= targetTimestamp),
         )
         recordIds.push(...tokensWithRanges.map((t) => t.id))
-
-        const { since, until } = getProjectSyncRange(tokensWithRanges)
-
-        if (since > targetTimestamp || (until && until < targetTimestamp)) {
-          continue
-        }
-
-        recordIds.push(project.projectId)
       }
 
       await db.syncMetadata.upsertMany(
@@ -163,6 +157,7 @@ export function initTvsModule({
         chain: chain,
         totalSupplyProvider: providers.totalSupply,
         starknetTotalSupplyProvider: providers.starknetTotalSupply,
+        starknetBalanceProvider: providers.starknetBalance,
         balanceProvider: providers.balance,
         parents: [blockTimestampIndexer],
         indexerService,
@@ -218,6 +213,20 @@ export function initTvsModule({
     valueIndexers.push(tokenValueIndexer)
   }
 
+  let cleaner: TvsCleaner | undefined
+  if (config.tvs.cleaner) {
+    cleaner = new TvsCleaner(
+      {
+        parents: [hourlyIndexer],
+        indexerService,
+        db,
+        syncOptimizer,
+        configurations: config.tvs.cleaner,
+      },
+      logger,
+    )
+  }
+
   const tvsProjects = config.tvs.projects
   const start = async () => {
     await updateTokenMetadata(tvsProjects, db, logger)
@@ -235,6 +244,10 @@ export function initTvsModule({
     for (const indexer of valueIndexers) {
       await indexer.start()
     }
+
+    if (cleaner) {
+      await cleaner.start()
+    }
   }
 
   return {
@@ -242,7 +255,6 @@ export function initTvsModule({
   }
 }
 
-type TokenWithRanges = ReturnType<typeof getTokensWithRanges>[number]
 function getTokensWithRanges(tokens: TvsToken[]) {
   return tokens.map((t) => {
     const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
@@ -253,29 +265,6 @@ function getTokensWithRanges(tokens: TvsToken[]) {
       untilTimestamp,
     }
   })
-}
-
-function getProjectSyncRange(tokens: TokenWithRanges[]) {
-  const since = tokens.reduce(
-    (prev, curr) => (prev > curr.sinceTimestamp ? curr.sinceTimestamp : prev),
-    Number.POSITIVE_INFINITY,
-  )
-
-  const hasUndefinedTimestamp = tokens.some(
-    (token) => token.untilTimestamp === undefined,
-  )
-
-  const until = hasUndefinedTimestamp
-    ? null
-    : tokens
-        .map((t) => t.untilTimestamp)
-        .filter(notUndefined)
-        .reduce((prev, curr) => (prev < curr ? curr : prev), UnixTime(0))
-
-  return {
-    since,
-    until,
-  }
 }
 
 async function updateTokenMetadata(

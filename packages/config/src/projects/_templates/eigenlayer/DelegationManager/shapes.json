@@ -1,21 +1,21 @@
 {
   "DelegationManager": {
-    "hash": "0x236f85a005803b10e03d97356b1569532271b43a19b27c7479079c51b731709e",
+    "hash": "0x5d187c961cbccbfd7d27aeee43f3ca507e0c766802dc3394f9bc5e5f0a75f295",
     "address": "eth:0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
     "blockNumber": 22188285
   },
   "DelegationManager.sol": {
-    "hash": "0x3be3c1a5b3c5a2b2e3d0af8a02c711c6eead5686cab112054a0e80e945fdc766",
+    "hash": "0x94820180ebd8174090ab34e2c7b081827315ce2e1264399ee5dbce3815e67b6b",
     "address": "eth:0xA75112d1df37FA53a431525CD47A7d7faCEA7E73",
     "blockNumber": 22424645
   },
   "DelegationManager_redistribution": {
-    "hash": "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c",
+    "hash": "0x5dbaab72ecd4b0b8067daf3761660832411d6b4cced13221996e48da3df2d25a",
     "address": "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89",
     "blockNumber": 23083543
   },
   "DelegationManager_v1.9.0": {
-    "hash": "0xc7434c1abe25723dac4061deb679b18972a97bda6317eb9b36833da48f9c59c1",
+    "hash": "0x2876ad926c0041bb58be266172b9bb1bf7450f4e7c3a54bd9b4fa01e2255bbcc",
     "address": "eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75",
     "blockNumber": 24350294
   }

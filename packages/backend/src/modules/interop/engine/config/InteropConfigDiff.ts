@@ -127,5 +127,33 @@ function normalizeForDiff(value: unknown): unknown {
   if (typeof value !== 'object') {
     return value
   }
-  return withoutUndefinedKeys(value)
+
+  if (Array.isArray(value)) {
+    return value.map(normalizeForDiff).sort(byNormalizedValues)
+  }
+
+  const normalizedObject = withoutUndefinedKeys(value)
+
+  return Object.keys(normalizedObject)
+    .sort()
+    .reduce(
+      (result, key) => {
+        result[key] = normalizeForDiff(
+          (normalizedObject as Record<string, unknown>)[key],
+        )
+        return result
+      },
+      {} as Record<string, unknown>,
+    )
+}
+
+function byNormalizedValues(left: unknown, right: unknown): number {
+  return serializeNormalizedValue(left).localeCompare(
+    serializeNormalizedValue(right),
+  )
+}
+
+function serializeNormalizedValue(value: unknown): string {
+  const serialized = JSON.stringify(value)
+  return serialized ?? String(value)
 }

@@ -22,6 +22,7 @@ export interface Parser<T> {
 
 export interface Validator<T> {
   description?: string
+  metadata?: Record<string, string>
   validate: (value: unknown) => T
   safeValidate: (value: unknown) => Result<T>
   isValid: (value: unknown) => value is T
@@ -42,13 +43,14 @@ export interface Validator<T> {
   catch(value: T): Parser<T>
   optional(): Validator<T | undefined>
   describe: (description: string) => Validator<T>
+  meta: (metadata: Record<string, string>) => Validator<T>
 }
 
 const CANNOT_VALIDATE = () => {
   throw new Error('Cannot call validate on a parser object.')
 }
 
-export type ImpMeta =
+export type ImpDefinition =
   | { type: 'unknown' }
   | { type: 'string' }
   | { type: 'number' }
@@ -86,17 +88,18 @@ export type ImpMeta =
   | { type: 'tuple'; values: Imp<unknown>[] }
 
 export class Imp<T> implements Validator<T>, Parser<T> {
-  meta: ImpMeta
+  definition: ImpDefinition
   description?: string
+  metadata?: Record<string, string>
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
 
   constructor(
-    meta: ImpMeta,
+    definition: ImpDefinition,
     safeValidate: (value: unknown) => Result<T>,
     safeParse: (value: unknown) => Result<T>,
   ) {
-    this.meta = meta
+    this.definition = definition
     this.safeValidate = safeValidate
     this.safeParse = safeParse
   }
@@ -115,6 +118,12 @@ export class Imp<T> implements Validator<T>, Parser<T> {
 
   describe(description: string) {
     this.description = description
+    return this
+  }
+
+  meta(metadata: Record<string, string>) {
+    assertValidMetadata(metadata)
+    this.metadata = { ...this.metadata, ...metadata }
     return this
   }
 
@@ -166,6 +175,32 @@ export class Imp<T> implements Validator<T>, Parser<T> {
       impOptional(this.safeValidate),
       impOptional(this.safeParse),
     )
+  }
+}
+
+const RESERVED_METADATA_KEYS = new Set([
+  '$schema',
+  '$ref',
+  'additionalItems',
+  'additionalProperties',
+  'allOf',
+  'anyOf',
+  'const',
+  'definitions',
+  'enum',
+  'items',
+  'oneOf',
+  'properties',
+  'propertyNames',
+  'required',
+  'type',
+])
+
+function assertValidMetadata(metadata: Record<string, string>) {
+  for (const key of Object.keys(metadata)) {
+    if (RESERVED_METADATA_KEYS.has(key)) {
+      throw new Error(`Metadata key "${key}" is reserved.`)
+    }
   }
 }
 
@@ -371,11 +406,14 @@ function impObject<T extends object>(
       const imp = schema[key] as Imp<unknown>
       const prop = (value as { [record: string]: unknown })[key]
       if (prop === undefined) {
-        if (imp.meta.type === 'optional') {
+        if (imp.definition.type === 'optional') {
           continue
         }
-        if (imp.meta.type === 'default' || imp.meta.type === 'catch') {
-          result[key] = structuredClone(imp.meta.value)
+        if (
+          imp.definition.type === 'default' ||
+          imp.definition.type === 'catch'
+        ) {
+          result[key] = structuredClone(imp.definition.value)
           continue
         }
       }
@@ -561,8 +599,11 @@ function impRecord<K extends string | number, V>(
   clone: boolean,
 ) {
   let enumKeys: (string | number)[] | undefined
-  if (valueImp.meta.type !== 'optional' && keyImp.meta.type === 'enum') {
-    enumKeys = keyImp.meta.values as (string | number)[]
+  if (
+    valueImp.definition.type !== 'optional' &&
+    keyImp.definition.type === 'enum'
+  ) {
+    enumKeys = keyImp.definition.values as (string | number)[]
   }
 
   return function impRecord(value: unknown): Result<Record<K, V>> {
@@ -574,10 +615,10 @@ function impRecord<K extends string | number, V>(
       for (const key of enumKeys) {
         if (!(key in value)) {
           if (
-            valueImp.meta.type === 'default' ||
-            valueImp.meta.type === 'catch'
+            valueImp.definition.type === 'default' ||
+            valueImp.definition.type === 'catch'
           ) {
-            result[key as K] = structuredClone(valueImp.meta.value as V)
+            result[key as K] = structuredClone(valueImp.definition.value as V)
             continue
           }
           return {
@@ -680,13 +721,16 @@ function impTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
   let defaultLength = schema.length
   for (let i = schema.length - 1; i >= 0; i--) {
     const imp = schema[i] as Imp<unknown>
-    if (imp.meta.type === 'optional' && requiredLength === defaultLength) {
+    if (
+      imp.definition.type === 'optional' &&
+      requiredLength === defaultLength
+    ) {
       defaultLength--
     }
     if (
-      imp.meta.type === 'optional' ||
-      imp.meta.type === 'default' ||
-      imp.meta.type === 'catch'
+      imp.definition.type === 'optional' ||
+      imp.definition.type === 'default' ||
+      imp.definition.type === 'catch'
     ) {
       requiredLength--
     } else {

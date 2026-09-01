@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       perform_db_dump:
-        description: Perform database dump before migration
+        description: Perform database dump before migration (currently unsupported)
         type: boolean
         default: false
         required: false
@@ -19,39 +19,23 @@ jobs:
     timeout-minutes: 20 # DB backup can take some time
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - uses: pnpm/action-setup@v4
+        uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
       - run: pnpm install
-      - name: Create DB snapshot for STAGING database
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
-        run: |
-          heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_DEV }}
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
       - name: Apply migrations to STAGING
         run: |
           cd packages/database
           pnpm prisma migrate deploy
         env:
           PRISMA_DB_URL: ${{ secrets.STAGING_DATABASE_URL }}
-      - name: Create DB snapshot for PRODUCTION database
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
-        run: |
-          heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_PROD }}
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
       - name: Apply migrations to PRODUCTION
         run: |
           cd packages/database
@@ -68,7 +52,7 @@ jobs:
             -d "{\"content\": \"DB Migration workflow failure at $GITHUB_REF_NAME! Defails: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" \
             "${DISCORD_WEBHOOK_URL}"
       - name: Notify devs in case of failure
-        uses: dawidd6/action-send-mail@v6
+        uses: dawidd6/action-send-mail@v17
         if: ${{ failure() }}
         with:
           username: ${{ secrets.MAIL_USERNAME }}

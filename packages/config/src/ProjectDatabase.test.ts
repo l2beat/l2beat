@@ -8,7 +8,7 @@ import {
 import { expect } from 'earl'
 import { unlinkSync } from 'fs'
 import { ProjectDatabase } from './ProjectDatabase'
-import type { BaseProject } from './types'
+import type { BaseProject, ProjectScalingInfo } from './types'
 
 describe(ProjectDatabase.name, () => {
   let db: ProjectDatabase
@@ -60,7 +60,7 @@ describe(ProjectDatabase.name, () => {
       name: 'b',
       shortName: undefined,
       addedAt: 0,
-      isScaling: true,
+      scalingInfo: {} as ProjectScalingInfo,
     }
     const projectC: BaseProject = {
       id: ProjectId('c'),
@@ -75,8 +75,8 @@ describe(ProjectDatabase.name, () => {
     await db.saveProject(projectC)
 
     const result = await db.getProjects({
-      select: ['isScaling'],
-      whereNotNull: ['isScaling'],
+      select: ['scalingInfo'],
+      whereNotNull: ['scalingInfo'],
       whereNull: [],
     })
 
@@ -101,5 +101,30 @@ describe(ProjectDatabase.name, () => {
     await db.saveToken(token)
     expect(await db.getToken(token.id)).toEqual(token)
     expect(await db.getTokens()).toEqual([token])
+  })
+
+  it('rolls back a failed transaction', async () => {
+    const project: BaseProject = {
+      id: ProjectId('rolled-back'),
+      slug: 'rolled-back',
+      name: 'Rolled back',
+      shortName: undefined,
+      addedAt: 0,
+    }
+
+    await expect(
+      db.transaction(async () => {
+        await db.saveProject(project)
+        throw new Error('test error')
+      }),
+    ).toBeRejectedWith('test error')
+
+    const result = await db.getProject({
+      id: project.id,
+      select: [],
+      whereNotNull: [],
+      whereNull: [],
+    })
+    expect(result).toEqual(undefined)
   })
 })

@@ -18,15 +18,15 @@ export async function getGovernancePublicationData(
       metadata: getMetadata(manifest, {
         title: `${publication.shortTitle ?? publication.title} - L2BEAT`,
         description: publication.description ?? publication.excerpt,
+        url,
         openGraph: {
-          url,
           image: `/meta-images/publications/${publication.id}.png`,
           type: 'article',
         },
       }),
     },
     ssr: {
-      page: 'GovernancePublicationPage',
+      page: 'PublicationPage',
       props: {
         ...appLayoutProps,
         publication,

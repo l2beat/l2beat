@@ -1,20 +1,21 @@
-import { createServerSideHelpers } from '@trpc/react-query/server'
+import { dehydrate } from '@tanstack/react-query'
+import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query'
 import { appRouter } from '~/server/trpc/root'
 import { createQueryClient } from './queryClient'
 
 export type SsrHelpers = ReturnType<typeof getSsrHelpers>
-export const getSsrHelpers = () =>
-  createServerSideHelpers({
+
+export function getSsrHelpers() {
+  const queryClient = createQueryClient()
+  const trpc = createTRPCOptionsProxy({
     router: appRouter,
-    queryClient: createQueryClient(),
+    queryClient,
     ctx: { headers: new Headers({ 'x-trpc-source': 'server' }) },
-    // Do not serialize data to JSON, because it will be serialized again by the render function
-    //     .replace(
-    //       `<!--ssr-data-->`,
-    //       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
-    //     )
-    transformer: {
-      serialize: (data) => data,
-      deserialize: (data) => data,
-    },
   })
+
+  return {
+    queryClient,
+    trpc,
+    dehydrate: () => dehydrate(queryClient),
+  }
+}

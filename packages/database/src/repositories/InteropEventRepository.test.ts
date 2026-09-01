@@ -257,7 +257,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
   describe(
     InteropEventRepository.prototype.getSupportBreakdownByChainArg.name,
     () => {
-      it('aggregates by $dstChain and uses unsupported as source of truth', async () => {
+      it('aggregates by $dstChain split by support flag', async () => {
         await repository.insertMany([
           event(
             'plugin1',
@@ -313,8 +313,13 @@ describeDatabase(InteropEventRepository.name, (db) => {
         expect(result).toEqualUnsorted([
           {
             chain: 'base',
+            isSupported: true,
+            count: 1,
+          },
+          {
+            chain: 'base',
             isSupported: false,
-            count: 2,
+            count: 1,
           },
           {
             chain: '(unknown)',

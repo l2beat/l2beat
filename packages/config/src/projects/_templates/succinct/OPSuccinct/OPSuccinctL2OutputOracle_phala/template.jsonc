@@ -5,7 +5,8 @@
     "proposer": {
       "permissions": [
         {
-          "type": "propose"
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
         }
       ]
     },

@@ -38,4 +38,5 @@ export interface CoinMarketChartRangeData {
 
 export interface CoingeckoClientConfig {
   apiKey?: string
+  callsPerMinute: number
 }

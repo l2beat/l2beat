@@ -1,16 +1,16 @@
 {
   "SP1Verifier.sol": {
-    "hash": "0x5350c31937c3194b7ab11b26251fcec0e2a3ba88b516d5c851b9f6bfe7e76935",
+    "hash": "0xb498f65eb229dc8523e336b0d4e5764ef80debb3bbddd0a22265e7153b214e38",
     "address": "eth:0x5f5b83Ca87E2fBc513B800FeD6cCD626536d7219",
     "blockNumber": 22468063
   },
   "SP1PostPacaya": {
-    "hash": "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca",
+    "hash": "0x6c5bdf706e6f3d02482e93d00f188f1f466d1c16b9624e5050592a3abb609e08",
     "address": "eth:0x35f26e14D0dAeDd1904843370f761C60B891D466",
     "blockNumber": 22565516
   },
   "TaikoSP1Verifier": {
-    "hash": "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0",
+    "hash": "0x53fcd821320b7b1cf76d240740fb3a7e69def295d0f6160d5e23ce2634c5fcb4",
     "address": "eth:0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7",
     "blockNumber": 22630425
   }

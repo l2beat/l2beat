@@ -177,4 +177,193 @@ describe(AccessControlHandler.name, () => {
       ignoreRelative: true,
     })
   })
+
+  it('does not include ABI roles which have never been granted by default', async () => {
+    const address = ChainSpecificAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return []
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      { type: 'accessControl' },
+      ['function WIZARD_ROLE() view returns (bytes32)'],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
+
+  it('includes ABI roles which have never been granted when configured', async () => {
+    const address = ChainSpecificAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return []
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      { type: 'accessControl', includeEmptyRoles: true },
+      ['function WIZARD_ROLE() view returns (bytes32)'],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+        WIZARD_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
+
+  it('prefers an explicit hash for a role with a custom value', async () => {
+    const address = ChainSpecificAddress.random()
+    const customRole = utils.solidityKeccak256(
+      ['string'],
+      ['namespaced.WizardRole'],
+    )
+    const member = EthereumAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return [RoleGranted(customRole, member)]
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      {
+        type: 'accessControl',
+        includeEmptyRoles: true,
+        roleNames: { [customRole]: 'WIZARD_ROLE' },
+      },
+      ['function WIZARD_ROLE() view returns (bytes32)'],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+        WIZARD_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [
+            ChainSpecificAddress.fromLong('ethereum', member).toString(),
+          ],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
+
+  it('does not re-derive an ABI role name that roleNames already maps, even without includeEmptyRoles', async () => {
+    const address = ChainSpecificAddress.random()
+    const customRole = utils.solidityKeccak256(['string'], ['custom wizard'])
+    const derivedRole = utils.solidityKeccak256(['string'], ['WIZARD_ROLE'])
+    const member = EthereumAddress.random()
+    const other = EthereumAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return [
+          RoleGranted(customRole, member),
+          RoleGranted(derivedRole, other),
+        ]
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      { type: 'accessControl', roleNames: { [customRole]: 'WIZARD_ROLE' } },
+      ['function WIZARD_ROLE() view returns (bytes32)'],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+        WIZARD_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [
+            ChainSpecificAddress.fromLong('ethereum', member).toString(),
+          ],
+        },
+        [derivedRole]: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [
+            ChainSpecificAddress.fromLong('ethereum', other).toString(),
+          ],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
+
+  it('keeps DEFAULT_ADMIN_ROLE members when the ABI exposes DEFAULT_ADMIN_ROLE()', async () => {
+    // Regression: keccak256("DEFAULT_ADMIN_ROLE") must not shadow bytes32(0)
+    const address = ChainSpecificAddress.random()
+    const admin = EthereumAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return [RoleGranted('0x' + '0'.repeat(64), admin)]
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      { type: 'accessControl', includeEmptyRoles: true },
+      [
+        'function DEFAULT_ADMIN_ROLE() view returns (bytes32)',
+        'function WIZARD_ROLE() view returns (bytes32)',
+      ],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [
+            ChainSpecificAddress.fromLong('ethereum', admin).toString(),
+          ],
+        },
+        WIZARD_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
 })

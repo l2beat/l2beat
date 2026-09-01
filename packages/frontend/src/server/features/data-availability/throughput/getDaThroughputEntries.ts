@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { formatSeconds, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import {
   getDaThroughputTable,
@@ -10,7 +11,7 @@ import { getThroughputSyncWarning } from './isThroughputSynced'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   const [daLayers, daBridges] = await Promise.all([
-    ps.getProjects({ select: ['daLayer', 'statuses'] }),
+    ps.getProjects({ select: ['daLayer', 'statuses', 'display'] }),
     ps.getProjects({ select: ['daBridge'] }),
   ])
 
@@ -29,14 +30,14 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
         project,
         daBridges,
         latestData.data[project.id],
-        latestData.scalingOnlyData[project.id],
+        latestData.l2OnlyData[project.id],
       ),
     )
     .filter(notUndefined)
     .sort(
       (a, b) =>
-        (b.scalingOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0) -
-        (a.scalingOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0),
+        (b.l2OnlyData?.pastDayData?.avgThroughputPerSecond ?? 0) -
+        (a.l2OnlyData?.pastDayData?.avgThroughputPerSecond ?? 0),
     )
   return entries
 }
@@ -61,6 +62,7 @@ interface DaThroughputEntryData {
         avgCapacityUtilization: number | null
         totalPosted: number
         change: number
+        changePeriod: PercentageChangePeriod
         largestPoster:
           | {
               name: string
@@ -75,16 +77,16 @@ interface DaThroughputEntryData {
 
 export interface DaThroughputEntry extends CommonDaEntry {
   data: DaThroughputEntryData | undefined
-  scalingOnlyData: DaThroughputEntryData | undefined
+  l2OnlyData: DaThroughputEntryData | undefined
   finality: string | undefined
   isSynced: boolean
 }
 
 function getDaThroughputEntry(
-  project: Project<'daLayer' | 'statuses'>,
+  project: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge'>[],
   data: ThroughputTableData['data'][string] | undefined,
-  scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
+  l2OnlyData: ThroughputTableData['l2OnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
   const syncWarning = data?.syncedUntil
@@ -101,7 +103,7 @@ function getDaThroughputEntry(
         })
       : undefined,
     data,
-    scalingOnlyData,
+    l2OnlyData,
     isSynced: !syncWarning,
   }
 }

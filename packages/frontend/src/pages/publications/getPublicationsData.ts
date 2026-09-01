@@ -7,6 +7,7 @@ import {
   getPublicationEntryFromExternalPublication,
   getPublicationEntryFromGovernance,
   getPublicationEntryFromMonthlyUpdate,
+  getPublicationEntryFromOtherPublication,
 } from './utils/getPublicationEntry'
 
 export async function getPublicationsData(
@@ -15,11 +16,13 @@ export async function getPublicationsData(
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
   const governancePublications = getCollection('governance-publications')
+  const otherPublications = getCollection('other-publications')
   const monthlyUpdates = getCollection('monthly-updates')
   const externalPublications = getCollection('external-publications')
 
   const publications = governancePublications
     .map(getPublicationEntryFromGovernance)
+    .concat(otherPublications.map(getPublicationEntryFromOtherPublication))
     .concat(monthlyUpdates.map(getPublicationEntryFromMonthlyUpdate))
     .concat(
       externalPublications.map(getPublicationEntryFromExternalPublication),
@@ -33,8 +36,8 @@ export async function getPublicationsData(
         title: 'Publications - L2BEAT',
         description:
           'Your hub for everything L2BEAT publishes: research, explainers, essays, interviews, and curated highlights on the evolving Layer 2 ecosystem.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/publications/opengraph-image.png',
         },
       }),

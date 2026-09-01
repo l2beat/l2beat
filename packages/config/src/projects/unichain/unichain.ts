@@ -7,7 +7,7 @@ import {
 import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
 const genesisTimestamp = UnixTime(1730748359)
@@ -20,9 +20,11 @@ export const unichain: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 21116363 })],
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Unichain',
+    aliases: ['Uniswap'],
     slug: 'unichain',
     stateValidationImage: 'opfp',
     description:
@@ -39,6 +41,40 @@ export const unichain: ScalingProject = opStackL2({
       ],
       other: ['https://growthepie.com/chains/unichain'],
     },
+  },
+  interopConfig: {
+    name: 'Unichain Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'unichain',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'unichain',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
   },
   hasSuperchainScUpgrades: true,
   scopeOfAssessment: {
@@ -67,14 +103,6 @@ export const unichain: ScalingProject = opStackL2({
       tokens: ['wstETH'],
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
-    }),
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A',
-      ),
-      tokens: ['USDS', 'sUSDS'],
-      description:
-        'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
   ],
   chainConfig: {

@@ -13,7 +13,6 @@ export const DiscoLupeProject = v.object({
   arePermissionsDiscoveryDriven: v.boolean(),
   areContractsDiscoveryDriven: v.boolean(),
   isArchived: v.boolean(),
-  isUpcoming: v.boolean(),
   isUnderReview: v.boolean(),
 
   costsConfigured: v.boolean(),

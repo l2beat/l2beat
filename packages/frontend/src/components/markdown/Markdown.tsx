@@ -29,18 +29,12 @@ export function Markdown(props: MarkdownProps) {
   const render = (text: string) =>
     props.inline ? markdown.renderInline(text) : markdown.render(text)
 
-  // This is a hack to remove leading spaces, to prevent the appearance of
-  // unwanted code blocks. Use backticks instead.
-  // Don't strip spaces if they're followed by a '*' (bullet point in markdown)
-  const stripped = props.children.replace(
-    /(^|\n)(?:\t|\s{4})(?!\*)(.+)/g,
-    '$1$2',
-  )
-
   // Markdown-it does not support pre-render hooks and token rerendering so
   // we have to the do linking of glossary terms here explicitly.
   const rendered = render(
-    props.ignoreGlossary ? stripped : linkGlossaryTerms(terms)(stripped),
+    props.ignoreGlossary
+      ? props.children
+      : linkGlossaryTerms(terms)(props.children),
   )
   const collapsed = processCollapsibleText(rendered)
 

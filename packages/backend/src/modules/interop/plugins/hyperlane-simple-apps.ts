@@ -1,21 +1,21 @@
 /**
  * For tagging apps that use Hyperlane AMB
  */
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   Dispatch,
-  HYPERLANE_NETWORKS,
   Process,
   parseProcess,
   parseProcessId,
   processIdLog,
   processLog,
 } from './hyperlane'
+import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
 import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -43,6 +43,8 @@ const ReceivedFromBridgeProcess = createInteropEventType<{
 export class HyperlaneSimpleAppsPlugIn implements InteropPluginResyncable {
   readonly name = 'hyperlane-simple-apps'
 
+  constructor(private configs: InteropConfigStore) {}
+
   getDataRequests(): DataRequest[] {
     return [
       {
@@ -61,6 +63,8 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
+    const networks = this.configs.get(HyperlaneConfig) ?? []
+
     const priceUpdated = parsePriceUpdated(input.log, null)
     if (priceUpdated) {
       const process = findParsedAround(
@@ -80,10 +84,9 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPluginResyncable {
       return [
         PriceUpdatedProcess.create(input, {
           messageId: processId.messageId,
-          $srcChain: findChain(
-            HYPERLANE_NETWORKS,
-            (x) => x.chainId,
-            process.parsed.origin,
+          $srcChain: findHyperlaneChain(
+            networks,
+            Number(process.parsed.origin),
           ),
         }),
       ]
@@ -109,10 +112,9 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPluginResyncable {
       return [
         ReceivedFromBridgeProcess.create(input, {
           messageId: processId.messageId,
-          $srcChain: findChain(
-            HYPERLANE_NETWORKS,
-            (x) => x.chainId,
-            process.parsed.origin,
+          $srcChain: findHyperlaneChain(
+            networks,
+            Number(process.parsed.origin),
           ),
         }),
       ]

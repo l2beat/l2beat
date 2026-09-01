@@ -9,23 +9,30 @@ import {
   renderDashboardMarkdown,
   renderProjectMarkdown,
 } from './view/DashboardMarkdown'
-import { renderDashboardPage } from './view/DashboardPage'
+import {
+  type DashboardDeployment,
+  renderDashboardPage,
+} from './view/DashboardPage'
 
 export class UpdateMonitorController {
   private readonly onDiskConfigs: ConfigRegistry[] = []
   private projectConfigs:
-    | Project<never, 'scalingInfo' | 'isDaLayer'>[]
+    | Project<never, 'scalingInfo' | 'daLayer'>[]
     | undefined
 
   constructor(
     private readonly db: Database,
     private readonly configReader: ConfigReader,
     private readonly projectService: ProjectService,
+    deployment: DashboardDeployment,
   ) {
+    this.deployment = deployment
     this.onDiskConfigs = this.configReader
       .readAllDiscoveredProjects()
       .map((project) => this.configReader.readConfig(project))
   }
+
+  private readonly deployment: DashboardDeployment
 
   async getDiscoveryDashboard(selectedEmoji?: string): Promise<string> {
     const { projects, projectConfigs, projectsWithHighSeverityChanges } =
@@ -34,6 +41,7 @@ export class UpdateMonitorController {
       projects,
       projectConfigs,
       projectsWithHighSeverityChanges,
+      this.deployment,
       selectedEmoji,
     )
   }
@@ -74,8 +82,7 @@ export class UpdateMonitorController {
 
     const ps = new ProjectService()
     this.projectConfigs = await ps.getProjects({
-      optional: ['scalingInfo', 'isDaLayer'],
-      whereNot: ['isUpcoming'],
+      optional: ['scalingInfo', 'daLayer'],
     })
 
     return this.projectConfigs
@@ -83,7 +90,7 @@ export class UpdateMonitorController {
 
   private async getDiscoveryDashboardData(): Promise<{
     projects: DashboardProject[]
-    projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[]
+    projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[]
     projectsWithHighSeverityChanges: Set<string>
   }> {
     const projects: DashboardProject[] = await getDashboardProjects(

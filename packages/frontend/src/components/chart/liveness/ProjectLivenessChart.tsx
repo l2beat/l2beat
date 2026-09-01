@@ -1,16 +1,17 @@
 import type { Milestone } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { LivenessChartRangeControls } from '~/pages/scaling/liveness/components/LivenessChartRangeControls'
-import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/components/LivenessChartSubtypeControls'
-import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import { rangeToResolution } from '~/server/features/scaling/liveness/utils/range'
-import { api } from '~/trpc/React'
+import { LivenessChartRangeControls } from '~/pages/layer2s/liveness/components/LivenessChartRangeControls'
+import { LivenessChartSubtypeControls } from '~/pages/layer2s/liveness/components/LivenessChartSubtypeControls'
+import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import type { ChartRange } from '~/utils/range/range'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './LivenessChart'
@@ -35,19 +36,22 @@ export function ProjectLivenessChart({
   defaultRange,
   hideSubtypeSwitch,
 }: Props) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [subtype, setSubtype] = useState<TrackedTxsConfigSubtype>(
     getDefaultSubtype(configuredSubtypes),
   )
 
-  const { data: chart, isLoading } = api.liveness.projectChart.useQuery({
-    range,
-    projectId: project.id,
-    subtype,
-  })
+  const { data: chart, isLoading } = useQuery(
+    trpc.liveness.projectChart.queryOptions({
+      projectId: project.id,
+      range,
+      subtype,
+    }),
+  )
 
   const anyAnomalyLive = anomalies.some(
-    (anomaly) => anomaly.subtype === subtype && anomaly.end === undefined,
+    (anomaly) => anomaly.subtype === subtype && isAnomalyOngoing(anomaly),
   )
   const chartData = useMemo(() => {
     return chart?.data?.map(([timestamp, min, avg, max]) => {
@@ -70,7 +74,8 @@ export function ProjectLivenessChart({
     return lastValidTimestamp
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const resolution = rangeToResolution(range)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
     <div className="flex flex-col">
@@ -101,7 +106,7 @@ export function ProjectLivenessChart({
           milestones={milestones}
           lastValidTimestamp={lastValidTimestamp}
           anyAnomalyLive={anyAnomalyLive}
-          resolution={rangeToResolution(range)}
+          resolution={resolution}
           tickCount={4}
         />
       </div>

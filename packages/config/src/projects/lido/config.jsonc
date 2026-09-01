@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lido",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 1000,
+  "initialAddresses": [
+    // Core protocol and stETH
+    "eth:0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+    // Aragon governance. Kernel mappings are not enumerable, so Voting is an entrypoint.
+    "eth:0x2e59a20f205bb85a89c53f1936454680651e618e",
+    // Dual Governance constrains execution of DAO proposals.
+    "eth:0xc1db28b3301331277e307fdcff8de28242a4486e",
+    // SRv3 consolidation pipeline. These are not referenced by LidoLocator.
+    "eth:0xd907ce33b4be423823d1cffe80bd147e8b8554c8",
+    "eth:0x9dc70b5a4f4f5e4af9058c983d560564f031f1d7",
+    // Other standalone contracts in the production core deployment.
+    "eth:0xac4aae7123248684c405a4b0038c1560ec7fe018",
+    "eth:0xa88f0329c2c4ce51ba3fc619bbf44efe7120dd0d",
+    "eth:0xf95f069f9ad107938f6ba802a3da87892298610e"
+  ],
+  "names": {
+    "eth:0xa02FC823cCE0D016bD7e17ac684c9abAb2d6D647": "TreasuryManagementCommittee"
+  },
+  "overrides": {
+    "eth:0x9dc70b5a4f4f5e4af9058c983d560564f031f1d7": {
+      "ignoreMethods": ["getAllowedTargets"]
+    },
+    // Uninitialized StakingVault implementation. Authorities are set on each proxy.
+    "eth:0x06a56487494aa080dec7bf69128eda9225784553": {
+      "ignoreRelatives": ["owner", "depositor", "nodeOperator"]
+    },
+    // Standard Ethereum execution-layer system contracts used by SRv3.
+    "eth:0x000f3df6d732807ef1319fb7b8bb8522d0beac02": {
+      "name": "BeaconRoots",
+      "description": "EIP-4788 system contract that exposes historical Beacon Chain block roots.",
+      "ignoreDiscovery": true
+    },
+    "eth:0x0000bbddc7ce488642fb579f8b00f3a590007251": {
+      "name": "ConsolidationRequests",
+      "description": "EIP-7251 system contract that accepts validator consolidation requests.",
+      "ignoreDiscovery": true
+    },
+    "eth:0x00000961ef480eb55e80d19ad83579a64c007002": {
+      "name": "WithdrawalRequests",
+      "description": "EIP-7002 system contract that accepts execution-layer validator withdrawal requests.",
+      "ignoreDiscovery": true
+    },
+    // 4/7 Safe listed as Treasury Management Committee in the Lido docs.
+    "eth:0xa02fc823cce0d016bd7e17ac684c9abab2d6d647": {
+      "description": "Multisig of the Lido DAO Treasury Management Committee."
+    },
+    // EIP-7702 delegated-code wallets reached only as Safe members.
+    "eth:0x1115f1d81a4027f5655b0955deb55c8a1c7ba6bf": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    },
+    "eth:0x318d61847439855744987bec073dd98fe425ab91": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    }
+  }
+}

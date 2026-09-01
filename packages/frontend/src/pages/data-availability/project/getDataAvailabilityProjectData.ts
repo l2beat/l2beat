@@ -38,8 +38,8 @@ export async function getDataAvailabilityProjectData(
             description: projectEntry.description,
           },
         }),
+        url,
         openGraph: {
-          url,
           image: `/meta-images/data-availability/projects/${params.layer}/opengraph-image.png`,
         },
       }),
@@ -63,7 +63,6 @@ async function getProjectEntry(
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
     optional: [
-      'isUpcoming',
       'milestones',
       'archivedAt',
       'colors',

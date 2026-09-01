@@ -1,11 +1,11 @@
 {
   "RegistryCoordinator": {
-    "hash": "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68",
+    "hash": "0x01d350cded0d91af3d3b216f49f3d8c33d54b5c0542ac5666e106427c901f8de",
     "address": "eth:0xdcabf0bE991d4609096CCe316df08d091356E03F",
     "blockNumber": 22188285
   },
   "RegistryCoordinator_v2": {
-    "hash": "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575",
+    "hash": "0x7bc3d6a892a6e8c6ec410ff8d531b91cca1a03c0c06abc1963b402fd63287f38",
     "address": "eth:0x2088435ABcB1234A9427B755931C9064C93a2595",
     "blockNumber": 22596592
   }

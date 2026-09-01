@@ -48,6 +48,7 @@ export const CELER_NETWORKS = defineNetworks('celer', [
   { celerChainId: 59144, chain: 'linea' },
   { celerChainId: 196, chain: 'xlayer' },
   { celerChainId: 43114, chain: 'avalanche' },
+  // monad, tempo unsupported
 ])
 
 export const CelerMessage = createInteropEventType<{

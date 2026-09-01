@@ -50,8 +50,7 @@
         "args": [],
         "method": "getStaticConfig"
         //"pickFields": ["chainSelector", "destChainSelector"]
-      },
-      "edit": ["map", ["format", "ChainIdMap"]]
+      }
     },
     "tokenAddresses": {
       "handler": {

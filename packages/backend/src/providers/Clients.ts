@@ -1,6 +1,7 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
-  AvailWsClient,
+  type AztecBlockClient,
+  AztecRpcClient,
   BeaconChainClient,
   type BlockClient,
   BlockIndexerClient,
@@ -14,12 +15,12 @@ import {
   type IRpcClient,
   LighterClient,
   type LogsClient,
-  LoopringClient,
   MulticallV3Client,
   NearClient,
   PolkadotRpcClient,
   RpcClient,
   RpcClientCompat,
+  RpcMetricsAggregator,
   StarkexClient,
   StarknetClient,
   type SvmBlockClient,
@@ -27,7 +28,6 @@ import {
   toRetryOptions,
   VoyagerClient,
   withRetries,
-  ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
@@ -36,22 +36,22 @@ export interface Clients {
   block: BlockClient[]
   logs: LogsClient[]
   svmBlock: SvmBlockClient[]
+  aztecBlock: AztecBlockClient[]
   indexer: BlockIndexerClient[]
   voyager: VoyagerClient | undefined
   lighter: LighterClient | undefined
   starkex: StarkexClient | undefined
-  loopring: LoopringClient | undefined
-  degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   beacon: BeaconChainClient | undefined
   celestia: CelestiaRpcClient | undefined
   celestiaDaBeat: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
-  availWs: AvailWsClient | undefined
+  availDaBeat: PolkadotRpcClient | undefined
   eigen: EigenApiClient | undefined
   getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: IRpcClient[]
+  rpcMetricsAggregator: RpcMetricsAggregator
   starknetClients: StarknetClient[]
   near: NearClient | undefined
   espresso: EspressoClient | undefined
@@ -60,16 +60,17 @@ export interface Clients {
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
+  const rpcMetricsAggregator = new RpcMetricsAggregator({
+    logger: logger.for(RpcMetricsAggregator.name),
+  })
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
-  let loopringClient: LoopringClient | undefined
-  let degateClient: LoopringClient | undefined
   let ethereumClient: IRpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let celestiaDaBeat: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
-  let availWs: AvailWsClient | undefined
+  let availDaBeat: PolkadotRpcClient | undefined
   let near: NearClient | undefined
   let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
@@ -79,6 +80,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const blockClients: BlockClient[] = []
   const logsClients: LogsClient[] = []
   const svmBlockClients: SvmBlockClient[] = []
+  const aztecBlockClients: AztecBlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
   const rpcClients: IRpcClient[] = []
 
@@ -114,6 +116,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                rpcMetricsAggregator,
                 timeout: blockApi.timeout,
               })
             : new RpcClient({
@@ -124,6 +127,10 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                rpcMetrics: rpcMetricsAggregator.createRecorder({
+                  rpcChain: chain.name,
+                  rpcClient: RpcClient.name,
+                }),
                 timeout: blockApi.timeout,
               })
           blockClients.push(rpcClient)
@@ -132,19 +139,6 @@ export function initClients(config: Config, logger: Logger): Clients {
           if (chain.name === 'ethereum' && ethereumClient === undefined) {
             ethereumClient = rpcClient
           }
-          break
-        }
-
-        case 'zksync': {
-          const zksyncLiteClient = new ZksyncLiteClient({
-            sourceName: 'zksynclite',
-            url: blockApi.url,
-            http,
-            callsPerMinute: blockApi.callsPerMinute,
-            retryStrategy: blockApi.retryStrategy,
-            logger,
-          })
-          blockClients.push(zksyncLiteClient)
           break
         }
 
@@ -159,23 +153,6 @@ export function initClients(config: Config, logger: Logger): Clients {
           })
           blockClients.push(client)
           starknetClients.push(client)
-          break
-        }
-        case 'loopring':
-        case 'degate3': {
-          const client = new LoopringClient({
-            sourceName: blockApi.type,
-            url: blockApi.url,
-            type: blockApi.type,
-            http,
-            callsPerMinute: blockApi.callsPerMinute,
-            retryStrategy: blockApi.retryStrategy,
-            logger,
-          })
-          blockClients.push(client)
-          blockApi.type === 'loopring'
-            ? (loopringClient = client)
-            : (degateClient = client)
           break
         }
         case 'fuel': {
@@ -213,6 +190,18 @@ export function initClients(config: Config, logger: Logger): Clients {
           svmBlockClients.push(client)
           break
         }
+        case 'aztec-rpc': {
+          const client = new AztecRpcClient({
+            sourceName: chain.name,
+            url: blockApi.url,
+            http,
+            callsPerMinute: blockApi.callsPerMinute,
+            retryStrategy: blockApi.retryStrategy,
+            logger,
+          })
+          aztecBlockClients.push(client)
+          break
+        }
         default:
           assertUnreachable(blockApi)
       }
@@ -230,6 +219,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             sourceName: layer.name,
             logger,
             http,
+            timeout: layer.timeout,
           })
           blockClients.push(celestia)
           break
@@ -343,7 +333,14 @@ export function initClients(config: Config, logger: Logger): Clients {
       logger,
       http,
     })
-    availWs = new AvailWsClient(config.daBeat.availWsUrl)
+    availDaBeat = new PolkadotRpcClient({
+      url: config.daBeat.availRpcUrl,
+      callsPerMinute: 100,
+      retryStrategy: 'RELIABLE',
+      sourceName: 'avail',
+      logger,
+      http,
+    })
     espresso = new EspressoClient({
       sourceName: 'espresso',
       apiUrl: config.daBeat.espressoApiUrl,
@@ -370,22 +367,22 @@ export function initClients(config: Config, logger: Logger): Clients {
     block: blockClients,
     logs: logsClients,
     svmBlock: svmBlockClients,
+    aztecBlock: aztecBlockClients,
     indexer: indexerClients,
     starkex: starkexClient,
-    loopring: loopringClient,
-    degate: degateClient,
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
     celestia,
     celestiaDaBeat,
     eigen,
     avail,
-    availWs,
+    availDaBeat,
     near,
     espresso,
     getStarknetClient,
     getRpcClient,
     rpcClients,
+    rpcMetricsAggregator,
     starknetClients,
     voyager: voyagerClient,
     lighter: lighterClient,

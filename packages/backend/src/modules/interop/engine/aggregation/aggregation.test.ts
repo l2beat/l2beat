@@ -357,7 +357,7 @@ describe('aggregation', () => {
       expect(result.avgValueInFlight).toEqual(324.07)
     })
 
-    it('calculates minted & burned value correctly', () => {
+    it('sums net mint and burn for strict lock-and-mint flags', () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer({
           timestamp,
@@ -439,11 +439,124 @@ describe('aggregation', () => {
         calculateNetMinted: true,
       })
 
-      // Only the first transfer counts (minting)
-      // mintedValueUsd = 2000
-      // burnedValueUsd = 0
+      // Only the first transfer counts (minting); no burn total → field omitted
       expect(result.mintedValueUsd).toEqual(2000)
-      expect(result.burnedValueUsd).toEqual(0)
+      expect(result.burnedValueUsd).toEqual(undefined)
+    })
+
+    it('two-sided transfers omit net mint or burn unless src/dst booleans are strict pairs', () => {
+      const mintNeedsExplicitNotBurn = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            dstWasMinted: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).mintedValueUsd
+
+      expect(mintNeedsExplicitNotBurn).toEqual(undefined)
+
+      const burnNeedsExplicitNotMint = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            srcWasBurned: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).burnedValueUsd
+
+      expect(burnNeedsExplicitNotMint).toEqual(undefined)
+    })
+
+    it('one-sided transfers use loose burn/mint booleans for net minted', () => {
+      const mintOnlyDstFlag = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            srcEventId: undefined,
+            dstWasMinted: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).mintedValueUsd
+
+      expect(mintOnlyDstFlag).toEqual(10)
+
+      const burnOnlySrcFlag = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            dstEventId: undefined,
+            srcWasBurned: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).burnedValueUsd
+
+      expect(burnOnlySrcFlag).toEqual(10)
+    })
+
+    it('omits net mint and burn when both burn/mint booleans are unset', () => {
+      const twoSided = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 100,
+            dstValueUsd: 100,
+            srcWasBurned: undefined,
+            dstWasMinted: undefined,
+          }),
+        ],
+        { calculateNetMinted: true },
+      )
+
+      expect(twoSided.mintedValueUsd).toEqual(undefined)
+      expect(twoSided.burnedValueUsd).toEqual(undefined)
+
+      const oneSided = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 100,
+            dstValueUsd: 100,
+            srcEventId: undefined,
+            srcWasBurned: undefined,
+            dstWasMinted: undefined,
+          }),
+        ],
+        { calculateNetMinted: true },
+      )
+
+      expect(oneSided.mintedValueUsd).toEqual(undefined)
+      expect(oneSided.burnedValueUsd).toEqual(undefined)
     })
 
     it('correctly counts identified transfers', () => {
@@ -1260,6 +1373,8 @@ function createTransfer(overrides: {
   dstValueUsd?: number
   srcWasBurned?: boolean
   dstWasMinted?: boolean
+  srcEventId?: string | undefined
+  dstEventId?: string | undefined
 }): InteropTransferRecord {
   return {
     plugin: 'test-plugin',
@@ -1270,7 +1385,8 @@ function createTransfer(overrides: {
     srcTime: overrides.timestamp,
     srcTxHash: 'random-hash',
     srcLogIndex: 0,
-    srcEventId: 'random-event-id',
+    srcEventId:
+      'srcEventId' in overrides ? overrides.srcEventId : 'random-event-id',
     srcTokenAddress: undefined,
     srcRawAmount: undefined,
     srcWasBurned: overrides.srcWasBurned ?? undefined,
@@ -1283,7 +1399,8 @@ function createTransfer(overrides: {
         : undefined,
     dstTxHash: 'random-hash',
     dstLogIndex: 0,
-    dstEventId: 'random-event-id',
+    dstEventId:
+      'dstEventId' in overrides ? overrides.dstEventId : 'random-event-id',
     dstTokenAddress: undefined,
     dstRawAmount: undefined,
     dstWasMinted: overrides.dstWasMinted ?? undefined,

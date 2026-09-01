@@ -1,0 +1,103 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "KMSGeneration",
+  "description": "Gateway contract that orchestrates FHE key generation, CRS generation, PRSS initialization, and key resharing through threshold KMS responses.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getConsensusTxSenders",
+    "getKeyMaterials",
+    "getCrsMaterials",
+    "getKeyParamsType",
+    "getCrsParamsType"
+  ],
+  "fields": {
+    "gatewayConfig": {
+      "description": "GatewayConfig contract used as the source of truth for the gateway owner, KMS set, and KMS generation threshold.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab"
+      }
+    },
+    "gatewayOwner": {
+      "description": "Owner of GatewayConfig. This account authorizes KMSGeneration upgrades and can trigger key, CRS, PRSS, and key-resharing workflows.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the KMSGeneration implementation."
+        },
+        {
+          "type": "interact",
+          "description": "start KMS key generation, CRS generation, PRSS initialization, and key resharing."
+        }
+      ]
+    },
+    "gatewayKmsTxSenders": {
+      "description": "KMS transaction-sender addresses configured in GatewayConfig. These accounts may submit preprocessing keygen, keygen, and CRS generation responses.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getKmsTxSenders() view returns (address[])",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration."
+        }
+      ]
+    },
+    "gatewayKmsSigners": {
+      "description": "KMS signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether key and CRS generation responses reach threshold.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getKmsSigners() view returns (address[])",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration."
+        }
+      ]
+    },
+    "gatewayKmsGenThreshold": {
+      "description": "Minimum number of matching KMS responses required before key or CRS generation reaches consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "method": "function getKmsGenThreshold() view returns (uint256)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      }
+    },
+    "getActiveKeyId": {
+      "description": "Identifier of the active FHE key generated through KMS consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getActiveCrsId": {
+      "description": "Identifier of the active CRS generated through KMS consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "eip712Domain": {
+      "description": "EIP-712 domain used when validating KMS signatures over key-generation and CRS-generation responses."
+    }
+  }
+}

@@ -1,7 +1,18 @@
 {
   "UpgradeableBeacon": {
-    "hash": "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133",
+    "hash": "0xd9cf0eec93e95085d5fac84bb3d87285b88caaf45ae89a67943a17d1f76cc73a",
     "address": "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
     "blockNumber": 22273268
+  },
+  "LidoStakingVaultBeacon": {
+    "hash": "0x5cf3d26d4fcd1958dd8077785a9ff2adda45e0c7ca89b651ba85610102eadb3b",
+    "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
+    "blockNumber": 25624347
+  },
+  "UpgradeableBeacon_solady": {
+    "hash": "0xcb33e9894b3ccc02f7d9511a725a42e91d4b3be81177489c4e045cf0ace202de",
+    "address": "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6",
+    "chain": "base",
+    "blockNumber": 50511351
   }
 }

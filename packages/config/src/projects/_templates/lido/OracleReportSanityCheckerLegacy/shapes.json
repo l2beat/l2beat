@@ -1,0 +1,12 @@
+{
+  "OracleReportSanityChecker": {
+    "hash": "0x7415f579b0d85484eba031fce088e3815743538fa503cfa81fa067bf2e1b0b3f",
+    "address": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
+    "blockNumber": 22188285
+  },
+  "OracleReportSanityChecker_v2": {
+    "hash": "0xac98014b6eb58f63a45fb64697a2b2d15d725923c438ac9a1c031988af5d5d7f",
+    "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
+    "blockNumber": 24183468
+  }
+}

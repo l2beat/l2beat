@@ -2,13 +2,14 @@ import type { Milestone, Project } from '@l2beat/config'
 import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tvs/ZkCatalogTvsSection'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
+import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import { optionToRange } from '~/utils/range/range'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsUsedIn } from './getTrustedSetupsWithVerifiersAndAttesters'
 
 export function getZkCatalogTvsSection(
   project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: ProjectWithPageMetadata[],
 ): Omit<ZkCatalogTvsSectionProps, keyof ProjectSectionProps> | undefined {
   const allProjectsMap = new Map(
     allProjects.map((project) => [project.id, project]),
@@ -69,8 +70,7 @@ export function getZkCatalogTvsSection(
         date: new Date(p.sinceTimestamp * 1000).toISOString(),
         title: `${p.name} started using ${project.name}`,
         type: 'project',
-        projectId: p.projectId,
-        projectIcon: resolved.icon,
+        project: { id: p.projectId, name: p.name, icon: resolved.icon },
         linkLabel: 'Go to project page',
         url: resolved.url,
       },

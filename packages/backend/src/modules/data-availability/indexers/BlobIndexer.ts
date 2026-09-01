@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DaProvider } from '@l2beat/shared'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
@@ -32,42 +33,50 @@ export class BlobIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const adjustedTo =
-      from + this.$.batchSize < to ? from + this.$.batchSize : to
+    return await withCoreFeatureRpcMetricsContext(
+      'dataAvailability.blob',
+      {
+        daLayer: this.$.daLayer,
+      },
+      async () => {
+        const adjustedTo =
+          from + this.$.batchSize < to ? from + this.$.batchSize : to
 
-    this.logger.info('Fetching blobs', {
-      from,
-      to: adjustedTo,
-    })
+        this.logger.info('Fetching blobs', {
+          from,
+          to: adjustedTo,
+        })
 
-    const blobs = await this.$.daProvider.getBlobs(
-      this.$.daLayer,
-      from,
-      adjustedTo,
+        const blobs = await this.$.daProvider.getBlobs(
+          this.$.daLayer,
+          from,
+          adjustedTo,
+        )
+
+        if (blobs.length === 0) {
+          this.logger.info('Empty blobs response received', {
+            from,
+            to: adjustedTo,
+          })
+
+          return adjustedTo
+        }
+
+        this.logger.info('Fetched blobs', {
+          blobs: blobs.length,
+        })
+
+        await this.$.blobService.save(blobs)
+
+        this.logger.info('Saved blobs into DB', {
+          from,
+          to: adjustedTo,
+          records: blobs.length,
+        })
+
+        return adjustedTo
+      },
     )
-
-    if (blobs.length === 0) {
-      this.logger.info('Empty blobs response received', {
-        from,
-        to: adjustedTo,
-      })
-
-      return adjustedTo
-    }
-
-    this.logger.info('Fetched blobs', {
-      blobs: blobs.length,
-    })
-
-    await this.$.blobService.save(blobs)
-
-    this.logger.info('Saved blobs into DB', {
-      from,
-      to: adjustedTo,
-      records: blobs.length,
-    })
-
-    return adjustedTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

@@ -1,4 +1,4 @@
-import { assert, type Block, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
 import type { BlockClient } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
@@ -41,17 +41,42 @@ export class BlockProvider {
     throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
   }
 
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, UnixTime>> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        assert(
+          client.getBlockTimestamps,
+          'Client does not support batch fetching of block timestamps',
+        )
+        const out = new Map<number, UnixTime>()
+        const timestamps = await client.getBlockTimestamps(blockNumbers)
+        for (const [n, ts] of timestamps) {
+          out.set(n, UnixTime(ts))
+        }
+        assert(out.size === blockNumbers.length, 'Missing block timestamps')
+        return out
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
   async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
-    start = 0,
+    start = 1,
   ): Promise<number> {
     for (const [index, client] of this.clients.entries()) {
       try {
         const end = await client.getLatestBlockNumber()
+        const effectiveStart = start >= end ? 1 : start
 
         return await getBlockNumberAtOrBefore(
           timestamp,
-          start,
+          effectiveStart,
           end,
           (number: number) => client.getBlockWithTransactions(number),
         )

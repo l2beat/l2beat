@@ -1,5 +1,11 @@
+export interface SearchBarCategoryConfig {
+  name: string
+  /** Shown below the rank-ordered groups in search results */
+  pinToBottom?: boolean
+}
+
 export const searchBarCategories = {
-  scaling: {
+  l2: {
     name: 'Scaling',
   },
   da: {
@@ -14,9 +20,19 @@ export const searchBarCategories = {
   ecosystems: {
     name: 'Ecosystems',
   },
+  privacy: {
+    name: 'Privacy',
+  },
+  defi: {
+    name: 'DeFi',
+  },
+  tokens: {
+    name: 'Tokens',
+    pinToBottom: true,
+  },
   other: {
     name: 'Other',
   },
-} as const satisfies Record<string, { name: string }>
+} as const satisfies Record<string, SearchBarCategoryConfig>
 
 export type SearchBarCategory = keyof typeof searchBarCategories

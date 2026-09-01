@@ -102,6 +102,10 @@ export class ConfigModel {
     return this.overrides[id]?.getFieldDescription(fieldName)
   }
 
+  getFieldPermissions(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldPermissions(fieldName)
+  }
+
   setFieldHandler(
     id: string,
     fieldName: string,
@@ -118,6 +122,14 @@ export class ConfigModel {
 
   getFieldHandlerString(id: string, fieldName: string) {
     return this.overrides[id]?.getFieldHandlerString(fieldName)
+  }
+
+  getFieldEdit(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldEdit(fieldName)
+  }
+
+  getFieldEditString(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldEditString(fieldName)
   }
 
   setCategory(id: string, category: ContractConfigSchema['category']) {

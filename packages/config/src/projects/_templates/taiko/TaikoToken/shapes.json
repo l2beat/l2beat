@@ -1,7 +1,7 @@
 {
-  "TaikoToken.sol": {
-    "hash": "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f",
-    "address": "eth:0x87C752b0F70cAa237Edd7571B0845470A37DE040",
-    "blockNumber": 22474718
+  "TaikoTokenPostPacaya": {
+    "hash": "0x41ab29308b74d97dd20c9a343bb0ec5bf06ff5c16e1dce8e573ce3d11b24c37b",
+    "address": "eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106",
+    "blockNumber": 22565516
   }
 }

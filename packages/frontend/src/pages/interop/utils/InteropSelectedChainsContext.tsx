@@ -5,23 +5,19 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react'
-import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { useEventListener } from '~/hooks/useEventListener'
 import { useTracking } from '~/hooks/useTracking'
+import { useUrlStateSync } from '~/hooks/useUrlStateSync'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
 import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
-import { toInteropApiSelection } from './toInteropApiSelection'
-import type { InteropMode, InteropSelection } from './types'
+import { toggleSelection } from './toggleSelection'
+import type { InteropSelection } from './types'
 
 interface InteropSelectedChainsContextType {
-  mode: InteropMode
   selectedChains: InteropSelection
-  selectionForApi: InteropSelection
   allChainIds: string[]
   getChainById: (chainId: string) => InteropChainWithIcon | undefined
   selectChain: (type: 'from' | 'to', chainId: string | null) => void
@@ -30,9 +26,6 @@ interface InteropSelectedChainsContextType {
   selectAll: (type?: 'from' | 'to') => void
   deselectAll: (type?: 'from' | 'to') => void
   swapPaths: () => void
-  reset: () => void
-  isDirty: boolean
-  buildUrl: (path: string, options?: { mode?: InteropMode }) => string
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -41,14 +34,12 @@ export const InteropSelectedChainsContext = createContext<
 
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
-  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   initialSelection: InteropSelection
 }
 
 export function InteropSelectedChainsProvider({
   children,
-  mode,
   interopChains,
   initialSelection,
 }: InteropSelectedChainsProviderProps) {
@@ -61,30 +52,12 @@ export function InteropSelectedChainsProvider({
     [interopChains],
   )
 
-  const defaultSelectionByMode = useMemo(
-    () => ({
-      public: {
-        from: [],
-        to: [],
-      },
-      internal: {
-        from: [...allChainIds],
-        to: [...allChainIds],
-      },
-    }),
-    [allChainIds],
-  )
-
   const normalizedInitialSelection = useMemo(
     () => getValidInteropSelection(initialSelection, allChainIds),
     [initialSelection, allChainIds],
   )
 
   const [selection, setSelection] = useState(normalizedInitialSelection)
-  const selectionForApi = useMemo(
-    () => toInteropApiSelection(selection, mode),
-    [selection, mode],
-  )
 
   useEffect(() => {
     setSelection(normalizedInitialSelection)
@@ -95,58 +68,27 @@ export function InteropSelectedChainsProvider({
     [chainsById],
   )
 
-  const buildUrl = useCallback(
-    (path: string, options?: { mode?: InteropMode }) => {
-      const targetMode = options?.mode ?? mode
-      const targetPath = toInteropPathMode(path, targetMode)
-      return buildInteropUrl(targetPath, selection, targetMode)
-    },
-    [mode, selection],
-  )
-
   const { track } = useTracking()
-  const debouncedSelection = useDebouncedValue(selection, 500)
-  const skipNextUrlUpdate = useRef(false)
-
-  useEffect(() => {
-    if (skipNextUrlUpdate.current) {
-      skipNextUrlUpdate.current = false
-      return
-    }
-
-    const nextUrl = buildInteropUrl(
-      toInteropPathMode(window.location.pathname, mode),
-      debouncedSelection,
-      mode,
-    )
-
-    const currentUrl = window.location.pathname + window.location.search
-    if (nextUrl === currentUrl) {
-      return
-    }
-
-    window.history.pushState({}, '', nextUrl)
-
-    const chains = [
-      ...new Set([...debouncedSelection.from, ...debouncedSelection.to]),
-    ]
-      .sort()
-      .join(',')
-    track('interopChainsSelected', {
-      props: { chains, page: window.location.pathname },
-    })
-  }, [debouncedSelection, mode, track])
-
-  useEventListener('popstate', () => {
-    skipNextUrlUpdate.current = true
-
-    const parsedSelection = parseInteropSelectionFromSearchParams({
-      searchParams: new URLSearchParams(window.location.search),
-      interopChainsIds: allChainIds,
-      mode,
-    })
-
-    setSelection(getValidInteropSelection(parsedSelection, allChainIds))
+  useUrlStateSync({
+    state: selection,
+    debounceMs: 500,
+    parse: (searchParams) =>
+      parseInteropSelectionFromSearchParams({
+        searchParams,
+        interopChainsIds: allChainIds,
+      }),
+    build: buildInteropUrl,
+    onPopState: (parsed) =>
+      setSelection(getValidInteropSelection(parsed, allChainIds)),
+    onPushState: (_url, pushed) => {
+      const chains = [...new Set([...pushed.from, ...pushed.to])]
+        .sort()
+        .join(',')
+      track('interopChainsSelected', {
+        chains,
+        page: window.location.pathname,
+      })
+    },
   })
 
   const selectChain = useCallback(
@@ -213,23 +155,10 @@ export function InteropSelectedChainsProvider({
     }))
   }, [])
 
-  const reset = useCallback(() => {
-    setSelection(defaultSelectionByMode[mode])
-  }, [defaultSelectionByMode, mode])
-
-  const isDirty = useMemo(
-    () =>
-      !isSameSelection(selection.from, defaultSelectionByMode[mode].from) ||
-      !isSameSelection(selection.to, defaultSelectionByMode[mode].to),
-    [selection, defaultSelectionByMode, mode],
-  )
-
   return (
     <InteropSelectedChainsContext.Provider
       value={{
-        mode,
         selectedChains: selection,
-        selectionForApi,
         allChainIds,
         getChainById,
         selectChain,
@@ -238,52 +167,10 @@ export function InteropSelectedChainsProvider({
         selectAll,
         deselectAll,
         swapPaths,
-        reset,
-        isDirty,
-        buildUrl,
       }}
     >
       {children}
     </InteropSelectedChainsContext.Provider>
-  )
-}
-
-function toggleSelection(
-  selection: string[],
-  chainId: string,
-  allChainIds: string[],
-): string[] {
-  const nextSet = new Set(selection)
-  if (nextSet.has(chainId)) {
-    nextSet.delete(chainId)
-  } else {
-    nextSet.add(chainId)
-  }
-
-  return allChainIds.filter((id) => nextSet.has(id))
-}
-
-function toInteropPathMode(path: string, mode: InteropMode) {
-  const normalizedPath = path.endsWith('/') ? path.slice(0, -1) : path
-
-  if (mode === 'internal') {
-    if (normalizedPath.endsWith('/internal')) {
-      return normalizedPath
-    }
-    return `${normalizedPath}/internal`
-  }
-
-  if (normalizedPath.endsWith('/internal')) {
-    return normalizedPath.slice(0, -'/internal'.length)
-  }
-
-  return normalizedPath
-}
-
-function isSameSelection(left: string[], right: string[]) {
-  return (
-    left.length === right.length &&
-    left.every((value, index) => value === right[index])
   )
 }
 

@@ -7,10 +7,7 @@ import type {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
-import {
-  buildSharedModuleIndex,
-  makeEntryStructureConfig,
-} from '../config/structureUtils'
+import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { AllProviders } from '../provider/AllProviders'
 import {
   type DiscoveryCounter,
@@ -19,6 +16,11 @@ import {
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
+
+export interface AddressStats {
+  discovered: number
+  skipped: number
+}
 
 export class DiscoveryEngine {
   constructor(
@@ -31,11 +33,11 @@ export class DiscoveryEngine {
     config: StructureConfig,
     timestamp: UnixTime,
     counter: DiscoveryCounter = new SimpleDiscoveryCounter(),
-  ): Promise<Analysis[]> {
-    const sharedModuleIndex = buildSharedModuleIndex(config)
+  ): Promise<{ analyses: Analysis[]; stats: AddressStats }> {
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
+    let skipped = 0
 
     config.initialAddresses.forEach((address) => {
       toAnalyze[address.toString()] = new Set()
@@ -89,17 +91,6 @@ export class DiscoveryEngine {
 
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
-          const sharedItem = sharedModuleIndex[address]
-          if (sharedItem) {
-            resolved[address.toString()] = {
-              name: sharedItem.name,
-              type: 'Reference',
-              address: sharedItem.address,
-              targetType: sharedItem.type,
-              targetProject: sharedItem.project,
-            }
-            return
-          }
           if (config.entrypoints?.[address] !== undefined) {
             const entrypoint = config.entrypoints[address]
             if (entrypoint.project !== config.name) {
@@ -116,12 +107,14 @@ export class DiscoveryEngine {
           const skipReason = shouldSkip(
             address,
             config,
-            sharedModuleIndex,
             depth,
             counter.getCount(),
           )
           if (skipReason !== undefined) {
-            const info = `${counter.increment()}/${total}`
+            if (skipReason.startsWith('total ')) {
+              skipped++
+            }
+            const info = `↓${depth} ${counter.increment()}/${total}`
             const entries = [
               chalk.gray(info),
               chalk.gray(address),
@@ -154,7 +147,7 @@ export class DiscoveryEngine {
             }
 
             counter.increment()
-            this.logObject(analysis, total, counter)
+            this.logObject(analysis, total, counter, depth)
           } catch (error) {
             this.logAnalysisError(address, error)
             throw error
@@ -165,18 +158,22 @@ export class DiscoveryEngine {
       depth++
     }
 
-    const result = Object.values(resolved)
-    this.checkErrors(result)
+    const analyses = Object.values(resolved)
+    this.checkErrors(analyses)
 
-    return result
+    return {
+      analyses,
+      stats: { discovered: analyses.length, skipped },
+    }
   }
 
   private logObject(
     analysis: Analysis,
     total: number,
     counter: DiscoveryCounter,
+    depth: number,
   ) {
-    const info = `${counter.getCount()}/${total}`
+    const info = `↓${depth} ${counter.getCount()}/${total}`
     if (analysis.type === 'EOA') {
       const entries = [chalk.gray(info), analysis.address, chalk.blue('EOA')]
       this.logger.info(entries.join(' '))

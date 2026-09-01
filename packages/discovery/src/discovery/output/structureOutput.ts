@@ -1,7 +1,6 @@
 import {
   type Hash256,
   type UnixTime,
-  undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
 import { recalculateSourceHashes } from '../../flatten/utils'
@@ -18,7 +17,13 @@ export function generateStructureHash(config: StructureConfig): Hash256 {
   //                    require rediscovery of everything.
   // TODO: find proper way of handling such situations
   const { import: _i, entrypoints: _e, ...strippedConfig } = config
-  return hashJsonStable(strippedConfig)
+  // TODO: drop the `sharedModules` pin below and rediscover everything.
+  // `sharedModules` was replaced by entrypoints and no longer exists on the
+  // config. Every project had it defaulting to `[]`, so it was always part of
+  // this hash. It stays pinned so that the removal alone does not invalidate
+  // the configHash committed in all 151 non-archived discovered.json files.
+  // Removing it requires a full `l2b refresh-discovery --all`.
+  return hashJsonStable({ ...strippedConfig, sharedModules: [] })
 }
 
 export function getStructureOutput(
@@ -31,7 +36,6 @@ export function getStructureOutput(
     name: config.name,
     timestamp,
     configHash: generateStructureHash(config),
-    sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
     usedBlockNumbers,
@@ -77,6 +81,7 @@ export function processAnalysis(
                 sourceHashes: recalculateSourceHashes(x.sourceBundles),
                 proxyType: x.proxyType,
                 ignoreInWatchMode: x.ignoreInWatchMode,
+                deployerAddress: x.deployerAddress,
                 sinceTimestamp: x.deploymentTimestamp,
                 sinceBlock: x.deploymentBlockNumber,
                 values:

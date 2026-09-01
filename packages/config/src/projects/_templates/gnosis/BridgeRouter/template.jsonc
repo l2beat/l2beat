@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Entry router for bridging between Ethereum and Gnosis. It routes DAI and USDS through the legacy xDAI bridge, ETH through the WETH Omnibridge router, and other ERC20 tokens through Omnibridge.",
+  "ignoreRelatives": ["DAI", "USDS"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the DAI and USDS bridge routes and recover ETH or ERC20 tokens locked in the router."
+        }
+      ]
+    },
+    "FOREIGN_XDAIBRIDGE": {
+      "description": "Legacy DAI or USDS bridge used for canonical stablecoin transfers between Ethereum and Gnosis.",
+      "severity": "HIGH"
+    },
+    "FOREIGN_AMB": {
+      "description": "Ethereum-side Arbitrary Message Bridge endpoint used by the Gnosis bridge system for cross-chain calls.",
+      "severity": "HIGH"
+    },
+    "FOREIGN_OMNIBRIDGE": {
+      "description": "Ethereum-side Omnibridge mediator used for arbitrary token transfers between Ethereum and Gnosis.",
+      "severity": "HIGH"
+    },
+    "WETH_OMNIBRIDGE_ROUTER": {
+      "description": "ETH-specific router that wraps ETH into WETH before sending it through Omnibridge.",
+      "severity": "HIGH"
+    }
+  }
+}

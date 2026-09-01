@@ -1,14 +1,17 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const zksyncprover: BaseProject = {
   id: ProjectId('zksyncprover'),
   slug: 'zksyncprover',
   name: 'ZKsync Lite',
   shortName: undefined,
+  aliases: ['Matter Labs'],
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
+  // archivedAt: UnixTime.fromDate(new Date('2026-05-05')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -40,11 +43,7 @@ export const zksyncprover: BaseProject = {
         ZK_CATALOG_TAGS.Other.CustomCircuits,
       ],
     },
-    proofSystemInfo: `
-    ## Proof system
-
-    ZKSync Lite prover is a monolithic SNARK proving system that generates validity proofs for the state transition of ZKSync Lite L2. It is a [Plonk system](https://docs.lite.zksync.io/userdocs/security/#primitives) over BN254 curve with [custom circuits](https://github.com/matter-labs/zksync/tree/master/core/lib/circuit/src) designed to prove the specific state transition function of the L2, including deposits and withdrawals, transfers, swaps, NFT operations. The proof system itself is implemented in the [bellman library](https://github.com/matter-labs/bellman), while many base cryptographic primitives are implemented in [franklin library](https://github.com/matter-labs/franklin-crypto/tree/dev).    
-    `,
+    proofSystemInfo: readProjectMarkdown('zksyncprover', 'proofSystemInfo'),
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
@@ -60,18 +59,38 @@ export const zksyncprover: BaseProject = {
         projectId: ProjectId('zkspace'),
         sinceTimestamp: UnixTime(1639954800),
       },
+      {
+        projectId: ProjectId('apex-omni'),
+        sinceTimestamp: UnixTime(1717970400),
+      },
     ],
     verifierHashes: [
+      {
+        hash: '0xa43ed825e5cd25608fc1bf63fa12bbf73a05523066b040a90069b2c201e76d1e',
+        name: 'ZkLink verifier ApeX Omni',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of the abi packed array of uint256 obtained from flattening VerificationKey structure returned by getVkAggregated1()',
+      },
       {
         hash: '0xfa15bba967ebf892d9657359fb8ff07aea13e152c0d5160143a494abb4bc9df3',
         name: 'ZKsync Lite verifier 1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
@@ -84,10 +103,10 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
@@ -100,10 +119,10 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

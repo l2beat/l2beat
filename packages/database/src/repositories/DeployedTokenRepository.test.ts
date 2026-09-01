@@ -96,6 +96,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
             decimals: 8,
             deploymentTimestamp: 20,
             comment: 'updated comment',
+            ignored: true,
           },
         )
 
@@ -110,6 +111,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           decimals: 8,
           deploymentTimestamp: 20,
           comment: 'updated comment',
+          ignored: true,
         })
       })
     },
@@ -659,8 +661,10 @@ function abstractToken(
     iconUrl: overrides.iconUrl ?? null,
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    additionalCoingeckoEntries: overrides.additionalCoingeckoEntries ?? null,
     comment: overrides.comment ?? null,
     reviewed: overrides.reviewed ?? false,
+    isPriceUnreliable: overrides.isPriceUnreliable ?? false,
   }
 }
 
@@ -677,6 +681,7 @@ function deployedToken(
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? 0,
     comment: overrides.comment ?? null,
+    ignored: overrides.ignored ?? false,
     metadata: overrides.metadata ?? {
       tvs: {
         includeInCalculations: true,
@@ -691,6 +696,8 @@ function deployedToken(
         excludeFromTotal: false,
       },
     },
+    abstractTokenAssignmentProof:
+      overrides.abstractTokenAssignmentProof ?? null,
   }
 }
 

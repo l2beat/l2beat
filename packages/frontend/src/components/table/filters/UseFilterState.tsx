@@ -69,13 +69,10 @@ function filterReducer(
         : [action.payload.value]
 
       track('filterValueSelected', {
-        props: {
-          name: action.payload.id,
-          value: action.payload.value,
-          allValues: [...newValues].sort().join(','),
-          additionalFilters:
-            Object.keys(state).length - (existingFilter ? 1 : 0),
-        },
+        name: action.payload.id,
+        value: action.payload.value,
+        allValues: [...newValues].sort().join(','),
+        additionalFilters: Object.keys(state).length - (existingFilter ? 1 : 0),
       })
 
       return {
@@ -100,9 +97,7 @@ function filterReducer(
 
         if (newValues.length === 0) {
           delete newState[action.payload.id]
-          track('filterRemoved', {
-            props: { name: action.payload.id },
-          })
+          track('filterRemoved', { name: action.payload.id })
         } else {
           newState[action.payload.id] = {
             ...filter,
@@ -111,9 +106,7 @@ function filterReducer(
         }
       } else {
         delete newState[action.payload.id]
-        track('filterRemoved', {
-          props: { name: action.payload.id },
-        })
+        track('filterRemoved', { name: action.payload.id })
       }
 
       return newState
@@ -125,10 +118,8 @@ function filterReducer(
 
       if (action.payload.value === true) {
         track('filterInversed', {
-          props: {
-            name: action.payload.id,
-            allValues: [...filter.values].sort().join(','),
-          },
+          name: action.payload.id,
+          allValues: [...filter.values].sort().join(','),
         })
       }
 

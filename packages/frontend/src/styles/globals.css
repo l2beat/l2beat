@@ -347,8 +347,7 @@
   --color-yellow-300: #fdcf44;
   --color-yellow-500: #e5c227;
   --color-yellow-700: #cb9800;
-  --color-yellow-800: #382d11;
-  --color-yellow-900: #684e00;
+  --color-yellow-800: #684e00;
   --color-n-yellow-700: #ab8000;
 
   --color-orange-400: #ff8b36;
@@ -419,6 +418,9 @@
   --color-sky-500: #0074fd;
   --color-sky-550: #2670ff;
   --color-sky-600: #2083c1;
+
+  --color-n-sky-300: #76cdf9;
+  --color-n-sky-500: #2498d6;
 
   --color-fuchsia-700: #860cb0;
 
@@ -495,32 +497,20 @@
   --transition-property-height: height;
   --transition-property-max-height: max-height;
 
-  --animate-beat: beat 5s ease-in-out infinite forwards;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-collapsible-down: collapsible-down 0.3s ease-out;
   --animate-collapsible-up: collapsible-up 0.3s ease-out;
   --animate-row-highlight: row-highlight 2.5s ease-in-out;
   --animate-row-highlight-no-opacity: row-highlight-no-opacity 2.5s ease-in-out;
+  --animate-badge-dialog-loading: badge-dialog-loading 1.2s linear infinite;
 
-  @keyframes beat {
+  @keyframes badge-dialog-loading {
     0% {
-      transform: scale(1, 1);
-    }
-    80% {
-      transform: scale(1, 1);
-    }
-    85% {
-      transform: scale(1.05, 1.05);
-    }
-    90% {
-      transform: scale(1, 1);
-    }
-    95% {
-      transform: scale(1.05, 1.05);
+      transform: translateX(-100%);
     }
     100% {
-      transform: scale(1, 1);
+      transform: translateX(250%);
     }
   }
 
@@ -789,5 +779,38 @@
   }
   to {
     clip-path: circle(var(--circle-radius) at var(--circle-x) var(--circle-y));
+  }
+}
+
+@keyframes transfer-speed-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/*
+ * Interop flows particles. Both keyframes are shared by every particle on the
+ * graph — the per-flow travel/idle split lives in the animation-timing-function
+ * (a linear() easing) rather than in the keyframe percentages, so hundreds of
+ * particles need only these two rules. See ParticleLayer.tsx.
+ */
+@keyframes interop-particle-move {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes interop-particle-fade {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 0;
   }
 }

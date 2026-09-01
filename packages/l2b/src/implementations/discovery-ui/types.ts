@@ -14,6 +14,17 @@ export interface ApiProjectResponse {
   entries: ApiProjectChain[]
 }
 
+export type ApiTvlResponse = ApiTvlEntry[]
+
+export interface ApiTvlEntry {
+  tvl: number
+  ticker: string
+  address: string
+  iconURL: string | undefined
+  balance: number
+  price: number | undefined
+}
+
 export interface ApiPreviewResponse {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
@@ -56,6 +67,7 @@ export type ApiAddressType =
   | 'Timelock'
   | 'Untemplatized'
   | 'Contract'
+  | 'Group'
   | 'Unknown'
 
 export interface ApiAddressEntry {
@@ -166,6 +178,16 @@ export interface ApiAbiEntry {
 export interface ApiCodeResponse {
   entryName: string | undefined
   sources: { name: string; code: string }[]
+}
+
+export interface ApiCodeSegment {
+  name: string | null
+  content: string
+}
+
+export interface ApiCodeDeclarationsResponse {
+  entryName: string | undefined
+  sources: { name: string; declarations: ApiCodeSegment[] }[]
 }
 
 export interface ApiCodeSearchResponse {

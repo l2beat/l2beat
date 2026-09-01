@@ -79,12 +79,14 @@ export function PermissionsSection({
                       key={technologyContractKey(permission)}
                       contract={permission}
                       className="my-4"
+                      expandableAddresses={permission.addresses.length > 1}
                     />
                   ))}
                   {changedActors.length > 0 && (
                     <ContractsWithImpactfulChanges
                       contracts={changedActors}
                       type="permissions"
+                      expandableAddresses
                     />
                   )}
                 </div>

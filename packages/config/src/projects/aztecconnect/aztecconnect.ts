@@ -9,7 +9,7 @@ import {
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -87,7 +87,7 @@ export const aztecconnect: ScalingProject = {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -249,6 +249,14 @@ export const aztecconnect: ScalingProject = {
       'The code to decode onchain data can be found [here](https://github.com/AztecProtocol/aztec-connect/blob/master/yarn-project/barretenberg.js/src/rollup_proof/rollup_proof_data.ts#L453)',
   },
   milestones: [
+    {
+      title: 'Immutable smart contract exploit',
+      date: '2026-06-15T00:00:00Z',
+      url: 'https://www.aztec-labs.com/blog/aztec-connect-incident.html',
+      description:
+        '$~2.3M of assets are drained by exploiting a bug in a smart contract.',
+      type: 'incident',
+    },
     {
       title: 'Aztec operator sunset',
       date: '2024-04-30T00:00:00Z',

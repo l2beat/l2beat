@@ -9,6 +9,58 @@
           "description": "add/remove verifiers and the selectors they are mapped to."
         }
       ]
+    },
+    // Read the verifier registered at each known selector directly from the public `verifiers`
+    // mapping, so the leaf verifiers are discovered and tracked independent of the owner. Selectors
+    // are maintained by hand from the owner timelock's executed addVerifier calls; an unset/removed
+    // selector reads back as the zero/tombstone address and is not followed.
+    "verifier_310fe598": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes4) view returns (address)",
+        "args": ["0x310fe598"]
+      }
+    },
+    "verifier_9f39696c": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes4) view returns (address)",
+        "args": ["0x9f39696c"]
+      }
+    },
+    "verifier_f536085a": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes4) view returns (address)",
+        "args": ["0xf536085a"]
+      }
+    },
+    "verifier_bb001d44": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes4) view returns (address)",
+        "args": ["0xbb001d44"]
+      }
+    },
+    "verifier_73c457ba": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes4) view returns (address)",
+        "args": ["0x73c457ba"]
+      }
+    },
+    "verifier_242f9d5b": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function verifiers(bytes4) view returns (address)",
+        "args": ["0x242f9d5b"]
+      }
     }
   }
 }

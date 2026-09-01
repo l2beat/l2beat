@@ -1,0 +1,251 @@
+import { clamp } from '@l2beat/shared-pure'
+import { type Token, tokenizeSolidity } from './tokenizeSolidity'
+
+export interface LineRange {
+  startLineNumber: number
+  endLineNumberExclusive: number
+}
+
+export interface LineRangeMapping {
+  original: LineRange
+  modified: LineRange
+}
+
+export type ChangeDecision =
+  | { kind: 'keep' }
+  | { kind: 'drop' }
+  | { kind: 'narrow'; original: LineRange; modified: LineRange }
+
+// For each Monaco change we drop or narrow, return the line-range slices
+// that the diff editor must still pad with view zones so unequal line counts
+// on the two sides don't cause cumulative drift below the change.
+//   drop   → the whole outer mapping (Monaco won't render it any more).
+//   keep   → nothing (Monaco aligns the change itself).
+//   narrow → the lead and trail slices outside the kept narrow region.
+export function alignmentGaps(
+  outer: LineRangeMapping,
+  decision: ChangeDecision,
+): LineRangeMapping[] {
+  if (decision.kind === 'drop') {
+    return [outer]
+  }
+  if (decision.kind === 'keep') {
+    return []
+  }
+  return [
+    {
+      original: {
+        startLineNumber: outer.original.startLineNumber,
+        endLineNumberExclusive: decision.original.startLineNumber,
+      },
+      modified: {
+        startLineNumber: outer.modified.startLineNumber,
+        endLineNumberExclusive: decision.modified.startLineNumber,
+      },
+    },
+    {
+      original: {
+        startLineNumber: decision.original.endLineNumberExclusive,
+        endLineNumberExclusive: outer.original.endLineNumberExclusive,
+      },
+      modified: {
+        startLineNumber: decision.modified.endLineNumberExclusive,
+        endLineNumberExclusive: outer.modified.endLineNumberExclusive,
+      },
+    },
+  ]
+}
+
+export function decideChanges(
+  changes: LineRangeMapping[],
+  originalSource: string,
+  modifiedSource: string,
+  ignoreComments: boolean,
+): ChangeDecision[] {
+  if (changes.length === 0) {
+    return []
+  }
+
+  const originalTokens = tokenizeSolidity(originalSource)
+  const modifiedTokens = tokenizeSolidity(modifiedSource)
+
+  return changes.map((change) =>
+    decideChange(change, originalTokens, modifiedTokens, ignoreComments),
+  )
+}
+
+function decideChange(
+  change: LineRangeMapping,
+  originalTokens: Token[],
+  modifiedTokens: Token[],
+  ignoreComments: boolean,
+): ChangeDecision {
+  const left = effectiveTokens(
+    tokensInRange(
+      originalTokens,
+      change.original.startLineNumber,
+      change.original.endLineNumberExclusive,
+    ),
+    ignoreComments,
+  )
+  const right = effectiveTokens(
+    tokensInRange(
+      modifiedTokens,
+      change.modified.startLineNumber,
+      change.modified.endLineNumberExclusive,
+    ),
+    ignoreComments,
+  )
+
+  const narrowed = narrowChange(change, left, right)
+  if (narrowed === null) {
+    return { kind: 'drop' }
+  }
+  if (rangesEqual(narrowed, change)) {
+    return { kind: 'keep' }
+  }
+  return {
+    kind: 'narrow',
+    original: narrowed.original,
+    modified: narrowed.modified,
+  }
+}
+
+function tokensInRange(
+  tokens: Token[],
+  startLine: number,
+  endLineExclusive: number,
+): Token[] {
+  const result: Token[] = []
+  for (const token of tokens) {
+    if (token.startLine >= endLineExclusive) {
+      break
+    }
+    if (token.endLine >= startLine) {
+      result.push(token)
+    }
+  }
+  return result
+}
+
+function effectiveTokens(tokens: Token[], ignoreComments: boolean): Token[] {
+  if (ignoreComments) {
+    return tokens.filter((t) => t.type !== 'comment')
+  }
+  return tokens
+}
+
+function narrowChange(
+  change: LineRangeMapping,
+  left: Token[],
+  right: Token[],
+): LineRangeMapping | null {
+  let prefix = 0
+  const maxPrefix = Math.min(left.length, right.length)
+  while (prefix < maxPrefix && tokenMatches(left[prefix], right[prefix])) {
+    prefix++
+  }
+
+  let suffix = 0
+  const maxSuffix = maxPrefix - prefix
+  while (
+    suffix < maxSuffix &&
+    tokenMatches(
+      left[left.length - 1 - suffix],
+      right[right.length - 1 - suffix],
+    )
+  ) {
+    suffix++
+  }
+
+  // Back the trim off any intra-line boundary: if the last matched token
+  // and the first unmatched token share a line on either side, the line
+  // still visually changed (e.g. a trailing comma was removed leaving the
+  // rest unchanged) and excluding it would hide the diff.
+  while (
+    prefix > 0 &&
+    (sharesLine(left[prefix - 1], left[prefix]) ||
+      sharesLine(right[prefix - 1], right[prefix]))
+  ) {
+    prefix--
+  }
+  while (
+    suffix > 0 &&
+    (sharesLine(left[left.length - suffix - 1], left[left.length - suffix]) ||
+      sharesLine(
+        right[right.length - suffix - 1],
+        right[right.length - suffix],
+      ))
+  ) {
+    suffix--
+  }
+
+  const leftSurvivors = left.slice(prefix, left.length - suffix)
+  const rightSurvivors = right.slice(prefix, right.length - suffix)
+
+  if (leftSurvivors.length === 0 && rightSurvivors.length === 0) {
+    return null
+  }
+
+  return {
+    original: projectRange(leftSurvivors, left, prefix, change.original),
+    modified: projectRange(rightSurvivors, right, prefix, change.modified),
+  }
+}
+
+function sharesLine(a: Token | undefined, b: Token | undefined): boolean {
+  return a !== undefined && b !== undefined && a.endLine === b.startLine
+}
+
+function tokenMatches(a: Token | undefined, b: Token | undefined): boolean {
+  if (a === undefined || b === undefined) {
+    return false
+  }
+  return a.type === b.type && a.content === b.content
+}
+
+function projectRange(
+  survivors: Token[],
+  all: Token[],
+  prefix: number,
+  fallback: LineRange,
+): LineRange {
+  // All output line numbers are clamped to `fallback`. A multiline token
+  // (block comment, multiline string) that straddles the change boundary
+  // would otherwise project to lines outside the original Monaco range.
+  if (survivors.length === 0) {
+    const rawAnchor =
+      prefix > 0
+        ? (all[prefix - 1] as Token).endLine + 1
+        : fallback.startLineNumber
+    const anchor = clamp(
+      rawAnchor,
+      fallback.startLineNumber,
+      fallback.endLineNumberExclusive,
+    )
+    return { startLineNumber: anchor, endLineNumberExclusive: anchor }
+  }
+  const first = survivors[0] as Token
+  const last = survivors[survivors.length - 1] as Token
+  return {
+    startLineNumber: clamp(
+      first.startLine,
+      fallback.startLineNumber,
+      fallback.endLineNumberExclusive,
+    ),
+    endLineNumberExclusive: clamp(
+      last.endLine + 1,
+      fallback.startLineNumber,
+      fallback.endLineNumberExclusive,
+    ),
+  }
+}
+
+function rangesEqual(a: LineRangeMapping, b: LineRangeMapping): boolean {
+  return (
+    a.original.startLineNumber === b.original.startLineNumber &&
+    a.original.endLineNumberExclusive === b.original.endLineNumberExclusive &&
+    a.modified.startLineNumber === b.modified.startLineNumber &&
+    a.modified.endLineNumberExclusive === b.modified.endLineNumberExclusive
+  )
+}

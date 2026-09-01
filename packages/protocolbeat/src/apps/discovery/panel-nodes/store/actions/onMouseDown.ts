@@ -1,11 +1,13 @@
-import type { State } from '../State'
+import type { Node, State } from '../State'
 import {
   CLICKED_LEFT_MOUSE_BUTTON,
   CLICKED_MIDDLE_MOUSE_BUTTON,
 } from '../utils/constants'
 import { boxContains, isResizable } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
+import { buildRenderGraph, headerAt } from '../utils/renderGraph'
 import { reverseIter } from '../utils/reverseIter'
+import { getRowLayout } from '../utils/rows'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function onMouseDown(
@@ -30,12 +32,19 @@ export function onMouseDown(
     }
 
     const { x, y } = toViewCoordinates(event, container, state.transform)
+    const graph = buildRenderGraph(state.nodes)
 
-    for (const node of reverseIter(state.nodes)) {
-      if (state.hidden.includes(node.id)) {
-        continue
-      }
+    // Clicking an open group's header selects the group and drags it (and,
+    // through positionsBeforeMove, its whole subtree) as one unit.
+    const header = headerAt(graph.containers, x, y)
+    if (header !== undefined) {
+      const selected = event.shiftKey
+        ? [...state.selected, header.id]
+        : [header.id]
+      return startDrag(state, selected, x, y, event.shiftKey)
+    }
 
+    for (const node of reverseIter(graph.nodes)) {
       if (boxContains(node.box, x, y)) {
         if (isResizable(node.box, state.transform.scale, x)) {
           return {
@@ -59,12 +68,15 @@ export function onMouseDown(
         let selected: readonly string[]
         let mouseUpAction: State['mouseUpAction']
         if (event.metaKey || event.altKey) {
-          selected = []
-
-          const field = node.fields.find((f) => boxContains(f.box, x, y))
-          if (field !== undefined) {
-            selected = [field.target]
-          }
+          // Clicking a row selects what it points at, which for a compressed
+          // row is every value fanning out of it.
+          const row = getRowLayout(node).rows.find((row) => {
+            const anchor = node.fields[row.fieldIndices[0] as number]
+            return anchor !== undefined && boxContains(anchor.box, x, y)
+          })
+          selected = (row?.fieldIndices ?? [])
+            .map((index) => node.fields[index]?.target)
+            .filter((target): target is string => target !== undefined)
         } else if (!event.shiftKey && !includes) {
           selected = [node.id]
         } else if (!event.shiftKey && includes) {
@@ -77,32 +89,11 @@ export function onMouseDown(
           mouseUpAction = { type: 'DeselectOne', id: node.id }
         }
 
-        return updateNodePositions({
-          ...state,
-          selected,
-          input: {
-            ...state.input,
-            lmbPressed: true,
-            // this is needed to fix alt tab during shift dragging
-            shiftPressed: event.shiftKey,
-            mouseStartX: x,
-            mouseStartY: y,
-            mouseX: x,
-            mouseY: y,
-          },
-          mouseMoveAction: 'drag',
-          mouseUpAction,
-          positionsBeforeMove: Object.fromEntries(
-            state.nodes
-              .filter((x) => selected.includes(x.id))
-              .map((node) => [node.id, { x: node.box.x, y: node.box.y }]),
-          ),
-        })
+        return startDrag(state, selected, x, y, event.shiftKey, mouseUpAction)
       }
     }
 
-    return updateNodePositions({
-      ...state,
+    return updateNodePositions(state, {
       selected: event.shiftKey ? state.selected : [],
       input: {
         ...state.input,
@@ -132,4 +123,51 @@ export function onMouseDown(
   }
 
   return {}
+}
+
+function startDrag(
+  state: State,
+  selected: readonly string[],
+  x: number,
+  y: number,
+  shiftPressed: boolean,
+  mouseUpAction?: State['mouseUpAction'],
+): Partial<State> {
+  return updateNodePositions(state, {
+    selected,
+    input: {
+      ...state.input,
+      lmbPressed: true,
+      shiftPressed,
+      mouseStartX: x,
+      mouseStartY: y,
+      mouseX: x,
+      mouseY: y,
+    },
+    mouseMoveAction: 'drag',
+    mouseUpAction,
+    positionsBeforeMove: collectDragPositions(state.nodes, new Set(selected)),
+  })
+}
+
+// Selecting a node drags its whole subtree, so a group carries its members and
+// a member (or nested group) carries its own contents.
+function collectDragPositions(
+  nodes: readonly Node[],
+  selected: Set<string>,
+): State['positionsBeforeMove'] {
+  const positions: Record<string, { x: number; y: number }> = {}
+  const walk = (list: readonly Node[], underSelected: boolean) => {
+    for (const node of list) {
+      const dragged = underSelected || selected.has(node.id)
+      if (dragged) {
+        positions[node.id] = { x: node.box.x, y: node.box.y }
+      }
+      if (node.subnodes.length > 0) {
+        walk(node.subnodes, dragged)
+      }
+    }
+  }
+  walk(nodes, false)
+  return positions
 }

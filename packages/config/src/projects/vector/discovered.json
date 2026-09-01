@@ -1,8 +1,7 @@
 {
   "name": "vector",
-  "timestamp": 1763483689,
-  "configHash": "0x3087020b831e71fadec3b6ff92c1164f58ffc2a99e23e3666405009834cee774",
-  "sharedModules": ["shared-sp1"],
+  "timestamp": 1786359830,
+  "configHash": "0xbe9d01dcb88d0b8eb832345d9a645515c6ddfd453813a1dee6a603b00822fabd",
   "entries": [
     {
       "name": "Vector",
@@ -10,12 +9,13 @@
       "type": "Contract",
       "template": "succinct/SP1Vector",
       "sourceHashes": [
-        "0xca64a552160ec278e1bacf8ca23e8c71f49012ace91a33141b797451f4683731",
-        "0x0e469131222e34f50c12fe74205439de113446461e0fbd31fff1a43b081dbbeb"
+        "0x0940bdd2da00547eb0c190e7c4c5648e1147c96389d9771c2749b98270fc6315",
+        "0xe7fda3c09c3912281f605cde13565f94a164de607ec5784e028531883f3a6077"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.",
       "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1720128227,
       "sinceBlock": 20235805,
       "values": {
@@ -60,13 +60,13 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 551,
-        "latestBlock": 2169088,
+        "latestAuthoritySetId": 838,
+        "latestBlock": 3312384,
         "relayers": ["eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
-        "vectorXProgramVkey": "0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1",
+        "vectorXProgramVkey": "0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb",
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
@@ -81,12 +81,13 @@
       "type": "Contract",
       "template": "avail/AvailBridgeV1",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0x069ad8329069dba1dfdae5d03c54eaa7e8c15f55fb8498db3b46e3b945330199"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0x3903ac9a0d6e9221ce37976cf87cacfc141984011d05bf62c9bfffc3479f77c0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.",
       "ignoreInWatchMode": ["messageId"],
+      "deployerAddress": "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42",
       "sinceTimestamp": 1720568903,
       "sinceBlock": 20272316,
       "values": {
@@ -119,7 +120,7 @@
         "feePerByte": 0,
         "feeRecipient": "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1804,
+        "messageId": 1843,
         "owner": "eth:0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -143,18 +144,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "description": "pause the bridge.",
-          "role": ".pauserAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE458b870F2F59a49915591282f1Bb688901767AD",
       "sinceTimestamp": 1714942703,
       "sinceBlock": 19806426,
       "values": {
@@ -188,15 +182,7 @@
     {
       "address": "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "role": ".relayers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A",
@@ -212,13 +198,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "role": "admin"
-        }
-      ],
+      "deployerAddress": "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42",
       "sinceTimestamp": 1720568903,
       "sinceBlock": 20272316,
       "values": {
@@ -243,29 +223,11 @@
       "type": "Contract",
       "template": "global/TimelockController",
       "sourceHashes": [
-        "0x98201d53847b5f763bccbb14f9d4e7ffa8a4ed16c8a4a388949f76850c3d1671"
+        "0x2699a8e9ab56350f4ca6bf41e86895f77f53e2cf6dcf3e9b5d3a6b309992f942"
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC"
-        }
-      ],
+      "deployerAddress": "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42",
       "sinceTimestamp": 1745960099,
       "sinceBlock": 22377231,
       "values": {
@@ -321,9 +283,8 @@
     },
     {
       "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sp1"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Avail Multisig 1",
@@ -332,91 +293,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "can freeze the Vector contract and update the list of authorized relayers.",
-          "role": ".guardians"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
-          "role": ".defaultAdminAC",
-          "via": [
-            {
-              "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
-              "delay": 86400
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC",
-          "via": [
-            {
-              "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
-              "delay": 86400
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "role": ".timelocks"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B" },
-            {
-              "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
-              "delay": 86400
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
-          "delay": 86400,
-          "role": ".Executor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE458b870F2F59a49915591282f1Bb688901767AD",
       "sinceTimestamp": 1714943123,
       "sinceBlock": 19806461,
       "values": {
@@ -436,7 +317,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -763,6 +644,141 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Vector": "0xfa432768402e63bf3829db629a75b9b795d90d28bde6ae5d3971689687185dd9"
   },
-  "usedBlockNumbers": { "ethereum": 23827222 },
-  "permissionsConfigHash": "0x0d54b47320dab9ec3ed2c0783045318923a36c8243db89727a0531c06efa676d"
+  "usedBlockNumbers": { "ethereum": 25724173 },
+  "permissionsConfigHash": "0x081b099ea0144ce3465d36db18ecaf33e1a6dc500cf7475853cf1b60dd79e165",
+  "permissions": {
+    "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "description": "pause the bridge.",
+          "role": ".pauserAC"
+        }
+      ]
+    },
+    "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
+        }
+      ]
+    },
+    "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x45828180bbE489350D621d002968A0585406d487": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "description": "can freeze the Vector contract and update the list of authorized relayers.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "description": "manage the pauser role and all other access control configurations, set the address of the target contract for DA verification, manage fees.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
+              "delay": 86400
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
+              "delay": 86400
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "role": ".timelocks"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B" },
+            {
+              "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
+              "delay": 86400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
+          "delay": 86400,
+          "role": ".Executor"
+        }
+      ]
+    }
+  }
 }

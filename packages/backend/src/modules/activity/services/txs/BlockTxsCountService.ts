@@ -1,15 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { ActivityRecord } from '@l2beat/database'
-import type { BlockProvider } from '@l2beat/shared'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import range from 'lodash/range'
+import { withCoreFeatureRpcMetricsContext } from '../../../../tools/coreFeatureRpcMetrics'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
-import type { UopsAnalyzer } from '../uops/types'
+import type { ActivityBlockProvider } from './types'
 
 interface Dependencies {
-  provider: BlockProvider
+  provider: ActivityBlockProvider
   projectId: ProjectId
-  uopsAnalyzer?: UopsAnalyzer
   assessCount: (count: number, blockNumber: number) => number
 }
 
@@ -28,51 +26,56 @@ export class BlockTxsCountService {
     records: ActivityRecord[]
     latestTimestamp: number
   }> {
-    const queries = range(from, to + 1).map(async (blockNumber) => {
-      const block = await this.$.provider.getBlockWithTransactions(blockNumber)
+    return await withCoreFeatureRpcMetricsContext(
+      'activity.count',
+      {
+        chain: this.$.provider.chain,
+        mode: 'block',
+      },
+      async () => {
+        const blocks = await this.$.provider.getBlocks(from, to)
 
-      const txs = block.transactions.length
-      let txsCount = this.$.assessCount(txs, blockNumber)
+        const countedBlocks = blocks.map((block) => {
+          let txsCount = this.$.assessCount(block.txsCount, block.number)
 
-      if (txsCount < 0) {
-        this.logger.warn('txsCount is negative', {
-          projectId: this.$.projectId,
-          blockNumber,
-          txsCount,
-        })
-        txsCount = 0
-      }
+          if (txsCount < 0) {
+            this.logger.warn('txsCount is negative', {
+              projectId: this.$.projectId,
+              blockNumber: block.number,
+              txsCount,
+            })
+            txsCount = 0
+          }
 
-      let uopsCount: number | null = null
-      if (this.$.uopsAnalyzer) {
-        const uops = this.$.uopsAnalyzer.calculateUops(block)
-        uopsCount = this.$.assessCount(uops, blockNumber)
-        if (uopsCount < 0) {
-          this.logger.warn('uopsCount is negative', {
-            projectId: this.$.projectId,
-            blockNumber,
+          let uopsCount: number | null = null
+          if (block.uopsCount !== null) {
+            uopsCount = this.$.assessCount(block.uopsCount, block.number)
+            if (uopsCount < 0) {
+              this.logger.warn('uopsCount is negative', {
+                projectId: this.$.projectId,
+                blockNumber: block.number,
+                uopsCount,
+              })
+              uopsCount = 0
+            }
+          }
+
+          return {
+            txsCount,
             uopsCount,
-          })
-          uopsCount = 0
+            timestamp: UnixTime(block.timestamp),
+            number: block.number,
+          }
+        })
+
+        const latestTimestamp = countedBlocks.at(-1)?.timestamp
+        assert(latestTimestamp, 'Latest timestamp is undefined')
+
+        return {
+          records: aggregatePerDay(this.$.projectId, countedBlocks),
+          latestTimestamp,
         }
-      }
-
-      return {
-        txsCount,
-        uopsCount,
-        timestamp: UnixTime(block.timestamp),
-        number: block.number,
-      }
-    })
-
-    const blocks = await Promise.all(queries)
-
-    const latestTimestamp = blocks.at(-1)?.timestamp
-    assert(latestTimestamp, 'Latest timestamp is undefined')
-
-    return {
-      records: aggregatePerDay(this.$.projectId, blocks),
-      latestTimestamp,
-    }
+      },
+    )
   }
 }

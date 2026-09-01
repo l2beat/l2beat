@@ -16,7 +16,7 @@ import {
 } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import { getDb } from '~/server/database'
-import { getTvsTargetTimestamp } from '~/server/features/scaling/tvs/utils/getTvsTargetTimestamp'
+import { getTvsTargetTimestamp } from '~/server/features/layer2s/tvs/utils/getTvsTargetTimestamp'
 
 /**
  * This endpoint is temporary - it serves as a source of data for our internal token spreadsheet.
@@ -183,6 +183,7 @@ function collectAddressesFromFormula(
       })
       break
     case 'balanceOfEscrow':
+    case 'starknetBalanceOf':
       if (formula.address !== 'native') {
         addresses.push({
           address: formula.address,

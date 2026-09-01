@@ -8,7 +8,6 @@ import { ManagedMultiIndexer } from './ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
   SavedConfiguration,
 } from './types'
 
@@ -116,10 +115,12 @@ describe(ManagedMultiIndexer.name, () => {
           saved('b', 100, 1000, 1000, 'props'),
           saved('c', 100, 1000, 1000, 'props'),
         ],
-        toTrimDataAfterUpdate: [removal('b', 50, 99), removal('b', 1001, 1500)],
-        toWipeDataAfterUpdate: [removal('c', 200, 1000)],
+        toTrimData: [
+          { id: 'b'.repeat(12), range: [50, 99] },
+          { id: 'b'.repeat(12), range: [1001, 1500] },
+        ],
         toDelete: ['d'],
-        toWipeDataAfterDelete: [removal('d', 100, 1000)],
+        toWipeData: [{ id: 'c'.repeat(12) }, { id: 'd'.repeat(12) }],
       })
 
       expect(indexerService.insertConfigurations).toHaveBeenOnlyCalledWith(
@@ -139,15 +140,13 @@ describe(ManagedMultiIndexer.name, () => {
         INDEXER_ID,
         ['d'],
       )
-      expect(indexer.removeData).toHaveBeenNthCalledWith(1, [
-        removal('b', 50, 99),
-        removal('b', 1001, 1500),
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+        { id: 'b'.repeat(12), range: [50, 99] },
+        { id: 'b'.repeat(12), range: [1001, 1500] },
       ])
-      expect(indexer.removeData).toHaveBeenNthCalledWith(2, [
-        removal('c', 200, 1000),
-      ])
-      expect(indexer.removeData).toHaveBeenNthCalledWith(3, [
-        removal('d', 100, 1000),
+      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
+        { id: 'c'.repeat(12) },
+        { id: 'd'.repeat(12) },
       ])
 
       expect(db.transaction).toHaveBeenCalledTimes(1)
@@ -450,8 +449,8 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('a', 400, null, 550)])
 
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-        removal('d', 100, 550),
+      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
+        { id: 'd'.repeat(12) },
       ])
     })
 
@@ -477,8 +476,8 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 50, null, null)])
 
       // remove all data
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-        removal('d', 100, 550),
+      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
+        { id: 'd'.repeat(12) },
       ])
     })
 
@@ -504,8 +503,8 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 150, null, 550)])
 
       // remove part of data
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-        removal('d', 100, 149),
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+        { id: 'd'.repeat(12), range: [100, 149] },
       ])
     })
 
@@ -530,8 +529,8 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 1000, null, null)])
 
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-        removal('d', 100, 999),
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+        { id: 'd'.repeat(12), range: [100, 999] },
       ])
     })
 
@@ -556,7 +555,8 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 100, 1000, 550)])
 
-      expect(indexer.removeData).not.toHaveBeenCalled()
+      expect(indexer.trimData).not.toHaveBeenCalled()
+      expect(indexer.wipeData).not.toHaveBeenCalled()
     })
 
     it('maxHeight changed with need to trim', async () => {
@@ -580,8 +580,8 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 100, 200, 200)])
 
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-        removal('d', 201, 550),
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
+        { id: 'd'.repeat(12), range: [201, 550] },
       ])
     })
 
@@ -627,8 +627,10 @@ class TestIndexer extends ManagedMultiIndexer<string> {
   multiUpdate = mockFn<ManagedMultiIndexer<string>['multiUpdate']>(
     async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
-  removeData =
-    mockFn<ManagedMultiIndexer<string>['removeData']>().resolvesTo(undefined)
+  override trimData =
+    mockFn<ManagedMultiIndexer<string>['trimData']>().resolvesTo(undefined)
+  override wipeData =
+    mockFn<ManagedMultiIndexer<string>['wipeData']>().resolvesTo(undefined)
 }
 
 function actual(
@@ -659,10 +661,6 @@ function saved(
     maxHeight,
     currentHeight,
   }
-}
-
-function removal(id: string, from: number, to: number): RemovalConfiguration {
-  return { id: id.repeat(12), from, to }
 }
 
 async function getSavedConfigurations(indexerService: IndexerService) {

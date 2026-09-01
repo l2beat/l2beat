@@ -218,8 +218,8 @@
       "symbol": "AMO",
       "decimals": 18,
       "deploymentTimestamp": 1698365339,
-      "untilTimestamp": 1747440000,
       "coingeckoListingTimestamp": 1698969600,
+      "untilTimestamp": 1747440000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
       "chainId": 1,
@@ -867,6 +867,20 @@
       "coingeckoListingTimestamp": 1637280000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/20285/large/Boba-200x200---white.png?1696519690",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "BOLD Stablecoin",
+      "coingeckoId": "liquity-bold-2",
+      "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+      "symbol": "BOLD",
+      "decimals": 18,
+      "deploymentTimestamp": 1747245587,
+      "coingeckoListingTimestamp": 1748217600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56069/large/BOLD_logo.png?1748265087",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2131,6 +2145,20 @@
       "supply": "zero"
     },
     {
+      "name": "f(x) USD",
+      "coingeckoId": "f-x-protocol-fxusd",
+      "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6",
+      "symbol": "fxUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1708657775,
+      "coingeckoListingTimestamp": 1710979200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36202/large/fxUSD.jpg?1710833113",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Fantom Token",
       "coingeckoId": "wrapped-fantom",
       "address": "0x4E15361FD6b4BB609Fa63C81A2be19d873717870",
@@ -2252,6 +2280,20 @@
       "coingeckoListingTimestamp": 1711065600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36339/large/IMG_3928.png?1727165842",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Fluid",
+      "coingeckoId": "instadapp",
+      "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
+      "symbol": "FLUID",
+      "decimals": 18,
+      "deploymentTimestamp": 1617673481,
+      "coingeckoListingTimestamp": 1623801600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14688/large/Logo_1_%28brighter%29.png?1734430693",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2379,6 +2421,20 @@
       "coingeckoListingTimestamp": 1649462400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Frax USD",
+      "coingeckoId": "frax-usd",
+      "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "symbol": "frxUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1735900127,
+      "coingeckoListingTimestamp": 1739664000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53963/large/frxUSD.png?1737792154",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3714,6 +3770,20 @@
       "supply": "zero"
     },
     {
+      "name": "Mog Coin",
+      "coingeckoId": "mog-coin",
+      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+      "symbol": "Mog",
+      "decimals": 18,
+      "deploymentTimestamp": 1689822407,
+      "coingeckoListingTimestamp": 1689897600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31059/large/MOG_LOGO_200x200.png?1696529893",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Moonflow",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
@@ -3877,6 +3947,20 @@
       "coingeckoListingTimestamp": 1602633600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "NEAR",
+      "coingeckoId": "rainbow-bridged-near-ethereum",
+      "address": "0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4",
+      "symbol": "NEAR",
+      "decimals": 24,
+      "deploymentTimestamp": 1621575783,
+      "coingeckoListingTimestamp": 1768867200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71681/large/near.png?1768905174",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4806,6 +4890,20 @@
       "supply": "zero"
     },
     {
+      "name": "Rail",
+      "coingeckoId": "railgun",
+      "address": "0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+      "symbol": "RAIL",
+      "decimals": 18,
+      "deploymentTimestamp": 1625318205,
+      "coingeckoListingTimestamp": 1625270400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16840/large/railgun.jpeg?1696516407",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Rally",
       "coingeckoId": "rally-2",
       "address": "0xf1f955016EcbCd7321c7266BccFB96c68ea5E49b",
@@ -4904,6 +5002,34 @@
       "supply": "zero"
     },
     {
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1701811163,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Renzo Restaked LST ",
+      "coingeckoId": "renzo-restaked-lst",
+      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "symbol": "pzETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1719403475,
+      "coingeckoListingTimestamp": 1720569600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Republic Token",
       "coingeckoId": "republic-protocol",
       "address": "0x408e41876cCCDC0F92210600ef50372656052a38",
@@ -4983,6 +5109,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1696503058",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Ronin",
+      "coingeckoId": "ronin",
+      "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
+      "symbol": "RON",
+      "decimals": 18,
+      "deploymentTimestamp": 1636027117,
+      "coingeckoListingTimestamp": 1643241600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20009/large/photo_2024-04-06_22-52-24.jpg?1712415367",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5366,6 +5506,20 @@
       "supply": "zero"
     },
     {
+      "name": "Staked $AZUR",
+      "coingeckoId": "azuro-protocol",
+      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB",
+      "symbol": "stAZUR",
+      "decimals": 18,
+      "deploymentTimestamp": 1723579643,
+      "coingeckoListingTimestamp": 1718755200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38499/large/azuro.jpeg?1717727357",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Staked Aethir",
       "coingeckoId": "aethir",
       "address": "0xc96Aa65F31E41b4Ca6924B86D93e25686019E59C",
@@ -5520,6 +5674,20 @@
       "supply": "zero"
     },
     {
+      "name": "STASIS EURS Token",
+      "coingeckoId": "stasis-eurs",
+      "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+      "symbol": "EURS",
+      "decimals": 2,
+      "deploymentTimestamp": 1529686012,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/5164/large/EURS_300x300.png?1696505680",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Status Network Token",
       "coingeckoId": "status",
       "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
@@ -5529,6 +5697,34 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/779/large/status.png?1696501931",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Steakhouse Confidential Prime USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+      "symbol": "steakcUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1781867411,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Steakhouse tGBP",
+      "coingeckoId": "tokenised-gbp",
+      "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+      "symbol": "bbqTGBP",
+      "decimals": 18,
+      "deploymentTimestamp": 1776442415,
+      "coingeckoListingTimestamp": 1762905600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5912,6 +6108,20 @@
       "supply": "zero"
     },
     {
+      "name": "tGBP",
+      "coingeckoId": "tokenised-gbp",
+      "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+      "symbol": "tGBP",
+      "decimals": 18,
+      "deploymentTimestamp": 1754053223,
+      "coingeckoListingTimestamp": 1762905600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Thales DAO Token",
       "coingeckoId": "thales",
       "address": "0x8947da500Eb47F82df21143D0C01A29862a8C3c5",
@@ -6235,6 +6445,20 @@
       "supply": "zero"
     },
     {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1725290327,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "USUAL",
       "coingeckoId": "usual",
       "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E",
@@ -6431,6 +6655,20 @@
       "supply": "zero"
     },
     {
+      "name": "World Liberty Financial USD",
+      "coingeckoId": "usd1-wlfi",
+      "address": "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+      "symbol": "USD1",
+      "decimals": 18,
+      "deploymentTimestamp": 1738036895,
+      "coingeckoListingTimestamp": 1744329600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54977/large/USD1_1000x1000_transparent.png?1749297002",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Worldcoin",
       "coingeckoId": "worldcoin-wld",
       "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
@@ -6585,6 +6823,20 @@
       "supply": "zero"
     },
     {
+      "name": "Wrapped OETH",
+      "coingeckoId": "wrapped-oeth",
+      "address": "0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
+      "symbol": "wOETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1680301283,
+      "coingeckoListingTimestamp": 1699920000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Wrapped SOL",
       "coingeckoId": "sol-wormhole",
       "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
@@ -6706,6 +6958,20 @@
       "coingeckoListingTimestamp": 1731369600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/51471/large/fjord-token-logo-darkbg.png?1731384618",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Zama",
+      "coingeckoId": "zama",
+      "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+      "symbol": "ZAMA",
+      "decimals": 18,
+      "deploymentTimestamp": 1763038283,
+      "coingeckoListingTimestamp": 1769990400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70921/large/zama.png?1764591992",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -7197,6 +7463,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1746045509,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Staked FRAX",
       "coingeckoId": "staked-frax",
       "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
@@ -7436,6 +7716,20 @@
       }
     },
     {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1745995631,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "VelodromeV2",
       "coingeckoId": "velodrome-finance",
       "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
@@ -7645,6 +7939,20 @@
       }
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1746046906,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 130,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "USD₮0",
       "coingeckoId": "usdt0",
       "address": "0x9151434b16b9763660705744891fA906F660EcC5",
@@ -7686,6 +7994,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x7E10036Acc4B56d4dFCa3b77810356CE52313F9C",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1745994447,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 130,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "Wrapped BTC",
@@ -7754,6 +8076,97 @@
       }
     },
     {
+      "name": "AUSD",
+      "coingeckoId": "agora-dollar",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "symbol": "AUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1735492876,
+      "coingeckoListingTimestamp": 1722729600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/AUSD_1024px.png?1764684132",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "BRLA Token",
+      "coingeckoId": "brla-digital-brla",
+      "address": "0xE6A537a407488807F0bbeb0038B79004f19DDDFb",
+      "symbol": "BRLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1681858398,
+      "coingeckoListingTimestamp": 1725408000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "BRZ Token",
+      "coingeckoId": "brz",
+      "address": "0x4eD141110F6EeeAbA9A1df36d8c26f684d2475Dc",
+      "symbol": "BRZ",
+      "decimals": 18,
+      "deploymentTimestamp": 1687282016,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8472/large/MicrosoftTeams-image_%286%29.png?1696508657",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD Coin (PoS)",
+      "coingeckoId": "usd-coin",
+      "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1601199611,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Polygon PoS"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1689890042,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
       "name": "USDT0",
       "coingeckoId": "usdt0",
       "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -7774,6 +8187,34 @@
           }
         ]
       }
+    },
+    {
+      "name": "Worldwide USD",
+      "coingeckoId": "worldwide-usd",
+      "address": "0x7Cd017ca5ddb86861FA983a34b5F495C6F898c41",
+      "symbol": "WUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1734057669,
+      "coingeckoListingTimestamp": 1708300800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35358/large/WUSD-logo.png?1755754866",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "XSGD",
+      "coingeckoId": "xsgd",
+      "address": "0xDC3326e71D45186F113a2F448984CA0e8D201995",
+      "symbol": "XSGD",
+      "decimals": 6,
+      "deploymentTimestamp": 1648632579,
+      "coingeckoListingTimestamp": 1602806400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12832/large/XSGD_Logo_Full_Colour_1.png?1772634156",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Ether",
@@ -8025,6 +8466,49 @@
       "chainId": 185,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1756441826,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 196,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xB6CEceAB302E2E4948951eE7843FC24E92933061",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1785169210,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 196,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "OpenUSDT",
@@ -8907,6 +9391,27 @@
       "chainId": 480,
       "source": "external",
       "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1755006480,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 999,
+      "source": "external",
+      "supply": "zero",
       "bridgedUsing": {
         "bridges": [
           {
@@ -10166,6 +10671,201 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Axie Infinity Shard",
+      "coingeckoId": "axie-infinity",
+      "address": "0x97a9107C1793BC407d6F527b77e7fff4D812bece",
+      "symbol": "AXS",
+      "decimals": 18,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1604448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fishing Frenzy",
+      "coingeckoId": "fishing-frenzy",
+      "address": "0x533701B17963AAf318E11ab274Ca8e2Ec813aA64",
+      "symbol": "xFISH",
+      "decimals": 18,
+      "deploymentTimestamp": 1700000000,
+      "coingeckoListingTimestamp": 1764201600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70780/large/fish200x200.png?1763708762",
+      "chainId": 2020,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "PIXEL",
+      "coingeckoId": "pixels",
+      "address": "0x7EAe20d11Ef8c779433Eb24503dEf900b9d28ad7",
+      "symbol": "PIXEL",
+      "decimals": 18,
+      "deploymentTimestamp": 1708300800,
+      "coingeckoListingTimestamp": 1708300800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35100/large/pixel-icon.png?1708339519",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ronin Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Smooth Love Potion",
+      "coingeckoId": "smooth-love-potion",
+      "address": "0xa8754b9Fa15fc18BB59458815510E40a12cD2014",
+      "symbol": "SLP",
+      "decimals": 0,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1578700800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
+      "chainId": 2020,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0x0B7007c13325C48911F73A2daD5FA5dCBf808aDc",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1654387200,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x7E73630F81647bCFD7B1F2C04c1C662D17d4577e",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Ronin Bridge (legacy multi-sig)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0xCa3Eb64F3DFd7861C76070e3d1492eE5ee20cdC3",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1745539200,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Ronin",
+      "coingeckoId": "ronin",
+      "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+      "symbol": "WRON",
+      "decimals": 18,
+      "deploymentTimestamp": 1640000000,
+      "coingeckoListingTimestamp": 1643241600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20009/large/photo_2024-04-06_22-52-24.jpg?1712415367",
+      "chainId": 2020,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Yield Guild Games Token",
+      "coingeckoId": "yield-guild-games",
+      "address": "0x1c306872bC82525d72Bf3562E8F0aA3f8F26e857",
+      "symbol": "YGG",
+      "decimals": 18,
+      "deploymentTimestamp": 1640995200,
+      "coingeckoListingTimestamp": 1627430400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "ABSTER",
       "coingeckoId": "abster",
       "address": "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5",
@@ -10296,6 +10996,28 @@
       }
     },
     {
+      "name": "Bitget Wrapped BTC",
+      "coingeckoId": "bitget-wrapped-btc",
+      "address": "0x31011317764E097b28d159a8145B92BFA453F606",
+      "symbol": "BGBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1777433128,
+      "coingeckoListingTimestamp": 1776988800,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102172988/large/20260423-114744.png?1777014158",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
+    },
+    {
       "name": "BitgetToken",
       "coingeckoId": "bitget-token",
       "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",
@@ -10405,6 +11127,27 @@
       }
     },
     {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xCfb1186F4e93D60E60a8bDd997427D1F33bc372B",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1770335184,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
       "name": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -10422,6 +11165,28 @@
           {
             "name": "Layer Zero v2",
             "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1769513867,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -10488,6 +11253,633 @@
           {
             "name": "Socket",
             "slug": "socket"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bridged USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xe436820ba0C69702c1d3E601d421c0eF38262739",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1773056676,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 4153,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cap USD",
+      "coingeckoId": "cap-usd",
+      "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+      "symbol": "cUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1767034034,
+      "coingeckoListingTimestamp": 1756339200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68272/large/cUSD_ab_500%C3%97500.png?1755232868",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MegaUSD",
+      "coingeckoId": "megausd",
+      "address": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+      "symbol": "USDm",
+      "decimals": 18,
+      "deploymentTimestamp": 1767518517,
+      "coingeckoListingTimestamp": 1770249600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69955/large/USDm.png?1760170136",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1767074275,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Alibaba • Robinhood Token",
+      "coingeckoId": "alibaba-robinhood-tokenized-stock",
+      "address": "0xad25Ac6C84D497db898fa1E8387bf6Af3532a1c4",
+      "symbol": "BABA",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105034,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174135/large/0xad25ac6c84d497db898fa1e8387bf6af3532a1c4.png?1782444629",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Alphabet Class A • Robinhood Token",
+      "coingeckoId": "alphabet-class-a-robinhood-tokenized-stock",
+      "address": "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+      "symbol": "GOOGL",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105160,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174124/large/0x2e0847e8910a9732eb3fb1bb4b70a580adad4fe3.png?1782444601",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Amazon • Robinhood Token",
+      "coingeckoId": "amazon-robinhood-tokenized-stock",
+      "address": "0x12f190a9F9d7D37a250758b26824B97CE941bF54",
+      "symbol": "AMZN",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105205,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174126/large/0x12f190a9f9d7d37a250758b26824b97ce941bf54.png?1782444606",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "AMD • Robinhood Token",
+      "coingeckoId": "amd-robinhood-tokenized-stock",
+      "address": "0x86923f96303D656E4aa86D9d42D1e57ad2023fdC",
+      "symbol": "AMD",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105109,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174114/large/0x86923f96303d656e4aa86d9d42d1e57ad2023fdc.png?1782444575",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Apple • Robinhood Token",
+      "coingeckoId": "apple-robinhood-tokenized-stock",
+      "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+      "symbol": "AAPL",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105102,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174123/large/0xaf3d76f1834a1d425780943c99ea8a608f8a93f9.png?1782444598",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "ASML Holding NV • Robinhood Token",
+      "coingeckoId": "asml-holding-nv-robinhood-tokenized-stock",
+      "address": "0x47F93d52cBeC7C6D2CfC080e154002370a60dAEA",
+      "symbol": "ASML",
+      "decimals": 18,
+      "deploymentTimestamp": 1781039713,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174168/large/0x47f93d52cbec7c6d2cfc080e154002370a60daea.png?1782444718",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Cash Cat",
+      "coingeckoId": "cash-cat",
+      "address": "0x020bfC650A365f8BB26819deAAbF3E21291018b4",
+      "symbol": "CASHCAT",
+      "decimals": 18,
+      "deploymentTimestamp": 1781812885,
+      "coingeckoListingTimestamp": 1782950400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174280/large/cashcat-logo.jpg?1782922765",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Circle Internet Group • Robinhood Token",
+      "coingeckoId": "circle-internet-group-robinhood-tokenized-stock",
+      "address": "0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5",
+      "symbol": "CRCL",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105147,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174121/large/0xdf0992e440dd0be65bd8439b609d6d4366bf1cb5.png?1782444593",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "CleanSpark • Robinhood Token",
+      "coingeckoId": "cleanspark-robinhood-tokenized-stock",
+      "address": "0xcBB95BBF36099d34dA091dc6Fa6F49EfA257Cee3",
+      "symbol": "CLSK",
+      "decimals": 18,
+      "deploymentTimestamp": 1781039599,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174156/large/0xcbb95bbf36099d34da091dc6fa6f49efa257cee3.png?1782444686",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Coinbase • Robinhood Token",
+      "coingeckoId": "coinbase-robinhood-tokenized-stock",
+      "address": "0x6330D8C3178a418788dF01a47479c0ce7CCF450b",
+      "symbol": "COIN",
+      "decimals": 18,
+      "deploymentTimestamp": 1781106177,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174136/large/0x6330d8c3178a418788df01a47479c0ce7ccf450b.png?1782444632",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "CoreWeave • Robinhood Token",
+      "coingeckoId": "coreweave-robinhood-tokenized-stock",
+      "address": "0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3",
+      "symbol": "CRWV",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105154,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174127/large/0x5f10a1c971b69e47e059e1dc91901b59b3fb49c3.png?1782444608",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1777567931,
+      "coingeckoListingTimestamp": 1777567931,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 4663,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "GameStop • Robinhood Token",
+      "coingeckoId": "gamestop-robinhood-tokenized-stock",
+      "address": "0x1b0E319c6A659F002271B69dB8A7df2F911c153E",
+      "symbol": "GME",
+      "decimals": 18,
+      "deploymentTimestamp": 1781104998,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174150/large/0x1b0e319c6a659f002271b69db8a7df2f911c153e.png?1782444670",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Global Dollar",
+      "coingeckoId": "global-dollar",
+      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+      "symbol": "USDG",
+      "decimals": 6,
+      "deploymentTimestamp": 1778003991,
+      "coingeckoListingTimestamp": 1730764800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Intel • Robinhood Token",
+      "coingeckoId": "intel-robinhood-tokenized-stock",
+      "address": "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681",
+      "symbol": "INTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105167,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174118/large/0xc72b96e0e48ecd4dc75e1e45396e26300bc39681.png?1782444585",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Invesco QQQ • Robinhood Token",
+      "coingeckoId": "invesco-qqq-robinhood-tokenized-stock",
+      "address": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+      "symbol": "QQQ",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105170,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174119/large/0xd5f3879160bc7c32ebb4dc785f8a4f505888de68.png?1782444588",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "IonQ • Robinhood Token",
+      "coingeckoId": "ionq-robinhood-tokenized-stock",
+      "address": "0x558378E000D634A36593E338eBacdd6207640EfE",
+      "symbol": "IONQ",
+      "decimals": 18,
+      "deploymentTimestamp": 1781039680,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174166/large/0x558378e000d634a36593e338ebacdd6207640efe.png?1782444713",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "iShares 0-3 Month Treasury Bond • Robinhood Token",
+      "coingeckoId": "ishares-0-3-month-treasury-bond-etf-robinhood-tokenized-stock",
+      "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5",
+      "symbol": "SGOV",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105212,
+      "coingeckoListingTimestamp": 1783468800,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174130/large/0x92fd66527192e3e61d4ddd13322aa222de86f9b5.png?1782444616",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "iShares MSCI South Korea fund • Robinhood Token",
+      "coingeckoId": "ishares-msci-south-korea-fund-robinhood-tokenized-stock",
+      "address": "0x7f0aBeF0C07280F82c6a08ead09dEd6BAE2C13Fc",
+      "symbol": "EWY",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105044,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174159/large/0x7f0abef0c07280f82c6a08ead09ded6bae2c13fc.png?1782444694",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "iShares Silver Trust • Robinhood Token",
+      "coingeckoId": "ishares-silver-trust-robinhood-tokenized-stock",
+      "address": "0x411eFb0E7f985935DAec3D4C3ebaEa0d0AD7D89f",
+      "symbol": "SLV",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105112,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174120/large/0x411efb0e7f985935daec3d4c3ebaea0d0ad7d89f.png?1782444590",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Meta Platforms • Robinhood Token",
+      "coingeckoId": "meta-platforms-robinhood-tokenized-stock",
+      "address": "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35",
+      "symbol": "META",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105150,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174122/large/0xc0d6457c16cc70d6790dd43521c899c87ce02f35.png?1782444595",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Micron Technology • Robinhood Token",
+      "coingeckoId": "micron-technology-robinhood-tokenized-stock",
+      "address": "0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD",
+      "symbol": "MU",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105219,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174111/large/0xff080c8ce2e5feadaca0da81314ae59d232d4afd.png?1782444567",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Microsoft • Robinhood Token",
+      "coingeckoId": "microsoft-robinhood-tokenized-stock",
+      "address": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+      "symbol": "MSFT",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105099,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174116/large/0xe93237c50d904957cf27e7b1133b510c669c2e74.png?1782444580",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Nebius Group • Robinhood Token",
+      "coingeckoId": "nebius-group-robinhood-tokenized-stock",
+      "address": "0x9D9c6684F596F66a64C030B93A886D51Fd4D7931",
+      "symbol": "NBIS",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105048,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174160/large/0x9d9c6684f596f66a64c030b93a886d51fd4d7931.png?1782444697",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "NVIDIA • Robinhood Token",
+      "coingeckoId": "nvidia-robinhood-tokenized-stock",
+      "address": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+      "symbol": "NVDA",
+      "decimals": 18,
+      "deploymentTimestamp": 1781031216,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174110/large/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec.png?1782444565",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Oracle • Robinhood Token",
+      "coingeckoId": "oracle-robinhood-tokenized-stock",
+      "address": "0xb0992820E760d836549ba69BC7598b4af75dEE03",
+      "symbol": "ORCL",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105209,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174128/large/0xb0992820e760d836549ba69bc7598b4af75dee03.png?1782444611",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Palantir Technologies • Robinhood Token",
+      "coingeckoId": "palantir-technologies-robinhood-tokenized-stock",
+      "address": "0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A",
+      "symbol": "PLTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105164,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174117/large/0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a.png?1782444583",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Rigetti Computing • Robinhood Token",
+      "coingeckoId": "rigetti-computing-robinhood-tokenized-stock",
+      "address": "0x284358abc07F9359f19f4b5b4aC91901Be2597Ba",
+      "symbol": "RGTI",
+      "decimals": 18,
+      "deploymentTimestamp": 1781104854,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174146/large/0x284358abc07f9359f19f4b5b4ac91901be2597ba.png?1782444659",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Rocket Lab Corporation • Robinhood Token",
+      "coingeckoId": "rocket-lab-corporation-robinhood-tokenized-stock",
+      "address": "0x3b14C39E89D60D627b42a1A4CA45b5bb45Fc12e2",
+      "symbol": "RKLB",
+      "decimals": 18,
+      "deploymentTimestamp": 1781104864,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174133/large/0x3b14c39e89d60d627b42a1a4ca45b5bb45fc12e2.png?1782444624",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Sandisk Corporation • Robinhood Token",
+      "coingeckoId": "sandisk-corporation-robinhood-tokenized-stock",
+      "address": "0xB90A19fF0Af67f7779afF50A882A9CfF42446400",
+      "symbol": "SNDK",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105223,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174113/large/0xb90a19ff0af67f7779aff50a882a9cff42446400.png?1782444573",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "SpaceX • Robinhood Token",
+      "coingeckoId": "spacex-robinhood-tokenized-stock",
+      "address": "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+      "symbol": "SPCX",
+      "decimals": 18,
+      "deploymentTimestamp": 1781535194,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174129/large/0x4a0e65a3eccec6dbe60ae065f2e7bb85fae35eea.png?1782444614",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "SPDR S&P 500 ETF Trust • Robinhood Token",
+      "coingeckoId": "spdr-s-p-500-etf-trust-robinhood-tokenized-stock",
+      "address": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+      "symbol": "SPY",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105226,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174115/large/0x117cc2133c37b721f49de2a7a74833232b3b4c0c.png?1782444578",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Strategy Inc. • Robinhood Token",
+      "coingeckoId": "strategy-inc-robinhood-tokenized-stock",
+      "address": "0xec262a75e413fAfD0dF80480274532C79D42da09",
+      "symbol": "MSTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1781104904,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174143/large/0xec262a75e413fafd0df80480274532c79d42da09.png?1782444651",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Taiwan Semiconductor Manufacturing • Robinhood Token",
+      "coingeckoId": "taiwan-semiconductor-manufacturing-robinhood-tokenized-stock",
+      "address": "0x58FfE4a942d3885bAa22D7520691F611EF09e7AA",
+      "symbol": "TSM",
+      "decimals": 18,
+      "deploymentTimestamp": 1781104994,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174148/large/0x58ffe4a942d3885baa22d7520691f611ef09e7aa.png?1782444664",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Tesla • Robinhood Token",
+      "coingeckoId": "tesla-robinhood-tokenized-stock",
+      "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+      "symbol": "TSLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1780668515,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174112/large/0x322f0929c4625ed5bad873c95208d54e1c003b2d.png?1782444570",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "United States Oil Fund • Robinhood Token",
+      "coingeckoId": "united-states-oil-fund-robinhood-tokenized-stock",
+      "address": "0xa30FA36Db767ad9eD3f7a60fC79526fB4d56D344",
+      "symbol": "USO",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105106,
+      "coingeckoListingTimestamp": 1782432000,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174125/large/0xa30fa36db767ad9ed3f7a60fc79526fb4d56d344.png?1782444603",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "USA Rare Earth • Robinhood Token",
+      "coingeckoId": "usa-rare-earth-robinhood-tokenized-stock",
+      "address": "0xd917B029C761D264c6A312BBbcDA868658eF86a6",
+      "symbol": "USAR",
+      "decimals": 18,
+      "deploymentTimestamp": 1781105215,
+      "coingeckoListingTimestamp": 1783468800,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174132/large/0xd917b029c761d264c6a312bbbcda868658ef86a6.png?1782444621",
+      "chainId": 4663,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1780403342,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "chainId": 4663,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
           }
         ]
       }
@@ -11243,6 +12635,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "KelpDao Restaked ETH",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+      "symbol": "rsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1711342433,
+      "coingeckoListingTimestamp": 1705017600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Keyboard Cat",
       "coingeckoId": "keyboard-cat-base",
       "address": "0x9a26F5433671751C3276a065f57e5a02D2817973",
@@ -11377,6 +12791,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Mog Coin",
+      "coingeckoId": "mog-coin",
+      "address": "0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71",
+      "symbol": "Mog",
+      "decimals": 18,
+      "deploymentTimestamp": 1711647579,
+      "coingeckoListingTimestamp": 1689897600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31059/large/MOG_LOGO_200x200.png?1696529893",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "Non-Playable Coin",
@@ -11615,6 +13043,20 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52336/large/saint.jpg?1733121865",
       "chainId": 8453,
       "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1728572501,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 8453,
+      "source": "canonical",
       "supply": "totalSupply"
     },
     {
@@ -11869,6 +13311,20 @@
       }
     },
     {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1728558915,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "VaderAI by Virtuals",
       "coingeckoId": "vaderai-by-virtuals",
       "address": "0x731814e491571A2e9eE3c5b1F7f3b962eE8f4870",
@@ -11914,6 +13370,28 @@
           {
             "name": "Chainlink CCIP",
             "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wormhole Token",
+      "coingeckoId": "wormhole",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "symbol": "W",
+      "decimals": 18,
+      "deploymentTimestamp": 1713221517,
+      "coingeckoListingTimestamp": 1712102400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/W_Token_%283%29.png?1758122686",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
           }
         ]
       }
@@ -12339,6 +13817,28 @@
       }
     },
     {
+      "name": "USDC.e",
+      "coingeckoId": "usd-coin",
+      "address": "0x9cb8142aEBBcdc60AF7c97Af897A67A8f3CA71C2",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1775297696,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 36900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
+    },
+    {
       "name": "Blend Token",
       "coingeckoId": "blend-3",
       "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
@@ -12476,6 +13976,20 @@
       }
     },
     {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "symbol": "BUIDL",
+      "decimals": 6,
+      "deploymentTimestamp": 1730729689,
+      "coingeckoListingTimestamp": 1739318400,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Boop",
       "coingeckoId": "boop-2",
       "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
@@ -12574,6 +14088,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Chip",
+      "coingeckoId": "chip-2",
+      "address": "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "symbol": "CHIP",
+      "decimals": 18,
+      "deploymentTimestamp": 1774945554,
+      "coingeckoListingTimestamp": 1776816000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102171777/large/CHIP_Token_Logo_Large.png?1776777444",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "clBTC",
@@ -13270,6 +14798,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Ondo U.S. Dollar Yield",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+      "symbol": "USDY",
+      "decimals": 18,
+      "deploymentTimestamp": 1723057357,
+      "coingeckoListingTimestamp": 1699401600,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "OpenEden T-Bills",
       "coingeckoId": "openeden-tbill",
       "address": "0xF84D28A8D28292842dD73D1c5F99476A80b6666A",
@@ -13456,6 +15006,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xdDb46999F8891663a8F2828d25298f70416d7610",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1738149802,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "totalSupply"
     },
     {
       "name": "SmarDex Token",
@@ -13833,6 +15397,20 @@
       }
     },
     {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0x6491c05A82219b8D1479057361ff1654749b876b",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1737544573,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "totalSupply"
+    },
+    {
       "name": "USDX",
       "coingeckoId": "usdx-money-usdx",
       "address": "0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
@@ -13887,6 +15465,28 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Wormhole Token",
+      "coingeckoId": "wormhole",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "symbol": "W",
+      "decimals": 18,
+      "deploymentTimestamp": 1713221460,
+      "coingeckoListingTimestamp": 1712102400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/W_Token_%283%29.png?1758122686",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped BTC",
@@ -14088,6 +15688,20 @@
       "supply": "zero"
     },
     {
+      "name": "BRLA Token",
+      "coingeckoId": "brla-digital-brla",
+      "address": "0xFECB3F7c54E2CAAE9dC6Ac9060A822D47E053760",
+      "symbol": "BRLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1716405493,
+      "coingeckoListingTimestamp": 1725408000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "chainId": 42220,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Celo Brazilian Real",
       "coingeckoId": "celo-real-creal",
       "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
@@ -14194,6 +15808,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Mento British Pound",
+      "coingeckoId": "celo-british-pound",
+      "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+      "symbol": "GBPm",
+      "decimals": 18,
+      "deploymentTimestamp": 1742684383,
+      "coingeckoListingTimestamp": 1745798400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55374/large/GBPm__%28Mento_British_Pound%29.png?1769111439",
+      "chainId": 42220,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "PLASTIK Token",
       "coingeckoId": "plastiks",
       "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
@@ -14292,6 +15920,27 @@
       "chainId": 42766,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Bridged USDC (VIA Labs)",
+      "coingeckoId": "usd-coin",
+      "address": "0x3b952c8C9C44e8Fe201e2b26F6B2200203214cfF",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1730731277,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Proto-CCTP (not Circle)"
+          }
+        ]
+      }
     },
     {
       "name": "ENA",

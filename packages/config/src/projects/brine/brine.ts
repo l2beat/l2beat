@@ -7,7 +7,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -15,6 +14,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
+import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -27,7 +27,10 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
-import { getSHARPBootloaderHashes } from '../starknet/starknet'
+import {
+  getAcceptedSHARPVerifierChain,
+  getSHARPBootloaderHashes,
+} from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('brine')
 
@@ -58,16 +61,14 @@ export const brine: ScalingProject = {
   id: ProjectId('brine'),
   capability: 'appchain',
   addedAt: UnixTime(1690545663), // 2023-07-28T12:01:03Z
+  archivedAt: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    redWarning:
-      'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     architectureImage: 'starkex',
     name: 'tanX',
     slug: 'tanx',
@@ -89,15 +90,48 @@ export const brine: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogIds: [ProjectId('stone')],
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: getAltDaStage(
+    {
+      stage0: {
+        callsItselfValidiumOrOptimium: true,
+        stateRootsPostedToL1: true,
+        stateVerificationOnL1: true,
+        daAttestedByIndependentParty: true,
+        nodeSourceAvailable: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
+        usersCanExitWithoutCooperation: 'UnderReview',
+        usersHave7DaysToExit: 'UnderReview',
+        securityCouncilProperlySetUp: false,
+        daVerifierSecureOnL1: true,
+        daVerifier7DayExitWindow: 'UnderReview',
+        daCommitteeDecentralized: false,
+        noRedTrustedSetups: 'UnderReview',
+        proverSourcePublished: 'UnderReview',
+        verifierContractsReproducible: 'UnderReview',
+        programHashesReproducible: 'UnderReview',
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow: 'UnderReview',
+        daMechanismEconomicSecurity: false,
+      },
+    },
+    {
+      nodeSourceLink: 'https://github.com/starkware-libs/starkex-contracts',
+    },
+  ),
   chainConfig: {
     name: 'brine',
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['brine'] }],
+    untilTimestamp: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   },
   config: {
     escrows: [
@@ -127,7 +161,10 @@ export const brine: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_ST,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST,
+      executionDelay: 0,
+    },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
       membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,
@@ -159,6 +196,8 @@ export const brine: ScalingProject = {
       ),
     ],
     programHashes: tanxProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // stone verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: getAcceptedSHARPVerifierChain().factRegistries,
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

@@ -6,79 +6,44 @@ import { SyncOptimizer } from './SyncOptimizer'
 
 describe(SyncOptimizer.name, () => {
   const LAST_HOUR = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
-  const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
-  const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
   const CLOCK = mockObject<Clock>({
     getLastHour: () => LAST_HOUR,
-    hourlyCutoffDays: 7,
-    sixHourlyCutoffDays: 90,
   })
 
   describe(SyncOptimizer.prototype.shouldTimestampBeSynced.name, () => {
     const syncOptimizer = new SyncOptimizer(CLOCK)
-    it('return true if timestamp should be synced', () => {
-      const result = syncOptimizer.shouldTimestampBeSynced(
-        LAST_HOUR - 1 * UnixTime.HOUR,
-      )
-      expect(result).toEqual(true)
+
+    it('returns true when timestamp is already the aligned sync target', () => {
+      const ts = syncOptimizer.getTimestampToSync(LAST_HOUR - 1 * UnixTime.HOUR)
+      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toEqual(true)
     })
 
-    it('return false if timestamp should not be synced', () => {
-      const result = syncOptimizer.shouldTimestampBeSynced(
-        LAST_HOUR + 365 * UnixTime.DAY - 1 * UnixTime.HOUR,
-      )
-      expect(result).toEqual(true)
+    it('returns false when timestamp is not the aligned sync target', () => {
+      const ts = LAST_HOUR - 1 * UnixTime.HOUR + 123
+      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toEqual(false)
     })
   })
 
   describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
-    const CLOCK = mockObject<Clock>({
+    const clock = mockObject<Clock>({
       getLastHour: () => LAST_HOUR + 1 * UnixTime.MINUTE,
-      hourlyCutoffDays: 7,
-      sixHourlyCutoffDays: 90,
     })
 
-    it('returns daily timestamp', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK)
+    it('aligns timestamps to hourly, six-hourly, or daily grid from cutoff boundaries', () => {
+      const syncOptimizer = new SyncOptimizer(clock)
 
-      // hourly timestamp older than daily cutoff
-      const hourlyTimestamp =
-        LAST_HOUR -
-        (SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 1) * UnixTime.DAY +
-        1 * UnixTime.HOUR
-      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
-      // in this case daily should be returned
-      const expected = UnixTime.toEndOf(hourlyTimestamp, 'day')
-
-      expect(timestampToSync).toEqual(expected)
-    })
-
-    it('returns six hourly timestamp', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK)
-
-      // hourly timestamp older than daily cutoff
-      const hourlyTimestamp =
-        LAST_HOUR -
-        (HOURLY_CUTOFF_WITH_GRACE_PERIOD + 1) * UnixTime.DAY +
-        1 * UnixTime.HOUR
-
-      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
-      // in this case sixHourly should be returned
-      const expected = UnixTime.toEndOf(hourlyTimestamp, 'six hours')
-
-      expect(timestampToSync).toEqual(expected)
-    })
-
-    it('returns hourly timestamp', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK)
-
-      // hourly timestamp older than daily cutoff
-      const hourlyTimestamp = LAST_HOUR - 1 * UnixTime.HOUR
-      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
-      // in this case daily should be returned
-      const expected = UnixTime.toEndOf(LAST_HOUR - 1 * UnixTime.HOUR, 'hour')
-
-      expect(timestampToSync).toEqual(expected)
+      expect(
+        syncOptimizer.getTimestampToSync(LAST_HOUR - 200 * UnixTime.DAY),
+      ).toEqual(UnixTime(1665619200))
+      expect(
+        syncOptimizer.getTimestampToSync(LAST_HOUR - 100 * UnixTime.DAY),
+      ).toEqual(UnixTime(1674259200))
+      expect(
+        syncOptimizer.getTimestampToSync(LAST_HOUR - 40 * UnixTime.DAY),
+      ).toEqual(UnixTime(1679443200))
+      expect(
+        syncOptimizer.getTimestampToSync(LAST_HOUR - 1 * UnixTime.HOUR),
+      ).toEqual(UnixTime(1682895600))
     })
   })
 
@@ -87,20 +52,20 @@ describe(SyncOptimizer.name, () => {
       const syncOptimizer = new SyncOptimizer(CLOCK)
 
       const start = LAST_HOUR - 7 * UnixTime.HOUR
-      const timestampToSync = syncOptimizer.getTimestampsToSync(
-        start,
-        start + 100_000 * UnixTime.DAY,
-        7,
-      )
-
-      expect(timestampToSync).toEqual([
-        start,
-        start + 1 * UnixTime.HOUR,
-        start + 2 * UnixTime.HOUR,
-        start + 3 * UnixTime.HOUR,
-        start + 4 * UnixTime.HOUR,
-        start + 5 * UnixTime.HOUR,
-        start + 6 * UnixTime.HOUR,
+      expect(
+        syncOptimizer.getTimestampsToSync(
+          start,
+          start + 100_000 * UnixTime.DAY,
+          7,
+        ),
+      ).toEqual([
+        UnixTime(1682874000),
+        UnixTime(1682877600),
+        UnixTime(1682881200),
+        UnixTime(1682884800),
+        UnixTime(1682888400),
+        UnixTime(1682892000),
+        UnixTime(1682895600),
       ])
     })
 
@@ -108,42 +73,41 @@ describe(SyncOptimizer.name, () => {
       const syncOptimizer = new SyncOptimizer(CLOCK)
 
       const start = LAST_HOUR - 7 * UnixTime.HOUR
-      const timestampToSync = syncOptimizer.getTimestampsToSync(
-        start,
-        start + 6 * UnixTime.HOUR,
-        100_000,
-      )
-
-      expect(timestampToSync).toEqual([
-        start,
-        start + 1 * UnixTime.HOUR,
-        start + 2 * UnixTime.HOUR,
-        start + 3 * UnixTime.HOUR,
-        start + 4 * UnixTime.HOUR,
-        start + 5 * UnixTime.HOUR,
-        start + 6 * UnixTime.HOUR,
+      expect(
+        syncOptimizer.getTimestampsToSync(
+          start,
+          start + 6 * UnixTime.HOUR,
+          100_000,
+        ),
+      ).toEqual([
+        UnixTime(1682874000),
+        UnixTime(1682877600),
+        UnixTime(1682881200),
+        UnixTime(1682884800),
+        UnixTime(1682888400),
+        UnixTime(1682892000),
+        UnixTime(1682895600),
       ])
     })
 
-    it('complex case', () => {
+    it('steps through daily and six-hourly regions before hourly', () => {
       const syncOptimizer = new SyncOptimizer(CLOCK)
 
-      const start =
-        LAST_HOUR - (SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 2) * UnixTime.DAY
-      const timestampToSync = syncOptimizer.getTimestampsToSync(
-        start,
-        start + 100_000 * UnixTime.DAY,
-        7,
-      )
-
-      expect(timestampToSync).toEqual([
-        start,
-        start + 1 * UnixTime.DAY,
-        start + 2 * UnixTime.DAY,
-        start + 2 * UnixTime.DAY + 6 * UnixTime.HOUR,
-        start + 2 * UnixTime.DAY + 12 * UnixTime.HOUR,
-        start + 2 * UnixTime.DAY + 18 * UnixTime.HOUR,
-        start + 2 * UnixTime.DAY + 24 * UnixTime.HOUR,
+      const start = LAST_HOUR - 95 * UnixTime.DAY
+      expect(
+        syncOptimizer.getTimestampsToSync(
+          start,
+          start + 100_000 * UnixTime.DAY,
+          7,
+        ),
+      ).toEqual([
+        UnixTime(1674691200),
+        UnixTime(1674712800),
+        UnixTime(1674734400),
+        UnixTime(1674756000),
+        UnixTime(1674777600),
+        UnixTime(1674799200),
+        UnixTime(1674820800),
       ])
     })
   })

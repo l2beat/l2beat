@@ -1,8 +1,7 @@
 {
   "L1ETHGateway.sol": {
-    "hash": "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c",
+    "hash": "0xe92fa45dcb3b7f6f6a441a9da9924129cd8184c78382da028ad13d2e098ee90a",
     "address": "eth:0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c",
-    "chain": "ethereum",
     "blockNumber": 24147273
   }
 }

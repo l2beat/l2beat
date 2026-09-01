@@ -8,13 +8,32 @@
   ],
   "names": { "eth:0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8": "LyraMultisig" },
   "overrides": {
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0xbfb9219d933ec96Ac99C4f3D7231eFE43757811F": {
+      "ignoreDiscovery": true
+    },
     "eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },
     "eth:0x35844639E3e674C484180C650EfD2170433Df71c": {
       "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
+        "proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     }
   }

@@ -1,0 +1,232 @@
+{
+  "title": "Monthly Updates - March 2026",
+  "startDate": "2026-03-01",
+  "endDate": "2026-03-31",
+  "publishedOn": "2026-04-01",
+  "description": "Explore the most important March developments across major ecosystems — from enterprise adoption and tokenized finance to agent infrastructure, governance evolution, and performance improvements.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "edgeX Launches EDGE Chain on Arbitrum for High-Performance Trading",
+          "content": "Arbitrum [announced](https://blog.arbitrum.io/edgex-announces-edge-chain-on-arbitrum/) that edgeX is launching EDGE Chain, an app-specific rollup designed to support high-speed global trading across crypto, equities, and derivatives markets.\n\nThe chain is optimized for institutional-grade workloads with a modular architecture separating trading execution from standard DeFi operations. It will integrate native USDC and CCTP through a partnership with Circle, enabling seamless cross-chain liquidity and institutional on/offramps."
+        },
+        {
+          "title": "Arbitrum Shows Improved Fee Stability with Dynamic Pricing Upgrade",
+          "content": "Arbitrum [published](https://blog.arbitrum.io/predictability-at-peak-demand/) new data on its Dynamic Pricing mechanism, highlighting improved fee predictability under real mainnet congestion.\n\nResults show 98% lower peak gas spikes, faster fee recovery, and the ability to handle significantly higher throughput while keeping fees stable — reinforcing Arbitrum’s positioning as infrastructure for high-volume, production-grade applications."
+        },
+        {
+          "title": "Simcluster Launches AI-Native Social App on Arbitrum",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2029600514325811646) the launch of Simcluster, an AI-native social application combining content creation, gameplay, and tokenized IP into a single onchain experience.\n\nThe launch reinforces Arbitrum’s role as a hub for emerging AI-driven and consumer-facing applications."
+        },
+        {
+          "title": "WalletConnect Pay SDK Goes Live on Arbitrum",
+          "content": "WalletConnect [announced](https://x.com/WalletConnect/status/2031445073154683380) that its WalletConnect Pay SDK is now live globally, enabling crypto payments directly on Arbitrum.\n\nThe integration allows merchants to accept stablecoin and wallet-based payments through existing infrastructure, positioning Arbitrum as a production-ready payment rail."
+        },
+        {
+          "title": "Arbitrum Advances Security Council Elections",
+          "content": "Arbitrum Governance [launched](https://forum.arbitrum.foundation/t/march-2026-security-council-election-nominee-selection/30682) the nominee selection phase for the March 2026 Security Council elections.\n\nThe 12-member council is responsible for handling critical upgrades and emergency decisions across the protocol.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Highlights Institutional Growth in 2025 Transparency Report",
+          "content": "Arbitrum [published](https://x.com/arbitrum/status/2033921637993607475) its 2025 Transparency Report, highlighting deployments from institutions such as Robinhood, Franklin Templeton, and WisdomTree.\n\nThe report also emphasizes progress across developer programs, ArbOS upgrades, Stylus adoption, and DAO governance."
+        },
+        {
+          "title": "Arbitrum Joins Mastercard’s Crypto Partner Program",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2034308009065603260) its participation in Mastercard’s Crypto Partner Program, aiming to connect onchain infrastructure with global payment networks."
+        },
+        {
+          "title": "Arbitrum Launches Mentorship Program for Robinhood Chain Builders",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2034737958016958468) a mentorship program supporting early-stage teams building on Robinhood Chain, offering up to $100K in rewards.\n\nThe initiative focuses on accelerating development of financial applications aligned with Robinhood’s onchain strategy."
+        },
+        {
+          "title": "MoonPay OWS Brings AI Agent Wallet Infrastructure to Arbitrum",
+          "content": "Arbitrum [announced](https://x.com/ArbitrumDevs/status/2036383026586984892) support for MoonPay’s Onchain Wallet Stack (OWS), enabling AI agents to manage wallets, store keys, and sign transactions directly onchain.\n\nThe integration expands the design space for autonomous applications."
+        },
+        {
+          "title": "Arbitrum Restores Sepolia After Temporary Halt",
+          "content": "Arbitrum [reported](https://x.com/ArbitrumDevs/status/2036153112042586428) a temporary pause in Sepolia block production due to a Nitro-related issue, which was later [resolved](https://x.com/ArbitrumDevs/status/2036213399684784571).\n\nThe team confirmed no user funds were at risk and announced further improvements to network stability."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "Five U.S. Regional Banks Move to ZKsync Through Cari Network",
+          "content": "ZKsync [announced](https://www.zksync.io/blog/cari-selects-zksyncs-prividium) that Cari Network is building a tokenized deposit system with five U.S. regional banks representing over $600B in deposits.\n\nUsing Prividium, the network enables programmable settlement while keeping deposits under existing regulatory oversight."
+        },
+        {
+          "title": "ZKsync Partners with BitGo for Tokenized Deposits",
+          "content": "ZKsync [announced](https://x.com/zksync/status/2036903630146510918) a partnership with BitGo to deliver infrastructure for issuing and managing tokenized deposits.\n\nThe solution combines Prividium with institutional custody and wallet services to support compliant financial workflows."
+        },
+        {
+          "title": "ZKsync Launches Capped Minter V3",
+          "content": "ZKsync deployed Capped Minter V3, upgrading token governance for Token Program Proposals (TPPs).\n\nThe update introduces transferable admin rights and updatable minting sources, improving flexibility and continuity for token programs.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "GRVT Introduces Unified Margin on ZKsync",
+          "content": "GRVT, a ZK chain within the Elastic Network, [introduced](https://x.com/zksync/status/2039121320714371144) a unified margin model enabling users to operate with a single shared collateral pool.\n\nThis improves capital efficiency across markets while leveraging ZKsync’s scalable infrastructure."
+        },
+        {
+          "title": "ZKsync Publishes ZARP v1 Retrospective",
+          "content": "ZKsync [published](https://forum.zknation.io/t/zarp-v1-retrospective-zip-audit-reimbursement-program-zarp/933) the closeout report for ZARP v1, a $5M audit reimbursement program.\n\nThe report highlights $2.7M reimbursed and identifies governance timing mismatches, informing improvements introduced in ZARP v2.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Optimism Introduces End-to-End Benchmarking Framework",
+          "content": "Optimism [published](https://www.optimism.io/blog/benchmarking-the-op-stack) a benchmarking framework focused on real-world performance across full devnets.\n\nThe approach prioritizes sustained workload capacity and bottleneck identification rather than peak throughput metrics."
+        },
+        {
+          "title": "Bitpanda Launches Vision Chain on OP Enterprise",
+          "content": "Optimism [announced](https://www.optimism.io/blog/bitpanda-launches-vision-chain-as-the-first-fully-managed-op-enterprise-chain) Vision Chain, a fully managed OP Stack chain for European institutional finance.\n\nThe chain will support tokenized assets, MiCA-compliant stablecoins, and same-day withdrawals via ZK proofs."
+        },
+        {
+          "title": "Optimism Executes First OP Buyback",
+          "content": "Optimism [confirmed](https://gov.optimism.io/t/buyback-communication-thread/10588/4?u=manugotsuka) its first OP token buyback funded by Superchain revenue, purchasing 1.57M OP.\n\nThe program allocates 50% of revenue to buybacks over 12 months, linking token demand to ecosystem activity.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Ether.fi Cash Migrates to OP Mainnet",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2031386470603468828) the migration of Ether.fi Cash to OP Mainnet, bringing over 300K accounts and $160M+ TVL.\n\nThe platform now contributes ~55% of Ether.fi’s revenue, highlighting growing adoption of onchain payment products."
+        },
+        {
+          "title": "OKX Expands XLayer with ICE Partnership",
+          "content": "Optimism [highlighted](https://x.com/Optimism/status/2031420708837011953) a partnership between OKX and Intercontinental Exchange (ICE) to bring tokenized equities and futures onchain via XLayer."
+        },
+        {
+          "title": "Optimism Joins Mastercard Crypto Partner Program",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2031746443619487754) its participation in Mastercard’s Crypto Partner Program, strengthening connections between blockchain infrastructure and global payment networks."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Apex Group Commits $100B to T-REX Ledger on Polygon",
+          "content": "T-REX Network, Tokeny, and Polygon Labs [launched](https://polygon.technology/blog/apex-group-commits-100b-in-tokenized-assets-to-t-rex-ledger-new-rwa-compliance-chain-built-with-polygon-cdk) a compliance-focused blockchain using Polygon CDK.\n\nApex Group plans to tokenize $100B in assets by 2027, leveraging ERC-3643 for regulated financial instruments."
+        },
+        {
+          "title": "Polygon Improves Fee Stability with Network Upgrade",
+          "content": "Polygon [implemented](https://polygon.technology/blog/polygon-just-made-transaction-fees-more-predictable-for-institutions) an upgrade removing artificial capacity limits, enabling the network to operate at 110M gas per block.\n\nThis reduces fee volatility and improves predictability for institutional users."
+        },
+        {
+          "title": "Polygon Joins Mastercard Crypto Partner Program",
+          "content": "Polygon [joined](https://polygon.technology/blog/polygon-is-part-of-the-mastercard-crypto-partner-program) Mastercard’s Crypto Partner Program, connecting blockchain infrastructure with global payment rails."
+        },
+        {
+          "title": "Polygon Launches Agent CLI for Onchain AI Economy",
+          "content": "Polygon [introduced](https://polygon.technology/blog/polygon-launches-an-onchain-toolkit-built-for-the-agent-economy) Agent CLI, enabling AI agents to manage wallets, identity, and transactions onchain.\n\nThe toolkit supports ERC-8004 identity and gas abstraction, positioning Polygon for agent-driven applications."
+        },
+        {
+          "title": "Polygon Enables Cross-chain Swaps via WhatsApp",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2028518129542844638) cross-chain swaps integrated into WhatsApp via Dyad, expanding access to onchain liquidity through familiar interfaces."
+        },
+        {
+          "title": "Polygon Activates Lisovo Upgrade",
+          "content": "Polygon [activated](https://x.com/0xPolygon/status/2029256715523506391) the Lisovo upgrade, introducing gas subsidies for agent payments, improved fee tuning, and enhanced network reliability."
+        },
+        {
+          "title": "PIP-85 Proposes Priority Fee Redistribution",
+          "content": "Polygon [introduced](https://x.com/0xPolygonFdn/status/2036832154965901368) PIP-85 to adjust priority fee distribution between validators and stakers.\n\nThe proposal responds to increased network usage and aims to align incentives.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Polygon Enables Free Transactions for Agents",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2029224899118846012) a $1M gas rebate program enabling agents to transact without fees for x402-enabled payments.\n\nThe initiative aims to accelerate agentic commerce by removing cost barriers."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "Eigen Foundation Appoints New Executive Director",
+          "content": "The Eigen Foundation [announced](https://x.com/eigenfoundation/status/2032521576386875621) that Ajit Tripathi has joined as Executive Director, while Robert Drost transitions to Senior Advisor."
+        },
+        {
+          "title": "EigenCloud Participates in Agent Hackathon",
+          "content": "EigenCloud [announced](https://x.com/eigencloud/status/2034511590310187414) its participation in the Synthesis hackathon, focusing on verifiable compute for agent applications."
+        },
+        {
+          "title": "Eigen Labs Hiring Social Media Lead for AI",
+          "content": "Eigen Labs is [hiring](https://x.com/eigen_labs/status/2032614064409686499) a Social Media Lead focused on AI, agents, and verifiable systems."
+        },
+        {
+          "title": "EigenCloud Launches AgentKit for Sovereign Agents",
+          "content": "EigenCloud [introduced](https://x.com/eigencloud/status/2037204321008500947) AgentKit, a toolkit enabling AI agents to manage assets, identity, and payments autonomously.\n\nThe system combines verifiable compute, secure execution, and onchain financial primitives."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Nethermind Highlights Evolving Blockchain Security Landscape",
+          "content": "Nethermind [outlined](https://www.nethermind.io/blog/blockchain-security-strategic-challenges-now-and-ahead) how security is expanding beyond smart contracts to include ZK systems, infrastructure, and AI-driven components.\n\nThe report highlights the need for full-stack security and formal verification."
+        },
+        {
+          "title": "Nethermind Hiring Web3 Security Triager",
+          "content": "Nethermind is [hiring](https://x.com/Nethermind/status/2019703925809512500) a Web3 Security Triager focused on validating AI-detected vulnerabilities."
+        },
+        {
+          "title": "Nethermind Releases v1.36.1 Update",
+          "content": "Nethermind [announced](https://x.com/Nethermind) v1.36.1, enabling support for the Osaka hard fork on the Chiado testnet."
+        },
+        {
+          "title": "Nethermind Joins Mastercard Crypto Partner Program",
+          "content": "Nethermind [announced](https://x.com/Nethermind/status/2032035873668145159) its participation in Mastercard’s Crypto Partner Program."
+        },
+        {
+          "title": "Nethermind Showcases AI Security Tool Performance",
+          "content": "Nethermind Security [reported](https://x.com/NethermindSec/status/2032407080498242025) that its AuditAgent detected 67% of vulnerabilities in benchmarks, outperforming baseline models."
+        },
+        {
+          "title": "Nethermind Tests Agent-Based Audits on Lido",
+          "content": "Nethermind [conducted](https://x.com/Nethermind/status/2033880278670643475) agent-based audits on Lido contracts, identifying multiple issues validated by human auditors."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Rollups Node Update Enhances Operational Resilience",
+          "content": "Cartesi [released](https://github.com/cartesi/rollups-node/releases/tag/v2.0.0-alpha.10) Rollups Node v2.0.0-alpha.10, improving database safety, shutdown behavior, and logging controls.\n\nThe update enhances reliability for long-running deployments."
+        },
+        {
+          "title": "Cartesi CLI Updates With Latest Core Components",
+          "content": "Recent Cartesi CLI alpha releases (v2.0.0-alpha.32 and 33) integrate the latest Rollups Node, Contracts, and PRT versions, ensuring developers work with the most up-to-date stack."
+        },
+        {
+          "title": "Fraud Proof System Release Strengthens Dispute Infrastructure",
+          "content": "Cartesi released PRT v2.1.1, improving bond refunds and reliability of the fraud-proof system while simplifying deployment and configuration."
+        },
+        {
+          "title": "DeFi Educational Series Wrap-up",
+          "content": "Cartesi Dev Advocacy Lead João Garcia completed a DeFi-focused educational series explaining how execution environments impact financial design.\n\nThe series highlights how Cartesi enables advanced financial models, floating-point math, and stateful applications using a Linux-based environment while remaining verifiable on Ethereum."
+        }
+      ]
+    }
+  ]
+}

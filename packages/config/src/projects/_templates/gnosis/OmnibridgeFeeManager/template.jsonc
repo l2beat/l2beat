@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Fee manager used by HomeOmnibridge to calculate and distribute bridge fees to a configured reward address list.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change Omnibridge fee schedules and the list of addresses that receive distributed bridge fees."
+        }
+      ]
+    },
+    "mediator": {
+      "description": "HomeOmnibridge mediator allowed to route fees through this manager.",
+      "severity": "HIGH"
+    },
+    "rewardAddressList": {
+      "description": "Addresses that receive fees distributed by the HomeOmnibridge fee manager."
+    }
+  }
+}

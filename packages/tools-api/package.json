@@ -6,13 +6,13 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build *.tsbuildinfo",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "start": "node build/index.js",
-    "dev": "node -r esbuild-register --watch src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
@@ -31,6 +31,7 @@
     "viem": "^2.8.14"
   },
   "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*"
+    "@l2beat/typescript-config": "workspace:*",
+    "tsx": "^4.9.3"
   }
 }

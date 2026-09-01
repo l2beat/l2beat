@@ -1,29 +1,22 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import { useQueryClient } from '@tanstack/react-query'
 import partition from 'lodash/partition'
-import { api } from '~/trpc/React'
+import { useState } from 'react'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
-import type { InteropSelection } from '../utils/types'
+import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
 import type { InteropChainWithIcon } from './chain-selector/types'
 
 interface Props {
-  selectedChains: InteropSelection
   interopChains: InteropChainWithIcon[]
-  selectChain: (type: 'from' | 'to', chainId: string | null) => void
   type: KnownInteropBridgeType | undefined
 }
 
-export function InitialChainSelector({
-  interopChains,
-  selectedChains,
-  selectChain,
-  type,
-}: Props) {
-  const utils = api.useUtils()
-  const firstSelectedChainId =
-    selectedChains.from.length === 1 ? selectedChains.from[0] : undefined
-  const secondSelectedChainId =
-    selectedChains.to.length === 1 ? selectedChains.to[0] : undefined
+export function InitialChainSelector({ interopChains, type }: Props) {
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
+  const { toggleFrom, toggleTo, allChainIds } = useInteropSelectedChains()
+  const [firstChainId, setFirstChainId] = useState<string | null>(null)
 
   const [activeChains, upcomingChains] = partition(
     interopChains,
@@ -31,21 +24,29 @@ export function InitialChainSelector({
   )
 
   function toggleChain(chainId: string) {
-    if (!firstSelectedChainId) {
-      selectChain('from', chainId)
+    if (!firstChainId) {
+      setFirstChainId(chainId)
       return
     }
 
-    if (firstSelectedChainId === chainId) {
-      selectChain('from', null)
+    if (firstChainId === chainId) {
+      setFirstChainId(null)
       return
     }
 
-    if (!secondSelectedChainId) {
-      selectChain('to', chainId)
-      return
-    }
+    toggleFrom(firstChainId)
+    toggleFrom(chainId)
+    toggleTo(firstChainId)
+    toggleTo(chainId)
   }
+
+  function getOrderedPair(secondChainId: string) {
+    if (!firstChainId) return []
+    return allChainIds.filter(
+      (id) => id === firstChainId || id === secondChainId,
+    )
+  }
+
   return (
     <div className="flex w-full grow flex-col items-center justify-center gap-6 bg-surface-primary p-6 md:rounded-lg">
       <h2 className="text-balance text-center text-brand text-heading-32">
@@ -56,26 +57,21 @@ export function InitialChainSelector({
           <ChainSelectorButton
             key={chain.id}
             chain={chain}
-            selected={
-              firstSelectedChainId === chain.id ||
-              secondSelectedChainId === chain.id
-            }
+            selected={firstChainId === chain.id}
             onClick={() => toggleChain(chain.id)}
             onMouseEnter={() => {
-              if (!firstSelectedChainId) {
+              if (!firstChainId || firstChainId === chain.id) {
                 return
               }
 
-              utils.interop.dashboard.prefetch({
-                ...toInteropApiSelection(
-                  {
-                    from: [firstSelectedChainId],
-                    to: [chain.id],
-                  },
-                  'public',
-                ),
-                type,
-              })
+              const pair = getOrderedPair(chain.id)
+              queryClient.prefetchQuery(
+                trpc.interop.dashboard.queryOptions({
+                  from: pair,
+                  to: pair,
+                  type,
+                }),
+              )
             }}
           />
         ))}

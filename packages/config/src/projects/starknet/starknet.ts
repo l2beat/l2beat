@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -20,7 +20,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('starknet')
 
@@ -92,7 +93,7 @@ function formatMaxTotalBalanceString(
   ) {
     return 'There is no bridge cap.'
   }
-  return `The current bridge cap is ${formatLargeNumber(
+  return `The current bridge cap is ${formatNumber(
     maxTotalBalance / 10 ** decimals,
   )} ${ticker}.`
 }
@@ -172,22 +173,46 @@ const finalizationPeriod = 0
 
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
+const currentSHARPOuterBootloaderProgramHash =
+  '3427958597398434235135013788958741576989752718219267963615783564775551242024'
 
-// Verifiers chain reference older verifiers where a proof could be registered.
-// Unless a verifier referral expired, a proof could be looked up on a referenced
-// old verifier. This funciton collects bootloader prog hashes from all usable old verifiers.
-export function getSHARPBootloaderHashes(): string[] {
-  const sharpBootloaderHashes: string[] = []
+interface ModernSHARPBootloaderConfig {
+  [key: string]: string
+  simpleBootloaderConfigurationCommitment: string
+  applicativeBootloaderProgramHash: string
+  supportedCairoVerifierProgramHashesCommitment: string
+}
+
+// A verifier accepts facts registered locally or in its reference registry until
+// that reference expires. Collect the accepted registry deployments and their
+// bootloader-configuration pins, plus the current shared outer bootloader.
+export function getAcceptedSHARPVerifierChain(): {
+  programPins: string[]
+  factRegistries: ChainSpecificAddress[]
+} {
+  // Derived standard Cairo program hash for the exact 1,166-felt executable
+  // returned by the current shared CairoBootloaderProgram contract.
+  const programPins: string[] = [currentSHARPOuterBootloaderProgramHash]
+  const factRegistries: ChainSpecificAddress[] = []
   let sharpVerifierAddress = discovery.getContract('SHARPVerifier').address
   let expirationTimestamp = Number.MAX_SAFE_INTEGER
   const timestampNow = Date.now() / 1000
   while (timestampNow < expirationTimestamp) {
-    const bootloaderConfig = discovery.getContractValue<string[]>(
-      sharpVerifierAddress,
-      'getBootloaderConfig',
-    )
-    sharpBootloaderHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-    sharpBootloaderHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+    factRegistries.push(sharpVerifierAddress)
+    const bootloaderConfig = discovery.getContractValue<
+      ModernSHARPBootloaderConfig | string[]
+    >(sharpVerifierAddress, 'getBootloaderConfig')
+    if (Array.isArray(bootloaderConfig)) {
+      // Older verifier generations expose only the simple-bootloader program
+      // hash and recursive Cairo-verifier allowlist commitment.
+      programPins.push(...bootloaderConfig)
+    } else {
+      programPins.push(
+        bootloaderConfig.simpleBootloaderConfigurationCommitment,
+        bootloaderConfig.applicativeBootloaderProgramHash,
+        bootloaderConfig.supportedCairoVerifierProgramHashesCommitment,
+      )
+    }
 
     expirationTimestamp = discovery.getContractValue<number>(
       sharpVerifierAddress,
@@ -198,9 +223,18 @@ export function getSHARPBootloaderHashes(): string[] {
       'referenceFactRegistry',
     )
   }
-  return [...new Set(sharpBootloaderHashes)]
+  return {
+    programPins: [...new Set(programPins)],
+    factRegistries: [...new Set(factRegistries)],
+  }
 }
 
+// Kept for shared-SHARP projects that consume the common program-pin list.
+export function getSHARPBootloaderHashes(): string[] {
+  return getAcceptedSHARPVerifierChain().programPins
+}
+
+const acceptedSHARPVerifierChain = getAcceptedSHARPVerifierChain()
 const starknetProgramHashes: string[] = []
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'programHash'),
@@ -208,7 +242,32 @@ starknetProgramHashes.push(
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
-starknetProgramHashes.push(...getSHARPBootloaderHashes())
+// Virtual Starknet OS for client-side proving (e.g. STRK-20). Not stored in
+// the L1 core contract: it is pinned as ALLOWED_VIRTUAL_OS_PROGRAM_HASHES
+// inside the L1-registered Starknet OS program above. See
+// https://github.com/starkware-libs/sequencer/blob/5114457/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/constants.cairo#L66-L71
+starknetProgramHashes.push(
+  '2373625305120835200243020426311988160128377108314438505880592663683179928225',
+)
+starknetProgramHashes.push(...acceptedSHARPVerifierChain.programPins)
+
+const starkwareMultisig2Stats = discovery.getMultisigStats(
+  'Starkware Multisig 2',
+)
+const starkwareMultisig1Stats = discovery.getMultisigStats(
+  'Starkware Multisig 1',
+)
+const scMinorityStats = discovery.getMultisigStats(
+  'Starkware SCMinority Multisig',
+)
+const executionDelay = discovery.getContractValue<string>(
+  'DelayedExecutor',
+  'executionDelayFmt',
+)
+const sharpUpgradeDelay = discovery.getContractValue<string>(
+  'SHARPVerifierCallProxy',
+  'upgradeActivationDelayFmt',
+)
 
 export const starknet: ScalingProject = {
   type: 'layer2',
@@ -224,6 +283,7 @@ export const starknet: ScalingProject = {
   ],
   display: {
     name: 'Starknet',
+    aliases: ['StarkWare'],
     slug: 'starknet',
     stacks: ['SN Stack'],
     description:
@@ -264,7 +324,7 @@ export const starknet: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stwo'),
+    zkCatalogIds: [ProjectId('stwo')],
   },
   chainConfig: {
     name: 'starknet',
@@ -296,7 +356,7 @@ export const starknet: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL(),
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -312,7 +372,7 @@ export const starknet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: true,
-        programHashesReproducible: false,
+        programHashesReproducible: true,
         proverSourcePublished: true,
         verifierContractsReproducible: true,
       },
@@ -325,7 +385,7 @@ export const starknet: ScalingProject = {
     {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
       securityCouncilReference:
-        'https://governance.starknet.io/learn/security_council',
+        'https://docs.starknet.io/learn/protocol/security-council',
       stage1PrincipleDescription:
         'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
@@ -365,7 +425,7 @@ export const starknet: ScalingProject = {
       {
         title: 'Proven Program',
         description:
-          'The source code of the Starknet OS can be found [here](https://github.com/keep-starknet-strange/snos). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
+          'The current Starknet OS and aggregator sources are published in the [Starknet sequencer repository](https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core), and the bootloader sources are published in [cairo-lang](https://github.com/starkware-libs/cairo-lang/tree/1c5dace6fbd1dc9d1ae2eb878dc1dd85f23512ab/src/starkware/cairo/bootloaders). The exact 1,166-felt outer bootloader stored onchain has been reproduced from [this source revision](https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/bootloader). However, SHARP also commits to an ordered allowlist of recursive Cairo verifier programs whose active preimages and source-to-hash mappings have not been published, so the complete proven program is not independently reproducible.',
         risks: [],
       },
       {
@@ -384,14 +444,53 @@ export const starknet: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
     programHashes: starknetProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // GPS statement-verifier deployments currently able to satisfy Starknet's
+    // fact lookup. Their selectable CPU verifiers and helper contracts are
+    // exposed by the shared SHARP discovery.
+    zkVerifiers: acceptedSHARPVerifierChain.factRegistries,
+    programHashesDescription:
+      'The Starknet OS, virtual Starknet OS, aggregator, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
   },
-  upgradesAndGovernance: `
-The Starknet zk Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the main Starknet rollup contract and its core bridge escrows (ETHBridge, STRKBridge) is currently split between the ${scThreshold} Security Council with instant upgrade capability and the ${discovery.getMultisigStats('Starkware Multisig 2')} Starkware Multisig 2 who can upgrade with a ${discovery.getContractValue('DelayedExecutor', 'executionDelayFmt')} delay. The former Multisig also governs most other bridge escrows with instant upgradeability. The shared SHARP verifier used for state validation can be changed by the ${sharpMsThreshold} SHARP Multisig with and a ${discovery.getContractValue('SHARPVerifierCallProxy', 'upgradeActivationDelayFmt')} delay, affecting all rollups like Starknet that are sharing it. 
-
-The Operator role in the Starknet contract is permissioned to update the state of the Starknet rollup by supplying valid (zk) state transition proofs. Since this role is not permissionless, Starknet implements a StarknetSCMinorityMultisig with the Operator role, which allows a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the StarknetSecurityCouncil to enforce censorship resistance by including transactions that are not included by regular Operators.
-
-All bridge escrows allow enabling a withdrawal throttle of 5% of the locked funds per 24h period. Enabling it is permissioned to a Multisig while disabling it in the core bridge escrows (STRKBridge, ETHBridge) can be done by a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the Security Council.
-`,
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('starknet', 'upgradesAndGovernance', {
+      scThreshold,
+      starkwareMultisig1Stats,
+      starkwareMultisig2Stats,
+      executionDelay,
+      sharpMsThreshold,
+      sharpUpgradeDelay,
+      scMinorityStats,
+    }),
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${scThreshold}** onchain Safe multisig — 12 members, geographically and organizationally diverse (<50% from one country, <4 from one organization). The Starknet Foundation appoints and can administratively remove members. No fixed term length and no live tokenholder election mechanism.`,
+        'Members public':
+          '**Not mapped**, SNIP-25 and Foundation announcements publish only composition criteria (technical reputation, KYC/AML, diversity limits, conflict-of-interest rules).',
+        Charter:
+          '[SNIP-25](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-25.md) defines duties (security-only mandate), vetting-failure reports, eligibility and the code of conduct.',
+        'Can bypass DAO?': `**Yes** — ${scThreshold} can approve and execute an emergency upgrade immediately. The same instant rights let it counteract a malicious action queued in the DelayedExecutor during its ${executionDelay} window.`,
+        'DAO can override SC?':
+          '**No**, the community can only dispute the emergency upgrades after the fact in advisory way.',
+      },
+      upgrades: {
+        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub on L2](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week STRK vote on L2 → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        'Emergency upgrade path': `**${scThreshold} Security Council, instant**.`,
+        'Exit window': `**${executionDelay}** enforced onchain by the DelayedExecutor on the normal upgrade path (procedurally ≥7 days after the vote for major releases, ≥5 days for minor). **0** for emergency upgrades by the Security Council.`,
+      },
+      tokenGovernance: {
+        'Governance token':
+          '\`STRK\` — ~10.15B total supply, not permanently capped. Users can vote with L1 STRK, natively staked STRK or L2 vSTRK tokens, each gives 1 vote. In 2025 the Starknet Foundation [delegated ~1.7B STRK](https://www.starknet.io/blog/starknet-foundation-delegation-program/) to ~180 ecosystem delegates.',
+        'Voting venue':
+          '[Starknet Governance Hub](https://governance.starknet.io/) using Snapshot X — proposals, space configuration and results are recorded and verified on Starknet, with relayed gasless signed votes.',
+        'Proposal threshold':
+          '**None**, but proposal admission is curated, not triggered permissionlessly by an onchain token threshold.',
+        Quorum:
+          '**No protocol-wide quorum rule published.** Historical votes used a simple majority with no minimum quorum.',
+        'Execution model': `**Vote as onchain record, permissioned deployment** — passed proposals are queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1 and execute after ${executionDelay}.`,
+      },
+    },
+  },
   milestones: [
     {
       title: 'Starknet reverts 18mins of history',
@@ -914,6 +1013,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: UnixTime(1636979180),
+          untilTimestamp: UnixTime(1710352043), // last call: https://etherscan.io/tx/0xd7cfa525566850a190eec7937da2f8e43c8e87873747e5a41c74adb404210472
         },
       },
       {

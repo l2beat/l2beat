@@ -3,7 +3,6 @@ import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
-import type { DiscoveryTimestamps } from '../modelling/modelPermissions'
 
 export type ContractValue =
   | string
@@ -19,7 +18,6 @@ export interface StructureOutput {
   entries: StructureEntry[]
   abis: Record<string, string[]>
   configHash: Hash256
-  sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
 }
@@ -31,11 +29,10 @@ export interface DiscoveryOutput {
   entries: EntryParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
-  sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
-  dependentDiscoveries?: DiscoveryTimestamps
+  permissions?: Record<ChainSpecificAddress, PermissionEntry>
 }
 
 export interface DiscoveryCustomType {
@@ -86,6 +83,7 @@ export type StructureEntry = {
   template?: string
   sourceHashes?: (string | undefined)[]
   unverified?: true
+  deployerAddress?: ChainSpecificAddress
   sinceTimestamp?: number
   sinceBlock?: number
   proxyType?: string
@@ -108,7 +106,7 @@ export type ColorEntry = {
 export type PermissionEntry = {
   receivedPermissions?: ReceivedPermission[]
   directlyReceivedPermissions?: ReceivedPermission[]
-  controlsMajorityOfUpgradePermissions?: boolean
+  eoaWithUpgradePermissions?: boolean
 }
 
 export type EntryParameters = StructureEntry & ColorEntry & PermissionEntry
@@ -118,7 +116,7 @@ export interface ColorOutput {
 }
 
 export type PermissionsOutput = {
-  eoasWithMajorityUpgradePermissions?: ChainSpecificAddress[]
+  eoasWithUpgradePermissions?: ChainSpecificAddress[]
   permissionsConfigHash: Hash256
   permissions: {
     receiver: ChainSpecificAddress
@@ -135,5 +133,4 @@ export type PermissionsOutput = {
     isFinal: boolean
     role?: string
   }[]
-  dependentTimestamps: DiscoveryTimestamps
 }

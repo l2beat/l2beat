@@ -72,9 +72,9 @@ describe(DiscoveryEngine.name, () => {
       })
 
     const engine = new DiscoveryEngine(addressAnalyzer, Logger.SILENT)
-    const result = await engine.discover(provider, config.structure, 1234)
+    const { analyses } = await engine.discover(provider, config.structure, 1234)
 
-    expect(result).toEqual([
+    expect(analyses).toEqual([
       {
         ...base,
         type: 'Contract',

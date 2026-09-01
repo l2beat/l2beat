@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Getters",
+  "description": "Read-only helper contract that batches governance snapshot and reward-view calls.",
+  "category": "bridge-external",
+  "ignoreMethods": ["getGlobalsSnapshots"],
+  "fields": {
+    "staking": {
+      "description": "Staking contract queried for snapshot history and voting-power data."
+    },
+    "governorRewards": {
+      "description": "Configured contract address used by the reward-view helper methods."
+    }
+  }
+}

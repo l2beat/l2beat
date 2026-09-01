@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 
 export async function getDaProjectsTvs(projectIds: ProjectId[]) {
   if (env.MOCK) {
@@ -20,6 +20,7 @@ async function getDaProjectsTvsData(projectIds: ProjectId[]) {
         projectId: ProjectId(projectId),
         tvs: projectValues.breakdown.total,
         tvs7d: projectValues.breakdown7d.total,
+        changePeriod: projectValues.changePeriod,
       }
     },
   )
@@ -39,15 +40,20 @@ export function pickTvsForProjects(
     const latest = included.reduce((acc, curr) => acc + curr.tvs, 0)
     const sevenDaysAgo = included.reduce((acc, curr) => acc + curr.tvs7d, 0)
 
-    return { latest, sevenDaysAgo }
+    return {
+      latest,
+      sevenDaysAgo,
+      changePeriod: included[0]?.changePeriod ?? ('7D' as const),
+    }
   }
 }
 
 async function getMockDaProjectsTvsData(): Promise<DaProjectsTvs> {
-  const projects = await ps.getProjects({ where: ['isScaling'] })
+  const projects = await ps.getProjects({ where: ['scalingInfo'] })
   return projects.map((project) => ({
     projectId: project.id,
     tvs: 100000,
     tvs7d: 90000,
+    changePeriod: '7D',
   }))
 }

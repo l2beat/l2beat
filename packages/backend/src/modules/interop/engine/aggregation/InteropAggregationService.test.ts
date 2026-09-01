@@ -70,7 +70,7 @@ describe(InteropAggregationService.name, () => {
         countOver100K: 0,
         identifiedCount: 2,
         mintedValueUsd: 5000,
-        burnedValueUsd: 0,
+        burnedValueUsd: undefined,
         bridgeType: 'lockAndMint',
       })
 
@@ -270,6 +270,146 @@ describe(InteropAggregationService.name, () => {
 
       expect(result.aggregatedTransfers).toEqual([])
       expect(result.aggregatedTokens).toEqual([])
+      expect(result.aggregatedDeployedTokens).toEqual([])
+      expect(result.aggregatedTokensPairs).toEqual([])
+    })
+
+    it('aggregates deployed tokens per address with net minted', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcTokenAddress: '0xeth',
+          dstTokenAddress: '0xarb',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const classifier = new InteropTransferClassifier()
+      const service = new InteropAggregationService(classifier)
+
+      const result = service.aggregate(transfers, configs, to)
+
+      expect(result.aggregatedDeployedTokens).toHaveLength(2)
+
+      const srcToken = result.aggregatedDeployedTokens.find(
+        (t) => t.tokenChain === 'ethereum' && t.tokenAddress === '0xeth',
+      )
+      const dstToken = result.aggregatedDeployedTokens.find(
+        (t) => t.tokenChain === 'arbitrum' && t.tokenAddress === '0xarb',
+      )
+
+      expect(srcToken).toEqual({
+        timestamp: to,
+        id: 'config1',
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        tokenChain: 'ethereum',
+        tokenAddress: '0xeth',
+        transferTypeStats: {
+          deposit: { transferCount: 1, totalDurationSum: 5000 },
+        },
+        transferCount: 1,
+        transfersWithDurationCount: 1,
+        totalDurationSum: 5000,
+        volume: 2000,
+        minTransferValueUsd: 2000,
+        maxTransferValueUsd: 2000,
+        bridgeType: 'lockAndMint',
+        mintedValueUsd: 0,
+        burnedValueUsd: 0,
+      })
+
+      // The newly minted supply is attributed to the destination token.
+      expect(dstToken?.mintedValueUsd).toEqual(2000)
+      expect(dstToken?.burnedValueUsd).toEqual(0)
+      expect(dstToken?.volume).toEqual(2000)
+    })
+
+    it('aggregates one-sided transfers even when their bridge type cannot be inferred', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          srcChain: 'ethereum',
+          dstChain: 'solana',
+          srcAbstractTokenId: 'usdc',
+          dstAbstractTokenId: 'usdc',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+          srcEventId: 'src-only-event',
+          dstEventId: undefined,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const classifier = new InteropTransferClassifier()
+      const service = new InteropAggregationService(classifier)
+
+      const result = service.aggregate(transfers, configs, to)
+
+      expect(result.aggregatedTransfers).toHaveLength(1)
+      expect(result.aggregatedTransfers[0]?.bridgeType).toEqual('unknown')
+      expect(result.aggregatedTransfers[0]?.transferCount).toEqual(1)
+      expect(result.aggregatedTokens).toHaveLength(1)
+      expect(result.aggregatedTokensPairs).toHaveLength(1)
+    })
+
+    it('does not aggregate one-sided transfers when they carry a mismatched bridge type', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          bridgeType: 'nonMinting',
+          srcChain: 'ethereum',
+          dstChain: 'solana',
+          srcAbstractTokenId: 'usdc',
+          dstAbstractTokenId: 'usdc',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+          srcEventId: 'src-only-event',
+          dstEventId: undefined,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const classifier = new InteropTransferClassifier()
+      const service = new InteropAggregationService(classifier)
+
+      const result = service.aggregate(transfers, configs, to)
+
+      expect(result.aggregatedTransfers).toEqual([])
+      expect(result.aggregatedTokens).toEqual([])
       expect(result.aggregatedTokensPairs).toEqual([])
     })
   })
@@ -283,28 +423,37 @@ function createTransfer(
   type: string,
   timestamp: UnixTime,
   overrides: {
+    bridgeType?: 'lockAndMint' | 'burnAndMint' | 'nonMinting'
     srcChain: string
     dstChain: string
     srcAbstractTokenId: string
     dstAbstractTokenId: string
+    srcTokenAddress?: string
+    dstTokenAddress?: string
     duration: number
     srcValueUsd?: number
     dstValueUsd?: number
     srcWasBurned?: boolean
     dstWasMinted?: boolean
+    srcEventId?: string
+    dstEventId?: string
   },
 ): InteropTransferRecord {
   return {
     plugin,
     transferId,
     type,
-    bridgeType: undefined,
+    bridgeType: overrides.bridgeType,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',
     srcLogIndex: 0,
-    srcEventId: 'random-event-id',
-    srcTokenAddress: undefined,
+    // We need to preserve explicit undefined here for one-sided transfer tests.
+    // Using ?? would replace it with the fallback and accidentally make the
+    // transfer two-sided again.
+    srcEventId:
+      'srcEventId' in overrides ? overrides.srcEventId : 'random-event-id',
+    srcTokenAddress: overrides.srcTokenAddress,
     srcRawAmount: undefined,
     srcWasBurned: overrides.srcWasBurned,
     srcSymbol: undefined,
@@ -313,8 +462,9 @@ function createTransfer(
     dstTime: timestamp + overrides.duration,
     dstTxHash: 'random-hash',
     dstLogIndex: 0,
-    dstEventId: 'random-event-id',
-    dstTokenAddress: undefined,
+    dstEventId:
+      'dstEventId' in overrides ? overrides.dstEventId : 'random-event-id',
+    dstTokenAddress: overrides.dstTokenAddress,
     dstRawAmount: undefined,
     dstWasMinted: overrides.dstWasMinted,
     dstSymbol: undefined,

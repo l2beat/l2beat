@@ -1,6 +1,6 @@
-import { getCostsProjects } from '~/server/features/scaling/costs/utils/getCostsProjects'
-import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
-import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { getCostsProjects } from '~/server/features/layer2s/costs/utils/getCostsProjects'
+import { getLiveness } from '~/server/features/layer2s/liveness/getLiveness'
+import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
@@ -13,7 +13,7 @@ export async function getDiscolupeProjects() {
 
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingTechnology'],
-    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'archivedAt'],
+    optional: ['discoveryInfo', 'milestones', 'archivedAt'],
   })
 
   return {
@@ -32,7 +32,6 @@ export async function getDiscolupeProjects() {
       areContractsDiscoveryDriven:
         project.discoveryInfo?.contractsDiscoDriven ?? false,
       isArchived: !!project.archivedAt,
-      isUpcoming: !!project.isUpcoming,
       isUnderReview: !!project.statuses.reviewStatus,
 
       costsConfigured: costs.includes(project.id.toString()),
@@ -47,7 +46,10 @@ export async function getDiscolupeProjects() {
       stateValidationConfigured:
         project.scalingTechnology.stateValidation !== undefined,
       upgradesAndGovernanceConfigured:
-        project.scalingTechnology.upgradesAndGovernance !== undefined,
+        project.scalingTechnology.upgradesAndGovernance?.content !==
+          undefined ||
+        project.scalingTechnology.upgradesAndGovernance?.governanceInfo !==
+          undefined,
     })),
   }
 }

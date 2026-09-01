@@ -17,10 +17,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('adi')
 
@@ -51,12 +52,7 @@ export const adi: ScalingProject = {
   id: ProjectId('adi'),
   addedAt: UnixTime(1766016000), // 2025-12-18T00:00:00Z
   capability: 'universal',
-  badges: [
-    BADGES.Stack.ZKStack,
-    BADGES.Infra.ElasticChain,
-    BADGES.VM.EVM,
-    BADGES.DA.EthereumCalldata,
-  ],
+  badges: [BADGES.Stack.ZKStack, BADGES.VM.EVM, BADGES.DA.EthereumCalldata],
   display: {
     name: 'ADI Chain',
     purposes: ['Universal'],
@@ -66,7 +62,10 @@ export const adi: ScalingProject = {
       'ADI Chain is a zk rollup built for scale and policy alignment.',
     links: {
       websites: ['https://adi.foundation/'],
-      explorers: ['https://explorer.adifoundation.ai/'],
+      explorers: [
+        'https://explorer-bls.adifoundation.ai',
+        'https://explorer.adifoundation.ai/',
+      ],
       repositories: ['https://github.com/orgs/ADI-Foundation-Labs/'],
       bridges: ['https://bridge.adifoundation.ai'],
       documentation: [
@@ -80,7 +79,7 @@ export const adi: ScalingProject = {
     },
     // Do we need upgradesAndGovernanceImage? architectureImage? liveness?
   },
-  proofSystem: { type: 'Validity', zkCatalogId: ProjectId('airbender') },
+  proofSystem: { type: 'Validity', zkCatalogIds: [ProjectId('airbender')] },
   config: {
     associatedTokens: ['ADI'],
     escrows: [
@@ -102,7 +101,7 @@ export const adi: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 23874833,
-        inbox: 'eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
+        inbox: '0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
         sequencers: [
           '0xF8fF3e62E94807a5C687f418Fe36942dD3a24524',
           '0x6090e365149d005517e2013926cD18d767f04Aa1',
@@ -171,7 +170,7 @@ export const adi: ScalingProject = {
   chainConfig: {
     name: 'adi',
     chainId,
-    explorerUrl: 'https://explorer.adifoundation.ai',
+    explorerUrl: 'https://explorer-bls.adifoundation.ai',
     sinceTimestamp: UnixTime(1764062519),
     gasTokens: ['ADI'],
     apis: [
@@ -199,7 +198,7 @@ export const adi: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -263,14 +262,13 @@ export const adi: ScalingProject = {
       EXITS.FORCED_MESSAGING('forced-messages'),
     ],
   },
-  upgradesAndGovernance: `
-Upgrades are managed by a Governance smart contract on L1. The owner of smart contract (${govOwnerAddress}) can schedule either transparent or shadow proposals.
-Transparent proposals have full upgrade data onchain when scheduled. Shadow proposals post only the hash of the upgrade data onchain when proposed, and the full upgrade data during execution.
-
-Scheduled proposals must wait a minimal delay before being executed (currently ${formatSeconds(minGovUpgradeDelayS)}). Governance supports a 'securityCouncil' role (${govSecurityCouncilAddress}) that can execute proposals without any delay.
-
-Currently, the governance process does not involve ADI token holders. See this link for more info: [https://docs.adi.foundation/appendix/appendix-b-governance](https://docs.adi.foundation/appendix/appendix-b-governance).
-  `,
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('adi', 'upgradesAndGovernance', {
+      govOwnerAddress,
+      minGovUpgradeDelayS: formatSeconds(minGovUpgradeDelayS),
+      govSecurityCouncilAddress,
+    }),
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
@@ -278,6 +276,12 @@ Currently, the governance process does not involve ADI token holders. See this l
       CONTRACTS.UPGRADE_NO_DELAY_RISK, // There is a Governance minDelay, but it is set to 0 now. This should be updated if minDelay increases
     ],
     // zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],  still need to check how this actually works with Airbender
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'ZKsyncOSDualVerifier',
+        'plonkVerifier0',
+      ),
+    ],
   },
   stateValidation: {
     description:

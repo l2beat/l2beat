@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Ethereum-side Omnibridge mediator used for arbitrary token transfers between Ethereum and Gnosis via the AMB bridge.",
+  "ignoreInWatchMode": ["getCurrentDay"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the counterpart mediator, the AMB bridge endpoint, the wrapped token factory, gas settings, token pairs, and per-token bridge limits for Omnibridge transfers."
+        }
+      ]
+    },
+    "upgradeabilityOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts."
+        }
+      ]
+    },
+    "bridgeContract": {
+      "description": "AMB bridge endpoint used as the cross-chain messaging layer for the Ethereum-side Omnibridge mediator.",
+      "severity": "HIGH"
+    },
+    "mediatorContractOnOtherSide": {
+      "description": "Counterpart Omnibridge mediator on Gnosis.",
+      "severity": "HIGH",
+      "edit": ["format", "GnosisAddress"]
+    },
+    "requestGasLimit": {
+      "description": "Gas limit forwarded for Omnibridge message execution on Gnosis.",
+      "severity": "HIGH"
+    },
+    "tokenFactory": {
+      "description": "Factory used to deploy wrapped tokens for assets bridged from Gnosis to Ethereum.",
+      "severity": "HIGH"
+    }
+  }
+}

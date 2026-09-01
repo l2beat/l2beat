@@ -1,4 +1,4 @@
-import { partition } from '../../../../../utils/partition'
+import { partition } from '@l2beat/shared-pure'
 import type { Field } from '../../store/State'
 
 export function groupByPath(fields: Field[]) {
@@ -21,10 +21,30 @@ export type SimpleField = {
 export interface ComplexField {
   type: 'complex'
   property: string
+  // Path of the group itself, which is what compressing a row is keyed by.
+  fullKey: string
   value: (SimpleField | ComplexField)[]
 }
 
 export type ExpandedField = SimpleField | ComplexField
+
+// Every value below a tree entry, by the path that identifies it in
+// `hiddenFields`.
+export function leafKeys(field: ExpandedField): string[] {
+  if (field.type === 'simple') {
+    return [field.fullKey]
+  }
+  return field.value.flatMap(leafKeys)
+}
+
+// The entry's own path plus the paths of the groups below it, which are the
+// paths compression can be keyed by.
+export function groupPaths(field: ExpandedField): string[] {
+  if (field.type === 'simple') {
+    return []
+  }
+  return [field.fullKey, ...field.value.flatMap(groupPaths)]
+}
 
 export function buildFieldTree(
   fields: Field[],
@@ -34,7 +54,7 @@ export function buildFieldTree(
 
   const simple: SimpleField[] = simpleFields.map((field) => ({
     type: 'simple',
-    property: field.name,
+    property: field.label ?? field.name,
     fullKey: normalizePath(startingPath, field.name),
   }))
 
@@ -46,6 +66,7 @@ export function buildFieldTree(
       return {
         type: 'complex',
         property: key,
+        fullKey,
         value: buildFieldTree(group, fullKey),
       }
     },

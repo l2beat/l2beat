@@ -1,0 +1,1 @@
+Any conflicting sibling proposals within a tournament that are made within the {{maxClockDuration}} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.

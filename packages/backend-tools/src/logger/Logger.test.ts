@@ -223,6 +223,7 @@ describe(Logger.name, () => {
           error: {
             name: 'Error',
             error: 'Oops',
+            cause: undefined,
             stack: expect.a(Array),
           },
         },
@@ -242,6 +243,28 @@ describe(Logger.name, () => {
           error: {
             name: 'Error',
             error: 'Oops',
+            cause: undefined,
+            stack: expect.a(Array),
+          },
+        },
+      })
+    })
+
+    it('error with cause', () => {
+      const inner = new Error('Inner')
+      const error = new Error('Oops', { cause: inner })
+      const transport = new TestTransport()
+      const logger = new Logger({ getTime, transports: [transport] })
+      logger.info(error)
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: '',
+        parameters: {
+          error: {
+            name: 'Error',
+            error: 'Oops',
+            cause: inner,
             stack: expect.a(Array),
           },
         },

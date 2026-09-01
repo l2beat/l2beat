@@ -20,8 +20,8 @@ export async function getDataAvailabilityLivenessData(
         title: 'Data Availability Liveness - L2BEAT',
         description:
           'Monitor liveness metrics of data availability solutions and recent anomalies.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/data-availability/liveness/opengraph-image.png',
         },
       }),

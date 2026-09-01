@@ -27,7 +27,7 @@ export function getExplorer(
 
 export function getExplorerConfig(
   config: ExplorerCLIConfiguration,
-): ExplorerConfig {
+): ExplorerConfig[] {
   if (config.chainName !== undefined) {
     const chainConfig = getChainConfig(config.chainName)
     return chainConfig.explorer
@@ -40,10 +40,12 @@ export function getExplorerConfig(
     config.explorerType !== 'sourcify' || config.explorerChainId !== undefined,
     'When using sourcify you should provide the chainId using --explorer-chain-id.',
   )
-  return {
-    type: config.explorerType as ExplorerConfig['type'],
-    url: config.explorerUrl.toString(),
-    apiKey: config.explorerApiKey ?? 'YourApiKeyToken',
-    chainId: config.explorerChainId ?? 1,
-  }
+  return [
+    {
+      type: config.explorerType as ExplorerConfig['type'],
+      url: config.explorerUrl.toString(),
+      apiKey: config.explorerApiKey ?? 'YourApiKeyToken',
+      chainId: config.explorerChainId ?? 1,
+    },
+  ]
 }

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "epochLength": {
+      "description": "time spans during which per-token rate-limiting is applied"
+    },
+    "delayPeriod": {
+      "description": "a transfer that exceeds the per-asset delayThreshold amount is delayed by this period"
+    }
+  }
+}

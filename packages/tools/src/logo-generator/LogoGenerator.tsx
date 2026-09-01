@@ -8,7 +8,6 @@ export function LogoGenerator() {
   const { data: projects, isLoading, isError } = useLogoGeneratorProjects()
   const [size, setSize] = useState(32)
   const [borderRadius, setBorderRadius] = useState(0)
-  const [hideUpcoming, setHideUpcoming] = useState(false)
   const [hideArchived, setHideArchived] = useState(false)
   const [secondGroupValue, setSecondGroupValue] = useState('')
   const [types, setTypes] = useState<string[]>(['layer2'])
@@ -29,9 +28,6 @@ export function LogoGenerator() {
   const filteredProjects =
     projects?.filter((project) => {
       if (!types.includes(project.type)) {
-        return false
-      }
-      if (hideUpcoming && project.isUpcoming) {
         return false
       }
       if (hideArchived && project.isArchived) {
@@ -66,15 +62,6 @@ export function LogoGenerator() {
           </select>
         </div>
         <div className="flex gap-4">
-          <div className="flex gap-1.5">
-            <input
-              id="hide-upcoming"
-              type="checkbox"
-              checked={hideUpcoming}
-              onChange={(e) => setHideUpcoming(e.target.checked)}
-            />
-            <label htmlFor="hide-upcoming">Hide upcoming</label>
-          </div>
           <div className="flex gap-1.5">
             <input
               id="hide-archived"

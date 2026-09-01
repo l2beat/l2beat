@@ -15,14 +15,7 @@ export function sumByResolutionAndProject(
     groupedByProjectId,
   )) {
     const groupedByResolution = groupBy(projectRecords, (r) =>
-      UnixTime.toStartOf(
-        r.timestamp,
-        resolution === 'hourly'
-          ? 'hour'
-          : resolution === 'sixHourly'
-            ? 'six hours'
-            : 'day',
-      ),
+      UnixTime.toStartOf(r.timestamp, resolution),
     )
 
     const daLayer = projectRecords[0]?.daLayer

@@ -1,16 +1,17 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
-import {
-  assert,
-  type Configuration,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
+} from '../../../../tools/uif/multi/types'
+import { mapEigenProjectData } from './mapEigenProjectData'
 
 export interface Dependencies
   extends Omit<
@@ -32,8 +33,6 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
         name: 'eigenda_projects_indexer',
         tags: { tag: $.daLayer },
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        configurationsTrimmingDisabled: true,
-        dataWipingAfterDeleteDisabled: false,
       },
       logger,
     )
@@ -44,10 +43,18 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
     )
   }
 
+  /**
+   * The active `configurations` are intentionally unused: the daily file
+   * fetched at 02:00 holds the PREVIOUS day, so "active at this height" is the
+   * wrong window for it. Ranges are enforced per record in getByProjectData
+   * instead. ManagedMultiIndexer is still worth it for the per-configuration
+   * lifecycle: backfill of a new configuration from its since, wipe on removal,
+   * trim / re-index on range edits.
+   */
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<TimestampDaIndexedConfig>[],
+    _configurations: Configuration<TimestampDaIndexedConfig>[],
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
     const adjustedTo = Math.min(adjustedFrom + UnixTime.HOUR, to)
@@ -94,7 +101,6 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
       this.logger.info('Saved DA metrics into DB', {
         from,
         to: adjustedTo,
-        configurations: configurations.length,
         records: projectData.length,
       })
 
@@ -118,57 +124,54 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
       Extract<TimestampDaIndexedConfig, { type: 'eigen-da' }>
     >[]
 
-    const recordsMap = new Map<string, DataAvailabilityRecord>()
-
-    for (const d of data) {
-      if (
-        d.datetime < startOfTheDay - UnixTime.DAY ||
-        d.datetime >= startOfTheDay
-      ) {
-        continue
-      }
-
-      const configuration = projectsConfigurations.find(
-        (c) => c.properties.customerId === d.customer_id,
-      )
-      if (!configuration) {
-        continue
-      }
-      const key = `${d.datetime}-${configuration.id}`
-
-      const totalSize = BigInt(Math.round(d.total_size_mb * 1024 * 1024))
-
-      const existing = recordsMap.get(key)
-      if (!existing) {
-        recordsMap.set(key, {
-          timestamp: d.datetime,
-          totalSize,
-          projectId: configuration.properties.projectId,
-          daLayer: this.daLayer,
-          configurationId: configuration.id,
-        })
-      } else {
-        existing.totalSize += totalSize
-      }
-    }
-
-    return Array.from(recordsMap.values())
+    return mapEigenProjectData(
+      data,
+      projectsConfigurations,
+      this.daLayer,
+      startOfTheDay,
+    )
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
+  override async wipeData(
+    configurations: WipeRemovalConfiguration[],
   ): Promise<void> {
-    //this function should only run with this flag enabled
-    assert(this.options.configurationsTrimmingDisabled)
+    const deletedRecords = await this.$.db.dataAvailability.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
 
-    for (const c of configurations) {
-      const deletedRecords =
-        await this.$.db.dataAvailability.deleteByConfigurationId(c.id)
-
-      this.logger.info('Wiped DA records for configuration', {
-        id: c.id,
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped DA records for configurations', {
+        configurations: configurations.length,
         deletedRecords,
       })
+    }
+  }
+
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      // Records are hourly buckets, so cut at full hours: keep the bucket holding
+      // the new sinceTimestamp (range ends at since - 1; nothing re-indexes it),
+      // drop the bucket holding the new untilTimestamp (range starts at until + 1;
+      // it is re-fetched if the range grows again). Same rule as DaIndexer.
+      const from = UnixTime.toStartOf(configuration.range[0], 'hour')
+      const to = UnixTime.toStartOf(configuration.range[1] + 1, 'hour') - 1
+      const deletedRecords =
+        await this.$.db.dataAvailability.deleteByConfigInTimeRange(
+          configuration.id,
+          from,
+          to,
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DA records for configuration', {
+          id: configuration.id,
+          from,
+          to,
+          deletedRecords,
+        })
+      }
     }
   }
 

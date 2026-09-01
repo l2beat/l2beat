@@ -1,8 +1,7 @@
 {
   "L1StandardERC20Gateway.sol": {
-    "hash": "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c",
+    "hash": "0xd9fd1d2027fa84e5c617578022ac0b91eb03a0d519100e7b2a48aaac4ad3194c",
     "address": "eth:0x75BC012fA81DF052baFc4EF9255Af29B6C4e5301",
-    "chain": "ethereum",
     "blockNumber": 24147273
   }
 }

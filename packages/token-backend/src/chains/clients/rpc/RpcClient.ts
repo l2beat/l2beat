@@ -1,11 +1,12 @@
-import { v } from '@l2beat/validate'
+import { UnixTime } from '@l2beat/shared-pure'
+import { type Validator, v } from '@l2beat/validate'
 import {
   decodeFunctionResult,
   encodeFunctionData,
   type Hex,
   parseAbi,
 } from 'viem'
-import type { RpcClientConfig, RpcResponse } from './types'
+import type { RpcClientConfig } from './types'
 
 const DECIMALS_ABI = parseAbi(['function decimals() view returns (uint8)'])
 const SYMBOL_ABI = parseAbi(['function symbol() view returns (string)'])
@@ -13,10 +14,10 @@ const SYMBOL_BYTES32_ABI = parseAbi([
   'function symbol() view returns (bytes32)',
 ])
 
-const RpcResponseSchema = v.object({
+const RpcEnvelopeSchema = v.object({
   id: v.union([v.string(), v.number()]),
   jsonrpc: v.string(),
-  result: v.string().optional(),
+  result: v.unknown().optional(),
   error: v
     .object({
       code: v.number(),
@@ -25,15 +26,21 @@ const RpcResponseSchema = v.object({
     .optional(),
 })
 
+const HexStringSchema = v
+  .string()
+  .check((s): s is Hex => s.startsWith('0x'), 'expected 0x-prefixed hex string')
+
+const BlockSchema = v.object({
+  timestamp: HexStringSchema,
+})
+
 export class RpcClient {
   constructor(private readonly config: RpcClientConfig) {}
 
   async test(): Promise<{ success: boolean; error?: string }> {
     try {
-      const response = await this.query('eth_blockNumber', [])
-      return {
-        success: response.result !== undefined && !response.error,
-      }
+      await this.query('eth_blockNumber', [], HexStringSchema)
+      return { success: true }
     } catch (error) {
       if (error instanceof Error) {
         return {
@@ -57,9 +64,9 @@ export class RpcClient {
       }),
     }
 
-    const response = await this.call(callData, 'latest')
+    const result = await this.call(callData, 'latest')
 
-    if (!response.result || response.result === '0x') {
+    if (result === '0x') {
       throw new Error(
         `Could not get decimals for token ${address} for URL ${this.config.url}`,
       )
@@ -69,13 +76,13 @@ export class RpcClient {
       decodeFunctionResult({
         abi: DECIMALS_ABI,
         functionName: 'decimals',
-        data: response.result as Hex,
+        data: result,
       }),
     )
 
     if (Number.isNaN(decimals)) {
       throw new Error(
-        `Invalid decimals response for token ${address} for URL ${this.config.url}: ${response.result}`,
+        `Invalid decimals response for token ${address} for URL ${this.config.url}: ${result}`,
       )
     }
 
@@ -91,9 +98,9 @@ export class RpcClient {
       }),
     }
 
-    const response = await this.call(callData, 'latest')
+    const result = await this.call(callData, 'latest')
 
-    if (!response.result || response.result === '0x') {
+    if (result === '0x') {
       throw new Error(
         `Could not get symbol for token ${address} for URL ${this.config.url}`,
       )
@@ -103,12 +110,12 @@ export class RpcClient {
       const symbol = decodeFunctionResult({
         abi: SYMBOL_ABI,
         functionName: 'symbol',
-        data: response.result as Hex,
+        data: result,
       })
 
       if (!symbol) {
         throw new Error(
-          `Invalid symbol response for token ${address} for URL ${this.config.url}: ${response.result}`,
+          `Invalid symbol response for token ${address} for URL ${this.config.url}: ${result}`,
         )
       }
 
@@ -120,7 +127,7 @@ export class RpcClient {
     const bytes32Symbol = decodeFunctionResult({
       abi: SYMBOL_BYTES32_ABI,
       functionName: 'symbol',
-      data: response.result as Hex,
+      data: result,
     })
     const symbol = Buffer.from(bytes32Symbol.slice(2), 'hex')
       .toString('utf8')
@@ -128,24 +135,54 @@ export class RpcClient {
 
     if (!symbol) {
       throw new Error(
-        `Invalid symbol response for token ${address} for URL ${this.config.url}: ${response.result}`,
+        `Invalid symbol response for token ${address} for URL ${this.config.url}: ${result}`,
       )
     }
 
     return symbol
   }
 
+  async getBlockNumber(): Promise<number> {
+    const result = await this.query('eth_blockNumber', [], HexStringSchema)
+    return Number.parseInt(result, 16)
+  }
+
+  async getCode(
+    address: string,
+    blockNumber: 'latest' | number,
+  ): Promise<string> {
+    return await this.query(
+      'eth_getCode',
+      [address, encodeBlock(blockNumber)],
+      HexStringSchema,
+    )
+  }
+
+  async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    const block = await this.query(
+      'eth_getBlockByNumber',
+      [encodeBlock(blockNumber), false],
+      BlockSchema,
+    )
+    return UnixTime(Number.parseInt(block.timestamp, 16))
+  }
+
   private async call(
     callData: { to: string; data: string },
     blockNumber: 'latest' | number,
-  ): Promise<RpcResponse> {
-    const blockParam =
-      blockNumber === 'latest' ? 'latest' : `0x${blockNumber.toString(16)}`
-
-    return await this.query('eth_call', [callData, blockParam])
+  ): Promise<Hex> {
+    return await this.query(
+      'eth_call',
+      [callData, encodeBlock(blockNumber)],
+      HexStringSchema,
+    )
   }
 
-  private async query(method: string, params: unknown[]): Promise<RpcResponse> {
+  private async query<T>(
+    method: string,
+    params: unknown[],
+    resultSchema: Validator<T>,
+  ): Promise<T> {
     const body = {
       jsonrpc: '2.0',
       id: 1,
@@ -168,14 +205,18 @@ export class RpcClient {
     }
 
     const data = await response.json()
-    const parsed = RpcResponseSchema.parse(data)
+    const envelope = RpcEnvelopeSchema.parse(data)
 
-    if (parsed.error) {
+    if (envelope.error) {
       throw new Error(
-        `RPC error: ${parsed.error.code} - ${parsed.error.message}`,
+        `RPC error: ${envelope.error.code} - ${envelope.error.message}`,
       )
     }
 
-    return parsed
+    return resultSchema.parse(envelope.result)
   }
+}
+
+function encodeBlock(blockNumber: 'latest' | number): string {
+  return blockNumber === 'latest' ? 'latest' : `0x${blockNumber.toString(16)}`
 }

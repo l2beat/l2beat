@@ -12,14 +12,7 @@ export function getTimestampedValuesRange(
   const [from, to] = getBucketValuesRange(range, resolution, opts)
 
   const adjustedFrom =
-    from !== null
-      ? from +
-        (resolution === 'daily'
-          ? UnixTime.DAY
-          : resolution === 'sixHourly'
-            ? UnixTime.SIX_HOURS
-            : UnixTime.HOUR)
-      : null
+    from !== null ? from + UnixTime.periodToSeconds(resolution) : null
 
   return [adjustedFrom, to]
 }
@@ -37,14 +30,7 @@ function getBucketValuesRange(
   const end = UnixTime.toStartOf(UnixTime.now() + offset, 'hour')
   const start =
     days !== null
-      ? UnixTime.toStartOf(
-          end - days * UnixTime.DAY,
-          resolution === 'daily'
-            ? 'day'
-            : resolution === 'sixHourly'
-              ? 'six hours'
-              : 'hour',
-        )
+      ? UnixTime.toStartOf(end - days * UnixTime.DAY, resolution)
       : null
 
   return [start, end]

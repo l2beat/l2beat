@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ACL",
+  "description": "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus. Since v0.4.0 users can delegate user decryption of their handles across all app contracts at once via a wildcard delegation.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": ["WILDCARD_DELEGATION_ADDRESS"],
+  "fields": {
+    "owner": {
+      "description": "Owner of the ACL and host-contract owner checked by onlyACLOwner in the Zama verifier and helper contracts, including ProtocolConfig and KMSGeneration.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Pending owner for a two-step ACL ownership transfer.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept ACL ownership if non-zero."
+        }
+      ]
+    },
+    "paused": {
+      "description": "Whether ACL operations that require whenNotPaused are currently paused.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "blockedAccounts": {
+      "description": "Accounts denied from using ACL operations, reconstructed from BlockedAccount and UnblockedAccount events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "ignoreRelative": true,
+        "add": { "event": "BlockedAccount" },
+        "remove": { "event": "UnblockedAccount" }
+      }
+    },
+    "WILDCARD_DELEGATION_ADDRESS": {
+      "description": "Sentinel contract address that a user can pass to delegateForUserDecryption to delegate user decryption of their handles across all app contracts at once. The wildcard does not bypass per-handle allowances."
+    },
+    "getFHEVMExecutorAddress": {
+      "description": "FHEVMExecutor contract that may grant transient handle allowances without first being allowed by the caller.",
+      "type": "EXTERNAL"
+    },
+    "getPauserSetAddress": {
+      "description": "PauserSet contract whose members may pause the ACL.",
+      "type": "EXTERNAL"
+    }
+  }
+}

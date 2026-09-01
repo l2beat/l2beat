@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.",
+  "ignoreMethods": ["blockHashes", "proxiableUUID"],
+  "category": "core",
+  "ignoreInWatchMode": ["getBlockState"]
+}

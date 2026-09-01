@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -13,11 +14,14 @@ import { EM_DASH } from '~/consts/characters'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import type {
   AverageDuration,
+  ProtocolDisplayable,
   TokenData,
   TokenFlowData,
   TokensPairData,
-} from '~/server/features/scaling/interop/types'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+} from '~/server/features/layer2s/interop/types'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
+import type { InteropSelection } from '../../utils/types'
+import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 import { TokenFlowsCell } from './TokenFlowsCell'
 
@@ -25,6 +29,7 @@ export type TokenRow = TokenData & BasicTableRow
 export type TokensPairRow = TokensPairData & BasicTableRow
 
 type CommonRow = {
+  topProtocol?: ProtocolDisplayable
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
@@ -34,8 +39,43 @@ type CommonRow = {
   flows: TokenFlowData[]
 }
 
-function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
-  return [
+function getCommonColumns<T extends CommonRow>(
+  columnHelper: ColumnHelper<T>,
+  showTopProtocolColumn?: boolean,
+  showFlowsColumn = true,
+) {
+  return compact([
+    showTopProtocolColumn &&
+      columnHelper.accessor((row) => row.topProtocol?.name, {
+        id: 'topProtocol',
+        header: 'Top\nprotocol',
+        cell: (ctx) => {
+          const topProtocol = ctx.row.original.topProtocol
+          if (!topProtocol) return EM_DASH
+
+          return (
+            <a
+              href={`/interop/protocols/${topProtocol.slug}`}
+              className="flex items-center gap-1.5 hover:underline"
+            >
+              <img
+                className="size-4 rounded-full bg-white shadow"
+                src={topProtocol.iconUrl}
+                width={16}
+                height={16}
+                alt={`${topProtocol.name} icon`}
+              />
+              <span className="font-medium text-label-value-15">
+                {topProtocol.name}
+              </span>
+            </a>
+          )
+        },
+        meta: {
+          tooltip:
+            'The protocol with the highest total transfer volume for this token over the past 24 hours.',
+        },
+      }),
     columnHelper.accessor((row) => row.volume, {
       id: 'volume',
       header: 'Last 24h\nVolume',
@@ -49,9 +89,12 @@ function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
       },
       meta: {
         align: 'right',
+        tooltip:
+          'The total USD value of all token transfers completed in the past 24 hours.',
       },
     }),
     columnHelper.accessor((row) => row.transferCount, {
+      id: 'transferCount',
       header: 'Last 24h\ntransfer count',
       cell: (ctx) => (
         <div className="font-medium text-label-value-15">
@@ -60,6 +103,8 @@ function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
       ),
       meta: {
         align: 'right',
+        tooltip:
+          'The total number of token transfer transactions completed in the past 24 hours.',
       },
     }),
     columnHelper.accessor(
@@ -74,19 +119,24 @@ function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
                   .map((split) => split.duration ?? Number.POSITIVE_INFINITY),
               ),
       {
+        id: 'avgDuration',
         header: 'Last 24h avg.\ntransfer time',
         cell: (ctx) => {
-          if (ctx.row.original.avgDuration === null) return EM_DASH
+          if (ctx.row.original.avgDuration === null)
+            return <InteropNoDataBadge />
           return (
             <AvgDurationCell averageDuration={ctx.row.original.avgDuration} />
           )
         },
         meta: {
           align: 'right',
+          tooltip:
+            'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
         },
       },
     ),
     columnHelper.accessor((row) => row.avgValue, {
+      id: 'avgValue',
       header: 'Last 24h avg.\ntransfer value',
       cell: (ctx) => {
         if (ctx.row.original.avgValue === null) return EM_DASH
@@ -143,25 +193,44 @@ function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
           </Tooltip>
         )
       },
-    }),
-    columnHelper.accessor(
-      (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
-      {
-        id: 'flows',
-        header: 'Flows',
-        cell: (ctx) => {
-          const flows = ctx.row.original.flows
-          if (!flows || flows.length === 0) return EM_DASH
-
-          return <TokenFlowsCell flows={flows} />
-        },
+      meta: {
+        tooltip:
+          'The average USD value per token transfer completed in the past 24 hours.',
       },
-    ),
-  ]
+    }),
+    showFlowsColumn &&
+      columnHelper.accessor(
+        (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
+        {
+          id: 'flows',
+          header: 'Top flows',
+          cell: (ctx) => {
+            const flows = ctx.row.original.flows
+            if (!flows || flows.length === 0) return EM_DASH
+
+            return <TokenFlowsCell flows={flows.slice(0, 3)} />
+          },
+          meta: {
+            tooltip:
+              'Top 3 flows by volume for this token over the past 24 hours, across source and destination chains.',
+          },
+        },
+      ),
+  ])
 }
 
 const tokenColumnHelper = createColumnHelper<TokenRow>()
-export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
+export const getTopTokensColumns = ({
+  showNetMintedValueColumn,
+  showTopProtocolColumn,
+  showFlowsColumn,
+  selectedChains,
+}: {
+  showNetMintedValueColumn?: boolean
+  showTopProtocolColumn?: boolean
+  showFlowsColumn?: boolean
+  selectedChains?: InteropSelection
+} = {}) =>
   compact([
     tokenColumnHelper.display({
       id: 'icon',
@@ -182,34 +251,60 @@ export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
     }),
     tokenColumnHelper.accessor('symbol', {
       header: 'Symbol',
-      cell: (ctx) => (
-        <TwoRowCell>
-          <TwoRowCell.First className="font-bold leading-none!">
-            {ctx.row.original.symbol}
-          </TwoRowCell.First>
-          {ctx.row.original.issuer && (
-            <TwoRowCell.Second>
-              Issued by{' '}
-              <span className="capitalize">{ctx.row.original.issuer}</span>
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      ),
+      enableSorting: false,
+      cell: (ctx) => {
+        const content = (
+          <>
+            <TwoRowCell.First className="font-bold leading-none!">
+              {ctx.row.original.symbol}
+            </TwoRowCell.First>
+            {ctx.row.original.issuer && (
+              <TwoRowCell.Second>
+                Issued by{' '}
+                <span className="capitalize">{ctx.row.original.issuer}</span>
+              </TwoRowCell.Second>
+            )}
+          </>
+        )
+
+        const tokenUrl = selectedChains
+          ? getInteropTokenUrl(ctx.row.original)
+          : undefined
+
+        return (
+          <TwoRowCell>
+            {tokenUrl ? (
+              <a href={tokenUrl} className="hover:underline">
+                {content}
+              </a>
+            ) : (
+              content
+            )}
+          </TwoRowCell>
+        )
+      },
       meta: {
         headClassName: 'pl-0!',
         cellClassName: 'pl-0!',
       },
     }),
-    ...getCommonColumns(tokenColumnHelper),
+    ...getCommonColumns(
+      tokenColumnHelper,
+      showTopProtocolColumn,
+      showFlowsColumn,
+    ),
     showNetMintedValueColumn &&
       tokenColumnHelper.accessor('netMintedValue', {
         header: 'Last 24h net\nminted value',
         meta: {
           align: 'right',
           headClassName: 'text-2xs',
+          tooltip:
+            "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
         cell: (ctx) => {
-          if (ctx.row.original.netMintedValue === undefined) return EM_DASH
+          if (ctx.row.original.netMintedValue === undefined)
+            return <InteropNoDataBadge />
           return (
             <span className="font-medium text-label-value-15">
               {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
@@ -220,7 +315,15 @@ export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
   ])
 
 const tokensPairColumnHelper = createColumnHelper<TokensPairRow>()
-export const topTokensPairsColumns = [
+export const getTopTokensPairsColumns = ({
+  showTopProtocolColumn,
+  showFlowsColumn,
+  selectedChains,
+}: {
+  showTopProtocolColumn?: boolean
+  showFlowsColumn?: boolean
+  selectedChains?: InteropSelection
+} = {}) => [
   tokensPairColumnHelper.accessor(
     (row) =>
       row.id === 'unknown'
@@ -235,7 +338,7 @@ export const topTokensPairsColumns = [
           return <span className="font-bold">Unknown pairs</span>
         }
         return (
-          <div className="flex items-center gap-1 font-bold">
+          <div className="flex w-max items-center gap-1 whitespace-nowrap font-bold">
             <img
               className="size-[20px] rounded-full bg-white shadow"
               src={tokenA.iconUrl}
@@ -243,8 +346,8 @@ export const topTokensPairsColumns = [
               height={20}
               alt={`${tokenA.symbol} icon`}
             />
-            <span>{tokenA.symbol}</span>
-            <BidirectionalArrowIcon className="size-4 fill-brand" />
+            <TokenPairSymbol token={tokenA} selectedChains={selectedChains} />
+            <BidirectionalArrowIcon className="size-4 shrink-0 fill-brand" />
             <img
               className="size-[20px] rounded-full bg-white shadow"
               src={tokenB.iconUrl}
@@ -252,7 +355,7 @@ export const topTokensPairsColumns = [
               height={20}
               alt={`${tokenB.symbol} icon`}
             />
-            <span>{tokenB.symbol}</span>
+            <TokenPairSymbol token={tokenB} selectedChains={selectedChains} />
           </div>
         )
       },
@@ -262,5 +365,29 @@ export const topTokensPairsColumns = [
       },
     },
   ),
-  ...getCommonColumns(tokensPairColumnHelper),
+  ...getCommonColumns(
+    tokensPairColumnHelper,
+    showTopProtocolColumn,
+    showFlowsColumn,
+  ),
 ]
+
+function TokenPairSymbol({
+  token,
+  selectedChains,
+}: {
+  token: TokensPairRow['tokenA']
+  selectedChains: InteropSelection | undefined
+}) {
+  const tokenUrl = selectedChains ? getInteropTokenUrl(token) : undefined
+
+  if (!tokenUrl) {
+    return <span>{token.symbol}</span>
+  }
+
+  return (
+    <a href={tokenUrl} className="hover:underline">
+      {token.symbol}
+    </a>
+  )
+}

@@ -271,9 +271,9 @@ describe(FunctionSelectorDecoder.name, () => {
       expect(provider.getSource).toHaveBeenCalledTimes(5)
       expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
       expect(provider.getSource).toHaveBeenNthCalledWith(2, target2)
-      expect(provider.getSource).toHaveBeenNthCalledWith(3, implementation2)
-      expect(provider.getSource).toHaveBeenNthCalledWith(4, implementation3)
-      expect(provider.getSource).toHaveBeenNthCalledWith(5, implementation1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(3, implementation1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(4, implementation2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(5, implementation3)
     })
   })
 

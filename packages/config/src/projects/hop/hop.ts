@@ -12,5 +12,5 @@ export const hop: BaseProject = {
   addedAt: UnixTime(1662628329),
   // TODO: add plugin
   // TODO!: when added, remove it from filter in config.test.ts
-  // isInteropProtocol: true,
+  //
 }

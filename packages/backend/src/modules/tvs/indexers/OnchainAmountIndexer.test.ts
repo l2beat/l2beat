@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, TvsAmountRecord } from '@l2beat/database'
 import type {
   BalanceProvider,
+  StarknetBalanceProvider,
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
@@ -61,6 +62,10 @@ describe(OnchainAmountIndexer.name, () => {
           getTotalSupplies: mockFn(),
         })
 
+      const starknetBalanceProvider = mockObject<StarknetBalanceProvider>({
+        getBalances: mockFn(),
+      })
+
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         upsertMany: mockFn().returnsOnce(undefined),
       })
@@ -72,6 +77,7 @@ describe(OnchainAmountIndexer.name, () => {
           balanceProvider,
           totalSupplyProvider,
           starknetTotalSupplyProvider,
+          starknetBalanceProvider,
           db: mockDatabase({
             tvsAmount: tvsAmountRepository,
             tvsBlockTimestamp: tvsBlockTimestampRepository,
@@ -110,6 +116,7 @@ describe(OnchainAmountIndexer.name, () => {
       expect(
         starknetTotalSupplyProvider.getTotalSupplies,
       ).not.toHaveBeenCalled()
+      expect(starknetBalanceProvider.getBalances).not.toHaveBeenCalled()
 
       const expectedRecords: TvsAmountRecord[] = [
         record('escrow-config-1', timestamp, 1000),
@@ -132,6 +139,7 @@ describe(OnchainAmountIndexer.name, () => {
 
       const token1 = '0x1234'
       const token2 = '0x5678'
+      const holder = '0xabcd'
 
       const mockStarknetTotalSupplyConfig1 = starknetTotalSupply(
         'starknet-supply-config-1',
@@ -141,10 +149,16 @@ describe(OnchainAmountIndexer.name, () => {
         'starknet-supply-config-2',
         token2,
       )
+      const mockStarknetBalanceConfig = starknetBalanceOf(
+        'starknet-balance-config',
+        token1,
+        holder,
+      )
 
       const configs = [
         mockStarknetTotalSupplyConfig1,
         mockStarknetTotalSupplyConfig2,
+        mockStarknetBalanceConfig,
       ]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
@@ -170,6 +184,10 @@ describe(OnchainAmountIndexer.name, () => {
           getTotalSupplies: mockFn().returnsOnce([BigInt(1000), BigInt(2000)]),
         })
 
+      const starknetBalanceProvider = mockObject<StarknetBalanceProvider>({
+        getBalances: mockFn().returnsOnce([BigInt(3000)]),
+      })
+
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         upsertMany: mockFn().returnsOnce(undefined),
       })
@@ -181,6 +199,7 @@ describe(OnchainAmountIndexer.name, () => {
           balanceProvider,
           totalSupplyProvider,
           starknetTotalSupplyProvider,
+          starknetBalanceProvider,
           db: mockDatabase({
             tvsAmount: tvsAmountRepository,
             tvsBlockTimestamp: tvsBlockTimestampRepository,
@@ -208,10 +227,16 @@ describe(OnchainAmountIndexer.name, () => {
       expect(
         starknetTotalSupplyProvider.getTotalSupplies,
       ).toHaveBeenOnlyCalledWith([token1, token2], blockNumber, 'starknet')
+      expect(starknetBalanceProvider.getBalances).toHaveBeenOnlyCalledWith(
+        [{ token: token1, holder }],
+        blockNumber,
+        'starknet',
+      )
 
       const expectedRecords: TvsAmountRecord[] = [
         record('starknet-supply-config-1', timestamp, 1000),
         record('starknet-supply-config-2', timestamp, 2000),
+        record('starknet-balance-config', timestamp, 3000),
       ]
 
       expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
@@ -244,6 +269,7 @@ describe(OnchainAmountIndexer.name, () => {
           starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
             {},
           ),
+          starknetBalanceProvider: mockObject<StarknetBalanceProvider>({}),
           db: mockDatabase({}),
           syncOptimizer,
           parents: [],
@@ -289,6 +315,7 @@ describe(OnchainAmountIndexer.name, () => {
           starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
             {},
           ),
+          starknetBalanceProvider: mockObject<StarknetBalanceProvider>({}),
           db: mockDatabase({
             tvsBlockTimestamp: tvsBlockTimestampRepository,
           }),
@@ -305,7 +332,7 @@ describe(OnchainAmountIndexer.name, () => {
     })
   })
 
-  describe(OnchainAmountIndexer.prototype.removeData.name, () => {
+  describe(OnchainAmountIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         deleteByConfigs: mockFn().returns(5),
@@ -331,6 +358,7 @@ describe(OnchainAmountIndexer.name, () => {
           starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
             {},
           ),
+          starknetBalanceProvider: mockObject<StarknetBalanceProvider>({}),
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
           syncOptimizer: mockObject<SyncOptimizer>({}),
           parents: [],
@@ -340,11 +368,19 @@ describe(OnchainAmountIndexer.name, () => {
       )
 
       const removalConfigs = [
-        { id: 'escrow-config-1', from: 100, to: 200 },
-        { id: 'supply-config-1', from: 300, to: 400 },
+        {
+          type: 'trim' as const,
+          id: 'escrow-config-1',
+          range: [100, 200] as [number, number],
+        },
+        {
+          type: 'trim' as const,
+          id: 'supply-config-1',
+          range: [300, 400] as [number, number],
+        },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(tvsAmountRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
         {
@@ -409,6 +445,26 @@ function starknetTotalSupply(id: string, tokenAddress: string) {
     properties: {
       type: 'starknetTotalSupply' as const,
       address: tokenAddress,
+      sinceTimestamp: 0,
+      chain: 'chain',
+      decimals: 18,
+    },
+  }
+}
+
+function starknetBalanceOf(
+  id: string,
+  tokenAddress: string,
+  escrowAddress: string,
+) {
+  return {
+    id,
+    minHeight: 0,
+    maxHeight: null,
+    properties: {
+      type: 'starknetBalanceOf' as const,
+      address: tokenAddress,
+      escrowAddress,
       sinceTimestamp: 0,
       chain: 'chain',
       decimals: 18,

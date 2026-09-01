@@ -4,11 +4,12 @@ export interface State {
   readonly projectId: string
   readonly nodes: readonly Node[]
   readonly selected: readonly string[]
-  readonly hidden: readonly string[]
+  readonly history: HistoryState
   readonly userPreferences: {
-    readonly hideUnknownOnLoad: boolean
     readonly enableDimming: boolean
     readonly hideLargeArrays: boolean
+    readonly highlightOverlapping: boolean
+    readonly useExperimentalRenderer: boolean
   }
   readonly transform: {
     readonly offsetX: number
@@ -51,15 +52,32 @@ export interface Node {
   readonly name: string
   readonly fields: Field[]
   readonly hiddenFields: string[]
+  // Field paths whose subtree is drawn as one row that fans out to every
+  // value below it. Hiding is about the graph, compressing is about layout.
+  readonly compressedRows: string[]
   readonly box: Box
   readonly color: number
+  readonly colorSourceId?: string
   readonly hueShift: number
   readonly data: unknown
   readonly isReachable: boolean
+  readonly opened: boolean
+  readonly subnodes: readonly Node[]
+}
+
+export interface HistoryState {
+  readonly past: readonly HistorySnapshot[]
+  readonly future: readonly HistorySnapshot[]
+  readonly pending?: HistorySnapshot
+}
+
+export interface HistorySnapshot {
+  readonly nodes: readonly Node[]
 }
 
 export interface Field {
   readonly name: string
+  readonly label?: string
   readonly target: string
   readonly box: Box
   readonly connection: Connection

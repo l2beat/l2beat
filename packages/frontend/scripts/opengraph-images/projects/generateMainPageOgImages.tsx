@@ -7,39 +7,59 @@ import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
 
 const mainPages: MainPage[] = [
   {
-    type: 'scaling',
+    title: 'Home',
+  },
+  {
+    type: 'layer2s',
     title: 'Summary',
   },
   {
-    type: 'scaling',
-    title: 'Risk Analysis',
+    type: 'layer2s',
+    secondaryLabel: 'RISKS',
+    title: 'Overview',
   },
   {
-    type: 'scaling',
-    title: 'Value Secured',
-  },
-  {
-    type: 'scaling',
-    title: 'Activity',
-  },
-  {
-    type: 'scaling',
+    type: 'layer2s',
+    secondaryLabel: 'RISKS',
     title: 'Data Availability',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
+    secondaryLabel: 'RISKS',
+    title: 'State Validation',
+  },
+  {
+    type: 'layer2s',
+    secondaryLabel: 'RISKS',
+    title: 'Sequencing',
+  },
+  {
+    type: 'layer2s',
+    title: 'Value Secured',
+  },
+  {
+    type: 'layer2s',
+    title: 'Activity',
+  },
+
+  {
+    type: 'layer2s',
     title: 'Liveness',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Costs',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
+    title: 'Compare',
+  },
+  {
+    type: 'layer2s',
     title: 'Upcoming',
   },
   {
-    type: 'scaling',
+    type: 'layer2s',
     title: 'Archived',
   },
   {
@@ -59,6 +79,14 @@ const mainPages: MainPage[] = [
     title: 'Burn & Mint',
   },
   {
+    type: 'interop',
+    title: 'Token Frameworks',
+  },
+  {
+    type: 'interop',
+    title: 'Intent Bridges',
+  },
+  {
     type: 'data-availability',
     title: 'Summary',
   },
@@ -73,6 +101,14 @@ const mainPages: MainPage[] = [
   {
     type: 'data-availability',
     title: 'Liveness',
+  },
+  {
+    type: 'privacy',
+    title: 'Summary',
+  },
+  {
+    type: 'defi',
+    title: 'Summary',
   },
   {
     title: 'ZK Catalog',
@@ -92,6 +128,21 @@ const mainPages: MainPage[] = [
   {
     title: 'Terms of Service',
   },
+  {
+    title: 'Brand Kit',
+  },
+  {
+    title: 'Multisig Report',
+  },
+  {
+    title: 'Icon preview',
+  },
+  {
+    title: 'DA Risk Framework',
+  },
+  {
+    title: 'Native Rollups',
+  },
 ]
 
 export async function generateMainPageOgImages(
@@ -106,7 +157,10 @@ export async function generateMainPageOgImages(
       process.cwd(),
       'static/meta-images',
       mainPage.type ?? '',
-      `/${mainPage.title.toLowerCase().split(' ').join('-')}`,
+      mainPage.secondaryLabel
+        ? mainPage.secondaryLabel.toLowerCase().split(' ').join('-')
+        : '',
+      mainPage.title.toLowerCase().split(' ').join('-'),
     )
     const outputFile = path.join(outputDir, 'opengraph-image.png')
     if (existsSync(outputFile)) {

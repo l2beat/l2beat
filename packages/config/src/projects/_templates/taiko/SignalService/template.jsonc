@@ -1,14 +1,24 @@
 {
-  "description": "The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.",
   "fields": {
-    "proxiableUUID": {
-      "handler": {
-        "type": "call",
-        "method": "function proxiableUUID() view returns (bytes32)",
-        "args": [],
-        "expectRevert": true
-      }
+    "paused": { "severity": "HIGH" },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause signal proof verification."
+        }
+      ]
+    },
+    "pauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause signal proof verification."
+        }
+      ]
     }
   },
-  "category": "spam"
+  "ignoreMethods": ["proxiableUUID"]
 }

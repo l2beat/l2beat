@@ -3,6 +3,7 @@ import { type ReactNode, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -20,49 +21,44 @@ import {
   TabsTrigger,
 } from '~/components/core/Tabs'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
-import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { TokensPairsTable } from './TokenPairsTable'
-import { TokensTable } from './TokensTable'
+import { type TokensQueryInput, TokensTable } from './TokensTable'
 
 type ActiveTab = 'tokens' | 'pairs'
 
 interface TokensDialogProps {
-  id: ProjectId | undefined
-  type?: KnownInteropBridgeType
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
+  queryInput: TokensQueryInput
   title: ReactNode
+  subtitle?: ReactNode
   showNetMintedValueColumn?: boolean
+  showFlowsColumn?: boolean
 }
 
 export function TokensDialog({
-  id,
-  type,
   isOpen,
   setIsOpen,
+  queryInput,
   title,
+  subtitle,
   showNetMintedValueColumn,
+  showFlowsColumn,
 }: TokensDialogProps) {
   const breakpoint = useBreakpoint()
-  const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
   const [hideSameToken, setHideSameToken] = useState(false)
 
-  const utils = api.useUtils()
-  const queryInput = { ...selectionForApi, id, type }
+  const showTopProtocolColumn = queryInput.id === undefined
 
   const tabsList = (
     <>
       <TabsList>
         <TabsTrigger value="tokens">Tokens</TabsTrigger>
-        <TabsTrigger
-          value="pairs"
-          onMouseEnter={() => utils.interop.tokensPairs.prefetch(queryInput)}
-        >
-          Pairs
-        </TabsTrigger>
+        <TabsTrigger value="pairs">Pairs</TabsTrigger>
       </TabsList>
       {activeTab === 'pairs' && (
         <Checkbox
@@ -82,12 +78,16 @@ export function TokensDialog({
         <TokensTable
           queryInput={queryInput}
           showNetMintedValueColumn={showNetMintedValueColumn}
+          showTopProtocolColumn={showTopProtocolColumn}
+          showFlowsColumn={showFlowsColumn}
         />
       </TabsContent>
       <TabsContent value="pairs">
         <TokensPairsTable
           queryInput={queryInput}
           hideSameToken={hideSameToken}
+          showTopProtocolColumn={showTopProtocolColumn}
+          showFlowsColumn={showFlowsColumn}
         />
       </TabsContent>
     </>
@@ -105,7 +105,7 @@ export function TokensDialog({
           >
             <DrawerHeader className="mb-2">
               <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
-              <BetweenChainsInfo />
+              {subtitle}
               {tabsList}
             </DrawerHeader>
             <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
@@ -119,24 +119,54 @@ export function TokensDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="primary-card max-h-[450px] w-[1040px] max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+      <DialogContent className="primary-card flex max-h-3/5 w-[1120px] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-0">
+        <DialogClose />
         <Tabs
           name="tokens"
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as ActiveTab)}
           variant="highlighted"
-          className="min-w-0"
+          className="flex min-h-0 flex-1 flex-col"
         >
-          <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
+          <DialogHeader className="fade-out-to-bottom-3 -mb-2 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-3">
             <DialogTitle>{title}</DialogTitle>
-            <BetweenChainsInfo className="mt-1" />
+            {subtitle}
             {tabsList}
           </DialogHeader>
-          <div className="overflow-x-auto">
-            <div className="mx-6">{tabsContent}</div>
+          <div className="-mt-4 flex-1 overflow-x-auto overflow-y-auto pt-4">
+            <div className="mx-6 pb-3">{tabsContent}</div>
           </div>
         </Tabs>
       </DialogContent>
     </Dialog>
+  )
+}
+
+export function SelectedChainsTokensDialog({
+  id,
+  type,
+  isOpen,
+  setIsOpen,
+  apiSelection,
+  title,
+  showNetMintedValueColumn,
+  showFlowsColumn,
+}: Omit<TokensDialogProps, 'queryInput' | 'subtitle'> & {
+  id: ProjectId | undefined
+  type?: KnownInteropBridgeType
+  apiSelection?: InteropSelection
+}) {
+  const { selectedChains } = useInteropSelectedChains()
+
+  return (
+    <TokensDialog
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      queryInput={{ ...(apiSelection ?? selectedChains), id, type }}
+      title={title}
+      subtitle={<BetweenChainsInfo className="mt-1" />}
+      showNetMintedValueColumn={showNetMintedValueColumn}
+      showFlowsColumn={showFlowsColumn}
+    />
   )
 }

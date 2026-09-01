@@ -1,0 +1,9 @@
+[profile.default]
+src = "test"
+test = "test"
+out = "out"
+libs = []
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+via_ir = true

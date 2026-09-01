@@ -1,18 +1,17 @@
 {
   "CanonicalBridge_v2_0_0": {
-    "hash": "0x39cf355665c54bebc4ab239f0a40e776f0f1f3ab01a77a95830c90f9517c48ca",
+    "hash": "0x78596574fc63672380f9df1095f6fab5b0cfb383e4f7c20dfab244b8e7a0005f",
     "address": "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
     "blockNumber": 22868281
   },
   "CanonicalBridge_v2_1_0": {
-    "hash": "0x3d55623cb35937b0b8f6a42b0dec9a7287f19e54ebca9af664a6215829b5df66",
+    "hash": "0xd09cfbe624df181ad0f1ce023d054517f00c71de26c45119f715a9a7fcb5dbd8",
     "address": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
     "blockNumber": 22868281
   },
   "CanonicalBridgeV3.sol": {
-    "hash": "0xa3f1bc495709a51f53d454130ac4b132983abbc6738a9630f44e6a8fb68b392d",
+    "hash": "0xd85948ac23a3119f71c0b5227a946f5bb5434a10105cfc5a552fd78e3aea24cd",
     "address": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
-    "chain": "ethereum",
     "blockNumber": 23839653
   }
 }

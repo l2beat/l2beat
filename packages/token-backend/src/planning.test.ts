@@ -1,0 +1,904 @@
+import type {
+  AbstractTokenRecord,
+  DeployedTokenRecord,
+  TokenDatabase,
+  TokenRelationRecord,
+} from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
+import { generatePlan, Plan } from './planning'
+
+const USER = 'someone@l2beat.com'
+
+describe('Plan', () => {
+  it('defaults missing additional CoinGecko entries on abstract token records', () => {
+    const parsed = Plan.parse({
+      intent: {
+        type: 'UpdateAbstractTokenIntent',
+        id: 'ABC123',
+        update: {
+          additionalCoingeckoEntries: [
+            {
+              coingeckoId: 'bridged-token',
+              coingeckoListingTimestamp: 1782345600,
+              iconUrl: 'https://example.com/icon.png',
+            },
+          ],
+        },
+      },
+      commands: [
+        {
+          type: 'UpdateAbstractTokenCommand',
+          id: 'ABC123',
+          existing: {
+            id: 'ABC123',
+            symbol: 'USDT',
+            issuer: null,
+            category: null,
+            iconUrl: null,
+            coingeckoId: 'tether',
+            coingeckoListingTimestamp: null,
+            comment: null,
+            reviewed: false,
+            isPriceUnreliable: false,
+          },
+          update: {
+            additionalCoingeckoEntries: [
+              {
+                coingeckoId: 'bridged-token',
+                coingeckoListingTimestamp: 1782345600,
+                iconUrl: 'https://example.com/icon.png',
+              },
+            ],
+          },
+        },
+      ],
+    })
+
+    expect(parsed.commands[0]).toEqual({
+      type: 'UpdateAbstractTokenCommand',
+      id: 'ABC123',
+      existing: {
+        id: 'ABC123',
+        symbol: 'USDT',
+        issuer: null,
+        category: null,
+        iconUrl: null,
+        coingeckoId: 'tether',
+        coingeckoListingTimestamp: null,
+        additionalCoingeckoEntries: null,
+        comment: null,
+        reviewed: false,
+        isPriceUnreliable: false,
+      },
+      update: {
+        additionalCoingeckoEntries: [
+          {
+            coingeckoId: 'bridged-token',
+            coingeckoListingTimestamp: 1782345600,
+            iconUrl: 'https://example.com/icon.png',
+          },
+        ],
+      },
+    })
+  })
+})
+
+describe('planning proof stamping', () => {
+  describe('AddDeployedTokenIntent', () => {
+    it('stamps a manual proof on insert when abstractTokenId is set', async () => {
+      const db = mockDb({})
+      const record = deployedRecord('ethereum', '0xaaa', 'USDC01')
+
+      const result = await generatePlan(
+        db,
+        { type: 'AddDeployedTokenIntent', record },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'success',
+        plan: {
+          intent: { type: 'AddDeployedTokenIntent', record },
+          commands: [
+            {
+              type: 'AddDeployedTokenCommand',
+              record: {
+                ...record,
+                abstractTokenAssignmentProof: { kind: 'manual', user: USER },
+              },
+            },
+          ],
+        },
+      })
+    })
+
+    it('stamps a null proof on insert when abstractTokenId is null', async () => {
+      const db = mockDb({})
+      const record: DeployedTokenRecord = {
+        ...deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        abstractTokenId: null,
+      }
+
+      const result = await generatePlan(
+        db,
+        { type: 'AddDeployedTokenIntent', record },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'success',
+        plan: {
+          intent: { type: 'AddDeployedTokenIntent', record },
+          commands: [
+            {
+              type: 'AddDeployedTokenCommand',
+              record: { ...record, abstractTokenAssignmentProof: null },
+            },
+          ],
+        },
+      })
+    })
+  })
+
+  describe('UpdateDeployedTokenIntent', () => {
+    it('stamps a manual proof when abstractTokenId changes', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+          update: { abstractTokenId: 'USDT01' },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+          update: {
+            abstractTokenId: 'USDT01',
+            abstractTokenAssignmentProof: { kind: 'manual', user: USER },
+          },
+        },
+      ])
+    })
+
+    it('clears the proof when abstractTokenId is set to null', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+          update: { abstractTokenId: null },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+          update: {
+            abstractTokenId: null,
+            abstractTokenAssignmentProof: null,
+          },
+        },
+      ])
+    })
+
+    it('does not touch the proof when other fields change', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+          update: { symbol: 'X' },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+          update: { symbol: 'X' },
+        },
+      ])
+    })
+
+    it('includes ignored changes in the generated plan', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+          update: { ignored: true },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+          update: { ignored: true },
+        },
+      ])
+    })
+
+    it('does not re-stamp the proof when abstractTokenId is the same as existing', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+          update: { abstractTokenId: existing.abstractTokenId, symbol: 'Y' },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+          update: { abstractTokenId: existing.abstractTokenId, symbol: 'Y' },
+        },
+      ])
+    })
+  })
+
+  describe('TokenRelation intents', () => {
+    it('adds a token relation with its endpoints in the stored order', async () => {
+      // A human names the endpoints in whichever order they think of them; a
+      // relation is a fact about an unordered pair, so the stored order is
+      // derived. Here arbitrum sorts before ethereum, so the two are swapped.
+      const ethereumToken = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const arbitrumToken = deployedRecord('arbitrum', '0xbbb', 'USDC01')
+      const relation = tokenRelation(ethereumToken, arbitrumToken)
+      const db = mockDb({
+        deployedByPk: {
+          [`${ethereumToken.chain}:${ethereumToken.address}`]: ethereumToken,
+          [`${arbitrumToken.chain}:${arbitrumToken.address}`]: arbitrumToken,
+        },
+      })
+
+      const result = await generatePlan(
+        db,
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'AddTokenRelationCommand',
+          record: tokenRelation(arbitrumToken, ethereumToken),
+        },
+      ])
+    })
+
+    it('rejects a relation with an unknown bridge type', async () => {
+      const relation = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+        { bridgeType: 'unknown' },
+      )
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          "A token relation cannot use bridge type 'unknown' — pick the mechanism the bridge uses",
+      })
+    })
+
+    it('rejects a relation with a nonMinting bridge type', async () => {
+      const relation = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+        { bridgeType: 'nonMinting', lockedToken: null },
+      )
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          'A token relation cannot use bridge type nonMinting — a nonMinting route may swap assets, and a relation asserts both endpoints are the same asset',
+      })
+    })
+
+    it('rejects a locked token on a non-lockAndMint relation', async () => {
+      const relation = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+        { bridgeType: 'burnAndMint', lockedToken: 'A' },
+      )
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          'Only a lockAndMint relation has a locked token — a burnAndMint relation must not name one',
+      })
+    })
+
+    it('rejects a relation between a token and itself', async () => {
+      const token = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      // Addresses are compared case-insensitively, like the table stores them.
+      const relation = tokenRelation(token, {
+        chain: token.chain,
+        address: token.address.toUpperCase(),
+      })
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error: 'A token relation must connect two different tokens',
+      })
+    })
+
+    it('stamps the plan-time user into manual relation evidence', async () => {
+      const ethereumToken = deployedRecord('ethereum', '0xaaa', 'ETH001')
+      const arbitrumToken = deployedRecord('arbitrum', '0xbbb', 'ETH001')
+      const bridge = {
+        name: 'WETH contract',
+        chain: 'ethereum',
+        address: '0xc02a',
+      }
+      const relation = tokenRelation(ethereumToken, arbitrumToken, {
+        plugin: 'manual',
+        bridgeType: 'lockAndMint',
+        lockedToken: 'A',
+        // A client-sent `user` is not trusted: the planner replaces it with
+        // the authenticated plan-time user.
+        transfer: {
+          kind: 'manual',
+          comment: 'WETH wraps ETH',
+          bridge,
+          user: 'forged@example.com',
+        },
+      })
+      const db = mockDb({
+        deployedByPk: {
+          [`${ethereumToken.chain}:${ethereumToken.address}`]: ethereumToken,
+          [`${arbitrumToken.chain}:${arbitrumToken.address}`]: arbitrumToken,
+        },
+      })
+
+      const result = await generatePlan(
+        db,
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'AddTokenRelationCommand',
+          // Endpoints are normalized (arbitrum sorts first), and the stated
+          // role moves with them.
+          record: tokenRelation(arbitrumToken, ethereumToken, {
+            plugin: 'manual',
+            bridgeType: 'lockAndMint',
+            lockedToken: 'B',
+            transfer: {
+              kind: 'manual',
+              comment: 'WETH wraps ETH',
+              bridge,
+              user: USER,
+            },
+          }),
+        },
+      ])
+    })
+
+    it('rejects a manual relation whose evidence is not a manual entry', async () => {
+      const ethereumToken = deployedRecord('ethereum', '0xaaa', 'ETH001')
+      const arbitrumToken = deployedRecord('arbitrum', '0xbbb', 'ETH001')
+      const relation = tokenRelation(ethereumToken, arbitrumToken, {
+        plugin: 'manual',
+      })
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          "A relation with plugin 'manual' must carry manual-entry evidence: { kind: 'manual', comment, bridge }",
+      })
+    })
+
+    it('updates an existing token relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateTokenRelationIntent',
+          pk: relationPk(existing),
+          update: { transfer: { transferId: 'transfer-2' } },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+          update: { transfer: { transferId: 'transfer-2' } },
+        },
+      ])
+    })
+
+    it('rejects a locked token update on a non-lockAndMint relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateTokenRelationIntent',
+          pk: relationPk(existing),
+          update: { lockedToken: 'A' },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          'Only a lockAndMint relation has a locked token — a burnAndMint relation must not name one',
+      })
+    })
+
+    it('stamps the plan-time user when updating manual relation evidence', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'ETH001'),
+        deployedRecord('arbitrum', '0xbbb', 'ETH001'),
+        {
+          plugin: 'manual',
+          transfer: { kind: 'manual', comment: null, bridge: null, user: USER },
+        },
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateTokenRelationIntent',
+          pk: relationPk(existing),
+          update: {
+            transfer: {
+              kind: 'manual',
+              comment: 'Fixed comment',
+              bridge: null,
+            },
+          },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+          update: {
+            transfer: {
+              kind: 'manual',
+              comment: 'Fixed comment',
+              bridge: null,
+              user: USER,
+            },
+          },
+        },
+      ])
+    })
+
+    it('deletes an existing token relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        { type: 'DeleteTokenRelationIntent', pk: relationPk(existing) },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'DeleteTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+        },
+      ])
+    })
+  })
+
+  describe('DeleteDeployedTokenIntent', () => {
+    it('leaves touching token relations in place when deleting the token', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'DeleteDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'DeleteDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+        },
+      ])
+    })
+  })
+})
+
+describe('MergeAbstractTokenIntent', () => {
+  it('copies source CoinGecko entries, reassigns deployed tokens, and deletes source', async () => {
+    const source = abstractRecord('SOURCE', 'USDC', {
+      coingeckoId: 'usd-coin-bridged',
+      coingeckoListingTimestamp: UnixTime(100),
+      iconUrl: 'https://example.com/source.png',
+      additionalCoingeckoEntries: [
+        {
+          coingeckoId: 'usd-coin-extra',
+          coingeckoListingTimestamp: UnixTime(200),
+          iconUrl: 'https://example.com/extra.png',
+        },
+        {
+          coingeckoId: 'usd-coin',
+          coingeckoListingTimestamp: UnixTime(300),
+          iconUrl: 'https://example.com/duplicate-primary.png',
+        },
+      ],
+    })
+    const target = abstractRecord('TARGET', 'USDC', {
+      coingeckoId: 'usd-coin',
+      additionalCoingeckoEntries: [
+        {
+          coingeckoId: 'usd-coin-extra',
+          coingeckoListingTimestamp: UnixTime(201),
+          iconUrl: 'https://example.com/existing-extra.png',
+        },
+      ],
+    })
+    const firstDeployed = deployedRecord('base', '0xbbb', source.id)
+    const secondDeployed = deployedRecord('ethereum', '0xaaa', source.id)
+    const db = mockDb({
+      abstractTokens: [source, target],
+      deployedTokens: [secondDeployed, firstDeployed],
+    })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        // The UI sends display ids (`<id>:<issuer>:<symbol>`); planning must
+        // extract the unique identifier prefix.
+        sourceId: `${source.id}:${source.issuer}:${source.symbol}`,
+        targetId: `${target.id}:${target.issuer}:${target.symbol}`,
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'UpdateAbstractTokenCommand',
+        existing: target,
+        id: target.id,
+        update: {
+          comment:
+            'Merged from SOURCE:null:USDC (category: null, coingeckoId: usd-coin-bridged)',
+          additionalCoingeckoEntries: [
+            {
+              coingeckoId: 'usd-coin-extra',
+              coingeckoListingTimestamp: UnixTime(201),
+              iconUrl: 'https://example.com/existing-extra.png',
+            },
+            {
+              coingeckoId: 'usd-coin-bridged',
+              coingeckoListingTimestamp: UnixTime(100),
+              iconUrl: 'https://example.com/source.png',
+            },
+          ],
+        },
+      },
+      {
+        type: 'UpdateDeployedTokenCommand',
+        existing: firstDeployed,
+        pk: { chain: firstDeployed.chain, address: firstDeployed.address },
+        update: {
+          abstractTokenId: target.id,
+          abstractTokenAssignmentProof: { kind: 'manual', user: USER },
+        },
+      },
+      {
+        type: 'UpdateDeployedTokenCommand',
+        existing: secondDeployed,
+        pk: { chain: secondDeployed.chain, address: secondDeployed.address },
+        update: {
+          abstractTokenId: target.id,
+          abstractTokenAssignmentProof: { kind: 'manual', user: USER },
+        },
+      },
+      {
+        type: 'DeleteAbstractTokenCommand',
+        id: source.id,
+        existing: source,
+      },
+    ])
+  })
+
+  it('appends the merge note to an existing comment even when the source has no CoinGecko data', async () => {
+    const source = abstractRecord('SOURCE', 'DAI', {
+      issuer: 'MakerDAO',
+      category: 'other',
+    })
+    const target = abstractRecord('TARGET', 'DAI', {
+      comment: 'existing note',
+    })
+    const db = mockDb({ abstractTokens: [source, target] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        sourceId: source.id,
+        targetId: target.id,
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'UpdateAbstractTokenCommand',
+        existing: target,
+        id: target.id,
+        update: {
+          comment:
+            'existing note\nMerged from SOURCE:MakerDAO:DAI (category: other, coingeckoId: null)',
+        },
+      },
+      {
+        type: 'DeleteAbstractTokenCommand',
+        id: source.id,
+        existing: source,
+      },
+    ])
+  })
+
+  it('fails when source and target are the same token', async () => {
+    const db = mockDb({})
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        sourceId: 'USDC01',
+        targetId: 'USDC01',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: 'Cannot merge an abstract token into itself',
+    })
+  })
+
+  it('fails when target token does not exist', async () => {
+    const source = abstractRecord('SOURCE', 'USDC')
+    const db = mockDb({ abstractTokens: [source] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'MergeAbstractTokenIntent',
+        sourceId: source.id,
+        targetId: 'TARGET',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: "AbstractToken TARGET doesn't exist",
+    })
+  })
+})
+
+function mockDb(opts: {
+  existingDeployed?: DeployedTokenRecord
+  abstractTokens?: AbstractTokenRecord[]
+  deployedTokens?: DeployedTokenRecord[]
+  deployedByPk?: Record<string, DeployedTokenRecord>
+  existingRelation?: ReturnType<typeof tokenRelation>
+}): TokenDatabase {
+  const findDeployed = mockFn().executes(
+    async (pk: { chain: string; address: string }) => {
+      return (
+        opts.deployedByPk?.[`${pk.chain}:${pk.address.toLowerCase()}`] ??
+        opts.existingDeployed
+      )
+    },
+  )
+
+  return mockObject<TokenDatabase>({
+    deployedToken: mockObject<TokenDatabase['deployedToken']>({
+      findByChainAndAddress: findDeployed,
+      getByAbstractTokenId: mockFn((id: string) =>
+        Promise.resolve(
+          (opts.deployedTokens ?? []).filter(
+            (token) => token.abstractTokenId === id,
+          ),
+        ),
+      ),
+    }),
+    abstractToken: mockObject<TokenDatabase['abstractToken']>({
+      findById: mockFn((id: string) =>
+        Promise.resolve(
+          (opts.abstractTokens ?? []).find((token) => token.id === id),
+        ),
+      ),
+    }),
+    tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+      findByPrimaryKey: mockFn().resolvesTo(opts.existingRelation),
+    }),
+  })
+}
+
+function abstractRecord(
+  id: string,
+  symbol: string,
+  overrides: Partial<AbstractTokenRecord> = {},
+): AbstractTokenRecord {
+  return {
+    id,
+    symbol,
+    issuer: null,
+    category: null,
+    iconUrl: null,
+    coingeckoId: null,
+    coingeckoListingTimestamp: null,
+    additionalCoingeckoEntries: null,
+    comment: null,
+    reviewed: false,
+    isPriceUnreliable: false,
+    ...overrides,
+  }
+}
+
+function deployedRecord(
+  chain: string,
+  shortAddress: string,
+  abstractTokenId: string,
+): DeployedTokenRecord {
+  return {
+    chain,
+    address: `0x${shortAddress.slice(2).padStart(40, '0')}`,
+    abstractTokenId,
+    symbol: 'USDC',
+    decimals: 6,
+    deploymentTimestamp: UnixTime(1),
+    comment: null,
+    ignored: false,
+    metadata: null,
+  }
+}
+
+function tokenRelation(
+  tokenA: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  tokenB: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  overrides: Partial<
+    Pick<
+      TokenRelationRecord,
+      'plugin' | 'bridgeType' | 'lockedToken' | 'transfer'
+    >
+  > = {},
+) {
+  return {
+    tokenAChain: tokenA.chain,
+    tokenAAddress: tokenA.address,
+    tokenBChain: tokenB.chain,
+    tokenBAddress: tokenB.address,
+    plugin: 'superbridge',
+    bridgeType: 'burnAndMint' as const,
+    lockedToken: null,
+    transfer: { transferId: 'transfer-1' },
+    ...overrides,
+  }
+}
+
+function relationPk(relation: ReturnType<typeof tokenRelation>) {
+  return {
+    tokenAChain: relation.tokenAChain,
+    tokenAAddress: relation.tokenAAddress,
+    tokenBChain: relation.tokenBChain,
+    tokenBAddress: relation.tokenBAddress,
+    plugin: relation.plugin,
+    bridgeType: relation.bridgeType,
+  }
+}
+
+function assertSuccess<T>(
+  result: { outcome: 'success'; plan: T } | { outcome: 'error'; error: string },
+): asserts result is { outcome: 'success'; plan: T } {
+  if (result.outcome !== 'success') {
+    throw new Error(`Expected success, got error: ${result.error}`)
+  }
+}

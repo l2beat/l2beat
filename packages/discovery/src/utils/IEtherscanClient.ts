@@ -1,10 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { BlockscoutClient } from './BlockscoutClient'
-import { EtherscanClient } from './EtherscanClient'
-import { RoutescanClient } from './RoutescanClient'
-import { SourcifyClient } from './SourcifyClient'
+import { CombiningEtherscanClient } from './CombiningEtherscanClient'
 
 // If a given instance of Etherscan does not support some endpoint set a
 // corresponding variable to true, otherwise do not set to anything -
@@ -60,6 +57,7 @@ export type ExplorerConfig =
 
 export interface ContractSource {
   name: string
+  rootFile: string | undefined
   isVerified: boolean
   abi: string[]
   solidityVersion: string
@@ -67,6 +65,20 @@ export interface ContractSource {
   files: Record<string, string>
   remappings: string[]
   libraries: Record<string, EthereumAddress>
+  compilerSettings?: {
+    optimizer?: { enabled?: boolean; runs?: number }
+    evmVersion?: string
+    viaIR?: boolean
+    metadata?: {
+      bytecodeHash?: string
+      useLiteralContent?: boolean
+      appendCBOR?: boolean
+    }
+    debug?: {
+      revertStrings: string
+      debugInfo?: string[]
+    }
+  }
 }
 
 export interface IEtherscanClient {
@@ -85,46 +97,8 @@ export interface IEtherscanClient {
 
 export function getExplorerClient(
   httpClient: HttpClient,
-  config: ExplorerConfig,
+  configs: ExplorerConfig[],
   logger: Logger = Logger.SILENT,
 ): IEtherscanClient {
-  switch (config.type) {
-    case 'etherscan-v1': {
-      return EtherscanClient.createForDiscovery(
-        httpClient,
-        logger,
-        config.url,
-        config.apiKey,
-        config.unsupported,
-      )
-    }
-    case 'etherscan': {
-      return EtherscanClient.createForDiscovery(
-        httpClient,
-        logger,
-        config.url,
-        config.apiKey,
-        config.unsupported,
-        { chainId: config.chainId.toString() },
-      )
-    }
-    case 'routescan': {
-      return RoutescanClient.createForDiscovery(
-        httpClient,
-        logger,
-        config.url,
-        '',
-        config.unsupported,
-      )
-    }
-    case 'blockscout': {
-      return new BlockscoutClient(httpClient, config.url, config.unsupported)
-    }
-    case 'sourcify': {
-      return new SourcifyClient(httpClient, config.chainId)
-    }
-    default: {
-      throw new Error('Unknown explorer type')
-    }
-  }
+  return new CombiningEtherscanClient(httpClient, configs, logger)
 }

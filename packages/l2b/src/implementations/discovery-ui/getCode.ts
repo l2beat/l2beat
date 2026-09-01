@@ -1,19 +1,36 @@
-import {
-  type ConfigReader,
-  combineImplementationHashes,
-  flatteningHash,
-  get$Implementations,
-} from '@l2beat/discovery'
+import { type ConfigReader, get$Implementations } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { existsSync, readdirSync, readFileSync } from 'fs'
-import { join } from 'path'
-import { isDeepStrictEqual } from 'util'
-import {
-  getAllProjectDiscoveries,
-  getProjectDiscoveries,
-} from './getDiscoveries'
-import type { ApiCodeResponse } from './types'
-import { getReferencedProjects } from './utils'
+import { existsSync, readFileSync } from 'fs'
+import { compareFiles, getCodePaths } from '../discovery/getCodePaths'
+import { getProjectDiscoveries } from '../discovery/getProjectDiscoveries'
+import type { FlatSourceClient } from './diffovery/FlatSourceClient'
+import { splitSolidityDeclarations } from './solidityDeclarations'
+import type { ApiCodeDeclarationsResponse, ApiCodeResponse } from './types'
+
+// Splits every flattened source into selectable top-level declarations while
+// keeping the bytes intact (see splitSolidityDeclarations). A source that fails
+// to parse (e.g. unverified or non-Solidity) falls back to a single unnamed
+// segment so the code view still renders the original text.
+export function toCodeDeclarations(
+  code: ApiCodeResponse,
+): ApiCodeDeclarationsResponse {
+  return {
+    entryName: code.entryName,
+    sources: code.sources.map((source) => {
+      try {
+        return {
+          name: source.name,
+          declarations: splitSolidityDeclarations(source.code),
+        }
+      } catch {
+        return {
+          name: source.name,
+          declarations: [{ name: null, content: source.code }],
+        }
+      }
+    }),
+  }
+}
 
 export function addFlattenerNote(code: string): string {
   const note = [
@@ -34,58 +51,76 @@ export function addFlattenerNote(code: string): string {
   return note.join('\n') + code
 }
 
-interface CodePathResult {
-  entryName: string | undefined
-  codePaths: { name: string; path: string }[]
-}
-
 function isFlatCodeCurrent(
-  configReader: ConfigReader,
-  project: string,
-  address: ChainSpecificAddress,
-  codePaths: CodePathResult['codePaths'],
+  _configReader: ConfigReader,
+  _project: string,
+  _address: ChainSpecificAddress,
+  _codePaths: ReturnType<typeof getCodePaths>['codePaths'],
 ): boolean {
-  const discovery = configReader.readDiscovery(project)
-  const discoveries = [discovery]
-  const referencedProjects = getReferencedProjects(discovery)
-
-  for (const refProj of referencedProjects) {
-    const refDiscovery = configReader.readDiscovery(refProj)
-    discoveries.push(refDiscovery)
-  }
-
-  const discoHashes =
-    discoveries
-      .flatMap((d) => d.entries)
-      .filter((e) => e.type !== 'Reference')
-      .find((e) => e.address === address)?.sourceHashes ?? []
-
-  const flatHashes = codePaths.map(({ path }) =>
-    flatteningHash(readFileSync(path, 'utf-8')),
-  )
-  const [proxy, ...implementations] = flatHashes
-  const calculatedHashes = [proxy]
-  if (implementations.length === 1) {
-    calculatedHashes.push(implementations[0])
-  } else if (implementations.length > 1) {
-    calculatedHashes.push(combineImplementationHashes(implementations))
-  }
-
-  return isDeepStrictEqual(discoHashes.sort(), calculatedHashes.sort())
+  // TODO(radomski): Redo this feature with the newer flattener
+  //   const discovery = configReader.readDiscovery(project)
+  //   const discoveries = [discovery]
+  //   const referencedProjects = getReferencedProjects(discovery)
+  //
+  //   for (const refProj of referencedProjects) {
+  //     const refDiscovery = configReader.readDiscovery(refProj)
+  //     discoveries.push(refDiscovery)
+  //   }
+  //
+  //   const discoHashes =
+  //     discoveries
+  //       .flatMap((d) => d.entries)
+  //       .filter((e) => e.type !== 'Reference')
+  //       .find((e) => e.address === address)?.sourceHashes ?? []
+  //
+  //   const flatHashes = codePaths.map(({ path }) =>
+  //     flatteningHash(readFileSync(path, 'utf-8')),
+  //   )
+  //   const [proxy, ...implementations] = flatHashes
+  //   const calculatedHashes = [proxy]
+  //   if (implementations.length === 1) {
+  //     calculatedHashes.push(implementations[0])
+  //   } else if (implementations.length > 1) {
+  //     calculatedHashes.push(combineImplementationHashes(implementations))
+  //   }
+  //
+  //   return isDeepStrictEqual(discoHashes.sort(), calculatedHashes.sort())
+  return true
 }
 
-export function getCode(
+export async function getCodeFromEtherscan(
   configReader: ConfigReader,
   project: string,
   address: ChainSpecificAddress,
-  checkFlatCode = false,
+  flatSourceClient: FlatSourceClient,
+): Promise<ApiCodeResponse> {
+  const { entryName, links } = getEntryLinks(configReader, project, address)
+
+  const sources = await Promise.all(
+    links.map(async ({ address, name }) => ({
+      name,
+      code: (await flatSourceClient.getFlat(address)).flat,
+    })),
+  )
+
+  return { entryName, sources }
+}
+
+function getFallbackSourceName(index: number, total: number): string {
+  if (index === 0 && total > 1) return 'Proxy'
+  if (total <= 2) return 'Implementation'
+  return `Implementation #${index}`
+}
+
+export function getCodeFromDisk(
+  configReader: ConfigReader,
+  project: string,
+  address: ChainSpecificAddress,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(configReader, project, address)
 
-  if (checkFlatCode) {
-    if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
-      throw new Error('Flat code is outdated')
-    }
+  if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
+    throw new Error('Flat code is outdated')
   }
 
   return {
@@ -104,7 +139,7 @@ export function getAllCode(
   project: string,
 ): Record<string, ApiCodeResponse> {
   const result: Record<string, ApiCodeResponse> = {}
-  const discoveries = getAllProjectDiscoveries(configReader, project)
+  const discoveries = getProjectDiscoveries(configReader, project)
 
   // Get all unique addresses across all chains
   const allAddresses = discoveries.flatMap((discovery) =>
@@ -142,65 +177,26 @@ export function getAllCode(
   return result
 }
 
-export function getCodePaths(
+function getEntryLinks(
   configReader: ConfigReader,
   project: string,
   address: ChainSpecificAddress,
-): CodePathResult {
-  const discoveries = getProjectDiscoveries(configReader, project)
+): {
+  entryName: string | undefined
+  links: { address: ChainSpecificAddress; name: string }[]
+} {
+  const entry = getProjectDiscoveries(configReader, project)
+    .map((d) => d.entries.find((x) => x.address === address))
+    .find((e) => e && e.type !== 'Reference')
 
-  for (const discovery of discoveries) {
-    const entry = discovery.entries.find((x) => x.address === address)
+  const addresses = entry
+    ? [entry.address, ...get$Implementations(entry.values)]
+    : []
 
-    if (!entry || entry.type === 'Reference') {
-      continue
-    }
-
-    const similar = discovery.entries.filter(
-      (x) => x.name === entry.name && x.type !== 'Reference',
-    )
-    const hasImplementations = get$Implementations(entry.values).length > 0
-
-    const name =
-      similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
-    const root = join(configReader.getProjectPath(discovery.name), '.flat')
-
-    if (!hasImplementations) {
-      return {
-        entryName: entry.name,
-        codePaths: [
-          { name: `${entry.name}.sol`, path: join(root, name + '.sol') },
-        ],
-      }
-    }
-    const dir = readdirSync(join(root, name))
-    const codePaths = dir
-      .map((file) => ({
-        name: file,
-        path: join(root, name, file),
-      }))
-      .sort((a, b) => compareFiles(a.name, b.name))
-
-    return {
-      entryName: entry.name,
-      codePaths,
-    }
-  }
-
-  return { entryName: undefined, codePaths: [] }
-}
-
-function compareFiles(a: string, b: string) {
-  return fileNameToOrder(a) - fileNameToOrder(b)
-}
-
-function fileNameToOrder(name: string) {
-  const ending = name.match(/\.(\w+)\.sol/)?.[1]
-  if (!ending) {
-    return 1
-  }
-  if (ending === 'p') {
-    return 0
-  }
-  return /^\d+$/.test(ending) ? Number.parseInt(ending) : 2
+  const names = entry?.implementationNames ?? {}
+  const links = addresses.map((a, i) => ({
+    address: a,
+    name: names[a] ?? getFallbackSourceName(i, addresses.length),
+  }))
+  return { entryName: entry?.name, links }
 }

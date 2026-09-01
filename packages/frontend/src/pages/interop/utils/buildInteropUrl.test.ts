@@ -2,46 +2,21 @@ import { expect } from 'earl'
 import { buildInteropUrl } from './buildInteropUrl'
 
 describe(buildInteropUrl.name, () => {
-  it('builds public URL with selectedChains for complete pair', () => {
-    const result = buildInteropUrl(
-      '/interop/summary',
-      {
-        from: ['ethereum'],
-        to: ['arbitrum'],
-      },
-      'public',
-    )
+  it('builds URL with from and to arrays', () => {
+    const result = buildInteropUrl('/interop/summary', {
+      from: ['ethereum', 'arbitrum'],
+      to: ['base'],
+    })
 
-    expect(result).toEqual(
-      '/interop/summary?selectedChains=ethereum%2Carbitrum',
-    )
+    expect(result).toEqual('/interop/summary?from=ethereum%2Carbitrum&to=base')
   })
 
-  it('returns public path without query for incomplete pair', () => {
-    const result = buildInteropUrl(
-      '/interop/summary',
-      {
-        from: ['ethereum'],
-        to: [],
-      },
-      'public',
-    )
+  it('returns path without query when selection is empty', () => {
+    const result = buildInteropUrl('/interop/summary', {
+      from: [],
+      to: [],
+    })
 
     expect(result).toEqual('/interop/summary')
-  })
-
-  it('builds internal URL with from and to arrays', () => {
-    const result = buildInteropUrl(
-      '/interop/summary/internal',
-      {
-        from: ['ethereum', 'arbitrum'],
-        to: ['base'],
-      },
-      'internal',
-    )
-
-    expect(result).toEqual(
-      '/interop/summary/internal?from=ethereum%2Carbitrum&to=base',
-    )
   })
 })

@@ -12,10 +12,12 @@ import {
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
+import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 import {
+  BlockNumberResponse,
   type CallParameters,
   EVMBalanceResponse,
-  type EVMBlock,
+  EVMBlock,
   EVMBlockResponse,
   type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
@@ -36,6 +38,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  rpcMetrics?: RpcMetricsRecorder
   timeout?: number
 }
 
@@ -55,8 +58,15 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   async getLatestBlockNumber() {
-    const block = await this.getBlock('latest', false)
-    return Number(block.number)
+    const response = await this.query('eth_blockNumber', [])
+    const result = BlockNumberResponse.safeParse(response)
+    if (!result.success) {
+      this.$.logger.warn('Invalid response', {
+        response: JSON.stringify(response),
+      })
+      throw new Error('Error during parsing block number')
+    }
+    return result.data.result
   }
 
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
@@ -309,18 +319,45 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   async query(method: string, params: Param[]) {
-    return await this.fetch(this.$.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    try {
+      const result = await this.fetch(this.$.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method,
+          params,
+          id: this.$.generateId ? this.$.generateId() : generateId(),
+          jsonrpc: '2.0',
+        }),
+        redirect: 'follow',
+        timeout: this.$.timeout ?? 10_000,
+      })
+      return result
+    } finally {
+      this.$.rpcMetrics?.record({
         method,
-        params,
-        id: this.$.generateId ? this.$.generateId() : generateId(),
-        jsonrpc: '2.0',
-      }),
-      redirect: 'follow',
-      timeout: this.$.timeout ?? 10_000,
-    })
+      })
+    }
+  }
+
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const paramsBatch = blockNumbers.map((n) => [
+      Quantity.encode(BigInt(n)),
+      false,
+    ])
+
+    const responses = await this.batchQuery('eth_getBlockByNumber', paramsBatch)
+
+    const out = new Map<number, number>()
+    for (let i = 0; i < blockNumbers.length; i++) {
+      const parsed = EVMBlock.safeParse(responses[i]?.result)
+      assert(parsed.success, `Failed to parse block ${blockNumbers[i]}`)
+      out.set(blockNumbers[i], parsed.data.timestamp)
+    }
+
+    return out
   }
 
   // TODO: add multi-method support
@@ -332,26 +369,33 @@ export class RpcClient extends ClientCore implements IRpcClient {
       jsonrpc: '2.0',
     }))
 
-    const response = await this.fetch(this.$.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(queries),
-      redirect: 'follow',
-      timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
-    })
+    try {
+      const response = await this.fetch(this.$.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(queries),
+        redirect: 'follow',
+        timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
+      })
 
-    const results = new Map(
-      v
-        .array(RpcResponse)
-        .parse(response)
-        .map((p) => [p.id, p]),
-    )
+      const results = new Map(
+        v
+          .array(RpcResponse)
+          .parse(response)
+          .map((p) => [p.id, p]),
+      )
 
-    return queries.map((q) => {
-      const r = results.get(q.id)
-      assert(r, `Request with ${q.id} not found`)
-      return r
-    })
+      return queries.map((q) => {
+        const r = results.get(q.id)
+        assert(r, `Request with ${q.id} not found`)
+        return r
+      })
+    } finally {
+      this.$.rpcMetrics?.record({
+        count: paramsBatch.length,
+        method,
+      })
+    }
   }
 
   override validateResponse(response: json): {
@@ -389,7 +433,7 @@ function encodeBlockNumber(blockNumber: number | 'latest'): string {
 function buildCallObject(callParams: CallParameters): Record<string, string> {
   return {
     to: callParams.to.toString(),
-    data: callParams.data.toString(),
+    input: callParams.input.toString(),
   }
 }
 

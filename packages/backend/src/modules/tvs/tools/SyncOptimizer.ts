@@ -1,26 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { alignTimestamp } from '../../../tools/alignTimestamp'
 import type { Clock } from '../../../tools/Clock'
+
+// Frontend shows hourly data for max range of 7 days but we use 14 days to be safe
+const HOURLY_CUTOFF_DAYS = 14
+// Frontend shows six hourly data for max range of 90 days but we use 100 days to be safe
+const SIX_HOURLY_CUTOFF_DAYS = 100
+
 export class SyncOptimizer {
-  private readonly gracePeriodDays = 3
-
   constructor(private readonly clock: Clock) {}
-
-  get sixHourlyCutOffWithGracePeriod() {
-    return UnixTime.toEndOf(
-      this.clock.getLastHour() +
-        (-this.clock.sixHourlyCutoffDays - this.gracePeriodDays) * UnixTime.DAY,
-      'six hours',
-    )
-  }
-
-  get hourlyCutOffWithGracePeriod() {
-    return UnixTime.toEndOf(
-      this.clock.getLastHour() +
-        (-this.clock.hourlyCutoffDays - this.gracePeriodDays) * UnixTime.DAY,
-      'hour',
-    )
-  }
 
   shouldTimestampBeSynced(timestamp: UnixTime) {
     return timestamp === this.getTimestampToSync(timestamp)
@@ -29,10 +17,26 @@ export class SyncOptimizer {
   getTimestampToSync(_timestamp: number): UnixTime {
     const timestamp = UnixTime(_timestamp)
 
-    const hourlyCutOff = this.hourlyCutOffWithGracePeriod
-    const sixHourlyCutOff = this.sixHourlyCutOffWithGracePeriod
+    const hourlyCutOff = this.getHourlyCutOffWithGracePeriod()
+    const sixHourlyCutOff = this.getSixHourlyCutOffWithGracePeriod()
 
     return alignTimestamp(timestamp, hourlyCutOff, sixHourlyCutOff)
+  }
+
+  getSixHourlyCutOffWithGracePeriod(targetTimestamp?: UnixTime) {
+    const timestamp = targetTimestamp ?? this.clock.getLastHour()
+    return UnixTime.toEndOf(
+      timestamp - SIX_HOURLY_CUTOFF_DAYS * UnixTime.DAY,
+      'six hours',
+    )
+  }
+
+  getHourlyCutOffWithGracePeriod(targetTimestamp?: UnixTime) {
+    const timestamp = targetTimestamp ?? this.clock.getLastHour()
+    return UnixTime.toEndOf(
+      timestamp - HOURLY_CUTOFF_DAYS * UnixTime.DAY,
+      'hour',
+    )
   }
 
   getTimestampsToSync(from: number, to: number, maxTimestamps: number) {

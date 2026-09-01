@@ -4,6 +4,7 @@ import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '../core/tooltip/Tooltip'
 
@@ -33,8 +34,7 @@ export function ProjectBadge({
       height={badge.height}
       className={cn(
         'h-16 w-auto lg:h-18',
-        !disableInteraction &&
-          badge.href &&
+        ((!disableInteraction && badge.href) || disableInteraction) &&
           'transition-[scale] ease-in-out hover:scale-[1.08]',
         className,
       )}
@@ -44,20 +44,24 @@ export function ProjectBadge({
     !disableInteraction && badge.href ? (
       <a href={badge.href}>{badgeImg}</a>
     ) : (
-      badgeImg
+      <span className="shrink-0">{badgeImg}</span>
     )
 
-  if (disableInteraction || disableTooltip) return component
+  if (disableTooltip) return component
 
   return (
     <Tooltip delayDuration={0}>
-      <TooltipTrigger className="shrink-0">{component}</TooltipTrigger>
-      <TooltipContent>
-        <span className="mb-1 block font-medium text-label-value-14">
-          {badge.name}
-        </span>
-        <span>{badge.description}</span>
-      </TooltipContent>
+      <TooltipTrigger asChild disabledOnMobile={disableInteraction}>
+        {component}
+      </TooltipTrigger>
+      <TooltipPortal>
+        <TooltipContent>
+          <span className="mb-1 block font-medium text-label-value-14">
+            {badge.name}
+          </span>
+          <span>{badge.description}</span>
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

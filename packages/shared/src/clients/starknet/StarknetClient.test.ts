@@ -6,6 +6,7 @@ import { StarknetClient } from './StarknetClient'
 import type {
   StarknetCallParameters,
   StarknetErrorResponse,
+  StarknetEvent,
   StarknetGetBlockResponse,
   StarknetGetBlockWithTxsResponse,
 } from './types'
@@ -54,6 +55,27 @@ describe(StarknetClient.name, () => {
     })
   })
 
+  describe(StarknetClient.prototype.getBlockTimestamps.name, () => {
+    it('returns timestamps keyed by block number', async () => {
+      const client = mockClient({})
+      const getBlockWithTransactions = mockFn()
+        .returnsOnce({ number: 100, timestamp: 1_000 })
+        .returnsOnce({ number: 200, timestamp: 2_000 })
+      client.getBlockWithTransactions = getBlockWithTransactions
+
+      const result = await client.getBlockTimestamps([100, 200])
+
+      expect(getBlockWithTransactions).toHaveBeenNthCalledWith(1, 100)
+      expect(getBlockWithTransactions).toHaveBeenNthCalledWith(2, 200)
+      expect(result).toEqual(
+        new Map([
+          [100, 1_000],
+          [200, 2_000],
+        ]),
+      )
+    })
+  })
+
   describe(StarknetClient.prototype.call.name, () => {
     it('sends call request and parses response', async () => {
       const params: StarknetCallParameters = {
@@ -82,6 +104,58 @@ describe(StarknetClient.name, () => {
       ])
 
       expect(result).toEqual(rpcResult)
+    })
+  })
+
+  describe(StarknetClient.prototype.getEvents.name, () => {
+    it('fetches every response page', async () => {
+      const client = mockClient({})
+      const query = mockFn()
+        .returnsOnce(
+          mockStarknetGetEventsResponse([mockStarknetEvent(1)], 'next'),
+        )
+        .returnsOnce(mockStarknetGetEventsResponse([mockStarknetEvent(2)]))
+      client.query = query
+
+      const result = await client.getEvents(10, 20, '0x1234', [
+        '0x5678',
+        '0x9abc',
+      ])
+
+      expect(query).toHaveBeenNthCalledWith(1, 'starknet_getEvents', [
+        {
+          from_block: { block_number: 10 },
+          to_block: { block_number: 20 },
+          address: '0x1234',
+          keys: [['0x5678', '0x9abc']],
+          chunk_size: 1_000,
+        },
+      ])
+      expect(query).toHaveBeenNthCalledWith(2, 'starknet_getEvents', [
+        {
+          from_block: { block_number: 10 },
+          to_block: { block_number: 20 },
+          address: '0x1234',
+          keys: [['0x5678', '0x9abc']],
+          chunk_size: 1_000,
+          continuation_token: 'next',
+        },
+      ])
+      expect(result).toEqual([mockStarknetEvent(1), mockStarknetEvent(2)])
+    })
+
+    it('assigns a deterministic index when the RPC omits event_index', async () => {
+      const client = mockClient({})
+      client.query = mockFn().returnsOnce(
+        mockStarknetGetEventsResponse([
+          mockStarknetEventWithoutIndex('0xtx'),
+          mockStarknetEventWithoutIndex('0xtx'),
+        ]),
+      )
+
+      const result = await client.getEvents(10, 20, '0x1234', ['0x5678'])
+
+      expect(result.map((event) => event.event_index)).toEqual([0, 1])
     })
   })
 
@@ -165,6 +239,47 @@ const mockStarknetGetBlockResponse = (
     transactions: [],
   },
 })
+
+function mockStarknetEvent(eventIndex: number): StarknetEvent {
+  return {
+    block_number: 100,
+    transaction_hash: '0x1234',
+    event_index: eventIndex,
+    keys: ['0x5678'],
+    data: ['0x9abc'],
+  }
+}
+
+function mockStarknetGetEventsResponse(
+  events: StarknetRpcEvent[],
+  continuationToken?: string | null,
+) {
+  return {
+    jsonrpc: '2.0' as const,
+    id: 1,
+    result: {
+      events,
+      ...(continuationToken === undefined
+        ? {}
+        : { continuation_token: continuationToken }),
+    },
+  }
+}
+
+type StarknetRpcEvent = Omit<StarknetEvent, 'event_index'> & {
+  event_index?: number
+}
+
+function mockStarknetEventWithoutIndex(
+  transactionHash: string,
+): StarknetRpcEvent {
+  return {
+    block_number: 100,
+    transaction_hash: transactionHash,
+    keys: ['0x5678'],
+    data: ['0x9abc'],
+  }
+}
 
 const mockStarknetGetBlockWithTxsResponse = (
   block: Block,

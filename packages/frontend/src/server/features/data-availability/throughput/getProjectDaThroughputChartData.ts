@@ -40,7 +40,7 @@ export type ProjectDaThroughputChartDataParams = v.infer<
 
 export async function getProjectDaThroughputChartData(
   params: ProjectDaThroughputChartDataParams,
-): Promise<ProjectDaThroughputChartData | undefined> {
+): Promise<ProjectDaThroughputChartData | null> {
   if (env.MOCK) {
     return getMockProjectDaThroughputChartData(params)
   }
@@ -49,12 +49,12 @@ export async function getProjectDaThroughputChartData(
     getProjectDaThroughputChart(params),
     getDaThroughputTable([params.projectId]),
   ])
-  const projectData = params.includeScalingOnly
-    ? throughputTable.scalingOnlyData[params.projectId]
+  const projectData = params.includeL2Only
+    ? throughputTable.l2OnlyData[params.projectId]
     : throughputTable.data[params.projectId]
 
   if (!chartData || chartData.chart.length === 0 || !projectData) {
-    return undefined
+    return null
   }
 
   return {
@@ -92,7 +92,7 @@ function getMockProjectDaThroughputChartData({
     }
   }
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return {
     chart: timestamps.map((timestamp) => {
       const throughputValue = Math.random() * 900_000_000 + 90_000_000

@@ -2,15 +2,20 @@ import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import uniq from 'lodash/uniq'
 import type { DaBeatConfig } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getDaBeatConfig(
   ps: ProjectService,
   env: Env,
+  flags: FeatureFlags,
 ): Promise<DaBeatConfig> {
-  const projects = await ps.getProjects({
+  const allProjects = await ps.getProjects({
     select: ['daLayer'],
-    whereNot: ['isUpcoming'],
   })
+  // Individual projects can be disabled with e.g. FEATURES=*,!da-beat.avail
+  const projects = allProjects.filter((x) =>
+    flags.isEnabled('da-beat', x.id.toString()),
+  )
 
   const coingeckoIds = projects
     .map((x) => x.daLayer.economicSecurity?.token.coingeckoId)
@@ -45,9 +50,9 @@ export async function getDaBeatConfig(
       ['NEAR_RPC_URL_FOR_DA_BEAT', 'NEAR_RPC_URL'],
       'https://rpc.mainnet.near.org/',
     ),
-    availWsUrl: env.string(
-      ['AVAIL_WS_URL_FOR_DA_BEAT', 'AVAIL_WS_URL'],
-      'wss://avail-rpc.publicnode.com',
+    availRpcUrl: env.string(
+      ['AVAIL_RPC_URL_FOR_DA_BEAT', 'AVAIL_RPC_URL'],
+      'https://mainnet-rpc.avail.so/rpc',
     ),
     espressoApiUrl: env.string(
       ['ESPRESSO_API_URL_FOR_DA_BEAT', 'ESPRESSO_API_URL'],

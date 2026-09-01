@@ -1,0 +1,12 @@
+{
+  "SignalService.sol": {
+    "hash": "0xe1c40b24c6eb9c066432e6d1720c4a08b1ed9936521e600cc30dec7a09901275",
+    "address": "eth:0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3",
+    "blockNumber": 22297586
+  },
+  "SignalService": {
+    "hash": "0xbe9189078eaf02ba15aa9550b8533869116d06d41697df3d663cf5fc0a7cc2e3",
+    "address": "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
+    "blockNumber": 22565516
+  }
+}

@@ -1,8 +1,7 @@
 {
   "EnforcedTxGateway.sol": {
-    "hash": "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6",
+    "hash": "0x294706d7e04e66317dc12b73ccc3cca5f90ce931686626f7694fecdce0d11f0c",
     "address": "eth:0xCb13746Fc891fC2e7D824870D00a26F43fE6123e",
-    "chain": "ethereum",
     "blockNumber": 24147273
   }
 }

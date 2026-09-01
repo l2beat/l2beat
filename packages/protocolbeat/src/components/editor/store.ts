@@ -25,7 +25,7 @@ interface CodeState {
 
   setEditor: (key: string, editor: Editor) => void
   getEditor: (key: string) => Editor | undefined
-  removeEditor: (key: string) => void
+  removeEditor: (key: string, editor?: Editor) => void
   setDiffEditor: (key: string, editor: DiffEditor) => void
   getDiffEditor: (key: string) => DiffEditor | undefined
   removeDiffEditor: (key: string) => void
@@ -43,14 +43,14 @@ interface CodeState {
 interface DiffSettings {
   fold: boolean
   removeUnchanged: boolean
-  removeComments: boolean
+  ignoreComments: boolean
   swapped: boolean
 }
 
 interface DiffSettingsStore extends DiffSettings {
   toggleFold: () => void
   toggleRemoveUnchanged: () => void
-  toggleRemoveComments: () => void
+  toggleIgnoreComments: () => void
   toggleSwapped: () => void
   setSettings: (settings: Partial<DiffSettings>) => void
 }
@@ -68,8 +68,11 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getEditor: (editorId: string) => {
     return get().editors[editorId]
   },
-  removeEditor: (editorId: string) =>
+  removeEditor: (editorId: string, editor?: Editor) =>
     set((state) => {
+      if (editor !== undefined && state.editors[editorId] !== editor) {
+        return state
+      }
       const { [editorId]: _, ...editors } = state.editors
       return { editors }
     }),
@@ -120,14 +123,14 @@ export const useCodeStore = create<CodeState>((set, get) => ({
 export const useDiffSettingsStore = create<DiffSettingsStore>((set) => ({
   fold: false,
   removeUnchanged: false,
-  removeComments: false,
+  ignoreComments: false,
   swapped: false,
 
   toggleFold: () => set((state) => ({ fold: !state.fold })),
   toggleRemoveUnchanged: () =>
     set((state) => ({ removeUnchanged: !state.removeUnchanged })),
-  toggleRemoveComments: () =>
-    set((state) => ({ removeComments: !state.removeComments })),
+  toggleIgnoreComments: () =>
+    set((state) => ({ ignoreComments: !state.ignoreComments })),
   toggleSwapped: () => set((state) => ({ swapped: !state.swapped })),
 
   setSettings: (settings) => set((state) => ({ ...state, ...settings })),

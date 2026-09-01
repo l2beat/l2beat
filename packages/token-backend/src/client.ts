@@ -1,3 +1,4 @@
+import { trpcTransformer } from '@l2beat/shared-pure'
 import { createTRPCClient, httpBatchLink } from '@trpc/client'
 import type { AppRouter } from './trpc/appRouter'
 
@@ -25,10 +26,7 @@ export function getTokenDbClient(config: TokenClientConfig) {
       httpBatchLink({
         url: config.apiUrl,
         methodOverride: 'POST', // Sometimes request body is too large to fit in GET's URL
-        transformer: {
-          serialize: JSON.stringify,
-          deserialize: JSON.parse,
-        },
+        transformer: trpcTransformer,
         headers() {
           return headers
         },

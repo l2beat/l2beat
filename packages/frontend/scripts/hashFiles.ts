@@ -12,7 +12,7 @@ void addHashes({
   inputDir: 'static',
   outputDir: 'dist/static',
   manifest: 'dist/manifest.json',
-  ignore: ['.gitignore'],
+  ignore: ['.gitignore', 'robots.txt'],
   hashLength: 8,
 })
 

@@ -7,7 +7,7 @@ function main() {
     const schema = toJsonSchema(ProjectTvsConfigSchema)
 
     fs.writeFileSync(
-      './src/tvs/json/schema/tvs-config-schema.json',
+      './src/projects/tvs-config-schema.json',
       JSON.stringify(schema, null, 2),
     )
 

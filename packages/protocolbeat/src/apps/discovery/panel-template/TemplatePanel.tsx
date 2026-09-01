@@ -6,12 +6,16 @@ import type { EditorFile } from '../../../components/editor/store'
 import { EditorView } from '../../../components/editor/views/EditorView'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
-import { type ConfigModels, useConfigModels } from '../hooks/useConfigModels'
+import { useConfigModels } from '../hooks/useConfigModels'
 import { useProjectData } from '../hooks/useProjectData'
 
 export function TemplatePanel() {
   const { selectedAddress } = useProjectData()
   const configModels = useConfigModels()
+  const templateId = configModels.templateModel.templateId
+  const templateContent = configModels.templateModel.files.template
+  const shapesContent = configModels.templateModel.files.shapes
+  const criteriaContent = configModels.templateModel.files.criteria
 
   const onSaveCallback: EditorSaveCallback = (content: string) => {
     configModels.templateModel.save(content)
@@ -19,16 +23,22 @@ export function TemplatePanel() {
     return true
   }
 
-  const files = useMemo(
-    () => getTemplateFiles(configModels, selectedAddress),
-    [configModels, selectedAddress],
+  const files = useMemo<EditorFile[]>(
+    () =>
+      getTemplateFiles({
+        templateId,
+        templateContent,
+        shapesContent,
+        criteriaContent,
+      }),
+    [templateId, templateContent, shapesContent, criteriaContent],
   )
 
-  if (configModels.isError) {
+  if (configModels.isProjectError || configModels.isTemplateError) {
     return <ErrorState />
   }
 
-  if (configModels.isPending) {
+  if (configModels.isProjectPending || configModels.isTemplatePending) {
     return <LoadingState />
   }
 
@@ -36,7 +46,7 @@ export function TemplatePanel() {
     return <ActionNeededState message="Select a contract" />
   }
 
-  if (!configModels.templateModel.hasTemplate) {
+  if (!templateId) {
     return <ActionNeededState message="No template files" />
   }
 
@@ -49,39 +59,46 @@ export function TemplatePanel() {
   )
 }
 
-function getTemplateFiles(
-  { templateModel }: ConfigModels,
-  selectedAddress: string | undefined,
-): EditorFile[] {
-  if (!selectedAddress) {
+function getTemplateFiles({
+  templateId,
+  templateContent,
+  shapesContent,
+  criteriaContent,
+}: {
+  templateId: string | undefined
+  templateContent: string
+  shapesContent: string | undefined
+  criteriaContent: string | undefined
+}): EditorFile[] {
+  if (!templateId) {
     return []
   }
 
   const sources: EditorFile[] = []
 
   sources.push({
-    id: 'template',
+    id: `template-${templateId}`,
     name: 'template.jsonc',
-    content: templateModel.files.template,
+    content: templateContent,
     language: 'json',
     readOnly: IS_READONLY,
   })
 
-  if (templateModel.files.shapes) {
+  if (shapesContent) {
     sources.push({
-      id: 'shapes',
+      id: `shapes-${templateId}`,
       name: 'shapes.json',
-      content: templateModel.files.shapes,
+      content: shapesContent,
       language: 'json',
       readOnly: true,
     })
   }
 
-  if (templateModel.files.criteria) {
+  if (criteriaContent) {
     sources.push({
-      id: 'criteria',
+      id: `criteria-${templateId}`,
       name: 'criteria.json',
-      content: templateModel.files.criteria,
+      content: criteriaContent,
       language: 'json',
       readOnly: true,
     })

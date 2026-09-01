@@ -14,21 +14,21 @@ export function CodeIcon(props: SvgIconProps) {
     >
       <g clipPath="url(#clip0_190_6173)">
         <path
-          d="M9.20005 2L6.80005 14"
+          d="M9.2 2 6.8 14"
           strokeWidth="1.4"
           strokeMiterlimit="10"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
-          d="M12.8 4.3999L15.3458 7.9999L12.8 11.5999"
+          d="M12.8 4.4 15.346 8 12.8 11.6"
           strokeWidth="1.4"
           strokeMiterlimit="10"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
-          d="M3.34585 11.5999L0.800049 7.9999L3.34585 4.3999"
+          d="M3.346 11.6.8 8l2.546-3.6"
           strokeWidth="1.4"
           strokeMiterlimit="10"
           strokeLinecap="round"

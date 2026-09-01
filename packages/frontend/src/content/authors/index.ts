@@ -7,6 +7,6 @@ export const authorsCollection = defineCollection({
   schema: v.object({
     firstName: v.string(),
     lastName: v.string(),
-    role: v.string(),
+    role: v.string().optional(),
   }),
 })

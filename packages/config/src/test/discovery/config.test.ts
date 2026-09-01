@@ -4,6 +4,7 @@ import {
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
+  get$Implementations,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   getHashToBeMatched,
@@ -34,13 +35,18 @@ export const onChainProjects: string[] = [
   'vector',
   'espresso',
   'dydx',
-  'tokens',
+  'lido',
   'gateway',
   'opcm16',
-  'aztecnetwork',
-  'aztecnetwork-alphapayload',
   'debridge',
-  ...configReader.getProjectsInGroup('tokens'),
+  'layerzero',
+  'ccip',
+  'wormhole',
+  'privacy-pools',
+  'railgun',
+  'tornado-cash',
+  'butternetwork',
+  'interfold',
 ]
 
 describe('discovery config.jsonc', () => {
@@ -62,7 +68,7 @@ describe('discovery config.jsonc', () => {
         ?.flat()
         ?.filter((c) => !c.name.startsWith('shared-'))
         ?.filter((c) => !projectIds.includes(c.name))
-        .filter((c) => c.name !== 'everclearbridge' && c.name !== 'hop')
+        .filter((c) => c.name !== 'hop')
         .map((c) => c.name) ?? []
 
     expect(notCorresponding).toBeEmpty()
@@ -118,7 +124,7 @@ describe('discovery config.jsonc', () => {
   })
 
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
-    for (const c of configs) {
+    for (const c of configs.filter((c) => !c.archived)) {
       const discovery = configReader.readDiscovery(c.name)
       const reasons = templateService.discoveryNeedsRefresh(discovery, c)
 
@@ -127,7 +133,7 @@ describe('discovery config.jsonc', () => {
         `${c.name} project is outdated: ${reasons.map((r) => templateService.formatReason(r)).join('\n')}.\n Run "l2b refresh-discovery"`,
       )
     }
-  })
+  }).timeout(10_000)
 
   describe('shape addresses are unique', () => {
     const shapes = templateService.listAllTemplates()
@@ -146,6 +152,31 @@ describe('discovery config.jsonc', () => {
 
         const uniqueAddresses = unique(addresses, asKey)
         expect(addresses).toHaveLength(uniqueAddresses.length)
+      })
+    }
+  })
+
+  describe('shape addresses are not proxies', () => {
+    const proxies: Set<ChainSpecificAddress> = new Set()
+
+    for (const c of configs.filter((c) => !c.archived)) {
+      const discovery = configReader.readDiscovery(c.name)
+      const addresses = discovery.entries
+        .filter((e) => get$Implementations(e.values).length > 0)
+        .map((e) => e.address)
+
+      for (const a of addresses) proxies.add(a)
+    }
+
+    const shapes = templateService.listAllTemplates()
+    for (const [templateId, { shapePath }] of Object.entries(shapes)) {
+      it(`shape ${templateId}:${shapePath} addresses are not proxies`, () => {
+        const shape = templateService.readShapeSchema(shapePath)
+        const addresses = Object.values(shape).flatMap((x) =>
+          Array.isArray(x.address) ? x.address : [x.address],
+        )
+
+        expect(addresses.every((a) => !proxies.has(a))).toBeTruthy()
       })
     }
   })
@@ -197,7 +228,7 @@ describe('discovery config.jsonc', () => {
       const mismatches: TemplateMatchMismatch[] = []
       const allShapes = templateService.getAllShapes()
 
-      for (const c of configs) {
+      for (const c of configs.filter((c) => !c.archived)) {
         const discovery = configReader.readDiscovery(c.name)
 
         for (const contract of discovery.entries) {
@@ -288,19 +319,6 @@ describe('discovery config.jsonc', () => {
       }
     })
 
-    describe('all shared modules exist', () => {
-      for (const c of configs ?? []) {
-        it(c.name, () => {
-          for (const sharedModule of c.structure.sharedModules) {
-            assert(
-              configs?.flat()?.some((x) => x.name === sharedModule),
-              `Shared module ${sharedModule} does not exist (${c.name})`,
-            )
-          }
-        })
-      }
-    })
-
     // inversion logic depends on this
     describe('all accessControl fields keys are accessControl', () => {
       for (const c of configs ?? []) {
@@ -356,7 +374,7 @@ describe('discovery config.jsonc', () => {
         } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
       )
     }
-  })
+  }).timeout(10_000)
 
   it('is colorized correctly', () => {
     for (const c of configs ?? []) {

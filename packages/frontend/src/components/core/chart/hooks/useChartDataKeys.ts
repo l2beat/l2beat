@@ -5,16 +5,9 @@ export function useChartDataKeys<T extends ChartMeta>(
   chartMeta: T,
   hiddenDataKeys?: (keyof T)[] | readonly (keyof T)[],
 ) {
-  const [showAllSelected, setShowAllSelected] = useState(false)
   const [dataKeys, setDataKeys] = useState<(keyof T)[] | null>(null)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: do not re-run this effect when showAllDataKeys changes
   useEffect(() => {
-    if (showAllSelected) {
-      setDataKeys(Object.keys(chartMeta))
-      return
-    }
-
     if (Object.keys(chartMeta).length === 0) {
       return
     }
@@ -30,18 +23,20 @@ export function useChartDataKeys<T extends ChartMeta>(
     })
   }, [chartMeta, hiddenDataKeys])
 
-  const toggleDataKey = (dataKey: keyof T | (string & {})) => {
-    const newDataKeys = dataKeys?.includes(dataKey)
-      ? dataKeys.filter((key) => key !== dataKey)
-      : [...(dataKeys ?? []), dataKey]
+  const allKeys = Object.keys(chartMeta)
+  const showAllSelected =
+    allKeys.length > 0 && (dataKeys ?? []).length === allKeys.length
 
-    setShowAllSelected(newDataKeys.length === Object.keys(chartMeta).length)
-    setDataKeys(newDataKeys)
+  const toggleDataKey = (dataKey: keyof T | (string & {})) => {
+    setDataKeys((prev) =>
+      prev?.includes(dataKey)
+        ? prev.filter((key) => key !== dataKey)
+        : [...(prev ?? []), dataKey],
+    )
   }
 
   const toggleAllDataKeys = () => {
-    setDataKeys(showAllSelected ? [] : Object.keys(chartMeta))
-    setShowAllSelected((prev) => !prev)
+    setDataKeys(showAllSelected ? [] : allKeys)
   }
 
   return {

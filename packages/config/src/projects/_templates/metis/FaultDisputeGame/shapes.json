@@ -1,11 +1,11 @@
 {
   "FaultDisputeGame.sol": {
-    "hash": "0x171272194c7494ad426657a3403f919053a4f01c01a500eca95b48796ac9417e",
+    "hash": "0xfd2a877e22ca930288655c61bfd8214fce7efb8c252ba242458c8ad907f82601",
     "address": "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
     "blockNumber": 22517630
   },
   "FaultDisputeGame_2": {
-    "hash": "0xcab2446b5b05f3af5fbdda3c99e19228203a34e88d64e1c3a1f0d011e8465100",
+    "hash": "0xd66a2ab4ce893d9a0b2ef0770691a41e2e28fc0667216aead21c9535b71aad8f",
     "address": "eth:0xD362F83945118dC953924Da1E30D7029b9Cf113d",
     "blockNumber": 23019188
   }

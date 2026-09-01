@@ -1,23 +1,22 @@
 {
   "Bridgehub": {
-    "hash": "0xe79288af01ff8940265966caffdc9ea0ef18822166fd7f704488419737716623",
+    "hash": "0x595cd38d19f42701dd8c051df700c9d168f57a0412ae9a7a9e4d1f7f34f704c8",
     "address": "eth:0xb720523EC3c615b069453bF4B0584CEbF034706f",
     "blockNumber": 22188285
   },
   "BridgeHub_v27": {
-    "hash": "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb",
+    "hash": "0xbd5548b2b3c11d539a109f8654c4af602f0160cd89a17ddd3363af9f123a8f3e",
     "address": "eth:0xcdd748d4A80CE6831080f1dA2CA9084CDa87Cc87",
     "blockNumber": 22374168
   },
   "BridgeHub_v29.sol": {
-    "hash": "0x2a749098cea7b9243019ffc1193ad519dbadc55c43cf610962f7ba13beba3f21",
+    "hash": "0x7164330a8d67036a0b8dd7419636f90602218fc2937b8571f518f2ab527c974a",
     "address": "eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B",
     "blockNumber": 23588465
   },
   "BridgeHub_v29_ADI": {
-    "hash": "0x9899b4cd60a43768bafab09e097eb4c2b02875f309b7503d71018eccdc3b6cb8",
+    "hash": "0x3c13c6f9517df023e1e2cc9e717c1dc1d372cb9eaf923bf027f56f3709d5a620",
     "address": "eth:0xcf1c73439c85f7eB9d4439dAf398Fd6392d176E6",
-    "chain": "ethereum",
     "blockNumber": 24038982
   }
 }

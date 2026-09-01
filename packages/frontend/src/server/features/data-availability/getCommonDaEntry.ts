@@ -13,7 +13,7 @@ export function getCommonDaEntry({
   href,
   syncWarning,
 }: {
-  project: Project<'daLayer' | 'statuses'>
+  project: Project<'daLayer' | 'statuses' | 'display'>
   href: string
   syncWarning?: string
 }): CommonDaEntry {
@@ -33,6 +33,7 @@ export function getCommonDaEntry({
     tab: project.daLayer.systemCategory,
     backgroundColor: getRowBackgroundColor(statuses),
     statuses,
+    description: project.display.description,
   }
 }
 
@@ -40,7 +41,7 @@ export function getCommonDacDaEntry({
   project,
   syncWarning,
 }: {
-  project: Project<'customDa' | 'statuses'>
+  project: Project<'customDa' | 'statuses' | 'display'>
   syncWarning?: string
 }): CommonDaEntry {
   const statuses = {
@@ -56,9 +57,10 @@ export function getCommonDacDaEntry({
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     name: project.customDa.name ?? `${project.name} DAC`,
     nameSecondLine: project.customDa.type,
-    href: `/scaling/projects/${project.slug}`,
+    href: `/layer2s/projects/${project.slug}`,
     tab: 'custom',
     backgroundColor: getRowBackgroundColor(statuses),
     statuses,
+    description: project.customDa.description ?? project.display.description,
   }
 }

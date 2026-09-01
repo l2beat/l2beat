@@ -1,13 +1,13 @@
+import { formatBytes } from '@l2beat/shared-pure'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
-import { formatBytes } from '~/utils/number-format/formatBytes'
+import type { L2ProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getL2ProjectDaThroughtputChart'
 
 export function ProjectDataPostedChartStats({
   isLoading,
   data,
 }: {
   isLoading: boolean
-  data: ScalingProjectDaThroughputChart['stats'] | undefined
+  data: L2ProjectDaThroughputChart['stats'] | undefined
 }) {
   return (
     <ChartStats className="lg:grid-cols-3">

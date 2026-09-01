@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('lisk')
 
@@ -14,6 +14,7 @@ export const lisk: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19788851 })],
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
@@ -21,6 +22,8 @@ export const lisk: ScalingProject = opStackL2({
   display: {
     name: 'Lisk',
     slug: 'lisk',
+    headerWarning:
+      'Lisk Chain will shut down on October 31, 2026. See the [announcement](https://lisk.com/blog/posts/introducing-the-new-lisk) and withdraw your funds to Ethereum.',
     description:
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
@@ -44,6 +47,14 @@ export const lisk: ScalingProject = opStackL2({
     },
   },
   milestones: [
+    {
+      title: 'Lisk Chain shutdown announcement',
+      url: 'https://lisk.com/blog/posts/introducing-the-new-lisk',
+      date: '2026-08-25T00:00:00Z',
+      description:
+        'Lisk announces its chain will shut down on October 31, 2026. Live projects will migrate to Celo.',
+      type: 'general',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://lisk.com/blog/posts/lisk-user-mainnet-is-live/',

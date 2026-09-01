@@ -1,13 +1,12 @@
 {
   "PredicateServiceManager": {
-    "hash": "0x55b4084f8591b2c3c51011b50fe478e7761ce2cab412359b4df3b6941fcba322",
+    "hash": "0x95362e0f8c238015c489b61e090c05d499a158c33aa5151f3b871e862018d54a",
     "address": "eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0",
     "blockNumber": 22872700
   },
   "ServiceManager.sol": {
-    "hash": "0x64a4c29e61f52080da22207fe5295d233b6450ecc65dbf2852a0b0383fd74f63",
+    "hash": "0xe58aa83dafa0e6dff193969939930317f9b3522d853cc539225ade1c46cbe271",
     "address": "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E",
-    "chain": "ethereum",
     "blockNumber": 23789926
   }
 }

@@ -10,6 +10,7 @@ describe(SlotTxsCountService.name, () => {
     it('should return txs count', async () => {
       const START = UnixTime.now()
       const mockProvider = mockObject<SvmBlockProvider>({
+        chain: 'ethereum',
         getBlockWithTransactions: mockFn()
           .resolvesToOnce(undefined)
           .resolvesToOnce({

@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('ethernity')
 
@@ -13,13 +13,16 @@ export const ethernity: ScalingProject = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1718182472), // 2024-06-12T08:54:32Z
+  archivedAt: UnixTime(1775805866), // 2026-04-10T09:24:26
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['AI'],
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20519438 })],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   isPartOfSuperchain: true,
   display: {
     name: 'Epic Chain',
+    aliases: ['Ethernity'],
     slug: 'epicchain',
     description:
       'Epic chain, previously Ethernity, is a low-cost Layer 2 solution on the Superchain, designed to bring global entertainment franchises onto the blockchain.',

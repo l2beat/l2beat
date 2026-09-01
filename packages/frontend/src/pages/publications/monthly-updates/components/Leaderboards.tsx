@@ -1,8 +1,7 @@
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 
 interface Props {
   tvsLeaderboard: EcosystemMonthlyUpdateEntry['tvsLeaderboard']
@@ -75,9 +74,14 @@ function LeaderboardTvsItem({
     <div className="grid grid-cols-4 items-center">
       <a
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
-        href={`/scaling/projects/${item.slug}`}
+        href={`/layer2s/projects/${item.slug}`}
       >
-        <img src={item.iconUrl} className="size-5" />
+        <img
+          src={item.iconUrl}
+          alt={item.name}
+          loading="lazy"
+          className="size-5"
+        />
         <span className="font-bold text-xs">{item.name}</span>
       </a>
       <PercentChange value={item.change} textClassName="font-semibold" />
@@ -97,9 +101,14 @@ function LeaderboardActivityItem({
     <div className="grid grid-cols-4 items-center">
       <a
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
-        href={`/scaling/projects/${item.slug}`}
+        href={`/layer2s/projects/${item.slug}`}
       >
-        <img src={item.iconUrl} className="size-5" />
+        <img
+          src={item.iconUrl}
+          alt={item.name}
+          loading="lazy"
+          className="size-5"
+        />
         <span className="font-bold text-xs">{item.name}</span>
       </a>
       <PercentChange value={item.change} textClassName="font-semibold" />

@@ -11,8 +11,12 @@ describe(CelestiaRpcClient.name, () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: {
-            height: mockBlockHeight,
-            txs_results: [],
+            block: {
+              header: {
+                time: '2024-02-07T10:00:00Z',
+                height: mockBlockHeight,
+              },
+            },
           },
         }),
       })
@@ -21,7 +25,7 @@ describe(CelestiaRpcClient.name, () => {
       const result = await rpc.getLatestBlockNumber()
 
       expect(result).toEqual(Number(mockBlockHeight))
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block_results', {
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block', {
         method: 'GET',
         redirect: 'follow',
       })
@@ -34,25 +38,16 @@ describe(CelestiaRpcClient.name, () => {
       const mockTimestamp = '2024-02-07T10:00:00Z'
 
       const http = mockObject<HttpClient>({
-        fetch: async (url: string) => {
-          if (url.includes('block_results')) {
-            return {
-              result: {
+        fetch: async () => ({
+          result: {
+            block: {
+              header: {
+                time: mockTimestamp,
                 height: mockBlockHeight,
-                txs_results: [],
-              },
-            }
-          }
-          return {
-            result: {
-              block: {
-                header: {
-                  time: mockTimestamp,
-                },
               },
             },
-          }
-        },
+          },
+        }),
       })
       const rpc = mockClient({ http })
 
@@ -66,17 +61,7 @@ describe(CelestiaRpcClient.name, () => {
         transactions: [],
       })
 
-      expect(http.fetch).toHaveBeenCalledTimes(2)
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        1,
-        'API_URL/block_results?height=12345',
-        {
-          method: 'GET',
-          redirect: 'follow',
-        },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        2,
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
         'API_URL/block?height=12345',
         {
           method: 'GET',
@@ -85,30 +70,21 @@ describe(CelestiaRpcClient.name, () => {
       )
     })
 
-    it('returns block with transactions for latest block', async () => {
+    it('returns block with transactions for the latest block', async () => {
       const mockBlockHeight = '12345'
       const mockTimestamp = '2024-02-07T10:00:00Z'
 
       const http = mockObject<HttpClient>({
-        fetch: async (url: string) => {
-          if (url.includes('block_results')) {
-            return {
-              result: {
+        fetch: async () => ({
+          result: {
+            block: {
+              header: {
+                time: mockTimestamp,
                 height: mockBlockHeight,
-                txs_results: [],
-              },
-            }
-          }
-          return {
-            result: {
-              block: {
-                header: {
-                  time: mockTimestamp,
-                },
               },
             },
-          }
-        },
+          },
+        }),
       })
       const rpc = mockClient({ http })
 
@@ -122,12 +98,7 @@ describe(CelestiaRpcClient.name, () => {
         transactions: [],
       })
 
-      expect(http.fetch).toHaveBeenCalledTimes(2)
-      expect(http.fetch).toHaveBeenNthCalledWith(1, 'API_URL/block_results', {
-        method: 'GET',
-        redirect: 'follow',
-      })
-      expect(http.fetch).toHaveBeenNthCalledWith(2, 'API_URL/block', {
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block', {
         method: 'GET',
         redirect: 'follow',
       })
@@ -143,6 +114,7 @@ describe(CelestiaRpcClient.name, () => {
             block: {
               header: {
                 time: mockTimestamp,
+                height: '100',
               },
             },
           },
@@ -224,6 +196,21 @@ describe(CelestiaRpcClient.name, () => {
           redirect: 'follow',
         },
       )
+    })
+
+    it('passes configured timeout', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({ result: 'success' }),
+      })
+      const rpc = mockClient({ http, timeout: 30_000 })
+
+      await rpc.query('test_method', {})
+
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/test_method', {
+        method: 'GET',
+        redirect: 'follow',
+        timeout: 30_000,
+      })
     })
   })
 
@@ -330,6 +317,7 @@ describe(CelestiaRpcClient.name, () => {
 function mockClient(deps: {
   http?: HttpClient
   url?: string
+  timeout?: number
   generateId?: () => string
 }) {
   return new CelestiaRpcClient({
@@ -339,6 +327,7 @@ function mockClient(deps: {
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
+    timeout: deps.timeout,
     generateId: deps.generateId,
   })
 }

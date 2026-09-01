@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -7,17 +8,19 @@ import {
 import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
+  computeBoldDefenderAdvantage,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
   UPGRADE_MECHANISM,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
   getNitroGovernance,
+  getOrbitStackDaTracking,
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
@@ -43,7 +46,7 @@ const l1TimelockDelay = discovery.getContractValue<number>(
 const l2TimelockDelay = discovery.getContractValue<number>(
   'L2Timelock',
   'getMinDelay',
-) // 3 days
+) // 8 days since the 2024-10 'Extend Delay on L2Time Lock' constitutional AIP
 const totalDelay = l2TimelockDelay + challengeWindowSeconds + l1TimelockDelay // compare https://github.com/ArbitrumFoundation/governance/blob/main/docs/overview.md#proposal-delays
 
 const upgradeExecutorUpgradeability = {
@@ -83,6 +86,46 @@ const treasuryTimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
+const securityCouncilStats = discovery.getMultisigStats(
+  'Arbitrum Security Council',
+)
+const coreVotingDelaySeconds =
+  discovery.getContractValue<number>('CoreGovernor', 'votingDelay') *
+  assumedBlockTime
+const coreVotingPeriodSeconds =
+  discovery.getContractValue<number>('CoreGovernor', 'votingPeriod') *
+  assumedBlockTime
+const tempCheckSeconds = 7 * 24 * 60 * 60
+const constitutionalWallClockDays = Math.round(
+  (tempCheckSeconds +
+    coreVotingDelaySeconds +
+    coreVotingPeriodSeconds +
+    totalDelay) /
+    86400,
+)
+const treasuryWallClockDays = Math.round(
+  (tempCheckSeconds +
+    coreVotingDelaySeconds +
+    coreVotingPeriodSeconds +
+    treasuryTimelockDelay) /
+    86400,
+)
+const onchainEnforcedDays = Math.round(
+  (coreVotingDelaySeconds + coreVotingPeriodSeconds + totalDelay) / 86400,
+)
+const exitWindowDays = (totalDelay / 86400).toFixed(1)
+const outboxDays = (challengeWindowSeconds / 86400).toFixed(1)
+
+const sequencerInbox = discovery.getContract('SequencerInbox')
+const outbox = discovery.getContract('Outbox')
+assert(
+  sequencerInbox.sinceTimestamp !== undefined &&
+    outbox.sinceTimestamp !== undefined,
+)
+const genesisTimestamp = UnixTime(
+  Math.min(sequencerInbox.sinceTimestamp, outbox.sinceTimestamp),
+)
+
 const maxTimeVariation = discovery.getContractValue<{
   delayBlocks: number
   futureBlocks: number
@@ -102,11 +145,42 @@ export const arbitrum: ScalingProject = orbitStackL2({
     BADGES.Other.Governance,
   ],
   discovery,
+  daTracking: [getOrbitStackDaTracking(discovery, { sinceBlock: 15411056 })],
   hasAtLeastFiveExternalChallengers: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
+  sequencerInbox,
+  additionalTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   usesEthereumBlobs: true,
   display: {
     name: 'Arbitrum One',
@@ -231,15 +305,43 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+      challengeGracePeriodSeconds,
+    ),
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${securityCouncilStats}** — 12 members across two 6-seat cohorts, 1-year staggered terms. DAO-elected via on-chain vote with Foundation eligibility screening.`,
+        'Members public':
+          '**Mapped** — 12 entities + addresses [published by the Arbitrum Foundation](https://docs.arbitrum.foundation/security-council-members). Mix of individuals (gzeon, zachxbt, Bartek, Yoav, Griff Green, "fred", Emiliano, Michael Lewellen) and orgs (Gauntlet, Immunefi, Certora, OpenZeppelin).',
+        Charter: `[Arbitrum DAO Constitution §3](https://docs.arbitrum.foundation/dao-constitution) — defines ${securityCouncilStats} threshold, transparency reports, conflict-of-interest, removal mechanics, ≤3-per-org cap.`,
+        'Can bypass DAO?': `**Yes** — emergency (${securityCouncilStats}, instant) and non-emergency (${securityCouncilStats}, still subject to ${formatSeconds(l2TimelockDelay)} L2 + ${formatSeconds(l1TimelockDelay)} L1 timelocks). Non-emergency bypass skips AIP Phases 1–3 only.`,
+        'DAO can override SC?': `**No** — although DAO Constitution §3 gives the DAO authority to modify or eliminate the SC, an active ${securityCouncilStats} SC holds Canceller on both L1 and L2 Timelocks and can execute emergency upgrades during the ~${exitWindowDays}d execution window. If the SC is inactive or cooperative, the DAO can replace it through normal governance.`,
+      },
+      upgrades: {
+        'Normal upgrade path': `Forum temp-check → On-chain vote (${formatSeconds(coreVotingPeriodSeconds)}) → L2 Timelock (${formatSeconds(l2TimelockDelay)}) → L2→L1 outbox (~${outboxDays}d) → L1 Timelock (${formatSeconds(l1TimelockDelay)}) → execute. Total wall-clock ≈ ${constitutionalWallClockDays} days for Constitutional AIPs (≈ ${onchainEnforcedDays}d onchain-enforced), ≈ ${treasuryWallClockDays} days for Treasury AIPs.`,
+        'Emergency upgrade path': `**${securityCouncilStats} SC, instant** — no timelock, no exit window. E.g. KelpDAO freeze (21 Apr 2026), Stylus stack-depth fix (13 Oct 2025).`,
+        'Exit window': `**~${exitWindowDays}d** non-emergency · **0** emergency. L2 Timelock + L2→L1 outbox + L1 Timelock provide the non-emergency window; emergency actions skip all three.`,
+      },
+      tokenGovernance: {
+        'Governance token':
+          '`ARB` — 10,000,000,000 total · ~6.15B circulating · ~3.5B in DAO treasury. 1 token = 1 vote, delegated. Foundation tokens excluded from Votable Tokens.',
+        'Voting venue':
+          '[Tally](https://www.tally.xyz/gov/arbitrum) — two on-chain governors on Arbitrum One: Core (Constitutional) `0xf07DeD9d…` · Treasury (Non-Constitutional) `0x789fC990…`.',
+        'Proposal threshold':
+          '**1,000,000 ARB** delegated to submit on-chain. 500k ARB delegated to post a Snapshot temperature check.',
+        Quorum: `**${l2CoreQuorumPercent}%** of Delegated Voting Power Constitutional · **${l2TreasuryQuorumPercent}%** Treasury, with floor/ceiling bounds of 150–450M ARB (Const) / 100–300M ARB (Treasury). Counts "For" + "Abstain".`,
+        'Execution model':
+          "**On-chain payload · Permissionless execute.** The Governor stores the proposal's `(targets[], values[], calldatas[])` at submission. Once the vote passes and the L2/L1 Timelocks expire, anyone can call `execute()` — the same bytes that were voted on are what runs. No multisig signing, no team discretion, no off-chain step between vote and effect.",
+      },
+    },
+  },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
@@ -253,7 +355,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xcEe284F754E854890e311e3280b767F80797180d',
       ),
       tokens: '*',
-      excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
+      excludedTokens: ['USDT', 'USDS', 'sUSDS'], // upgraded or tracked on L2
       premintedTokens: ['SQD'],
       description:
         'Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2.',
@@ -265,7 +367,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
       ),
       tokens: '*',
-      excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'PEPE', 'rsETH'],
+      excludedTokens: [
+        'SolvBTC',
+        'SolvBTC.BBN',
+        'PEPE',
+        'rsETH',
+        'USDS',
+        'sUSDS',
+      ],
       premintedTokens: ['LOGX', 'AIUS', 'YBR', 'FFM'],
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
@@ -275,9 +384,9 @@ export const arbitrum: ScalingProject = orbitStackL2({
       address: ChainSpecificAddress(
         'eth:0xA10c7CE4b876998858b1a9E12b10092229539400',
       ),
-      tokens: ['DAI', 'USDS', 'sUSDS'],
+      tokens: ['DAI'],
       description:
-        'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
+        'Maker/Sky-controlled vault for DAI bridged with canonical messaging.',
     }),
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
@@ -326,15 +435,26 @@ export const arbitrum: ScalingProject = orbitStackL2({
       ...RISK_VIEW.STATE_FP_INT(
         challengeWindowSeconds,
         challengeGracePeriodSeconds,
+        'if-challenged',
       ),
-      initialBond: formatEther(
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        ),
+      },
+      permissioned: false,
+      defenderAdvantage: computeBoldDefenderAdvantage(
         discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        discovery.getContractValue<number[]>(
+          'EdgeChallengeManager',
+          'stakeAmounts',
+        ),
       ),
     },
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -389,12 +509,36 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
+      title: 'Bridge emergency upgrade',
+      url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-24-05-2026/30910',
+      date: '2026-05-24T00:00:00Z',
+      description:
+        'Security Council patches L2->L1 governance-DoS (Bridge renounces PROPOSER_ROLE). No funds at risk.',
+      type: 'incident',
+    },
+    {
+      title: 'Security Council recovers KelpDAO exploiter funds',
+      url: 'https://x.com/arbitrum/status/2046435443680346189',
+      date: '2026-04-21T00:00:00Z',
+      description:
+        'Security Council emergency action recovers ~30,766 ETH from KelpDAO exploiter on Arbitrum.',
+      type: 'general',
+    },
+    {
+      title: 'KelpDAO bridge exploit',
+      url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-21-04-2026/30803',
+      date: '2026-04-18T00:00:00Z',
+      description:
+        'KelpDAO rsETH bridge exploit drains 116,500 rsETH across 11 chains including Arbitrum.',
+      type: 'incident',
+    },
+    {
       title: 'Activate ArbOS 51 (Dia) and Gas Pricing Updates',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/53154361738756237993090798888616593723057470462495169047773178676976253908001?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
       date: '2026-01-05T00:00:00Z',
       description:
         'Arbitrum One upgraded to ArbOS 51 with Fusaka EVM support and new gas pricing.',
-      type: 'incident',
+      type: 'general',
     },
     {
       title: 'ArbOS 40, Callisto Upgrade',

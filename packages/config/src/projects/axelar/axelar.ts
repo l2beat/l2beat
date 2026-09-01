@@ -14,16 +14,17 @@ export const axelar: BaseProject = {
     plugins: [
       {
         plugin: 'axelar',
-        transferType: 'axelar.Transfer',
         bridgeType: 'lockAndMint',
       },
       {
         plugin: 'axelar',
-        transferType: 'axelar.Transfer',
         bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'axelar',
+        bridgeType: 'nonMinting',
       },
     ],
     type: 'multichain', // technically its a token bridge, but >90% used for axlUSDC, which is a multichain token
   },
-  isInteropProtocol: true,
 }

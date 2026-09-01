@@ -1,3 +1,4 @@
+import type { ProjectRedWarning } from '@l2beat/config'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WarningBar } from '~/components/WarningBar'
 import { ShieldIcon } from '~/icons/Shield'
@@ -19,7 +20,7 @@ export interface DaRiskSummarySectionProps extends ProjectSectionProps {
   }
   warning: string | undefined
   isVerified: boolean | undefined
-  redWarning: string | undefined
+  redWarning: ProjectRedWarning | undefined
 }
 
 export function DaRiskSummarySection({
@@ -46,7 +47,7 @@ export function DaRiskSummarySection({
       )}
       {redWarning && (
         <WarningBar
-          text={redWarning}
+          text={redWarning.text}
           color="red"
           className="my-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}

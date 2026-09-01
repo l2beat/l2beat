@@ -12,7 +12,7 @@ export const educhain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1737072000), // 2025-01-17T00:00:00Z
   hostChain: 'arbitrum',
   discovery,
-  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -20,6 +20,7 @@ export const educhain: ScalingProject = orbitStackL3({
   ],
   display: {
     name: 'EDU Chain',
+    aliases: ['Open Campus'],
     slug: 'edu-chain',
     description:
       'EDU Chain is a Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative "Learn Own Earn" model for education.',
@@ -50,7 +51,7 @@ export const educhain: ScalingProject = orbitStackL3({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.edu-chain.raas.gelato.cloud',
+        url: 'https://rpc.educhain.xyz',
         callsPerMinute: 300,
       },
     ],

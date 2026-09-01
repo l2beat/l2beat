@@ -1,17 +1,23 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { ChainSpecificAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import path from 'path'
 import type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
 } from '../config/types'
-import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
+import {
+  findEntrypointConsumers,
+  ownsEntrypoints,
+  printEntrypointConsumers,
+} from '../utils/printEntrypointConsumers'
 import type { Analysis } from './analysis/AddressAnalyzer'
 import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
+import type { AddressStats } from './engine/DiscoveryEngine'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
@@ -57,15 +63,16 @@ export async function runDiscovery(
 
   const timestampDate = getTimestamp(configReader, config)
 
-  const { result, timestamp, usedBlockNumbers, providerStats } = await discover(
-    paths,
-    chainConfigs,
-    projectConfig,
-    logger,
-    timestampDate,
-    http,
-    config.overwriteCache,
-  )
+  const { result, timestamp, usedBlockNumbers, providerStats, addressStats } =
+    await discover(
+      paths,
+      chainConfigs,
+      projectConfig,
+      logger,
+      timestampDate,
+      http,
+      config.overwriteCache,
+    )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
@@ -88,17 +95,11 @@ export async function runDiscovery(
     },
   )
 
-  // TODO(radomski): This is a disaster from the point of view of separation of
-  // concerns. We should agree on what even is a shared module and how to
-  // handle them cleanly.
-  if (config.project.startsWith('shared-')) {
-    const allConfigs = configReader
-      .readAllDiscoveredProjects()
-      .map((p) => configReader.readConfig(p))
-    const backrefConfigs = allConfigs
-      .filter((c) => c.structure.sharedModules.includes(config.project))
-      .map((c) => c.structure)
-    printSharedModuleInfo(logger, backrefConfigs)
+  if (ownsEntrypoints(projectConfig.structure)) {
+    printEntrypointConsumers(
+      logger,
+      findEntrypointConsumers(configReader, config.project),
+    )
   }
 
   if (config.printStats) {
@@ -114,6 +115,39 @@ export async function runDiscovery(
     projectConfig.color,
     templateService,
   )
+
+  if (addressStats.skipped > 0) {
+    printMaxAddressesWarning(
+      logger,
+      addressStats.skipped,
+      projectConfig.structure.maxAddresses,
+    )
+  }
+}
+
+function printMaxAddressesWarning(
+  logger: Logger,
+  skipped: number,
+  maxAddresses: number,
+) {
+  const lines = [
+    '  ⚠  WARNING — DISCOVERY IS INCOMPLETE  ⚠  ',
+    '',
+    `  maxAddresses limit reached: ${skipped} address${skipped === 1 ? '' : 'es'} were SKIPPED.`,
+    '  These addresses were NOT analyzed and are MISSING from discovered.json.',
+    '',
+    `  FIX: raise "maxAddresses" (currently ${maxAddresses}) in the project config,`,
+    '       then re-run discovery.',
+  ]
+  const width = lines.reduce((max, l) => Math.max(max, l.length), 0)
+  const padded = lines.map((l) => ' ' + l.padEnd(width) + ' ')
+  const blank = ' '.repeat(width + 2)
+  const banner = [blank, ...padded, blank].map((l) => chalk.bgRed.white.bold(l))
+  logger.info('')
+  for (const line of banner) {
+    logger.info(line)
+  }
+  logger.info('')
 }
 
 export async function dryRunDiscovery(
@@ -202,6 +236,7 @@ export async function discover(
   timestamp: UnixTime
   usedBlockNumbers: Record<string, number>
   providerStats: Record<string, AllProviderStats>
+  addressStats: AddressStats
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
 
@@ -217,11 +252,8 @@ export async function discover(
     logger,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
-  const result = await discoveryEngine.discover(
-    allProviders,
-    config.structure,
-    timestamp,
-  )
+  const { analyses: result, stats: addressStats } =
+    await discoveryEngine.discover(allProviders, config.structure, timestamp)
   const chains = unique(
     result.map((c) => ChainSpecificAddress.longChain(c.address)),
   )
@@ -237,5 +269,6 @@ export async function discover(
     timestamp,
     usedBlockNumbers,
     providerStats: allProviders.getStats(),
+    addressStats,
   }
 }

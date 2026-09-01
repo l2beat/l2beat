@@ -5,14 +5,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import {
+  ProjectNameCell,
+  ProjectNameInfoTooltip,
+} from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getDaCommonProjectColumns } from '~/components/table/common-project-columns/DaCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
 import { BridgeNameCell } from '~/pages/data-availability/summary/components/table/BridgeNameCell'
-import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
+import { AnomalyIndicator } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
 import { DaLivenessIntervalCell } from './DaLivenessIntervalCell'
 import type { DaLivenessTableEntry } from './toDaLivenessTableEntry'
 
@@ -23,9 +26,11 @@ export const publicColumns = () => [
   columnHelper.accessor('name', {
     header: 'DA Layer',
     cell: (ctx) => (
-      <TableLink href={ctx.row.original.href}>
-        <ProjectNameCell project={ctx.row.original} />
-      </TableLink>
+      <ProjectNameInfoTooltip project={ctx.row.original}>
+        <TableLink href={ctx.row.original.href}>
+          <ProjectNameCell project={ctx.row.original} withInfoTooltip />
+        </TableLink>
+      </ProjectNameInfoTooltip>
     ),
     meta: {
       tooltip:

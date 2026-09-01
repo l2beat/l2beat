@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "timestamp": 1769510717,
-  "configHash": "0x8192c5b5f9936379abd3392407409821e4221235526b62f2ae7e1cacda25a546",
+  "timestamp": 1786612387,
+  "configHash": "0x2e6508c3065ac604a4b2341439c30bdf79511651bea082bff8ba2a97432fbcc5",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -10,226 +10,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
-          "role": ".tokenAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812",
-          "description": "manage critical access control roles and the role that can upgrade the implementation..",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "delay": 259200,
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "delay": 259200,
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "delay": 259200,
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "delay": 259200,
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1692867743,
       "sinceBlock": 17983541,
       "values": {
@@ -264,6 +49,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
+      "deployerAddress": "eth:0xe50EdeAf57E63dD4a93d1B075bd64395011Be96C",
       "sinceTimestamp": 1687524587,
       "sinceBlock": 17542373,
       "values": {
@@ -280,63 +66,7 @@
     {
       "address": "eth:0x030ceEE5D4CBc304287234720B11E00f47695755",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x033796B61cD66eD49d22a786cbA12a8D76717302",
@@ -353,6 +83,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
+      "deployerAddress": "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d",
       "sinceTimestamp": 1652101038,
       "sinceBlock": 14742550,
       "values": {
@@ -383,19 +114,12 @@
       "type": "Contract",
       "template": "starknet/StarkgateManager",
       "sourceHashes": [
-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
-        "0x542e548d4e5b9c6da6613f9a5618cfe1f3f2aedf1449c2f52fa6c565eb90e51d"
+        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f",
+        "0x11ce7cbe180d6e08e3dabf78d67f1da5bc6ae76675467c1821a812f067c0c0e4"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually).",
-          "role": ".manager"
-        }
-      ],
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707308579,
       "sinceBlock": 19176289,
       "values": {
@@ -496,11 +220,12 @@
       "type": "Contract",
       "template": "starknet/StarkgateRegistry",
       "sourceHashes": [
-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
-        "0x90444355cfe353ba90f2050035caf7c6ae157bfb6e54bf74a4117580f568bf95"
+        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f",
+        "0x49b696a50718ac322e3bcefc4377b3fdbb9cbb1c8c282aad76b481910491824b"
       ],
       "proxyType": "StarkWare proxy",
       "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707322595,
       "sinceBlock": 19177447,
       "values": {
@@ -555,44 +280,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599599,
       "sinceBlock": 21767132,
       "values": {
@@ -602,8 +294,8 @@
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
           "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
           "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-          "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+          "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
@@ -617,7 +309,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -626,10 +318,15 @@
       },
       "references": [
         {
-          "text": "Security Council members - Starkware Governance Hub",
-          "href": "https://governance.starknet.io/learn/security_council"
+          "text": "Security Council - Starknet Docs",
+          "href": "https://docs.starknet.io/learn/protocol/security-council"
         }
       ]
+    },
+    {
+      "address": "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
@@ -642,11 +339,12 @@
       "type": "Contract",
       "template": "starknet/StarknetMultiBridge_haltable",
       "sourceHashes": [
-        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
-        "0x75f2a8488acf6abb9e13f53441969f226aebd93a943aae7e6051a2cbfea0b7d0"
+        "0xf53fa59a32c4a031ce88a109b01439d6e82cf8a3c883d9c7b91e6ad2e7fc256c",
+        "0xa85eb6c0c00a5231c470d84df58b4779bded066ada67ba9c6d07db3512fb48db"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137600,
       "sinceBlock": 15090980,
       "values": {
@@ -807,21 +505,9 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x32369C32113D6A85d4B71faA40DDd048187DCe79",
@@ -831,82 +517,12 @@
     {
       "address": "eth:0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC",
-          "via": [
-            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SHARPVerifierCallProxy",
@@ -916,6 +532,11 @@
       "targetProject": "shared-sharp-verifier"
     },
     {
+      "address": "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x5540E5e19a48172C37d3D79523ab7737c5b2033F",
       "type": "EOA",
       "proxyType": "EOA"
@@ -923,31 +544,7 @@
     {
       "address": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "role": ".$admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
@@ -956,9 +553,8 @@
     },
     {
       "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sharp-verifier"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
@@ -976,11 +572,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x20a609ea574f29e1dc4cd95f6a3db5438a67101c26995c48f2c2f69e446b7b98",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689267,
       "sinceBlock": 17968760,
       "values": {
@@ -1127,48 +724,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x030ceEE5D4CBc304287234720B11E00f47695755",
       "sinceTimestamp": 1727171111,
       "sinceBlock": 20819642,
       "values": {
@@ -1214,64 +774,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin",
-          "via": [
-            {
-              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "role": ".$admin",
-          "via": [
-            {
-              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin",
-          "via": [
-            {
-              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "role": ".$admin",
-          "via": [
-            {
-              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-          "delay": 691200,
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299",
       "sinceTimestamp": 1672587635,
       "sinceBlock": 16312873,
       "values": {
@@ -1290,7 +797,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 37,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1309,11 +816,12 @@
       "type": "Contract",
       "template": "starknet/StarknetMultiBridge",
       "sourceHashes": [
-        "0xef5bec9147a21f62b18b6320b8177ab928b4200dbdd747833b23522450ec899c",
-        "0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211"
+        "0x97cb2a0f2f480643f5d3de3af907aed2ca72977b7a4f8f9f93a1c0595b895f73",
+        "0x93f566217d18d47b1788b7d3ea4caa5ff428416b8f8268ab446e2301d46e4411"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1757941367,
       "sinceBlock": 23368649,
       "values": {
@@ -1410,7 +918,12 @@
         "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "ProxyV5",
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "address": "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1DaiGateway",
@@ -1422,6 +935,7 @@
       ],
       "proxyType": "immutable",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
+      "deployerAddress": "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d",
       "sinceTimestamp": 1666446647,
       "sinceBlock": 15804056,
       "values": {
@@ -1450,11 +964,12 @@
       "type": "Contract",
       "template": "starknet/StarknetMultiBridge_haltable",
       "sourceHashes": [
-        "0xef5bec9147a21f62b18b6320b8177ab928b4200dbdd747833b23522450ec899c",
-        "0x75f2a8488acf6abb9e13f53441969f226aebd93a943aae7e6051a2cbfea0b7d0"
+        "0x97cb2a0f2f480643f5d3de3af907aed2ca72977b7a4f8f9f93a1c0595b895f73",
+        "0xa85eb6c0c00a5231c470d84df58b4779bded066ada67ba9c6d07db3512fb48db"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1750859519,
       "sinceBlock": 22781865,
       "values": {
@@ -1581,7 +1096,7 @@
         "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": "ProxyV5",
         "eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc",
@@ -1594,11 +1109,12 @@
       "type": "Contract",
       "template": "starknet/StarknetEthBridge",
       "sourceHashes": [
-        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
-        "0x7e4d647efdbbd67f7c4af48b29a4ece562fe1383101cd94625402008a572ba87"
+        "0xa2b51d5024b872eb502c2abfec88397c41c32d42494dd19905514a69d38abfec",
+        "0x9bd8df5bc00910b64e4e65ce2e453bbac21a9a7c1fcd0a6b09c01bc33ffa171c"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1647857148,
       "sinceBlock": 14429055,
       "values": {
@@ -1759,16 +1275,22 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "USDTBridge",
       "address": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0xf53fa59a32c4a031ce88a109b01439d6e82cf8a3c883d9c7b91e6ad2e7fc256c",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137615,
       "sinceBlock": 15090981,
       "values": {
@@ -1925,11 +1447,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0x53dd98b4b8b7867686e1dba07dd739c1bdb6b4a5e11d04efbbe743cb975dbc8c",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x9a1f6dfc09188744a544eb39f54d07327ed5aa4bca9cf01c4c367c0aaba7e34d",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xCd7F67F78E76b2797678dAde0246466459b5D259",
       "sinceTimestamp": 1685452751,
       "sinceBlock": 17371995,
       "values": {
@@ -2069,17 +1592,18 @@
       "type": "Contract",
       "template": "starknet/Starknet",
       "sourceHashes": [
-        "0xce548bceca83c22eb3686987781754a8d9527dde81c86ae4a13d5a9ba5395d62",
-        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
+        "0xae4b9235290d1223f8c06fb525f6650abc203f29a6c25dc81cf2b021092ef0eb",
+        "0xef60960a959a9506c3f6eece9374f7fbcd095a488763801577ae88e427fd3d51"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
+      "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
         "stateBlockHash",
         "stateRoot"
       ],
+      "deployerAddress": "eth:0x194E22F49BC3f58903866d55488E1e9e8d69b517",
       "sinceTimestamp": 1636978914,
       "sinceBlock": 13620297,
       "values": {
@@ -2088,7 +1612,7 @@
           "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
         ],
         "$immutable": false,
-        "$implementation": "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
+        "$implementation": "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A",
         "$pastUpgrades": [
           [
             "2021-11-15T12:26:20.000Z",
@@ -2139,28 +1663,46 @@
             "2025-03-24T17:11:59.000Z",
             "0x7e6e541652c8ed05afba0c7fd372d6a340d438d85a545666ee7ecd1a4046eb5b",
             ["eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"]
+          ],
+          [
+            "2026-04-20T11:53:35.000Z",
+            "0xb2fd817ea47d39435e0b08825964bcb0b2ae08ebc4c5a47954f9b169235ed1c1",
+            ["eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"]
           ]
         ],
-        "$upgradeCount": 10,
-        "aggregatorHashMapped": "1701025211190912681772481128523426351562426117847395998223683709327746845867",
-        "aggregatorProgramHash": "1701025211190912681772481128523426351562426117847395998223683709327746845867",
-        "configHash": "3188242426588271529884520804512942022765170489242162533995649881904346336763",
+        "$upgradeCount": 11,
+        "aggregatorHashMapped": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
+        "aggregatorProgramHash": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
+        "aggregatorProgramHashHistory": [
+          0,
+          "1161178844461337253856226043908368523817098764221830529880464854589141231910",
+          "15787695375210609250491147414005894154890873413229882671403677761527504080",
+          "273279642033703284306509103355536170486431195329675679055627933497997642494",
+          "760308386675154762009993173725077399730170358078020153308029499928875469870",
+          "1701025211190912681772481128523426351562426117847395998223683709327746845867",
+          "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+        ],
+        "configHash": "Starknet OS config V4 (SN_MAIN, STRK fee token, no state-diff encryption)",
+        "configHashHistory": [
+          "671483050609816861429812414688707376174032882875357307847551691140236175837",
+          "2590421891839256512113614983194993186457498815986333310670788206383913888162",
+          "3188242426588271529884520804512942022765170489242162533995649881904346336763"
+        ],
         "feeCollector": "eth:0x0000000000000000000000000000000000000000",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
-        "governedFinalized": 0,
-        "identify": "StarkWare_Starknet_2025_10",
-        "implementation": "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
+        "identify": "StarkWare_Starknet_2026_11",
+        "implementation": "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1687520,
+        "l1ToL2MessageNonce": 1696820,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
           "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
         ],
-        "programHash": "918745833886511857768061986591752808672496300091957204265383861063635175685",
+        "programHash": "2006389624453304912912750132846114593020263069652857561377702883656839453432",
         "programHashHistory": [
           "1921772108187713503530008849184725638117898887391063185252422808224349294626",
           "3258367057337572248818716706664617507069572185152472699066582725377748079373",
@@ -2174,38 +1716,87 @@
           "2397984267054479079853548842566103781972463965746662494980785692480538410509",
           "2231644845387633655859130162745748394456578773184260372693322394988769337368",
           "2534935718742676028234156221136000178296467523045214874259117268197132196876",
-          "793595346346724189681221050719974054861327641387231526786912662354259445535"
+          "793595346346724189681221050719974054861327641387231526786912662354259445535",
+          "918745833886511857768061986591752808672496300091957204265383861063635175685",
+          "2733003247060056328192560178934419513655729851806095615814023997114795707702"
         ],
-        "programHashMapped": "918745833886511857768061986591752808672496300091957204265383861063635175685",
+        "programHashMapped": "2006389624453304912912750132846114593020263069652857561377702883656839453432",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1794705575304545653555250059344444209501136001411434838534066072021738544278",
-        "stateBlockNumber": 6098913,
-        "stateRoot": "928059118949997370702171154852949991044296692383084129143527623834870904323",
+        "stateBlockHash": "460416287689914351838488462183993789270396474383792784101450107858726611728",
+        "stateBlockNumber": 13216199,
+        "stateRoot": "2826411619930727617352753332712584583771552457306778130493037728711489308726",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."
+          "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
         },
         "isFinalized": {
           "severity": "HIGH",
-          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+          "description": "Locks the current implementation's setters for the Starknet OS hash, aggregator hash, OS-config hash, and message-cancellation delay. It does not lock the fee collector or freeze the proxy, so an implementation upgrade can replace or bypass every pin."
+        },
+        "programHashHistory": {
+          "severity": "HIGH",
+          "description": "Previous Starknet OS program hashes emitted on each governance update. The current value is exposed separately as `programHash`.",
+          "type": "CODE_CHANGE"
+        },
+        "aggregatorProgramHashHistory": {
+          "severity": "HIGH",
+          "description": "Previous Starknet aggregator program hashes emitted on each governance update. The current value is exposed separately as `aggregatorProgramHash`.",
+          "type": "CODE_CHANGE"
+        },
+        "configHashHistory": {
+          "severity": "HIGH",
+          "description": "Previous Starknet OS-configuration commitments emitted on each governance update. The current value is exposed separately as `configHash`.",
+          "type": "CODE_CHANGE"
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "SHARP fact registry used by `updateStateInternal`. It is initialized once and currently points to an upgradeable call proxy. Starknet calls the proxy's explicit `isValid` function, which always queries the default target and its active reference registries; caller-specific fallback routes affect proof submission but not this lookup. All programs pinned by the default target and active references are part of Starknet's proof trust chain. Changing this address requires upgrading the Starknet implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "feeCollector": {
+          "severity": "HIGH",
+          "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
+          "type": "RISK_PARAMETER"
         },
         "programHash": {
           "severity": "HIGH",
-          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+          "description": "Starknet OS program hash. In direct mode it is included in the SHARP fact key; in aggregator mode the aggregator's public output must contain this exact OS hash. A malicious OS program could prove arbitrary state transitions. Update the program-hash catalog and liveness tracking whenever this changes.",
           "type": "CODE_CHANGE"
+        },
+        "aggregatorProgramHash": {
+          "severity": "HIGH",
+          "description": "Cairo aggregator program hash used in the SHARP fact key when the program output declares aggregator mode. The output must also name the current Starknet OS hash. A malicious aggregator could fabricate the transition output attributed to otherwise valid OS executions.",
+          "type": "CODE_CHANGE"
+        },
+        "configHash": {
+          "severity": "HIGH",
+          "description": "Commitment to the Starknet OS execution environment which every direct or aggregated program output must equal. The current V4 commitment is reproducible from `StarknetOsConfig4`, chain ID `SN_MAIN`, the STRK fee-token address, and no state-diff encryption public keys. A malicious value can authorize proofs under a different chain ID, fee token, or optional public-key configuration.",
+          "type": "CODE_CHANGE"
+        },
+        "programHashMapped": {
+          "description": "Human-readable label for the current Starknet OS program hash."
+        },
+        "aggregatorHashMapped": {
+          "description": "Human-readable label for the current Starknet aggregator program hash."
         }
       },
       "implementationNames": {
         "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Proxy",
-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04": "Starknet"
+        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A": "Starknet"
       },
       "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "2579130946496422157802313572919622021390761807038780433165936715591440018810": "Starknet OS config V4 (SN_MAIN, STRK fee token, no state-diff encryption)"
+          }
+        },
         {
           "typeCaster": "Mapping",
           "arg": {
@@ -2244,32 +1835,11 @@
       "type": "Contract",
       "template": "starknet/DelayedExecutor",
       "sourceHashes": [
-        "0x6a59350278d90840dff5cb37a714e105c3003955a6c304046fb1222f61374eed"
+        "0xd1a33296097e75a8950498c36c3b41ab16a6f16f7f1e1e3b17213a92c4b390fd"
       ],
       "proxyType": "immutable",
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "role": ".$admin"
-        }
-      ],
+      "deployerAddress": "eth:0x555134E9d31ECe4CEa6F83674A887cDb150dA47A",
       "sinceTimestamp": 1739989031,
       "sinceBlock": 21882151,
       "values": {
@@ -2290,11 +1860,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xa126705c0d6B5dd65279253Ea2C8B19A04b96e60",
       "sinceTimestamp": 1704905879,
       "sinceBlock": 18977888,
       "values": {
@@ -2470,11 +2041,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x4c21fb0aff75ac1755959abe5aace71b3d70cd508a697c0a16ffbd2f81b5420a",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1685880791,
       "sinceBlock": 17407168,
       "values": {
@@ -2615,10 +2187,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x32369C32113D6A85d4B71faA40DDd048187DCe79",
       "sinceTimestamp": 1767857003,
       "sinceBlock": 24188443,
       "values": {
@@ -2650,11 +2223,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x20a609ea574f29e1dc4cd95f6a3db5438a67101c26995c48f2c2f69e446b7b98",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689279,
       "sinceBlock": 17968761,
       "values": {
@@ -2785,11 +2359,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x20a609ea574f29e1dc4cd95f6a3db5438a67101c26995c48f2c2f69e446b7b98",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689255,
       "sinceBlock": 17968759,
       "values": {
@@ -2920,11 +2495,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x4c21fb0aff75ac1755959abe5aace71b3d70cd508a697c0a16ffbd2f81b5420a",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1688046071,
       "sinceBlock": 17585317,
       "values": {
@@ -3046,7 +2622,7 @@
           }
         }
       ],
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "MultiBridge",
@@ -3054,11 +2630,12 @@
       "type": "Contract",
       "template": "starknet/StarknetMultiBridge",
       "sourceHashes": [
-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
-        "0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211"
+        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f",
+        "0x93f566217d18d47b1788b7d3ea4caa5ff428416b8f8268ab446e2301d46e4411"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707322643,
       "sinceBlock": 19177451,
       "values": {
@@ -3202,11 +2779,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0xf53fa59a32c4a031ce88a109b01439d6e82cf8a3c883d9c7b91e6ad2e7fc256c",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137639,
       "sinceBlock": 15090984,
       "values": {
@@ -3360,26 +2938,7 @@
     {
       "address": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
-          "role": ".$admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
@@ -3393,40 +2952,22 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "operateStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".operators"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599755,
       "sinceBlock": 21767145,
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-          "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+          "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+          "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+          "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
-          "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
@@ -3440,7 +2981,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3454,11 +2995,12 @@
       "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
-        "0x28ffce7fadb62d041968d5ce5d5fe471d2bedf36c28e342957a33d63a00b872c",
-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+        "0x74a5dd4c0ea9361b77fae0d366e83ad1e54543f252e4cceade7f81ffdec17b7c",
+        "0x6bafeadde9cde82862409d80d9665d5db6a4f5d8323c7ab5e61e79126c5e4ec0"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1698061847,
       "sinceBlock": 18412782,
       "values": {
@@ -3582,11 +3124,6 @@
         }
       ],
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
@@ -3790,66 +3327,6 @@
       "function signalTokenHalt(address token) payable",
       "function withdraw(address token, uint256 amount, address recipient)",
       "function withdraw(address token, uint256 amount)"
-    ],
-    "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04": [
-      "event AggregatorProgramHashChanged(address indexed changedBy, uint256 oldAggregatorProgramHash, uint256 newAggregatorProgramHash)",
-      "event ConfigHashChanged(address indexed changedBy, uint256 oldConfigHash, uint256 newConfigHash)",
-      "event ConsumedMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
-      "event ConsumedMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
-      "event Finalized()",
-      "event LogMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
-      "event LogMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce, uint256 fee)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogOperatorAdded(address operator)",
-      "event LogOperatorRemoved(address operator)",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
-      "event LogStateUpdate(uint256 globalRoot, int256 blockNumber, uint256 blockHash)",
-      "event MessageToL2Canceled(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
-      "event MessageToL2CancellationStarted(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
-      "event ProgramHashChanged(address indexed changedBy, uint256 oldProgramHash, uint256 newProgramHash)",
-      "function aggregatorProgramHash() view returns (uint256)",
-      "function cancelL1ToL2Message(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
-      "function configHash() view returns (uint256)",
-      "function consumeMessageFromL2(uint256 fromAddress, uint256[] payload) returns (bytes32)",
-      "function feeCollector() view returns (address)",
-      "function finalize()",
-      "function getMaxL1MsgFee() pure returns (uint256)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes data)",
-      "function isFinalized() view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isOperator(address user) view returns (bool)",
-      "function l1ToL2MessageCancellations(bytes32 msgHash) view returns (uint256)",
-      "function l1ToL2MessageNonce() view returns (uint256)",
-      "function l1ToL2Messages(bytes32 msgHash) view returns (uint256)",
-      "function l1ToL2MsgHash(address fromAddress, uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) pure returns (bytes32)",
-      "function l2ToL1Messages(bytes32 msgHash) view returns (uint256)",
-      "function l2ToL1MsgHash(uint256 fromAddress, address toAddress, uint256[] payload) pure returns (bytes32)",
-      "function messageCancellationDelay() view returns (uint256)",
-      "function programHash() view returns (uint256)",
-      "function registerOperator(address newOperator)",
-      "function safeAddImplementation(address newImplementation, bytes data)",
-      "function sendMessageToL2(uint256 toAddress, uint256 selector, uint256[] payload) payable returns (bytes32, uint256)",
-      "function setAggregatorProgramHash(uint256 newAggregatorProgramHash)",
-      "function setConfigHash(uint256 newConfigHash)",
-      "function setFeeCollectionAddress(address collector)",
-      "function setMessageCancellationDelay(uint256 delayInSeconds)",
-      "function setProgramHash(uint256 newProgramHash)",
-      "function starknetAcceptGovernance()",
-      "function starknetCancelNomination()",
-      "function starknetIsGovernor(address user) view returns (bool)",
-      "function starknetNominateNewGovernor(address newGovernor)",
-      "function starknetRemoveGovernor(address governorForRemoval)",
-      "function startL1ToL2MessageCancellation(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
-      "function stateBlockHash() view returns (uint256)",
-      "function stateBlockNumber() view returns (int256)",
-      "function stateRoot() view returns (uint256)",
-      "function unregisterOperator(address removedOperator)",
-      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
-      "function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)"
     ],
     "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4": [
       "constructor(uint256 upgradeActivationDelay)",
@@ -4245,6 +3722,66 @@
       "function safeAddImplementation(address newImplementation, bytes data)",
       "function upgradeTo(address newImplementation, bytes data)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A": [
+      "event AggregatorProgramHashChanged(address indexed changedBy, uint256 oldAggregatorProgramHash, uint256 newAggregatorProgramHash)",
+      "event ConfigHashChanged(address indexed changedBy, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConsumedMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event ConsumedMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event Finalized()",
+      "event LogMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event LogMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce, uint256 fee)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogOperatorAdded(address operator)",
+      "event LogOperatorRemoved(address operator)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
+      "event LogStateUpdate(uint256 globalRoot, int256 blockNumber, uint256 blockHash)",
+      "event MessageToL2Canceled(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event MessageToL2CancellationStarted(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event ProgramHashChanged(address indexed changedBy, uint256 oldProgramHash, uint256 newProgramHash)",
+      "function aggregatorProgramHash() view returns (uint256)",
+      "function cancelL1ToL2Message(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function configHash() view returns (uint256)",
+      "function consumeMessageFromL2(uint256 fromAddress, uint256[] payload) returns (bytes32)",
+      "function feeCollector() view returns (address)",
+      "function finalize()",
+      "function getMaxL1MsgFee() pure returns (uint256)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isFinalized() view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isOperator(address user) view returns (bool)",
+      "function l1ToL2MessageCancellations(bytes32 msgHash) view returns (uint256)",
+      "function l1ToL2MessageNonce() view returns (uint256)",
+      "function l1ToL2Messages(bytes32 msgHash) view returns (uint256)",
+      "function l1ToL2MsgHash(address fromAddress, uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) pure returns (bytes32)",
+      "function l2ToL1Messages(bytes32 msgHash) view returns (uint256)",
+      "function l2ToL1MsgHash(uint256 fromAddress, address toAddress, uint256[] payload) pure returns (bytes32)",
+      "function messageCancellationDelay() view returns (uint256)",
+      "function programHash() view returns (uint256)",
+      "function registerOperator(address newOperator)",
+      "function safeAddImplementation(address newImplementation, bytes data)",
+      "function sendMessageToL2(uint256 toAddress, uint256 selector, uint256[] payload) payable returns (bytes32, uint256)",
+      "function setAggregatorProgramHash(uint256 newAggregatorProgramHash)",
+      "function setConfigHash(uint256 newConfigHash)",
+      "function setFeeCollectionAddress(address collector)",
+      "function setMessageCancellationDelay(uint256 delayInSeconds)",
+      "function setProgramHash(uint256 newProgramHash)",
+      "function starknetAcceptGovernance()",
+      "function starknetCancelNomination()",
+      "function starknetIsGovernor(address user) view returns (bool)",
+      "function starknetNominateNewGovernor(address newGovernor)",
+      "function starknetRemoveGovernor(address governorForRemoval)",
+      "function startL1ToL2MessageCancellation(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function stateBlockHash() view returns (uint256)",
+      "function stateBlockNumber() view returns (int256)",
+      "function stateRoot() view returns (uint256)",
+      "function unregisterOperator(address removedOperator)",
+      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
+      "function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)"
     ],
     "eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d": [
       "constructor(address _starkNet, address _dai, uint256 _l2Dai, address _escrow, uint256 _l2DaiBridge)",
@@ -4929,12 +4466,670 @@
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
+    "starknet/Starknet": "0xfadaad9feb97c113d19f43abb4e24ed692a26a6efc6094ada095836e6793f431",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 24325656 },
-  "permissionsConfigHash": "0xa4d7d4b4ca08ed468ecc8a9bbfdc82705f284f1b4fc9a694bf9a7859c27002fb"
+  "usedBlockNumbers": { "ethereum": 25745123 },
+  "permissionsConfigHash": "0x8d7e07bdf23362ed999fa6b9521fb6f1214328b6851e693ccb9805ebe31ff9d2",
+  "permissions": {
+    "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
+          "role": ".tokenAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "description": "manage critical access control roles and the role that can upgrade the implementation..",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "delay": 259200,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "delay": 259200,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "delay": 259200,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "delay": 259200,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0x030ceEE5D4CBc304287234720B11E00f47695755": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        }
+      ]
+    },
+    "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually).",
+          "role": ".manager"
+        }
+      ]
+    },
+    "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        }
+      ]
+    },
+    "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        }
+      ]
+    },
+    "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0x59232aC80E6d403b6381393e52f4665ECA328558": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        }
+      ]
+    },
+    "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        }
+      ]
+    },
+    "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
+          "role": ".$admin",
+          "via": [
+            {
+              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "role": ".$admin",
+          "via": [
+            {
+              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin",
+          "via": [
+            {
+              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "role": ".$admin",
+          "via": [
+            {
+              "address": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+          "delay": 691200,
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        }
+      ]
+    }
+  }
 }

@@ -1,19 +1,17 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-export const GetMetricsV1SuccessSchema = v.object({
-  throughput: v.number(),
-})
-
-export const GetMetricsV2SuccessSchema = v.object({
+export const GetMetricsResponse = v.object({
   total_bytes_posted: v.number(),
 })
+export type GetMetricsResponse = v.infer<typeof GetMetricsResponse>
 
-const ProjectDataSchema = v.object({
+const ProjectData = v.object({
   datetime: v
     .string()
     .transform((val) => UnixTime.fromDate(new Date(val + 'Z'))),
   customer_id: v.string(),
   total_size_mb: v.number(),
 })
-export const GetByProjectDataSuccessSchema = v.array(ProjectDataSchema)
+export const GetByProjectResponse = v.array(ProjectData)
+export type GetByProjectResponse = v.infer<typeof GetByProjectResponse>

@@ -11,6 +11,7 @@ interface ProofSystemCellProps {
   slug: string
   stacks?: ProjectScalingStack[]
   hideType?: boolean
+  permissioned?: boolean
 }
 
 export function ProofSystemCell({
@@ -18,15 +19,25 @@ export function ProofSystemCell({
   slug,
   stacks,
   hideType,
+  permissioned,
 }: ProofSystemCellProps) {
+  const secondLine =
+    permissioned !== undefined
+      ? permissioned
+        ? 'Permissioned'
+        : 'Permissionless'
+      : proofSystem?.name && !hideType
+        ? proofSystem.name
+        : undefined
+  const zkCatalogIds = proofSystem?.zkCatalogIds ?? []
   return (
     <TableLink
       href={
         !proofSystem?.type
           ? undefined
-          : proofSystem?.zkCatalogId
-            ? `/zk-catalog?highlight=${proofSystem?.zkCatalogId}`
-            : `/scaling/projects/${slug}#state-validation`
+          : zkCatalogIds.length > 0
+            ? `/zk-catalog?highlight=${zkCatalogIds.join(',')}`
+            : `/layer2s/projects/${slug}#state-validation`
       }
     >
       <TwoRowCell>
@@ -37,14 +48,7 @@ export function ProofSystemCell({
             <TypeInfo stacks={stacks}>{proofSystem?.type ?? 'None'}</TypeInfo>
           )}
         </TwoRowCell.First>
-        {proofSystem?.name && !hideType && (
-          <TwoRowCell.Second>{proofSystem?.name}</TwoRowCell.Second>
-        )}
-        {hideType && proofSystem?.challengeProtocol && (
-          <TwoRowCell.Second>
-            {proofSystem?.challengeProtocol}
-          </TwoRowCell.Second>
-        )}
+        {secondLine && <TwoRowCell.Second>{secondLine}</TwoRowCell.Second>}
       </TwoRowCell>
     </TableLink>
   )

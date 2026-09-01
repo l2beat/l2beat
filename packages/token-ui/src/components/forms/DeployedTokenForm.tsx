@@ -1,9 +1,15 @@
-import type { AbstractTokenRecord, RouterOutputs } from '@l2beat/token-backend'
+import type {
+  AbstractTokenRecord,
+  ChainApi,
+  ChainRecord,
+  RouterOutputs,
+} from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import {
   ArrowRightIcon,
   CheckIcon,
   ChevronsUpDownIcon,
+  CircleAlertIcon,
   PlusIcon,
   SettingsIcon,
   TrashIcon,
@@ -24,6 +30,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -42,10 +49,6 @@ import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
 import { parseDateTimePaste } from '~/utils/parseDate'
-import type {
-  ChainApi,
-  ChainRecord,
-} from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
 import { CardActionButton, CardActionButtons } from '../CardActionButtons'
 import { Badge } from '../core/Badge'
@@ -88,6 +91,10 @@ const symbolSourceToLabel = {
   coingecko: 'CoinGecko',
 } as const
 
+type AutofillWarning =
+  RouterOutputs['deployedTokens']['checks']['warnings'][number]
+type AutofillWarningField = AutofillWarning['field']
+
 const TvsMetadata = v.object({
   includeInCalculations: v.boolean(),
   source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
@@ -114,6 +121,7 @@ export const DeployedTokenSchema = v.object({
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
   comment: v.string().optional(),
+  ignored: v.boolean(),
   metadata: Metadata.optional(),
 })
 
@@ -167,7 +175,9 @@ export function DeployedTokenForm({
     tokenDetails.data?.error?.type !== 'chain-not-found' &&
     tokenDetails.data?.error?.type !== 'already-exists'
   const addressFieldSuccess =
-    tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
+    tokenDetails.data &&
+    tokenDetails.data?.error?.type !== 'already-exists' &&
+    tokenDetails.data?.error?.type !== 'not-a-token'
   const fetchedSymbol = tokenDetails.data?.data?.symbol
   const symbolSource = tokenDetails.data?.data?.symbolSource as
     | keyof typeof symbolSourceToLabel
@@ -308,6 +318,10 @@ export function DeployedTokenForm({
                     <FormLabel>
                       Address{' '}
                       {tokenDetails.loading && <Spinner className="size-3.5" />}
+                      <AutofillWarningIndicator
+                        warnings={tokenDetails.data?.warnings}
+                        fields={['contractCode']}
+                      />
                     </FormLabel>
                     <div className="flex items-center gap-2">
                       <FormControl>
@@ -378,6 +392,10 @@ export function DeployedTokenForm({
                       {symbolSourceLabel}
                     </Badge>
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['symbol']}
+                  />
                 </FormLabel>
                 <FormControl>
                   <Input {...field} disabled={tokenDetails.loading} />
@@ -402,6 +420,10 @@ export function DeployedTokenForm({
                       chainName={chainValue}
                     />
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['decimals']}
+                  />
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -437,6 +459,10 @@ export function DeployedTokenForm({
                       chainName={chainValue}
                     />
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['deploymentTimestamp', 'contractCode']}
+                  />
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -477,6 +503,14 @@ export function DeployedTokenForm({
                       chainName={chainValue}
                     />
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={[
+                      'abstractTokenId',
+                      'abstractTokenSuggestions',
+                      'coingeckoId',
+                    ]}
+                  />
                 </FormLabel>
                 <div className="flex items-center gap-2">
                   <Popover>
@@ -561,14 +595,14 @@ export function DeployedTokenForm({
                       <ArrowRightIcon />
                     </Link>
                   )}
-                  {tokenDetails.data?.data?.coingeckoId && !abstractToken && (
+                  {!abstractToken && (
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Link
                           to={buildUrlWithParams('/tokens/new', {
                             tab: 'abstract',
-                            coingeckoId: tokenDetails.data?.data?.coingeckoId,
                             redirectTo: 'deployed',
+                            coingeckoId: tokenDetails.data?.data?.coingeckoId,
                           })}
                           className={buttonVariants({
                             variant: 'outline',
@@ -624,6 +658,30 @@ export function DeployedTokenForm({
                   <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ignored"
+            render={({ field }) => (
+              <FormItem className="grid gap-1">
+                <div className="flex flex-row items-center gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) =>
+                        field.onChange(checked === true)
+                      }
+                    />
+                  </FormControl>
+                  <FormLabel className="font-normal text-sm">Ignored</FormLabel>
+                </div>
+                <FormDescription>
+                  When ignoring, put reason in the comment. Ignored tokens stay
+                  in TokenDB but are excluded from graphs and calculations. You
+                  may need to refresh financials after ignoring a token.
+                </FormDescription>
               </FormItem>
             )}
           />
@@ -685,6 +743,35 @@ export function setDeployedTokenExistsError(
     type: 'already-exists',
     message: 'Deployed token with given address and chain already exists',
   })
+}
+
+function AutofillWarningIndicator({
+  warnings,
+  fields,
+}: {
+  warnings: AutofillWarning[] | undefined
+  fields: AutofillWarningField[]
+}) {
+  const filteredWarnings =
+    warnings?.filter((warning) => fields.includes(warning.field)) ?? []
+  if (filteredWarnings.length === 0) {
+    return null
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="ml-1 inline-flex cursor-help align-middle text-muted-foreground">
+          <CircleAlertIcon className="size-lh stroke-red-500" />
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-80 space-y-1">
+        {filteredWarnings.map((warning) => (
+          <p key={`${warning.field}:${warning.message}`}>{warning.message}</p>
+        ))}
+      </TooltipContent>
+    </Tooltip>
+  )
 }
 
 function TvsMetadataFields({

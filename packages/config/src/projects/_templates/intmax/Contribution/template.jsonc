@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).",
+  "category": "non-critical",
   "ignoreMethods": ["proxiableUUID"],
   "ignoreInWatchMode": ["getCurrentPeriod"]
 }

@@ -3,6 +3,7 @@ export interface InteropChain {
   name: string
   type: 'evm'
   display: string
+  color: string
   iconSlug?: string
   explorerUrl: string
 }
@@ -13,6 +14,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Ethereum',
     type: 'evm',
     display: 'ETH',
+    color: '#627EEA',
     explorerUrl: 'https://etherscan.io',
   },
   {
@@ -20,6 +22,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Arbitrum One',
     type: 'evm',
     display: 'ARB',
+    color: '#28A0F0',
     explorerUrl: 'https://arbiscan.io',
   },
   {
@@ -27,7 +30,16 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Base',
     type: 'evm',
     display: 'BASE',
+    color: '#0052FF',
     explorerUrl: 'https://basescan.org',
+  },
+  {
+    id: 'robinhood',
+    name: 'Robinhood Chain',
+    type: 'evm',
+    display: 'RH',
+    color: '#00C805',
+    explorerUrl: 'https://robinhoodchain.blockscout.com',
   },
   {
     id: 'optimism',
@@ -35,14 +47,8 @@ export const INTEROP_CHAINS: InteropChain[] = [
     iconSlug: 'op-mainnet',
     type: 'evm',
     display: 'OP',
+    color: '#FF0420',
     explorerUrl: 'https://optimistic.etherscan.io',
-  },
-  {
-    id: 'apechain',
-    name: 'ApeChain',
-    type: 'evm',
-    display: 'APE',
-    explorerUrl: 'https://apescan.io',
   },
   {
     id: 'polygonpos',
@@ -50,6 +56,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Polygon PoS',
     type: 'evm',
     display: 'POL',
+    color: '#8247E5',
     explorerUrl: 'https://polygonscan.com',
   },
   {
@@ -58,6 +65,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'ZKsync Era',
     type: 'evm',
     display: 'ZK',
+    color: '#4E529A',
     explorerUrl: 'https://explorer.zksync.io',
   },
   {
@@ -65,6 +73,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Abstract',
     type: 'evm',
     display: 'ABS',
+    color: '#00FF94',
     explorerUrl: 'https://abscan.org',
   },
   {
@@ -73,6 +82,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Katana',
     type: 'evm',
     display: 'KAT',
+    color: '#E11D48',
     explorerUrl: 'https://katanascan.com',
   },
   {
@@ -80,13 +90,23 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'BNB Smart Chain',
     type: 'evm',
     display: 'BSC',
+    color: '#F0B90B',
     explorerUrl: 'https://bscscan.com',
+  },
+  {
+    id: 'gnosis',
+    name: 'Gnosis Chain',
+    type: 'evm',
+    display: 'GNO',
+    color: '#04795B',
+    explorerUrl: 'https://gnosis.blockscout.com',
   },
   {
     id: 'solana',
     name: 'Solana',
     type: 'evm',
     display: 'SOL',
+    color: '#9945FF',
     explorerUrl: 'https://solscan.io',
   },
   {
@@ -94,6 +114,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Starknet',
     type: 'evm',
     display: 'STRK',
+    color: '#EC796B',
     explorerUrl: 'https://starkscan.co',
   },
   {
@@ -101,6 +122,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Ink',
     type: 'evm',
     display: 'INK',
+    color: '#B87FFF',
     explorerUrl: 'https://explorer.inkonchain.com',
   },
   {
@@ -108,6 +130,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'MegaETH',
     type: 'evm',
     display: 'MEGA',
+    color: '#FF6B00',
     explorerUrl: 'https://megaeth.blockscout.com',
   },
   {
@@ -116,13 +139,23 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'World Chain',
     type: 'evm',
     display: 'WORLD',
+    color: '#1DC99E',
     explorerUrl: 'https://worldscan.org',
+  },
+  {
+    id: 'rise',
+    name: 'RISE',
+    type: 'evm',
+    display: 'RISE',
+    color: '#04DF83',
+    explorerUrl: 'https://explorer.risechain.com',
   },
   {
     id: 'celo',
     name: 'Celo',
     type: 'evm',
     display: 'CELO',
+    color: '#FCFF52',
     explorerUrl: 'https://celoscan.io',
   },
   {
@@ -130,28 +163,39 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Unichain',
     type: 'evm',
     display: 'UNI',
+    color: '#FF007A',
     explorerUrl: 'https://uniscan.xyz',
-  },
-  {
-    id: 'forknet',
-    iconSlug: 'forknet',
-    name: 'Forknet',
-    type: 'evm',
-    display: 'FORK',
-    explorerUrl: 'https://forkscan.org',
   },
   {
     id: 'linea',
     name: 'Linea',
     type: 'evm',
     display: 'LINEA',
+    color: '#61DFFF',
     explorerUrl: 'https://lineascan.build',
+  },
+  {
+    id: 'xlayer',
+    name: 'X Layer',
+    type: 'evm',
+    display: 'XLAYER',
+    color: '#000000',
+    explorerUrl: 'https://web3.okx.com/explorer/x-layer/evm',
+  },
+  {
+    id: 'adi',
+    name: 'ADI Chain',
+    type: 'evm',
+    display: 'ADI',
+    color: '#FD7108',
+    explorerUrl: 'https://explorer-bls.adifoundation.ai',
   },
   {
     id: 'avalanche',
     name: 'Avalanche',
     type: 'evm',
     display: 'AVAX',
+    color: '#E84142',
     explorerUrl: 'https://snowtrace.io',
   },
   {
@@ -159,6 +203,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'HyperEVM',
     type: 'evm',
     display: 'HYPER',
+    color: '#3CFF72',
     explorerUrl: 'https://hyperevmscan.io',
   },
   {
@@ -166,8 +211,57 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Tempo',
     type: 'evm',
     display: 'TMP',
+    color: '#7C3AED',
     explorerUrl: 'https://explore.tempo.xyz',
+  },
+  {
+    id: 'monad',
+    name: 'Monad',
+    type: 'evm',
+    display: 'MON',
+    color: '#836EF9',
+    explorerUrl: 'https://monadscan.com',
+  },
+  {
+    id: 'plasma',
+    name: 'Plasma',
+    type: 'evm',
+    display: 'XPL',
+    color: '#162F29',
+    explorerUrl: 'https://plasmascan.to',
+  },
+  {
+    id: 'tron',
+    name: 'Tron',
+    type: 'evm',
+    display: 'TRX',
+    color: '#FF060A',
+    explorerUrl: 'https://tronscan.org',
+  },
+  {
+    id: 'hyperliquid',
+    name: 'Hyperliquid',
+    type: 'evm',
+    display: 'HL',
+    color: '#3CFF72',
+    explorerUrl: 'https://app.hyperliquid.xyz/explorer',
+  },
+  {
+    id: 'lighter',
+    name: 'Lighter',
+    type: 'evm',
+    display: 'LIGHTER',
+    color: '#1E88E5',
+    explorerUrl: 'https://app.lighter.xyz',
   },
 ] as const
 
-export const INTEROP_ONE_SIDED_CHAINS = ['solana'] as const
+export const INTEROP_ONE_SIDED_CHAINS = [
+  'solana',
+  'xlayer',
+  'adi',
+  'plasma',
+  'tron',
+  'hyperliquid',
+  'lighter',
+] as const

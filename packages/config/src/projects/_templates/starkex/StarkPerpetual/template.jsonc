@@ -31,7 +31,15 @@
       "severity": "HIGH",
       "permissions": [
         { "type": "upgrade", "delay": "{{getUpgradeActivationDelay}}" },
-        { "type": "governStarknet" },
+        {
+          "type": "upgrade",
+          "delay": "{{configurationDelay}}",
+          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters."
+        },
+        {
+          "type": "interact",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
+        },
         { "type": "interact", "description": "manage the token admin role." }
       ]
     },
@@ -60,7 +68,12 @@
         "add": { "event": "LogOperatorAdded" },
         "remove": { "event": "LogOperatorRemoved" }
       },
-      "permissions": [{ "type": "operateStarknet" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+        }
+      ]
     },
     "escapeVerifier": {
       "handler": { "type": "storage", "slot": 4, "returnType": "address" }

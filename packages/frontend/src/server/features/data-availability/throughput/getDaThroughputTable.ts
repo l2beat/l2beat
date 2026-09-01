@@ -67,32 +67,32 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   )
   // Grouped DA layer values
   const groupedDaLayerValues = groupBy(
-    sumByResolutionAndProject(daLayerValues, 'daily'),
+    sumByResolutionAndProject(daLayerValues, 'day'),
     (v) => v.daLayer,
   )
   // Grouped all projects values
   const groupedProjectValues = groupBy(
-    sumByResolutionAndProject(projectValues, 'daily'),
+    sumByResolutionAndProject(projectValues, 'day'),
     (v) => v.daLayer,
   )
   // Grouped all scaling only projects values
-  const groupedScalingOnlyValues = groupBy(
+  const groupedL2OnlyValues = groupBy(
     sumByResolutionAndProject(
       projectValues.filter(
         (v) => !sovereignProjectsNamesMap.has(v.projectId as ProjectId),
       ),
-      'daily',
+      'day',
     ),
     (v) => v.daLayer,
   )
-  const onlyScalingDaLayerValues = Object.fromEntries(
+  const onlyL2DaLayerValues = Object.fromEntries(
     daLayerIds.map((daLayer) => [
       daLayer,
-      sumByTimestamp(daLayer, groupedScalingOnlyValues),
+      sumByTimestamp(daLayer, groupedL2OnlyValues),
     ]),
   )
 
-  const { all: largestPostersAll, scalingOnly: largestPostersScalingOnly } =
+  const { all: largestPostersAll, l2Only: largestPostersL2Only } =
     await getLargestPosters(
       groupedDaLayerValues,
       groupedProjectValues,
@@ -160,10 +160,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
 
   return {
     data: getData(groupedDaLayerValues, largestPostersAll),
-    scalingOnlyData: getData(
-      onlyScalingDaLayerValues,
-      largestPostersScalingOnly,
-    ),
+    l2OnlyData: getData(onlyL2DaLayerValues, largestPostersL2Only),
   }
 }
 
@@ -200,6 +197,7 @@ function getPastDayData(
   return {
     totalPosted: currentTotalPosted,
     change,
+    changePeriod: '1D' as const,
     avgThroughputPerSecond,
     avgCapacityUtilization,
     largestPoster: largestPoster
@@ -212,7 +210,7 @@ function getPastDayData(
           ),
           totalPosted: Number(largestPoster.totalSize),
           href: largestPoster.slug
-            ? `/scaling/projects/${largestPoster.slug}`
+            ? `/layer2s/projects/${largestPoster.slug}`
             : undefined,
         }
       : undefined,
@@ -240,11 +238,12 @@ function getMockDaThroughputTableData(
                   name: 'Base',
                   percentage: 12,
                   totalPosted: 123123,
-                  href: '/scaling/projects/base',
+                  href: '/layer2s/projects/base',
                 },
                 avgCapacityUtilization: 24,
                 totalPosted: 10312412,
                 change: 0.15,
+                changePeriod: '1D',
                 avgThroughputPerSecond: 100000,
               },
               maxThroughputPerSecond: 400000,
@@ -257,7 +256,7 @@ function getMockDaThroughputTableData(
         })
         .filter(notUndefined),
     ),
-    scalingOnlyData: Object.fromEntries(
+    l2OnlyData: Object.fromEntries(
       daLayerIds
         .map((daLayerId) => {
           return [
@@ -267,11 +266,12 @@ function getMockDaThroughputTableData(
                 avgCapacityUtilization: 48,
                 totalPosted: 20312412,
                 change: -0.08,
+                changePeriod: '1D',
                 largestPoster: {
                   name: 'Base',
                   percentage: 40,
                   totalPosted: 123123,
-                  href: '/scaling/projects/base',
+                  href: '/layer2s/projects/base',
                 },
                 avgThroughputPerSecond: 100000,
               },
@@ -340,7 +340,7 @@ async function getLargestPosters(
   sovereignProjectsNamesMap: Map<string, string>,
 ): Promise<{
   all: Record<string, LargestPoster | undefined>
-  scalingOnly: Record<string, LargestPoster | undefined>
+  l2Only: Record<string, LargestPoster | undefined>
 }> {
   const rawData = Object.fromEntries(
     Object.entries(groupedProjectValues)
@@ -351,7 +351,7 @@ async function getLargestPosters(
         const currentValues = values.filter(
           (v) => v.timestamp === lastTimestamp,
         )
-        const scalingValues = currentValues.filter(
+        const l2Values = currentValues.filter(
           (v) => !sovereignProjectsNamesMap.has(v.projectId),
         )
 
@@ -359,7 +359,7 @@ async function getLargestPosters(
           daLayer,
           {
             all: findLargestPoster(currentValues),
-            scalingOnly: findLargestPoster(scalingValues),
+            l2Only: findLargestPoster(l2Values),
           },
         ] as const
       })
@@ -367,9 +367,9 @@ async function getLargestPosters(
   )
 
   const projectIds = new Set<ProjectId>()
-  for (const { all, scalingOnly } of Object.values(rawData)) {
+  for (const { all, l2Only } of Object.values(rawData)) {
     if (all) projectIds.add(ProjectId(all.projectId))
-    if (scalingOnly) projectIds.add(ProjectId(scalingOnly.projectId))
+    if (l2Only) projectIds.add(ProjectId(l2Only.projectId))
   }
 
   const projects = await ps.getProjects({
@@ -386,16 +386,11 @@ async function getLargestPosters(
           : undefined,
       ]),
     ),
-    scalingOnly: Object.fromEntries(
-      Object.entries(rawData).map(([daLayer, { scalingOnly }]) => [
+    l2Only: Object.fromEntries(
+      Object.entries(rawData).map(([daLayer, { l2Only }]) => [
         daLayer,
-        scalingOnly
-          ? enrichPoster(
-              scalingOnly,
-              projects,
-              sovereignProjectsNamesMap,
-              false,
-            )
+        l2Only
+          ? enrichPoster(l2Only, projects, sovereignProjectsNamesMap, false)
           : undefined,
       ]),
     ),

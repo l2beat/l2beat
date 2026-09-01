@@ -6,9 +6,16 @@ import {
   type KnownInteropBridgeType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { type Insertable, type Selectable, sql } from 'kysely'
+import {
+  type Expression,
+  type ExpressionBuilder,
+  type Insertable,
+  type Selectable,
+  type SqlBool,
+  sql,
+} from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { InteropTransfer } from '../kysely/generated/types'
+import type { DB, InteropTransfer } from '../kysely/generated/types'
 
 // Interop bridge types are stored in the database.
 // If they are modified (e.g. renamed/removed), you MUST update
@@ -63,29 +70,109 @@ export interface InteropTransferRecord {
 }
 
 export interface InteropTransferUpdate {
-  srcAbstractTokenId?: string | null
-  srcSymbol?: string | null
-  srcPrice?: number | null
-  srcAmount?: number | null
-  srcValueUsd?: number | null
-  dstAbstractTokenId?: string | null
-  dstSymbol?: string | null
-  dstPrice?: number | null
-  dstAmount?: number | null
-  dstValueUsd?: number | null
+  srcAbstractTokenId: string | null
+  srcSymbol: string | null
+  srcPrice: number | null
+  srcAmount: number | null
+  srcValueUsd: number | null
+  dstAbstractTokenId: string | null
+  dstSymbol: string | null
+  dstPrice: number | null
+  dstAmount: number | null
+  dstValueUsd: number | null
 }
 
-export interface InteropMissingTokenInfo {
+export interface InteropTransferFinancialsFilter {
+  transferId?: string
+  srcChain?: string
+  srcTokenAddress?: string
+  srcAbstractTokenId?: string
+  srcSymbol?: string
+  dstChain?: string
+  dstTokenAddress?: string
+  dstAbstractTokenId?: string
+  dstSymbol?: string
+  /** Inclusive lower bound for the transfer timestamp. */
+  from?: UnixTime
+  /** Inclusive upper bound for the transfer timestamp. */
+  to?: UnixTime
+}
+
+/** Transfer timestamp interval with an exclusive lower and inclusive upper bound. */
+export interface InteropTransferTimeRange {
+  from: UnixTime
+  to: UnixTime
+}
+
+export interface InteropTransferFinancialsStats {
+  totalCount: number
+  unprocessedCount: number
+  missingSrcValueCount: number
+  missingDstValueCount: number
+  srcValueUsdSum: number
+  dstValueUsdSum: number
+}
+
+export function hasAnyInteropTransferFinancialsFilter(
+  filter: InteropTransferFinancialsFilter,
+): boolean {
+  return Object.values(filter).some((value) => value !== undefined)
+}
+
+export interface InteropTransferTokenAddress {
   chain: string
-  tokenAddress: string
-  count: number
-  plugins: string[]
+  address: string
+}
+
+export interface InteropTransferTokenAddressBatch {
+  latestSerialId: string | undefined
+  transferCount: number
+  tokenAddresses: InteropTransferTokenAddress[]
+}
+
+export interface InteropTransferBatch {
+  latestSerialId: string | undefined
+  transfers: InteropTransferRecord[]
+}
+
+/**
+ * One row per unique combination of token pair and bridge-type evidence,
+ * aggregated over all retained transfers. `sampleTransferId` is the id of an
+ * arbitrary transfer belonging to the group, so callers that need a full
+ * transfer row as evidence can fetch exactly one by primary key instead of
+ * holding every transfer in memory.
+ */
+export interface InteropTokenRouteRecord {
+  plugin: string
+  srcChain: string
+  srcTokenAddress: string | undefined
+  dstChain: string
+  dstTokenAddress: string | undefined
+  bridgeType: KnownInteropBridgeType | undefined
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+  transferCount: number
+  sampleTransferId: string
+  /** Tx hashes of the sample transfer (the row behind `sampleTransferId`),
+   * so route consumers can point a human at an explorer without loading the
+   * full transfer row. */
+  sampleSrcTxHash: string | undefined
+  sampleDstTxHash: string | undefined
 }
 
 interface PartialAbstractTokenFilter {
   chain: string
   address: Address32
 }
+
+const CASE_INSENSITIVE_FINANCIALS_COLUMNS = [
+  'srcTokenAddress',
+  'srcAbstractTokenId',
+  'srcSymbol',
+  'dstTokenAddress',
+  'dstAbstractTokenId',
+  'dstSymbol',
+] as const
 
 export function toRecord(
   row: Selectable<InteropTransfer>,
@@ -200,6 +287,11 @@ export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
   valueDifferencePercent: number
 }
 
+export interface InteropTransferCursor {
+  timestamp: UnixTime
+  transferId: string
+}
+
 export class InteropTransferRepository extends BaseRepository {
   async insertMany(records: InteropTransferRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -220,6 +312,156 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByFinancialsFilter(
+    filter: InteropTransferFinancialsFilter,
+    limit: number,
+  ): Promise<InteropTransferRecord[]> {
+    assert(limit > 0, 'limit must be a positive number')
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where((eb) => this.financialsFilterExpression(eb, filter))
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .limit(limit)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getFinancialsStatsByFilter(
+    filter: InteropTransferFinancialsFilter,
+  ): Promise<InteropTransferFinancialsStats> {
+    const row = await this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        eb.fn.countAll().as('totalCount'),
+        sql<string>`COUNT(*) FILTER (WHERE "isProcessed" = false)`.as(
+          'unprocessedCount',
+        ),
+        sql<string>`COUNT(*) FILTER (WHERE "srcValueUsd" IS NULL)`.as(
+          'missingSrcValueCount',
+        ),
+        sql<string>`COUNT(*) FILTER (WHERE "dstValueUsd" IS NULL)`.as(
+          'missingDstValueCount',
+        ),
+        eb.fn.sum('srcValueUsd').as('srcValueUsdSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueUsdSum'),
+      ])
+      .where((eb) => this.financialsFilterExpression(eb, filter))
+      .executeTakeFirst()
+
+    return {
+      totalCount: Number(row?.totalCount ?? 0),
+      unprocessedCount: Number(row?.unprocessedCount ?? 0),
+      missingSrcValueCount: Number(row?.missingSrcValueCount ?? 0),
+      missingDstValueCount: Number(row?.missingDstValueCount ?? 0),
+      srcValueUsdSum: Number(row?.srcValueUsdSum ?? 0),
+      dstValueUsdSum: Number(row?.dstValueUsdSum ?? 0),
+    }
+  }
+
+  async getTokenRoutes(): Promise<InteropTokenRouteRecord[]> {
+    const groupColumns = [
+      'plugin',
+      'srcChain',
+      'srcTokenAddress',
+      'dstChain',
+      'dstTokenAddress',
+      'bridgeType',
+      'srcWasBurned',
+      'dstWasMinted',
+    ] as const
+
+    // The sample tx hashes must come from the same row as `sampleTransferId`
+    // (mixing max() per column would stitch hashes from different transfers),
+    // hence the join back on the primary key instead of extra aggregates.
+    // Transfer ids are random, so a bare max() would pick an arbitrary row;
+    // groups can mix fully hashed transfers with partially observed ones
+    // (a side's token address comes from the message payload even when its
+    // event — and thus tx hash — was never seen), so prefer a fully hashed
+    // sample, then any hashed one, before settling for an arbitrary row.
+    const rows = await this.db
+      .with('route', (qb) =>
+        qb
+          .selectFrom('InteropTransfer')
+          .select((eb) => [
+            ...groupColumns,
+            eb.fn.countAll().as('transferCount'),
+            eb.fn
+              .coalesce(
+                eb.fn
+                  .max('transferId')
+                  .filterWhere('srcTxHash', 'is not', null)
+                  .filterWhere('dstTxHash', 'is not', null),
+                eb.fn
+                  .max('transferId')
+                  .filterWhere((eb) =>
+                    eb.or([
+                      eb('srcTxHash', 'is not', null),
+                      eb('dstTxHash', 'is not', null),
+                    ]),
+                  ),
+                eb.fn.max('transferId'),
+              )
+              .as('sampleTransferId'),
+          ])
+          .groupBy([...groupColumns]),
+      )
+      .selectFrom('route')
+      .innerJoin(
+        'InteropTransfer as sample',
+        'sample.transferId',
+        'route.sampleTransferId',
+      )
+      .select([
+        ...groupColumns.map((column) => `route.${column}` as const),
+        'route.transferCount',
+        'route.sampleTransferId',
+        'sample.srcTxHash as sampleSrcTxHash',
+        'sample.dstTxHash as sampleDstTxHash',
+      ])
+      .execute()
+
+    return rows.map((row) => {
+      if (row.bridgeType !== null && !isInteropBridgeType(row.bridgeType)) {
+        throw new Error(
+          `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.sampleTransferId}`,
+        )
+      }
+
+      return {
+        plugin: row.plugin,
+        srcChain: row.srcChain,
+        srcTokenAddress: row.srcTokenAddress ?? undefined,
+        dstChain: row.dstChain,
+        dstTokenAddress: row.dstTokenAddress ?? undefined,
+        bridgeType:
+          row.bridgeType === null
+            ? undefined
+            : (row.bridgeType as KnownInteropBridgeType),
+        srcWasBurned: row.srcWasBurned ?? undefined,
+        dstWasMinted: row.dstWasMinted ?? undefined,
+        transferCount: Number(row.transferCount),
+        sampleTransferId: row.sampleTransferId,
+        sampleSrcTxHash: row.sampleSrcTxHash ?? undefined,
+        sampleDstTxHash: row.sampleDstTxHash ?? undefined,
+      }
+    })
+  }
+
+  async findByTransferId(
+    transferId: string,
+  ): Promise<InteropTransferRecord | undefined> {
+    const row = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('transferId', '=', transferId)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getByRange(
     from: UnixTime,
     to: UnixTime,
@@ -237,11 +479,17 @@ export class InteropTransferRepository extends BaseRepository {
   async getByType(
     type: string,
     options: {
+      plugin?: string
       srcChain?: string
       dstChain?: string
+      timeRange?: InteropTransferTimeRange
     } = {},
   ): Promise<InteropTransferRecord[]> {
     let query = this.db.selectFrom('InteropTransfer').where('type', '=', type)
+
+    if (options.plugin !== undefined) {
+      query = query.where('plugin', '=', options.plugin)
+    }
 
     if (options.srcChain !== undefined) {
       query = query.where('srcChain', '=', options.srcChain)
@@ -251,6 +499,12 @@ export class InteropTransferRepository extends BaseRepository {
       query = query.where('dstChain', '=', options.dstChain)
     }
 
+    if (options.timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(options.timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(options.timeRange.to))
+    }
+
     const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
@@ -258,8 +512,13 @@ export class InteropTransferRepository extends BaseRepository {
 
   async getValueMismatchTransfers(
     valueDifferencePercentThreshold: number,
-    minimumSideValueUsdThreshold = 0,
+    options: {
+      minimumSideValueUsdThreshold?: number
+      timeRange?: InteropTransferTimeRange
+    } = {},
   ): Promise<InteropSuspiciousTransferRecord[]> {
+    const minimumSideValueUsdThreshold =
+      options.minimumSideValueUsdThreshold ?? 0
     assert(
       valueDifferencePercentThreshold > 0,
       'valueDifferencePercentThreshold must be a positive number',
@@ -282,7 +541,7 @@ export class InteropTransferRepository extends BaseRepository {
       END
     `
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('InteropTransfer')
       .selectAll()
       .select(valueDifferencePercent.as('valueDifferencePercent'))
@@ -296,6 +555,14 @@ export class InteropTransferRepository extends BaseRepository {
           AND (${absoluteValueDifferenceUsd} * 100) > (${valueDifferencePercentThreshold} * ${maxSideValueUsd})
         `,
       )
+
+    if (options.timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(options.timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(options.timeRange.to))
+    }
+
+    const rows = await query
       .orderBy(valueDifferencePercent, 'desc')
       .orderBy('timestamp', 'desc')
       .orderBy('transferId', 'desc')
@@ -338,14 +605,134 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getUnprocessed() {
-    const rows = await this.db
+  async getProjectTransfersPage(options: {
+    plugins: string[]
+    snapshotTimestamp: UnixTime
+    sourceChains: string[]
+    destinationChains: string[]
+    abstractTokenId?: string
+    cursor?: InteropTransferCursor
+    limit: number
+  }): Promise<InteropTransferRecord[]> {
+    if (
+      options.plugins.length === 0 ||
+      options.sourceChains.length === 0 ||
+      options.destinationChains.length === 0 ||
+      options.limit <= 0
+    ) {
+      return []
+    }
+
+    const from = options.snapshotTimestamp - UnixTime.DAY
+    let query = this.db
       .selectFrom('InteropTransfer')
-      .where('isProcessed', '=', false)
       .selectAll()
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
+      .where('plugin', 'in', options.plugins)
+      .where('srcChain', 'in', options.sourceChains)
+      .where('dstChain', 'in', options.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+
+    const abstractTokenId = options.abstractTokenId
+    if (abstractTokenId !== undefined) {
+      query = query.where((eb) =>
+        eb.or([
+          eb('srcAbstractTokenId', '=', abstractTokenId),
+          eb('dstAbstractTokenId', '=', abstractTokenId),
+        ]),
+      )
+    }
+
+    const cursor = options.cursor
+    if (cursor) {
+      const cursorDate = UnixTime.toDate(cursor.timestamp)
+      query = query.where((eb) =>
+        eb.or([
+          eb('timestamp', '<', cursorDate),
+          eb.and([
+            eb('timestamp', '=', cursorDate),
+            eb('transferId', '<', cursor.transferId),
+          ]),
+        ]),
+      )
+    }
+
+    const rows = await query
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .limit(options.limit)
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getUnprocessed(limit?: number) {
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .where('isProcessed', '=', false)
+      .selectAll()
+
+    if (limit !== undefined) {
+      query = query.limit(limit)
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getTokenAddressesAfterSerialId(
+    serialId: string,
+  ): Promise<InteropTransferTokenAddressBatch> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select([
+        'serialId',
+        'srcChain',
+        'srcTokenAddress',
+        'dstChain',
+        'dstTokenAddress',
+      ])
+      .where('serialId', '>', serialId)
+      .orderBy('serialId', 'asc')
+      .execute()
+
+    const tokenAddresses = new Map<string, InteropTransferTokenAddress>()
+    for (const row of rows) {
+      if (row.srcTokenAddress) {
+        const address = { chain: row.srcChain, address: row.srcTokenAddress }
+        tokenAddresses.set(`${address.chain}:${address.address}`, address)
+      }
+      if (row.dstTokenAddress) {
+        const address = { chain: row.dstChain, address: row.dstTokenAddress }
+        tokenAddresses.set(`${address.chain}:${address.address}`, address)
+      }
+    }
+
+    return {
+      latestSerialId: rows.at(-1)?.serialId,
+      transferCount: rows.length,
+      tokenAddresses: Array.from(tokenAddresses.values()),
+    }
+  }
+
+  async getAfterSerialId(
+    serialId: string,
+    limit: number,
+  ): Promise<InteropTransferBatch> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('serialId', '>', serialId)
+      .orderBy('serialId', 'asc')
+      .limit(limit)
+      .execute()
+
+    return {
+      latestSerialId: rows.at(-1)?.serialId,
+      transfers: rows.map(toRecord),
+    }
   }
 
   async getWithPartialAbstractTokenIds(): Promise<InteropTransferRecord[]> {
@@ -396,14 +783,53 @@ export class InteropTransferRepository extends BaseRepository {
       )
   }
 
-  async updateFinancials(
-    id: string,
-    update: InteropTransferUpdate,
+  async updateManyFinancials(
+    updates: { id: string; update: InteropTransferUpdate }[],
   ): Promise<void> {
+    if (updates.length === 0) {
+      return
+    }
+
+    // unnest instead of a VALUES list: each column binds as a single array
+    // parameter, so the statement stays within Postgres' 65535 parameter
+    // limit regardless of the number of rows.
+    const v = sql<{ transferId: string } & InteropTransferUpdate>`unnest(
+      ${updates.map((u) => u.id)}::varchar[],
+      ${updates.map((u) => u.update.srcAbstractTokenId)}::varchar[],
+      ${updates.map((u) => u.update.srcSymbol)}::varchar[],
+      ${updates.map((u) => u.update.srcPrice)}::real[],
+      ${updates.map((u) => u.update.srcAmount)}::real[],
+      ${updates.map((u) => u.update.srcValueUsd)}::real[],
+      ${updates.map((u) => u.update.dstAbstractTokenId)}::varchar[],
+      ${updates.map((u) => u.update.dstSymbol)}::varchar[],
+      ${updates.map((u) => u.update.dstPrice)}::real[],
+      ${updates.map((u) => u.update.dstAmount)}::real[],
+      ${updates.map((u) => u.update.dstValueUsd)}::real[]
+    )`.as<'v'>(
+      sql`v(
+        "transferId",
+        "srcAbstractTokenId", "srcSymbol", "srcPrice", "srcAmount", "srcValueUsd",
+        "dstAbstractTokenId", "dstSymbol", "dstPrice", "dstAmount", "dstValueUsd"
+      )`,
+    )
+
     await this.db
       .updateTable('InteropTransfer')
-      .set({ ...update, isProcessed: true })
-      .where('transferId', '=', id)
+      .from(v)
+      .set((eb) => ({
+        srcAbstractTokenId: eb.ref('v.srcAbstractTokenId'),
+        srcSymbol: eb.ref('v.srcSymbol'),
+        srcPrice: eb.ref('v.srcPrice'),
+        srcAmount: eb.ref('v.srcAmount'),
+        srcValueUsd: eb.ref('v.srcValueUsd'),
+        dstAbstractTokenId: eb.ref('v.dstAbstractTokenId'),
+        dstSymbol: eb.ref('v.dstSymbol'),
+        dstPrice: eb.ref('v.dstPrice'),
+        dstAmount: eb.ref('v.dstAmount'),
+        dstValueUsd: eb.ref('v.dstValueUsd'),
+        isProcessed: true,
+      }))
+      .whereRef('InteropTransfer.transferId', '=', 'v.transferId')
       .execute()
   }
 
@@ -417,8 +843,60 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
-  async getStats(): Promise<InteropTransfersStatsRecord[]> {
-    const overallStats = await this.db
+  async markAsUnprocessedByFinancialsFilter(
+    filter: InteropTransferFinancialsFilter,
+  ): Promise<number> {
+    const result = await this.db
+      .updateTable('InteropTransfer')
+      .set({ isProcessed: false })
+      .where('isProcessed', '=', true)
+      .where((eb) => this.financialsFilterExpression(eb, filter))
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
+  private financialsFilterExpression(
+    eb: ExpressionBuilder<DB, 'InteropTransfer'>,
+    filter: InteropTransferFinancialsFilter,
+  ): Expression<SqlBool> {
+    assert(
+      hasAnyInteropTransferFinancialsFilter(filter),
+      'At least one filter is required',
+    )
+
+    const conditions: Expression<SqlBool>[] = []
+    if (filter.transferId !== undefined) {
+      conditions.push(eb('transferId', '=', filter.transferId))
+    }
+    if (filter.srcChain !== undefined) {
+      conditions.push(eb('srcChain', '=', filter.srcChain))
+    }
+    if (filter.dstChain !== undefined) {
+      conditions.push(eb('dstChain', '=', filter.dstChain))
+    }
+    for (const column of CASE_INSENSITIVE_FINANCIALS_COLUMNS) {
+      const value = filter[column]
+      if (value !== undefined) {
+        conditions.push(
+          eb(eb.fn<string>('lower', [column]), '=', value.toLowerCase()),
+        )
+      }
+    }
+    if (filter.from !== undefined) {
+      conditions.push(eb('timestamp', '>=', UnixTime.toDate(filter.from)))
+    }
+    if (filter.to !== undefined) {
+      conditions.push(eb('timestamp', '<=', UnixTime.toDate(filter.to)))
+    }
+
+    return eb.and(conditions)
+  }
+
+  async getStats(
+    timeRange?: InteropTransferTimeRange,
+  ): Promise<InteropTransfersStatsRecord[]> {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'plugin',
@@ -428,8 +906,14 @@ export class InteropTransferRepository extends BaseRepository {
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
-      .groupBy(['plugin', 'type'])
-      .execute()
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const overallStats = await query.groupBy(['plugin', 'type']).execute()
 
     return overallStats.map((overall) => ({
       plugin: overall.plugin,
@@ -441,8 +925,10 @@ export class InteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getDetailedStats(): Promise<InteropTransfersDetailedStatsRecord[]> {
-    const chainStats = await this.db
+  async getDetailedStats(
+    timeRange?: InteropTransferTimeRange,
+  ): Promise<InteropTransfersDetailedStatsRecord[]> {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'plugin',
@@ -456,6 +942,14 @@ export class InteropTransferRepository extends BaseRepository {
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const chainStats = await query
       .groupBy(['plugin', 'type', 'srcChain', 'dstChain'])
       .execute()
 
@@ -479,13 +973,19 @@ export class InteropTransferRepository extends BaseRepository {
   ): Promise<InteropTransferRecord[]> {
     if (items.length === 0) return []
 
-    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
-    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
     const rows = await this.db
       .selectFrom('InteropTransfer')
       .selectAll()
-      .where('srcTxHash', 'in', srcHashes)
-      .where('dstTxHash', 'in', dstHashes)
+      .where((eb) =>
+        eb.or(
+          items.map((item) =>
+            eb.and([
+              eb('srcTxHash', '=', item.srcTxHash.toLowerCase()),
+              eb('dstTxHash', '=', item.dstTxHash.toLowerCase()),
+            ]),
+          ),
+        ),
+      )
       .execute()
     return rows.map(toRecord)
   }
@@ -511,66 +1011,5 @@ export class InteropTransferRepository extends BaseRepository {
       .deleteFrom('InteropTransfer')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  async getMissingTokensInfo(): Promise<InteropMissingTokenInfo[]> {
-    const rows = await this.db
-      .selectFrom('InteropTransfer')
-      .select([
-        'plugin',
-        'srcValueUsd',
-        'dstValueUsd',
-        'srcChain',
-        'srcTokenAddress',
-        'dstChain',
-        'dstTokenAddress',
-      ])
-      .where('isProcessed', '=', true)
-      .where((eb) =>
-        eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
-      )
-      .execute()
-
-    const chainAddressCounts = new Map<string, number>()
-    const chainAddressPlugins = new Map<string, Set<string>>()
-
-    for (const row of rows) {
-      if (row.srcValueUsd === null && row.srcChain && row.srcTokenAddress) {
-        const key = `${row.srcChain}:${row.srcTokenAddress}`
-        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
-        const plugins = chainAddressPlugins.get(key)
-        if (!plugins) {
-          chainAddressPlugins.set(key, new Set())
-        } else {
-          plugins.add(row.plugin)
-        }
-      }
-      if (row.dstValueUsd === null && row.dstChain && row.dstTokenAddress) {
-        const key = `${row.dstChain}:${row.dstTokenAddress}`
-        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
-        const plugins = chainAddressPlugins.get(key)
-        if (!plugins) {
-          chainAddressPlugins.set(key, new Set())
-        } else {
-          plugins.add(row.plugin)
-        }
-      }
-    }
-
-    const result: InteropMissingTokenInfo[] = []
-    for (const [key, count] of chainAddressCounts) {
-      const [chain, tokenAddress] = key.split(':')
-      const plugins = Array.from(
-        chainAddressPlugins.get(key) || new Set<string>(),
-      ).sort()
-      result.push({
-        chain: chain as string,
-        tokenAddress: tokenAddress as string,
-        count,
-        plugins,
-      })
-    }
-
-    return result
   }
 }

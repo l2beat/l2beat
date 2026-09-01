@@ -1,0 +1,271 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TokenBridge",
+  "description": "Contract used to bridge and escrow ERC-20 tokens.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
+        }
+      ]
+    },
+    // enum PauseType {
+    // 0  UNUSED,
+    // 1  GENERAL,
+    // 2  L1_L2,
+    // 3  L2_L1,
+    // 4  BLOB_SUBMISSION,
+    // 5  CALLDATA_SUBMISSION,
+    // 6  FINALIZATION,
+    // 7  INITIATE_TOKEN_BRIDGING,
+    // 8  COMPLETE_TOKEN_BRIDGING
+    // 9  NATIVE_YIELD_STAKING
+    // 10 NATIVE_YIELD_UNSTAKING
+    // 11 NATIVE_YIELD_PERMISSIONLESS_ACTIONS
+    // 12 NATIVE_YIELD_REPORTING
+    // 13 STATE_DATA_SUBMISSION
+    // }
+    "isPaused_GENERAL": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [1]
+      }
+    },
+    "isPaused_L1_L2": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [2]
+      }
+    },
+    "isPaused_L2_L1": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [3]
+      }
+    },
+    //   "isPaused_BLOB_SUBMISSION": {  // DEPRECATED
+    //     "severity": "HIGH",
+    //     "handler": {
+    //       "type": "call",
+    //       "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+    //       "args": [4]
+    //     }
+    //   },
+    //   "isPaused_CALLDATA_SUBMISSION": {      // DEPRECATED
+    //     "severity": "HIGH",
+    //     "handler": {
+    //       "type": "call",
+    //       "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+    //       "args": [5]
+    //     }
+    //   },
+    "isPaused_FINALIZATION": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [6]
+      }
+    },
+    "isPaused_INITIATE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [7]
+      }
+    },
+    "isPaused_COMPLETE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [8]
+      }
+    },
+    "isPaused_NATIVE_YIELD_STAKING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [9]
+      }
+    },
+    "isPaused_NATIVE_YIELD_UNSTAKING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [10]
+      }
+    },
+    "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [11]
+      }
+    },
+    "isPaused_NATIVE_YIELD_REPORTING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [12]
+      }
+    },
+    "isPaused_STATE_DATA_SUBMISSION": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [13]
+      }
+    },
+    "pauseTypeToRole": {
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": {
+          "event": "PauseTypeRoleSet"
+        },
+        "groupBy": "pauseType"
+      }
+    },
+    "unpauseTypeToRole": {
+      "handler": {
+        "type": "event",
+        "select": ["role"],
+        "set": {
+          "event": "UnPauseTypeRoleSet"
+        },
+        "groupBy": "unPauseType"
+      }
+    },
+    "allPausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ALL_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause the bridge."
+        }
+      ]
+    },
+    "initiateTokenBridgingPausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause token bridging actions initiated from this layer."
+        }
+      ]
+    },
+    "completeTokenBridgingPausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause token bridging actions initiated from the other layer."
+        }
+      ]
+    },
+    "allUnpausers": {
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_ALL_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause the bridge."
+        }
+      ]
+    },
+    "initiateTokenBridgingUnpausers": {
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can unpause token bridging actions initiated from this layer."
+        }
+      ]
+    },
+    "completeTokenBridgingUnpausers": {
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can unpause token bridging actions initiated from the other layer."
+        }
+      ]
+    },
+    "customContractSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_CUSTOM_CONTRACT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set custom ERC20 contracts for specific ERC20s."
+        }
+      ]
+    },
+    "reserveTokenSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_RESERVED_TOKEN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status."
+        }
+      ]
+    },
+    "reserveTokenRemovers": {
+      "copy": "accessControl",
+      "edit": ["get", "REMOVE_RESERVED_TOKEN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again."
+        }
+      ]
+    },
+    "messageServiceSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_MESSAGE_SERVICE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set the contract used as the source of truth from crosschain messages."
+        }
+      ]
+    },
+    "remoteSender": {
+      "edit": ["format", "LineaAddress"]
+    },
+    "nonSecurityCouncilCooldownEnd": {
+      "severity": "HIGH",
+      "description": "Timestamp until which non security council entities can't pause the rollup."
+    }
+  }
+}

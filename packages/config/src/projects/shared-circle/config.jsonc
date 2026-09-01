@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "shared-circle",
+  "import": ["../globalConfig.jsonc"],
+  // Covers the full CCTP graph so transitive permissions resolve to attesters.
+  "maxAddresses": 150,
+  "initialAddresses": ["eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+}

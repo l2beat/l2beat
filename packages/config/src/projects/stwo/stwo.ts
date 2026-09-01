@@ -1,13 +1,15 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const stwo: BaseProject = {
   id: ProjectId('stwo'),
   slug: 'stwo',
   name: 'Stwo',
   shortName: undefined,
+  aliases: ['StarkWare'],
   addedAt: UnixTime.fromDate(new Date('2025-10-29')),
   statuses: {
     yellowWarning: undefined,
@@ -34,6 +36,7 @@ export const stwo: BaseProject = {
   },
   zkCatalogInfo: {
     creator: 'Starkware',
+    quantumResistant: true,
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Stwo,
@@ -41,34 +44,7 @@ export const stwo: BaseProject = {
         ZK_CATALOG_TAGS.Field.Mersenne31,
       ],
     },
-    proofSystemInfo: `
-## Description
-
-Stwo is the next iteration of Starkware zkVM STARK system. It is intended to prove the execution of programs written in [Cairo language](https://www.starknet.io/cairo-book/title-page.html) and compiled into Cairo assembly (cASM) byte code, however it also allows writing custom AIR to be proven. Stwo verifies STARK proofs directly onchain without any final SNARK wraps and thus requires no trusted setup. 
-
-Stwo targets 96 bits of cryptographic security + 30 bits of PoW grinding security (e.g. see constructor params on [this contract](https://etherscan.io/address/0x3d57526c1C8D63fa2A8704487Df65e9000166c8E#code)). Here PoW grinding refers to a challenge that prover needs to compute every time they generate a proof. An honest prover performs the work only once but a malicious prover has additional computational load with every attempted forging of a proof.
-
-## Proof system
-
-Stwo proof system is a zkVM working with AIR arithmetizations over Mersenne31 field. [This stwo-cairo toolkit](https://github.com/starkware-libs/stwo-cairo/tree/main) allows compiling Cairo program traces to the AIR arithmetization, however it is possible to create custom AIRs to be proven by Stwo, see more [here](https://zksecurity.github.io/stwo-book/air-development/index.html). 
-
-Stwo offers several innovations to optimize proving time. Firstly, its use of small Mersenne31 field compared to previous version [felt252 field](https://docs.starknet.io/archive/cairo-101/felt/) is much better aligned with CPU arithmetics, also operations over M31 could be highly optimized as explained [here](https://zksecurity.github.io/stwo-book/how-it-works/mersenne-prime.html). Secondly, Stwo implements a circle STARK as introduced in [this paper](https://eprint.iacr.org/2024/278). Thirdly, Stwo prover now uses Blake2 hash function instead of Poseidon, which is more efficient.
-
-### Circle STARKs
-
-Circle STARKs replace interpolation domain without any structure with an interpolation domain with a structure of a circle domain, where points of interpolation are chosen from a complex unit circle over Mersenne31 field. It allows using Circle FFT algorithm, which speeds up the interpolation step in STARK proving, as well as Circle FRI algorithm for low-degree polynomial testing.
-
-### StarkNet Operating System (SNOS)
-
-The base layer of Stwo proving L2s is a Cairo program called [SNOS](https://docs.starknet.io/architecture/os/) that proves the correct STF from one state to another given the list of transactions. SNOS execution includes checking transaction inputs (e.g. state), executing transactions and processing state diffs. The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/ee7ce74e1159a349d4b77a5f952241b50b1692de/src/starkware/starknet/core/os).
-
-### Recursive aggregation
-
-Proofs of SNOS executions of several consecutive blocks are recursively aggregated. The correctness of this aggregation is checked by [applicative bootloader](https://github.com/starkware-libs/cairo-lang/blob/8e11b8cc65ae1d0959328b1b4a40b92df8b58595/src/starkware/cairo/bootloaders/applicative_bootloader/applicative_bootloader.cairo#L15) program, which also verifies the correct relation of corresponding SNOS inputs and outputs. Applicative bootloader proofs are aggregated across several blockchains and proven by [SHARP](https://docs.starknet.io/architecture/sharp/#what_is_sharp). The SHARP STARK proof is verified onchain without any SNARK wraps.
-
-## Trusted setup
-
-Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so it does not require any trusted setup.`,
+    proofSystemInfo: readProjectMarkdown('stwo', 'proofSystemInfo'),
     trustedSetups: [
       {
         ...TRUSTED_SETUPS.TransparentSetup,
@@ -87,25 +63,25 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
     ],
     verifierHashes: [
       {
-        hash: '0xf16d320ba0d2087a99ffd465041960fd0aedf5e723c0fb877533876c531191d3',
-        name: 'Stwo verifier 2025_11',
+        hash: '0x243611f51b76871574612cc0f140acb660c684a66b74e37b7547474c6683659a',
+        name: 'Stwo GPS statement verifier 2026_13_4',
         sourceLink:
-          'https://etherscan.io/address/0x13e120F6c8E747983F7aaF0f7731796bfcb0D934#code',
+          'https://etherscan.io/address/0x4956bda1d23F75B988644329c5B06BD1494a72b6#code',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stwo,
         knownDeployments: [
           {
-            address: EthereumAddress(
-              '0x13e120F6c8E747983F7aaF0f7731796bfcb0D934',
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x4956bda1d23F75B988644329c5B06BD1494a72b6',
             ),
-            chain: 'ethereum',
             overrideUsedIn: [ProjectId('starknet'), ProjectId('paradex')],
           },
         ],
         verificationStatus: 'successful',
         verificationSteps:
-          'Onchain stwo verifier smart contracts contain code that directly checks proofs of correct Cairo program execution. Unlike SNARK final wraps, it does not contain any additional cryptographic components that need to be independently regenerated because it introduces no new zk circuits. The sources are verified on etherscan and can be examined directly to check the correct implementation of STARK verification protocol.',
+          'The immutable Solidity sources are verified on Etherscan and expose every selected CPU verifier, memory-page registry, outer bootloader contract, and bootloader configuration word. Source verification of the Solidity contracts does not by itself reproduce the Cairo programs hidden behind the recursive-verifier allowlist commitment.',
         description:
-          "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
+          "Custom verifier ID: SHA256 hash of the address of the immutable GPS statement verifier in hex string format '0x...'.",
       },
     ],
   },

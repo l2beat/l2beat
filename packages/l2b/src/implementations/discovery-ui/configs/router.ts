@@ -13,7 +13,6 @@ const updateConfigFileSchema = z.object({
 })
 
 const createConfigFileSchema = z.object({
-  type: z.enum(['project', 'token']),
   project: z.string().check((v) => v.length > 0),
   initialAddresses: z
     .array(z.string())
@@ -75,11 +74,7 @@ export function attachConfigRouter(
       maxAddresses: body.data.maxAddresses,
     }
 
-    if (body.data.type === 'project') {
-      configWriter.createProjectConfigFile(body.data.project, templateValues)
-    } else {
-      configWriter.createTokenConfigFile(body.data.project, templateValues)
-    }
+    configWriter.createProjectConfigFile(body.data.project, templateValues)
 
     res.json({ success: true })
   })

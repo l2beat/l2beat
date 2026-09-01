@@ -24,6 +24,7 @@ export const lyra: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Derive',
+    aliases: ['Lyra'],
     slug: 'derive',
     description:
       'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
@@ -45,10 +46,14 @@ export const lyra: ScalingProject = opStackL2({
     },
   },
   genesisTimestamp: UnixTime(1700022479),
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
+    },
+  ],
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [

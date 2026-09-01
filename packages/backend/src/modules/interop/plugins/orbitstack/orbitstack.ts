@@ -201,6 +201,36 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
       },
     ],
   },
+  {
+    chain: 'robinhood',
+    // L2 -> L1 (Withdrawals)
+    arbsys: EthereumAddress('0x0000000000000000000000000000000000000064'),
+    outbox: EthereumAddress('0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9'),
+    // L1 -> L2 (Messages)
+    bridge: EthereumAddress('0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3'),
+    inbox: EthereumAddress('0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D'),
+    sequencerInbox: EthereumAddress(
+      '0xBd0D173EEb87D57A09521c24388a12789F33ba96',
+    ),
+    arbRetryableTx: EthereumAddress(
+      '0x000000000000000000000000000000000000006e',
+    ),
+    // Gateways
+    l1StandardGateway: EthereumAddress(
+      '0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0',
+    ),
+    l2StandardGateway: EthereumAddress(
+      '0xfd9b17206278C16DdaacF6AC8f05dBf97EdCb31e',
+    ),
+    l1WethGateway: EthereumAddress(
+      '0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B',
+    ),
+    l2WethGateway: EthereumAddress(
+      '0x1D187C3E2dA52D72BC9C41e3AbA0fdFa6a7bF055',
+    ),
+    l1Weth: EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
+    l2Weth: EthereumAddress('0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73'),
+  },
 ])
 
 export class OrbitStackPlugin implements InteropPlugin {

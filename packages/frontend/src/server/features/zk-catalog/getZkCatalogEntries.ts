@@ -5,7 +5,7 @@ import type { FilterableEntry } from '~/components/table/filters/filterableValue
 import {
   get7dTvsBreakdown,
   type SevenDayTvsBreakdown,
-} from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+} from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -13,6 +13,7 @@ import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
@@ -28,6 +29,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
   icon: string
   creator?: string
+  quantumResistant?: boolean
   tvs: {
     value: number
     numberOfProjects: number
@@ -41,9 +43,17 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
     await Promise.all([
       ps.getProjects({
         select: ['zkCatalogInfo', 'display', 'statuses'],
+        whereNot: ['archivedAt'],
       }),
       ps.getProjects({
-        optional: ['daBridge', 'isScaling', 'isDaLayer'],
+        optional: [
+          'display',
+          'daBridge',
+          'scalingInfo',
+          'daLayer',
+          'privacyInfo',
+          'defiInfo',
+        ],
       }),
       get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
@@ -58,7 +68,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 
 function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: ProjectWithPageMetadata[],
   tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {
@@ -80,8 +90,10 @@ function getZkCatalogEntry(
     backgroundColor: undefined,
     statuses: project.statuses,
     name: project.name,
+    description: project.display.description,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     creator: project.zkCatalogInfo.creator,
+    quantumResistant: project.zkCatalogInfo.quantumResistant,
     tvs: {
       value: tvsForProject,
       numberOfProjects,

@@ -24,6 +24,7 @@ const schema = {
   slug: 'TEXT NOT NULL',
   name: 'TEXT NOT NULL',
   shortName: 'TEXT',
+  aliases: 'TEXT',
   addedAt: 'INTEGER NOT NULL',
 
   statuses: 'TEXT',
@@ -51,6 +52,9 @@ const schema = {
   zkCatalogInfo: 'TEXT',
 
   interopConfig: 'TEXT',
+  privacyInfo: 'TEXT',
+  defiInfo: 'TEXT',
+  externalDependencies: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
@@ -67,10 +71,6 @@ const schema = {
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',
 
-  isScaling: 'BOOLEAN',
-  isDaLayer: 'BOOLEAN',
-  isInteropProtocol: 'BOOLEAN',
-  isUpcoming: 'BOOLEAN',
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',
 } satisfies Schema<BaseProject>
@@ -95,6 +95,18 @@ export class ProjectDatabase {
         id TEXT PRIMARY KEY,
         data TEXT NOT NULL
       )`)
+  }
+
+  async transaction<T>(callback: () => Promise<T>): Promise<T> {
+    await this.query('BEGIN TRANSACTION')
+    try {
+      const result = await callback()
+      await this.query('COMMIT')
+      return result
+    } catch (error) {
+      await this.query('ROLLBACK')
+      throw error
+    }
   }
 
   async saveProject(project: BaseProject) {

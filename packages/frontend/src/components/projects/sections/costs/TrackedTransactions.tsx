@@ -1,3 +1,4 @@
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { Checkbox } from '~/components/core/Checkbox'
@@ -20,9 +21,30 @@ import type {
   TrackedTransactionsByType,
 } from '~/utils/project/tracked-txs/getTrackedTransactions'
 
-export function TrackedTransactions(props: TrackedTransactionsByType) {
+const subtypeToTitle: Record<TrackedTxsConfigSubtype, string> = {
+  batchSubmissions: 'Batch submissions',
+  proofSubmissions: 'Proof submissions',
+  stateUpdates: 'State updates',
+}
+
+interface TrackedTransactionsProps extends TrackedTransactionsByType {
+  duplicateData?: {
+    from: TrackedTxsConfigSubtype
+    to: TrackedTxsConfigSubtype
+  }
+}
+
+export function TrackedTransactions({
+  duplicateData,
+  ...props
+}: TrackedTransactionsProps) {
   const [showHistoricalTransactions, setShowHistoricalTransactions] =
     useState(false)
+
+  const getTitle = (subtype: TrackedTxsConfigSubtype) =>
+    duplicateData?.from === subtype
+      ? `${subtypeToTitle[subtype]}, ${subtypeToTitle[duplicateData.to]}`
+      : subtypeToTitle[subtype]
 
   const transactions = {
     batchSubmissions: showHistoricalTransactions
@@ -67,7 +89,7 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
         {transactions.batchSubmissions &&
           transactions.batchSubmissions.length > 0 && (
             <TransactionGroup
-              title="Batch submissions"
+              title={getTitle('batchSubmissions')}
               transactions={transactions.batchSubmissions}
               showHistoricalTransactions={showHistoricalTransactions}
             />
@@ -75,14 +97,14 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
         {transactions.proofSubmissions &&
           transactions.proofSubmissions.length > 0 && (
             <TransactionGroup
-              title="Proof submissions"
+              title={getTitle('proofSubmissions')}
               transactions={transactions.proofSubmissions}
               showHistoricalTransactions={showHistoricalTransactions}
             />
           )}
         {transactions.stateUpdates && transactions.stateUpdates.length > 0 && (
           <TransactionGroup
-            title="State updates"
+            title={getTitle('stateUpdates')}
             transactions={transactions.stateUpdates}
             showHistoricalTransactions={showHistoricalTransactions}
           />

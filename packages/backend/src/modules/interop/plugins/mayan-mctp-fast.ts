@@ -50,7 +50,6 @@ export class MayanMctpFastPlugin implements InteropPluginResyncable {
       ...(this.configs.get(CCTPV1Config) ?? []),
       ...(this.configs.get(CCTPV2Config) ?? []),
     ]
-    if (cctpNetworks.length === 0) return
 
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {

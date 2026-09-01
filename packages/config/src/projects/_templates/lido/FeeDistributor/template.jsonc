@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Receives a staking module's stETH fee shares and distributes them to node operators according to a Merkle tree submitted by its FeeOracle. Claims are accounted in stETH shares.",
+  "category": "core",
+  "ignoreMethods": [
+    "distributedShares",
+    "logCid",
+    "treeCid",
+    "getHistoricalDistributionData"
+  ],
+  "ignoreInWatchMode": [
+    "treeRoot",
+    "totalClaimableShares",
+    "pendingSharesToDistribute",
+    "distributionDataHistoryCount"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke FeeDistributor roles and change the rebate recipient."
+        }
+      ]
+    },
+    "assetRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "RECOVERER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover unprotected assets accidentally held by FeeDistributor."
+        }
+      ]
+    }
+  }
+}

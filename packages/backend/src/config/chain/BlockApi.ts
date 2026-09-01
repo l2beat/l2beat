@@ -2,7 +2,7 @@ import type { RetryHandlerVariant } from '@l2beat/shared'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 interface BlockBasedApi {
-  type: 'rpc' | 'starknet' | 'zksync' | 'loopring' | 'degate3' | 'fuel'
+  type: 'rpc' | 'starknet' | 'fuel'
   url: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
@@ -13,8 +13,8 @@ interface BlockBasedApi {
   }
 }
 
-interface SvmBlockBasedApi {
-  type: 'svm-rpc'
+interface NonEvmBlockBasedApi {
+  type: 'svm-rpc' | 'aztec-rpc'
   url: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
@@ -28,4 +28,4 @@ interface StarkexApi {
   retryStrategy: RetryHandlerVariant
 }
 
-export type BlockApi = BlockBasedApi | StarkexApi | SvmBlockBasedApi
+export type BlockApi = BlockBasedApi | StarkexApi | NonEvmBlockBasedApi

@@ -7,6 +7,7 @@ export const agglayer: BaseProject = {
   slug: 'agglayer',
   name: 'Agglayer',
   shortName: undefined,
+  aliases: ['Polygon'],
   addedAt: 1743677000,
   display: {
     description:
@@ -35,6 +36,8 @@ export const agglayer: BaseProject = {
     },
   },
   interopConfig: {
+    description:
+      "The canonical or trust-minimized bridge: Agglayer supports transfers to/from Ethereum as well as native interop within the Agglayer cluster of chains. L1<->L2 transfers are validated by validity or accounting proofs. Agglayer interop supports the secure participation of chains without state transition proofs via 'pessimistic proofs'.",
     plugins: [
       {
         plugin: 'agglayer',

@@ -1,4 +1,11 @@
-import { CirclePlusIcon, LightbulbIcon, PanelsTopLeftIcon } from 'lucide-react'
+import {
+  CirclePlusIcon,
+  HistoryIcon,
+  LightbulbIcon,
+  ListChecksIcon,
+  NetworkIcon,
+  PanelsTopLeftIcon,
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -33,6 +40,21 @@ const items = [
         title: 'Suggestions',
         url: '/tokens/suggestions',
         icon: LightbulbIcon,
+      },
+      {
+        title: 'Queue',
+        url: '/tokens/ingestion-queue',
+        icon: ListChecksIcon,
+      },
+      {
+        title: 'History',
+        url: '/tokens/history',
+        icon: HistoryIcon,
+      },
+      {
+        title: 'Graph',
+        url: '/tokens/relations-graph',
+        icon: NetworkIcon,
       },
     ],
   },

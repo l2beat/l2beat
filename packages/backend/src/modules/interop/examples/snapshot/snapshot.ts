@@ -212,7 +212,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     const key = this.buildSnapshotKey([
       'call',
       callParams.to.toString(),
-      callParams.data.toString(),
+      callParams.input.toString(),
       blockNumber.toString(),
     ])
 
@@ -226,7 +226,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     blockNumber: number,
   ): Promise<MulticallV3Response[]> {
     const callsKey = calls
-      .map((c) => this.buildSnapshotKey([c.to.toString(), c.data.toString()]))
+      .map((c) => this.buildSnapshotKey([c.to.toString(), c.input.toString()]))
       .join('|')
     const key = this.buildSnapshotKey([
       'multicall',

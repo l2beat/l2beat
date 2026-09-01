@@ -21,8 +21,8 @@ export async function getTermsOfServiceData(
       metadata: getMetadata(manifest, {
         title: 'Terms of Service - L2BEAT',
         description: 'Terms of Service for L2BEAT.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/terms-of-service/opengraph-image.png',
         },
       }),

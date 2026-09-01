@@ -1,8 +1,7 @@
 {
   "L1StandardBridge_v2_8_0_neutered": {
-    "hash": "0x0460471c76edec23e825a4f7b4dd7441a6b794790d2a04cf03209d56b6eae190",
+    "hash": "0x3c227758cbabb16443198846c941fb95c3f79593c4e62bdd3a78d046e95096fc",
     "address": "eth:0x2978527d5D1372C32fEdC182FDE7559c0471d051",
-    "chain": "ethereum",
     "blockNumber": 23975101
   }
 }

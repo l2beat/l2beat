@@ -1,9 +1,13 @@
 {
   "version": 1,
   "examples": {
-    "allbridge": {
-      "definitionHash": "14072afa65cfd5028fc8e59ecf493f3a4f1cb15f61b035ea672e6922ee3bc320",
-      "sealedAt": "2026-02-06T17:22:28.687Z"
+    "ccip-partial-adi": {
+      "definitionHash": "ded1c242cdda65bb8a220da275ceba40cfd908a9333a6df18709360e099777dd",
+      "sealedAt": "2026-07-17T08:47:40.566Z"
+    },
+    "ccip-v2": {
+      "definitionHash": "0ee63c09d0848d0b1ad2bd651a6677e0f24b632c44147d2df1e60ac56c9aa47b",
+      "sealedAt": "2026-08-12T10:45:35.564Z"
     }
   }
 }

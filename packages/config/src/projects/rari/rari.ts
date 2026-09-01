@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ESPRESSO } from '../../common/sequencing'
@@ -11,6 +11,7 @@ const discovery = new ProjectDiscovery('rari')
 
 export const rari: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1706285474), // 2024-01-26T16:11:14Z
+  archivedAt: UnixTime(1782813784), // Tue, 30 Jun 2026 10:03:04 GMT
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   hostChain: 'arbitrum',
@@ -18,6 +19,7 @@ export const rari: ScalingProject = orbitStackL3({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'RARI Chain',
+    aliases: ['Rarible'],
     slug: 'rari',
     description:
       'RARI Chain embeds royalties on the node level to guarantee royalty payments. A secure, low-cost, decentralized Ethereum L3 blockchain powered by Arbitrum.',
@@ -35,10 +37,14 @@ export const rari: ScalingProject = orbitStackL3({
       ],
     },
   },
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
+    },
+  ],
   customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -77,6 +83,7 @@ export const rari: ScalingProject = orbitStackL3({
       { type: 'blockscout', url: 'https://rari.calderaexplorer.xyz/api' },
       { type: 'blockscoutV2', url: 'https://rari.calderaexplorer.xyz/api/v2' },
     ],
+    untilTimestamp: UnixTime(1782813784), // Tue, 30 Jun 2026 10:03:04 GMT
   },
   nonTemplateTechnology: {
     sequencing: ESPRESSO,

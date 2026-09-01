@@ -1,22 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import { findSelected } from '../../../utils/findSelected'
 import { usePanelStore } from '../store/panel-store'
+import { useProjectQueryOptions } from './projectQuery'
 
 export function useProjectData() {
   const { project } = useParams()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddresses = usePanelStore((state) => state.selected)
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
 
-  const projectResponse = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
+  const projectResponse = useQuery(useProjectQueryOptions(project))
 
+  const [selectedAddress] = selectedAddresses
   const selected = projectResponse.data
     ? findSelected(projectResponse.data.entries, selectedAddress)
     : undefined
@@ -26,6 +24,7 @@ export function useProjectData() {
     isError: projectResponse.isError,
     project,
     selectedAddress,
+    selectedAddresses,
     projectResponse,
     selected,
   }

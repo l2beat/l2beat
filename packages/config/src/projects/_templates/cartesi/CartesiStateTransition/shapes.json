@@ -1,13 +1,12 @@
 {
   "CartesiStateTransition": {
-    "hash": "0xc742ba941fb8f350e4f2f41efd06418dfd193404fc7c5022815b47b9f775e558",
+    "hash": "0xcbf407cc5eff0799f36dfb78739e128556cf8dac40e619b9cc9e2e1f849ca6cc",
     "address": "eth:0x772732EFbDE6559B2960327276ed33d707fF057f",
     "blockNumber": 22716869
   },
   "CartesiStateTransition.sol": {
-    "hash": "0xd7ac00e8f86fd3a5a23b988ac1e1b7fee0e33c3e7da7fe9d052cf59d3d0350b8",
+    "hash": "0xfe97214cf7ff781796de8d352e12146ee3ad0f84521e9c49511b949a70185ee6",
     "address": "eth:0x31EEaeC2A8d855B13B376b72C172F0c20A2910F6",
-    "chain": "ethereum",
     "blockNumber": 23775846
   }
 }

@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "ignoreMethods": [
+    "epochsPoolGotRewardFor",
+    "mintedInBlock",
+    "validatorMinRewardPercent",
+    "validatorRewardPercent"
+  ],
+  "ignoreInWatchMode": [
+    "extraReceiversQueueSize",
+    "mintedTotally",
+    "nativeRewardUndistributed",
+    "tokenRewardUndistributed"
+  ],
+  "ignoreRelatives": ["validatorSetContract", "tokenMinterContract"],
+  "description": "Part of the deprecated AuRa proof-of-authority consensus model. Gnosis switched to an Ethereum-like consensus, but this contract is still used as the legacy xDAI mint queue for Ethereum-to-Gnosis bridge messages.",
+  "fields": {
+    "admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "allow which legacy bridge contracts may queue xDAI minting through this contract and change the token minter used by the deprecated AuRa reward path."
+        }
+      ]
+    },
+    "ercToNativeBridgesAllowed": {
+      "description": "Bridge contracts allowed to queue xDAI minting through the legacy BlockRewardAuRa contract.",
+      "severity": "HIGH"
+    }
+  }
+}

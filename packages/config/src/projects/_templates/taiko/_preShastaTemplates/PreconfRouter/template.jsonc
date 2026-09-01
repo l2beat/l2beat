@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "PreconfRouter",
+  "description": "Routes batch proposals for preconfirmed blocks to the main Taiko contract. It ensures that only operators from the {{preconfWhitelist}} (or a designated fallback) can successfully submit a batch.",
+  "fields": {
+    "fallbackPreconfer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to commit transactions from the current layer to the host chain."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [{ "type": "interact", "description": "pause/unpause." }]
+    }
+  },
+  "ignoreMethods": ["proxiableUUID"]
+}

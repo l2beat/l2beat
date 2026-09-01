@@ -14,7 +14,6 @@ import {
   DrawerTrigger,
 } from '~/components/core/Drawer'
 import { Markdown } from '~/components/markdown/Markdown'
-import { CloseIcon } from '~/icons/Close'
 
 export function VerificationSteps({
   verificationSteps,
@@ -40,13 +39,9 @@ export function VerificationSteps({
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
         <DialogContent className="md:max-w-[720px]">
+          <DialogClose />
           <DialogHeader>
-            <div className="flex items-center justify-between">
-              <DialogTitle>Verification steps</DialogTitle>
-              <DialogClose>
-                <CloseIcon className="size-4 fill-primary" />
-              </DialogClose>
-            </div>
+            <DialogTitle>Verification steps</DialogTitle>
           </DialogHeader>
           <Markdown className="text-paragraph-16">{verificationSteps}</Markdown>
         </DialogContent>

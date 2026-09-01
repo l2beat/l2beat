@@ -1,12 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { alignTimestamp } from './alignTimestamp'
 
 export class Clock {
   constructor(
     private readonly minTimestamp: UnixTime,
     private readonly delayInSeconds: number,
-    readonly hourlyCutoffDays = 7,
-    readonly sixHourlyCutoffDays = 90,
     private readonly refreshIntervalMs = 1000,
   ) {}
 
@@ -37,78 +34,6 @@ export class Clock {
 
   getLastDay(): UnixTime {
     return UnixTime.toStartOf(UnixTime.now() - this.delayInSeconds, 'day')
-  }
-
-  shouldTimestampBeIncluded(targetTimestamp: UnixTime, timestamp: UnixTime) {
-    return timestamp === this.getTimestampForApi(targetTimestamp, timestamp)
-  }
-
-  getAllTimestampsForApi(
-    targetTimestamp: UnixTime,
-    options?: {
-      minTimestampOverride: UnixTime
-    },
-  ): UnixTime[] {
-    const from =
-      options?.minTimestampOverride &&
-      options.minTimestampOverride > this.getFirstDay()
-        ? this.getTimestampForApi(targetTimestamp, options.minTimestampOverride)
-        : this.getFirstDay()
-
-    let current = this.getTimestampForApi(targetTimestamp, from)
-
-    const timestamps: UnixTime[] = []
-    while (current <= targetTimestamp) {
-      timestamps.push(current)
-      current = this.getTimestampForApi(targetTimestamp, current + 1)
-    }
-
-    return timestamps
-  }
-
-  private getTimestampForApi(
-    targetTimestamp: UnixTime,
-    _timestamp: number,
-  ): UnixTime {
-    const timestamp = UnixTime(_timestamp)
-    const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
-    const sixHourlyCutOff = this.getSixHourlyCutoff(targetTimestamp)
-
-    return alignTimestamp(timestamp, hourlyCutOff, sixHourlyCutOff)
-  }
-
-  getSixHourlyCutoff(
-    targetTimestamp: UnixTime,
-    options?: {
-      minTimestampOverride: UnixTime
-    },
-  ): UnixTime {
-    const cutoff = UnixTime.toEndOf(
-      targetTimestamp - this.sixHourlyCutoffDays * UnixTime.DAY,
-      'six hours',
-    )
-
-    return options?.minTimestampOverride &&
-      options.minTimestampOverride > cutoff
-      ? UnixTime.toEndOf(options.minTimestampOverride, 'six hours')
-      : cutoff
-  }
-
-  getHourlyCutoff(
-    targetTimestamp: UnixTime,
-    options?: {
-      minTimestampOverride: UnixTime
-    },
-  ): UnixTime {
-    const cutoff = UnixTime.toEndOf(
-      targetTimestamp - this.hourlyCutoffDays * UnixTime.DAY,
-      'hour',
-    )
-
-    return options?.minTimestampOverride &&
-      options.minTimestampOverride > cutoff
-      ? UnixTime.toEndOf(options.minTimestampOverride, 'hour')
-      : cutoff
   }
 
   onNewHour(callback: (timestamp: UnixTime) => void) {

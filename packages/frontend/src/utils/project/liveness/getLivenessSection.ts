@@ -5,9 +5,9 @@ import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
+import type { LivenessProject } from '~/server/features/layer2s/liveness/types'
+import { getHasTrackedContractChanged } from '~/server/features/layer2s/liveness/utils/getHasTrackedContractChanged'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import type { LivenessProject } from '~/server/features/scaling/liveness/types'
-import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
 import type { SsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
@@ -54,14 +54,18 @@ export async function getLivenessSection(
     (subtype) => project.livenessInfo?.overwrites?.[subtype] !== 'no-data', // we do not want to show disabled subtypes
   )
 
-  const range = optionToRange('max')
+  const defaultRange = project.archivedAt
+    ? optionToRange('max')
+    : optionToRange('30d')
   const subtype = getDefaultSubtype(configuredSubtypes)
 
-  const data = await helpers.liveness.projectChart.fetch({
-    projectId: project.id,
-    range,
-    subtype,
-  })
+  const data = await helpers.queryClient.fetchQuery(
+    helpers.trpc.liveness.projectChart.queryOptions({
+      projectId: project.id,
+      range: defaultRange,
+      subtype,
+    }),
+  )
 
   if (data.data.length === 0) return undefined
 
@@ -77,9 +81,8 @@ export async function getLivenessSection(
     anomalies: liveness?.anomalies ?? [],
     hasTrackedContractsChanged,
     trackedTransactions,
-    defaultRange: project.archivedAt
-      ? optionToRange('max')
-      : optionToRange('30d'),
+    duplicateData: project.livenessConfig?.duplicateData,
+    defaultRange,
     isArchived: project.archivedAt !== undefined,
   }
 }

@@ -1,8 +1,19 @@
 {
   "AccessManager.sol": {
-    "hash": "0x5328680aaf3216187a64073bdff9a69e374be581a9be8dc3ec9851276d36ae7e",
+    "hash": "0x25e2fd33e56e0f2487c10c9735c4420e3cb4ea27e35fc796bafcc4c8a84569e6",
     "address": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
-    "chain": "ethereum",
     "blockNumber": 23988638
+  },
+  "AccessManager_xlayer.sol": {
+    "hash": "0xe25d5d620d35e0b1752ae46bac31441e95a1fa6fe94fd740a0584c94d704c591",
+    "address": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+    "chain": "ethereum",
+    "blockNumber": 25436631
+  },
+  "AccessManager_rise.sol": {
+    "hash": "0x219f095816b5cdaca04593c26cba2820b20761b9aea9708d7458d57182ce7f8b",
+    "address": "eth:0xF90a72FC295DBEf2fD27629Fda4B98Fd3E842d17",
+    "chain": "ethereum",
+    "blockNumber": 24167766
   }
 }

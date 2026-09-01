@@ -75,9 +75,6 @@ export async function getChainConfig(
           })
           break
         case 'fuel':
-        case 'loopring':
-        case 'degate3':
-        case 'zksync':
           blockApis.push({
             type: api.type,
             url: env.string(Env.key(chain, 'API_URL'), api.url),
@@ -113,8 +110,9 @@ export async function getChainConfig(
           })
           break
         case 'svm-rpc':
+        case 'aztec-rpc':
           blockApis.push({
-            type: 'svm-rpc',
+            type: api.type,
             url: env.string(Env.key(chain, 'RPC_URL'), api.url),
             callsPerMinute: env.integer(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
@@ -124,6 +122,7 @@ export async function getChainConfig(
           })
           break
         case 'lighter':
+        case 'payy':
           break
         default:
           assertUnreachable(api)

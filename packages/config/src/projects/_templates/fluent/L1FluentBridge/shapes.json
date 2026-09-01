@@ -1,0 +1,12 @@
+{
+  "L1FluentBridge.sol": {
+    "hash": "0x7bda96bf482f46806c7ec01435c28a85aa1cac36fddebecc38ed1b28e23ebc12",
+    "address": "eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227",
+    "blockNumber": 24842284
+  },
+  "L1FluentBridge_v2.sol": {
+    "hash": "0x73f59c197fe2e902ffd1c1e9ee49d52d05e0df7bf001e7e56cc3d82339a457ea",
+    "address": "eth:0xF67255be817061139C9DeeA757f7276916cBF849",
+    "blockNumber": 24957000
+  }
+}

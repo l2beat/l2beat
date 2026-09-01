@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "TaikoDAOController",
+  "description": "Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.",
+  "category": "gov",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "daoController": {
+      "edit": ["format", "EthereumAddress"],
+      "permissions": [{ "type": "act" }]
+    }
+  }
+}

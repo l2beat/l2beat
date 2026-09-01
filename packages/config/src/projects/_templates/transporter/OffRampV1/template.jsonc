@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
+  "description": "Arbitrum-to-Ethereum OffRamp. It accepts OCR execution reports, checks every message against a blessed committed Merkle root, enforces sequence and nonce rules, releases or mints tokens, and calls the Router to deliver ccipReceive() to the receiver.",
   "ignoreMethods": [
     "getTransmitters",
     "getSupportedTokens",
@@ -8,21 +10,61 @@
     "currentRateLimiterState",
     "lastUpdated"
   ],
-  "ignoreRelatives": ["owner"],
+  "ignoreRelatives": ["getTokenLimitAdmin", "owner"],
   "fields": {
+    "ocrConfig": {
+      "description": "Execution OCR config from ConfigSet. usually f+1 signers must sign message that is committed by a transmitter. This OffRamp inherits OCR2BaseNoChecks, so transmit() does not verify OCR signer signatures onchain. Acceptance is one configured transmitter plus the matching config digest; message safety comes from the blessed CommitStore proof and OffRamp execution checks.",
+      "handler": {
+        "type": "event",
+        "select": [
+          "configCount",
+          "signers",
+          "transmitters",
+          "f",
+          "offchainConfigVersion"
+        ],
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof."
+        }
+      ]
+    },
     "commitStore": {
+      "description": "CommitStore whose blessed Merkle roots must prove every message executed by this OffRamp.",
       "handler": {
         "type": "call",
         "method": "getStaticConfig",
         "args": []
       },
-      "edit": ["get", "commitStore"]
+      "edit": ["get", "commitStore"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "provide committed Merkle roots that this OffRamp requires before executing messages."
+        }
+      ]
     },
     "getStaticConfig": {
-      "edit": [
-        "pipe",
-        ["set", "chainSelector", ["format", "ChainIdMap"]],
-        ["set", "sourceChainSelector", ["format", "ChainIdMap"]]
+      "description": "Immutable inbound lane config: Ethereum destination selector and Arbitrum source selector.",
+      "edit": ["pick", "chainSelector", "sourceChainSelector"]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable execution config: Router, PriceRegistry, permissionless execution delay, message size and token limits, and token pool gas limit."
+    },
+    "latestConfigDetails": {
+      "description": "Digest and config count for the currently accepted execution OCR config. Reports must use this digest, but this field is not itself a quorum."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the OffRamp admin, OCR config, rate limits, token pools, and execution parameters."
+        }
       ]
     }
   }

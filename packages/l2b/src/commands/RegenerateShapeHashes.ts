@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
+  contractFlatteningHash,
   type DiscoveryPaths,
   getChainConfigs,
   getDiscoveryPaths,
+  ShapeSchema,
   SQLiteCache,
 } from '@l2beat/discovery'
-import { ShapeSchema } from '@l2beat/discovery/dist/discovery/config/ShapeSchema'
-import { contractFlatteningHash } from '@l2beat/discovery/dist/flatten/utils'
 import { HttpClient } from '@l2beat/shared'
 import {
   assert,
@@ -123,6 +123,9 @@ async function getSourceHash(
 
   const sources = await Promise.all(addresses.map((a) => client.getSource(a)))
   const hashes = sources.map((source) => contractFlatteningHash(source))
+  if (hashes.some((x) => x === undefined)) {
+    return undefined
+  }
   assert(hashes.every((x) => x !== undefined))
 
   if (hashes.length === 1) {

@@ -8,11 +8,15 @@ import {
   getCustomTypeCaster,
   isCustomTypeCaster,
 } from '../discovery/type-casters'
-import type { BlipSexp } from './type'
+import type { BlipEnv, BlipSexp } from './type'
+import { isEnvKey } from './type'
 
 export class BlipRuntime {
   public readonly usedTypesSet: Set<DiscoveryCustomType> = new Set()
-  constructor(private readonly types: Record<string, DiscoveryCustomType>) {}
+  constructor(
+    private readonly types: Record<string, DiscoveryCustomType>,
+    private readonly env: BlipEnv = {},
+  ) {}
 
   get usedTypes(): DiscoveryCustomType[] {
     return [...this.usedTypesSet]
@@ -54,6 +58,27 @@ export class BlipRuntime {
         }
         return xs.some((e) => x !== e)
       }
+      case '<': {
+        const [x, ...xs] = blip.slice(1).map((b) => this.executeBlip(v, b))
+        if (xs.length === 0) {
+          return compareValues(v, x) < 0
+        }
+        return xs.every((e) => compareValues(x, e) < 0)
+      }
+      case '>': {
+        const [x, ...xs] = blip.slice(1).map((b) => this.executeBlip(v, b))
+        if (xs.length === 0) {
+          return compareValues(v, x) > 0
+        }
+        return xs.every((e) => compareValues(x, e) > 0)
+      }
+      case 'env': {
+        const key = blip[1]
+        assert(isEnvKey(key), `Unknown environment key: ${key}`)
+        const value = this.env[key]
+        assert(value !== undefined, `Environment value not available: ${key}`)
+        return value
+      }
       case 'and': {
         const values = blip.slice(1).map((b) => this.executeBlip(v, b))
         return values.every((e) => e)
@@ -65,6 +90,26 @@ export class BlipRuntime {
         const fn = blip[1]
         assert(Array.isArray(v), 'map requires an array input')
         return v.map((item) => this.executeBlip(item, fn))
+      }
+      case 'sort': {
+        // ['sort'] sorts elements directly; ['sort', keyExpr] sorts by a
+        // computed key. Ascending, deterministic, stable. Useful to normalize
+        // set-like arrays (e.g. DON nodes) so reordering produces no diff.
+        assert(Array.isArray(v), 'sort requires an array input')
+        const keyFn = blip[1]
+        const decorated = v.map((item) => ({
+          item,
+          key: keyFn === undefined ? item : this.executeBlip(item, keyFn),
+        }))
+        decorated.sort((a, b) => {
+          if (typeof a.key === 'number' && typeof b.key === 'number') {
+            return a.key - b.key
+          }
+          const as = String(a.key)
+          const bs = String(b.key)
+          return as < bs ? -1 : as > bs ? 1 : 0
+        })
+        return decorated.map((d) => d.item)
       }
       case 'pick': {
         assert(
@@ -328,4 +373,18 @@ export class BlipRuntime {
 
 function ensureArray<T>(v: T | T[]): T[] {
   return Array.isArray(v) ? v : [v]
+}
+
+function compareValues(
+  a: ContractValue | undefined,
+  b: ContractValue | undefined,
+): number {
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a - b
+  }
+  assert(
+    typeof a === 'string' && typeof b === 'string',
+    'Comparison requires two numbers or two strings',
+  )
+  return a < b ? -1 : a > b ? 1 : 0
 }

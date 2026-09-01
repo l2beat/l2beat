@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FixedAssetReader",
+  "description": "A read-only accessor for the embedded font data used to draw the trove NFT image. It reads the raw bytes out of the FixedAssetData data contract (stored via the SSTORE2 pattern) and serves them to the MetadataNFT renderer. It holds no funds and changes no state."
+}

@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { EigenApiClient } from '@l2beat/shared'
+import { EIGENDA_LAYER_DATA_GAP, type EigenApiClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import uniq from 'lodash/uniq'
@@ -9,7 +9,8 @@ import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiInd
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
 
 export interface Dependencies
@@ -32,8 +33,6 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
         name: 'eigenda_layer_indexer',
         tags: { tag: $.daLayer },
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        configurationsTrimmingDisabled: true,
-        dataWipingAfterDeleteDisabled: false,
       },
       logger,
     )
@@ -55,6 +54,20 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
     const adjustedTo = adjustedFrom + UnixTime.HOUR
+
+    if (
+      adjustedFrom >= EIGENDA_LAYER_DATA_GAP.from &&
+      adjustedFrom < EIGENDA_LAYER_DATA_GAP.until
+    ) {
+      this.logger.info('Skipping update - sync disabled for this range', {
+        from: adjustedFrom,
+        to: adjustedTo,
+      })
+      return () => {
+        return Promise.resolve(adjustedTo)
+      }
+    }
+
     const daLayerData = await this.getDaLayerData(adjustedFrom, adjustedTo)
 
     this.logger.info('Da Layer data fetched')
@@ -83,11 +96,7 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     from: number,
     to: number,
   ): Promise<DataAvailabilityRecord> {
-    const [throughputV1, totalSizeV2] = await Promise.all([
-      this.$.eigenClient.getMetricsV1(from, to - 1),
-      this.$.eigenClient.getMetricsV2(from, to - 1),
-    ])
-    const totalSizeV1 = Math.round(throughputV1 * (to - 1 - from))
+    const metrics = await this.$.eigenClient.getMetrics(from, to - 1)
     const configurationId = this.$.configurations.find(
       (c) => c.properties.projectId === this.daLayer,
     )?.id
@@ -96,27 +105,53 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
 
     return {
       timestamp: UnixTime.toStartOf(from, 'hour'),
-      totalSize: BigInt(totalSizeV1 + totalSizeV2),
+      totalSize: BigInt(metrics.total_bytes_posted),
       projectId: 'eigenda',
       daLayer: this.daLayer,
       configurationId,
     }
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
+  override async wipeData(
+    configurations: WipeRemovalConfiguration[],
   ): Promise<void> {
-    //this function should only run with this flag enabled
-    assert(this.options.configurationsTrimmingDisabled)
+    const deletedRecords = await this.$.db.dataAvailability.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
 
-    for (const c of configurations) {
-      const deletedRecords =
-        await this.$.db.dataAvailability.deleteByConfigurationId(c.id)
-
-      this.logger.info('Wiped DA records for configuration', {
-        id: c.id,
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped DA records for configurations', {
+        configurations: configurations.length,
         deletedRecords,
       })
+    }
+  }
+
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      // Records are hourly buckets, so cut at full hours: keep the bucket holding
+      // the new sinceTimestamp (range ends at since - 1; nothing re-indexes it),
+      // drop the bucket holding the new untilTimestamp (range starts at until + 1;
+      // it is re-fetched if the range grows again). Same rule as DaIndexer.
+      const from = UnixTime.toStartOf(configuration.range[0], 'hour')
+      const to = UnixTime.toStartOf(configuration.range[1] + 1, 'hour') - 1
+      const deletedRecords =
+        await this.$.db.dataAvailability.deleteByConfigInTimeRange(
+          configuration.id,
+          from,
+          to,
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DA records for configuration', {
+          id: configuration.id,
+          from,
+          to,
+          deletedRecords,
+        })
+      }
     }
   }
 

@@ -1,13 +1,12 @@
 {
   "Application": {
-    "hash": "0x040a3525c8ccc1fbd5fef3a9e0b3087a477f2f7d77e358637619e3c8702615ac",
+    "hash": "0xd5c6844a1955553e2252e54218056ab8dc1b0a917bdb5ab1225476aececd140b",
     "address": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
     "blockNumber": 22709685
   },
   "Application.sol": {
-    "hash": "0x9a732e55de9aeae2ead7314600feb957c1d7d92daaac68f6d61fdcf0e3bbed2d",
+    "hash": "0x864b35ad1132c5889d6b57001dd402c40280800647b096f91d7f4f8f049d0168",
     "address": "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998",
-    "chain": "ethereum",
     "blockNumber": 23775846
   }
 }

@@ -123,6 +123,80 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getFirstTimestampByProjectIds(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+    const row = await this.db
+      .selectFrom('DataAvailability')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
+  async getFirstTimestampsByProjectIds(
+    projectIds: string[],
+  ): Promise<Record<string, UnixTime>> {
+    if (projectIds.length === 0) return {}
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(['projectId', (eb) => eb.fn.min('timestamp').as('timestamp')])
+      .where('projectId', 'in', projectIds)
+      .groupBy('projectId')
+      .execute()
+
+    return Object.fromEntries(
+      rows
+        .filter((row) => row.timestamp !== null)
+        .map((row) => [row.projectId, UnixTime.fromDate(row.timestamp)]),
+    )
+  }
+
+  // Mirrors the filter of getSummedProjectsByDaLayersAndTimeRange (sums the
+  // projects of a DA layer, excluding the layer's own aggregate record).
+  async getFirstTimestampOfSummedProjectsByDaLayers(
+    daLayers: string[],
+    excludedProjectIds?: string[],
+  ): Promise<UnixTime | undefined> {
+    if (daLayers.length === 0) return undefined
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('daLayer', 'in', daLayers)
+      .whereRef('projectId', '!=', 'daLayer')
+
+    if (excludedProjectIds && excludedProjectIds.length > 0) {
+      query = query.where('projectId', 'not in', excludedProjectIds)
+    }
+
+    const row = await query.executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
+  // Mirrors the filter of getByDaLayersAndTimeRange (all records of a DA layer,
+  // including the layer's own aggregate record).
+  async getFirstTimestampByDaLayers(
+    daLayers: string[],
+    excludedProjectIds?: string[],
+  ): Promise<UnixTime | undefined> {
+    if (daLayers.length === 0) return undefined
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('daLayer', 'in', daLayers)
+
+    if (excludedProjectIds && excludedProjectIds.length > 0) {
+      query = query.where('projectId', 'not in', excludedProjectIds)
+    }
+
+    const row = await query.executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
   async getSummedProjectsByDaLayersAndTimeRange(
     daLayers: string[],
     timeRange: [UnixTime | null, UnixTime],
@@ -189,10 +263,33 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigurationId(configurationId: string): Promise<number> {
     const result = await this.db
       .deleteFrom('DataAvailability')
       .where('configurationId', '=', configurationId)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByConfigInTimeRange(
+    configurationId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
@@ -212,6 +309,28 @@ export class DataAvailabilityRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getLatestTimestampsByConfigId(): Promise<
+    { configurationId: string; latestTimestamp: UnixTime }[]
+  > {
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(['configurationId'])
+      .select(this.db.fn.max('timestamp').as('latestTimestamp'))
+      .groupBy('configurationId')
+      .execute()
+
+    return rows.flatMap((row) => {
+      if (row.latestTimestamp === null) {
+        return []
+      }
+
+      return {
+        configurationId: row.configurationId,
+        latestTimestamp: UnixTime.fromDate(row.latestTimestamp),
+      }
+    })
   }
 
   // Test only

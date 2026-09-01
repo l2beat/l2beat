@@ -9,7 +9,7 @@ import {
   LeveledCache,
   TemplateService,
 } from '@l2beat/discovery'
-import type { HttpClient } from '@l2beat/shared'
+import type { HttpClient, RpcMetricsAggregator } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { DatabaseCache } from './DatabaseCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -23,6 +23,7 @@ export function createDiscoveryRunner(
   chainConfigs: DiscoveryChainConfig[],
   cacheEnabled: boolean,
   cacheUri: string,
+  rpcMetricsAggregator?: RpcMetricsAggregator,
 ) {
   let discoveryCache: IDiscoveryCache = {
     get: async () => undefined,
@@ -41,6 +42,7 @@ export function createDiscoveryRunner(
     discoveryCache,
     http,
     discoveryLogger,
+    rpcMetricsAggregator,
   )
 
   const templateService = new TemplateService(paths.discovery)

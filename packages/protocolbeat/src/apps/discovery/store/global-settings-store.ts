@@ -6,6 +6,11 @@ interface State {
    * If true, unreachable entries should have a distinctive visual treatment.
    */
   readonly markUnreachableEntries: boolean
+  /**
+   * Maximum BFS depth used when computing reachable entries on the server.
+   * `null` means unlimited (server default).
+   */
+  readonly maxReachableDepth: number | null
 }
 
 interface Actions {
@@ -14,6 +19,7 @@ interface Actions {
 
 const INITIAL_STATE: State = {
   markUnreachableEntries: true,
+  maxReachableDepth: null,
 }
 
 export const useGlobalSettingsStore = create<State & Actions>()(

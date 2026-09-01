@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,7 +13,30 @@ export const arenaz = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
+  archivedAt: UnixTime.fromDate(new Date('2026-05-07')),
   discovery,
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21169100, // first batch of the original batcher
+      untilBlock: 24776391, // batcher rotation, last old-batcher batch @ 24774882
+      inbox: EthereumAddress('0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0'),
+      sequencers: [
+        EthereumAddress('0x2b8733E8c60A928b19BB7db1D79b918e8E09AC8c'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 24776391, // first batch of the rotated batcher
+      untilBlock: 25228892, // last batch before archival
+      inbox: EthereumAddress('0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0'),
+      sequencers: [
+        EthereumAddress('0x47827645bA78EB18c3d64Fe2146EfdE66F74894B'),
+      ],
+    },
+  ],
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -37,6 +60,7 @@ export const arenaz = opStackL2({
   chainConfig: {
     name: 'arenaz',
     chainId: 7897,
+    untilTimestamp: UnixTime.fromDate(new Date('2026-05-07')),
     apis: [
       {
         type: 'rpc',

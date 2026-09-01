@@ -1,6 +1,8 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatNumber,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -13,9 +15,140 @@ import { zkStackL2 } from '../../templates/zkStack'
 const discovery = new ProjectDiscovery('zksync2')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
+// Governance values below are read from the shared-zk-stack discovery.
+// The SecurityCouncil and EmergencyUpgradeBoard contracts were redeployed by
+// ZIP-15 (executed 2026-05-22, 12 -> 8 members); docs.zknation.io prose partly
+// still shows pre-ZIP-15 values, the onchain configuration is authoritative.
+const scMemberCount = discovery.getContractValue<string[]>(
+  'SecurityCouncil',
+  '$members',
+).length
+const scApprovalThreshold = discovery.getContractValue<number>(
+  'SecurityCouncil',
+  'APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD',
+)
+const scSoftFreezeThreshold = discovery.getContractValue<number>(
+  'SecurityCouncil',
+  'RECOMMENDED_SOFT_FREEZE_THRESHOLD',
+)
+const scHardFreezeThreshold = discovery.getContractValue<number>(
+  'SecurityCouncil',
+  'HARD_FREEZE_THRESHOLD',
+)
+const scMainThreshold = discovery.getContractValue<number>(
+  'SecurityCouncil',
+  'EIP1271_THRESHOLD',
+)
+const guardiansMemberCount = discovery.getContractValue<string[]>(
+  'Guardians',
+  '$members',
+).length
+const guardiansMainThreshold = discovery.getContractValue<number>(
+  'Guardians',
+  'EIP1271_THRESHOLD',
+)
+const guardiansExtendThreshold = discovery.getContractValue<number>(
+  'Guardians',
+  'EXTEND_LEGAL_VETO_THRESHOLD',
+)
+const zkFoundationStats = discovery.getMultisigStats('ZK Foundation Multisig')
+const softFreezeS = discovery.getContractValue<number>(
+  'ProtocolUpgradeHandler',
+  'SOFT_FREEZE_PERIOD',
+)
+const hardFreezeS = discovery.getContractValue<number>(
+  'ProtocolUpgradeHandler',
+  'HARD_FREEZE_PERIOD',
+)
+const legalVetoStandardS = discovery.getContractValue<number>(
+  'ProtocolUpgradeHandler',
+  'STANDARD_LEGAL_VETO_PERIOD',
+)
+const legalVetoExtendedS = discovery.getContractValue<number>(
+  'ProtocolUpgradeHandler',
+  'EXTENDED_LEGAL_VETO_PERIOD',
+)
+const upgradeDelayPeriodS = discovery.getContractValue<number>(
+  'ProtocolUpgradeHandler',
+  'UPGRADE_DELAY_PERIOD',
+)
+const upgradeWaitOrExpireS = discovery.getContractValue<number>(
+  'ProtocolUpgradeHandler',
+  'UPGRADE_WAIT_OR_EXPIRE_PERIOD',
+)
+const protVotingDelayS = discovery.getContractValue<number>(
+  'ZkProtocolGovernor',
+  'votingDelay',
+)
+const protVotingPeriodS = discovery.getContractValue<number>(
+  'ZkProtocolGovernor',
+  'votingPeriod',
+)
+const protLateQuorumExtensionS = discovery.getContractValue<number>(
+  'ZkProtocolGovernor',
+  'lateQuorumVoteExtension',
+)
+const tokenVotingDelayS = discovery.getContractValue<number>(
+  'ZkTokenGovernor',
+  'votingDelay',
+)
+const tokenVotingPeriodS = discovery.getContractValue<number>(
+  'ZkTokenGovernor',
+  'votingPeriod',
+)
+const tokenLateQuorumExtensionS = discovery.getContractValue<number>(
+  'ZkTokenGovernor',
+  'lateQuorumVoteExtension',
+)
+const tokenTlDelayS = discovery.getContractValue<number>(
+  'ZkTokenTimelockController',
+  'getMinDelay',
+)
+const proposalThresholdM =
+  discovery.getContractValueBigInt('ZkProtocolGovernor', 'proposalThreshold') /
+  1000000000000000000000000n // result: M of tokens
+const quorumM =
+  discovery.getContractValueBigInt('ZkProtocolGovernor', 'currentQuorum') /
+  1000000000000000000000000n // result: M of tokens
+const zkMaxSupply = formatNumber(
+  Number(discovery.getContractValueBigInt('ZkToken', 'maxSupply') / 10n ** 18n),
+)
+const zkTotalSupply = formatNumber(
+  Number(
+    discovery.getContractValueBigInt('ZkToken', 'totalSupply') / 10n ** 18n,
+  ),
+)
+// wall-clock timelines for the governance profile (excluding cross-chain
+// message latency and the ValidatorTimelock batch execution delay)
+const fastestNormalUpgradeD = Math.round(
+  (protVotingDelayS +
+    protVotingPeriodS +
+    legalVetoStandardS +
+    upgradeDelayPeriodS) /
+    86400,
+)
+const guardianFallbackUpgradeD = Math.round(
+  (protVotingDelayS +
+    protVotingPeriodS +
+    legalVetoStandardS +
+    upgradeWaitOrExpireS +
+    upgradeDelayPeriodS) /
+    86400,
+)
+const exitWindowD = Math.round(
+  (legalVetoStandardS + upgradeDelayPeriodS) / 86400,
+)
+const tppWallClockD = Math.round(
+  (tokenVotingDelayS + tokenVotingPeriodS + tokenTlDelayS) / 86400,
+)
+
 const chainId = 324
 // https://etherscan.io/tx/0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26#eventlog
 const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
+
+// timestamp of the first executeBatchesSharedBridge trx on 0xdC26B08F0335b68721F64001C38b05D0BC9B539d
+const eraMultisigValidatorTs = UnixTime(1777393451)
+const eraMultisigValidatorBlock = 24979735 // block with timestamp eraMultisigValidatorTs
 
 export const zksync2: ScalingProject = zkStackL2({
   chainId,
@@ -24,6 +157,7 @@ export const zksync2: ScalingProject = zkStackL2({
   discovery,
   display: {
     name: 'ZKsync Era',
+    aliases: ['ZKsync 2.0'],
     slug: 'zksync-era',
     description:
       'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',
@@ -89,18 +223,50 @@ export const zksync2: ScalingProject = zkStackL2({
     ],
   },
   associatedTokens: ['ZK'],
+  governanceInfo: {
+    securityCouncil: {
+      Composition: `**${scApprovalThreshold}/${scMemberCount}** to approve upgrades · **${scSoftFreezeThreshold}/${scMemberCount}** soft freeze · **${scHardFreezeThreshold}/${scMemberCount}** hard freeze, unfreeze and emergency approval. No fixed terms: members serve until replaced via Protocol Governor proposal.`,
+      'Members public': `**Mapped** — ${scMemberCount} representatives of different orgs + signer addresses [published in Schedule 3](https://docs.zknation.io/zksync-governance-procedures/schedule-3-zksync-security-council).`,
+      Charter:
+        '[ZKsync Governance Procedures, Schedules 2–3](https://docs.zknation.io/zksync-governance-procedures/schedule-3-zksync-security-council) + bylaws of the ZKsync Security Council entity.',
+      'Can bypass DAO?': `**Freeze yes, upgrade no (alone)** — can unilaterally and immideately freeze the protocol: ${formatSeconds(softFreezeS)} soft freeze (${scSoftFreezeThreshold}/${scMemberCount}) or ${formatSeconds(hardFreezeS)} hard freeze (${scHardFreezeThreshold}/${scMemberCount}). Upgrades require approvals from ${guardiansMainThreshold}/${guardiansMemberCount} Guardians and ${zkFoundationStats} ZK Foundation Multisig.`,
+      'DAO can override SC?': `**Partially** — the Token Assembly can pass a Protocol Governor proposal replacing SC members, but it needs SC approval (${scApprovalThreshold}/${scMemberCount}) or ${guardiansMainThreshold}/${guardiansMemberCount} Guardians as fallback. No unconditional tokenholder path.`,
+    },
+    guardians: {
+      Composition: `**${guardiansMainThreshold}/${guardiansMemberCount}** for vetoes and approvals, no fixed terms. Addresses and names of individuals that take Guardian role are [published in Schedule 4](https://docs.zknation.io/zksync-governance-procedures/schedule-4-zksync-guardians).`,
+      Powers: `**Veto + fallback approval + emergency co-sign.** L1 Onchain veto (${guardiansMainThreshold}/${guardiansMemberCount}) cancels Token/GovOps proposals during voting delay or vote. Offchain veto (${guardiansMainThreshold} signed statements to the SC Foundation) blocks Protocol proposals during the ${formatSeconds(legalVetoStandardS)} legal veto period; ${guardiansExtendThreshold}/${guardiansMemberCount} can extend it to ${formatSeconds(legalVetoExtendedS)}. ${guardiansMainThreshold}/${guardiansMemberCount} can approve a Protocol proposal in risk review if the SC won't. The Guardian multisig is 1 of 3 emergency upgrade signers. Veto justification due on the forum within 48h.`,
+      'Self-protection':
+        '**Yes** — Guardian membership is changed via Protocol Governor proposal, but Guardians may explicitly veto proposals affecting the Guardian body itself (Schedule 4 §5.2). Token holders have no unconditional onchain removal path.',
+    },
+    upgrades: {
+      'Normal upgrade path': `ZIP submission on L2 → ${formatSeconds(protVotingDelayS)} voting delay → ${formatSeconds(protVotingPeriodS)} vote (late quorum +${formatSeconds(protLateQuorumExtensionS)}) → L2→L1 message to the ProtocolUpgradeHandler → ${formatSeconds(legalVetoStandardS)} Guardian offchain-veto window (extendable to ${formatSeconds(legalVetoExtendedS)} by ${guardiansExtendThreshold}/${guardiansMemberCount}) → ≤${formatSeconds(upgradeWaitOrExpireS)} risk review, SC approval (${scApprovalThreshold}/${scMemberCount}) short-circuits to → ${formatSeconds(upgradeDelayPeriodS)} timelock → permissionless execution on Ethereum. Fastest ≈ **${fastestNormalUpgradeD} days** from submission; Guardian-fallback path ≈ **${guardianFallbackUpgradeD} days**.`,
+      'Emergency upgrade path': `**${scMainThreshold}/${scMemberCount} SC + ${guardiansMainThreshold}/${guardiansMemberCount} Guardians + ${zkFoundationStats} ZKsync Foundation, instant**.`,
+      'Exit window': `**~${exitWindowD} days** after the vote closes when the SC approves promptly (${formatSeconds(legalVetoStandardS)} veto window + ${formatSeconds(upgradeDelayPeriodS)} timelock). **0** for emergency upgrades.`,
+      'Token Program path': `Grants or modifies capped ZK minting/burning rights. TPPs via Token Governor: ${formatSeconds(tokenVotingDelayS)} delay → ${formatSeconds(tokenVotingPeriodS)} vote (late quorum +${formatSeconds(tokenLateQuorumExtensionS)}) → ${formatSeconds(tokenTlDelayS)} timelock → permissionless execution on Era, ≈ **${tppWallClockD} days**.`,
+      'GovOps path': `GAPs via GovOps Governor: same ${formatSeconds(tokenVotingDelayS)} + ${formatSeconds(tokenVotingPeriodS)} + ${formatSeconds(tokenTlDelayS)} schedule, but advisory only, implementation is left to the proposer or named parties.`,
+    },
+    tokenGovernance: {
+      'Governance token': `\`ZK\` — ${zkMaxSupply} maximum mintable supply, ${zkTotalSupply} currently minted, 1 delegated token = 1 vote. ZK tokens need to be delegated for voting, but are not locked.`,
+      'Voting venue':
+        '[ZKsync Governance Portal](https://vote.zknation.io/dao) powered by Cactus (formerly Tally). Three OpenZeppelin Governors on ZKsync Era: Protocol, Token, GovOps, each with its own timelock.',
+      'Proposal threshold': `**${proposalThresholdM},000,000 ZK** delegated (0.1% of the ${zkMaxSupply} max mintable supply), identical for all three governors.`,
+      Quorum: `**${quorumM},000,000 ZK** (3% of max mintable supply) for all three governors. Simple majority of For vs Against; abstentions don't count. Late-quorum extension: +${formatSeconds(protLateQuorumExtensionS)} (Protocol), +${formatSeconds(tokenLateQuorumExtensionS)} (Token/GovOps).`,
+      'Execution model':
+        '**On-chain payload · Permissionless execute.** Protocol proposals travel via L2→L1 message and are permissionlessly executed on Ethereum after review + timelock; Token proposals execute permissionlessly on Era after their timelock.',
+    },
+  },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
   // validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       // tracks old Era DA on ethereum
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 21809364,
       untilBlock: 23016895, // migration to Gateway
-      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
       sequencers: [
         '0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2',
         '0x30066439887C0a509Cb38E45c9262E6924a29BbD',
@@ -114,7 +280,7 @@ export const zksync2: ScalingProject = zkStackL2({
       daLayer: ProjectId('ethereum'),
       sinceBlock: 23016895, // migration to Gateway
       untilBlock: 23633924, // v29 upgrade
-      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
       sequencers: [
         '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
         '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
@@ -124,10 +290,26 @@ export const zksync2: ScalingProject = zkStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 23633924,
-      inbox: 'eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776',
+      untilBlock: eraMultisigValidatorBlock,
+      inbox: '0x2e5110cF18678Ec99818bFAa849B8C881744b776',
       sequencers: [
         '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
         '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
+        '0xc75cDcBEef3aE3365ABF0217815748586F9047F1',
+        '0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7',
+        '0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd',
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: eraMultisigValidatorBlock,
+      inbox: '0xdC26B08F0335b68721F64001C38b05D0BC9B539d',
+      sequencers: [
+        '0xa90c7CDB553332948E2943431436117eCFb1e781',
+        '0x28942E6870612893B96F77De0F485fcE3497AAA8',
+        '0xc75cDcBEef3aE3365ABF0217815748586F9047F1',
+        '0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd',
       ],
     },
   ],
@@ -177,7 +359,6 @@ export const zksync2: ScalingProject = zkStackL2({
         'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
     }),
   ],
-  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -453,6 +634,24 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: l1migrationTs,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0xdC26B08F0335b68721F64001C38b05D0BC9B539d'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
     {
@@ -598,6 +797,24 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: l1migrationTs,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0xdC26B08F0335b68721F64001C38b05D0BC9B539d'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
   ],

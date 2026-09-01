@@ -43,10 +43,8 @@ const Checkbox = ({
         onCheckedChange={(checked) => {
           props.onCheckedChange?.(checked)
           track('checkboxChanged', {
-            props: {
-              name,
-              value: checked.valueOf().toString(),
-            },
+            name,
+            value: checked.valueOf().toString(),
           })
         }}
       >

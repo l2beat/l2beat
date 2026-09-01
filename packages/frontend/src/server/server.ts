@@ -6,7 +6,7 @@ import type { NextFunction, Request, Response } from 'express'
 import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
-import { rawEnv } from '~/env'
+import { CLIENT_ENV_KEYS, rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import {
   CLIENT_ASSETS_OUTPUT_DIR,
@@ -22,6 +22,8 @@ import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
+import { createRobotsRouter } from './routers/RobotsRouter'
+import { createSitemapRouter } from './routers/SitemapRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
 const port = process.env.PORT ?? 3000
@@ -45,6 +47,10 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   const productionTemplate = options.dev
     ? undefined
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
+
+  // These routers are explicitly added before the express.static to avoid being overwritten by the static files
+  app.use('/', createRobotsRouter())
+  app.use('/', createSitemapRouter())
 
   if (options.dev) {
     app.use('/', express.static('./static'))
@@ -70,11 +76,11 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
       .replace('<!--app-html-->', rendered.html)
       .replace(
         '<!--ssr-data-->',
-        `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
+        `window.__SSR_DATA__=${jsonForInlineScript(data.ssr)}`,
       )
       .replace(
         '<!--env-data-->',
-        `window.__ENV__=${JSON.stringify(getClientEnvData())}`,
+        `window.__ENV__=${jsonForInlineScript(getClientEnvData())}`,
       )
   }
 
@@ -103,7 +109,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   })
 
   if (!options.dev) {
-    app.use(ErrorHandler())
+    app.use(ErrorHandler(baseLogger))
   }
 
   const server = app.listen(port, () => {
@@ -113,6 +119,10 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
         ? `http://localhost:${port}`
         : `Server running on port ${port}`,
     })
+
+    fetch(`http://localhost:${port}/`)
+      .then(() => logger.info('Warmup request completed'))
+      .catch((error) => logger.warn('Warmup request failed', { error }))
   })
 
   server.on('error', (err: NodeJS.ErrnoException) => {
@@ -161,20 +171,13 @@ async function getTemplate(
   return productionTemplate
 }
 
+/** Safe to embed in `<script>`: avoids `</script>` in JSON closing the tag early. */
+function jsonForInlineScript(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, '\\u003c')
+}
+
 function getClientEnvData() {
   return Object.fromEntries(
-    Object.entries(rawEnv)
-      .map(([key, value]) => {
-        if (
-          !key.startsWith('CLIENT_SIDE_') &&
-          key !== 'NODE_ENV' &&
-          key !== 'DEPLOYMENT_ENV'
-        ) {
-          return undefined
-        }
-
-        return [key, value] as const
-      })
-      .filter((x) => x !== undefined),
+    Object.entries(rawEnv).filter(([key]) => CLIENT_ENV_KEYS.includes(key)),
   )
 }

@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import {
   assertUnreachable,
+  formatSeconds,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -172,7 +173,7 @@ export function LivenessChart({
           data={data}
           isLoading={isLoading}
           yAxis={{
-            tickFormatter: (value: number) => formatDuration(value),
+            tickFormatter: (value: number) => formatSeconds(value),
             domain: ['auto', 'auto'],
             tickCount,
           }}
@@ -268,12 +269,7 @@ function LivenessCustomTooltip({
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(
             timestamp,
-            timestamp +
-              (resolution === 'hourly'
-                ? UnixTime.HOUR
-                : resolution === 'sixHourly'
-                  ? UnixTime.SIX_HOURS
-                  : UnixTime.DAY),
+            timestamp + UnixTime.periodToSeconds(resolution),
           )}
         </div>
         <HorizontalSeparator className="mt-1.5" />
@@ -287,32 +283,9 @@ function Stat({ name, seconds }: { name: string; seconds: number }) {
   return (
     <div className="flex items-center justify-between gap-1.5">
       <span className="font-medium text-label-value-14">{name}</span>
-      <span className="text-heading-16">{formatDuration(seconds)}</span>
+      <span className="text-heading-16">{formatSeconds(seconds)}</span>
     </div>
   )
-}
-
-export function formatDuration(durationInSeconds: number) {
-  const seconds = durationInSeconds
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
-
-  const remainingSeconds = seconds - minutes * 60
-  const remainingMinutes = minutes - hours * 60
-  const remainingHours = hours - days * 24
-
-  return days > 1
-    ? `${days}d ${getDurationText(remainingHours, 'h')} ${getDurationText(remainingMinutes, 'm')}`
-    : hours > 0
-      ? `${hours}h ${getDurationText(remainingMinutes, 'm')} ${getDurationText(remainingSeconds, 's')}`
-      : minutes > 0
-        ? `${minutes}min ${getDurationText(remainingSeconds, 's')}`
-        : `${seconds}s`
-}
-
-function getDurationText(amount: number, unit: 'd' | 'h' | 'm' | 's') {
-  return amount > 0 ? `${amount}${unit}` : ''
 }
 
 function getTooltipContent(subtype: TrackedTxsConfigSubtype) {

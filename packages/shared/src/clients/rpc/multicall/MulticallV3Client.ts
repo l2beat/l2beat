@@ -27,13 +27,13 @@ export class MulticallV3Client {
         false,
         batch.map((request) => [
           request.to.toString(),
-          request.data.toString(),
+          request.input.toString(),
         ]),
       ])
 
       return {
         to: this.address,
-        data: Bytes.fromHex(calldata),
+        input: Bytes.fromHex(calldata),
       }
     })
   }
@@ -45,10 +45,9 @@ export class MulticallV3Client {
     )
     const values = decoded[0] as [boolean, string][]
     return values.map(([success, data]): MulticallV3Response => {
-      const bytes = Bytes.fromHex(data)
       return {
-        success: success && bytes.length !== 0,
-        data: bytes,
+        success,
+        data: Bytes.fromHex(data),
       }
     })
   }
@@ -56,7 +55,7 @@ export class MulticallV3Client {
   encodeGetEthBalance(holder: string) {
     return {
       to: this.address,
-      data: Bytes.fromHex(
+      input: Bytes.fromHex(
         multicallInterface.encodeFunctionData('getEthBalance', [holder]),
       ),
     }

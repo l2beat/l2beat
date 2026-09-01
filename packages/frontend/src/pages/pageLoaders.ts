@@ -1,46 +1,42 @@
 export const pageLoaders = {
   IconPreviewPage: async () =>
     (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
-  ScalingSummaryPage: async () =>
-    (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
-  ScalingRiskPage: async () =>
-    (await import('./scaling/risk/ScalingRiskPage')).ScalingRiskPage,
-  ScalingTvsPage: async () =>
-    (await import('./scaling/tvs/ScalingTvsPage')).ScalingTvsPage,
-  ScalingTvsBreakdownPage: async () =>
-    (await import('./scaling/tvs/breakdown/ScalingTvsBreakdownPage'))
-      .ScalingTvsBreakdownPage,
-  ScalingActivityPage: async () =>
-    (await import('./scaling/activity/ScalingActivityPage'))
-      .ScalingActivityPage,
-  ScalingDataAvailabilityPage: async () =>
-    (await import('./scaling/data-availability/ScalingDataAvailabilityPage'))
-      .ScalingDataAvailabilityPage,
-  ScalingLivenessPage: async () =>
-    (await import('./scaling/liveness/ScalingLivenessPage'))
-      .ScalingLivenessPage,
-  ScalingCostsPage: async () =>
-    (await import('./scaling/costs/ScalingCostsPage')).ScalingCostsPage,
-  ScalingArchivedPage: async () =>
-    (await import('./scaling/archived/ScalingArchivedPage'))
-      .ScalingArchivedPage,
-  ScalingUpcomingPage: async () =>
-    (await import('./scaling/upcoming/ScalingUpcomingPage'))
-      .ScalingUpcomingPage,
-  ScalingProjectPage: async () =>
-    (await import('./scaling/project/ScalingProjectPage')).ScalingProjectPage,
-  ScalingProjectTvsBreakdownPage: async () =>
+  HomePage: async () => (await import('./home/HomePage')).HomePage,
+  L2SummaryPage: async () =>
+    (await import('./layer2s/summary/L2SummaryPage')).L2SummaryPage,
+  L2RiskPage: async () =>
+    (await import('./layer2s/risk/L2RiskPage')).L2RiskPage,
+  L2TvsPage: async () => (await import('./layer2s/tvs/L2TvsPage')).L2TvsPage,
+  L2TvsBreakdownPage: async () =>
+    (await import('./layer2s/tvs/breakdown/L2TvsBreakdownPage'))
+      .L2TvsBreakdownPage,
+  L2ActivityPage: async () =>
+    (await import('./layer2s/activity/L2ActivityPage')).L2ActivityPage,
+  L2ComparePage: async () =>
+    (await import('./layer2s/compare/L2ComparePage')).L2ComparePage,
+  L2RiskDataAvailabilityPage: async () =>
     (
       await import(
-        './scaling/project/tvs-breakdown/ScalingProjectTvsBreakdownPage'
+        './layer2s/risk/data-availability/L2RiskDataAvailabilityPage'
       )
-    ).ScalingProjectTvsBreakdownPage,
-  ScalingRiskStateValidationPage: async () =>
-    (
-      await import(
-        './scaling/risk/state-validation/ScalingRiskStateValidationPage'
-      )
-    ).ScalingRiskStateValidationPage,
+    ).L2RiskDataAvailabilityPage,
+  L2RiskSequencingPage: async () =>
+    (await import('./layer2s/risk/sequencing/L2RiskSequencingPage'))
+      .L2RiskSequencingPage,
+  L2LivenessPage: async () =>
+    (await import('./layer2s/liveness/L2LivenessPage')).L2LivenessPage,
+  L2CostsPage: async () =>
+    (await import('./layer2s/costs/L2CostsPage')).L2CostsPage,
+  L2ArchivedPage: async () =>
+    (await import('./layer2s/archived/L2ArchivedPage')).L2ArchivedPage,
+  L2ProjectPage: async () =>
+    (await import('./layer2s/project/L2ProjectPage')).L2ProjectPage,
+  L2ProjectTvsBreakdownPage: async () =>
+    (await import('./layer2s/project/tvs-breakdown/L2ProjectTvsBreakdownPage'))
+      .L2ProjectTvsBreakdownPage,
+  L2RiskStateValidationPage: async () =>
+    (await import('./layer2s/risk/state-validation/L2RiskStateValidationPage'))
+      .L2RiskStateValidationPage,
   InteropSummaryPage: async () =>
     (await import('./interop/summary/InteropSummaryPage')).InteropSummaryPage,
   InteropNonMintingPage: async () =>
@@ -55,6 +51,14 @@ export const pageLoaders = {
   InteropProtocolPage: async () =>
     (await import('./interop/protocol/InteropProtocolPage'))
       .InteropProtocolPage,
+  InteropTokenPage: async () =>
+    (await import('./interop/token/InteropTokenPage')).InteropTokenPage,
+  InteropTokenFrameworksPage: async () =>
+    (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
+      .InteropTokenFrameworksPage,
+  InteropIntentBridgesPage: async () =>
+    (await import('./interop/intent-bridges/InteropIntentBridgesPage'))
+      .InteropIntentBridgesPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,
@@ -76,6 +80,14 @@ export const pageLoaders = {
   DataAvailabilityArchivedPage: async () =>
     (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
       .DataAvailabilityArchivedPage,
+  PrivacySummaryPage: async () =>
+    (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
+  PrivacyProjectPage: async () =>
+    (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
+  DefiSummaryPage: async () =>
+    (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
+  DefiProjectPage: async () =>
+    (await import('./defi/project/DefiProjectPage')).DefiProjectPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>
@@ -86,12 +98,13 @@ export const pageLoaders = {
       .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
+  NativeRollupsPage: async () =>
+    (await import('./native-rollups/NativeRollupsPage')).NativeRollupsPage,
   EthereumConnectPage: async () =>
     (await import('./governance/ethereum-connect/EthereumConnectPage'))
       .EthereumConnectPage,
-  GovernancePublicationPage: async () =>
-    (await import('./publications/governance/GovernancePublicationPage'))
-      .GovernancePublicationPage,
+  PublicationPage: async () =>
+    (await import('./publications/PublicationPage')).PublicationPage,
   FaqPage: async () => (await import('./faq/FaqPage')).FaqPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,

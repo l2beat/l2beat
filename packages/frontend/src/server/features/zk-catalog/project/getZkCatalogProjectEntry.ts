@@ -1,8 +1,13 @@
-import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import type {
+  Project,
+  ProjectRedWarning,
+  ProjectZkCatalogInfo,
+} from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
@@ -13,7 +18,7 @@ import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
@@ -25,13 +30,14 @@ export interface ProjectZkCatalogEntry {
   name: string
   shortName: string | undefined
   creator?: string
+  quantumResistant?: boolean
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
     description?: string
     links: ProjectLink[]
@@ -40,6 +46,7 @@ export interface ProjectZkCatalogEntry {
     tvs: {
       value: number
       change: number
+      changePeriod: PercentageChangePeriod
     }
   }
   sections: ProjectDetailsSection[]
@@ -54,7 +61,14 @@ export async function getZkCatalogProjectEntry(
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
     await Promise.all([
       ps.getProjects({
-        optional: ['daBridge', 'isScaling', 'isDaLayer'],
+        optional: [
+          'display',
+          'daBridge',
+          'scalingInfo',
+          'daLayer',
+          'privacyInfo',
+          'defiInfo',
+        ],
       }),
       ps.getProjects({
         select: ['contracts'],
@@ -69,11 +83,11 @@ export async function getZkCatalogProjectEntry(
     tvs,
     allProjects,
   )
-  const { tvs: tvsForProject, change } = getZkCatalogProjectTvs(
-    project,
-    allProjects,
-    tvs,
-  )
+  const {
+    tvs: tvsForProject,
+    change,
+    changePeriod,
+  } = getZkCatalogProjectTvs(project, allProjects, tvs)
 
   const sortedMilestones =
     project.milestones?.sort(
@@ -91,12 +105,14 @@ export async function getZkCatalogProjectEntry(
     tvs: {
       value: tvsForProject,
       change,
+      changePeriod,
     },
   }
 
   const common = {
     name: project.name,
     creator: project.zkCatalogInfo.creator,
+    quantumResistant: project.zkCatalogInfo.quantumResistant,
     shortName: project.shortName,
     slug: project.slug,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
@@ -155,7 +171,7 @@ export async function getZkCatalogProjectEntry(
   })
 
   const verifiersSection = await getVerifiersSection(
-    project,
+    project.zkCatalogInfo.verifierHashes,
     contractUtils,
     allProjects,
     tvs,
@@ -165,6 +181,7 @@ export async function getZkCatalogProjectEntry(
     props: {
       id: 'verifiers',
       title: 'Verifier IDs',
+      variant: 'zkCatalog',
       ...verifiersSection,
     },
   })

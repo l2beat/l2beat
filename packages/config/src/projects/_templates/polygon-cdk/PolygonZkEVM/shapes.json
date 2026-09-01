@@ -1,16 +1,16 @@
 {
   "PolygonValidiumEtrog": {
-    "hash": "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c",
+    "hash": "0x5684ac32eb941b26475b5792fd1549caa9c2a7b9da3c5163c16ca5cd4eb4b4a5",
     "address": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
     "blockNumber": 22188285
   },
   "PolygonValidiumStorageMigration": {
-    "hash": "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7",
+    "hash": "0xc2c916e82f16c757dfd984fa2f02882312e7b4e546567608931fde689d1f0a78",
     "address": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
     "blockNumber": 22188285
   },
   "PolygonZkEVMEtrog": {
-    "hash": "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3",
+    "hash": "0x486dfa624ef4b9328a94ee223a9b7466c67311ade998b949085cab44091d1764",
     "address": "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
     "blockNumber": 22188285
   }

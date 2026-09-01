@@ -73,7 +73,7 @@ export async function getAggLayerTokens(
       id: token.id,
       request: {
         address: AGGLAYER_L2BRIDGE_ADDRESS,
-        data: Bytes.fromHex(
+        input: Bytes.fromHex(
           bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
             ORIGIN_NETWORK,
             token.address,

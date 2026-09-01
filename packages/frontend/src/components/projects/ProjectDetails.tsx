@@ -5,16 +5,24 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
+import { InteropFlowsSection } from './sections/interop/InteropFlowsSection'
+import { InteropTokenProtocolsSection } from './sections/interop/InteropTokenProtocolsSection'
 import { InteropTokensSection } from './sections/interop/InteropTokensSection'
+import { InteropTokenTransfersSection } from './sections/interop/InteropTokenTransfersSection'
+import { InteropTokenVolumeSection } from './sections/interop/InteropTokenVolumeSection'
 import { InteropTransfersSection } from './sections/interop/InteropTransfersSection'
 import { InteropVolumeSection } from './sections/interop/InteropVolumeSection'
+import { InteropTokenOnchainDeploymentsSection } from './sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
 import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
+import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
+import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
@@ -25,10 +33,11 @@ import { StateValidationSection } from './sections/state-validation/StateValidat
 import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
 import { TrustedSetupSection } from './sections/TrustedSetupsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
-import { ScalingTvsSection } from './sections/tvs/ScalingTvsSection'
+import { L2TvsSection } from './sections/tvs/L2TvsSection'
+import { TvsValueSection } from './sections/tvs/TvsValueSection'
 import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
 import type { ProjectDetailsSection } from './sections/types'
-import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
+import { UpdatesSection } from './sections/UpdatesSection'
 import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSection'
 import { VerifiersSection } from './sections/verifiers/VerifiersSection'
 
@@ -36,7 +45,7 @@ interface ProjectDetailsProps {
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]
-  isUpcoming?: boolean
+  selectedUpdateId?: string
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -49,9 +58,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           : `${index + 1}`
 
         switch (item.type) {
-          case 'ScalingTvsSection':
+          case 'L2TvsSection':
             return (
-              <ScalingTvsSection
+              <L2TvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
@@ -201,9 +210,49 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
+          case 'InteropFlowsSection':
+            return (
+              <InteropFlowsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
           case 'InteropTokensSection':
             return (
               <InteropTokensSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTokenVolumeSection':
+            return (
+              <InteropTokenVolumeSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTokenProtocolsSection':
+            return (
+              <InteropTokenProtocolsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTokenOnchainDeploymentsSection':
+            return (
+              <InteropTokenOnchainDeploymentsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTokenTransfersSection':
+            return (
+              <InteropTokenTransfersSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
@@ -265,8 +314,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'UpcomingDisclaimer':
-            return <UpcomingDisclaimer key={`${item.type}${index}`} />
           case 'Group':
             return (
               <GroupSection
@@ -286,6 +333,47 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'UpgradesAndGovernanceSection':
             return (
               <UpgradesAndGovernanceSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'UpdatesSection':
+            return (
+              <UpdatesSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+                selectedUpdateId={props.selectedUpdateId}
+              />
+            )
+          case 'TvsValueSection':
+            return (
+              <TvsValueSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'PrivacyFlowsSection':
+            return (
+              <PrivacyFlowsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'PrivacyAssetsBreakdownSection':
+            return (
+              <PrivacyAssetsBreakdownSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ExternalDependenciesSection':
+            return (
+              <ExternalDependenciesSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

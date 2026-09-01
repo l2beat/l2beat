@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FHEVMExecutor",
+  "description": "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for FHEVMExecutor administration.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ getACLAddress }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the FHEVMExecutor implementation."
+        }
+      ]
+    },
+    "getACLAddress": {
+      "description": "ACL contract used to check and grant access to encrypted handles.",
+      "type": "EXTERNAL"
+    },
+    "getHCULimitAddress": {
+      "description": "HCULimit contract used to account for homomorphic computation units consumed by encrypted operations.",
+      "type": "EXTERNAL"
+    },
+    "getInputVerifierAddress": {
+      "description": "InputVerifier contract used to verify coprocessor signatures over encrypted input bundles against the Zama Gateway InputVerification EIP-712 domain.",
+      "type": "EXTERNAL"
+    },
+    "getHandleVersion": {
+      "description": "Current ciphertext handle version emitted by the executor."
+    }
+  }
+}

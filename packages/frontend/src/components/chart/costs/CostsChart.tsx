@@ -1,5 +1,11 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  formatBytes,
+  formatCurrency,
+  formatNumber,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
@@ -19,14 +25,14 @@ import { ChartCommonComponents } from '~/components/core/chart/ChartCommonCompon
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
-import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
+import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
+import type { CostsUnit } from '~/server/features/layer2s/costs/types'
 import { formatRange } from '~/utils/dates'
-import { formatBytes } from '~/utils/number-format/formatBytes'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
-import type { ChartRange, ChartResolution } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '../../../server/features/data-availability/throughput/utils/consts'
 
 interface CostsChartDataPoint {
@@ -310,8 +316,9 @@ function CustomTooltip({
   if (!payload || typeof label !== 'number') return null
 
   const actualPayload = [...payload].reverse().filter((p) => !p.hide)
+  const costPayload = actualPayload.filter((p) => !isDataPostedKey(p.name))
   const total = actualPayload.reduce<number | null>((acc, curr) => {
-    if (curr.name === 'posted') {
+    if (isDataPostedKey(curr.name)) {
       return acc
     }
     if (curr.value === null || curr.value === undefined) {
@@ -328,17 +335,9 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatRange(
-            label,
-            label +
-              (resolution === 'daily'
-                ? UnixTime.DAY
-                : resolution === 'sixHourly'
-                  ? UnixTime.HOUR * 6
-                  : UnixTime.HOUR),
-          )}
+          {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
         </div>
-        {actualPayload.filter((p) => p.name !== 'posted').length > 1 && (
+        {costPayload.length > 1 && (
           <>
             <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
               <span>Total</span>
@@ -386,4 +385,8 @@ function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+function isDataPostedKey(name: string | undefined) {
+  return name !== undefined && THROUGHPUT_ENABLED_DA_LAYERS.includes(name)
 }

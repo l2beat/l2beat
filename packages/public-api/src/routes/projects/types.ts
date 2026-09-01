@@ -16,7 +16,6 @@ export const DetailedProjectSchema = v
     name: v.string(),
     chainId: v.number().optional(),
     type: v.string().optional(),
-    isUpcoming: v.boolean().optional(),
     isArchived: v.boolean().optional(),
     category: v.string().optional(),
     hostChain: v.string().optional(),

@@ -3,5 +3,57 @@
   "name": "TaikoDAO",
   "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
   "category": "gov",
-  "ignoreMethods": ["proxiableUUID"]
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": ["permsGranted", "permsRevoked"],
+  "fields": {
+    "permsGranted": {
+      "handler": {
+        "type": "event",
+        "groupBy": "who",
+        "add": {
+          "event": "Granted"
+        }
+      },
+      "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change. Use AI with L1 contract context."
+    },
+    "permsRevoked": {
+      "handler": {
+        "type": "event",
+        "groupBy": "who",
+        "add": {
+          "event": "Revoked"
+        }
+      },
+      "description": "Revoked permissions in the DAO. Need to be manually compared to the granted ones."
+    },
+    // aggregated hardcoded perms definitions from the above data
+    "daoPermissions": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261" // DAO contract (self)
+      },
+      "permissions": [
+        {
+          "type": "upgrade"
+        },
+        {
+          "type": "interact",
+          "description": "define all permissions of the central DAO smart contract"
+        }
+      ]
+    },
+    "currentSignerListPermissions": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2" // signerList
+      },
+      "permissions": [
+        {
+          "type": "act",
+          "delay": "604800",
+          "condition": "(emergency proposals bypass the delay)"
+        }
+      ]
+    }
+  }
 }

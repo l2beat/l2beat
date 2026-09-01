@@ -7,10 +7,13 @@ import type { TrackedTxProject } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
-import { actual, removal } from '../../tools/uif/multi/test/mockConfigurations'
+import {
+  actual,
+  trimRemoval,
+} from '../../tools/uif/multi/test/mockConfigurations'
 import type {
   Configuration,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import type { L2CostsUpdater } from './modules/l2-costs/L2CostsUpdater'
 import type { LivenessUpdater } from './modules/liveness/LivenessUpdater'
@@ -112,6 +115,53 @@ describe(TrackedTxsIndexer.name, () => {
       expect(safeHeight).toEqual(to)
     })
 
+    it('deduplicates l2costs per transaction but passes all liveness results', async () => {
+      const [liveness, , l2costs] = getMockTrackedTxResults()
+      const trackedTxsClient = mockObject<TrackedTxsClient>({
+        getData: async () => [
+          liveness,
+          { ...liveness, gasUsed: 111 },
+          l2costs,
+          { ...l2costs, gasUsed: 999 },
+        ],
+      })
+      const l2costsUpdater = mockObject<L2CostsUpdater>({
+        type: 'l2costs',
+        update: mockFn(async () => {}),
+      })
+      const livenessUpdater = mockObject<LivenessUpdater>({
+        type: 'liveness',
+        update: mockFn(async () => {}),
+      })
+
+      const indexer = getMockTrackedTxsIndexer({
+        updaters: [livenessUpdater, l2costsUpdater],
+        trackedTxsClient,
+        projects: [
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test'),
+            isArchived: false,
+          }),
+        ],
+      })
+
+      const configurations: Configuration<TrackedTxConfigEntry>[] = [
+        actual<TrackedTxConfigEntry>('a', 100, null, {
+          projectId: ProjectId('test'),
+          type: 'liveness',
+        }),
+      ]
+
+      const saveData = await indexer.multiUpdate(100, 300, configurations)
+      await saveData()
+
+      expect(livenessUpdater.update).toHaveBeenNthCalledWith(1, [
+        liveness,
+        { ...liveness, gasUsed: 111 },
+      ])
+      expect(l2costsUpdater.update).toHaveBeenNthCalledWith(1, [l2costs])
+    })
+
     it('correctly clamps FROM and TO to day', async () => {
       const from = UnixTime.fromDate(new Date('2024-01-01T12:00:00Z'))
       const to = UnixTime.fromDate(new Date('2024-01-02T12:00:00Z'))
@@ -208,12 +258,14 @@ describe(TrackedTxsIndexer.name, () => {
     })
   })
 
-  describe(TrackedTxsIndexer.prototype.removeData.name, () => {
+  describe(TrackedTxsIndexer.prototype.trimData.name, () => {
     it('removes data for configurations', async () => {
       const l2CostRepository = mockObject<Database['l2Cost']>({
+        deleteByConfigIds: async () => 0,
         deleteByConfigInTimeRange: async () => 1,
       })
       const livenessRepository = mockObject<Database['liveness']>({
+        deleteByConfigIds: async () => 0,
         deleteByConfigInTimeRange: async () => 1,
       })
 
@@ -228,12 +280,12 @@ describe(TrackedTxsIndexer.name, () => {
         ],
       })
 
-      const configurations: RemovalConfiguration[] = [
-        removal('a', 100, 200),
-        removal('b', 200, 300),
+      const configurations: TrimRemovalConfiguration[] = [
+        trimRemoval('a', 100, 200),
+        trimRemoval('b', 200, 300),
       ]
 
-      await indexer.removeData(configurations)
+      await indexer.trimData(configurations)
 
       expect(
         l2CostRepository.deleteByConfigInTimeRange,

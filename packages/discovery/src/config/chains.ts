@@ -4,12 +4,14 @@ import { getMulticall3Config } from '../discovery/provider/multicall/MulticallCo
 import type { MulticallConfig } from '../discovery/provider/multicall/types'
 import type { EtherscanUnsupportedMethods } from '../utils/IEtherscanClient'
 
+type OneOrMany<T> = T | T[]
+
 interface ChainConfig {
   name: string
   chainId: number
   // See: https://github.com/safe-global/safe-core-sdk/blob/9b64da33bc55615349d527909d4b792e05bb9826/packages/protocol-kit/src/utils/eip-3770/config.ts
   shortName: string
-  explorer:
+  explorer: OneOrMany<
     | {
         type: 'etherscan'
         customUrl?: string
@@ -20,10 +22,8 @@ interface ChainConfig {
         url: string
         unsupported?: EtherscanUnsupportedMethods
       }
-    | {
-        type: 'sourcify'
-        chainId: number
-      }
+    | { type: 'sourcify' }
+  >
   multicall: MulticallConfig | undefined
   coingeckoPlatform?: string
 }
@@ -34,9 +34,7 @@ export const chains: ChainConfig[] = [
     chainId: 1,
     shortName: 'eth',
     multicall: getMulticall3Config(14353601),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'ethereum',
   },
   {
@@ -44,9 +42,7 @@ export const chains: ChainConfig[] = [
     chainId: 42161,
     shortName: 'arb1',
     multicall: getMulticall3Config(7654707),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'arbitrum-one',
   },
   {
@@ -61,13 +57,24 @@ export const chains: ChainConfig[] = [
     coingeckoPlatform: 'arbitrum-nova',
   },
   {
+    name: 'robinhood',
+    chainId: 4663,
+    shortName: 'robinhood',
+    multicall: getMulticall3Config(406),
+    explorer: [
+      {
+        type: 'blockscout',
+        url: 'https://robinhoodchain.blockscout.com/api',
+      },
+      { type: 'sourcify' },
+    ],
+  },
+  {
     name: 'optimism',
     chainId: 10,
     shortName: 'oeth',
     multicall: getMulticall3Config(4286263),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'optimistic-ethereum',
   },
   {
@@ -75,36 +82,28 @@ export const chains: ChainConfig[] = [
     chainId: 137,
     shortName: 'matic',
     multicall: getMulticall3Config(25770160),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
   },
   {
     name: 'bsc',
     chainId: 56,
     shortName: 'bnb',
     multicall: getMulticall3Config(15921452),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
   },
   {
     name: 'avalanche',
     chainId: 43114,
     shortName: 'avax',
     multicall: getMulticall3Config(11907934),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
   },
   {
     name: 'celo',
     chainId: 42220,
     shortName: 'celo',
     multicall: getMulticall3Config(13112599),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'celo',
   },
   {
@@ -112,9 +111,7 @@ export const chains: ChainConfig[] = [
     chainId: 59144,
     shortName: 'linea',
     multicall: getMulticall3Config(42),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'linea',
   },
   {
@@ -122,9 +119,7 @@ export const chains: ChainConfig[] = [
     chainId: 8453,
     shortName: 'base',
     multicall: getMulticall3Config(5022),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'base',
   },
   {
@@ -132,18 +127,14 @@ export const chains: ChainConfig[] = [
     chainId: 1101,
     shortName: 'zkevm',
     multicall: getMulticall3Config(57746),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
   },
   {
     name: 'gnosis',
     chainId: 100,
     shortName: 'gno',
     multicall: getMulticall3Config(21022491),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
   },
   {
     name: 'zksync2',
@@ -164,18 +155,17 @@ export const chains: ChainConfig[] = [
     chainId: 11155111,
     shortName: 'sep',
     multicall: getMulticall3Config(751532),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
   },
   {
     name: 'scroll',
     chainId: 534352,
     shortName: 'scr',
     multicall: getMulticall3Config(14),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: [
+      { type: 'sourcify' },
+      { type: 'blockscout', url: 'https://scrollscan.com/api' },
+    ],
     coingeckoPlatform: 'scroll',
   },
   {
@@ -183,10 +173,7 @@ export const chains: ChainConfig[] = [
     chainId: 5000,
     shortName: 'mantle',
     multicall: getMulticall3Config(304717),
-    explorer: {
-      type: 'blockscout',
-      url: 'https://explorer.mantle.xyz/api',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'mantle',
   },
   {
@@ -249,9 +236,7 @@ export const chains: ChainConfig[] = [
     chainId: 81457,
     shortName: 'blastmainnet',
     multicall: getMulticall3Config(88189),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'blast',
   },
   {
@@ -272,10 +257,15 @@ export const chains: ChainConfig[] = [
     chainId: 130,
     shortName: 'unichain',
     multicall: getMulticall3Config(8000000),
-    explorer: {
-      type: 'etherscan',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'unichain',
+  },
+  {
+    name: 'hyperevm',
+    chainId: 999,
+    shortName: 'hyperevm',
+    multicall: getMulticall3Config(13051),
+    explorer: { type: 'etherscan' },
   },
   {
     name: 'ink',
@@ -306,10 +296,7 @@ export const chains: ChainConfig[] = [
     chainId: 48900,
     shortName: 'zircuit',
     multicall: undefined,
-    explorer: {
-      type: 'sourcify',
-      chainId: 48900,
-    },
+    explorer: { type: 'sourcify' },
     coingeckoPlatform: 'zircuit',
   },
   {
@@ -317,10 +304,7 @@ export const chains: ChainConfig[] = [
     chainId: 747474,
     shortName: 'katana',
     multicall: undefined,
-    explorer: {
-      type: 'blockscout',
-      url: 'https://katanascan.com/api',
-    },
+    explorer: { type: 'etherscan' },
     coingeckoPlatform: 'katana',
   },
   {
@@ -348,8 +332,16 @@ export const chains: ChainConfig[] = [
     chainId: 167000,
     shortName: 'taiko',
     multicall: undefined,
+    explorer: { type: 'etherscan' },
+  },
+  {
+    name: 'zama',
+    chainId: 261131,
+    shortName: 'zama',
+    multicall: undefined,
     explorer: {
-      type: 'etherscan',
+      type: 'blockscout',
+      url: 'https://explorer.mainnet.zama.org/api',
     },
   },
   {
@@ -381,5 +373,16 @@ export const chains: ChainConfig[] = [
       type: 'blockscout',
       url: 'https://explorer.ethscriptions.com/api',
     },
+  },
+  {
+    name: 'roninnetwork',
+    chainId: 2020,
+    shortName: 'ronin',
+    multicall: getMulticall3Config(1),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.roninchain.com/api',
+    },
+    coingeckoPlatform: 'ronin',
   },
 ] as const satisfies ChainConfig[]

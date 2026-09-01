@@ -15,10 +15,11 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('lighter')
 
@@ -41,8 +42,6 @@ export const lighter: ScalingProject = {
   addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
-    warning:
-      'Jan 5 2026: at the moment of writing, the desert mode circuits source code is not publicly available and therefore it is not possible to fully verify the escape hatch logic.',
     name: 'Lighter',
     slug: 'lighter',
     description:
@@ -66,7 +65,7 @@ export const lighter: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('lighterprover'),
+    zkCatalogIds: [ProjectId('lighterprover')],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,
@@ -169,6 +168,28 @@ export const lighter: ScalingProject = {
           sinceTimestamp: 1737090335, // Friday, January 17, 2025 5:05:35 AM
         },
       },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'batchSubmissions',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'batchSubmissions',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
+          ),
+          selector: '0xe415f0f4',
+          functionSignature:
+            'function commitBatch(tuple(uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 newStateRoot, bytes32 newValidiumRoot, bytes pubdataCommitments) newBatchData, tuple(uint64 batchNumber, uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 stateRoot, bytes32 validiumRoot, bytes32 commitment) lastStoredBatch)',
+          sinceTimestamp: 1737149807, // block 21646942, first commitBatch blob tx: https://etherscan.io/tx/0x5b9954f76e6bbae376197d8d9ddeece1ab410231229d1932981029037552e563
+        },
+      },
     ],
     activityConfig: {
       type: 'day',
@@ -186,38 +207,56 @@ export const lighter: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
+  stage: getRollupStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: true,
+        programHashesReproducible: null,
+        proverSourcePublished: true,
+        verifierContractsReproducible: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      principle: false,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: false,
-      noRedTrustedSetups: true,
-      programHashesReproducible: null,
-      proverSourcePublished: true,
-      verifierContractsReproducible: false,
+    {
+      rollupNodeLink: 'https://github.com/elliottech/lighter-prover/tree/main',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     dataAvailability: {
-      name: 'All data required for forced exits is published onchain',
+      name: 'Data published onchain',
       description:
-        'All the data needed to recover the latest accounts state (represented by the Account Tree) and construct the zk proof necessary for forced exits is published onchain in the form of blobs. Only data that leads to state changes is posted.',
+        'Account delta data is published onchain as blobs. A prover migration (gnark/MIMC → plonky2/Poseidon2) at block 23,711,820 left pre-migration blobs undecodable, but Lighter published a full state snapshot at batch #166859 (blobs.zip) that closes the gap. L2BEAT reproduced the snapshot state root from blobs and verified the roll-forward to chain head, confirming the live state is reconstructable from L1.',
       risks: [],
-      references: [],
+      references: [
+        {
+          title: 'Lighter Prover v0.0.1 (first public release, Dec 2025)',
+          url: 'https://github.com/elliottech/lighter-prover',
+        },
+        {
+          title: 'StateRootUpdate event — gnark to plonky2 migration',
+          url: 'https://etherscan.io/tx/0x6a50b2b00444914e5c53df2fb48404078a098f93fc3911e6fcbde1c7b6418225',
+        },
+        {
+          title: 'Desert exit circuit + state snapshot (blobs.zip)',
+          url: 'https://github.com/elliottech/lighter-prover/tree/main/desertexit',
+        },
+      ],
     },
     operator: {
       name: 'Centralized operators',
@@ -228,7 +267,11 @@ export const lighter: ScalingProject = {
     },
     forceTransactions: {
       name: 'Users can force their transactions on L1',
-      description: `If the centralized operators fail to include user transactions, users can force them themselves through L1. The possible transaction types that users can force are: deposits, withdrawals, order creation, order cancellation, and burning of pool shares. If the operators do not process forced transactions within ${formatSeconds(priorityExpiration)}, the system can be frozen (desert mode) and users can exit using the latest settled state. All open positions are settled using the latest index price.`,
+      description: readProjectMarkdown(
+        'lighter',
+        'technologyForceTransactions',
+        { priorityExpiration: formatSeconds(priorityExpiration) },
+      ),
       risks: [],
       references: [],
     },
@@ -237,9 +280,14 @@ export const lighter: ScalingProject = {
       {
         name: 'Escape hatch through ZK proofs',
         description:
-          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users can exit by reconstructing the latest settled state using the data available on L1 and providing a ZK proof of balance.',
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. The desert exit circuit and a full state snapshot at batch #166859 are public, and the deployed DesertVerifier matches a rebuild from that circuit. L2BEAT reproduced the snapshot state root from L1 blobs and verified the roll-forward to chain head.',
         risks: [],
-        references: [],
+        references: [
+          {
+            title: 'Desert exit circuit + state snapshot',
+            url: 'https://github.com/elliottech/lighter-prover/tree/main/desertexit',
+          },
+        ],
       },
     ],
     otherConsiderations: [
@@ -269,7 +317,7 @@ export const lighter: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for normal (i.e. non-desert) operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
+          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for both normal and desert operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
       },
       {
         title: 'ZK Circuits',
@@ -283,23 +331,26 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8#code#F1#L54',
+            url: 'https://etherscan.io/address/0xB1386c4266974D81256afB9908e104B00587112A#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
-            url: 'https://etherscan.io/address/0xd4460475F00307845082d3a146f36661354FBc67#code#F1#L39',
+            url: 'https://etherscan.io/address/0x866418061d4C1168e1c8E8f6facE79675395E008#code#F1#L55',
           },
         ],
       },
     ],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
-  upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
+  upgradesAndGovernance: {
+    content: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
+  },
   contracts: {
     addresses: {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: getVerifiers(),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
@@ -322,4 +373,32 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+  interopConfig: {
+    description:
+      'Canonical bridge between Ethereum and the Lighter perp DEX (zkSync-style priority queue), used by traders to deposit collateral and claim withdrawals.',
+    plugins: [
+      {
+        plugin: 'lighter-bridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+    transfersTimeMode: 'unknown',
+  },
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifierProxy = discovery.getContractValue<ChainSpecificAddress>(
+    'Lighter',
+    'verifier',
+  )
+
+  const result = discovery.get$Implementations(verifierProxy)
+  result.push(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'Lighter',
+      'desertVerifier',
+    ),
+  )
+  return result
 }

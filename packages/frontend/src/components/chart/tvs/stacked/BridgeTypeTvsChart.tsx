@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,
@@ -17,7 +18,6 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
 
 interface BridgeTypeChartDataPoint {
@@ -83,7 +83,8 @@ export function BridgeTypeTvsChart({
       }}
       project={project}
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
+      {/* Without right:1 the chart last point is not hoverable for some reason */}
+      <AreaChart responsive data={data} margin={{ top: 20, right: 1 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartCommonComponents
           data={data}

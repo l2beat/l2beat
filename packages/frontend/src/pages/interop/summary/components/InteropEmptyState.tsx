@@ -3,16 +3,10 @@ import { EmptyStateIcon } from '~/icons/EmptyState'
 import { cn } from '~/utils/cn'
 
 interface Props {
-  showResetButton?: boolean
-  onResetButtonClick?: () => void
   className?: string
 }
 
-export function InteropEmptyState({
-  showResetButton,
-  onResetButtonClick,
-  className,
-}: Props) {
+export function InteropEmptyState({ className }: Props) {
   return (
     <PrimaryCard
       className={cn(
@@ -29,14 +23,6 @@ export function InteropEmptyState({
           We couldn&apos;t find data for this path. Select another route or
           adjust your filters.
         </span>
-        {showResetButton && onResetButtonClick && (
-          <button
-            className="h-12 w-full max-w-[340px] rounded bg-brand font-semibold text-label-value-16 text-white"
-            onClick={onResetButtonClick}
-          >
-            Reset selection to default
-          </button>
-        )}
       </div>
     </PrimaryCard>
   )

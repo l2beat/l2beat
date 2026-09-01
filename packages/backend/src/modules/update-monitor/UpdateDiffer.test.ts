@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
-import type { UpdateDiffRepository } from '@l2beat/database/dist/repositories/UpdateDiffRepository'
 import type {
   ConfigReader,
   DiscoveryDiff,
@@ -14,127 +13,146 @@ import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 
 describe(UpdateDiffer.name, () => {
-  describe(UpdateDiffer.prototype.runForProject.name, () => {
-    it('should insert update diffs', async () => {
-      const updateDiffRepository = mockObject<UpdateDiffRepository>({
-        insertMany: async () => 0,
-        deleteByProjectAndChain: async () => {},
+  describe(UpdateDiffer.prototype.run.name, () => {
+    it('replaces the rows of every project it diffs', async () => {
+      const differ = differOver({
+        onDisk: { [PROJECT_A]: discoveryOf(PROJECT_A, [contract(ADDRESS_A)]) },
+        latest: { [PROJECT_A]: discoveryOf(PROJECT_A, [upgraded(ADDRESS_A)]) },
       })
-      const dbTransaction = mockFn(async (fun) => await fun())
 
-      const updateDiffer = new UpdateDiffer(
-        mockObject<ConfigReader>({
-          readDiscovery: mockFn().returns(mockProject),
-        }),
-        mockObject<Database>({
-          transaction: dbTransaction,
-          updateDiff: updateDiffRepository,
-        }),
-        mockObject<DiscoveryOutputCache>({
-          get: mockFn().returns({ entries: [] }),
-        }),
-        Logger.SILENT,
-      )
-      const updateDiffs: UpdateDiffRecord[] = [
-        {
-          address: ChainSpecificAddress.random(),
-          type: 'implementationChange',
-          projectId: PROJECT_A,
-          timestamp: UnixTime.now(),
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
-        },
-        {
-          address: ChainSpecificAddress.random(),
-          type: 'highSeverityFieldChange',
-          projectId: PROJECT_A,
-          timestamp: UnixTime.now(),
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
-        },
-        {
-          address: ChainSpecificAddress.random(),
-          type: 'ultimateUpgraderChange',
-          projectId: PROJECT_A,
-          timestamp: UnixTime.now(),
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
-        },
-      ]
-      updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
+      await differ.run([PROJECT_A], UnixTime.now())
 
-      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
-
-      expect(dbTransaction).toHaveBeenCalled()
-      expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
-        PROJECT_A,
-      )
-      expect(updateDiffRepository.insertMany).toHaveBeenCalledWith(updateDiffs)
+      expect(differ.deleted).toEqual([PROJECT_A])
+      expect(differ.inserted).toEqual([
+        record(PROJECT_A, ADDRESS_A, 'implementationChange'),
+      ])
     })
 
-    it('should not insert update diffs if there are no changes', async () => {
-      const updateDiffRepository = mockObject<UpdateDiffRepository>({
-        insertMany: async () => 0,
-        deleteByProjectAndChain: async () => {},
+    it('clears the rows of a project without changes', async () => {
+      const differ = differOver({
+        onDisk: { [PROJECT_A]: discoveryOf(PROJECT_A, [contract(ADDRESS_A)]) },
+        latest: { [PROJECT_A]: discoveryOf(PROJECT_A, [contract(ADDRESS_A)]) },
       })
 
-      const updateDiffer = new UpdateDiffer(
-        mockObject<ConfigReader>({
-          readDiscovery: mockFn().returns(mockProject),
-        }),
-        mockObject<Database>({
-          updateDiff: updateDiffRepository,
-        }),
-        mockObject<DiscoveryOutputCache>({
-          get: mockFn().returns({ entries: [] }),
-        }),
-        Logger.SILENT,
-      )
-      updateDiffer.getUpdateDiffs = mockFn().returns([])
+      await differ.run([PROJECT_A], UnixTime.now())
 
-      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
-
-      expect(updateDiffRepository.deleteByProjectAndChain).toHaveBeenCalledWith(
-        PROJECT_A,
-      )
-      expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
+      expect(differ.deleted).toEqual([PROJECT_A])
+      expect(differ.inserted).toEqual([])
     })
 
-    it('should skip if on disk discovery is newer', async () => {
-      const updateDiffRepository = mockObject<UpdateDiffRepository>({
-        insertMany: async () => 0,
-        deleteByProjectAndChain: async () => {},
-      })
-      const dbTransaction = mockFn(async (fun) => await fun())
-
-      const updateDiffer = new UpdateDiffer(
-        mockObject<ConfigReader>({
-          readDiscovery: mockFn().returns({
-            ...mockProject,
+    it('keeps the rows of a project whose on disk discovery is newer', async () => {
+      const differ = differOver({
+        onDisk: {
+          [PROJECT_A]: {
+            ...discoveryOf(PROJECT_A, [contract(ADDRESS_A)]),
             timestamp: 2,
-          }),
-        }),
-        mockObject<Database>({
-          transaction: dbTransaction,
-          updateDiff: updateDiffRepository,
-        }),
-        mockObject<DiscoveryOutputCache>({
-          get: mockFn().returns({ entries: [], timestamp: 1 }),
-        }),
-        Logger.SILENT,
-      )
+          },
+        },
+        latest: {
+          [PROJECT_A]: {
+            ...discoveryOf(PROJECT_A, [upgraded(ADDRESS_A)]),
+            timestamp: 1,
+          },
+        },
+      })
 
-      const getUpdateDiffsMock = mockFn()
-      updateDiffer.getUpdateDiffs = getUpdateDiffsMock
+      await differ.run([PROJECT_A], UnixTime.now())
 
-      await updateDiffer.runForProject(PROJECT_A, UnixTime.now())
+      expect(differ.inserted).toEqual([])
+      expect(differ.deleted).toEqual([])
+    })
 
-      expect(dbTransaction).not.toHaveBeenCalled()
-      expect(getUpdateDiffsMock).not.toHaveBeenCalled()
-      expect(
-        updateDiffRepository.deleteByProjectAndChain,
-      ).not.toHaveBeenCalled()
-      expect(updateDiffRepository.insertMany).not.toHaveBeenCalled()
+    it('keeps the rows of a project that was not discovered', async () => {
+      const differ = differOver({
+        onDisk: { [PROJECT_A]: discoveryOf(PROJECT_A, [contract(ADDRESS_A)]) },
+        latest: {},
+      })
+
+      await differ.run([PROJECT_A], UnixTime.now())
+
+      expect(differ.inserted).toEqual([])
+      expect(differ.deleted).toEqual([])
+    })
+
+    it('attributes a change to every project referencing the address', async () => {
+      const differ = differOver({
+        onDisk: {
+          [PROVIDER]: discoveryOf(PROVIDER, [contract(ADDRESS_A)]),
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROJECT_B]: discoveryOf(PROJECT_B, [reference(PROVIDER, ADDRESS_A)]),
+        },
+        latest: {
+          [PROVIDER]: discoveryOf(PROVIDER, [upgraded(ADDRESS_A)]),
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+          [PROJECT_B]: discoveryOf(PROJECT_B, [reference(PROVIDER, ADDRESS_A)]),
+        },
+      })
+
+      await differ.run([PROVIDER, PROJECT_A, PROJECT_B], UnixTime.now())
+
+      expect(differ.inserted).toEqual([
+        record(PROVIDER, ADDRESS_A, 'implementationChange'),
+        record(PROJECT_A, ADDRESS_A, 'implementationChange'),
+        record(PROJECT_B, ADDRESS_A, 'implementationChange'),
+      ])
+    })
+
+    // forknet references 4 of shared-polygon-cdk's 34 entries, so the other 30
+    // must not be able to raise an update for it.
+    it('does not attribute a change at an address it does not reference', async () => {
+      const differ = differOver({
+        onDisk: {
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            contract(ADDRESS_A),
+            contract(ADDRESS_B),
+          ]),
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+        },
+        latest: {
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            contract(ADDRESS_A),
+            upgraded(ADDRESS_B),
+          ]),
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+        },
+      })
+
+      await differ.run([PROVIDER, PROJECT_A], UnixTime.now())
+
+      expect(differ.inserted).toEqual([
+        record(PROVIDER, ADDRESS_B, 'implementationChange'),
+      ])
+    })
+
+    it('attributes a change along a chain of references', async () => {
+      const differ = differOver({
+        onDisk: {
+          [SECOND_PROVIDER]: discoveryOf(SECOND_PROVIDER, [
+            contract(ADDRESS_A),
+          ]),
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            reference(SECOND_PROVIDER, ADDRESS_A),
+          ]),
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+        },
+        latest: {
+          [SECOND_PROVIDER]: discoveryOf(SECOND_PROVIDER, [
+            upgraded(ADDRESS_A),
+          ]),
+          [PROVIDER]: discoveryOf(PROVIDER, [
+            reference(SECOND_PROVIDER, ADDRESS_A),
+          ]),
+          [PROJECT_A]: discoveryOf(PROJECT_A, [reference(PROVIDER, ADDRESS_A)]),
+        },
+      })
+
+      await differ.run([SECOND_PROVIDER, PROVIDER, PROJECT_A], UnixTime.now())
+
+      expect(differ.inserted.map((r) => r.projectId)).toEqual([
+        SECOND_PROVIDER,
+        PROVIDER,
+        PROJECT_A,
+      ])
     })
   })
 
@@ -306,7 +324,81 @@ describe(UpdateDiffer.name, () => {
   })
 })
 
+function differOver(discoveries: {
+  onDisk: Record<string, DiscoveryOutput>
+  latest: Record<string, DiscoveryOutput>
+}) {
+  const inserted: UpdateDiffRecord[] = []
+  const deleted: string[] = []
+  const updateDiffer = new UpdateDiffer(
+    mockObject<ConfigReader>({
+      readDiscovery: (name: string) => {
+        const found = discoveries.onDisk[name]
+        if (found === undefined) throw new Error(`Unknown project ${name}`)
+        return found
+      },
+    }),
+    mockObject<Database>({
+      transaction: async (fun) => await fun(),
+      updateDiff: mockObject<Database['updateDiff']>({
+        insertMany: async (records) => {
+          inserted.push(...records)
+          return records.length
+        },
+        deleteByProjectAndChain: async (projectId) => {
+          deleted.push(projectId)
+        },
+      }),
+    }),
+    mockObject<DiscoveryOutputCache>({
+      get: (name: string) => discoveries.latest[name],
+    }),
+    Logger.SILENT,
+  )
+  return Object.assign(updateDiffer, { inserted, deleted })
+}
+
+function discoveryOf(
+  name: string,
+  entries: EntryParameters[],
+): DiscoveryOutput {
+  return { ...mockProject, name, entries }
+}
+
+function reference(
+  targetProject: string,
+  address: ChainSpecificAddress,
+): EntryParameters {
+  return { type: 'Reference', address, targetProject }
+}
+
+function contract(address: ChainSpecificAddress): EntryParameters {
+  return { type: 'Contract', address, values: { $implementation: ADDRESS_C } }
+}
+
+function upgraded(address: ChainSpecificAddress): EntryParameters {
+  return { type: 'Contract', address, values: { $implementation: ADDRESS_A } }
+}
+
+function record(
+  projectId: string,
+  address: ChainSpecificAddress,
+  type: UpdateDiffRecord['type'],
+): UpdateDiffRecord {
+  return {
+    projectId,
+    address,
+    type,
+    timestamp: expect.a(Number) as unknown as UnixTime,
+    diffBaseTimestamp: expect.a(Number) as unknown as number,
+    diffHeadTimestamp: expect.a(Number) as unknown as number,
+  }
+}
+
+const PROVIDER = 'shared-provider'
+const SECOND_PROVIDER = 'shared-second-provider'
 const PROJECT_A = 'project-a'
+const PROJECT_B = 'project-b'
 const NAME_A = 'contract-a'
 const ADDRESS_A = ChainSpecificAddress.random()
 const NAME_B = 'contract-b'

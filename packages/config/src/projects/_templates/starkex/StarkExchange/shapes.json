@@ -1,6 +1,6 @@
 {
   "StarkExchange_2022": {
-    "hash": "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b",
+    "hash": "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c",
     "address": [
       "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
       "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -13,7 +13,7 @@
     "blockNumber": 22188285
   },
   "StarkexExchange_2020_2021": {
-    "hash": "0xfaa0bf87cf9230ba5a3f5530b447f76606e0cd9fb9d1acd2f3b87d30884e63d1",
+    "hash": "0x5c9c7a970280b6bfdb50bdc2ee43b98a98e4d34b47aa0839b68e570d1af16c2a",
     "address": [
       "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
       "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",

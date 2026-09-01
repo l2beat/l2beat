@@ -1,11 +1,11 @@
 {
   "DataAvailabilityChallenge": {
-    "hash": "0xc3e65c7b165290e34daf0095d095072dd3684f21965a97ddedde3ab52b34b04a",
+    "hash": "0x1c4ed0bf4c77a80ae3010f1d6af17ef183e6b001f911c17ba3670b55db68db31",
     "address": "eth:0x0d93eAA86eb6948b977857750A5512Bef6B05C51",
     "blockNumber": 22188285
   },
   "DataAvailabilityChallenge_automata": {
-    "hash": "0x61fee1dc963816dc535a7c3634947d11e5adf660665a8996c384ba8d74c0aab2",
+    "hash": "0x792536105c65a74aae9d01d4b764d7213c3394dccdc68e3a63a4597af1653a69",
     "address": "eth:0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3",
     "blockNumber": 22188285
   }

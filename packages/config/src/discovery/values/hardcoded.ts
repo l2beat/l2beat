@@ -19,6 +19,8 @@ export const HARDCODED = {
     SET_SEQUENCER_COUNT: 3,
   },
   OPTIMISM: {
+    // https://docs.optimism.io/chain-operators/guides/configuration/rollup#sequencerwindowsize
+    // https://github.com/ethereum-optimism/optimism/blob/develop/op-deployer/pkg/deployer/state/deploy_config.go#L93
     // https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
     SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
   },

@@ -1,6 +1,7 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { BlipRuntime } from '../../blip/BlipRuntime'
+import type { BlipEnv } from '../../blip/type'
 import type {
   DiscoveryCustomType,
   StructureContract,
@@ -16,6 +17,7 @@ export function decodeHandlerResults(
   results: HandlerResult[],
   fieldOverrides: StructureContract['fields'],
   types: Record<string, DiscoveryCustomType>,
+  env: BlipEnv = {},
 ): {
   values: EntryParameters['values']
   errors: Record<string, string>
@@ -41,7 +43,7 @@ export function decodeHandlerResults(
     }
   }
 
-  const runtime = new BlipRuntime(types)
+  const runtime = new BlipRuntime(types, env)
   const fields = merge({}, values, fieldOverrides)
   const copyBatches = orderByCopyDependencies(fields)
   for (const batch of copyBatches) {

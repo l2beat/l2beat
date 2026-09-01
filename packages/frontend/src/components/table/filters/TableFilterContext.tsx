@@ -32,9 +32,10 @@ export function useTableFilterContext() {
 export function useTableFilterReset() {
   const context = useContext(TableFilterContext)
 
-  const reset = () => {
-    context?.dispatch({ type: 'clear' })
+  if (!context) {
+    return
   }
-
-  return reset
+  return () => {
+    context.dispatch({ type: 'clear' })
+  }
 }

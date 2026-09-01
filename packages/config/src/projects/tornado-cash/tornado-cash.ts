@@ -1,0 +1,346 @@
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatNumber,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { utils } from 'ethers'
+import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
+import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import type { BaseProject, ProjectPrivacyToken } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
+
+const discovery = new ProjectDiscovery('tornado-cash')
+
+const TORNADO_DEPOSIT_EVENT =
+  '0xa945e51eec50ab98c161376f0db4cf2aeba3ec92755fe2fcd388bdbbb80ff196'
+const TORNADO_WITHDRAWAL_EVENT =
+  '0xe9e508bad6d4c3227e881ca19068f099da81b5164dd6d62b2eaf1e8bc6c34931'
+
+const proposalThreshold = discovery.getContractValueBigInt(
+  'GovernanceProposalStateUpgrade',
+  'PROPOSAL_THRESHOLD',
+)
+const quorumVotes = discovery.getContractValueBigInt(
+  'GovernanceProposalStateUpgrade',
+  'QUORUM_VOTES',
+)
+const closingPeriod = discovery.getContractValue<number>(
+  'GovernanceProposalStateUpgrade',
+  'CLOSING_PERIOD',
+)
+const executionDelay = discovery.getContractValue<number>(
+  'GovernanceProposalStateUpgrade',
+  'EXECUTION_DELAY',
+)
+const executionExpiration = discovery.getContractValue<number>(
+  'GovernanceProposalStateUpgrade',
+  'EXECUTION_EXPIRATION',
+)
+const voteExtendTime = discovery.getContractValue<number>(
+  'GovernanceProposalStateUpgrade',
+  'VOTE_EXTEND_TIME',
+)
+const votingDelay = discovery.getContractValue<number>(
+  'GovernanceProposalStateUpgrade',
+  'VOTING_DELAY',
+)
+const votingPeriod = discovery.getContractValue<number>(
+  'GovernanceProposalStateUpgrade',
+  'VOTING_PERIOD',
+)
+const tornTotalSupply = discovery.getContractValueBigInt('TORN', 'totalSupply')
+const tornTreasury = discovery.getContractValueBigInt(
+  'GovernanceProposalStateUpgrade',
+  'TORNTreasury',
+)
+const tornStaked = discovery.getContractValueBigInt(
+  'TornadoVault',
+  'TORNStaked',
+)
+
+const stakeLockPeriod = formatSeconds(
+  voteExtendTime + executionExpiration + executionDelay,
+)
+
+function formatDenomination(amount: bigint, decimals: number): string {
+  return utils.formatUnits(amount, decimals).replace(/\.?0+$/, '')
+}
+
+interface TornadoBucket {
+  id: string
+  address: ChainSpecificAddress
+  tokenAddress: EthereumAddress
+  tokenInfo: {
+    symbol: string
+    decimals: number
+    priceId: string
+    iconUrl: string | undefined
+  }
+  denomination: string
+  denominationAmount: string
+  sinceTimestamp: UnixTime
+  depositEvent: string
+  withdrawalEvent: string
+}
+
+const BUCKETS = getTornadoBuckets()
+const TORNADO_CASH_SINCE_TIMESTAMP = UnixTime(
+  Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
+)
+
+export const tornadoCash: BaseProject = {
+  id: ProjectId('tornado-cash'),
+  slug: 'tornado-cash',
+  name: 'Tornado Cash',
+  shortName: undefined,
+  addedAt: UnixTime.fromDate(new Date('2026-04-15')),
+  discoveryInfo: getDiscoveryInfo([discovery]),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: {
+      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds. See Secure frontend section below.',
+    },
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
+  display: {
+    description:
+      'A classic Ethereum mixer design based on fixed-denomination pools and zk withdrawals.',
+    detailedDescription: readProjectMarkdown(
+      'tornado-cash',
+      'detailedDescription',
+    ),
+    links: {
+      websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
+      socialMedia: ['https://t.me/TornadoCashOfficialDAO'],
+    },
+    badges: [],
+  },
+  escrows: BUCKETS.map((bucket) => ({
+    address: ChainSpecificAddress.address(bucket.address),
+    chain: ChainSpecificAddress.longChain(bucket.address),
+    sinceTimestamp: bucket.sinceTimestamp,
+    tokens: [bucket.tokenInfo.symbol],
+  })),
+  tvsInfo: {
+    associatedTokens: [],
+    warnings: [],
+  },
+  zkCatalogInfo: {
+    creator: 'Tornado Cash',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.websnark],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
+        ...TRUSTED_SETUPS.TornadoCash,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('tornado-cash'),
+        sinceTimestamp: TORNADO_CASH_SINCE_TIMESTAMP,
+      },
+    ],
+    verifierHashes: [
+      {
+        hash: 'Tornado Cash verifier 03.07.2026',
+        name: 'Tornado Cash verifier v2.1',
+        sourceLink:
+          'https://github.com/tornadocash/tornado-core/tree/v2.1/circuits',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.websnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xce172ce1F20EC0B3728c9965470eaf994A03557A',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'tornado-cash',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
+  },
+  privacyInfo: {
+    tokens: getPrivacyTokens(),
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: BUCKETS.map((bucket) => ({
+        address: bucket.address,
+        sinceTimestamp: bucket.sinceTimestamp,
+        extractor: 'tornadoCashWithdrawal',
+      })),
+    },
+    exitWindow: {
+      value: 'Infinite',
+      sentiment: 'good',
+      orderHint: Number.MAX_SAFE_INTEGER,
+      description:
+        'The core Tornado Cash contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
+      walkawayTest: { passed: true },
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
+    },
+    privacy: {
+      value: 'Unconditional',
+      sentiment: 'good',
+      description:
+        'There is no protocol-level compliance mechanism or way to compromise user privacy.',
+    },
+    noteDiscovery: {
+      description:
+        "A Tornado Cash note is generated locally at deposit time and kept by the user, so normally nothing has to be discovered to spend it. Users can additionally back up notes onchain: the note is encrypted to a user's private key and is emitted as an `EncryptedNote` event on `TornadoRouter`. The recovery downloads all such events and tries to decrypt each one locally. Because every event is requested, the RPC provider learns neither which events belong to the user, nor into which pool the user has deposited from the queries alone.",
+    },
+    attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
+    riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
+    upgradesAndGovernance: {
+      content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
+      governanceInfo: {
+        upgrades: {
+          'Normal upgrade path': `Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) → submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** → wait ${formatSeconds(votingDelay)} → vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)}) → pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum → wait ${formatSeconds(executionDelay)} → permissionless execution within ${formatSeconds(executionExpiration)}. The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.`,
+          'Exit window': `**${formatSeconds(executionDelay)}** for DAO-controlled changes — an accepted proposal remains timelocked for this period before it can be executed. Existing Tornado Cash pools are immutable and cannot be upgraded by the DAO.`,
+        },
+        tokenGovernance: {
+          'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
+          'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
+          'Voting venue':
+            '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the voting tab of the frontend, see the note on secure frontend above.',
+          'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
+          Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
+          'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,
+        },
+      },
+    },
+  },
+  permissions: discovery.getDiscoveredPermissions(),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [],
+  },
+}
+
+function getPrivacyTokens(): ProjectPrivacyToken[] {
+  const grouped = new Map<string, ProjectPrivacyToken>()
+
+  for (const bucket of BUCKETS) {
+    let asset = grouped.get(bucket.tokenInfo.symbol)
+    if (!asset) {
+      asset = {
+        token: {
+          address: bucket.tokenAddress,
+          iconUrl: bucket.tokenInfo.iconUrl,
+          symbol: bucket.tokenInfo.symbol,
+          decimals: bucket.tokenInfo.decimals,
+          priceId: bucket.tokenInfo.priceId,
+          sinceTimestamp: bucket.sinceTimestamp,
+        },
+        buckets: [],
+      }
+      grouped.set(bucket.tokenInfo.symbol, asset)
+    }
+
+    asset.token.sinceTimestamp = UnixTime(
+      Math.min(
+        asset.token.sinceTimestamp ?? Number.MAX_SAFE_INTEGER,
+        bucket.sinceTimestamp,
+      ),
+    )
+
+    asset.buckets.push({
+      id: bucket.id,
+      type: 'denomination',
+      label: `${bucket.tokenInfo.symbol} ${bucket.denomination}`,
+      address: bucket.address,
+      sinceTimestamp: bucket.sinceTimestamp,
+      denomination: bucket.denomination,
+      deposit: {
+        event: bucket.depositEvent,
+        extractor: 'fixedAmount',
+        params: {
+          amount: bucket.denominationAmount,
+        },
+      },
+      withdrawal: {
+        event: bucket.withdrawalEvent,
+        extractor: 'fixedAmount',
+        params: {
+          amount: bucket.denominationAmount,
+        },
+      },
+    })
+  }
+
+  return Array.from(grouped.values()).sort((a, b) =>
+    a.token.symbol.localeCompare(b.token.symbol, undefined, {
+      numeric: true,
+    }),
+  )
+}
+
+function getTornadoBuckets(): TornadoBucket[] {
+  const poolAddresses = discovery.getContractValue<string[]>(
+    'InstanceRegistry',
+    'getAllInstanceAddresses',
+  )
+
+  const pools = poolAddresses.map((address) => discovery.getContract(address))
+
+  return pools.map((pool) => {
+    const token = pool.values?.token?.toString()
+    const isNativeEth = token === undefined
+    const tokenAddress = isNativeEth
+      ? EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+      : EthereumAddress(
+          ChainSpecificAddress.address(token as ChainSpecificAddress),
+        )
+    const resolved = getTokenByAddress(tokenAddress.toString())
+    assert(resolved, `Unknown token ${token}`)
+
+    const denominationAmount = BigInt(
+      pool.values?.denomination?.toString() ?? 0,
+    )
+    const denomination = formatDenomination(
+      denominationAmount,
+      resolved.decimals,
+    )
+
+    return {
+      id: `tornado-${resolved.symbol}-${denomination}`,
+      address: pool.address,
+      tokenAddress,
+      tokenInfo: {
+        symbol: resolved.symbol,
+        decimals: resolved.decimals,
+        priceId: resolved.coingeckoId,
+        iconUrl: resolved.iconUrl,
+      },
+      denomination,
+      denominationAmount: denominationAmount.toString(),
+      sinceTimestamp: pool.sinceTimestamp ?? 0,
+      depositEvent: TORNADO_DEPOSIT_EVENT,
+      withdrawalEvent: TORNADO_WITHDRAWAL_EVENT,
+    }
+  })
+}

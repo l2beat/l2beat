@@ -18,6 +18,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('automata')
 const genesisTimestamp = UnixTime(1721183063)
@@ -55,6 +56,7 @@ export const automata: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1729359609), // 2024-10-19T17:40:09Z
+  archivedAt: UnixTime(1784195945), // Thu, 16 Jul 2026
   additionalBadges: [BADGES.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -93,6 +95,7 @@ export const automata: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1784195945), // Thu, 16 Jul 2026
   },
   discovery,
   genesisTimestamp,
@@ -151,23 +154,10 @@ export const automata: ScalingProject = opStackL2({
     challengeMechanism: 'DA Challenges',
     fallback: DA_LAYERS.ETH_CALLDATA,
     technology: {
-      description: `
-## Architecture
-![gmnetworkDA layer](/images/da-layer-technology/gmnetworkda/architecture.png#center)
-
-## Data Availability Challenges
-Automata relies on DA challenges for data availability. 
-The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
-If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}. 
-A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
-In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds.
-The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
-If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
-
-## DA Bridge
-Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.
-However, there is a mechanism that allows users to challenge unavailability of data.
-    `,
+      description: readProjectMarkdown('automata', 'customDaTechnology', {
+        daChallengeWindow,
+        daResolveWindow,
+      }),
       references: [
         {
           title: 'Alt-DA Specification',
@@ -197,4 +187,13 @@ However, there is a mechanism that allows users to challenge unavailability of d
       relayerFailure: DaRelayerFailureRisk.NoMechanism,
     },
   },
+  milestones: [
+    {
+      title: 'Automata paused',
+      url: 'https://etherscan.io/tx/0xe805d831fd737aae90f8313d66da05b7eae1f721f55cda3fbadad22a37deb2a4',
+      date: '2026-07-13T00:00:00Z',
+      description: 'Guardian EOA pauses chain contracts.',
+      type: 'incident',
+    },
+  ],
 })

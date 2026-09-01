@@ -1,0 +1,5 @@
+{
+  "term": "Phase 1",
+  "definition": "For Groth16 trusted setup, phase 1 represents circuit-independent part of the trusted setup (e.g. Perpetual Powers of Tau), which could be reused across different circuits. It generates a part of the secret cryptographic data required for Groth16 ZK protocol to work. If the outcome of phase 1 trusted setup ceremony is known, arbitrary proofs could be forged.",
+  "isSpicy": false
+}

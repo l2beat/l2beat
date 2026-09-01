@@ -1,25 +1,59 @@
+import clsx from 'clsx'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import {
+  type GraphEdge,
+  getGraphProjection,
+} from '../store/utils/graphProjection'
+import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
+import { IconControlStack } from './icons/IconControlStack'
 
-export function StackLayoutButton() {
+export function StackLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useStore((state) => state.hidden)
   const layout = useStore((state) => state.layout)
   const selected = useStore((state) => state.selected)
   const considerAllNodes = selected.length === 0
-  const visibleNodes = nodes.filter(
-    (node) =>
-      !hiddenNodes.includes(node.id) &&
-      (considerAllNodes || selected.includes(node.id)),
-  )
+  const footprints = containerBoxes(nodes)
+  const projection = getGraphProjection(nodes)
+  const visibleNodes = nodes
+    .filter(
+      (node) =>
+        !projection.hiddenNodeIds.has(node.id) &&
+        (considerAllNodes || selected.includes(node.id)),
+    )
+    .map((node) => {
+      const box = footprints.get(node.id)
+      return box ? { ...node, box } : node
+    })
 
   return (
     <ControlButton
-      onClick={() => layout(stackAutoLayout(visibleNodes, considerAllNodes))}
+      onClick={() => {
+        let locations = stackAutoLayout(
+          visibleNodes,
+          considerAllNodes,
+          projection.visibleEdges,
+        )
+        if (considerAllNodes) {
+          const { transform, viewportContainer } = useStore.getState()
+          locations = centerLocationsInViewport(
+            locations,
+            visibleNodes,
+            transform,
+            viewportContainer,
+          )
+        }
+        layout(locations)
+      }}
+      className={clsx('px-3 py-2.5', className)}
     >
-      Stack layout
+      <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
+        <IconControlStack />
+      </span>
     </ControlButton>
   )
 }
@@ -46,9 +80,10 @@ interface LayoutNode {
 
 export function stackAutoLayout(
   baseNodes: readonly Node[],
-  freshLayout = true,
+  freshLayout: boolean,
+  visibleEdges: readonly GraphEdge[],
 ) {
-  const nodes = toLayoutNodes(baseNodes)
+  const nodes = toLayoutNodes(baseNodes, visibleEdges)
   const clusters = clusterNodes(nodes)
 
   let { top, left } = getAnchorPoints(baseNodes, freshLayout)
@@ -85,7 +120,10 @@ function getChain(address: string): string {
   return prefix
 }
 
-function toLayoutNodes(baseNodes: readonly Node[]) {
+function toLayoutNodes(
+  baseNodes: readonly Node[],
+  visibleEdges: readonly GraphEdge[],
+) {
   const nodes = baseNodes.map(
     (base): LayoutNode => ({
       id: base.id,
@@ -102,24 +140,35 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
     }),
   )
 
-  const byId = new Map(nodes.map((x) => [x.id, x]))
+  const byId = new Map(nodes.map((node) => [node.id, node]))
+  const topLevelByAddress = topLevelByDescendant(baseNodes)
 
-  for (const node of nodes) {
-    const chainA = getChain(node.base.id)
-    for (const field of node.base.fields) {
-      const other = byId.get(field.target)
-      if (other && other !== node && getChain(other.base.id) === chainA) {
-        if (!node.connectionsOut.includes(other)) {
-          node.connectionsOut.push(other)
+  for (const edge of visibleEdges) {
+    const sourceTop = topLevelByAddress.get(edge.source)
+    const targetTop = topLevelByAddress.get(edge.target)
+    const source = sourceTop ? byId.get(sourceTop.id) : undefined
+    const target = targetTop ? byId.get(targetTop.id) : undefined
+    if (source && target && source !== target) {
+      if (nodeChain(source.base) === nodeChain(target.base)) {
+        if (!source.connectionsOut.includes(target)) {
+          source.connectionsOut.push(target)
         }
-        if (!other.connectionsIn.includes(node)) {
-          other.connectionsIn.push(node)
+        if (!target.connectionsIn.includes(source)) {
+          target.connectionsIn.push(source)
         }
       }
     }
   }
 
   return nodes
+}
+
+function nodeChain(node: Node): string {
+  const first = node.subnodes[0]
+  if (first === undefined) {
+    return getChain(node.id)
+  }
+  return nodeChain(first)
 }
 
 function clusterNodes(nodes: LayoutNode[]) {
@@ -278,8 +327,8 @@ function groupByLevel(nodes: LayoutNode[]) {
         index = order.push(node.id) - 1
       }
 
-      const uniqueChildren = node.base.fields
-        .flatMap((f) => f.target)
+      const uniqueChildren = node.connectionsOut
+        .map((child) => child.id)
         .filter((id) => order.indexOf(id) === -1)
       order.splice(index, 0, ...uniqueChildren)
     }

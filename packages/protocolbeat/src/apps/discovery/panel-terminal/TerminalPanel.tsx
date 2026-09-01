@@ -35,7 +35,7 @@ export function TerminalPanel() {
     findMinters,
     killCommand,
   } = useTerminalStore()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddress = usePanelStore((state) => state.selected[0])
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')

@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { formatBytes, formatCurrency, ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
 import { Breakdown } from '~/components/breakdown/Breakdown'
@@ -13,10 +13,11 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { InfoIcon } from '~/icons/Info'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/getDaThroughputSummary'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import {
+  calculatePercentageChange,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatBytes } from '~/utils/number-format/formatBytes'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface DaSummaryBoxesProps {
   entries: DaSummaryEntry[]
@@ -83,12 +84,14 @@ function SummaryTvsBox({
           label="By Ethereum"
           value={formatCurrency(ethereumValue, 'usd')}
           change={calculatePercentageChange(ethereumValue, ethereum7dAgo)}
+          changePeriod={ethereum?.tvs.changePeriod}
           tooltip="The sum of the Total Value Secured of all rollups listed on L2BEAT, displayed along with the percentage change compared to 7D ago."
         />
         <ValueWithChange
           label="By Alt-DAs"
           value={formatCurrency(othersValue, 'usd')}
           change={calculatePercentageChange(othersValue, others7dAgo)}
+          changePeriod={others[0]?.tvs.changePeriod}
           tooltip="The sum of the Total Value Secured of all scaling solutions listed on L2BEAT that use an alternative solution for DA (other than Ethereum), displayed along with the percentage change compared to 7D ago."
         />
       </div>
@@ -174,6 +177,7 @@ function SummaryThroughputBox({
           label="Scaling projects' past day data posted to DA Layers with public APIs"
           value={formatBytes(totalPosted)}
           change={calculatePercentageChange(totalPosted, totalPosted7d)}
+          changePeriod={throughputSummaryData.changePeriod}
           tooltip="The total size of the data posted over the past day by Ethereum scaling projects to DA solutions that have provided public APIs, displayed along with the percentage change compared to 7D ago."
         />
       </div>
@@ -237,11 +241,13 @@ function ValueWithChange({
   label,
   value,
   change,
+  changePeriod,
   tooltip,
 }: {
   label: string
   value: string
   change: number
+  changePeriod: PercentageChangePeriod | undefined
   tooltip: string
 }) {
   return (
@@ -258,6 +264,7 @@ function ValueWithChange({
         </span>
         <PercentChange
           value={change}
+          period={changePeriod}
           className="mt-1"
           textClassName="text-xs md:text-base font-semibold"
         />

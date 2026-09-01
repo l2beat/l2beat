@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoStakingRewards",
+  "description": "Staking contract that escrows TORN staked by relayers. With time, their stake is subtracted from for being officially registered as relayers and receiving fees from each withdrawal, and is redirected as TORN rewards for governance participants who are locking their TORN for voting/staking.",
+  "category": "gov",
+  "fields": {
+    "$admin": {
+      "description": "Can upgrade the staking rewards implementation.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the staking rewards implementation, changing custody and reward-accounting logic for relayer stake."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current staking rewards implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "Governance": {
+      "description": "Governance contract controlling staking reward accounting and token recovery.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update user reward accounting when locked balances change."
+        },
+        {
+          "type": "interact",
+          "description": "withdraw TORN held by the staking rewards contract."
+        }
+      ]
+    },
+    "relayerRegistry": {
+      "description": "Relayer registry that is also authorized to add burn-derived rewards into the staking system."
+    },
+    "torn": {
+      "description": "TORN token held as relayer stake and distributed as staking rewards."
+    },
+    "accumulatedRewardPerTorn": {
+      "description": "Global reward-per-TORN accumulator used to distribute burned relayer stake.",
+      "severity": "LOW"
+    },
+    "ratioConstant": {
+      "description": "Scaling factor based on total TORN supply used in reward calculations.",
+      "severity": "LOW"
+    }
+  },
+  "ignoreMethods": ["accumulatedRewardPerTorn"],
+  "ignoreInWatchMode": ["accumulatedRewardPerTorn"]
+}

@@ -21,6 +21,7 @@ import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
 import { BlobService } from './services/BlobService'
 import { DaService } from './services/DaService'
+import { createDataAvailabilityTrpcRouter } from './trpc/router'
 
 export function initDataAvailabilityModule({
   config,
@@ -48,8 +49,13 @@ export function initDataAvailabilityModule({
       logger,
       providers,
     )
+  const trpcRouter = createDataAvailabilityTrpcRouter({ config: config.da })
 
   return {
+    trpc: {
+      namespace: 'dataAvailability',
+      trpcRouter,
+    },
     start: async () => {
       logger.info('Starting target indexers')
       await Promise.all(

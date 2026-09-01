@@ -1,9 +1,16 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../../common'
+import {
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
+  DaFraudDetectionRisk,
+  DaRelayerFailureRisk,
+  DaUpgradeabilityRisk,
+} from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import type { BaseProject } from '../../types'
+import type { BaseProject, ProjectPermissions } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('eigenda')
 
@@ -17,14 +24,20 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'registeredOperators',
 ).length
 
+const eigenDaAddresses = new Set(
+  discovery.configReader
+    .readDiscovery('eigenda')
+    .entries.filter((e) => e.type !== 'Reference')
+    .map((e) => e.address.toString()),
+)
+
 export const eigenda: BaseProject = {
   id: ProjectId('eigenda'),
   slug: 'eigenda',
   name: 'EigenDA',
   shortName: undefined,
+  aliases: ['EigenLayer', 'EigenCloud'],
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
-  // tags
-  isDaLayer: true,
   // data
   statuses: {
     yellowWarning: undefined,
@@ -57,63 +70,7 @@ export const eigenda: BaseProject = {
     type: 'DA Service',
     systemCategory: 'public',
     technology: {
-      description: `
-
-    ## Architecture
-
-    ![EigenDA architecture](/images/da-layer-technology/eigenda/architecture.png#center)
-
-    EigenDA is composed by three types of off-chain entities: node operators, a disperser and a retriever.
-    - EigenDA **operators** are node operators running the EigenDA node software and are registered to the EigenDA AVS in EigenLayer.
-    - The **disperser** is the entity responsible for collecting the blobs from the sequencer, erasure coding them and generating the encoded blob's KZG commitments for each chunk. Although the disperser could be rollup-operated, it is currently a centralised entity operated by Eigen Labs.
-    - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructing the original blob.
-
-    ### Operators Registration
-    Operators register with the EigenDAServiceManager via the registerOperatorToAVS() function, enabling them to participate in the data availability network. They are responsible for holding and serving blobs data, and earn rewards for their participation in the network.
-
-    ![EigenDA operator registration](/images/da-layer-technology/eigenda/registration.png#center)
-
-    ### Operators Stake Update
-
-    EigenDA operators' stake for quorum verification is fetched from the EigenDA StakeRegistry contract. To keep the stake in sync with changes in share balances in the EigenLayer DelegationManager (e.g., due to tokens delegated/undelegated to operators), the permissionless updateOperators() function on the RegistryCoordinator contract needs to be called periodically. This function updates the operators' quorum weight in the StakeRegistry contract based on the operators' shares in the EigenLayer DelegationManager contract.
-    ![EigenDA operator stake sync](/images/da-layer-technology/eigenda/stakesync.png#center)
-
-    ### Operators Blob Storage and Retrieval
-
-    The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then sends the chunks, KZG commitments, and KZG proofs to the operators.
-    Multiple operators are responsible for storing chunks of the encoded data blobs and their associated KZG commitment and proof.
-    Once the chunks, KZG commitments, and KZG proofs are sent to the operators, each of them generates a signature certifying that they have stored the data. These signatures are then sent to the Disperser which aggregates them and submits them to Ethereum by sending a transaction to the EigenDAServiceManager (the DA bridge).
-
-    ![EigenDA storing/retrieving](/images/da-layer-technology/eigenda/storing-retrieving.png#center)
-
-    ## Data Availability Certificates
-
-    EigenDA uses different certificate formats depending on the version, each with corresponding verifier contracts:
-
-    ### Certificate Types
-    - **V1 Certificates**: Used in EigenDA V1, verified through the EigenDAServiceManager contract via the confirmBatch() function. These certificates contain batch headers with KZG commitments and BLS aggregated signatures from operators.
-
-    - **V2/V3 Certificates**: Used in EigenDA V2, which introduces significant architectural changes. The sequencer acts as the relayer and does not post batches to the service manager. Instead, certificates are verified through dedicated DACert Verifier contracts that correspond to different certificate versions.
-
-    ### EigenDA V2
-    In EigenDA V2, the architecture has evolved to improve efficiency:
-    - **Sequencer as Relayer**: The sequencer now acts as the relayer, eliminating the need to post batches to the service manager
-    - **Direct Certificate Verification**: Certificates are verified directly through version-specific DACert Verifier contracts
-    - **Improved Throughput**: The new architecture supports higher throughput by removing bottlenecks in the batch confirmation process
-
-
-    ## L2 Data Availability
-    The verification process differs between EigenDA versions:
-
-    **EigenDA V1**: The Disperser collects operators' signatures and submits them to the EigenDAServiceManager contract via the confirmBatch() function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
-    
-    **EigenDA V2**: Certificate verification is handled by dedicated DACert Verifier contracts. Each certificate version corresponds to a specific verifier that validates the certificate format and cryptographic proofs without requiring batch submissions to a central service manager.
-
-    Threshold BLS signatures are not used. Instead, the threshold check is performed on the signers' total stake fetched by the StakeRegistry, and the stake threshold percentage to reach is provided in the batch header input data.
-
-    The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager (V1) or through the appropriate DACert Verifier contract (V2/V3).
-    This function is not used by the EigenDAServiceManager contract itself, but rather by L2 systems to prove inclusion of the blob and that their trust assumptions (i.e., batch confirmation threshold) were as expected.
-  `,
+      description: readProjectMarkdown('eigenda', 'daLayerTechnology'),
       references: [
         {
           title: 'EigenDA - Documentation',
@@ -318,17 +275,6 @@ export const eigenda: BaseProject = {
         ],
       },
       {
-        projectId: ProjectId('rise'),
-        name: 'Rise',
-        daTrackingConfig: [
-          {
-            type: 'eigen-da',
-            sinceTimestamp: 1767607200, // 2026-01-05T10:00:00Z
-            customerId: '0x78d5974216f751eb328018f003067f77e8be2fc4',
-          },
-        ],
-      },
-      {
         projectId: ProjectId('conduit-2'),
         name: 'Conduit',
         daTrackingConfig: [
@@ -352,16 +298,75 @@ export const eigenda: BaseProject = {
       },
     ],
   },
+  daBridge: {
+    name: 'DACert Verifier (EigenDA V2)',
+    daLayer: ProjectId('eigenda'),
+    relayerType: {
+      value: 'SelfRelay',
+      sentiment: 'good',
+      description:
+        'In EigenDA V2 secure integrations, the rollup batcher includes the DA certificate on L1, no separate third-party relayer is required.',
+    },
+    validationType: {
+      value: 'BLS Signature',
+      description:
+        'EigenDA V2 certificates require onchain BLS signatures verification through dedicated DACert Verifier contracts. Each certificate version corresponds to a specific verifier that validates the certificate format and proofs.',
+    },
+    usedIn: linkByDA({
+      layer: ProjectId('eigenda'),
+      bridge: ProjectId('eigenda'),
+    }),
+    technology: {
+      description: readProjectMarkdown('eigenda', 'daBridgeTechnology'),
+      references: [
+        {
+          title: 'EigenDA Integration Spec - Lifecycle Phases',
+          url: 'https://layr-labs.github.io/eigenda/integration/spec/5-lifecycle-phases.html#secure-dispersal',
+        },
+        {
+          title: 'EigenDA - Documentation',
+          url: 'https://docs.eigenda.xyz/overview',
+        },
+        {
+          title: 'EigenDA Disperser - Source Code',
+          url: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the sequencer posts an invalid certificate and EigenDA operators do not make the data available for verification.',
+        },
+        {
+          category: 'Funds can be frozen if',
+          text: 'the EigenDACertVerifierRouter fails to provide correct verifier contract addresses.',
+        },
+      ],
+    },
+    risks: {
+      committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
+        'Permissioned',
+        undefined,
+        totalNumberOfRegisteredOperators,
+      ),
+      upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
+      relayerFailure: DaRelayerFailureRisk.SelfPropose,
+    },
+  },
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: filterToEigenDaOnly(discovery.getDiscoveredContracts()),
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'the bridge (EigenDAServiceManager) contract receives a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the EigenDACertVerifier or EigenDACertVerifierRouter contracts receive a malicious code upgrade and accept invalid certificates. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
-        text: 'the EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the EigenDAServiceManager (BLS signature verifier) contract receives a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the EigenDA middleware contracts (StakeRegistry, BLSApkRegistry, RegistryCoordinator) receive a malicious code upgrade and report incorrect stake or keys to the cert verifier. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
@@ -373,11 +378,13 @@ export const eigenda: BaseProject = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'the bridge accepts an incorrect or malicious data commitment provided by node operators.',
+        text: 'a sequencer posts an incorrect or malicious DA certificate that is accepted by the verifier contract.',
       },
     ],
   },
-  permissions: discovery.getDiscoveredPermissions(),
+  permissions: filterPermissionsToEigenDaOnly(
+    discovery.getDiscoveredPermissions(),
+  ),
   milestones: [
     {
       title: 'EigenDA V2 launch',
@@ -402,4 +409,38 @@ export const eigenda: BaseProject = {
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function filterToEigenDaOnly<T extends { address: { toString(): string } }>(
+  contracts: Record<string, T[]>,
+): Record<string, T[]> {
+  return Object.fromEntries(
+    Object.entries(contracts).map(([chain, list]) => [
+      chain,
+      list.filter((c) => eigenDaAddresses.has(c.address.toString())),
+    ]),
+  )
+}
+
+function filterPermissionsToEigenDaOnly(
+  permissions: Record<string, ProjectPermissions>,
+): Record<string, ProjectPermissions> {
+  return Object.fromEntries(
+    Object.entries(permissions).map(([chain, p]) => [
+      chain,
+      {
+        roles: p.roles?.map((role) => ({
+          ...role,
+          accounts: role.accounts.filter((a) =>
+            eigenDaAddresses.has(a.address.toString()),
+          ),
+        })),
+        actors: p.actors?.filter((actor) =>
+          actor.accounts.some((a) =>
+            eigenDaAddresses.has(a.address.toString()),
+          ),
+        ),
+      },
+    ]),
+  )
 }

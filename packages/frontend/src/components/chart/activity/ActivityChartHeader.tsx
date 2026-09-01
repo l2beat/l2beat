@@ -1,6 +1,6 @@
 import { InfoIcon } from '~/icons/Info'
-import { useActivityMetricContext } from '~/pages/scaling/activity/components/ActivityMetricContext'
-import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
+import { useActivityMetricContext } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
 import {
   Tooltip,
   TooltipContent,
@@ -12,9 +12,9 @@ export function ActivityChartHeader() {
 
   return (
     <div className="flex items-center gap-2">
-      <h1 className="whitespace-nowrap font-bold text-xl max-md:ml-1 md:text-2xl">
+      <h2 className="whitespace-nowrap font-bold text-xl max-md:ml-1 md:text-2xl">
         Daily average
-      </h1>
+      </h2>
       <div className="flex items-center gap-2">
         <ActivityMetricControls
           value={metric}

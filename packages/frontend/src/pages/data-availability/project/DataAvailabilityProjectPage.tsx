@@ -73,7 +73,6 @@ export function DataAvailabilityProjectPage({
                   <ProjectSummaryBars
                     project={{
                       archivedAt: entry.archivedAt,
-                      isUpcoming: entry.isUpcoming,
                       underReviewStatus: entry.isUnderReview
                         ? 'config'
                         : undefined,

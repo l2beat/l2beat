@@ -1,50 +1,121 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { functionalUpdate, getCoreRowModel } from '@tanstack/react-table'
+import { useMemo, useState } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { api } from '~/trpc/React'
-import { type TokensPairRow, topTokensPairsColumns } from './columns'
+import type {
+  InteropTopItemsSort,
+  InteropTopItemsSorting,
+} from '~/server/features/layer2s/interop/types'
+import { useTRPC } from '~/trpc/React'
+import type { InteropSelection } from '../../utils/types'
+import { getTopTokensPairsColumns, type TokensPairRow } from './columns'
+import {
+  InfiniteScrollTrigger,
+  LoadingMoreText,
+  useInfiniteScrollTrigger,
+} from './infiniteScroll'
+
+const DEFAULT_SORTING: InteropTopItemsSorting = [
+  {
+    id: 'volume',
+    desc: true,
+  },
+]
 
 export type TokensPairsQueryInput = {
   id: ProjectId | undefined
   from: string[]
   to: string[]
   type?: KnownInteropBridgeType
+  protocolIds?: string[]
 }
 
 export function TokensPairsTable({
   queryInput,
   hideSameToken,
+  showTopProtocolColumn,
+  showFlowsColumn,
 }: {
   queryInput: TokensPairsQueryInput
   hideSameToken?: boolean
+  showTopProtocolColumn?: boolean
+  showFlowsColumn?: boolean
 }) {
-  const { data, isLoading } = api.interop.tokensPairs.useQuery(queryInput)
+  const trpc = useTRPC()
+  const selectedChains = useMemo<InteropSelection>(
+    () => ({ from: queryInput.from, to: queryInput.to }),
+    [queryInput],
+  )
+  const [sorting, setSorting] =
+    useState<InteropTopItemsSorting>(DEFAULT_SORTING)
+  const queryInputWithSort = useMemo(
+    () => ({
+      ...queryInput,
+      sort: sorting,
+    }),
+    [queryInput, sorting],
+  )
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      trpc.interop.tokensPairs.infiniteQueryOptions(queryInputWithSort, {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }),
+    )
 
   const filteredData = useMemo(() => {
-    const rows = data ?? []
+    const rows = data?.pages.flatMap((page) => page.items) ?? []
     if (!hideSameToken) return rows
     return rows.filter((row) => row.tokenA.symbol !== row.tokenB.symbol)
   }, [data, hideSameToken])
+  const loadMoreRef = useInfiniteScrollTrigger({
+    canLoadMore: !!hasNextPage && !isLoading && !isFetchingNextPage,
+    loadMore: fetchNextPage,
+  })
+  const columns = useMemo(
+    () =>
+      getTopTokensPairsColumns({
+        showTopProtocolColumn,
+        showFlowsColumn,
+        selectedChains,
+      }),
+    [showTopProtocolColumn, showFlowsColumn, selectedChains],
+  )
 
   const table = useTable<TokensPairRow>({
     data: filteredData,
-    columns: topTokensPairsColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
-    initialState: {
-      sorting: [{ id: 'volume', desc: true }],
+    manualSorting: true,
+    state: {
+      sorting,
+    },
+    onSortingChange: (updater) => {
+      const nextSorting = functionalUpdate(updater, sorting)
+      const nextSingleSorting = nextSorting.slice(0, 1).map((nextSort) => ({
+        id: nextSort.id as InteropTopItemsSort['id'],
+        desc: nextSort.desc,
+      }))
+      setSorting(
+        nextSingleSorting.length > 0 ? nextSingleSorting : DEFAULT_SORTING,
+      )
     },
   })
 
   return (
-    <BasicTable
-      skeletonCount={6}
-      table={table}
-      tableWrapperClassName="pb-0"
-      isLoading={isLoading}
-    />
+    <>
+      <BasicTable
+        skeletonCount={6}
+        table={table}
+        tableWrapperClassName="pb-0"
+        isLoading={isLoading}
+      />
+      {hasNextPage && <InfiniteScrollTrigger triggerRef={loadMoreRef} />}
+      {isFetchingNextPage && (
+        <LoadingMoreText>Loading more token pairs...</LoadingMoreText>
+      )}
+    </>
   )
 }

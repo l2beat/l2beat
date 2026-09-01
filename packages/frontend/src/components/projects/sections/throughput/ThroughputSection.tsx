@@ -1,5 +1,7 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import { formatBpsToMbps, formatBytes } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
@@ -7,11 +9,10 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
 import {
-  IncludeScalingOnlyProvider,
-  useIncludeScalingOnly,
+  IncludeL2OnlyProvider,
+  useIncludeL2Only,
 } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import { api } from '~/trpc/React'
-import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
+import { useTRPC } from '~/trpc/React'
 import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -37,7 +38,7 @@ export function ThroughputSection({
 }: ThroughputSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <IncludeScalingOnlyProvider>
+      <IncludeL2OnlyProvider>
         {syncStatus.warning && (
           <div className="my-3.5 flex items-start gap-3 rounded-lg bg-surface-secondary p-4">
             <ClockIcon className="mt-px size-[18px] shrink-0" />
@@ -60,7 +61,7 @@ export function ThroughputSection({
         />
         <HorizontalSeparator className="my-4" />
         <ThroughputChartStats projectId={project.id} syncStatus={syncStatus} />
-      </IncludeScalingOnlyProvider>
+      </IncludeL2OnlyProvider>
     </ProjectSection>
   )
 }
@@ -75,12 +76,15 @@ function ThroughputChartStats({
     isSynced: boolean
   }
 }) {
-  const { includeScalingOnly } = useIncludeScalingOnly()
-  const { data, isLoading } = api.da.projectCharts.useQuery({
-    range: optionToRange('1y'),
-    projectId,
-    includeScalingOnly,
-  })
+  const trpc = useTRPC()
+  const { includeL2Only } = useIncludeL2Only()
+  const { data, isLoading } = useQuery(
+    trpc.da.projectCharts.queryOptions({
+      range: optionToRange('1y'),
+      projectId,
+      includeL2Only,
+    }),
+  )
 
   return (
     <ChartStats>

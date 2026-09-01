@@ -70,43 +70,39 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       'COINGECKO_API_KEY',
     ]),
     multicall: chainConfig.multicall,
-    explorer:
-      chainConfig.explorer.type === 'blockscout'
-        ? {
-            type: chainConfig.explorer.type,
-            url: chainConfig.explorer.url,
-            unsupported: chainConfig.explorer.unsupported,
-          }
-        : chainConfig.explorer.type === 'sourcify'
-          ? {
-              type: chainConfig.explorer.type,
-              chainId: chainConfig.chainId,
-            }
-          : chainConfig.explorer.type === 'etherscan'
+    explorer: ensureArray(chainConfig.explorer).map((e) =>
+      e.type === 'blockscout'
+        ? { type: e.type, url: e.url, unsupported: e.unsupported }
+        : e.type === 'sourcify'
+          ? { type: e.type, chainId: chainConfig.chainId }
+          : e.type === 'etherscan'
             ? {
-                type: chainConfig.explorer.type,
+                type: e.type,
                 chainId: chainConfig.chainId,
-                url:
-                  chainConfig.explorer.customUrl ??
-                  'https://api.etherscan.io/v2/api',
-                apiKey: chainConfig.explorer.customUrl
+                url: e.customUrl ?? 'https://api.etherscan.io/v2/api',
+                apiKey: e.customUrl
                   ? ''
                   : env.string([
                       'ETHERSCAN_API_KEY_FOR_DISCOVERY',
                       'ETHERSCAN_API_KEY',
                     ]),
-                unsupported: chainConfig.explorer.unsupported,
+                unsupported: e.unsupported,
               }
             : ({
-                type: chainConfig.explorer.type,
-                url: chainConfig.explorer.url,
+                type: e.type,
+                url: e.url,
                 apiKey: env.string([
                   `${ENV_NAME}_ETHERSCAN_V1_API_KEY_FOR_DISCOVERY`,
                   `${ENV_NAME}_ETHERSCAN_V1_API_KEY`,
                   //support for legacy local configs
                   `DISCOVERY_${ENV_NAME}_ETHERSCAN_V1_API_KEY`,
                 ]),
-                unsupported: chainConfig.explorer.unsupported,
+                unsupported: e.unsupported,
               } as ExplorerConfig),
+    ),
   }
+}
+
+function ensureArray<T>(v: T | T[]): T[] {
+  return Array.isArray(v) ? v : [v]
 }

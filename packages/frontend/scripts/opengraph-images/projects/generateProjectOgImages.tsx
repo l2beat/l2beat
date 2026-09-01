@@ -14,7 +14,14 @@ export async function generateProjectOgImages(
   },
 ) {
   const projects = await ps.getProjects({
-    optional: ['isScaling', 'isDaLayer', 'zkCatalogInfo', 'interopConfig'],
+    optional: [
+      'scalingInfo',
+      'daLayer',
+      'zkCatalogInfo',
+      'interopConfig',
+      'privacyInfo',
+      'defiInfo',
+    ],
   })
 
   for (const project of projects) {
@@ -48,7 +55,13 @@ export async function generateProjectOgImages(
 
 async function generateProjectOgImage(
   project: Project<never, 'interopConfig'>,
-  type: 'scaling' | 'zk-catalog' | 'data-availability' | 'interop',
+  type:
+    | 'layer2s'
+    | 'zk-catalog'
+    | 'data-availability'
+    | 'interop'
+    | 'privacy'
+    | 'defi',
   size: { width: number; height: number },
   fonts: {
     robotoMedium: Buffer
@@ -66,7 +79,7 @@ async function generateProjectOgImage(
       }
       size={size}
     >
-      {`${type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}
+      {`${type === 'layer2s' ? 'LAYER 2S' : type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}
     </ProjectOpengraphImage>,
     {
       ...size,
@@ -93,22 +106,39 @@ async function generateProjectOgImage(
 export function getOpengraphProjectTypes(
   project: Project<
     never,
-    'isScaling' | 'isDaLayer' | 'zkCatalogInfo' | 'interopConfig'
+    | 'scalingInfo'
+    | 'daLayer'
+    | 'zkCatalogInfo'
+    | 'interopConfig'
+    | 'privacyInfo'
+    | 'defiInfo'
   >,
 ) {
-  const types: ('scaling' | 'zk-catalog' | 'data-availability' | 'interop')[] =
-    []
-  if (project.isScaling) {
-    types.push('scaling')
+  const types: (
+    | 'layer2s'
+    | 'zk-catalog'
+    | 'data-availability'
+    | 'interop'
+    | 'privacy'
+    | 'defi'
+  )[] = []
+  if (project.scalingInfo) {
+    types.push('layer2s')
   }
   if (project.zkCatalogInfo) {
     types.push('zk-catalog')
   }
-  if (project.isDaLayer) {
+  if (project.daLayer) {
     types.push('data-availability')
   }
   if (project.interopConfig) {
     types.push('interop')
+  }
+  if (project.privacyInfo) {
+    types.push('privacy')
+  }
+  if (project.defiInfo) {
+    types.push('defi')
   }
   return types
 }

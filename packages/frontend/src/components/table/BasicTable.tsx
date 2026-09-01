@@ -62,6 +62,11 @@ export interface BasicTableProps<T extends BasicTableRow> {
   renderSubComponent?: (props: { row: Row<T> }) => React.ReactElement
   getHighlightId?: (ctx: T) => string
   tableWrapperClassName?: string
+  /**
+   * Trims the row and header heights. For tables shown alongside other content
+   * rather than as a page's main subject.
+   */
+  compact?: boolean
 }
 
 type BasicTableCellData = {
@@ -100,7 +105,10 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         {groupedHeader && (
           <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
         )}
-        <BasicTableActualHeaderRow actualHeader={actualHeader} />
+        <BasicTableActualHeaderRow
+          actualHeader={actualHeader}
+          compact={props.compact}
+        />
         <BasicTableHeaderDividerRow />
       </TableHeader>
       <TableBody>
@@ -167,8 +175,10 @@ function BasicTableGroupedHeaderRow<T>({
 
 function BasicTableActualHeaderRow<T>({
   actualHeader,
+  compact,
 }: {
   actualHeader: HeaderGroup<T>
+  compact: boolean | undefined
 }) {
   return (
     <TableHeaderRow>
@@ -183,6 +193,7 @@ function BasicTableActualHeaderRow<T>({
                 groupParams,
                 isPinned: header.column.getIsPinned() !== false,
                 headClassName: header.column.columnDef.meta?.headClassName,
+                compact,
               })}
               align={header.column.columnDef.meta?.align}
               tooltip={header.column.columnDef.meta?.tooltip}
@@ -226,14 +237,14 @@ export function BasicTableRow<T extends BasicTableRow>({
   className,
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
-  const { highlightedId } = useHighlightedTableRowContext()
+  const { highlightedIds } = useHighlightedTableRowContext()
   const { cells, denominator } = prepareBasicTableVisibleCells(row)
 
   const cellDataMap = new Map<number, BasicTableCellData>()
 
   const highlightId = props.getHighlightId?.(row.original) ?? row.original.slug
   const isHighlighted =
-    highlightId !== undefined && highlightedId === highlightId
+    highlightId !== undefined && highlightedIds.includes(highlightId)
 
   const shouldRenderSubComponentRow =
     row.getIsExpanded() && !!props.renderSubComponent
@@ -258,6 +269,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         rowBackgroundColor: row.original.backgroundColor,
         isHighlighted,
         cellClassName: cellData.meta?.cellClassName,
+        compact: props.compact,
       }),
       style: getCommonPinningStyles(cellData.cell.column),
     }

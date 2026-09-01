@@ -16,7 +16,7 @@ export const ArbitrumScheduledTransactionsHandlerDefinition = v.strictObject({
 
 const executeFn = 'execute(address upgrade, bytes upgradeCallData) payable'
 const executeCallFn =
-  'executeCall(address upgrade, bytes upgradesCallData) payable'
+  'executeCall(address upgrade, bytes upgradeCallData) payable'
 const ExecutorInterface = new utils.Interface([
   `function ${executeFn}`,
   `function ${executeCallFn}`,
@@ -65,12 +65,29 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     const result: ContractValue[] = []
     for (const log of logs) {
       const parsed = this.timelockInterface.parseLog(log)
-      const decoded = await this.decodeLog(
-        parsed,
-        retryableTicketMagic,
-        provider,
-      )
-      result.push(decoded)
+      try {
+        result.push(
+          await this.decodeLog(parsed, retryableTicketMagic, provider),
+        )
+      } catch {
+        // A single scheduled tx we can't decode (a call that isn't an
+        // execute() wrapper, an unexpected call shape, an unknown inbox, a
+        // failed source fetch, etc.) must not fail the whole
+        // scheduledTransactions field. Keep the raw entry and mark it, so the
+        // degradation is visible in the diff instead of silent. The marker is
+        // a static flag on purpose - error messages don't belong in committed
+        // output (see neuterErrors).
+        result.push({
+          id: toContractValue(parsed.args.id),
+          decodingFailed: true,
+          raw: {
+            target: toContractValue(parsed.args.target),
+            value: toContractValue(parsed.args.value),
+            data: toContractValue(parsed.args.data),
+            delay: toContractValue(parsed.args.delay),
+          },
+        })
+      }
     }
     return {
       field: this.field,
@@ -179,15 +196,25 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     function: string
     inputs: { name: ContractValue; value: ContractValue }[]
   } {
-    const r = iface.parseTransaction({
-      data: calldata,
-    })
-    return {
-      function: r.functionFragment.name,
-      inputs: r.functionFragment.inputs.map((i) => ({
-        name: toContractValue(i.name),
-        value: toContractValue(r.args[i.name]),
-      })),
+    try {
+      const r = iface.parseTransaction({
+        data: calldata,
+      })
+      return {
+        function: r.functionFragment.name,
+        inputs: r.functionFragment.inputs.map((i) => ({
+          name: toContractValue(i.name),
+          value: toContractValue(r.args[i.name]),
+        })),
+      }
+    } catch {
+      // Selector not in the target ABI (e.g. a proxy upgraded after scheduling,
+      // or a newly-added function). Keep the raw calldata instead of throwing,
+      // which would fail the whole scheduledTransactions field.
+      return {
+        function: calldata.slice(0, 10),
+        inputs: [{ name: 'calldata', value: calldata }],
+      }
     }
   }
 

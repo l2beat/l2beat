@@ -1,0 +1,10 @@
+{
+  "extends": "@l2beat/typescript-config/react",
+  "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
+}

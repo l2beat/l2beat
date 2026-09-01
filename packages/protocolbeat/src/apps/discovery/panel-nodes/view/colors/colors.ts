@@ -1,4 +1,3 @@
-import type { ApiAddressType } from '../../../../../api/types'
 import colors from '../../../../../oklchColors.json'
 import { type OklchColor, oklchColorToCSS } from './oklch'
 
@@ -20,19 +19,17 @@ export const SELECTABLE_COLORS: { color: OklchColor; isDark: boolean }[] = [
 export function getColor({
   id,
   color,
+  colorSourceId,
   hueShift,
-  addressType,
 }: {
   id: string
   color: number
+  colorSourceId?: string
   hueShift: number
-  addressType: ApiAddressType
 }): { color: string; isDark: boolean } {
   const result =
     color === 0
-      ? addressType === 'Unknown'
-        ? { color: colors.aux.red, isDark: false }
-        : getChainColor(id.split(':')[0] ?? '')
+      ? getChainColor((colorSourceId ?? id).split(':')[0] ?? '')
       : (SELECTABLE_COLORS[color - 1] ?? { color: colors.white, isDark: false })
 
   const colorCopy = {

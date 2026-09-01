@@ -6,7 +6,7 @@ import {
   getActiveChangelogWhatsNewWidget,
   getChangelogEntries,
 } from '~/server/features/changelog/getChangelogEntries'
-import { getRecentlyAddedProjects } from '~/server/features/projects/search-bar/getRecentlyAddedProjects'
+import { getRecentlyAddedProjects } from '~/server/features/search-bar/getRecentlyAddedProjects'
 
 export async function getAppLayoutProps(): Promise<AppLayoutProps> {
   const recentlyAddedProjects = await getRecentlyAddedProjects()

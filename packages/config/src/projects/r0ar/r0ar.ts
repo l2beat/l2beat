@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('r0ar')
 const genesisTimestamp = UnixTime(1728285623)
@@ -15,11 +15,10 @@ export const r0ar: ScalingProject = opStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'R0ar',
+    aliases: ['Roar'],
     slug: 'r0ar',
     description:
       'R0ar is an Optimistic Rollup utilizing the OP Stack focusing on DeFi.',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://r0ar.io/'],
@@ -49,6 +48,7 @@ export const r0ar: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20912148 })],
   genesisTimestamp,
   isNodeAvailable: 'UnderReview',
 })

@@ -1,8 +1,7 @@
 {
   "L1StandardBridge_usdc_recovery": {
-    "hash": "0x68476feae49f34aef031656b4a4308f88e5d9c916368f096009669ac6759bbdf",
+    "hash": "0x8fc80c6a98df133602e3ff9aa3c7a38c9f2571457928f726d8abef08a955d469",
     "address": "eth:0x4B9882f8a7c65998bEe6176FA1F3CDf6fb54f8f9",
-    "chain": "ethereum",
     "blockNumber": 20711663
   }
 }

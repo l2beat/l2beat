@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import { EthRpcClient } from './EthRpcClient'
 import { Http, MockHttp } from './Http'
 
@@ -179,6 +180,33 @@ describe(EthRpcClient.name, () => {
     const result = await client.getTransactionByHash(`0x${'ff'.repeat(32)}`)
 
     expect(result?.calls).toEqual(undefined)
+  })
+
+  it('records rpc metrics for calls', async () => {
+    const http = new MockHttp()
+    const recorded: Parameters<RpcMetricsRecorder['record']>[0][] = []
+    const rpcMetrics: RpcMetricsRecorder = {
+      record: (metric) => {
+        recorded.push(metric)
+      },
+    }
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      '',
+      () => 1337,
+      undefined,
+      rpcMetrics,
+    )
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1337, result: '0x1234' }),
+    )
+
+    await client.getBlockNumber()
+
+    expect(recorded).toHaveLength(1)
+    expect(recorded[0]?.method).toEqual('eth_blockNumber')
   })
 })
 

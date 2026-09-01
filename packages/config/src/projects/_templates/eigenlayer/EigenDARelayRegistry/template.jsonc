@@ -11,7 +11,12 @@
         "select": ["relay", "relayURL"],
         "add": { "event": "RelayAdded" }
       },
-      "permissions": [{ "type": "relayDA" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks."
+        }
+      ]
     }
   }
 }

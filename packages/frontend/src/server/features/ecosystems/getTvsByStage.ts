@@ -1,5 +1,5 @@
 import type { Project, Stage } from '@l2beat/config'
-import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import { getActiveEcosystemProjects } from './getActiveEcosystemProjects'
 
 export type TvsByStage = Record<
@@ -11,10 +11,7 @@ export type TvsByStage = Record<
 >
 
 export function getTvsByStage(
-  ecosystemProjects: Project<
-    'ecosystemInfo',
-    'scalingStage' | 'archivedAt' | 'isUpcoming'
-  >[],
+  ecosystemProjects: Project<'ecosystemInfo', 'scalingStage' | 'archivedAt'>[],
   tvs: SevenDayTvsBreakdown,
 ): TvsByStage {
   const activeProjects = getActiveEcosystemProjects(ecosystemProjects)

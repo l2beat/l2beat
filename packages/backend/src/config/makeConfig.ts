@@ -1,14 +1,16 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
-import type { Config } from './Config'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { Config, DeploymentEnvironment } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
+import { getBackofficeConfig } from './features/backoffice'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getInteropFeatureConfig } from './features/interop'
+import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -16,13 +18,14 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
   name: string
+  deploymentEnv: DeploymentEnvironment
   isLocal?: boolean
   minTimestampOverride?: UnixTime
 }
 
 export async function makeConfig(
   env: Env,
-  { name, isLocal, minTimestampOverride }: MakeConfigOptions,
+  { name, deploymentEnv, isLocal, minTimestampOverride }: MakeConfigOptions,
 ): Promise<Config> {
   const ps = new ProjectService()
 
@@ -42,15 +45,15 @@ export async function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
+  const clockOffsetSeconds = UnixTime.HOUR
+
   return {
     name,
     isReadonly,
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
-      safeTimeOffsetSeconds: 60 * 60,
-      hourlyCutoffDays: 7,
-      sixHourlyCutoffDays: 90,
+      safeTimeOffsetSeconds: clockOffsetSeconds,
     },
     database: isLocal
       ? {
@@ -84,7 +87,8 @@ export async function makeConfig(
           isReadonly,
         },
     notifications:
-      flags.isEnabled('notifications') && getNotificationsConfig(env, flags),
+      flags.isEnabled('notifications') &&
+      getNotificationsConfig(env, flags, deploymentEnv),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -94,9 +98,8 @@ export async function makeConfig(
       },
     },
     health: {
-      releasedAt: env.optionalString('HEROKU_RELEASE_CREATED_AT'),
       startedAt: new Date().toISOString(),
-      commitSha: env.string('HEROKU_SLUG_COMMIT', getGitCommitHash()),
+      commitSha: env.string('DEPLOYMENT_COMMIT_SHA', getGitCommitHash()),
     },
     metricsAuth: isLocal
       ? false
@@ -127,7 +130,8 @@ export async function makeConfig(
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
-    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
+    daBeat:
+      flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env, flags)),
     ecosystems:
       flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
@@ -160,6 +164,10 @@ export async function makeConfig(
       chains,
       activeChains,
     ),
+    privacy:
+      flags.isEnabled('privacy') &&
+      (await getPrivacyConfig(ps, env, flags, chains)),
+    backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
     flags: flags.getResolved(),
@@ -169,6 +177,7 @@ export async function makeConfig(
 function getNotificationsConfig(
   env: Env,
   flags: FeatureFlags,
+  deploymentEnv: DeploymentEnvironment,
 ): Config['notifications'] {
   return {
     updateMonitor: flags.isEnabled('notifications', 'updateMonitor') && {
@@ -185,6 +194,7 @@ function getNotificationsConfig(
       discordWebhookUrl: env.string(
         'NOTIFICATIONS_INTEROP_DISCORD_WEBHOOK_URL',
       ),
+      backofficeEnvironment: deploymentEnv,
     },
     ethereumBlobs: flags.isEnabled('notifications', 'ethereumBlobs') && {
       discordWebhookUrl: env.string(

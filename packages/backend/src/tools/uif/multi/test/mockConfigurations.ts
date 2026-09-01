@@ -1,5 +1,9 @@
 import { mockObject } from 'earl'
-import type { Configuration, RemovalConfiguration } from '../types'
+import type {
+  Configuration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
+} from '../types'
 
 export function actual<T>(
   id: string,
@@ -15,10 +19,14 @@ export function actual<T>(
   }
 }
 
-export function removal(
+export function trimRemoval(
   id: string,
   from: number,
   to: number,
-): RemovalConfiguration {
-  return { id, from, to }
+): TrimRemovalConfiguration {
+  return { id, range: [from, to] }
+}
+
+export function wipeRemoval(id: string): WipeRemovalConfiguration {
+  return { id }
 }

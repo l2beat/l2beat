@@ -1,5 +1,5 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://v2-9-6.turborepo.dev/schema.json",
   "extends": ["//"],
   "tasks": {
     "build": {
@@ -15,6 +15,7 @@
         "EXCLUDED_ACTIVITY_PROJECTS",
         "FEATURE_FLAG_GITCOIN_OPTION",
         "FEATURE_FLAG_HIRING",
+        "CLIENT_SIDE_DEFI_ENABLED",
         "MOCK",
         "NODE_ENV",
         "DEPLOYMENT_ENV",

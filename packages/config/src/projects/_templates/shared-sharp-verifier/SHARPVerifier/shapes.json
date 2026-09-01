@@ -1,24 +1,22 @@
 {
   "SHARPVerifier": {
-    "hash": "0x851b82890362af9467218d27c5666552421bca8023529b83632b6ebc4cc6bc8f",
+    "hash": "0xb2fd3a883d471e64996c35699173931df174bd303b3032311d63f2a58ba61b28",
     "address": "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
     "blockNumber": 22188285
   },
   "SHARPVerifier_Oct25": {
-    "hash": "0x4861d3367a504472f64f32236f1345c2ab6b1b5e897ece08bc5e215bf14d3c7a",
+    "hash": "0x59a9cd18dfd9d425813a54d5f7fbf4b4df08b6504188fa73f2e324231fdac637",
     "address": "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
     "blockNumber": 23682614
   },
   "SHARPVerifier_Dec25": {
-    "hash": "0x114aa5977a86555ce5c1db3a96c7348dff6f5792982e1f284652996af22cfe4f",
+    "hash": "0x6715f44bddbc89fb65bc31bb21ba5e55c72d20db70fee29a588cd33734de9a46",
     "address": "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
-    "chain": "ethereum",
     "blockNumber": 23968827
   },
   "SHARPVerifier_2026_13": {
-    "hash": "0xb9dd070b540ba3bad7b65f9cd4ed80b62e8cf034bd4f4acdf0373e4af46068f3",
+    "hash": "0x702c3ac8228cb7a90fdc21a1ff9a274add0e7c4d692fafa13cde53c3cab10c45",
     "address": "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe",
-    "chain": "ethereum",
     "blockNumber": 24368772
   }
 }

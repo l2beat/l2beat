@@ -7,7 +7,10 @@ import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import type { Configuration } from '../../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  SavedConfiguration,
+} from '../../../../tools/uif/multi/types'
 import { EigenDaLayerIndexer } from './EigenDaLayerIndexer'
 
 const DA_LAYER = 'eigen-da'
@@ -47,18 +50,13 @@ describe(EigenDaLayerIndexer.name, () => {
   describe(EigenDaLayerIndexer.prototype.multiUpdate.name, () => {
     it('should fetch data, save to database and update sync metadata', async () => {
       const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
-      const throughputV1 = 12345678
-      const throughputV2 = 123456789
-      const expectedTotalSize = BigInt(
-        Math.round(throughputV1 * (UnixTime.HOUR - 1)) + throughputV2,
-      )
+      const throughput = 123456789
 
       const { indexer, repository, eigenClient, syncMetadataRepository } =
         mockIndexer({
           configurations,
           daLayer: DA_LAYER,
-          throughputV1,
-          throughputV2,
+          throughput,
         })
 
       const from = UnixTime.fromDate(new Date('2022-01-01T12:30:00Z')) // 1641038200
@@ -72,11 +70,7 @@ describe(EigenDaLayerIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(eigenClient.getMetricsV1).toHaveBeenOnlyCalledWith(
-        expectedAdjustedFrom,
-        expectedAdjustedTo - 1,
-      )
-      expect(eigenClient.getMetricsV2).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(
         expectedAdjustedFrom,
         expectedAdjustedTo - 1,
       )
@@ -84,7 +78,7 @@ describe(EigenDaLayerIndexer.name, () => {
       expect(repository.upsertMany).toHaveBeenOnlyCalledWith([
         {
           timestamp: expectedAdjustedFrom,
-          totalSize: expectedTotalSize,
+          totalSize: BigInt(throughput),
           projectId: 'eigenda',
           daLayer: DA_LAYER,
           configurationId: configurations[0].id,
@@ -100,14 +94,37 @@ describe(EigenDaLayerIndexer.name, () => {
       expect(safeHeight).toEqual(expectedAdjustedTo)
     })
 
+    it('should skip update within the sync disabled range', async () => {
+      const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
+
+      const { indexer, repository, eigenClient } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      const from = UnixTime.fromDate(new Date('2026-06-25T13:00:00Z'))
+      const expectedAdjustedTo = from + UnixTime.HOUR
+
+      const updateCallback = await indexer.multiUpdate(
+        from,
+        from + 30 * UnixTime.HOUR,
+        configurations,
+      )
+      const safeHeight = await updateCallback()
+
+      expect(eigenClient.getMetrics).not.toHaveBeenCalled()
+      expect(repository.upsertMany).not.toHaveBeenCalled()
+      expect(safeHeight).toEqual(expectedAdjustedTo)
+    })
+
     it('should handle hour boundaries correctly', async () => {
       const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
-      const throughputV1 = 1000000
+      const throughput = 1000000
 
       const { indexer, eigenClient } = mockIndexer({
         configurations,
         daLayer: DA_LAYER,
-        throughputV1,
+        throughput,
       })
 
       // Start at exact hour boundary
@@ -117,11 +134,7 @@ describe(EigenDaLayerIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(from, to, configurations)
       await updateCallback()
 
-      expect(eigenClient.getMetricsV1).toHaveBeenOnlyCalledWith(
-        from, // Should remain the same since it's already at hour start
-        from + UnixTime.HOUR - 1,
-      )
-      expect(eigenClient.getMetricsV2).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(
         from, // Should remain the same since it's already at hour start
         from + UnixTime.HOUR - 1,
       )
@@ -129,30 +142,25 @@ describe(EigenDaLayerIndexer.name, () => {
   })
 
   describe(EigenDaLayerIndexer.prototype.getDaLayerData.name, () => {
-    it('should call eigenClient, sum V1 and V2 data and format response correctly', async () => {
+    it('should call eigenClient and format response correctly', async () => {
       const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
-      const throughputV1 = 5000000
-      const throughputV2 = 10000000
+      const throughput = 10000000
       const from = 1641038400 // 2022-01-01T13:00:00Z
       const to = from + UnixTime.HOUR
 
       const { indexer, eigenClient } = mockIndexer({
         configurations,
         daLayer: DA_LAYER,
-        throughputV1,
-        throughputV2,
+        throughput,
       })
 
       const result = await indexer.getDaLayerData(from, to)
 
-      expect(eigenClient.getMetricsV1).toHaveBeenOnlyCalledWith(from, to - 1)
-      expect(eigenClient.getMetricsV2).toHaveBeenOnlyCalledWith(from, to - 1)
+      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(from, to - 1)
 
       expect(result).toEqual({
         timestamp: UnixTime.toStartOf(from, 'hour'),
-        totalSize: BigInt(
-          Math.round(throughputV1 * (to - 1 - from)) + throughputV2,
-        ),
+        totalSize: BigInt(throughput),
         projectId: 'eigenda',
         daLayer: DA_LAYER,
         configurationId: configurations[0].id,
@@ -161,29 +169,24 @@ describe(EigenDaLayerIndexer.name, () => {
 
     it('should calculate totalSize correctly', async () => {
       const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
-      const throughputV1 = 1000000
-      const throughputV2 = 2000000
+      const throughput = 2000000
       const from = 1641038400
       const to = from + UnixTime.HOUR
 
       const { indexer } = mockIndexer({
         configurations,
         daLayer: DA_LAYER,
-        throughputV1,
-        throughputV2,
+        throughput,
       })
 
       const result = await indexer.getDaLayerData(from, to)
 
-      // totalSize should be throughput * (to - 1 - from) = 1000000 * 3599
-      const expectedTotalSize = BigInt(
-        Math.round(throughputV1 * (to - 1 - from)) + throughputV2,
-      )
+      const expectedTotalSize = BigInt(throughput)
       expect(result.totalSize).toEqual(expectedTotalSize)
     })
   })
 
-  describe(EigenDaLayerIndexer.prototype.removeData.name, () => {
+  describe(EigenDaLayerIndexer.prototype.wipeData.name, () => {
     it('should delete records by configuration IDs', async () => {
       const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
 
@@ -193,33 +196,146 @@ describe(EigenDaLayerIndexer.name, () => {
       })
 
       const removalsConfigurations = [
-        { id: 'config-1', from: -1, to: -1 },
-        { id: 'config-2', from: -1, to: -1 },
+        { type: 'wipe' as const, id: 'config-1' },
+        { type: 'wipe' as const, id: 'config-2' },
       ]
 
-      await indexer.removeData(removalsConfigurations)
+      await indexer.wipeData(removalsConfigurations)
 
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        'config-1',
+        'config-2',
+      ])
+    })
+  })
+
+  describe(EigenDaLayerIndexer.prototype.trimData.name, () => {
+    it('deletes the hourly buckets of the trimmed ranges', async () => {
+      const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      const from = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+      await indexer.trimData([
+        { id: 'config-1', range: [from, from + 3 * UnixTime.HOUR - 1] },
+        { id: 'config-2', range: [from + 600, from + 5 * UnixTime.HOUR] },
+      ])
+
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenCalledTimes(2)
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenNthCalledWith(
         1,
         'config-1',
+        from,
+        from + 3 * UnixTime.HOUR - 1,
       )
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenNthCalledWith(
         2,
         'config-2',
+        from,
+        from + 5 * UnixTime.HOUR - 1,
       )
+    })
+  })
+
+  describe('range edits', () => {
+    // both timestamps are full hours
+    const SINCE = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+    const CURRENT = SINCE + 48 * UnixTime.HOUR
+
+    function saved(
+      configuration: Configuration<TimestampDaIndexedConfig>,
+      minHeight: number,
+      maxHeight: number | null,
+      currentHeight: number | null,
+    ): SavedConfiguration<string> {
+      return {
+        id: configuration.id,
+        properties: JSON.stringify(configuration.properties),
+        minHeight,
+        maxHeight,
+        currentHeight,
+      }
+    }
+
+    it('trims the tail when untilTimestamp is lowered', async () => {
+      const configuration = {
+        ...createConfiguration(DA_LAYER, DA_LAYER),
+        minHeight: SINCE,
+        maxHeight: SINCE + 24 * UnixTime.HOUR,
+      }
+      const { indexer, repository } = mockIndexer({
+        configurations: [configuration],
+        savedConfigurations: [saved(configuration, SINCE, null, CURRENT)],
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        configuration.id,
+        SINCE + 24 * UnixTime.HOUR,
+        CURRENT - 1,
+      )
+    })
+
+    it('trims the head when sinceTimestamp is raised', async () => {
+      const configuration = {
+        ...createConfiguration(DA_LAYER, DA_LAYER),
+        minHeight: SINCE + 24 * UnixTime.HOUR,
+        maxHeight: null,
+      }
+      const { indexer, repository } = mockIndexer({
+        configurations: [configuration],
+        savedConfigurations: [saved(configuration, SINCE, null, CURRENT)],
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        configuration.id,
+        SINCE,
+        SINCE + 24 * UnixTime.HOUR - 1,
+      )
+    })
+
+    it('still wipes when sinceTimestamp is lowered', async () => {
+      const configuration = {
+        ...createConfiguration(DA_LAYER, DA_LAYER),
+        minHeight: SINCE - 24 * UnixTime.HOUR,
+        maxHeight: null,
+      }
+      const { indexer, repository } = mockIndexer({
+        configurations: [configuration],
+        savedConfigurations: [saved(configuration, SINCE, null, CURRENT)],
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        configuration.id,
+      ])
     })
   })
 })
 
 function mockIndexer($: {
   configurations: Configuration<TimestampDaIndexedConfig>[]
+  savedConfigurations?: SavedConfiguration<string>[]
   daLayer: string
-  throughputV1?: number
-  throughputV2?: number
-  configurationsTrimmingDisabled?: boolean
+  throughput?: number
 }) {
   const repository = mockObject<Database['dataAvailability']>({
+    deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo(10),
+    deleteByConfigInTimeRange: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
   })
 
@@ -228,12 +344,13 @@ function mockIndexer($: {
   })
 
   const eigenClient = mockObject<EigenApiClient>({
-    getMetricsV1: mockFn().resolvesTo($.throughputV1 ?? 1000000),
-    getMetricsV2: mockFn().resolvesTo($.throughputV2 ?? 2000000),
+    getMetrics: mockFn().resolvesTo({
+      total_bytes_posted: $.throughput ?? 2000000,
+    }),
   })
 
   const indexerService = mockObject<IndexerService>({
-    getSavedConfigurations: mockFn().resolvesTo([]),
+    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
     insertConfigurations: mockFn().resolvesTo(undefined),
     upsertConfigurations: mockFn().resolvesTo(undefined),
     deleteConfigurations: mockFn().resolvesTo(undefined),
@@ -257,8 +374,6 @@ function mockIndexer($: {
       parents: [],
       indexerService,
       db,
-      configurationsTrimmingDisabled: $.configurationsTrimmingDisabled,
-      dataWipingAfterDeleteDisabled: false,
     },
     Logger.SILENT,
   )

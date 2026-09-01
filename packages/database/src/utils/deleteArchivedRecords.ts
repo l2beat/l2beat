@@ -1,12 +1,25 @@
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
+import type { Database } from '../database'
 import type { QueryBuilder } from '../kysely'
 import type { DB } from '../kysely/generated/types'
 
+/** Both bounds are inclusive: `from <= timestamp <= to` (when `from` is set). */
 export interface CleanDateRange {
   from: UnixTime | undefined
   to: UnixTime
 }
+
+interface CleanableArchivedRepository {
+  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number>
+  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number>
+}
+
+export type CleanableRepoName = {
+  [K in keyof Database]: Database[K] extends CleanableArchivedRepository
+    ? K
+    : never
+}[keyof Database]
 
 type TablesWithTimestamp = {
   [K in keyof DB]: DB[K] extends { timestamp: unknown } ? K : never
@@ -25,7 +38,7 @@ export async function deleteHourlyUntil(
     .where((eb) =>
       eb.and(
         [
-          eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
+          eb('timestamp', '<=', UnixTime.toDate(dateRange.to)),
           dateRange.from !== undefined
             ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
             : undefined,
@@ -51,7 +64,7 @@ export async function deleteSixHourlyUntil(
     .where((eb) =>
       eb.and(
         [
-          eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
+          eb('timestamp', '<=', UnixTime.toDate(dateRange.to)),
           dateRange.from !== undefined
             ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
             : undefined,

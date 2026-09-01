@@ -4,16 +4,29 @@ import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFr
 const CHAINS = ['ethereum', 'arbitrum', 'base']
 
 describe(parseInteropSelectionFromSearchParams.name, () => {
-  it('parses search params using the same selection semantics', () => {
+  it('parses from and to params', () => {
     const result = parseInteropSelectionFromSearchParams({
-      searchParams: new URLSearchParams('selectedChains=ethereum,arbitrum'),
+      searchParams: new URLSearchParams(
+        'from=ethereum,arbitrum&to=ethereum,arbitrum',
+      ),
       interopChainsIds: CHAINS,
-      mode: 'public',
     })
 
     expect(result).toEqual({
-      from: ['ethereum'],
-      to: ['arbitrum'],
+      from: ['ethereum', 'arbitrum'],
+      to: ['ethereum', 'arbitrum'],
+    })
+  })
+
+  it('returns empty selection when params are missing', () => {
+    const result = parseInteropSelectionFromSearchParams({
+      searchParams: new URLSearchParams(''),
+      interopChainsIds: CHAINS,
+    })
+
+    expect(result).toEqual({
+      from: [],
+      to: [],
     })
   })
 })

@@ -1,0 +1,145 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [TokenDB](#tokendb)
+  - [Two "planning" subsystems — what they share, what they don't](#two-planning-subsystems--what-they-share-what-they-dont)
+  - [The `ignored` flag on deployed tokens](#the-ignored-flag-on-deployed-tokens)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# TokenDB
+
+TokenDB is the system that holds L2BEAT's canonical token catalogue —
+**Abstract Tokens** (the asset, e.g. "USDC") and **Deployed Tokens**
+(individual `(chain, address)` instances of an asset), plus the
+relations between deployed tokens. It is served by the `token-backend` package and
+edited through the `token-ui` package.
+
+The docs in this folder describe how TokenDB is kept correct:
+
+- [Automatic token ingestion](./automatic_token_ingestion.md) — the
+  background loop that discovers new deployed tokens from interop
+  transfers, links them to abstract tokens (via transfer evidence and
+  CoinGecko), and surfaces conflicts/errors to humans.
+- [Token relations](./token_relations.md) — how relations between
+  deployed tokens are observed from non-swapping interop transfers, why
+  their ingestion is deliberately separate from the token ingestion
+  queue, and why the table has no foreign keys to `DeployedToken`.
+- [Intent / Plan / Execute](./intent_plan_execute.md) — the
+  intent → plan → commands pipeline behind every human-driven write
+  from token-UI, and why it exists (visible blast radius + concurrency
+  safety).
+- [Abstract token merging](./abstract_token_merging.md) — why duplicate
+  abstract tokens arise (CoinGecko splits, ingestion fallback), why an
+  abstract token keeps multiple CoinGecko entries, and how merging
+  resolves relation conflicts.
+
+## Two "planning" subsystems — what they share, what they don't
+
+TokenDB has *two* pipelines with `plan`-like steps in their names, and it
+is worth being explicit about why they exist and how they relate, because
+the distinction is load-bearing for any future work in this area.
+
+- **`intent → plan → execute`** ([intent_plan_execute.md](./intent_plan_execute.md))
+  is a **UX construct**. The plan exists so the user can see the full
+  blast radius of their edit before clicking Confirm; the re-plan-and-
+  compare inside the SERIALIZABLE transaction exists so what they
+  confirmed is exactly what gets written. It is not really about
+  "planning writes" — it is about *showing* writes and guaranteeing they
+  don't drift between dialog and click.
+- **`plan → fetch → apply`** ([automatic_token_ingestion.md](./automatic_token_ingestion.md))
+  in the ingestion processor is a **cost / separation construct**.
+  `plan` is RPC-free so the queue page can predict every row's outcome
+  cheaply; `fetch` is the only place external calls happen; `apply`
+  writes. The reasons are different, and the deep-equality check from
+  the other pipeline would actively hurt this one — CoinGecko coin map
+  updates would invalidate plans constantly.
+
+So merging the two into a single "plan-and-execute" pipeline would be the
+wrong target. Forcing ingestion through the intent pipeline would mean
+rebuilding a user-confirmation construct around something that has no
+user; conversely, dropping the intent pipeline would not actually
+simplify ingestion.
+
+What the two pipelines *do* share — and what should remain shared — is
+the **write boundary** below them: the `Command` primitives and a single
+`commitTokenChanges` helper in
+[`packages/token-backend/src/commitTokenChanges.ts`](../../../../../packages/token-backend/src/commitTokenChanges.ts).
+Both pipelines — and [token relation ingestion](./token_relations.md) as
+a third writer — translate their work into `Command[]` and funnel it
+through this helper. That means:
+
+- There is exactly one place that writes to TokenDB's three core tables
+  (`AbstractToken`, `DeployedToken`, `TokenRelation`).
+- Future cross-cutting concerns (history, audit log, write proofs) plug
+  in here once and cover every writer automatically.
+- Each pipeline still owns its own concurrency story (the intent
+  pipeline re-plans inside the SERIALIZABLE transaction; ingestion just
+  wraps the writes in SERIALIZABLE), because they have different
+  guarantees to provide.
+
+Each pipeline attaches an `AbstractTokenAssignmentProof` to deployed-token
+commands at *plan time*, so the proof is visible in the diff the user
+sees before clicking Confirm (and in the ingestion preview dialog):
+`{ kind: 'manual'; user }` (with the logged-in user's email) for user
+plans, and `{ kind: 'coingecko' }` or
+`{ kind: 'non-swapping-transfer'; transfer }` for ingestion plans. The
+proof lands on the `DeployedToken.abstractTokenAssignmentProof` JSON
+column; `commitTokenChanges` does not modify commands, it just routes
+them. The non-swapping-transfer proof carries the *full* transfer
+because the interop transfer table is a sliding 7-day window; BigInt raw
+amounts are stored in JSON as decimal strings. A persistent history
+table will land in a follow-up change.
+
+## The `ignored` flag on deployed tokens
+
+`DeployedToken.ignored` is a manually set, **interpretation-level**
+flag: "this deployment is noise (a test token, a broken deployment) —
+do not let it shape anything we compute or show". It is *not* an
+observation-level filter, and keeping that distinction is crucial:
+the observation/interpretation doctrine in
+[token relations](./token_relations.md) applies unchanged.
+
+What stays exactly the same for an ignored token:
+
+- Interop transfer capture and token relation ingestion record its
+  activity like any other token's, and automatic token ingestion keeps
+  maintaining the row (it never clears a manually set `ignored` — see
+  [automatic token ingestion](./automatic_token_ingestion.md)).
+- Ordinary read endpoints (tokens by key, relations) keep returning it,
+  and raw transfer lists on l2beat.com keep showing its transfers. The
+  observations exist and stay inspectable — e.g. to look at minters.
+- token-ui keeps showing the token (marked as ignored), because
+  operators must be able to audit it and un-ignore it. Generic
+  repository getters must therefore never filter on the flag.
+
+What changes — each a deliberate, named interpretation boundary:
+
+- **Financial interpretation** (the choke point for l2beat.com token
+  data): the interop financials loop refuses to price ignored tokens,
+  so their transfers never get `abstractTokenId`/price/value stamped
+  onto them. Everything derived from those stamps — the
+  `AggregatedInteropToken` rows behind every token list and dashboard,
+  volumes, token pairs (which fold unstamped transfers into their
+  existing `unknown` bucket) — excludes the token with no further
+  filtering. `AggregatedInteropDeployedToken` is the one aggregate
+  keyed by raw address, so it still records the activity; its only
+  consumer filters at read time (next point).
+- **Presentation**: l2beat.com reads that list deployed tokens straight
+  from TokenDB skip ignored rows (currently one such read: the "Onchain
+  deployments" section of an interop token page).
+- **Graph clustering**: the token-ui relations graph omits the node and
+  every edge touching it, so an ignored token cannot merge two clusters
+  (see [token relations](./token_relations.md)).
+
+Flagging a token that already has processed transfers requires
+reprocessing those transfers (interop dashboard → financials →
+reprocess) so the already-written stamps are cleared; the next hourly
+aggregate snapshot is then clean. Older snapshots keep whatever
+interpretation was current when they were built.
+
+Future consumers should follow the same rule: apply `ignored` at a
+named interpretation or presentation boundary, never inside shared
+reads — admin tooling, ingestion, and the financials loop itself all
+need to see ignored rows to do their jobs.

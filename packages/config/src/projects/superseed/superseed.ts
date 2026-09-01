@@ -3,7 +3,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('superseed')
 const genesisTimestamp = UnixTime(1726179683)
@@ -21,6 +21,8 @@ export const superseed: ScalingProject = opStackL2({
   display: {
     name: 'Superseed',
     slug: 'superseed',
+    headerWarning:
+      'Superseed is being deprecated. See the [announcement](https://x.com/superseed/status/2079216129059283250) and make sure to bridge off your funds until August 15, 2026.',
     description:
       'Superseed is an Optimistic Rollup utilizing the OP Stack, aiming to provide a CDP lending platform enshrined in the protocol and redistribution of Layer 2 fees to its users.',
     stacks: ['OP Stack'],
@@ -62,6 +64,7 @@ export const superseed: ScalingProject = opStackL2({
     startBlock: 1,
   },
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20737483 })],
   genesisTimestamp,
   milestones: [
     {

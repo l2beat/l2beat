@@ -9,12 +9,33 @@
   ],
   "names": {
     "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0": "ZircuitSuperchainConfig",
-    "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c": "Verifier"
+    "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c": "Verifier",
+    "zircuit:0x4200000000000000000000000000000000000015": "L1Block"
   },
   "overrides": {
     "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c": {
       "category": "spam",
       "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
+    },
+    "eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496": {
+      "fields": {
+        "proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
+      }
     }
   }
 }

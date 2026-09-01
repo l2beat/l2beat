@@ -6,6 +6,7 @@ export const hyperevm: BaseProject = {
   slug: 'hyperevm',
   name: 'HyperEVM',
   shortName: undefined,
+  aliases: ['Hyperliquid'],
   addedAt: UnixTime(1773154357),
   statuses: {
     yellowWarning: undefined,
@@ -24,6 +25,8 @@ export const hyperevm: BaseProject = {
     name: 'hyperevm',
     chainId: 999,
     explorerUrl: 'https://hyperevmscan.io',
+    sinceTimestamp: UnixTime(1739849780),
+    coingeckoPlatform: 'hyperevm',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -37,6 +40,7 @@ export const hyperevm: BaseProject = {
         type: 'rpc',
         url: 'https://rpc.hyperliquid.xyz/evm',
       },
+      { type: 'etherscan', chainId: 999 },
     ],
   },
 }

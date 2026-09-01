@@ -36,6 +36,22 @@ declare global {
   interface Window {
     __SSR_DATA__: SsrData
     __ENV__: Record<string, string>
-    plausible: Plausible | undefined
+    op: {
+      q?: string[][]
+      (
+        ...args: [
+          (
+            | 'init'
+            | 'track'
+            | 'identify'
+            | 'setGlobalProperties'
+            | 'increment'
+            | 'decrement'
+            | 'clear'
+          ),
+          ...unknown[],
+        ]
+      ): void
+    }
   }
 }

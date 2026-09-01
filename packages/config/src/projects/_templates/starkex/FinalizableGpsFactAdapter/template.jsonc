@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FinalizableGpsFactAdapter",
+  "description": "Adapter between the core contract and the {{gpsContract}}. Stores the Cairo programHash (`{{programHash}}`), which can be changed until the adapter is finalized.",
+  "fields": {
+    "programHashMapped": {
+      "handler": {
+        "type": "call",
+        "method": "programHash",
+        "args": []
+      },
+      "edit": ["format", "StarknetProgramHash"]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 2,
+        "returnType": "address"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "condition": "if the adapter is not finalized"
+        }
+      ]
+    }
+  }
+}

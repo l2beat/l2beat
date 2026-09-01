@@ -53,7 +53,7 @@
       },
       "permissions": [
         {
-          "type": "propose",
+          "type": "interact",
           "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout."
         }
       ]

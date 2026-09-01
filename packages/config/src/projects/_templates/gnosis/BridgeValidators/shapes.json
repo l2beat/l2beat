@@ -1,0 +1,17 @@
+{
+  "BridgeValidators": {
+    "hash": "0x9b17703651dbd73e46247e560c9c9dc2fafb5d61642ba7115598a4b62e48cbdd",
+    "address": "eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
+    "blockNumber": 22338375
+  },
+  "BridgeValidators_DAI.sol": {
+    "hash": "0x425e20a71323a60c28ce5fea6f556782ea2574976374aee9901d34cb73397522",
+    "address": "eth:0x6943A218d58135793F1FE619414eD476C37ad65a",
+    "blockNumber": 22337861
+  },
+  "BridgeValidators_pulsechain": {
+    "hash": "0xcca291b14fe67f9b78e93a84853366c057b3a41ffb9d9c4f757cc926402d842b",
+    "address": "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+    "blockNumber": 17968825
+  }
+}

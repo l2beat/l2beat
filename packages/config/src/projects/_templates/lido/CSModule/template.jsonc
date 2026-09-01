@@ -1,0 +1,174 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.",
+  "category": "core",
+  "ignoreMethods": [
+    "depositQueuePointers",
+    "exitDeadlineThreshold",
+    "getNodeOperator",
+    "getNodeOperatorBalance",
+    "getNodeOperatorIsActive",
+    "getNodeOperatorManagementProperties",
+    "getNodeOperatorNonWithdrawnKeys",
+    "getNodeOperatorOwner",
+    "getNodeOperatorSummary"
+  ],
+  "ignoreInWatchMode": [
+    "getActiveNodeOperatorsCount",
+    "getDepositableValidatorsCount",
+    "getKeysForTopUp",
+    "getNodeOperatorDepositInfoToUpdateCount",
+    "getNodeOperatorsCount",
+    "getNonce",
+    "getStakingModuleSummary",
+    "getTopUpQueue",
+    "getTopUpQueueItem",
+    "getTopUpQueueLength",
+    "getTotalModuleStake"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke Community Staking Module roles."
+        }
+      ]
+    },
+    "stakingRouters": {
+      "copy": "accessControl",
+      "edit": ["get", "STAKING_ROUTER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit validator deposits and top-ups, update validator and target limits, and finalize reward accounting."
+        }
+      ]
+    },
+    "delayedPenaltyReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "REPORT_GENERAL_DELAYED_PENALTY_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report a general delayed penalty against a node operator."
+        }
+      ]
+    },
+    "delayedPenaltySettlers": {
+      "copy": "accessControl",
+      "edit": ["get", "SETTLE_GENERAL_DELAYED_PENALTY_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "settle a previously reported general delayed penalty."
+        }
+      ]
+    },
+    "verifiers": {
+      "copy": "accessControl",
+      "edit": ["get", "VERIFIER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report validator balances, slashing, withdrawal, and exit-delay evidence used for operator accounting and penalties."
+        }
+      ]
+    },
+    "regularWithdrawalReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "REPORT_REGULAR_WITHDRAWN_VALIDATORS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report normally withdrawn validators for node operators."
+        }
+      ]
+    },
+    "slashedWithdrawalReporters": {
+      "copy": "accessControl",
+      "edit": ["get", "REPORT_SLASHED_WITHDRAWN_VALIDATORS_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report slashed withdrawn validators for node operators."
+        }
+      ]
+    },
+    "nodeOperatorCreators": {
+      "copy": "accessControl",
+      "edit": ["get", "CREATE_NODE_OPERATOR_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create node operators on behalf of other addresses."
+        }
+      ]
+    },
+    "operatorAddressAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "OPERATOR_ADDRESSES_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change or reset node-operator manager and reward addresses."
+        }
+      ]
+    },
+    "topUpQueueManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_TOP_UP_QUEUE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "normalize and compact the validator top-up queue."
+        }
+      ]
+    },
+    "topUpQueueRewinders": {
+      "copy": "accessControl",
+      "edit": ["get", "REWIND_TOP_UP_QUEUE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "rewind the validator top-up queue to an earlier item."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause module deposits and operator-management operations for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume the Community Staking Module."
+        }
+      ]
+    },
+    "assetRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "RECOVERER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover ETH, ERC-20, ERC-721 and ERC-1155 assets accidentally held by the module, subject to protected-token restrictions."
+        }
+      ]
+    }
+  }
+}

@@ -17,6 +17,7 @@ export const AccessControlHandlerDefinition = v.strictObject({
       v.string(),
     )
     .optional(),
+  includeEmptyRoles: v.boolean().optional(),
   pickRoleMembers: v.string().optional(),
   ignoreRelative: v.boolean().optional(),
 })
@@ -42,10 +43,15 @@ export class AccessControlHandler implements Handler {
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
       this.knownNames.set(hash, name)
     }
+    // Registered names (DEFAULT_ADMIN_ROLE, roleNames) win over ABI-derived hashes
+    const registeredNames = new Set(this.knownNames.values())
     for (const entry of abi) {
       const name = entry.match(/^function (\w+)_ROLE\(\)/)?.[1]
       if (name) {
         const fullName = name + '_ROLE'
+        if (registeredNames.has(fullName)) {
+          continue
+        }
         const hash = utils.solidityKeccak256(['string'], [fullName])
         this.knownNames.set(hash, fullName)
       }
@@ -61,6 +67,14 @@ export class AccessControlHandler implements Handler {
     address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const unnamedRoles = await fetchAccessControl(provider, address)
+    if (this.definition.includeEmptyRoles) {
+      for (const role of this.knownNames.keys()) {
+        unnamedRoles[role] ??= {
+          adminRole: DEFAULT_ADMIN_ROLE_BYTES,
+          members: [],
+        }
+      }
+    }
 
     const roles = Object.fromEntries(
       Object.entries(unnamedRoles).map(([role, { adminRole, members }]) => {

@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Library immutably linked into the Rollup for checkpoint proposal, proof verification, pruning, and chain-tip operations. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+  "category": "core",
+  "ignoreMethods": [
+    "getBlobBaseFee",
+    "getEpochProofPublicInputs",
+    "propose",
+    "prune",
+    "submitEpochRootProof",
+    "validateBlobs",
+    "validateHeaderWithAttestations"
+  ]
+}

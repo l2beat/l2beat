@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Optimistic Lido DAO motion system. Approved factories restrict the target and selector of each motion; LDO holders can object, and an unobstructed motion is executed through the EVMScriptExecutor after its delay.",
+  "category": "gov",
+  "ignoreMethods": ["evmScriptFactories", "motions"],
+  "ignoreRelatives": ["getEVMScriptFactories", "getMotions", "governanceToken"],
+  "ignoreInWatchMode": ["getMotion", "getMotions", "getEVMScriptFactories"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke EasyTrack roles, change motion settings and executor, and add or remove allowed script factories."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause creation and enactment of EasyTrack motions."
+        }
+      ]
+    },
+    "unpausers": {
+      "copy": "accessControl",
+      "edit": ["get", "UNPAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "unpause EasyTrack motion processing."
+        }
+      ]
+    },
+    "motionCancellers": {
+      "copy": "accessControl",
+      "edit": ["get", "CANCEL_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel individual, multiple, or all pending EasyTrack motions."
+        }
+      ]
+    }
+  }
+}

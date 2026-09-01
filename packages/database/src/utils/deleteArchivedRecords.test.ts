@@ -37,7 +37,6 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 12 * UnixTime.HOUR),
       fakeRecord(start + 18 * UnixTime.HOUR),
       fakeRecord(start + 24 * UnixTime.HOUR),
-      fakeRecord(start + 25 * UnixTime.HOUR),
     ])
   })
 
@@ -66,7 +65,6 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 12 * UnixTime.HOUR),
       fakeRecord(start + 18 * UnixTime.HOUR),
       fakeRecord(start + 24 * UnixTime.HOUR),
-      fakeRecord(start + 25 * UnixTime.HOUR),
     ])
   })
 

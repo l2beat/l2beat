@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -16,12 +16,17 @@ export const river: ScalingProject = opStackL2({
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
-  celestiaDa: {
-    sinceBlock: 4071540, // first blob in this celestia block https://celenium.io/block/4071540?tab=transactions
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 4071540, // first blob in this celestia block https://celenium.io/block/4071540?tab=transactions
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU=',
+    },
+  ],
   display: {
     name: 'Towns',
+    aliases: ['River'],
     slug: 'towns',
     description:
       'Towns is an Optimium based on the OP Stack. It is used by the Towns protocol - a protocol for building decentralized real-time messaging apps - acting as its backbone.',

@@ -98,6 +98,54 @@ describe(TrackedTxsClient.name, () => {
 
       expect(duneQueryService.query).not.toHaveBeenCalled()
     })
+
+    it('requests a calldata prefix for grouped liveness calls', async () => {
+      const duneQueryService = getMockDuneQueryService([[]])
+      const trackedTxsClient = new TrackedTxsClient(
+        duneQueryService,
+        Logger.SILENT,
+      )
+      const address = EthereumAddress.random()
+      const config: Configuration<
+        TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+      > = {
+        id: 'grouped',
+        minHeight: FROM,
+        maxHeight: null,
+        properties: {
+          id: 'grouped',
+          projectId: ProjectId('project'),
+          type: 'liveness',
+          subtype: 'stateUpdates',
+          sinceTimestamp: FROM,
+          groupBy: { type: 'functionCallParameter', path: [0, 0] },
+          params: {
+            formula: 'functionCall',
+            address,
+            selector: '0x12345678',
+            signature: 'function submit((uint256,uint256))',
+          },
+        },
+      }
+
+      await trackedTxsClient.getFunctionCalls([config], [], [], FROM, TO)
+
+      expect(duneQueryService.query).toHaveBeenCalledWith(
+        getFunctionCallQuery(
+          [
+            {
+              ...config.properties.params,
+              // 4 selector bytes + the first member of the static tuple
+              inputBytes: 36,
+            },
+          ],
+          FROM,
+          TO,
+        ),
+        'large',
+        expect.anything(),
+      )
+    })
   })
 })
 
@@ -333,6 +381,7 @@ const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[2]],
   [CONFIGURATIONS[3], CONFIGURATIONS[4], CONFIGURATIONS[5]],
   FUNCTIONS_RESPONSE,
+  Logger.SILENT,
 )
 
 const TRANSFERS_SQL = getTransferQuery(
@@ -353,9 +402,11 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
   ).map((c) => ({
     address: c.properties.params.address,
     selector: c.properties.params.selector,
-    getFullInput:
+    inputBytes:
       c.properties.params.formula === 'sharpSubmission' ||
-      c.properties.params.formula === 'sharedBridge',
+      c.properties.params.formula === 'sharedBridge'
+        ? ('full' as const)
+        : 4,
   })),
   FROM,
   TO,

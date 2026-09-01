@@ -3,7 +3,7 @@ import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('ink')
 const genesisTimestamp = UnixTime(1733498411)
@@ -16,8 +16,24 @@ export const ink: ScalingProject = opStackL2({
   addedAt: UnixTime(1734480000), // 2024-10-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   discovery,
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21344310,
+      untilBlock: 25631821, // batcherHash rotation
+      inbox: EthereumAddress('0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97'),
+      sequencers: [
+        EthereumAddress('0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac'),
+      ],
+    },
+    getOpStackDaTracking(discovery, {
+      sinceBlock: 25631821, // batcherHash rotation
+    }),
+  ],
   display: {
     name: 'Ink',
+    aliases: ['Kraken'],
     slug: 'ink',
     stateValidationImage: 'opfp',
     description:

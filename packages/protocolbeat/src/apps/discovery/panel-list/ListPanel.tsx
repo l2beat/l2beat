@@ -2,16 +2,20 @@ import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
+import { IconEyeClosed } from '../../../icons/IconEyeClosed'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
+import { IconUnlinked } from '../../../icons/IconUnliked'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { useStore as useNodesStore } from '../panel-nodes/store/store'
+import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 
@@ -20,10 +24,7 @@ export function ListPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-  const response = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
+  const response = useQuery(useProjectQueryOptions(project))
   if (response.isPending) {
     return <LoadingState />
   }
@@ -160,12 +161,17 @@ function ListItemContracts(props: {
 }
 
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
-  const isSelected = usePanelStore((state) => state.selected === entry.address)
+  const isSelected = usePanelStore((state) =>
+    state.selected.includes(entry.address),
+  )
   const select = usePanelStore((state) => state.select)
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
-  const isGrayedOut = markUnreachableEntries && !entry.isReachable
+  const isHidden = useNodesStore((state) =>
+    getGraphProjection(state.nodes).hiddenNodeIds.has(entry.address),
+  )
+  const isGrayedOut = isHidden || (markUnreachableEntries && !entry.isReachable)
 
   return (
     <li
@@ -174,7 +180,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
         isSelected && 'bg-autumn-300 text-black',
         !isSelected && 'bg-coffee-800 hover:bg-aux-brown',
       )}
-      onClick={() => select(entry.address)}
+      onClick={() => select([entry.address])}
       style={{
         opacity: isGrayedOut ? 0.2 : 1,
         filter: isGrayedOut ? 'grayscale(100%)' : 'none',
@@ -185,6 +191,10 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
       <span className="overflow-hidden text-ellipsis tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}
       </span>
+      <div className="mr-1 ml-auto flex gap-1 text-coffee-400">
+        {isHidden && <IconEyeClosed />}
+        {!entry.isReachable && <IconUnlinked />}
+      </div>
     </li>
   )
 }

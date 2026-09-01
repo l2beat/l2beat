@@ -5,6 +5,7 @@ const CelestiaBlock = v.object({
   block: v.object({
     header: v.object({
       time: v.string(),
+      height: v.string().transform((x) => Number.parseInt(x)),
     }),
   }),
 })

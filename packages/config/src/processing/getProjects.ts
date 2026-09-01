@@ -1,9 +1,13 @@
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  type TrackedTxConfigEntry,
+  type TrackedTxConfigEntryWithoutId,
+  type TrackedTxFunctionCallConfig,
+  type TrackedTxSharedBridgeConfig,
+  type TrackedTxSharpSubmissionConfig,
+  type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
@@ -35,6 +39,7 @@ import {
 } from '../utils/discoveryDriven'
 import { runConfigAdjustments } from './adjustments'
 import { ecosystems } from './ecosystems'
+import { getEoaUpgradeRedWarning } from './getEoaRedWarning'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -50,6 +55,7 @@ export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
   return refactored
+    .map((p): BaseProject => ({ ...p, tvsConfig: getTvsConfig(p) }))
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
@@ -69,6 +75,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     id: p.id,
     name: p.display.name,
     shortName: p.display.shortName,
+    aliases: p.display.aliases,
     slug: p.display.slug,
     addedAt: p.addedAt,
 
@@ -78,7 +85,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
-      redWarning: p.display.redWarning,
+      redWarning: getEoaUpgradeRedWarning(p.id, p.display.redWarning),
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
@@ -136,9 +143,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stateValidationImage: p.display.stateValidationImage,
       upgradesAndGovernance:
         p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
-      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
     },
     customDa: p.customDa,
+    privacyInfo: p.privacyInfo,
     tvsInfo: {
       associatedTokens: associatedTokens ?? [],
       warnings: [p.display.tvsWarning].filter((x) => x !== undefined),
@@ -158,10 +165,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     ecosystemInfo: p.ecosystemInfo,
     interopConfig: p.interopConfig,
     // tags
-    isScaling: true,
-    isInteropProtocol: p.interopConfig ? true : undefined,
     archivedAt: p.archivedAt,
-    isUpcoming: p.isUpcoming ? true : undefined,
     hasTestnet: p.hasTestnet,
     escrows: p.config.escrows,
   }
@@ -176,8 +180,7 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
       // If there's a bridge in DA
       if (da.bridge.value === 'Plasma') return 'Plasma'
 
-      if (p.isUpcoming || !p.proofSystem || !p.dataAvailability)
-        return undefined
+      if (!p.proofSystem || !p.dataAvailability) return undefined
 
       const isEthereumBridge =
         da.bridge.value === 'Enshrined' || da.bridge.value === 'Self-attested' // Intmax case
@@ -212,7 +215,8 @@ function getProcessedRiskView(
   let secondLine: string | undefined
   if (challengeDelay !== undefined && executionDelay !== undefined) {
     secondLine = formatChallengeAndExecutionDelay(
-      challengeDelay + executionDelay,
+      challengeDelay,
+      executionDelay,
     )
   } else if (challengeDelay !== undefined) {
     secondLine = formatChallengePeriod(challengeDelay)
@@ -246,70 +250,96 @@ function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
 function toBackendTrackedTxsConfig(
   projectId: ProjectId,
   configs: Layer2TxConfig[] | undefined,
-): Omit<TrackedTxConfigEntry, 'id'>[] | undefined {
+): TrackedTxConfigEntryWithoutId[] | undefined {
   if (configs === undefined) return
 
-  return configs.flatMap((config) =>
-    config.uses.map((use) => {
-      const base = {
-        projectId,
-        sinceTimestamp: config.query.sinceTimestamp,
-        untilTimestamp: config.query.untilTimestamp,
-        type: use.type,
-        subtype: use.subtype,
-        costMultiplier:
-          use.type === 'l2costs' ? config._hackCostMultiplier : undefined,
+  return configs.flatMap((config) => {
+    const common = {
+      projectId,
+      sinceTimestamp: config.query.sinceTimestamp,
+      untilTimestamp: config.query.untilTimestamp,
+    }
+    const params = toBackendTrackedTxParams(config)
+
+    return config.uses.map((use): TrackedTxConfigEntryWithoutId => {
+      if (use.type === 'l2costs') {
+        return {
+          ...common,
+          ...use,
+          costMultiplier: config._hackCostMultiplier,
+          params,
+        }
       }
 
-      switch (config.query.formula) {
-        case 'functionCall': {
-          return {
-            ...base,
-            params: {
-              formula: 'functionCall',
-              address: config.query.address,
-              selector: config.query.selector,
-              signature: config.query.functionSignature,
-              topics: config.query.topics,
-            },
-          }
-        }
-        case 'transfer': {
-          return {
-            ...base,
-            params: {
-              formula: 'transfer',
-              from: config.query.from,
-              to: config.query.to,
-            },
-          }
-        }
-        case 'sharpSubmission': {
-          return {
-            ...base,
-            params: {
-              formula: 'sharpSubmission',
-              address: SHARP_SUBMISSION_ADDRESS,
-              selector: SHARP_SUBMISSION_SELECTOR,
-              programHashes: config.query.programHashes,
-            },
-          }
-        }
-        case 'sharedBridge': {
-          return {
-            ...base,
-            params: {
-              formula: 'sharedBridge',
-              address: config.query.address,
-              signature: config.query.functionSignature,
-              selector: config.query.selector,
-              firstParameter: config.query.firstParameter,
-            },
-          }
+      if (use.groupBy !== undefined) {
+        assert(
+          params.formula === 'functionCall',
+          'Liveness grouping is only supported for function calls',
+        )
+        const { topics, ...groupableParams } = params
+        assert(
+          topics === undefined,
+          'Liveness grouping is not supported for topic-matched function calls',
+        )
+        return {
+          ...common,
+          type: use.type,
+          subtype: use.subtype,
+          groupBy: use.groupBy,
+          params: groupableParams,
         }
       }
-    }),
-  )
+
+      return {
+        ...common,
+        type: use.type,
+        subtype: use.subtype,
+        params,
+      }
+    })
+  })
+}
+
+type BackendTrackedTxParams =
+  | TrackedTxFunctionCallConfig
+  | TrackedTxTransferConfig
+  | TrackedTxSharpSubmissionConfig
+  | TrackedTxSharedBridgeConfig
+
+function toBackendTrackedTxParams(
+  config: Layer2TxConfig,
+): BackendTrackedTxParams {
+  switch (config.query.formula) {
+    case 'functionCall':
+      return {
+        formula: 'functionCall',
+        address: config.query.address,
+        selector: config.query.selector,
+        signature: config.query.functionSignature,
+        topics: config.query.topics,
+      }
+    case 'transfer':
+      return {
+        formula: 'transfer',
+        from: config.query.from,
+        to: config.query.to,
+      }
+    case 'sharpSubmission':
+      return {
+        formula: 'sharpSubmission',
+        address: SHARP_SUBMISSION_ADDRESS,
+        selector: SHARP_SUBMISSION_SELECTOR,
+        programHashes: config.query.programHashes,
+      }
+    case 'sharedBridge':
+      return {
+        formula: 'sharedBridge',
+        address: config.query.address,
+        signature: config.query.functionSignature,
+        selector: config.query.selector,
+        firstParameter: config.query.firstParameter,
+      }
+  }
 }
 
 export function adjustDiscoveryInfo(
@@ -332,11 +362,9 @@ export function adjustDiscoveryInfo(
   }
 }
 
-function getTvsConfig(
-  project: ScalingProject | Bridge,
-): TvsToken[] | undefined {
-  const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
-  const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
+function getTvsConfig(project: { id: ProjectId }): TvsToken[] | undefined {
+  const projectPath = project.id.replace('=', '').replace(';', '')
+  const filePath = join(__dirname, `../../src/projects/${projectPath}/tvs.json`)
 
   if (!existsSync(filePath)) {
     return undefined

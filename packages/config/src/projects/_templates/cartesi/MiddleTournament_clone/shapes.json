@@ -1,13 +1,12 @@
 {
   "MiddleTournament": {
-    "hash": "0xae62ff1fdcc1be0d64d4c17798c0bf6c133a9bdee804f44c19bf2cf045464843",
+    "hash": "0xbd8caf25e6dac993da83b906f4facddf866e3863033933e0259170645f218d26",
     "address": "eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
     "blockNumber": 22680005
   },
   "MiddleTournament_v2.sol": {
-    "hash": "0xc8a4de8f0bd4227203c659054d07e5fa9d219e2368a08706eaa6c3158e5eb18f",
+    "hash": "0x8517ec72b1d230916b763b25a18ab7bbeecbc518b3424a02b7e00befbddc5734",
     "address": "eth:0x0a88360f41D0f643ea63ade00c0A1a795395d2D9",
-    "chain": "ethereum",
     "blockNumber": 23796277
   }
 }

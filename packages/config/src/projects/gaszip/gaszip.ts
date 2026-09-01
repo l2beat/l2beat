@@ -8,6 +8,32 @@ export const gaszip: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769070497),
   interopConfig: {
+    description:
+      'Intent-based centralised EOA bridge used for gas token transfers, optimised for speed and diverse chain support.',
+    intent: {
+      color: '#64748B',
+      intentModel: {
+        value: 'Gas refuel',
+        description: 'Focused on sending small gas balances across chains.',
+      },
+      userRecovery: {
+        value: 'Request refund',
+        sentiment: 'bad',
+        description:
+          'There is no onchain refund option. Invalid deposits are handled through Gas.zip support.',
+      },
+      solverAccess: {
+        value: 'Internal',
+        sentiment: 'bad',
+        description: 'No open solver marketplace is exposed.',
+      },
+      settlement: {
+        value: 'Internal',
+        sentiment: 'bad',
+        description:
+          'Settlement depends on Gas.zip internal, centralized accounting.',
+      },
+    },
     plugins: [
       {
         plugin: 'gaszip',
@@ -16,5 +42,4 @@ export const gaszip: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

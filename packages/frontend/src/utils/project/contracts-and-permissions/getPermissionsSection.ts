@@ -8,7 +8,12 @@ import type {
 } from '../../../components/projects/sections/ContractEntry'
 import type { UsedInProject } from '../../../components/projects/sections/permissions/UsedInProject'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
+import { createAddressAnchors } from './getContractAddressAnchor'
 import type { ContractUtils } from './getContractUtils'
+import {
+  groupTechnologyContracts,
+  hasGroupableTechnologyContractState,
+} from './groupTechnologyContracts'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -18,7 +23,9 @@ type ProjectParams = {
   hostChain?: string
 }
 
-type PermissionSection = Omit<
+type GetAddressAnchor = ReturnType<typeof createAddressAnchors>
+
+export type PermissionSection = Omit<
   PermissionsSectionProps,
   keyof Omit<ProjectSectionProps, 'isUnderReview'>
 >
@@ -75,6 +82,7 @@ export function getPermissionsSection(
   const projectChangeReport = projectParams.id
     ? projectsChangeReport?.projects[projectParams.id]
     : undefined
+  const getAddressAnchor = createAddressAnchors('permissions')
 
   const permissionsByChain = {
     ...Object.fromEntries(
@@ -87,6 +95,7 @@ export function getPermissionsSection(
               permissions,
               contractUtils,
               projectChangeReport,
+              getAddressAnchor,
             ),
           ]
         },
@@ -105,27 +114,62 @@ function getGroupedTechnologyContracts(
   permissions: ProjectPermissions,
   contractUtils: ContractUtils,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
+  getAddressAnchor: GetAddressAnchor,
 ): PermissionSection['permissionsByChain'][string] {
+  const roles =
+    permissions.roles?.map(
+      (permission) =>
+        [
+          permission,
+          toTechnologyContract(
+            projectParams,
+            permission,
+            contractUtils,
+            projectChangeReport,
+            getAddressAnchor,
+          ),
+        ] as const,
+    ) ?? []
+  const actors =
+    permissions.actors?.map(
+      (permission) =>
+        [
+          permission,
+          toTechnologyContract(
+            projectParams,
+            permission,
+            contractUtils,
+            projectChangeReport,
+            getAddressAnchor,
+            { grouped: true },
+          ),
+        ] as const,
+    ) ?? []
+
   return {
-    roles:
-      permissions.roles?.flatMap((permission) =>
-        toTechnologyContract(
-          projectParams,
-          permission,
-          contractUtils,
-          projectChangeReport,
-        ),
-      ) ?? [],
-    actors:
-      permissions.actors?.flatMap((permission) =>
-        toTechnologyContract(
-          projectParams,
-          permission,
-          contractUtils,
-          projectChangeReport,
-        ),
-      ) ?? [],
+    roles: groupPermissionContracts(roles),
+    actors: groupPermissionContracts(actors),
   }
+}
+
+function groupPermissionContracts(
+  permissions: (readonly [ProjectPermission, TechnologyContract])[],
+) {
+  return groupTechnologyContracts(permissions, ([permission, contract]) => {
+    return (
+      permission.accounts.length === 1 &&
+      permission.accounts[0]?.type === 'Contract' &&
+      hasGroupableTechnologyContractState(contract)
+    )
+  })
+}
+
+function getPermissionedAccountDisplayName(
+  account: ProjectPermission['accounts'][number],
+): string | undefined {
+  return (
+    account as ProjectPermission['accounts'][number] & { displayName?: string }
+  ).displayName
 }
 
 function toTechnologyContract(
@@ -133,10 +177,16 @@ function toTechnologyContract(
   permission: ProjectPermission,
   contractUtils: ContractUtils,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
-): TechnologyContract[] {
+  getAddressAnchor: GetAddressAnchor,
+  options?: { grouped: true },
+): TechnologyContract {
+  const isGrouped = options?.grouped === true && permission.accounts.length > 1
+
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => ({
-      name: account.name,
+      name: isGrouped
+        ? (getPermissionedAccountDisplayName(account) ?? account.name)
+        : account.name,
       href: account.url,
       address: ChainSpecificAddress.address(account.address).toString(),
       verificationStatus: toVerificationStatus(
@@ -145,17 +195,16 @@ function toTechnologyContract(
           ChainSpecificAddress.address(account.address),
         ),
       ),
+      anchorId: getAddressAnchor(account.address),
     }),
   )
 
   let usedInProjects: UsedInProject[] | undefined
   if (permission.accounts.length === 1) {
     usedInProjects = permission.accounts.flatMap((a) =>
-      contractUtils.getUsedIn(
-        projectParams.id,
-        permission.chain,
-        ChainSpecificAddress.address(a.address),
-      ),
+      contractUtils
+        .getUsedIn(permission.chain, ChainSpecificAddress.address(a.address))
+        .filter((x) => x.id !== projectParams.id),
     )
     if (usedInProjects !== undefined) {
       usedInProjects = usedInProjects.map((p) => ({
@@ -165,10 +214,10 @@ function toTechnologyContract(
     }
   }
 
-  const name =
-    permission.accounts.length > 1
-      ? `${permission.name} (${permission.accounts.length})`
-      : permission.name
+  const allEoas = permission.accounts.every((account) => account.type === 'EOA')
+  const name = isGrouped
+    ? `${permission.accounts.length} ${allEoas ? 'EOAs' : 'actors'}`
+    : permission.name
 
   const participants = permission.participants?.map((account) => ({
     name: account.name,
@@ -186,20 +235,16 @@ function toTechnologyContract(
     addresses.map((a) => a.address).includes(changedAddress),
   )
 
-  const result: TechnologyContract[] = [
-    {
-      id: permission.id,
-      name,
-      addresses,
-      admins: [],
-      usedInProjects,
-      chain: permission.chain,
-      description: permission.description,
-      participants,
-      references: permission.references ?? [],
-      impactfulChange,
-    },
-  ]
-
-  return result
+  return {
+    id: permission.id,
+    name,
+    addresses,
+    admins: [],
+    usedInProjects,
+    chain: permission.chain,
+    description: permission.description,
+    participants,
+    references: permission.references ?? [],
+    impactfulChange,
+  }
 }

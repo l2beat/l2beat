@@ -1,0 +1,108 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Receives committee-consensus lists of validators that staking modules must exit and emits the exit requests. SRv3 accounts for the validators' effective-balance weights and key indices when applying per-report and replenishing exit limits.",
+  "category": "core",
+  "ignoreMethods": ["getLastProcessingRefSlot"],
+  "ignoreInWatchMode": [
+    "getConsensusReport",
+    "getExitRequestLimitFullInfo",
+    "getProcessingState",
+    "getResumeSinceTimestamp",
+    "getTotalRequestsProcessed"
+  ],
+  "fields": {
+    "exitRequestLimitConfiguration": {
+      "description": "Configured replenishing balance limit for validator exit reports.",
+      "copy": "getExitRequestLimitFullInfo",
+      "edit": [
+        "pick",
+        "maxExitBalanceEth",
+        "balancePerFrameEth",
+        "frameDurationInSec"
+      ]
+    },
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke every ValidatorsExitBusOracle role."
+        }
+      ]
+    },
+    "consensusContractManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_CONSENSUS_CONTRACT_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the HashConsensus contract that supplies validator-exit report hashes."
+        }
+      ]
+    },
+    "consensusVersionManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_CONSENSUS_VERSION_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the consensus version that validator-exit reports must use."
+        }
+      ]
+    },
+    "reportHashSubmitters": {
+      "copy": "accessControl",
+      "edit": ["get", "SUBMIT_REPORT_HASH_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit a validator-exit report hash without going through HashConsensus."
+        }
+      ]
+    },
+    "dataSubmitters": {
+      "copy": "accessControl",
+      "edit": ["get", "SUBMIT_DATA_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit validator-exit report data whose hash has reached oracle consensus."
+        }
+      ]
+    },
+    "exitLimitManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "EXIT_REQUEST_LIMIT_MANAGER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the replenishing limit on total validator effective balance requested to exit."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause validator-exit report processing for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume validator-exit report processing."
+        }
+      ]
+    }
+  }
+}

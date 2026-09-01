@@ -393,4 +393,27 @@ describe('validate', () => {
       expect(Foo.description).toEqual('Bar')
     })
   })
+
+  describe('meta', () => {
+    it('should add metadata', () => {
+      const Foo = v.object({ x: v.number() })
+      expect(Foo.metadata).toEqual(undefined)
+      Foo.meta({ description: 'Bar' })
+      expect(Foo.metadata).toEqual({ description: 'Bar' })
+    })
+
+    it('should merge metadata', () => {
+      const Foo = v.object({ x: v.number() })
+      Foo.meta({ description: 'Bar' })
+      Foo.meta({ owner: 'Baz' })
+      expect(Foo.metadata).toEqual({ description: 'Bar', owner: 'Baz' })
+    })
+
+    it('should reject reserved schema keys', () => {
+      const Foo = v.object({ x: v.number() })
+      expect(() => Foo.meta({ anyOf: 'true' })).toThrow(
+        'Metadata key "anyOf" is reserved.',
+      )
+    })
+  })
 })

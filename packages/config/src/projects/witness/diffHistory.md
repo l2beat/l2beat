@@ -1,3 +1,116 @@
+Generated with discovered.json: 0xb409e613e6d08bb9e486e33b823c60c2f3bc22e2
+
+# Diff at Wed, 29 Jul 2026 09:59:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e856505e0900740c5b57461c7b3471e0e0960ebe block: 1762264414
+- current timestamp: 1762264414
+
+## Description
+
+Make shared-polygon-cdk use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264414 (main branch discovery), not current.
+
+```diff
+    contract Verifier (eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81) [polygon-cdk/Verifier] {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4"
+    }
+```
+
+```diff
+    contract Validium (eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) [polygon-cdk/PolygonZkEVM] {
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0xc2c916e82f16c757dfd984fa2f02882312e7b4e546567608931fde689d1f0a78"
+      deployerAddress:
++        "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) [polygon-cdk/PolygonDataCommittee] {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      sourceHashes.1:
+-        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
++        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+Generated with discovered.json: 0xcd44da5ba92223a5bf3c894440beb76ab5d26110
+
+# Diff at Fri, 12 Jun 2026 10:19:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1762264414
+- current timestamp: 1762264414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264414 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x840b7b5f72b53139bbadf4d83f50c80b4783880b
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1762264414
+- current timestamp: 1762264414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264414 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x353800524721e11B453f73f523dD8840c215a213) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x1056015c35e22daeebffc390e66ad76849a61588
 
 # Diff at Tue, 04 Nov 2025 11:34:52 GMT:

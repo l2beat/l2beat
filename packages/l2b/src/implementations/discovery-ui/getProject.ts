@@ -1,4 +1,6 @@
 import {
+  attachPermissions,
+  type ColorContract,
   type ConfigReader,
   type ContractConfig,
   type DiscoveryOutput,
@@ -10,8 +12,11 @@ import {
   makeEntryStructureConfig,
   type TemplateService,
 } from '@l2beat/discovery'
-import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
@@ -33,6 +38,7 @@ export function getProject(
   configReader: ConfigReader,
   templateService: TemplateService,
   project: string,
+  maxDepth?: number,
 ): ApiProjectResponse {
   const discoveries = configReader.readDiscoveryWithReferences(project)
   const discovery = discoveries[0]
@@ -41,19 +47,37 @@ export function getProject(
     config: configReader.readConfig(discovery.name),
   }))
 
-  const reachableEntries = getReachableEntries(
-    data
-      .flatMap((x) => x.discovery.entries)
-      .filter((e) => e.type !== 'Reference'),
-    discovery.entries.map((e) => e.address),
-  ).map((x) => x.address)
+  // Same as ProjectDiscovery: permissions live in one map on the project that
+  // was modelled and are joined onto the cluster's entries here.
+  attachPermissions(discoveries)
+
+  const ownedEntries = resolveEntryOwnership(discoveries)
+
+  const allEntries = data
+    .flatMap((x) => x.discovery.entries)
+    .filter((e) => e.type !== 'Reference')
+  const entrypoints = discovery.entries.map((e) => e.address)
+
+  const reachableAddresses = toAddressSet(
+    getReachableEntries(allEntries, entrypoints),
+  )
+  // maxDepth only dims entries in the UI; filtering by it would drop nodes
+  // from the response and the autosaved layout would forget their positions.
+  const withinDepthAddresses =
+    maxDepth === undefined
+      ? reachableAddresses
+      : toAddressSet(getReachableEntries(allEntries, entrypoints, maxDepth))
 
   const response: ApiProjectResponse = { entries: [] }
-  const meta = getMeta(data.map((x) => x.discovery))
+  const meta = getMeta([...ownedEntries.values()].flat())
   for (const { config, discovery } of data) {
-    const contracts = discovery.entries
+    // Match ProjectDiscovery: contracts and permissions come from reachable
+    // entries only, so the UI must not show what the site drops.
+    const entries = (ownedEntries.get(discovery.name) ?? []).filter((e) =>
+      reachableAddresses.has(e.address),
+    )
+    const contracts = entries
       .filter((e) => e.type === 'Contract')
-      // .filter((e) => referencedEntries.includes(e.address))
       .map((entry) => {
         const contractConfig = makeEntryStructureConfig(
           config.structure,
@@ -82,10 +106,22 @@ export function getProject(
           contractColorConfig,
           discovery.abis,
           template,
-          reachableEntries,
+          withinDepthAddresses,
         )
       })
       .sort(orderAddressEntries)
+
+    const eoas = entries
+      .filter((e) => e.type === 'EOA')
+      .filter(
+        (x) => ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
+      )
+      .map((x) => eoaFromDiscovery(x, withinDepthAddresses))
+      .sort(orderAddressEntries)
+
+    if (contracts.length === 0 && eoas.length === 0) {
+      continue
+    }
 
     const initialAddresses = config.structure.initialAddresses
     const chainInfo = {
@@ -96,33 +132,80 @@ export function getProject(
       discoveredContracts: contracts.filter(
         (x) => !initialAddresses.includes(x.address),
       ),
-      eoas: discovery.entries
-        .filter((e) => e.type === 'EOA')
-        .filter(
-          (x) =>
-            ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
-        )
-        .map((x): ApiAddressEntry => {
-          const roles = getRoles(x)
-          return {
-            name: x.name || undefined,
-            type: roles.length > 0 ? 'EOAPermissioned' : 'EOA',
-            roles: roles,
-            description: x.description,
-            referencedBy: [],
-            address: x.address,
-            chain: ChainSpecificAddress.longChain(x.address),
-            isReachable: reachableEntries.includes(x.address),
-          }
-        })
-        .sort(orderAddressEntries),
-      blockNumbers: discovery.usedBlockNumbers,
+      eoas,
+      blockNumbers: blockNumbersOfPopulatedChains(discovery.usedBlockNumbers, [
+        ...contracts,
+        ...eoas,
+      ]),
     } satisfies ApiProjectChain
 
     response.entries.push(chainInfo)
   }
   populateReferencedBy(response.entries)
   return response
+}
+
+// A contract belongs to one project, because a shared module lists it as an
+// entrypoint and its dependents then reference it instead of discovering it.
+// EOAs are deliberately not entrypoints, since an EOA like a multisig signer
+// belongs to no project and making it one would chain unrelated discoveries
+// together. So the same EOA is discovered in full by every project that reaches
+// it. The UI keys every node by address, so the response may name an address
+// once: the first project to claim it wins, and `discoveries` starts with the
+// project itself, which puts shared EOAs in the project's scope rather than the
+// shared module's.
+function resolveEntryOwnership(
+  discoveries: DiscoveryOutput[],
+): Map<string, EntryParameters[]> {
+  const owned = new Map<string, EntryParameters[]>()
+  const claimed = new Set<ChainSpecificAddress>()
+
+  for (const discovery of discoveries) {
+    assert(!owned.has(discovery.name), 'Duplicate discovery')
+    const entries = discovery.entries
+      .filter((e) => e.type !== 'Reference')
+      .filter((e) => !claimed.has(e.address))
+
+    for (const { address } of entries) {
+      claimed.add(address)
+    }
+    owned.set(discovery.name, entries)
+  }
+
+  return owned
+}
+
+function toAddressSet(
+  entries: EntryParameters[],
+): ReadonlySet<ChainSpecificAddress> {
+  return new Set(entries.map((entry) => entry.address))
+}
+
+function eoaFromDiscovery(
+  entry: EntryParameters,
+  withinDepthAddresses: ReadonlySet<ChainSpecificAddress>,
+): ApiAddressEntry {
+  const roles = getRoles(entry)
+  return {
+    name: entry.name || undefined,
+    type: roles.length > 0 ? 'EOAPermissioned' : 'EOA',
+    roles: roles,
+    description: entry.description,
+    referencedBy: [],
+    address: entry.address,
+    chain: ChainSpecificAddress.longChain(entry.address),
+    isReachable: withinDepthAddresses.has(entry.address),
+  }
+}
+
+function blockNumbersOfPopulatedChains(
+  usedBlockNumbers: Record<string, number>,
+  entries: ApiAddressEntry[],
+): Record<string, number> {
+  const chains = new Set(entries.map((entry) => entry.chain))
+  return Object.fromEntries(
+    Object.entries(usedBlockNumbers).filter(([chain]) => chains.has(chain)),
+  )
 }
 
 function getRoles(entry: EntryParameters): string[] {
@@ -177,7 +260,7 @@ function contractFromDiscovery(
   contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
   template: ApiProjectContract['template'],
-  reachableEntries: ChainSpecificAddress[],
+  withinDepthAddresses: ReadonlySet<ChainSpecificAddress>,
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
@@ -224,7 +307,7 @@ function contractFromDiscovery(
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
     implementationNames: contract.implementationNames,
-    isReachable: reachableEntries.includes(contract.address),
+    isReachable: withinDepthAddresses.has(contract.address),
   }
 }
 

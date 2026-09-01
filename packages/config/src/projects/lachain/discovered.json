@@ -1,8 +1,7 @@
 {
   "name": "lachain",
   "timestamp": 1761642941,
-  "configHash": "0x0ce077608b766bcea7af63b39bf64129ed44c94c597d57127a69239f8fd9d727",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0x729086d33080c55e97333daee200266758676e4312bef719dc3999ec1ca3ae74",
   "entries": [
     {
       "address": "eth:0x00A74411DDBC50C04353543d5D3f4296936DA645",
@@ -22,15 +21,7 @@
     {
       "address": "eth:0x27251a0185F0354C7D5BF0aF5fAA1A384712C6bd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
-          "description": "set the conversion factor for gas token deposits.",
-          "role": ".tokenMultiplierSetter"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "BridgeHub",
@@ -54,6 +45,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747357991,
       "sinceBlock": 22492297,
       "values": {
@@ -86,6 +78,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747357979,
       "sinceBlock": 22492296,
       "values": {
@@ -121,7 +114,7 @@
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b",
-        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
+        "0xfe92fc5881d0e7d5cabb9edf0344e4bf0f6bf6de5a51f9ce5b9a03d32c1338bc"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
@@ -140,6 +133,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1744397327,
       "sinceBlock": 22247594,
       "values": {
@@ -407,18 +401,11 @@
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
+        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
-        }
-      ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108999,
       "sinceBlock": 21809364,
       "values": {
@@ -447,28 +434,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin",
-          "via": [
-            { "address": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5b72e13f78FEB8f5b44392f2e32940D4f37FA313",
       "sinceTimestamp": 1744030667,
       "sinceBlock": 22217169,
       "values": {
@@ -504,14 +474,7 @@
     {
       "address": "eth:0xB66d4AF4E96bF96026454A6A150EDD2CE55E9E67",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "role": ".validatorsVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ChainTypeManager",
@@ -526,18 +489,11 @@
       "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
-        "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
+        "0x3071b29c9d3c65c02f422ab100df2d586db80b598bf89958951c8dffea457c52"
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE act through it.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin"
-        }
-      ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1743708059,
       "sinceBlock": 22190436,
       "values": {
@@ -571,6 +527,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747323275,
       "sinceBlock": 22489437,
       "values": {
@@ -590,14 +547,7 @@
     {
       "address": "eth:0xDAC936134633C309BA831239e5e25Cfe5094b229",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "role": ".validatorsVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ProtocolUpgradeHandler",
@@ -1004,5 +954,77 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23674967 },
-  "permissionsConfigHash": "0x86793cba1c7e13c9aada6dbee6df18271d1c55457da012c913679f87d2d5458c"
+  "permissionsConfigHash": "0x6c7a6201040006c67cafa6cd2cca6e64154a14d3072d1f715401597510595223",
+  "permissions": {
+    "eth:0x27251a0185F0354C7D5BF0aF5fAA1A384712C6bd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
+          "description": "set the conversion factor for gas token deposits.",
+          "role": ".tokenMultiplierSetter"
+        }
+      ]
+    },
+    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [
+            { "address": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xB66d4AF4E96bF96026454A6A150EDD2CE55E9E67": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTL"
+        }
+      ]
+    },
+    "eth:0xDAC936134633C309BA831239e5e25Cfe5094b229": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTL"
+        }
+      ]
+    },
+    "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
+        }
+      ]
+    }
+  }
 }

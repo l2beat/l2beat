@@ -1,13 +1,12 @@
 {
   "ZkTokenV2": {
-    "hash": "0x3a3b3a9708ad3a6179afe0f24a1426254e558d14bbaa4f155ed0db49027b2099",
+    "hash": "0xf42f66813fde5c2233b3b84279ab36f676d4344a283f33f2dcce55927a00a5df",
     "address": "zksync:0x01a6715d3560241E09E865a46122bf347A576c09",
     "blockNumber": 58599111
   },
   "ZkTokenV3": {
-    "hash": "0x3f0cc88001b7e517d2d7fb4520faaf8deeb323106b3ab032ff35b0952046f99d",
+    "hash": "0x4422ff47dcb8778f2710f0cfa6dda82bb10065b2a0b23a543e81a70d0ab4a6c0",
     "address": "zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274",
-    "chain": "zksync2",
     "blockNumber": 66897815
   }
 }

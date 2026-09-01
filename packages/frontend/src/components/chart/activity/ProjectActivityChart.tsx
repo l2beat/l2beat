@@ -1,23 +1,20 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
-import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
-import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
-import { api } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatInteger } from '~/utils/number-format/formatInteger'
-import { formatUopsRatio } from '~/utils/number-format/formatUopsRatio'
+import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
+import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
+import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
+import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import { getChartType } from './utils/getChartType'
 
@@ -34,17 +31,20 @@ export function ProjectActivityChart({
   category,
   defaultRange,
 }: Props) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
-  const { data: chart, isLoading } = api.activity.chart.useQuery({
-    range,
-    filter: {
-      type: 'projects',
-      projectIds: [project.id],
-    },
-  })
+  const { data: chart, isLoading } = useQuery(
+    trpc.activity.chart.queryOptions({
+      range,
+      filter: {
+        type: 'projects',
+        projectIds: [project.id],
+      },
+    }),
+  )
 
   const type = getChartType(category)
 
@@ -78,7 +78,7 @@ export function ProjectActivityChart({
     }))
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
   const lastRatio = ratioData?.at(-1)?.ratio
   return (
     <div className="flex flex-col">
@@ -122,77 +122,12 @@ export function ProjectActivityChart({
           <RadioGroupItem value="linear">LIN</RadioGroupItem>
         </RadioGroup>
       </div>
-      <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">
-        <ChartStatsItem
-          label={`Past Day ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
-          className="max-md:h-7"
-          tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`}
-          isLoading={isLoading}
-        >
-          {chart?.stats?.[metric].pastDayCount !== undefined &&
-          chart?.stats?.[metric].pastDayCount !== null
-            ? formatActivityCount(chart?.stats?.[metric].pastDayCount)
-            : 'No data'}
-        </ChartStatsItem>
-        <ChartStatsItem
-          label={`Past Day ${metric === 'tps' ? 'Txs' : 'Ops'} count`}
-          className="max-md:h-7"
-          isLoading={isLoading}
-        >
-          {chart?.stats?.[metric].pastDaySum !== undefined &&
-          chart?.stats?.[metric].pastDaySum !== null
-            ? formatInteger(chart?.stats?.[metric].pastDaySum)
-            : 'No data'}
-        </ChartStatsItem>
-        {metric === 'tps' && (
-          <ChartStatsItem
-            label="Total Txs"
-            className="max-md:h-7"
-            isLoading={isLoading}
-          >
-            {chart?.stats?.tps.totalCount ? (
-              <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
-                <div>{formatInteger(chart?.stats?.tps.totalCount.value)}</div>
-                <div className="font-medium text-label-value-14 text-secondary">
-                  since{' '}
-                  {formatTimestamp(chart?.stats?.tps.totalCount.sinceTimestamp)}
-                </div>
-              </div>
-            ) : (
-              'No data'
-            )}
-          </ChartStatsItem>
-        )}
-        <ChartStatsItem
-          label={`Max. ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
-          tooltip={`Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`}
-          className="max-md:h-7"
-          isLoading={isLoading}
-        >
-          {chart?.stats?.[metric].maxCount !== undefined ? (
-            <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
-              <div>
-                {formatActivityCount(chart?.stats?.[metric].maxCount.value)}
-              </div>
-              <div className="font-medium text-label-value-14 text-secondary">
-                {formatTimestamp(chart?.stats?.[metric].maxCount.timestamp)}
-              </div>
-            </div>
-          ) : (
-            'No data'
-          )}
-        </ChartStatsItem>
-        <ChartStatsItem
-          label="Past day UOPS/TPS Ratio"
-          className="max-md:h-7"
-          tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
-          isLoading={isLoading}
-        >
-          {lastRatio !== undefined && lastRatio !== null
-            ? formatUopsRatio(lastRatio)
-            : 'No data'}
-        </ChartStatsItem>
-      </ChartStats>
+      <ActivityChartStatsPanel
+        stats={chart?.stats}
+        metric={metric}
+        lastRatio={lastRatio}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

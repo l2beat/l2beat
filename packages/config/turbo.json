@@ -1,11 +1,12 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://v2-9-6.turborepo.dev/schema.json",
   "extends": ["//"],
   "tasks": {
     "test": {
       "inputs": [
         "**/*.ts",
         "**/*.test.ts",
+        "src/**/*.md",
         "**/*.json",
         "**/*.jsonc",
         "../backend/**/*.json",

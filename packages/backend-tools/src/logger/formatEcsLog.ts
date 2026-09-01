@@ -59,6 +59,7 @@ export function formatEcsLog(entry: LogEntry): string {
         ? {
             message: truncate((error as Record<string, unknown>).error),
             type: (error as Record<string, unknown>).name,
+            cause: (error as Record<string, unknown>).cause,
             stack_trace: Array.isArray((error as Record<string, unknown>).stack)
               ? ((error as Record<string, unknown>).stack as unknown[]).map(
                   truncate,

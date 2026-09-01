@@ -5,13 +5,13 @@ import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import type { ChartResolution } from '~/utils/range/range'
+import { type ChartResolution, rangeToResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { rangeToResolution } from './utils/range'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 export type DaThroughputChartDataPoint = [
@@ -60,7 +60,7 @@ export async function getDaThroughputChartByProject(
 export async function getDaThroughputChartByProjectData({
   range,
   projectId,
-  includeScalingOnly,
+  includeL2Only,
 }: ProjectDaThroughputChartParams) {
   const db = getDb()
 
@@ -76,11 +76,17 @@ export async function getDaThroughputChartByProjectData({
   const sovereignProjectIds =
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.projectId)
 
-  const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
-    [projectId],
-    range,
-    includeScalingOnly ? sovereignProjectIds : undefined,
-  )
+  const [throughput, firstTimestamp] = await Promise.all([
+    db.dataAvailability.getByDaLayersAndTimeRange(
+      [projectId],
+      range,
+      includeL2Only ? sovereignProjectIds : undefined,
+    ),
+    db.dataAvailability.getFirstTimestampByDaLayers(
+      [projectId],
+      includeL2Only ? sovereignProjectIds : undefined,
+    ),
+  ])
 
   if (throughput.length === 0) {
     return undefined
@@ -101,7 +107,7 @@ export async function getDaThroughputChartByProjectData({
     allProjects,
     resolution,
     sovereignProjects,
-    includeScalingOnly,
+    includeL2Only,
   )
 
   const expectedTo = getThroughputExpectedTimestamp({
@@ -117,10 +123,17 @@ export async function getDaThroughputChartByProjectData({
     ? maxTimestamp
     : expectedTo
 
+  const from = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
+
   return {
     daLayer,
     grouped,
-    from: minTimestamp,
+    from,
     to: adjustedTo,
     syncedUntil,
   }
@@ -131,20 +144,13 @@ function groupByTimestampAndProjectId(
   allProjects: Project[],
   resolution: ChartResolution,
   sovereignProjects: Map<ProjectId, string>,
-  includeScalingOnly: boolean,
+  includeL2Only: boolean,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
 
-  const offset = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour',
-  )
+  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
   const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
 
   const [daLayerRecords, projectRecords] = partition(
@@ -178,7 +184,7 @@ function groupByTimestampAndProjectId(
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
-  if (!includeScalingOnly) {
+  if (!includeL2Only) {
     // Add the difference between the total size and the sum of the other projects as 'Unknown'
     const summedDaLayerByDay = sumByResolutionAndProject(
       daLayerRecords,
@@ -228,10 +234,10 @@ async function getMockDaThroughputChartByProject({
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = range[0] ?? to - days * UnixTime.DAY
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   const value = () => Math.random() * 900_000_000 + 90_000_000
 
-  const projects = (await ps.getProjects({ where: ['isScaling'] }))
+  const projects = (await ps.getProjects({ where: ['scalingInfo'] }))
     .map((p) => p.name)
     .slice(0, 50)
 

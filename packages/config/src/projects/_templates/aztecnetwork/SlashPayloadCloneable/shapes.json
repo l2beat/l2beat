@@ -1,14 +1,12 @@
 {
   "SlashPayloadCloneable.sol": {
-    "hash": "0x93ba104fbc1cf3a7164185bcb45b1005baeca7402f0a86b6fb9d8f6fa075e39e",
+    "hash": "0x3af8b06cdcc108cce614493bc713bad4e032b1428aea5c8fc46075abda8f932d",
     "address": "eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4",
-    "chain": "ethereum",
     "blockNumber": 23834069
   },
   "SlashPayloadCloneable_alpha.sol": {
-    "hash": "0xfbadea8713d96309e9bd97fddd93c7a26deaa423e3bc6380fea3583b1479c3ef",
+    "hash": "0x675553ce11773dc33f90165a629cf5899125e69c4272a3cf7b62b1cdcc0bc67b",
     "address": "eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445",
-    "chain": "ethereum",
     "blockNumber": 24590324
   }
 }

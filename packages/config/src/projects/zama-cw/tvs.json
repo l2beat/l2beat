@@ -1,0 +1,158 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "zama-cw",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "zama-cw-bbqTGBP",
+      "priceId": "tokenised-gbp",
+      "symbol": "bbqTGBP",
+      "name": "Steakhouse tGBP",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbeeffABcd0dB09589Dd21854aa760C52aB4bf04F",
+        "chain": "ethereum",
+        "escrowAddress": "0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+        "decimals": 18,
+        "sinceTimestamp": 1780585031
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-steakcUSDC",
+      "priceId": "usd-coin",
+      "symbol": "steakcUSDC",
+      "name": "Steakhouse Confidential Prime USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbEEF00A59B577423653A1526c7009bdE103F542B",
+        "chain": "ethereum",
+        "escrowAddress": "0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+        "decimals": 18,
+        "sinceTimestamp": 1781877707
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-tGBP",
+      "priceId": "tokenised-gbp",
+      "symbol": "tGBP",
+      "name": "tGBP",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+        "chain": "ethereum",
+        "escrowAddress": "0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+        "decimals": 18,
+        "sinceTimestamp": 1767000887
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xe978F22157048E5DB8E5d07971376e86671672B2",
+        "decimals": 6,
+        "sinceTimestamp": 1766750819
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+        "decimals": 6,
+        "sinceTimestamp": 1766750831
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+        "decimals": 18,
+        "sinceTimestamp": 1766750843
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-XAUt",
+      "priceId": "tether-gold",
+      "symbol": "XAUt",
+      "name": "Tether Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+        "chain": "ethereum",
+        "escrowAddress": "0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+        "decimals": 6,
+        "sinceTimestamp": 1772116091
+      },
+      "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-ZAMA",
+      "priceId": "zama",
+      "symbol": "ZAMA",
+      "name": "Zama",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70921/large/zama.png?1764591992",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
+        "chain": "ethereum",
+        "escrowAddress": "0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+        "decimals": 18,
+        "sinceTimestamp": 1769990400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

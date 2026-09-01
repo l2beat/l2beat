@@ -1,8 +1,7 @@
 {
   "name": "astarzkevm",
   "timestamp": 1762264420,
-  "configHash": "0xd50cddf750d169320962233319f76223a56ad0a89ea96029af1e89d454a62b34",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x06048981376f6059cbfa32ec2f3e3ec757985d458e1db90506612c058424c153",
   "entries": [
     {
       "name": "Verifier",
@@ -14,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
+      "deployerAddress": "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4",
       "sinceTimestamp": 1711291211,
       "sinceBlock": 19505052,
       "values": { "$immutable": true },
@@ -36,13 +36,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-          "role": "admin"
-        }
-      ],
+      "deployerAddress": "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4",
       "sinceTimestamp": 1708624547,
       "sinceBlock": 19284768,
       "values": {
@@ -65,11 +59,12 @@
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+        "0xc2c916e82f16c757dfd984fa2f02882312e7b4e546567608931fde689d1f0a78"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
       "sinceTimestamp": 1708632059,
       "sinceBlock": 19285389,
       "values": {
@@ -186,10 +181,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917",
       "sinceTimestamp": 1708443503,
       "sinceBlock": 19269852,
       "values": {
@@ -225,10 +221,11 @@
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
+        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).",
+      "deployerAddress": "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4",
       "sinceTimestamp": 1708624559,
       "sinceBlock": 19284769,
       "values": {
@@ -279,14 +276,7 @@
     {
       "address": "eth:0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-          "role": ".trustedSequencer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0",
@@ -320,45 +310,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0",
       "sinceTimestamp": 1708444367,
       "sinceBlock": 19269922,
       "values": {
@@ -624,5 +580,63 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23726378 },
-  "permissionsConfigHash": "0xfd723da2fdd1f0622486693cce69c11da86ea764814eec6e622c5339ba2b2cb1"
+  "permissionsConfigHash": "0x81b46191126b8fd80178c5a8747864038ba88a755c2c61218a740fee2ea8b2c5",
+  "permissions": {
+    "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".trustedSequencer"
+        }
+      ]
+    },
+    "eth:0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

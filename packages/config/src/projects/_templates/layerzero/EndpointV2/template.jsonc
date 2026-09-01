@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Part of the LayerZero messaging protocol. OApp owners can configure custom verification (MessageLib) and execution settings here.",
+  "description": "Part of the LayerZero messaging protocol. OApp owners or their delegates can configure custom verification- (message libraries) and execution settings here.",
   "fields": {
     "owner": {
       "permissions": [
@@ -10,5 +10,6 @@
         }
       ]
     }
-  }
+  },
+  "category": "core"
 }

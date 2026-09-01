@@ -47,6 +47,11 @@
     "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
       "description": "Stores DAI deposited from the attached L1DAITokenBridge."
     },
+    // OPContractsManagerV2: Karst upgrade tooling. Ignored so discovery doesn't
+    // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
       "references": [
         {

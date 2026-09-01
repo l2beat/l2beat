@@ -5,9 +5,10 @@ interface TestTransfer {
   id: string
   plugin: string
   bridgeType: 'lockAndMint' | 'burnAndMint' | 'nonMinting' | undefined
-  type: string
   srcChain: string
   dstChain: string
+  srcEventId: string | undefined
+  dstEventId: string | undefined
   srcWasBurned: boolean | undefined
   dstWasMinted: boolean | undefined
   srcAbstractTokenId: string | undefined
@@ -41,7 +42,6 @@ describe(InteropTransferClassifier.name, () => {
         id: 't3',
         plugin: 'plugin-b',
         bridgeType: 'nonMinting',
-        type: 'deposit',
       }),
     ]
 
@@ -55,7 +55,6 @@ describe(InteropTransferClassifier.name, () => {
       {
         plugin: 'plugin-b',
         bridgeType: 'nonMinting',
-        transferType: 'deposit',
       },
     ])
 
@@ -100,6 +99,104 @@ describe(InteropTransferClassifier.name, () => {
     expect(result.nonMinting).toEqual([])
     expect(result.unknown).toEqual([])
   })
+
+  it('applies the chain and abstractTokenId qualifiers to observations on either side', () => {
+    const matches = classifier.createPluginMatcher([
+      {
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+        chain: 'base',
+        abstractTokenId: 'circle-usdc',
+      },
+    ])
+    const observation = {
+      plugin: 'opstack',
+      bridgeType: 'lockAndMint' as const,
+      srcChain: 'ethereum',
+      dstChain: 'base',
+      srcAbstractTokenId: 'circle-usdc',
+    }
+
+    expect(matches(observation)).toEqual(true)
+    expect(matches({ ...observation, dstChain: 'optimism' })).toEqual(false)
+    expect(
+      matches({ ...observation, srcAbstractTokenId: 'tether-usdt' }),
+    ).toEqual(false)
+  })
+
+  it('only bypasses plugin bridge type matching for one-sided transfers with unknown bridge type', () => {
+    const result = classifier.classifyTransfers(
+      [
+        transfer({
+          id: 'one-sided-unknown',
+          bridgeType: undefined,
+          srcEventId: 'src-event',
+          dstEventId: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+        }),
+        transfer({
+          id: 'one-sided-known',
+          bridgeType: 'nonMinting',
+          srcEventId: 'src-event',
+          dstEventId: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+        }),
+        transfer({
+          id: 'two-sided-unknown',
+          bridgeType: undefined,
+          srcEventId: 'src-event',
+          dstEventId: 'dst-event',
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+        }),
+      ],
+      [{ plugin: 'plugin-a', bridgeType: 'lockAndMint' }],
+    )
+
+    expect(result.lockAndMint).toEqual([])
+    expect(result.burnAndMint).toEqual([])
+    expect(result.nonMinting).toEqual([])
+    expect(result.unknown.map((x) => x.id)).toEqual(['one-sided-unknown'])
+  })
+
+  describe(InteropTransferClassifier.inferLockedTransferSide.name, () => {
+    const lockedSide = (
+      srcWasBurned: boolean | undefined,
+      dstWasMinted: boolean | undefined,
+    ) =>
+      InteropTransferClassifier.inferLockedTransferSide({
+        srcWasBurned,
+        dstWasMinted,
+      })
+
+    it('reads the locked side from either flag alone', () => {
+      // One-sided transfers only ever observe one of the two flags, and one is
+      // enough: the roles of a lock-and-mint pair are complementary.
+      expect(lockedSide(false, undefined)).toEqual('src')
+      expect(lockedSide(undefined, true)).toEqual('src')
+      expect(lockedSide(true, undefined)).toEqual('dst')
+      expect(lockedSide(undefined, false)).toEqual('dst')
+    })
+
+    it('reads the locked side from both flags', () => {
+      expect(lockedSide(false, true)).toEqual('src')
+      expect(lockedSide(true, false)).toEqual('dst')
+    })
+
+    it('identifies no side when the flags were not observed', () => {
+      expect(lockedSide(undefined, undefined)).toEqual(undefined)
+    })
+
+    it('identifies no side when the flags contradict lock-and-mint', () => {
+      // Both reachable when a plugin declares `lockAndMint` itself: (false,
+      // false) is really non-minting and (true, true) is really burn-and-mint,
+      // so neither identifies a locked endpoint.
+      expect(lockedSide(false, false)).toEqual(undefined)
+      expect(lockedSide(true, true)).toEqual(undefined)
+    })
+  })
 })
 
 function transfer(override: Partial<TestTransfer>): TestTransfer {
@@ -107,9 +204,10 @@ function transfer(override: Partial<TestTransfer>): TestTransfer {
     id: 'default',
     plugin: 'plugin-a',
     bridgeType: 'nonMinting',
-    type: 'transfer',
     srcChain: 'ethereum',
     dstChain: 'arbitrum',
+    srcEventId: 'src-event',
+    dstEventId: 'dst-event',
     srcWasBurned: false,
     dstWasMinted: false,
     srcAbstractTokenId: 'eth',

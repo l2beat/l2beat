@@ -2,10 +2,11 @@ import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { isLinkActive } from '~/utils/isLinkActive'
 import { OverflowWrapper } from '../../core/OverflowWrapper'
-import type { NavGroup } from '../types'
+import type { NavGroup, NavLink } from '../types'
 
 /**
- * Second navbar displayed under the main navbar on mobile.
+ * Second navbar displayed under the main navbar on mobile. When the active
+ * link has sub-links, they are shown as a contextual second row of tabs.
  */
 export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   const pathname = usePathname()
@@ -13,28 +14,61 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   const currentGroup = groups
     .filter((g) => g.type === 'multiple')
     .find((g) => {
+      const firstLink = g.links[0]?.[0]
       return (
-        g.links[0] &&
-        isLinkActive({ href: `/${g.links[0].href.split('/')[1]}`, pathname }) &&
+        firstLink &&
+        isLinkActive({ href: `/${firstLink.href.split('/')[1]}`, pathname }) &&
         !g.disableMobileTabs
       )
     })
   if (!currentGroup) return null
 
+  const links = currentGroup.links.flat()
+
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matches the current path.
-  const display = currentGroup.links.some(({ href }) =>
-    isLinkActive({ href, pathname }),
-  )
+  const display = links.some(({ href }) => isLinkActive({ href, pathname }))
   if (!display) return null
 
+  const activeSubLinks = links.find(
+    (link) =>
+      link.subLinks?.length && isLinkActive({ href: link.href, pathname }),
+  )?.subLinks
+
+  return (
+    <>
+      <NavTabRow links={links} pathname={pathname} />
+      {activeSubLinks && (
+        <NavTabRow
+          links={activeSubLinks}
+          pathname={pathname}
+          tabClassName="h-8 text-2xs"
+        />
+      )}
+    </>
+  )
+}
+
+function NavTabRow({
+  links,
+  pathname,
+  tabClassName,
+}: {
+  links: NavLink[]
+  pathname: string
+  tabClassName?: string
+}) {
   return (
     <OverflowWrapper className="bg-surface-primary">
       <div className="flex">
-        {currentGroup.links
+        {links
           .filter((link) => !link.disabled)
           .map((link) => {
-            const isSelected = isLinkActive({ href: link.href, pathname })
+            const isSelected = isLinkActive({
+              href: link.href,
+              pathname,
+              exact: link.exactMatch,
+            })
             return (
               <a
                 ref={(node) => {
@@ -51,6 +85,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
                 className={cn(
                   'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
                   'data-[state=selected]:border-brand data-[state=selected]:text-brand',
+                  tabClassName,
                 )}
               >
                 {link.shortTitle ?? link.title}

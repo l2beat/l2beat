@@ -1,4 +1,4 @@
-import { parseAbiItem, toFunctionSelector } from 'viem'
+import { parseAbiItem, toFunctionSelector } from 'viem/utils'
 
 export const SAFE_MULTI_SEND_1_3_0 =
   '0xa238cbeb142c10ef7ad8442c6d1f9e89e07e7761'

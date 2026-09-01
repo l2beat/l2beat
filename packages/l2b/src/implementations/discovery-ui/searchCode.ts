@@ -1,6 +1,6 @@
 import type { ConfigReader } from '@l2beat/discovery'
 import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
-import { getAllCode, getCode } from './getCode'
+import { getAllCode, getCodeFromDisk } from './getCode'
 import type { ApiCodeSearchResponse } from './types'
 
 export function searchCode(
@@ -12,7 +12,7 @@ export function searchCode(
   const code =
     address === undefined
       ? getAllCode(configReader, project)
-      : { [address]: getCode(configReader, project, address) }
+      : { [address]: getCodeFromDisk(configReader, project, address) }
 
   const matches: ApiCodeSearchResponse['matches'] = []
   for (const address in code) {

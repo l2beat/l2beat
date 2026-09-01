@@ -5,6 +5,7 @@ import { assert } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 
 export class SlotTargetIndexer extends RootIndexer {
   constructor(
@@ -34,22 +35,32 @@ export class SlotTargetIndexer extends RootIndexer {
   }
 
   async tick(): Promise<number> {
-    const timestamp = this.clock.getLastHour()
-    this.logger.info('Getting slot number for timestamp', { timestamp })
+    return await withCoreFeatureRpcMetricsContext(
+      'activity.target',
+      {
+        chain: this.config.chainName,
+        mode: 'slot',
+      },
+      async () => {
+        const timestamp = this.clock.getLastHour()
+        this.logger.info('Getting slot number for timestamp', { timestamp })
 
-    assert(
-      this.config.activityConfig.type === 'slot',
-      'SlotTargetIndexer should only be used for slot activity',
+        assert(
+          this.config.activityConfig.type === 'slot',
+          'SlotTargetIndexer should only be used for slot activity',
+        )
+
+        const slotNumber =
+          await this.slotTimestampProvider.getSlotNumberAtOrBefore(
+            timestamp,
+            this.config.chainName,
+            (this.config.activityConfig as SlotActivityConfig).startSlot,
+          )
+
+        await this.options?.onTick?.(timestamp, slotNumber)
+
+        return slotNumber
+      },
     )
-
-    const slotNumber = await this.slotTimestampProvider.getSlotNumberAtOrBefore(
-      timestamp,
-      this.config.chainName,
-      (this.config.activityConfig as SlotActivityConfig).startSlot,
-    )
-
-    await this.options?.onTick?.(timestamp, slotNumber)
-
-    return slotNumber
   }
 }

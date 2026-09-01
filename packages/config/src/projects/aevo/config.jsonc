@@ -4,13 +4,32 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574"],
   "overrides": {
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0x30381af09B7996065f02D089217117Bb1eaf35E2": {
+      "ignoreDiscovery": true
+    },
     "eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },
     "eth:0x7326889874BBFE3fE6364BE73f0FFcDBD3dC827C": {
       "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
+        "proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     }
   }

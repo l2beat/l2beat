@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "InstanceRegistry",
+  "description": "Upgradeable registry of supported Tornado Cash pool instances and their mutable per-instance fee and routing configuration.",
+  "category": "core",
+  "ignoreMethods": ["instanceIds"],
+  "fields": {
+    "$admin": {
+      "description": "Can upgrade the instance registry implementation.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the registry implementation, changing how supported pool instances are tracked."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current instance registry implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "governance": {
+      "description": "Governance address controlling supported instances and per-instance settings.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or update supported Tornado instances and their enabled/disabled state."
+        },
+        {
+          "type": "interact",
+          "description": "remove supported instances from the registry."
+        },
+        {
+          "type": "interact",
+          "description": "set per-instance protocol fees charged to relayers."
+        },
+        {
+          "type": "interact",
+          "description": "change the router contract allowed to interact with registered instances."
+        }
+      ]
+    },
+    "router": {
+      "description": "Router contract authorized to interact with registered instances and hold ERC20 allowances for them.",
+      "severity": "HIGH"
+    },
+    "getAllInstances": {
+      "description": "Lists every supported instance together with its token type, enabled state, Uniswap fee tier, and protocol fee percentage.",
+      "severity": "LOW"
+    }
+  }
+}

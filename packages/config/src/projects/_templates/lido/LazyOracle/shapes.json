@@ -1,0 +1,12 @@
+{
+  "LazyOracle.sol": {
+    "hash": "0x9823182305a0c6bf787c26bafca2eddbfa4ecbc7b26466b1647cfd4423127b55",
+    "address": "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B",
+    "blockNumber": 24183468
+  },
+  "LazyOracle_new": {
+    "hash": "0x4e35d87bdeaefb350dcfcc6021b16ffae2c9268f30b5c712569f9755dd281f36",
+    "address": "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37",
+    "blockNumber": 24935917
+  }
+}

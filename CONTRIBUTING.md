@@ -89,7 +89,7 @@ If you want to add a new project you can do that by opening a PR. To do this you
    `packages/config/src/processing/layer3s.ts`. The order of the projects
    should be kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels to
-   `packages/frontend/public/icons`. From the `packages/frontend` directory run
+   `packages/frontend/static/icons`. From the `packages/frontend` directory run
    `pnpm tinify-logos` afterwards to reduce its size.
 5. Run the website locally to check out your changes. (optional, see above)
 6. Make sure that things like linting, formatting and tests are all passing. To

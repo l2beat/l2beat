@@ -3,11 +3,7 @@ import { expect } from 'earl'
 import { readFileSync } from 'fs'
 import { chains } from '../processing/chains'
 import { generateTokenNames, getTokenNamesFilePath } from './generateTokenNames'
-import {
-  getDiscoveryTokenList,
-  getGeneratedTokenList,
-  getTokenList,
-} from './tokens'
+import { getTokenList } from './tokens'
 
 const tokenList = getTokenList(chains)
 
@@ -63,31 +59,6 @@ describe('tokens', () => {
 
     //   expect(invalidSlugs).toHaveLength(0)
     // })
-  })
-
-  describe('tokens sources – no duplicates between generated.json and discovery', () => {
-    const generatedTokens = getGeneratedTokenList(chains)
-    const discoveryTokens = getDiscoveryTokenList(chains)
-
-    it('no token appears in both generated.json and discovery output', () => {
-      const generatedKeys = new Set<string>()
-
-      for (const t of generatedTokens) {
-        if (!t.address) continue // native assets have no address – skip
-        generatedKeys.add(t.id)
-      }
-
-      const duplicates: string[] = []
-
-      for (const token of discoveryTokens) {
-        if (!token.address) continue
-        if (generatedKeys.has(token.id)) {
-          duplicates.push(token.id)
-        }
-      }
-
-      expect(duplicates).toEqual([])
-    })
   })
 
   describe('globalTokens.jsonc', () => {

@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Gnosis-side Omnibridge mediator used for arbitrary token transfers between Gnosis and Ethereum via the AMB bridge.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the counterpart mediator, the AMB bridge endpoint, token factory, fee, gas-limit, and forwarding-rules managers, token pairs, and per-token bridge limits for Omnibridge transfers."
+        }
+      ]
+    },
+    "upgradeabilityOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts."
+        }
+      ]
+    },
+    "bridgeContract": {
+      "description": "AMB bridge endpoint used as the cross-chain messaging layer for the Gnosis-side Omnibridge mediator.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "act" // not very clean but resolves the GNO minting perm correctly
+        }
+      ]
+    },
+    "mediatorContractOnOtherSide": {
+      "description": "Counterpart Omnibridge mediator on Ethereum.",
+      "severity": "HIGH",
+      "edit": ["format", "EthereumAddress"]
+    },
+    "tokenFactory": {
+      "description": "Factory used to deploy wrapped tokens for assets bridged from Ethereum to Gnosis.",
+      "severity": "HIGH"
+    },
+    "feeManager": {
+      "description": "Module that computes and distributes Omnibridge fees on Gnosis.",
+      "severity": "HIGH"
+    },
+    "forwardingRulesManager": {
+      "description": "Module that chooses whether Omnibridge requests use the oracle-driven lane or the manual lane.",
+      "severity": "HIGH"
+    },
+    "gasLimitManager": {
+      "description": "Module that chooses request gas limits for Omnibridge cross-chain messages.",
+      "severity": "HIGH"
+    }
+  },
+  "ignoreInWatchMode": ["getCurrentDay"]
+}

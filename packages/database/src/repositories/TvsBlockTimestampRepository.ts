@@ -2,6 +2,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TvsBlockTimestamp } from '../kysely/generated/types'
+import {
+  type CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 
 export interface TvsBlockTimestampRecord {
   timestamp: UnixTime
@@ -61,6 +66,15 @@ export class TvsBlockTimestampRepository extends BaseRepository {
     return row?.blockNumber
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('TvsBlockTimestamp')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigInTimeRange(
     configId: string,
     fromInclusive: UnixTime,
@@ -73,6 +87,14 @@ export class TvsBlockTimestampRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteHourlyUntil(this.db, 'TvsBlockTimestamp', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteSixHourlyUntil(this.db, 'TvsBlockTimestamp', dateRange)
   }
 
   async getAll(): Promise<TvsBlockTimestampRecord[]> {

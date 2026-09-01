@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ACL",
+  "description": "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "owner": {
+      "description": "Owner of the ACL and host-contract owner checked by onlyACLOwner in the Zama verifier and helper contracts.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and update Zama verifier signer sets and thresholds."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Pending owner for a two-step ACL ownership transfer.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept ACL ownership if non-zero."
+        }
+      ]
+    },
+    "paused": {
+      "description": "Whether ACL operations that require whenNotPaused are currently paused.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "blockedAccounts": {
+      "description": "Accounts denied from using ACL operations, reconstructed from BlockedAccount and UnblockedAccount events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "ignoreRelative": true,
+        "add": { "event": "BlockedAccount" },
+        "remove": { "event": "UnblockedAccount" }
+      }
+    },
+    "getFHEVMExecutorAddress": {
+      "description": "FHEVMExecutor contract that may grant transient handle allowances without first being allowed by the caller.",
+      "type": "EXTERNAL"
+    },
+    "getPauserSetAddress": {
+      "description": "PauserSet contract whose members may pause the ACL.",
+      "type": "EXTERNAL"
+    }
+  }
+}

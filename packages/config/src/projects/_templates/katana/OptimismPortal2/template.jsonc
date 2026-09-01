@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal2",
+  "category": "core",
+  "description": "Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the {{ RespectedGameString }}. This contract is modified to disable asset bridging, but it allows forced transactions.",
+  "ignoreMethods": ["isOutputFinalized"],
+  "ignoreInWatchMode": ["params", "balance"],
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame",
+        "1337": "KailuaGame"
+      }
+    }
+  },
+  "fields": {
+    "respectedGameType": {
+      "severity": "HIGH"
+    },
+    "RespectedGameString": {
+      "handler": {
+        "type": "call",
+        "method": "respectedGameType",
+        "args": []
+      },
+      "edit": ["format", "DisputeGameMap"]
+    },
+    "paused": {
+      "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
+      "severity": "HIGH"
+    }
+  }
+}

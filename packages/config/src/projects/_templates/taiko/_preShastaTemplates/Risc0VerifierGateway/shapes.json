@@ -1,0 +1,17 @@
+{
+  "Risc0Verifier.sol": {
+    "hash": "0x6c8fb5c4506c3a84b2bf49e78f1dead832f49b3b2fa98c26b4e4233e2aa0b800",
+    "address": "eth:0xefe30A0D56a5804F695f971010597262CAd9A2c3",
+    "blockNumber": 22468063
+  },
+  "RiscZeroPostPacaya": {
+    "hash": "0x42383119326b84678702cee513d538bc1dd13b174d01a50ceafbc2a45c9d747e",
+    "address": "eth:0x801878e56A8DA58d6a837006345CDD11a9E6a852",
+    "blockNumber": 22565516
+  },
+  "TaikoRisc0Verifier": {
+    "hash": "0x2827c9d3db975ba03ffa1a011dce7716a27a40ecbb04ead2fdfe52178df8123a",
+    "address": "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be",
+    "blockNumber": 22694475
+  }
+}

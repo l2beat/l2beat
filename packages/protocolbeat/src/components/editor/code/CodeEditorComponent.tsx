@@ -18,22 +18,13 @@ export function CodeEditorComponent({
 }: CodeEditorComponentProps) {
   const monacoEl = useRef<HTMLDivElement>(null)
   const resizeObserverRef = useRef<ResizeObserver | null>(null)
-  const { setEditor, getEditor, removeEditor } = useCodeStore()
+  const { setEditor, removeEditor } = useCodeStore()
 
   useEffect(() => {
     const element = monacoEl.current
 
     if (!element) {
       return
-    }
-
-    const existingEditor = getEditor(editorKey)
-
-    if (existingEditor) {
-      return () => {
-        existingEditor.dispose()
-        removeEditor(editorKey)
-      }
     }
 
     const editor = new Editor(element)
@@ -56,10 +47,10 @@ export function CodeEditorComponent({
 
     return () => {
       resizeObserver.disconnect()
+      removeEditor(editorKey, editor)
       editor.dispose()
-      removeEditor(editorKey)
     }
-  }, [editorKey, setEditor, getEditor, removeEditor])
+  }, [editorKey, setEditor, removeEditor])
 
   return (
     <div

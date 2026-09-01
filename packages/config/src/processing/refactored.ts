@@ -5,52 +5,69 @@ import { avalanche } from '../projects/avalanche/avalanche'
 import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
+import { barretenberg } from '../projects/barretenberg/barretenberg'
+import { basesolbridge } from '../projects/basesolbridge/basesolbridge'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
+import { butternetwork } from '../projects/butternetwork/butternetwork'
 import { cbridge } from '../projects/cbridge/cbridge'
 import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
+import { chainlink } from '../projects/chainlink/chainlink'
 import { circlegateway } from '../projects/circlegateway/circlegateway'
+import { cloaked } from '../projects/cloaked/cloaked'
 import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
-import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
-import { gnosis } from '../projects/gnosis/gnosis'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
+import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
+import { liquityv2 } from '../projects/liquityv2/liquityv2'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
 import { meson } from '../projects/meson/meson'
+import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { polymarket } from '../projects/polymarket/polymarket'
+import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
+import { privacyPools } from '../projects/privacy-pools/privacy-pools'
+import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
-import { squid } from '../projects/squid/squid'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
+import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { tempo } from '../projects/tempo/tempo'
+import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
+import { umbra } from '../projects/umbra/umbra'
+import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
+import { uniswapv4 } from '../projects/uniswapv4/uniswapv4'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
+import { zama } from '../projects/zama/zama'
+import { zamaCw } from '../projects/zama-cw/zama-cw'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -74,6 +91,7 @@ export const refactored: BaseProject[] = [
   espressoprover,
   lighterprover,
   stwo,
+  barretenberg,
   // da-beat
   ethereum,
   avail,
@@ -84,14 +102,14 @@ export const refactored: BaseProject[] = [
   espresso,
   teeBridge,
   eigenda,
-  eigendaV2,
   memo,
   // chains
   bsc,
-  gnosis,
   gateway,
   avalanche,
+  monad,
   tempo,
+  zama,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,
@@ -100,10 +118,10 @@ export const refactored: BaseProject[] = [
   cctpv2,
   relay,
   gaszip,
+  lifi,
   layerzero,
   axelar,
   axelarits,
-  squid,
   fusionplus,
   circlegateway,
   wormholeWtt,
@@ -114,6 +132,24 @@ export const refactored: BaseProject[] = [
   debridge,
   stargate,
   cbridge,
+  butternetwork,
   hyperevm,
   freetunnel,
+  basesolbridge,
+  // defi
+  frankencoin,
+  liquityv2,
+  chainlink,
+  uniswapv3,
+  uniswapv4,
+  polymarket,
+  // privacy
+  cloaked,
+  privacyPools,
+  railgun,
+  strk20,
+  tornadoCash,
+  umbra,
+  zamaCw,
+  privacyBoost,
 ]

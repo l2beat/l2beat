@@ -6,4 +6,5 @@ export interface Log {
   blockHash: string
   transactionHash: string
   logIndex: number
+  blockTimestamp?: number
 }

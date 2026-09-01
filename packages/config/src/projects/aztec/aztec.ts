@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -14,7 +15,7 @@ import {
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -53,13 +54,14 @@ export const aztec: ScalingProject = {
   type: 'layer2',
   id: ProjectId('aztec'),
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime.fromDate(new Date('2026-06-20')),
   capability: 'appchain',
   display: {
     name: 'Zk.Money v1 (Aztec v1)',
     shortName: 'Zk.Money v1',
     slug: 'aztecv1',
     warning:
-      'EOL: Ownership of the rollup contract is irrevocably renounced and Aztec is not running a rollup processor (operator). Users or third parties have to [run the rollup system by themselves](https://github.com/AztecProtocol/aztec-v2-ejector/) to withdraw or transact.',
+      'On 2026-06-17 the immutable rollup contract was [exploited for ~$2.16M](https://x.com/aztecFND/status/2067511967237939636) (1,158 ETH, ~150k DAI and renBTC) through its emergency escapeHatch() withdrawal function. Ownership of the rollup contract is irrevocably renounced, so it cannot be paused or patched, and Aztec is not running a rollup processor (operator). Aztec stated the affected product is deprecated and unrelated to the current Aztec Network or the AZTEC token.',
     description:
       'Zk.Money v1 (Aztec v1, or sometimes called Aztec 2.0) is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['Payments', 'Privacy'],
@@ -79,7 +81,7 @@ export const aztec: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('aztecv1prover'),
+    zkCatalogIds: [ProjectId('aztecv1prover')],
   },
   config: {
     escrows: [
@@ -151,6 +153,7 @@ export const aztec: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
+      permissioned: false,
       executionDelay: finalizationPeriod,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -176,7 +179,7 @@ export const aztec: ScalingProject = {
       SOA.trustedSetup,
     ],
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -321,6 +324,12 @@ export const aztec: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'RollupProcessor',
+        'verifier',
+      ),
+    ],
   },
   permissions: {
     ethereum: {
@@ -338,6 +347,14 @@ export const aztec: ScalingProject = {
     },
   },
   milestones: [
+    {
+      title: 'Escape-hatch verifier exploit',
+      date: '2026-06-17T00:00:00Z',
+      url: 'https://www.aztec-labs.com/blog/aztec-2-incident.html',
+      description:
+        '$2.2M of assets are drained by exploiting an unsound verification key.',
+      type: 'incident',
+    },
     {
       title: 'Aztec operator sunset',
       date: '2023-07-08T00:00:00Z',

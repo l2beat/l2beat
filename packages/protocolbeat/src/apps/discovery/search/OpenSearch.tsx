@@ -1,4 +1,8 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ErrorState } from '../../../components/ErrorState'
@@ -7,7 +11,7 @@ import { Input } from '../../../components/Input'
 import { Loader } from '../../../components/Loader'
 import { useDebounce } from '../../../hooks/useDebounce'
 import { IconSearch } from '../../../icons/IconSearch'
-import { useMultiViewStore } from '../multi-view/store'
+import { useDockingStore } from '../multi-view/store'
 import { usePanelStore } from '../store/panel-store'
 import {
   CodeSearchResultEntry,
@@ -22,14 +26,15 @@ import { useSearchStore } from './store'
 interface OpenSearchProps {
   inputRef: React.RefObject<HTMLInputElement | null>
   project: string
-  select: (address: string) => void
+  select: (address: string[]) => void
 }
 
 export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   const navigate = useNavigate()
-  const { ensurePanel } = useMultiViewStore()
+  const queryClient = useQueryClient()
+  const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
   const { setSourceIndex, showRange } = useCodeStore()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddress = usePanelStore((state) => state.selected[0])
   const {
     setOpen,
     searchTerm,
@@ -66,7 +71,8 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
 
   const { isError, isPending, data } = useQuery({
     queryKey: ['search', project, selectedAddress, searchTermDebounced],
-    queryFn: () => searchQuery(project, searchTermDebounced, selectedAddress),
+    queryFn: () =>
+      searchQuery(queryClient, project, searchTermDebounced, selectedAddress),
     placeholderData: keepPreviousData,
   })
 
@@ -103,8 +109,8 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
         }
 
         if (entry !== undefined) {
-          ensurePanel('code')
-          select(entry.address)
+          ensureLeaf('code')
+          select([entry.address])
           const codeLocation = entry.codeLocation[selectedIndex - runningIndex]
           if (codeLocation !== undefined) {
             setSourceIndex(entry.address, codeLocation.index)
@@ -122,7 +128,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
         const result = data.entries[selectedIndex]
 
         if (result !== undefined) {
-          select(result.address)
+          select([result.address])
         }
       }
       setOpen(false)

@@ -1,4 +1,4 @@
-import { parseAbiItem, toFunctionSelector } from 'viem'
+import { parseAbiItem, toFunctionSelector } from 'viem/utils'
 
 export const EIP_7821_TRANSACTION_SIGNATURE = parseAbiItem(
   'function execute(bytes32 mode, bytes calldata executionData)',

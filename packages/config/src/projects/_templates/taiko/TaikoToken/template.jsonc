@@ -1,16 +1,7 @@
 {
-  "description": "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
-  "ignoreMethods": ["getPastTotalSupply", "proxiableUUID"],
-  "ignoreInWatchMode": ["clock"],
-  "fields": {
-    "proxiableUUID": {
-      "handler": {
-        "type": "call",
-        "method": "function proxiableUUID() view returns (bytes32)",
-        "args": [],
-        "expectRevert": true
-      }
-    }
-  },
-  "category": "core"
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TaikoToken",
+  "description": "ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.",
+  "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
+  "ignoreInWatchMode": ["clock"]
 }

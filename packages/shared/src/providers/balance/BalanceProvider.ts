@@ -35,7 +35,19 @@ export class BalanceProvider {
           })
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
-            if (r.success === false) {
+            // a revert gives no number - throw instead of storing a
+            // poisoned 0. getEthBalance always returns data, so empty
+            // data for native is a fault too
+            if (
+              !r.success ||
+              (r.data.length === 0 && queries[i].token === 'native')
+            ) {
+              throw new Error(
+                `Failed to fetch balance of ${queries[i].token} for ${queries[i].holder} at block ${blockNumber}`,
+              )
+            }
+            if (r.data.length === 0) {
+              // token not deployed at this block
               this.logger.tag({ chain }).warn('Issue with balance fetching', {
                 token: queries[i].token,
                 blockNumber,
@@ -45,37 +57,22 @@ export class BalanceProvider {
             return BigInt(r.data.toString())
           })
         }
-        return Promise.all(
+        return await Promise.all(
           queries.map(async (q) => {
-            if (q.token === 'native') {
-              try {
-                const res = await client.getBalance(q.holder, blockNumber)
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
-              } catch {
-                this.logger.tag({ chain }).warn('Issue with balance fetching', {
-                  token: q.token,
-                  blockNumber,
-                })
-                return 0n
-              }
-            } else {
-              try {
-                const res = await client.call(
-                  encodeErc20Balance(q.token, q.holder),
-                  blockNumber,
-                )
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
-              } catch {
-                this.logger.tag({ chain }).warn('Issue with balance fetching', {
-                  token: q.token,
-                  blockNumber,
-                })
-                return 0n
-              }
-            }
+            const res =
+              q.token === 'native'
+                ? await client.getBalance(q.holder, blockNumber)
+                : await client.call(
+                    encodeErc20Balance(q.token, q.holder),
+                    blockNumber,
+                  )
+            return res.toString() === '0x' ? 0n : BigInt(res.toString())
           }),
         )
       } catch (error) {
+        this.logger.tag({ chain }).warn('Balance fetching failed', {
+          blockNumber,
+        })
         if (index === clients.length - 1) throw error
       }
     }
@@ -105,7 +102,7 @@ export function encodeErc20Balance(
 ): CallParameters {
   return {
     to: token,
-    data: Bytes.fromHex(
+    input: Bytes.fromHex(
       erc20Interface.encodeFunctionData('balanceOf', [holder]),
     ),
   }

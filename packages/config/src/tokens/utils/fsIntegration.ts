@@ -1,19 +1,17 @@
+import { parseJsonc } from '@l2beat/shared-pure'
 import { readFileSync, writeFileSync } from 'fs'
-import { type ParseError, parse } from 'jsonc-parser'
 import { type GeneratedToken, Output, Source } from '../../../src/tokens/types'
 import type { ScriptLogger } from './ScriptLogger'
 
 export function readTokensFile(sourceFilePath: string, logger: ScriptLogger) {
   const sourceFile = readFileSync(sourceFilePath, 'utf-8')
-  const errors: ParseError[] = []
-  const parsed = parse(sourceFile, errors, {
-    allowTrailingComma: true,
-  }) as Record<string, string>
-  if (errors.length > 0) console.error(errors)
-  logger.assert(errors.length === 0, 'Cannot parse tokens.jsonc')
-  const source = Source.parse(parsed)
-
-  return source
+  try {
+    const parsed = parseJsonc<Record<string, string>>(sourceFile)
+    return Source.parse(parsed)
+  } catch (e) {
+    console.error(e)
+    logger.assert(false, 'Cannot parse tokens.jsonc')
+  }
 }
 
 export function readGeneratedFile(

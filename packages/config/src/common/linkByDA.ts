@@ -18,7 +18,6 @@ export function linkByDA(where: {
       const das = asArray(project.dataAvailability)
       return (
         !project.archivedAt &&
-        !project.isUpcoming &&
         das.some(
           (da) =>
             where.layer === da.layer.projectId &&

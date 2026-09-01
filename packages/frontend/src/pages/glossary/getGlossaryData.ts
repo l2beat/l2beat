@@ -18,8 +18,8 @@ export async function getGlossaryData(
         title: 'Glossary - L2BEAT',
         description:
           'Understand key terms in Ethereum’s scaling ecosystem with L2BEAT’s glossary.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/glossary/opengraph-image.png',
         },
       }),

@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "cTornado",
+  "category": "core",
+  "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
+  "fields": {
+    "denomination": {
+      "description": "Fixed cToken amount accepted by this pool.",
+      "severity": "LOW"
+    },
+    "token": { "description": "cToken accepted by this mixer instance." },
+    "verifier": {
+      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
+      "severity": "HIGH"
+    },
+    "hasher": {
+      "description": "Merkle-tree hasher used for commitments and root updates."
+    },
+    "comp": {
+      "description": "COMP token accrued by the cToken position and claimable to governance."
+    },
+    "governance": {
+      "description": "Recipient of claimed COMP rewards from this pool."
+    }
+  },
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]
+}

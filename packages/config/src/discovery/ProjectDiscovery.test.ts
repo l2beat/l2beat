@@ -85,31 +85,6 @@ describe(ProjectDiscovery.name, () => {
     expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
   })
 
-  describe(ProjectDiscovery.prototype.getPermissionsByRole.name, () => {
-    it('should find contracts and eoas by role', () => {
-      const discovery = new ProjectDiscovery('ExampleProject', configReader)
-      const sequencers = discovery.getPermissionsByRole('sequence')
-      expect(sequencers).toEqual([
-        {
-          address: contractStub.address,
-          type: 'Contract',
-          isVerified: true,
-          name: '0x0D4C…72ac',
-          url: 'https://etherscan.io/address/0x0D4C1222f5e839a911e2053860e45F18921D72ac',
-        },
-        {
-          address: ChainSpecificAddress(
-            'eth:0x000000000000000000000000000000000000Bb22',
-          ),
-          type: 'EOA',
-          isVerified: true,
-          name: '0x0000…Bb22',
-          url: 'https://etherscan.io/address/0x000000000000000000000000000000000000Bb22',
-        },
-      ])
-    })
-  })
-
   describe(ProjectDiscovery.prototype.replaceAddressesWithNames.name, () => {
     it('should replace addresses with names', () => {
       const replaced = discovery.replaceAddressesWithNames(

@@ -95,8 +95,15 @@
               "assert": "Use assert from @l2beat/shared-pure",
               "node:assert": "Use assert from @l2beat/shared-pure",
               "lodash": "Use lodash/{module}",
-              "process": "Do not use process"
-            }
+              "process": "Do not use process",
+              "earl": "earl is a test-only dependency. Use lodash/isEqual for deep equality or move this file under a test/ directory."
+            },
+            "patterns": [
+              {
+                "group": ["@l2beat/*/dist", "@l2beat/*/dist/**"],
+                "message": "Import from the package's public entrypoint instead."
+              }
+            ]
           }
         }
       },
@@ -170,7 +177,26 @@
       "linter": {
         "rules": {
           "style": {
-            "noNonNullAssertion": "off"
+            "noNonNullAssertion": "off",
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "console": "Do not use console",
+                  "node:console": "Do not use console",
+                  "assert": "Use assert from @l2beat/shared-pure",
+                  "node:assert": "Use assert from @l2beat/shared-pure",
+                  "lodash": "Use lodash/{module}",
+                  "process": "Do not use process"
+                },
+                "patterns": [
+                  {
+                    "group": ["@l2beat/*/dist", "@l2beat/*/dist/**"],
+                    "message": "Import from the package's public entrypoint instead."
+                  }
+                ]
+              }
+            }
           },
           "suspicious": {
             "noExplicitAny": "off",

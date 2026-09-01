@@ -39,7 +39,12 @@ export function contractDiffToMarkdown(
   }
 
   const contractDescription = diff?.description ?? 'None'
-  const contractLine = `    ${diff.addressType === 'EOA' ? 'EOA' : diff.addressType === 'Reference' ? 'reference' : 'contract'} ${diff.name ?? ''} (${diff.address.toString()})`
+  const isContract =
+    diff.addressType !== 'EOA' && diff.addressType !== 'Reference'
+  const kindLabel =
+    diff.addressType === 'EOA' ? 'EOA' : diff.addressType.toLowerCase()
+  const templateLabel = isContract ? ` [${diff.template ?? 'N/A'}]` : ''
+  const contractLine = `    ${kindLabel} ${diff.name ?? ''} (${diff.address.toString()})${templateLabel}`
   const descriptionLine = `    +++ description: ${contractDescription}`
   if (diff.diff) {
     result.push(`${contractLine} {`)

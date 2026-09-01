@@ -2,6 +2,7 @@ import { v } from '@l2beat/validate'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Application, Request, Response } from 'express'
 import { type BaseOpenApiSchema, OpenApi } from './OpenApi'
+import { InteropProtocolsResultSchema } from './routes/interop/types'
 
 describe(OpenApi.name, () => {
   describe('route registration', () => {
@@ -211,7 +212,7 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
 
       expect(schema).toEqual({
-        openapi: '3.0.0',
+        openapi: '3.1.0',
         info: {
           title: 'L2BEAT API',
           version: '1.0.0',
@@ -528,6 +529,27 @@ describe(OpenApi.name, () => {
         CustomError: expect.a(Object),
       })
     })
+
+    it('includes documented properties in component schemas', () => {
+      const app = mockApp()
+      const openapi = new OpenApi(app, baseSchema)
+
+      openapi.get(
+        '/interop/protocols',
+        { result: InteropProtocolsResultSchema },
+        mockFn(),
+      )
+
+      const schema = openapi.getOpenApiSchema()
+      const interopProtocolSchema = schema.components.schemas
+        .InteropProtocol as { properties?: Record<string, unknown> }
+
+      expect(interopProtocolSchema.properties?.subgroupId).toEqual({
+        anyOf: [{ type: 'string' }, { type: 'null' }],
+        description:
+          'ID of the aggregate/root interop protocol this protocol belongs to. Null for aggregate/root protocols.',
+      })
+    })
   })
 
   describe('edge cases', () => {
@@ -616,7 +638,7 @@ function getRouteHandler(app: Application) {
 }
 
 const baseSchema: BaseOpenApiSchema = {
-  openapi: '3.0.0' as const,
+  openapi: '3.1.0' as const,
   info: {
     title: 'L2BEAT API',
     version: '1.0.0',

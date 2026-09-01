@@ -3,10 +3,7 @@
   "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
   "fields": {
     "constructorArgs": {
-      "handler": {
-        "type": "constructorArgs",
-        "nameArgs": true
-      }
+      "handler": { "type": "constructorArgs", "nameArgs": true }
     },
     "owner": {
       "permissions": [
@@ -15,6 +12,9 @@
           "description": "can delete arbitrary checkpoints."
         }
       ]
+    },
+    "heimdallId": {
+      "description": "Fork identifier for the heimdall state bridge to bor (polygon execution). Changes with hard forks."
     }
   },
   "ignoreMethods": ["headerBlocks"],

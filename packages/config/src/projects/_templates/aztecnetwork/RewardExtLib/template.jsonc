@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Library immutably linked into the Rollup for sequencer and prover reward accounting. Its functions operate on the calling Rollup's storage through DELEGATECALL, so direct getter calls on the library are ignored.",
+  "category": "core",
+  "ignoreMethods": [
+    "canPruneAtTime",
+    "claimProverRewards",
+    "claimSequencerRewards",
+    "deployRewardBooster",
+    "getCheckpointReward",
+    "getCollectiveProverRewardsForEpoch",
+    "getEpochForCheckpoint",
+    "getEthPerFeeAssetAtCheckpoint",
+    "getHasClaimed",
+    "getHasSubmitted",
+    "getL1FeesAt",
+    "getManaLimit",
+    "getManaMinFeeComponentsAt",
+    "getManaTarget",
+    "getProvingCostPerMana",
+    "getRewardConfig",
+    "getRewardDistributor",
+    "getSequencerRewards",
+    "getSharesFor",
+    "getSpecificProverRewardsForEpoch",
+    "initializeConfig",
+    "summedMinFee",
+    "updateConfig"
+  ]
+}

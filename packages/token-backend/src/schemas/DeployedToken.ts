@@ -23,7 +23,9 @@ export const DeployedTokenRecord = v.object({
   abstractTokenId: v.union([v.string(), v.null()]),
   decimals: v.number(),
   deploymentTimestamp: v.number(),
+  ignored: v.boolean().optional(),
   metadata: v.union([Metadata, v.null()]),
+  abstractTokenAssignmentProof: v.unknown(),
 })
 
 export type DeployedTokenUpdateable = v.infer<typeof DeployedTokenUpdateable>
@@ -33,7 +35,9 @@ export const DeployedTokenUpdateable = v.object({
   abstractTokenId: v.union([v.string(), v.null()]).optional(),
   decimals: v.number().optional(),
   deploymentTimestamp: v.number().optional(),
+  ignored: v.boolean().optional(),
   metadata: Metadata.optional(),
+  abstractTokenAssignmentProof: v.unknown().optional(),
 })
 
 export type DeployedTokenPrimaryKey = v.infer<typeof DeployedTokenPrimaryKey>

@@ -1,3 +1,484 @@
+Generated with discovered.json: 0xff5586b0bc11f96e668651fc36b6e2db1582ce2d
+
+# Diff at Tue, 25 Aug 2026 07:57:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@19c383d3b8961aa173298f261cae4a76da50a99d block: 1786536914
+- current timestamp: 1787644553
+
+## Description
+
+Second trusted aggregator removed (was not used in ~250d).
+
+Tajirchain starts sending pessimistic proofs.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.accessControl.TRUSTED_AGGREGATOR.members.1:
+-        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.14:
++        28
+      values.trustedAggregatorAC.1:
+-        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
+    }
+```
+
+Generated with discovered.json: 0x3d750f17be46b20724b5a8095ad9254a678a780f
+
+# Diff at Wed, 12 Aug 2026 12:17:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fcd1e391c3f4bb947d4d1cd82a80d26e44f435a9 block: 1784814697
+- current timestamp: 1786536914
+
+## Description
+
+New agglayer chain with chainId 3377, which maps to tajirchain.com. pessimistic (noproofs) architecture.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupCount:
+-        27
++        28
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.27:
++        {"rollupContract":"eth:0xB07134fF28e74a90667Ab5e3F7271a542D6E0358","chainID":3377,"verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupTypeID":14,"rollupVerifierType":2,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
+Generated with discovered.json: 0xeed66383c3e1b421c260c92b6d5ca4da30a9c4e5
+
+# Diff at Thu, 30 Jul 2026 14:36:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1784814697
+- current timestamp: 1784814697
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784814697 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
+-        "shared-sp1/SP1Verifier"
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
+Generated with discovered.json: 0x35e32bd3dcf58017d67cd29cad1c2a06f2e504fd
+
+# Diff at Thu, 23 Jul 2026 13:53:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1781600877
+- current timestamp: 1784814697
+
+## Description
+
+One PolygonAdminMultisig signer was rotated.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
++        "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2"
+    }
+```
+
+Generated with discovered.json: 0x95844697bd903f68a260a701bf4651c98ea84eb9
+
+# Diff at Tue, 16 Jun 2026 09:09:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1781095928
+- current timestamp: 1781600877
+
+## Description
+
+Add new vkey for all chains that use AgglayerGW. Switch multisig signer.
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.routes.0x0000000e:
++        [{"selector":"0x0000000e","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A","pessimisticVKey":"0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"}]
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) [GnosisSafe] {
+    +++ description: None
+      values.$members.7:
+-        "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227"
++        "eth:0x21618593F7147235aC8D511d68A547C935F9d417"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol} |    0
+ ...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1427 ++++++++++++++++++++
+ 2 files changed, 1427 insertions(+)
+```
+
+Generated with discovered.json: 0x410f6ee81947472db2f44c65363f26bbb0d159a7
+
+# Diff at Wed, 10 Jun 2026 14:35:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b1a27959a14343aae7c71ebbc397f62f0aab99c block: 1777963087
+- current timestamp: 1781095928
+
+## Description
+
+New aggchain-FEP program (affecting katana, programhash reproduced).
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x000b0001:
++        [{"selector":"0x000b0001","newVKey":"0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"}]
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) [polygon-cdk/Timelock] {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.52:
++        {"target":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","value":"0","function":"addPessimisticVKeyRoute","inputs":{"pessimisticVKeySelector":"0x0000000e","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A","pessimisticVKey":"0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.description:
+-        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
++        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
+      fieldMeta.routes.description:
+-        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
++        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
+    }
+```
+
+Generated with discovered.json: 0xc1748f5b310167ebbdc6d2609878e4f3d961ae96
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777963087
+- current timestamp: 1777963087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
+      receivedPermissions.0.permission:
+-        "aggregatePolygon"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
+      receivedPermissions.0.permission:
+-        "aggregatePolygon"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x834aa026a65ff043024bc0d9c5be24cd26a0819e
+
+# Diff at Fri, 08 May 2026 07:52:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777963087
+- current timestamp: 1777963087
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      sourceHashes.1:
+-        "0x3e98abe94ddfb10602e8ecfe755bcbc2ef664b24dbdf25c9231ac726af8d7da7"
++        "0x283e15d7157ad798b631629ce8ce14b94d78742771d1dba85a7b2ec67b2a0525"
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [polygon-cdk/AgglayerBridge] {
+    +++ description: The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      sourceHashes.1:
+-        "0xb40fddae6c645a55f315f2543ba01f6f0129babd6c85689e32e56f2d5d4b5b4a"
++        "0x163489b29ed2cad3ce21f82ec45c140c55e1f1a2f62404cd0df47fb5942cd38e"
+    }
+```
+
+```diff
+    contract PolygonSecurityCouncil (eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      sourceHashes.1:
+-        "0xc090b472b887aea0913f1a8fd38eec84d8a0faf5a90a03114035ebe5401c3d1f"
++        "0xded7a37131f5b2c19e94e461e4e7f20ad8d83291e41f834b6bdc3f67db715ae4"
+    }
+```
+
+```diff
+    contract AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) [polygon-cdk/AgglayerGER] {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      sourceHashes.1:
+-        "0x0691e028b98db8d6bfadf2704505338eeea6f915426cadc2422a6b034b81e2fb"
++        "0xcb5d2f1ec788697db9d2a7628390cd232b83a0c2ba74315ee95e419ab5a6417c"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) [polygon-cdk/Timelock] {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      sourceHashes.0:
+-        "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
++        "0x67f85a797c33748d0cf0e92068621982669b7239a53ca2136d5bcd3ff78973f5"
+    }
+```
+
+Generated with discovered.json: 0x370a7ac76d22bce19016a0fe3bc35427f54b796f
+
+# Diff at Tue, 05 May 2026 10:23:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777963087
+- current timestamp: 1777963087
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      deployerAddress:
++        "eth:0xfcFC415D6D21660b90c0545CA0e91E68172B8650"
+    }
+```
+
+```diff
+    contract SharedProxyAdmin (eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d"
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891"
+    }
+```
+
+```diff
+    contract AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      deployerAddress:
++        "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d"
+    }
+```
+
+```diff
+    contract BridgeLib (eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3) {
+    +++ description: Extension contract of the AgglayerBridge for asset metadata..
+      deployerAddress:
++        "eth:0xaFec0EE6D714EBe2dDf732799EEbA9F553394bE8"
+    }
+```
+
+```diff
+    contract PolygonSecurityCouncil (eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x00Eb6d3334282401E59cC438bC9D7B9496c42f55"
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      deployerAddress:
++        "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d"
+    }
+```
+
+```diff
+    contract AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      deployerAddress:
++        "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      deployerAddress:
++        "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d"
+    }
+```
+
+Generated with discovered.json: 0xb6f9a8904393463fb1f12bccdab707b3571a61dc
+
+# Diff at Tue, 05 May 2026 06:40:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26382144ce3c79862aee73e15f619d0a40458aae block: 1773663853
+- current timestamp: 1777963087
+
+## Description
+
+changes due to penchain moving to PP.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.13:
++        16
+      values.rollupsDataV2.15.rollupVerifierType:
+-        0
++        2
+      values.rollupsDataV2.15.rollupTypeID:
+-        7
++        14
+      values.rollupsDataV2.15.forkID:
+-        12
++        0
+      values.rollupsDataV2.15.verifier:
+-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x4afe0b87f1ae2b4c291855a07d0ef82ebacc97f8
 
 # Diff at Mon, 16 Mar 2026 12:26:03 GMT:
@@ -9405,4 +9886,3 @@ Provide description of changes. This section will be preserved.
     contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF)
     +++ description: None
 ```
-

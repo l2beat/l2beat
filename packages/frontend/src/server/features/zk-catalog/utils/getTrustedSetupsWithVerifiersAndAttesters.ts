@@ -15,7 +15,11 @@ import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import {
+  getProjectUrl,
+  type ProjectWithPageMetadata,
+} from '~/utils/project/getProjectUrl'
+import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
 import { getZkCatalogLogo } from '../getZkCatalogLogo'
 import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'
@@ -69,7 +73,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: ProjectWithPageMetadata[],
   targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -146,7 +150,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
 function uniqAndSortProjectsUsedIn(
   usedIn: UsedInProjectWithIcon[] | undefined,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: ProjectWithPageMetadata[],
   tvs: SevenDayTvsBreakdown,
 ) {
   if (!usedIn) return undefined
@@ -160,7 +164,7 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: ProjectWithPageMetadata[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -170,8 +174,7 @@ function getVerifiersWithProcessedUsedIn(
         usedIn: deployment.overrideUsedIn
           ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(
-              project.id,
-              deployment.chain,
+              ChainSpecificAddress.longChain(deployment.address),
               toPlainAddress(deployment.address),
             ),
       }))
@@ -195,8 +198,8 @@ function getOnchainVerifiersForProject(
         .filter((d) => d.usedIn.some((u) => u.id === targetProjectId))
         .map((d) => {
           const onchainVerifier = getOnchainVerifier(
-            d.deployment.chain,
-            d.deployment.address,
+            ChainSpecificAddress.longChain(d.deployment.address),
+            ChainSpecificAddress.address(d.deployment.address),
             contracts,
           )
 
@@ -238,18 +241,23 @@ function getOnchainVerifier(
   contracts: ProjectContracts | undefined,
 ) {
   const addressKey = toPlainAddress(address)
+  const chainContracts = contracts?.addresses[chain] ?? []
 
-  const contract = contracts?.addresses[chain]?.find(
-    (c) => ChainSpecificAddress.address(c.address) === addressKey,
-  )
+  const contract =
+    chainContracts.find(
+      (c) => ChainSpecificAddress.address(c.address) === addressKey,
+    ) ??
+    chainContracts.find((c) =>
+      c.upgradeability?.implementations.some(
+        (impl) => ChainSpecificAddress.address(impl) === addressKey,
+      ),
+    )
 
   if (!contract?.url) return undefined
 
-  const plainEthAddress = ChainSpecificAddress.address(contract.address)
-
   return {
     name: contract.name,
-    href: explorerAddressPageUrl(contract.url, plainEthAddress),
+    href: explorerAddressPageUrl(contract.url, addressKey),
   }
 }
 
@@ -288,29 +296,20 @@ function getVerifierStatuses(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: ProjectWithPageMetadata[],
 ): UsedInProjectWithIcon[] {
+  const daLayers = allProjects.filter((x) => x.daLayer)
   return projectIds
     .map((projectId) => {
       const project = allProjects.find((p) => p.id === projectId)
       if (!project) return undefined
-
-      let url = `/scaling/projects/${project.slug}`
-      if (project.daBridge) {
-        const layer = allProjects
-          .filter((x) => x.isDaLayer)
-          .find((x) => x.id === project.daBridge?.daLayer)
-        url = `/data-availability/projects/${layer?.slug}/${project.slug}`
-      } else if (project.isDaLayer) {
-        url = `/data-availability/projects/${project.slug}/no-bridge`
-      }
 
       return {
         id: project.id,
         name: project.name,
         slug: project.slug,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        url,
+        url: getProjectUrl(project, daLayers),
       }
     })
     .filter(notUndefined)

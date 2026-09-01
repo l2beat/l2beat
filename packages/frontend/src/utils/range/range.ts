@@ -1,14 +1,18 @@
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  UnixTime,
+  type UnixTimePeriod,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { rangeToDays } from './rangeToDays'
 
-export type ChartResolution = 'hourly' | 'sixHourly' | 'daily'
+export type ChartResolution = Exclude<UnixTimePeriod, 'minute'>
 
 export type ChartRange = v.infer<typeof ChartRange>
 export const ChartRange = v.tuple([v.union([v.number(), v.null()]), v.number()])
 
 export type ChartRangePredefinedOption =
   | '1d'
+  | '3d'
   | '7d'
   | '30d'
   | '90d'
@@ -16,55 +20,41 @@ export type ChartRangePredefinedOption =
   | '1y'
   | 'max'
 
-export function optionToRange(
-  option: ChartRangePredefinedOption,
-  opts?: { offset?: UnixTime },
-): ChartRange {
-  // Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
-  const offset = opts?.offset ?? -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
+export function rangeToResolution(range: ChartRange): ChartResolution {
+  if (range[0] === null) return 'day'
+  if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 7 * UnixTime.DAY)
+    return 'hour'
+  if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 90 * UnixTime.DAY)
+    return 'six hours'
+  return 'day'
+}
+
+// Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
+const BACKEND_OFFSET = -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
+export function optionToRange(option: ChartRangePredefinedOption): ChartRange {
   const days = optionToDays(option)
 
+  const end = UnixTime.toStartOf(UnixTime.now() + BACKEND_OFFSET, 'hour')
+
   return [
-    days === null
-      ? null
-      : UnixTime.toStartOf(
-          UnixTime.toStartOf(UnixTime.now(), 'day') -
-            days * UnixTime.DAY +
-            offset,
-          'hour',
-        ),
-    UnixTime.toStartOf(UnixTime.now() + offset, 'hour'),
+    days === null ? null : UnixTime.toStartOf(end, 'day') - days * UnixTime.DAY,
+    end,
   ]
 }
 
-export function rangeToOption(
-  [from, to]: ChartRange,
-  options: { value: ChartRangePredefinedOption }[],
-  offset: UnixTime,
-): ChartRangePredefinedOption | 'custom' {
-  if (
-    UnixTime.toStartOf(to, 'day') !==
-    UnixTime.toStartOf(UnixTime.now() + offset, 'day')
-  ) {
-    return 'custom'
-  }
-  if (from === null) return 'max'
-  const days = rangeToDays([from, to])
-  const option = options.find((option) => optionToDays(option.value) === days)
-  if (option) return option.value
-
-  return 'custom'
-}
-
-function optionToDays(option: 'max'): null
-function optionToDays(
+export function optionToDays(option: 'max'): null
+export function optionToDays(
   option: Exclude<ChartRangePredefinedOption, 'max'>,
 ): number
-function optionToDays(option: ChartRangePredefinedOption): number | null
-function optionToDays(option: ChartRangePredefinedOption): number | null {
+export function optionToDays(option: ChartRangePredefinedOption): number | null
+export function optionToDays(
+  option: ChartRangePredefinedOption,
+): number | null {
   switch (option) {
     case '1d':
       return 1
+    case '3d':
+      return 3
     case '7d':
       return 7
     case '30d':

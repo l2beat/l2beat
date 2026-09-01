@@ -2,6 +2,7 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
+import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { TRANSFER_TYPE_DISPLAY } from '~/pages/interop/utils/display'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
@@ -16,8 +17,8 @@ export function BurnAndMintCard({
   entries: BurnAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
-  const { buildUrl } = useInteropSelectedChains()
-  const viewAllUrl = buildUrl('/interop/burn-and-mint')
+  const { selectedChains } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/burn-and-mint', selectedChains)
 
   return (
     <PrimaryCard className="flex flex-col border-t-burn-and-mint max-md:border-b max-md:border-b-divider md:border-t-4">

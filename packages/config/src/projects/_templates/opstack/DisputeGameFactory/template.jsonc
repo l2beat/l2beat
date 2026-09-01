@@ -2,7 +2,11 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DisputeGameFactory",
   "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-  "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+  "ignoreInWatchMode": [
+    "gameCount",
+    "permissionedGameArgs",
+    "permissionedGamesTotal"
+  ],
   "ignoreMethods": ["gameAtIndex"],
   "types": {
     "ProposerFromArgs": {

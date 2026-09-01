@@ -1,45 +1,37 @@
+import { memo } from 'react'
+
 export interface ConnectionProps {
-  from: { x: number; y: number; direction: 'left' | 'right' }
-  to: { x: number; y: number; direction: 'left' | 'right' }
+  fromX: number
+  fromY: number
+  fromDirection: 'left' | 'right'
+  toX: number
+  toY: number
+  toDirection: 'left' | 'right'
   isHighlighted?: boolean
   isDashed?: boolean
   isDimmed?: boolean
   isGrayedOut?: boolean
 }
 
-export function Connection({ from, to, isDashed, ...rest }: ConnectionProps) {
-  const controlA = {
-    x: from.x + (from.direction === 'left' ? -50 : 50),
-    y: from.y,
-  }
+function ConnectionImpl(props: ConnectionProps) {
+  const controlAX = props.fromX + (props.fromDirection === 'left' ? -50 : 50)
+  const controlAY = props.fromY
+  const controlBX = props.toX + (props.toDirection === 'left' ? -50 : 50)
+  const controlBY = props.toY
 
-  const controlB = {
-    x: to.x + (to.direction === 'left' ? -50 : 50),
-    y: to.y,
-  }
-
-  const d = [
-    'M',
-    from.x,
-    from.y,
-    'C',
-    controlA.x,
-    controlA.y,
-    controlB.x,
-    controlB.y,
-    to.x,
-    to.y,
-  ].join(' ')
+  const d = `M ${props.fromX} ${props.fromY} C ${controlAX} ${controlAY} ${controlBX} ${controlBY} ${props.toX} ${props.toY}`
 
   return (
     <path
       d={d}
       strokeLinecap="round"
-      strokeDasharray={isDashed ? '5,5' : undefined}
-      className={toStrokeClass(rest)}
+      strokeDasharray={props.isDashed ? '5,5' : undefined}
+      className={toStrokeClass(props)}
     />
   )
 }
+
+export const Connection = memo(ConnectionImpl)
 
 function toStrokeClass(
   props: Pick<ConnectionProps, 'isHighlighted' | 'isDimmed' | 'isGrayedOut'>,

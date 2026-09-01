@@ -1,11 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
-  type Analysis,
   ConfigReader,
   type ConfigRegistry,
   combinePermissionsIntoDiscovery,
-  type DiscoveryBlockNumbers,
   type DiscoveryEngine,
   type DiscoveryOutput,
   DiscoveryRegistry,
@@ -13,13 +11,14 @@ import {
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   modelPermissions,
+  remapDiscoverySourceNames,
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
-  UnixTime,
+  type UnixTime,
   unique,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
@@ -46,7 +45,6 @@ export class DiscoveryRunner {
   private async discover(
     projectName: string,
     discoveryTimestamp: number,
-    dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
@@ -66,25 +64,14 @@ export class DiscoveryRunner {
         configReader,
       )
       logger.info('Dependent project:', toDiscover)
-      logger.info(
-        'Requested dependent block numbers:',
-        dependentDiscoveries ?? 'none',
-      )
     } else {
       logger.info('Discovering only current project - no cross-chain modelling')
       toDiscover.push(projectName)
     }
 
-    if (dependentDiscoveries !== 'useCurrentTimestamp') {
-      // Always default the discovery of current project to discoveryBlockNumber
-      dependentDiscoveries[projectName] = {
-        timestamp: discoveryTimestamp,
-      }
-    }
-
     const discoveries = await this.discoverMany(
       toDiscover,
-      dependentDiscoveries,
+      discoveryTimestamp,
       configReader,
       logger,
     )
@@ -107,8 +94,7 @@ export class DiscoveryRunner {
     // TODO: Should not be here - drop it and use implementation name once it's ready
     // if somebody changes the name and decides to re-colorize
     // then .flat folder will be incorrect
-    // Duplicated from saveDiscoveryResult.ts
-    const remappedResults = remapNames(
+    const remappedResults = remapDiscoverySourceNames(
       projectDiscovery.analysis,
       projectDiscovery.discoveryOutput,
     )
@@ -122,41 +108,24 @@ export class DiscoveryRunner {
 
   private async discoverMany(
     toDiscover: string[],
-    dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
+    dependencyTimestamp: number,
     configReader: ConfigReader,
     logger: Logger,
   ) {
     const discoveries = new DiscoveryRegistry()
     for (const dependency of toDiscover) {
-      let dependencyTimestamp
-      if (dependentDiscoveries === 'useCurrentTimestamp') {
-        dependencyTimestamp = UnixTime.now()
-      } else {
-        dependencyTimestamp = dependentDiscoveries?.[dependency]?.timestamp
-
-        if (dependencyTimestamp === undefined) {
-          // We rediscover on the past block number, but with current configs and dependencies.
-          // Those dependencies might not have been referenced in the old discovery.
-          // In that case we don't fail - the diff will show all those "added".
-          logger.info(
-            `No block number found for dependency ${dependency}, skipping its rediscovery.`,
-          )
-          continue
-        }
-      }
-
       const dependencyConfig = configReader.readConfig(dependency)
       logger.info(
         `Discovering ${dependencyConfig.name} at timestamp ${dependencyTimestamp}`,
       )
-      const analysis = await this.discoveryEngine.discover(
+      const { analyses } = await this.discoveryEngine.discover(
         this.allProviders,
         dependencyConfig.structure,
         dependencyTimestamp,
       )
 
       const chains = unique(
-        analysis.map((c) => ChainSpecificAddress.longChain(c.address)),
+        analyses.map((c) => ChainSpecificAddress.longChain(c.address)),
       )
 
       const usedBlockNumbers: Record<string, number> = {}
@@ -170,9 +139,9 @@ export class DiscoveryRunner {
         dependencyConfig,
         dependencyTimestamp,
         usedBlockNumbers,
-        analysis,
+        analyses,
       )
-      discoveries.set(dependency, discovery, analysis)
+      discoveries.set(dependency, discovery, analyses)
     }
     return discoveries
   }
@@ -181,17 +150,10 @@ export class DiscoveryRunner {
     config: ConfigRegistry,
     timestamp: UnixTime,
     logger: Logger,
-    dependentDiscoveries?: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
     try {
-      return await this.discover(
-        config.name,
-        timestamp,
-        dependentDiscoveries ?? {},
-        logger,
-        configReader,
-      )
+      return await this.discover(config.name, timestamp, logger, configReader)
     } catch (error) {
       const err = isError(error)
         ? (error as Error)
@@ -208,30 +170,4 @@ export class DiscoveryRunner {
       throw err
     }
   }
-}
-
-function remapNames(
-  results: Analysis[],
-  discoveryOutput: DiscoveryOutput,
-): Analysis[] {
-  return results.map((entry) => {
-    if (entry.type === 'EOA' || entry.type === 'Reference') {
-      return entry
-    }
-
-    const matchingEntry = discoveryOutput.entries.find(
-      (e) => e.address === entry.address,
-    )
-
-    if (!matchingEntry) {
-      return entry
-    }
-
-    const newName = matchingEntry.name ?? entry.name
-
-    return {
-      ...entry,
-      name: newName,
-    }
-  })
 }

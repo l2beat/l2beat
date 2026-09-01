@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Groth16 verifier for PrivacyBoost private transfer / withdrawal epoch proofs. Verification keys are stored in SSTORE2 data contracts, keyed by circuit configuration (max transfers, inputs and outputs per transfer). Registered epoch keys are not enumerable on-chain.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register and replace the Groth16 verification keys used to validate epoch proofs."
+        }
+      ]
+    }
+  }
+}

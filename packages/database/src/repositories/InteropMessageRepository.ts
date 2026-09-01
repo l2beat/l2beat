@@ -115,11 +115,16 @@ export class InteropMessageRepository extends BaseRepository {
   async getByType(
     type: string,
     options: {
+      plugin?: string
       srcChain?: string
       dstChain?: string
     } = {},
   ): Promise<InteropMessageRecord[]> {
     let query = this.db.selectFrom('InteropMessage').where('type', '=', type)
+
+    if (options.plugin !== undefined) {
+      query = query.where('plugin', '=', options.plugin)
+    }
 
     if (options.srcChain !== undefined) {
       query = query.where('srcChain', '=', options.srcChain)
@@ -175,13 +180,19 @@ export class InteropMessageRepository extends BaseRepository {
   ): Promise<InteropMessageRecord[]> {
     if (items.length === 0) return []
 
-    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
-    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
     const rows = await this.db
       .selectFrom('InteropMessage')
       .selectAll()
-      .where('srcTxHash', 'in', srcHashes)
-      .where('dstTxHash', 'in', dstHashes)
+      .where((eb) =>
+        eb.or(
+          items.map((item) =>
+            eb.and([
+              eb('srcTxHash', '=', item.srcTxHash.toLowerCase()),
+              eb('dstTxHash', '=', item.dstTxHash.toLowerCase()),
+            ]),
+          ),
+        ),
+      )
       .execute()
     return rows.map(toRecord)
   }

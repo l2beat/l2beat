@@ -6,11 +6,16 @@ import {
   type SimulationNodeDatum,
 } from 'd3-force'
 import { useEffect, useState } from 'react'
-
+import { cn } from '../../../../utils/cn'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
+import { getGraphProjection } from '../store/utils/graphProjection'
+import { containerBoxes } from '../store/utils/renderGraph'
 import type { NodeLocations } from '../store/utils/storage'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
+import { IconControlCluster } from './icons/IconControlCluster'
 
 // d3 assumes each node is a single point (no width and height),
 // so we scale the coordinates of the simulation to move the nodes
@@ -24,11 +29,17 @@ interface SimulationNode extends SimulationNodeDatum {
   node: Node
 }
 
-export function ClusterLayoutButton() {
+export function ClusterLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
-  const hiddenNodes = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
-  const visibleNodes = nodes.filter((node) => !hiddenNodes.includes(node.id))
+  const footprints = containerBoxes(nodes)
+  const projection = getGraphProjection(nodes)
+  const visibleNodes = nodes
+    .filter((node) => !projection.hiddenNodeIds.has(node.id))
+    .map((node) => {
+      const box = footprints.get(node.id)
+      return box ? { ...node, box } : node
+    })
   const simulationNodes =
     selected.length === 0
       ? visibleNodes
@@ -45,21 +56,30 @@ export function ClusterLayoutButton() {
       selected.length === 0,
     )
 
+    // NaN tells d3 to assign its deterministic phyllotaxis seed. Seeding
+    // from current positions makes repeated presses non-idempotent:
+    // disconnected components repel each other further on every run.
     const simNodes: SimulationNode[] = simulationNodes.map((node) => ({
       id: node.id,
-      x: node.box.x / SIM_SCALE,
-      y: node.box.y / SIM_SCALE,
+      x: Number.NaN,
+      y: Number.NaN,
       node,
     }))
 
-    const links = simulationNodes
-      .flatMap((node) =>
-        node.fields.map((field) => ({
-          source: node.id,
-          target: field.target,
-        })),
+    const byDescendant = topLevelByDescendant(simulationNodes)
+
+    const simulationIds = new Set(simNodes.map((node) => node.id))
+    const links = projection.visibleEdges
+      .map((edge) => ({
+        source: byDescendant.get(edge.source)?.id ?? edge.source,
+        target: byDescendant.get(edge.target)?.id ?? edge.target,
+      }))
+      .filter(
+        (link) =>
+          link.source !== link.target &&
+          simulationIds.has(link.source) &&
+          simulationIds.has(link.target),
       )
-      .filter((l) => simNodes.some((sn) => sn.id === l.target))
 
     const simulation = forceSimulation(simNodes)
       .force(
@@ -83,11 +103,23 @@ export function ClusterLayoutButton() {
 
       simNodes.forEach((simNode) => {
         nodeLocations[simNode.id] = {
-          x: (simNode.x - minY) * SIM_SCALE + left,
-          y: (simNode.y - minX) * SIM_SCALE + top,
+          x: (simNode.x - minX) * SIM_SCALE + left,
+          y: (simNode.y - minY) * SIM_SCALE + top,
         }
       })
-      layout(nodeLocations)
+      if (selected.length === 0) {
+        const { transform, viewportContainer } = useStore.getState()
+        layout(
+          centerLocationsInViewport(
+            nodeLocations,
+            simulationNodes,
+            transform,
+            viewportContainer,
+          ),
+        )
+      } else {
+        layout(nodeLocations)
+      }
       simulation.stop()
       setUpdatingLayout(false)
     }
@@ -101,8 +133,11 @@ export function ClusterLayoutButton() {
     <ControlButton
       disabled={updatingLayout}
       onClick={() => setUpdatingLayout(true)}
+      className={cn('px-3 py-2.5', className)}
     >
-      {updatingLayout ? 'Wait...' : 'Cluster layout'}
+      <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
+        <IconControlCluster />
+      </span>
     </ControlButton>
   )
 }

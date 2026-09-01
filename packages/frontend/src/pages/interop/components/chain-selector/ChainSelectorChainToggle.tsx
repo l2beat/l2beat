@@ -1,3 +1,8 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
 
 export function ChainSelectorChainToggle({
@@ -5,6 +10,7 @@ export function ChainSelectorChainToggle({
   isSelected,
   toggleSelected,
   disabled,
+  disabledTooltip,
 }: {
   chain: {
     id: string
@@ -14,8 +20,9 @@ export function ChainSelectorChainToggle({
   isSelected: boolean
   toggleSelected: (chainId: string) => void
   disabled?: boolean
+  disabledTooltip?: string
 }) {
-  return (
+  const button = (
     <button
       className={cn(
         'flex h-8 cursor-pointer select-none items-center gap-2 rounded-sm border border-divider bg-surface-secondary py-1.5 pr-3 pl-2 transition-all focus:outline-none focus:ring focus:ring-brand disabled:cursor-not-allowed disabled:opacity-40',
@@ -29,5 +36,18 @@ export function ChainSelectorChainToggle({
         {chain.name}
       </div>
     </button>
+  )
+
+  if (!disabled || !disabledTooltip) {
+    return button
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="inline-flex">{button}</span>
+      </TooltipTrigger>
+      <TooltipContent>{disabledTooltip}</TooltipContent>
+    </Tooltip>
   )
 }

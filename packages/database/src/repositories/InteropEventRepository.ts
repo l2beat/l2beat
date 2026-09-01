@@ -220,10 +220,10 @@ export class InteropEventRepository extends BaseRepository {
       .selectFrom(source)
       .select((eb) => [
         'chain',
+        sql<boolean>`NOT unsupported`.as('isSupported'),
         eb.fn.countAll().as('count'),
-        sql<boolean>`NOT BOOL_OR(unsupported)`.as('isSupported'),
       ])
-      .groupBy('chain')
+      .groupBy(['chain', 'unsupported'])
       .orderBy('count', 'desc')
       .orderBy('chain', 'asc')
       .execute()

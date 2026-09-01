@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('race')
 
@@ -13,7 +13,9 @@ export const race: ScalingProject = opStackL2({
   },
   additionalPurposes: ['RWA'],
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20260607 })],
   addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z
+  archivedAt: UnixTime(1785971449), // Wed, 06 Aug 2026
   genesisTimestamp: UnixTime(1720421591),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   isPartOfSuperchain: true,
@@ -48,6 +50,7 @@ export const race: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1785971449), // Wed, 06 Aug 2026
   },
   isNodeAvailable: true,
 })

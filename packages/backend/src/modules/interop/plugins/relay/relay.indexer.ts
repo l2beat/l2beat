@@ -5,10 +5,28 @@ import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
-import { createInteropEventType, type InteropEvent } from '../types'
-import type { RelayApiClient } from './RelayApiClient'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { createInteropEventType, findChain, type InteropEvent } from '../types'
+import type { GetRequestsResponse, RelayApiClient } from './RelayApiClient'
+import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
+
+type RelayMetadata = GetRequestsResponse['requests'][number]['data']['metadata']
+type RelayCurrency = NonNullable<RelayMetadata>['currencyIn']
+
+export interface RelayIndexerConfig {
+  batchSize: number
+  maxRequestsPerUpdate: number
+  safeTimeOffset: number
+}
 
 export class RelayRootIndexer extends RootIndexer {
+  constructor(
+    logger: Logger,
+    private readonly safeTimeOffset: number,
+  ) {
+    super(logger)
+  }
+
   override initialize() {
     setInterval(() => this.requestTick(), 1_000)
     this.requestTick()
@@ -16,31 +34,44 @@ export class RelayRootIndexer extends RootIndexer {
   }
 
   tick(): Promise<number> {
-    return Promise.resolve(UnixTime.now())
+    return Promise.resolve(UnixTime.now() - this.safeTimeOffset)
   }
 }
 
-export const TokenSent = createInteropEventType<{
+export type TokenSentArgs = {
   id: string
   amount?: string
   token?: Address32
   $dstChain: string
-}>('relay.TokenSent', { direction: 'outgoing' })
+}
 
-export const TokenReceived = createInteropEventType<{
+export const TokenSent = createInteropEventType<TokenSentArgs>(
+  'relay.TokenSent',
+  { direction: 'outgoing' },
+)
+
+export type TokenReceivedArgs = {
   id: string
   amount?: string
   token?: Address32
   $srcChain: string
-}>('relay.TokenReceived', { direction: 'incoming' })
+}
+
+export const TokenReceived = createInteropEventType<TokenReceivedArgs>(
+  'relay.TokenReceived',
+  { direction: 'incoming' },
+)
 
 export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
+  private readonly bootstrapChainNamesById: Map<number, string>
 
   constructor(
-    private chains: { id: number; name: string }[],
+    chains: { id: number; name: string }[],
+    private configs: InteropConfigStore,
     private trackedChains: string[],
+    private readonly relayConfig: RelayIndexerConfig,
     private relayApiClient: RelayApiClient,
     private db: Database,
     private interopEventStore: InteropEventStore,
@@ -58,6 +89,8 @@ export class RelayIndexer extends ManagedChildIndexer {
       },
       logger,
     )
+
+    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(chains)
   }
 
   override async start(): Promise<void> {
@@ -78,9 +111,13 @@ export class RelayIndexer extends ManagedChildIndexer {
     if (chainId === undefined) {
       return 'Unknown'
     }
-    return (
-      this.chains.find((c) => c.id === chainId)?.name ?? `Unknown_${chainId}`
-    )
+
+    const networks = this.configs.get(RelayConfig)
+    if (networks) {
+      return findChain(networks, (network) => network.chainId, chainId)
+    }
+
+    return this.bootstrapChainNamesById.get(chainId) ?? `Unknown_${chainId}`
   }
 
   async update(from: number, to: number): Promise<number> {
@@ -88,37 +125,27 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
+    const batchSize = this.relayConfig.batchSize
+    const syncedTo = from + batchSize < to ? from + batchSize : to
+
     const res = await this.relayApiClient.getAllRequests({
-      limit: 500,
       startTimestamp: from,
-      sortBy: 'updatedAt',
-      sortDirection: 'asc',
+      endTimestamp: syncedTo + 1,
+      limit: this.relayConfig.maxRequestsPerUpdate,
     })
 
-    const successes = res.requests.filter((x) => x.status === 'success')
-    const last =
-      successes.length > 0 ? successes[successes.length - 1] : undefined
+    if (res.continuation) {
+      throw new Error(
+        `Window ${from}-${syncedTo} incomplete after ${res.requests.length} requests. Check the client warning for the reason and lower INTEROP_RELAY_BATCH_SIZE if the window is too dense`,
+      )
+    }
 
-    if (!last) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
-    }
-    const syncedTo = Math.min(
-      to,
-      UnixTime.fromDate(new Date(last.updatedAt)) - 1,
-    )
-    if (syncedTo < from) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
-    }
+    const successes = res.requests.filter((x) => x.status === 'success')
 
     const events: InteropEvent[] = []
 
     for (const item of successes) {
       const updateTime = UnixTime.fromDate(new Date(item.updatedAt))
-      if (updateTime > syncedTo) {
-        continue
-      }
       const createTime = UnixTime.fromDate(new Date(item.createdAt))
 
       const srcTx = item.data.inTxs?.[0]
@@ -146,7 +173,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         }
       }
       if (srcTx && srcTx.hash && srcTx.hash.length === 66) {
-        const srcToken = item.data.metadata?.currencyIn
+        const srcToken = getRelaySourceCurrency(item.data.metadata)
         let address = Address32.fromOrUndefined(srcToken?.currency?.address)
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
@@ -163,7 +190,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         events.push({ ...event, plugin: 'relay' })
       }
       if (dstTx && dstTx.hash && dstTx.hash.length === 66) {
-        const dstToken = item.data.metadata?.currencyOut
+        const dstToken = getRelayDestinationCurrency(item.data.metadata)
         let address = Address32.fromOrUndefined(dstToken?.currency?.address)
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
@@ -214,4 +241,18 @@ export class RelayIndexer extends ManagedChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+export function getRelaySourceCurrency(
+  metadata: RelayMetadata,
+): RelayCurrency | undefined {
+  const routeInput = metadata?.route?.origin?.inputCurrency
+  return routeInput?.amount !== undefined ? routeInput : metadata?.currencyIn
+}
+
+export function getRelayDestinationCurrency(
+  metadata: RelayMetadata,
+): RelayCurrency | undefined {
+  const routeOutput = metadata?.route?.destination?.outputCurrency
+  return routeOutput?.amount !== undefined ? routeOutput : metadata?.currencyOut
 }

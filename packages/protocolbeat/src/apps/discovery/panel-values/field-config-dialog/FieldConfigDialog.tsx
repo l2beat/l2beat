@@ -41,6 +41,7 @@ export function FieldConfigDialog(props: Props) {
   const configIgnoreMethods =
     models.configModel.ignoreMethods?.includes(fieldName)
   const configIgnoreRelatives =
+    models.configModel.ignoreRelatives === true ||
     models.configModel.ignoreRelatives?.includes(fieldName)
   const configIgnoreInWatchMode =
     models.configModel.ignoreInWatchMode?.includes(fieldName)
@@ -48,6 +49,7 @@ export function FieldConfigDialog(props: Props) {
   const templateIgnoreMethods =
     models.templateModel.ignoreMethods?.includes(fieldName)
   const templateIgnoreRelatives =
+    models.templateModel.ignoreRelatives === true ||
     models.templateModel.ignoreRelatives?.includes(fieldName)
   const templateIgnoreInWatchMode =
     models.templateModel.ignoreInWatchMode?.includes(fieldName)
@@ -56,6 +58,9 @@ export function FieldConfigDialog(props: Props) {
     models.configModel.getFieldHandlerString(fieldName)
   const templateHandlerString =
     models.templateModel.getFieldHandlerString(fieldName)
+
+  const configEditString = models.configModel.getFieldEditString(fieldName)
+  const templateEditString = models.templateModel.getFieldEditString(fieldName)
 
   const activeModel =
     activeTab === 'template' ? models.templateModel : models.configModel
@@ -230,6 +235,10 @@ export function FieldConfigDialog(props: Props) {
                 </div>
               </ConfigRow>
 
+              <ConfigRow headline="Edit">
+                <Code content={configEditString ?? 'No edit formula defined'} />
+              </ConfigRow>
+
               <ConfigRow headline="Description">
                 <DescriptionEditor
                   content={configDescription}
@@ -334,6 +343,12 @@ export function FieldConfigDialog(props: Props) {
                         fieldName={fieldName}
                       />
                     </div>
+                  </ConfigRow>
+
+                  <ConfigRow headline="Edit">
+                    <Code
+                      content={templateEditString ?? 'No edit formula defined'}
+                    />
                   </ConfigRow>
 
                   <ConfigRow headline="Description">

@@ -1,3 +1,4 @@
+import { RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import {
@@ -18,10 +19,18 @@ const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'
 export class CoingeckoClient {
   private readonly baseUrl: string
   private readonly apiKey?: string
+  private readonly rateLimiter: RateLimiter
 
   constructor(config: CoingeckoClientConfig) {
+    if (config.callsPerMinute < 1) {
+      throw new Error('CoinGecko callsPerMinute must be a positive integer')
+    }
+
     this.apiKey = config.apiKey
     this.baseUrl = config.apiKey ? PRO_API_URL : API_URL
+    this.rateLimiter = new RateLimiter({
+      callsPerMinute: config.callsPerMinute,
+    })
   }
 
   async getCoinDataById(id: string): Promise<Coin> {
@@ -33,9 +42,7 @@ export class CoingeckoClient {
       sparkline: 'false',
     })
 
-    const response = await fetch(url, {
-      headers: this.getHeaders(),
-    })
+    const response = await this.fetch(url)
 
     if (!response.ok) {
       throw new Error(
@@ -58,9 +65,7 @@ export class CoingeckoClient {
       include_platform: options.includePlatform.toString(),
     })
 
-    const response = await fetch(url, {
-      headers: this.getHeaders(),
-    })
+    const response = await this.fetch(url)
 
     if (!response.ok) {
       throw new Error(
@@ -90,9 +95,7 @@ export class CoingeckoClient {
       to: UnixTime.toYYYYMMDD(adjustedTo),
     })
 
-    const response = await fetch(url, {
-      headers: this.getHeaders(),
-    })
+    const response = await this.fetch(url)
 
     if (!response.ok) {
       throw new Error(
@@ -118,6 +121,14 @@ export class CoingeckoClient {
   private buildUrl(endpoint: string, params: Record<string, string>): string {
     const queryParams = new URLSearchParams(params).toString()
     return `${this.baseUrl}${endpoint}${queryParams ? `?${queryParams}` : ''}`
+  }
+
+  private async fetch(url: string) {
+    return await this.rateLimiter.call(() =>
+      fetch(url, {
+        headers: this.getHeaders(),
+      }),
+    )
   }
 
   private getHeaders(): Record<string, string> {

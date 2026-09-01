@@ -1,3 +1,4 @@
+import type { ProjectRedWarning } from '@l2beat/config'
 import {
   getUnderReviewText,
   type UnderReviewStatus,
@@ -6,11 +7,10 @@ import { Banner } from '../Banner'
 
 interface Project {
   archivedAt?: number
-  isUpcoming?: boolean
   underReviewStatus?: UnderReviewStatus
   header?: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
   }
 }
@@ -18,7 +18,6 @@ interface Project {
 export function ProjectSummaryBars({ project }: { project: Project }) {
   if (
     !project.archivedAt &&
-    !project.isUpcoming &&
     !project.underReviewStatus &&
     !project.header?.warning &&
     !project.header?.redWarning &&
@@ -34,11 +33,6 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
           This project is archived and no longer maintained.
         </Banner>
       )}
-      {project.isUpcoming && (
-        <Banner type="info" centered>
-          This is an upcoming project. Stay tuned!
-        </Banner>
-      )}
       {project.underReviewStatus && (
         <Banner type="warning" centered asMarkdown>
           {getUnderReviewText(project.underReviewStatus)}
@@ -51,7 +45,7 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
       )}
       {project.header?.redWarning && (
         <Banner type="negative" centered asMarkdown>
-          {project.header.redWarning}
+          {project.header.redWarning.text}
         </Banner>
       )}
       {project.header?.emergencyWarning && (

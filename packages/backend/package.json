@@ -2,47 +2,64 @@
   "name": "@l2beat/backend",
   "version": "0.1.0",
   "private": true,
-  "main": "./build/data.json",
-  "types": "./index.d.ts",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/src/index.d.ts",
+      "default": "./build/src/index.js"
+    },
+    "./trpc": {
+      "types": "./build/src/modules/backoffice/index.d.ts",
+      "default": "./build/src/modules/backoffice/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "trpc": [
+        "./build/src/modules/backoffice/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:backend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backend",
     "build:config": "cd ../config && pnpm build",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build *.tsbuildinfo",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "invert": "discovery invert",
     "lint": "biome check --formatter-enabled=false .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "db:migrate": "cd ../database && pnpm db:migrate",
-    "run-kroma-propose-script": "ts-node ./discovery/kroma/ethereum/script-ts/propose.ts",
+    "run-kroma-propose-script": "tsx ./discovery/kroma/ethereum/script-ts/propose.ts",
     "start": "node -r source-map-support/register build/src/index.js",
-    "start:dev": "pnpm build:dependencies && . ./.env && PRISMA_DB_URL=$LOCAL_DB_URL pnpm db:migrate && ts-node-dev --respawn --transpile-only src/index.ts",
-    "start:dev-pure": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start:profile": "node --inspect -r esbuild-register src/index.ts",
+    "start:dev": "pnpm build:dependencies && . ./.env && PRISMA_DB_URL=$LOCAL_DB_URL pnpm db:migrate && tsx watch src/index.ts",
+    "start:dev-pure": "tsx watch src/index.ts",
+    "start:profile": "tsx --inspect src/index.ts",
     "test": "./scripts/run_tests.sh",
     "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
-    "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
-    "env:sync": "ts-node ./scripts/env/sync.ts",
-    "starkware-costs": "ts-node --transpile-only scripts/starkwareCosts.ts",
-    "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
-    "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
+    "env:sync": "tsx ./scripts/env/sync.ts",
+    "railgun-observe": "tsx scripts/railgunObserve.ts",
+    "starkware-costs": "tsx scripts/starkwareCosts.ts",
+    "discover-tokens": "tsx scripts/discover-tokens/index.ts",
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm start:dev",
-    "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
-    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
-    "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",
-    "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
-    "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
-    "interop:example": "ts-node ./src/modules/interop/examples/script.ts",
-    "restore-table": "cd ../database && ./scripts/db-restore/table-restore.sh"
+    "tvs:generate": "pnpm build:config && tsx ./scripts/tvs/generate-config.ts",
+    "tvs:execute": "pnpm build:config && tsx ./scripts/tvs/execute.ts",
+    "da:preview": "pnpm build:config && tsx ./scripts/da/preview.ts",
+    "tvs:calculate-ids": "tsx ./scripts/tvs/calculate-ids.ts",
+    "tvs:translate-id": "tsx ./scripts/tvs/translate-id.ts",
+    "anomalies": "tsx ./scripts/anomalies/anomalies.ts",
+    "interop:example": "tsx ./src/modules/interop/examples/script.ts",
+    "interop:find-opstack": "tsx ./src/modules/interop/examples/findOpstackExamples.ts",
+    "restore-table": "cd ../database && pnpm db:restore-table"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "workspace:*",
-    "@l2beat/interop-backoffice": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/discovery": "workspace:*",
@@ -51,13 +68,17 @@
     "@l2beat/token-backend": "workspace:*",
     "@l2beat/uif": "workspace:*",
     "@l2beat/validate": "workspace:*",
+    "@scure/base": "1.2.6",
+    "@trpc/server": "11.17.0",
     "@types/ws": "^8.18.1",
+    "@waku/sdk": "0.0.36",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "diff": "^7.0.0",
     "elastic-apm-node": "^4.11.2",
     "ethers": "^5.7.2",
+    "jose": "5.10.0",
     "koa": "^2.14.1",
     "koa-bodyparser": "^4.4.1",
     "koa-compress": "^5.1.1",
@@ -88,8 +109,8 @@
     "@types/react-dom": "^19.0.4",
     "@types/supertest": "^2.0.12",
     "cmd-ts": "^0.13.0",
-    "jsonc-parser": "^3.2.0",
+    "dotenv": "^16.3.1",
     "supertest": "^6.2.3",
-    "ts-node-dev": "^2.0.0"
+    "tsx": "^4.9.3"
   }
 }

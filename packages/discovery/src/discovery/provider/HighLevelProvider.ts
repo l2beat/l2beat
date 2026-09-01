@@ -326,7 +326,12 @@ export class HighLevelProvider implements IProvider {
     const result = await this.provider.getDeployment(rawAddress)
     duration += performance.now()
     this.stats.mark(ProviderMeasurement.GET_DEPLOYMENT, duration)
-    return result
+    return (
+      result && {
+        ...result,
+        deployer: ChainSpecificAddress.fromLong(this.chain, result.deployer),
+      }
+    )
   }
 
   getBlobs(txHash: string): Promise<BlobsInBlock> {

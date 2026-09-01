@@ -6,6 +6,10 @@ import {
   AccessControlHandlerDefinition,
 } from './AccessControlHandler'
 import {
+  AragonPermissionsHandler,
+  AragonPermissionsHandlerDefinition,
+} from './AragonPermissionsHandler'
+import {
   ArbitrumActorsHandler,
   ArbitrumActorsHandlerDefinition,
 } from './ArbitrumActorsHandler'
@@ -66,6 +70,10 @@ import {
   LineaRolesModuleHandlerDefinition,
 } from './LineaRolesModuleHandler'
 import {
+  ManyChainMultiSigHandler,
+  ManyChainMultiSigHandlerDefinition,
+} from './ManyChainMultiSigHandler'
+import {
   OpStackDAHandler,
   OpStackDAHandlerDefinition,
 } from './OpDaHandler/OpDAHandler'
@@ -119,6 +127,7 @@ const DEFINITIONS = [
   EventHandlerDefinition,
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
+  AragonPermissionsHandlerDefinition,
   ScrollAccessControlHandlerDefinition,
   KintoAccessControlHandlerDefinition,
   LineaRolesModuleHandlerDefinition,
@@ -127,6 +136,7 @@ const DEFINITIONS = [
   HardCodedDefinition,
   StarkWareGovernanceHandlerDefinition,
   LayerZeroMultisigHandlerDefinition,
+  ManyChainMultiSigHandlerDefinition,
   ArbitrumActorsHandlerDefinition,
   ArbitrumScheduledTransactionsHandlerDefinition,
   OpStackDAHandlerDefinition,
@@ -159,6 +169,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   event: EventHandlerDefinition,
   starkWareNamedStorage: StarkWareNamedStorageHandlerDefinition,
   accessControl: AccessControlHandlerDefinition,
+  aragonPermissions: AragonPermissionsHandlerDefinition,
   kintoAccessControl: KintoAccessControlHandlerDefinition,
   scrollAccessControl: ScrollAccessControlHandlerDefinition,
   lineaRolesModule: LineaRolesModuleHandlerDefinition,
@@ -167,6 +178,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   hardcoded: HardCodedDefinition,
   starkWareGovernance: StarkWareGovernanceHandlerDefinition,
   layerZeroMultisig: LayerZeroMultisigHandlerDefinition,
+  manyChainMultiSig: ManyChainMultiSigHandlerDefinition,
   arbitrumActors: ArbitrumActorsHandlerDefinition,
   arbitrumScheduledTransactions: ArbitrumScheduledTransactionsHandlerDefinition,
   opStackDA: OpStackDAHandlerDefinition,
@@ -207,6 +219,8 @@ export function getUserHandler(
       return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
       return new AccessControlHandler(field, definition, abi)
+    case 'aragonPermissions':
+      return new AragonPermissionsHandler(field, definition, abi)
     case 'kintoAccessControl':
       return new KintoAccessControlHandler(field, definition, abi)
     case 'scrollAccessControl':
@@ -223,6 +237,8 @@ export function getUserHandler(
       return new StarkWareGovernanceHandler(field, definition, abi)
     case 'layerZeroMultisig':
       return new LayerZeroMultisigHandler(field, abi)
+    case 'manyChainMultiSig':
+      return new ManyChainMultiSigHandler(field, definition)
     case 'arbitrumActors':
       return new ArbitrumActorsHandler(field, definition)
     case 'arbitrumScheduledTransactions':

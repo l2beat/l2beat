@@ -1,5 +1,5 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export type TokenFlowDisplayData = {
   srcChain: {
@@ -15,7 +15,7 @@ export type TokenFlowDisplayData = {
 
 export function TokenFlowsCell({ flows }: { flows: TokenFlowDisplayData[] }) {
   return (
-    <div className="flex min-w-[120px] flex-col items-start gap-1 max-md:py-1">
+    <div className="flex min-w-[120px] flex-col items-start gap-1 py-1">
       {flows.map((flow) => {
         return (
           <div

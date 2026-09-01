@@ -73,7 +73,10 @@
     },
     "getLiquidator": {
       "permissions": [
-        { "type": "interact", "description": "take over liquidated accounts." }
+        {
+          "type": "interact",
+          "description": "take over liquidated accounts, then settle funding and PnL on the resulting positions via the PerpEngine."
+        }
       ]
     }
   }

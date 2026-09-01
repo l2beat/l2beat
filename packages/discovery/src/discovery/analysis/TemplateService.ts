@@ -27,7 +27,7 @@ import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
-import { StructureContract } from '../config/StructureConfig'
+import { type Entrypoint, StructureContract } from '../config/StructureConfig'
 import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -59,6 +59,11 @@ export type RefreshReason =
       type: 'TEMPLATE_CONFIG_CHANGED'
       templates: string[]
     }
+  | {
+      type: 'ENTRYPOINTS_CHANGED'
+      contract: string
+      detail: string
+    }
 
 export interface ShapeCriteria {
   validAddresses?: string[]
@@ -67,6 +72,11 @@ export interface ShapeCriteria {
 export interface Shape {
   criteria?: ShapeCriteria
   hashes: Hash256[]
+}
+
+interface Template {
+  criteria?: ShapeCriteria
+  shapePath: string | undefined
 }
 
 export class TemplateService {
@@ -88,40 +98,41 @@ export class TemplateService {
     return existsSync(join(resolvedRootPath, template, 'template.jsonc'))
   }
 
-  /**
-   * @returns A record where the keys are template IDs (relative paths from the templates
-   *          root directory) and the values are arrays of paths to the Solidity shape
-   *          files for each template.
-   */
-  listAllTemplates() {
-    const result: Record<
-      string,
-      { criteria?: ShapeCriteria; shapePath: string | undefined }
-    > = {}
+  private loadTemplateFromPath(path: string): Template | undefined {
+    if (!existsSync(join(path, 'template.jsonc'))) return undefined
+    const shapePath = join(path, 'shapes.json')
+
+    const hasShape = existsSync(shapePath)
+    const criteriaPath = join(path, 'criteria.json')
+    const criteria = existsSync(criteriaPath)
+      ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
+      : undefined
+
+    return { criteria, shapePath: hasShape ? shapePath : undefined }
+  }
+
+  listAllTemplates(): Record<string, Template> {
+    const result: Record<string, Template> = {}
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     if (!fileExistsCaseSensitive(resolvedRootPath)) {
       return {}
     }
     const templatePaths = listAllPaths(resolvedRootPath)
     for (const path of templatePaths) {
-      if (!existsSync(join(path, 'template.jsonc'))) {
-        continue
-      }
-      const shapePath = join(path, 'shapes.json')
-
-      const hasShape = existsSync(shapePath)
-      const criteriaPath = join(path, 'criteria.json')
-      const criteria = existsSync(criteriaPath)
-        ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
-        : undefined
-
-      const templateId = path.substring(resolvedRootPath.length + 1)
-      result[templateId] = {
-        criteria,
-        shapePath: hasShape ? shapePath : undefined,
+      const template = this.loadTemplateFromPath(path)
+      if (template !== undefined) {
+        const templateId = path.substring(resolvedRootPath.length + 1)
+        result[templateId] = template
       }
     }
     return result
+  }
+
+  getTemplateById(templateId: string): Template | undefined {
+    const templatePath = path.join(this.rootPath, TEMPLATES_PATH, templateId)
+    if (!fileExistsCaseSensitive(templatePath)) return undefined
+
+    return this.loadTemplateFromPath(templatePath)
   }
 
   findMatchingTemplates(
@@ -272,6 +283,8 @@ export class TemplateService {
         return 'project config or used template has changed'
       case 'TEMPLATE_CONFIG_CHANGED':
         return `template configs has changed: ${reason.templates.join(', ')}`
+      case 'ENTRYPOINTS_CHANGED':
+        return `entrypoints changed: "${reason.contract}" ${reason.detail}`
       default:
         assertUnreachable(reason)
     }
@@ -360,6 +373,47 @@ export class TemplateService {
         type: 'TEMPLATE_CONFIG_CHANGED',
         templates: outdatedTemplates,
       })
+    }
+
+    reasons.push(...this.entrypointsNeedRefresh(discovery, config))
+
+    return reasons
+  }
+
+  // Entrypoints are global and deliberately excluded from the config hash, so
+  // promoting an address to an entrypoint does not change any consumer's hash.
+  // Without this, a consumer keeps a stale full copy of something it should now
+  // only reference, and the drift only ever surfaces as a CI failure.
+  private entrypointsNeedRefresh(
+    discovery: DiscoveryOutput,
+    config: ConfigRegistry,
+  ): RefreshReason[] {
+    const reasons: RefreshReason[] = []
+    const entrypoints = config.structure.entrypoints ?? {}
+
+    for (const entry of discovery.entries) {
+      const entrypoint = entrypoints[entry.address]
+      const contract = entry.name ?? entry.address.toString()
+
+      if (entry.type === 'Reference') {
+        const detail = referenceRefreshDetail(entry.targetProject, entrypoint)
+        if (detail !== undefined) {
+          reasons.push({ type: 'ENTRYPOINTS_CHANGED', contract, detail })
+        }
+        continue
+      }
+
+      if (
+        entrypoint !== undefined &&
+        !entrypoint.isLegacy &&
+        entrypoint.project !== config.structure.name
+      ) {
+        reasons.push({
+          type: 'ENTRYPOINTS_CHANGED',
+          contract,
+          detail: `is discovered but is now an entrypoint of ${entrypoint.project}`,
+        })
+      }
     }
 
     return reasons
@@ -482,8 +536,7 @@ export class TemplateService {
   }
 
   findShapeByTemplateAndHash(templateId: string, hash: Hash256) {
-    const allTemplates = this.listAllTemplates()
-    const entry = allTemplates[templateId]
+    const entry = this.getTemplateById(templateId)
     if (!entry || !entry.shapePath) {
       return undefined
     }
@@ -524,6 +577,22 @@ export class TemplateService {
     const filePath = join(templatePath, 'criteria.json')
     return existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined
   }
+}
+
+function referenceRefreshDetail(
+  targetProject: string | undefined,
+  entrypoint: Entrypoint | undefined,
+): string | undefined {
+  if (entrypoint === undefined) {
+    return 'is a reference to an entrypoint that no longer exists'
+  }
+  if (entrypoint.isLegacy) {
+    return 'is a reference to an entrypoint that became legacy'
+  }
+  if (entrypoint.project !== targetProject) {
+    return `references ${targetProject} but the entrypoint is owned by ${entrypoint.project}`
+  }
+  return undefined
 }
 
 function listAllPaths(path: string): string[] {

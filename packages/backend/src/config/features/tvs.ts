@@ -1,5 +1,7 @@
 import type { ProjectService } from '@l2beat/config'
+import type { CleanableRepoName } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
   extractPricesAndAmounts,
@@ -7,7 +9,8 @@ import {
 } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import { isOnchainAmountConfig } from '../../modules/tvs/types'
-import type { TvsConfig } from '../Config'
+import type { Configuration } from '../../tools/uif/multi/types'
+import type { TvsCleanerConfig, TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getTvsConfig(
@@ -71,6 +74,7 @@ export async function getTvsConfig(
           case 'balanceOfEscrow':
           case 'totalSupply':
           case 'starknetTotalSupply':
+          case 'starknetBalanceOf':
             return a.chain
           case 'const':
             return undefined
@@ -103,11 +107,36 @@ export async function getTvsConfig(
     }
   })
 
+  const cleaner =
+    flags.isEnabled('tvs', 'cleaner') &&
+    createTvsCleanerConfigurations([
+      'tvsTokenValue',
+      'tvsBlockTimestamp',
+      'tvsAmount',
+      'tvsPrice',
+    ])
+
   return {
     projects: projectsWithSources,
     amounts,
     prices,
     chains,
     blockTimestamps,
+    cleaner,
   }
+}
+
+export function createTvsCleanerConfigurations(
+  repositories: readonly CleanableRepoName[],
+): Configuration<TvsCleanerConfig>[] {
+  return repositories.map((name) => ({
+    id: repoNameToConfigId(name),
+    minHeight: 0,
+    maxHeight: null,
+    properties: { name },
+  }))
+}
+
+function repoNameToConfigId(name: CleanableRepoName): string {
+  return createHash('sha1').update(name).digest('hex').slice(0, 12)
 }

@@ -64,7 +64,6 @@ export function addProjectsRoutes(
           'bridgeInfo',
           'ecosystemInfo',
           'display',
-          'isUpcoming',
           'archivedAt',
         ],
       })
@@ -82,7 +81,6 @@ export function addProjectsRoutes(
         name: project.name,
         chainId: project.chainConfig?.chainId,
         type: project.scalingInfo?.type,
-        isUpcoming: project.isUpcoming,
         isArchived: project.archivedAt !== undefined,
         category: project.bridgeInfo?.category,
         hostChain: project.scalingInfo?.hostChain.name,

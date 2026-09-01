@@ -20,7 +20,7 @@ You also MUST install an environment file called `.env` in the `packages/config`
 - `l2b discover [chain] [project]` run discovery for the project (e.g., `pnpm discover ethereum optimism`)
 - `l2b discover --help` print out all the possible switches for discovery
 
-A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
+A list of currently supported chains is [here](./src/config/chains.ts).
 In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `l2b discover all [project]`.
 It's possible to discover all projects that contain a given address by running `l2b discover (<chain> | all) [address]`, it's useful when a change to a shared multisig has occurred.
 
@@ -37,7 +37,7 @@ Discovery is based on two sources of information: the chain's RPC and it's explo
 To run you will need to provide the RPC url to use: (`CHAIN_RPC_URL_FOR_DISCOVERY`).
 Explorer is also required, most chains use Etherscan, for those that do use it, it's enough to configure only (`ETHERSCAN_API_KEY_FOR_DISCOVERY`).
 If your chain uses Blockscout you don't need to provide it.
-Chain information is already precompiled in the file mentioned [above](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
+Chain information is already precompiled in the file mentioned [above](./src/config/chains.ts).
 It stores information as the name, chain id, configuration of the multicall contract and the explorer instance.
 Adding a new chain boils down to just adding a new entry to the array and filling out all the data.
 
@@ -599,9 +599,11 @@ The event handler allows you to query and process blockchain events to track sta
 **Parameters:**
 
 - `type` - the literal: `"event"`
-- `select` - event parameter(s) to extract. Accepts a single string or array of strings (e.g., `"user"` or `["batchIndex", "chainId"]`)
-- `groupBy` - (optional) groups results by the specified event parameter. Returns an object with grouped keys when used.
+- `select` - event parameter(s) to extract. Accepts a single string or array of strings (e.g., `"user"` or `["batchIndex", "chainId"]`). Dot-notation reaches into nested values, e.g. `"config.chainSelector"` for a named field. Note that decoded struct/tuple parameters are positional arrays, so a nested struct field is addressed by its index, e.g. `"config.1"` for the second field of a `config` struct.
+- `groupBy` - (optional) groups results by the specified event parameter. Returns an object with grouped keys when used. Supports the same dot-notation as `select`, e.g. `"config.1"` to group by a field nested inside a struct parameter.
 - `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+- `flatten` - (optional, add/remove only) expands array-valued selected fields into one row per element.
+- `dedupBy` - (optional, add/remove only) field(s) that define row identity; later add/remove match on these while other selected fields stay in the output. Defaults to `select`.
 - `add` - (optional) configuration for events that add entries:
   - `event` - event name(s) to listen to (string or array).
   - `where` - (optional) conditional filter using a LISP like format `[OPERATOR, ...args]`.
@@ -1028,11 +1030,15 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 
 - `pipe`, chains multiple filters sequentially.
 - `map`, applies a filter to each element in an array.
+- `sort`, returns a new array sorted in ascending order, optionally by a computed key.
 - `pick`, selects specific keys from an object.
 - `get`, retrieves a value using a key or index path.
 - `set`, updates a value at a specific key or index path.
 - `filter`, creates a new array with all elements that pass the filter.
 - `find`, returns the first element that passes the filter.
+- `<`, less-than comparison of numbers or strings.
+- `>`, greater-than comparison of numbers or strings.
+- `env`, reads a value from the discovery environment.
 - `format`, applies the selected type caster.
 - `if`, conditional logic (if/then/else).
 - `delete`, deletes removes keys/indices from objects/arrays.
@@ -1064,6 +1070,21 @@ The second argument must be a single filter expression that will be applied to e
 - Input: `[1, 2, 3]`
 - Program: `["map", ["=", 2]]`
 - Output: `[false, true, false]`
+
+#### `sort`
+
+Returns a new array sorted in ascending order. The sort is stable and deterministic.
+When called with no arguments the elements are compared directly.
+When given a single filter argument, each element is sorted by the value that filter produces (its sort key).
+Useful for normalizing set-like arrays (e.g. a list of addresses or DON nodes) so that a pure reordering produces no diff.
+
+- Input: `[3, 1, 2]`
+- Program: `["sort"]`
+- Output: `[1, 2, 3]`
+
+- Input: `[{ id: "b" }, { id: "a" }]`
+- Program: `["sort", ["get", "id"]]`
+- Output: `[{ id: "a" }, { id: "b" }]`
 
 #### `pick`
 
@@ -1139,6 +1160,37 @@ The second argument must be a single filter expression that will be applied to e
 - Input: `[{ a: 1, v: 42 }, { a: 2, v: 43 }, { a: 3, v: 43 }]`
 - Program: `["find", ["pipe", ["get", "v"], ["=", 43]]]`
 - Output: `{ a: 2, v: 43 }`
+
+### `<`
+
+Compares values, returning `true` when the first operand is less than every other operand.
+Both operands of each comparison must be two numbers or two strings, otherwise the runtime throws.
+With a single argument the input value is compared against it (`input < arg`).
+With multiple arguments only the first operand is compared against each of the rest.
+It does not compare adjacent pairs, so it is not a strict-ordering (ascending sequence) check.
+For example `["<", 0, ["get", "n"], 10]` on `{ n: 100 }` is `true` because it checks `0 < 100` and `0 < 10`, even though the sequence `0, 100, 10` is not ascending.
+Together with `=`, `!=` and `>` it forms the comparison operators.
+
+- Input: `1`
+- Program: `["<", 2]`
+- Output: `true`
+
+- Input: `{ n: 10 }`
+- Program: `["pipe", ["get", "n"], ["<", 5]]`
+- Output: `false`
+
+- Input: `{ n: 100 }`
+- Program: `["<", 0, ["get", "n"], 10]`
+- Output: `true`
+
+### `>`
+
+Works like `<` but returns `true` when the first operand is greater than every other operand.
+It compares the first operand against each of the rest, not adjacent pairs, so it is likewise not a strict-ordering check.
+
+- Input: `3`
+- Program: `[">", 2]`
+- Output: `true`
 
 ### `format`
 
@@ -1250,6 +1302,34 @@ The filter must return a string.
 - Input: `{ a: 1, b: 2 }`
 - Program: `["map_keys", ["if", ["=", "a"], "first", "second"]]`
 - Output: `{ first: 1, second: 2 }`
+
+### `env`
+
+Reads a value from the discovery environment, ignoring the piped input value.
+The single argument is the key to read and must be one of the keys listed below, otherwise config validation fails.
+Reading a key whose value is unavailable in the current run (e.g. `timestamp` when no timestamp is set) throws an error.
+
+- `blockNumber` - the block number the discovery is running on.
+- `timestamp` - the UNIX timestamp (in seconds) of that block.
+- `chainName` - the name of the chain being discovered (e.g. `ethereum`).
+- `address` - the address of the contract the field belongs to.
+
+Because environment access is an explicit filter, plain strings are never treated as environment references. A literal such as `"$admin"` stays a literal, so patterns like `["pick", "$admin"]` keep working.
+
+- Input: `anything`
+- Program: `["env", "chainName"]`
+- Output: `"ethereum"`
+
+For example, to derive a boolean `hasExpired` field that becomes `true` once a stored expiration timestamp is in the past, `copy` the timestamp field and compare it against the environment timestamp:
+
+```json
+{
+  "hasExpired": {
+    "copy": "referralExpirationTime",
+    "edit": ["<", ["env", "timestamp"]]
+  }
+}
+```
 
 ### Copy feature
 

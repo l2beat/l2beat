@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const chainId = 43111
 const discovery = new ProjectDiscovery('hemi')
@@ -11,6 +11,7 @@ const genesisTimestamp = UnixTime(1725860711)
 export const hemi: ScalingProject = opStackL2({
   addedAt: UnixTime(1727449740), // 2024-09-27T17:09:00Z,
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20711665 })],
   genesisTimestamp,
   additionalPurposes: ['Bitcoin DApps'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -53,7 +54,7 @@ export const hemi: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.hemi.network/rpc',
-        callsPerMinute: 1000,
+        callsPerMinute: 300,
       },
       {
         type: 'blockscoutV2',

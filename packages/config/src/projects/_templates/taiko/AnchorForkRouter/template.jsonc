@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Routes to the Shasta Anchor contract post shasta fork.",
+  "ignoreMethods": ["proxiableUUID"],
+  "category": "spam"
+}

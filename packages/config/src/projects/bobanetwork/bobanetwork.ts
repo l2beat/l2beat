@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
@@ -13,6 +13,19 @@ export const bobanetwork: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 19671339, // first batch posted to the inbox after the Anchorage migration
+      untilBlock: 22790097, // last batch of this sequencer
+      inbox: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
+      sequencers: [
+        EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
+      ],
+    },
+    getOpStackDaTracking(discovery, { sinceBlock: 22790097 }),
+  ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Boba Network',

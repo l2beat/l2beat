@@ -1,4 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { ChainRecord } from '@l2beat/token-backend'
+import { useQuery } from '@tanstack/react-query'
 import { CoinsIcon, LinkIcon } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '~/components/core/Button'
@@ -28,14 +30,16 @@ import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
-import { api } from '~/react-query/trpc'
-import type { ChainRecord } from '../../../../database/dist/repositories/ChainRepository'
+import { useTRPC } from '~/react-query/trpc'
 
 export function SearchPage() {
+  const trpc = useTRPC()
   const { search } = useParams()
-  const { data } = api.search.all.useQuery(search ?? '', {
-    enabled: search !== '',
-  })
+  const { data } = useQuery(
+    trpc.search.all.queryOptions(search ?? '', {
+      enabled: search !== '',
+    }),
+  )
 
   return (
     <AppLayout className="space-y-2">

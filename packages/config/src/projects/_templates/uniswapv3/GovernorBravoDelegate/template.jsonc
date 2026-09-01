@@ -1,0 +1,104 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GovernorBravoDelegator",
+  "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of {{ proposalThresholdFmt }} {{ votingTokenSymbol }} can create proposals. Voting begins {{ votingDelayFmt }} blocks after proposal creation and lasts {{ votingPeriodFmt }} blocks; success requires more for-votes than against-votes and at least {{ quorumVotesFmt }} {{ votingTokenSymbol }} voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
+  "ignoreInWatchMode": ["proposalCount"],
+  "fields": {
+    "votingTokenSymbol": {
+      "handler": {
+        "type": "call",
+        "address": "{{ uni }}",
+        "method": "function symbol() view returns (string)",
+        "args": []
+      }
+    },
+    "proposalThresholdFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function proposalThreshold() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "quorumVotesFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function quorumVotes() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "votingDelayFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function votingDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal0"]
+    },
+    "votingPeriodFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function votingPeriod() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal0"]
+    },
+    "admin": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can replace the governor implementation or nominate a new proxy admin; the nominee can accept and thereafter control upgrades."
+        },
+        {
+          "type": "interact",
+          "description": "can set the voting delay, the voting period, and the proposal threshold."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "pendingAdmin": {
+      "description": "Address nominated to become proxy admin. It can accept the role without another action by the current admin.",
+      "severity": "HIGH"
+    },
+    "votingDelay": {
+      "handler": {
+        "type": "call",
+        "method": "function votingDelay() view returns (uint256)",
+        "args": []
+      },
+      "description": "Blocks between proposal submission and voting start."
+    },
+    "votingPeriod": {
+      "handler": {
+        "type": "call",
+        "method": "function votingPeriod() view returns (uint256)",
+        "args": []
+      },
+      "description": "Voting duration in blocks."
+    },
+    "proposalThreshold": {
+      "handler": {
+        "type": "call",
+        "method": "function proposalThreshold() view returns (uint256)",
+        "args": []
+      },
+      "description": "Delegated voting tokens required to submit a proposal."
+    },
+    "quorumVotes": {
+      "handler": {
+        "type": "call",
+        "method": "function quorumVotes() view returns (uint256)",
+        "args": []
+      },
+      "description": "For-votes required for a proposal to pass."
+    },
+    "proposalCount": {
+      "handler": {
+        "type": "call",
+        "method": "function proposalCount() view returns (uint256)",
+        "args": []
+      }
+    }
+  }
+}

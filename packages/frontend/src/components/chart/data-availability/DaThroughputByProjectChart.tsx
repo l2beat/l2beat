@@ -22,9 +22,9 @@ import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleA
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
-import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
+import type { ChartResolution } from '~/utils/range/range'
 import { getDaDataParams } from './getDaDataParams'
 
 interface Props {
@@ -34,7 +34,7 @@ interface Props {
   isLoading: boolean
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
 }
 
 const colorsCache = new Map<string, string>()
@@ -219,7 +219,7 @@ function CustomTooltip({
   resolution,
 }: CustomChartTooltipProps & {
   denominator: number
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
 }) {
   const { meta: config } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -234,15 +234,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatRange(
-          label,
-          label +
-            (resolution === 'daily'
-              ? UnixTime.DAY
-              : resolution === 'sixHourly'
-                ? UnixTime.HOUR * 6
-                : UnixTime.HOUR),
-        )}
+        {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

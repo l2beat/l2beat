@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.",
+  "category": "core",
+  "ignoreMethods": ["getAllowedTargets"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke ConsolidationMigrator roles."
+        }
+      ]
+    },
+    "pairAllowers": {
+      "copy": "accessControl",
+      "edit": ["get", "ALLOW_PAIR_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "allow a source and target operator pair and select the address allowed to submit its consolidation."
+        }
+      ]
+    },
+    "pairDisallowers": {
+      "copy": "accessControl",
+      "edit": ["get", "DISALLOW_PAIR_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove an allowed source and target operator pair."
+        }
+      ]
+    },
+    "allowedPairs": {
+      "description": "Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.",
+      "handler": {
+        "type": "event",
+        "select": ["sourceOperatorId", "targetOperatorId", "submitter"],
+        "dedupBy": ["sourceOperatorId", "targetOperatorId"],
+        "add": { "event": "ConsolidationPairAllowed" },
+        "remove": { "event": "ConsolidationPairDisallowed" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit validator consolidations for the specifically allowed source and target operator pair."
+        }
+      ]
+    }
+  }
+}

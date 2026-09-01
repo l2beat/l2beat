@@ -1,4 +1,7 @@
-import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
+import type {
+  RetryHandlerVariant,
+  TrackedTxConfigEntryWithoutId,
+} from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
   type CoingeckoId,
@@ -20,6 +23,17 @@ export interface WarningWithSentiment {
   sentiment: 'bad' | 'warning' | 'neutral'
 }
 
+export type ProjectDetailsSectionId =
+  | 'contracts'
+  | 'program-hashes'
+  | 'permissions'
+  | 'liveness'
+
+export interface ProjectRedWarning {
+  text: string
+  detailAnchor?: ProjectDetailsSectionId
+}
+
 export interface TableReadyValue<T extends string = string> {
   value: T
   secondLine?: string
@@ -30,13 +44,85 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface RegularExitWindowRisk
+  extends Pick<TableReadyValue, 'value' | 'sentiment'> {
+  description: string
+}
+
+export interface ExitWindowRisk extends TableReadyValue {
+  regular?: RegularExitWindowRisk
+}
+
 export interface ProjectTechnologyChoice {
   name: string
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  sequencerSetSpec?: ProjectSequencerSetSpec
+  inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
+  censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export interface ProjectSequencerSetSpec {
+  blockTime?: TableReadyValue
+  proposerRotationTime?: TableReadyValue
+  committeeRotationTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
+}
+
+export type ProjectInclusionDelayChart =
+  | ProjectEthereumLikeInclusionDelayChart
+  | ProjectCommitteeLikeInclusionDelayChart
+  | ProjectSpanLikeInclusionDelayChart
+
+interface ProjectInclusionDelayChartBase {
+  target: number
+  maxCensorFraction: number
+  stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
+}
+
+export interface ProjectInclusionDelayChartStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayChartEntityStake[]
+}
+
+export interface ProjectInclusionDelayChartEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectEthereumLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'ethereumlike'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectCommitteeLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'committeelike'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
+export interface ProjectSpanLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'spanlike'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
 }
 
 export interface ReferenceLink {
@@ -62,7 +148,7 @@ export type ProjectRiskCategory =
   | 'Withdrawals can be delayed if'
 // #endregion
 
-export type ProjectReviewStatus = 'initialReview' | 'inReview'
+export type ProjectReviewStatus = 'inReview'
 
 export interface BaseProject {
   id: ProjectId
@@ -70,6 +156,7 @@ export interface BaseProject {
   name: string
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
+  aliases?: string[]
   addedAt: UnixTime
 
   // common data
@@ -101,6 +188,15 @@ export interface BaseProject {
   // interop data
   interopConfig?: InteropConfig
 
+  // privacy data
+  privacyInfo?: ProjectPrivacyInfo
+
+  // defi data
+  defiInfo?: ProjectDefiInfo
+
+  // external dependency data
+  externalDependencies?: ProjectExternalDependency[]
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -108,7 +204,7 @@ export interface BaseProject {
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
-  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
+  trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
@@ -120,10 +216,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isScaling?: true
-  isInteropProtocol?: true
-  isDaLayer?: true
-  isUpcoming?: true
   archivedAt?: UnixTime
   hasTestnet?: true
 }
@@ -142,7 +234,7 @@ export interface ProjectCustomColors {
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
-  redWarning: string | undefined
+  redWarning: ProjectRedWarning | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
   unverifiedContracts: ChainSpecificAddress[]
@@ -150,8 +242,11 @@ export interface ProjectStatuses {
 
 export interface ProjectDisplay {
   description: string
+  detailedDescription?: string
+  references?: ReferenceLink[]
   links: ProjectLinks
   badges: Badge[]
+  redWarning?: ProjectRedWarning
 }
 
 export interface ProjectLinks {
@@ -229,8 +324,7 @@ interface IncidentMilestone extends BaseMilestone {
 }
 
 interface ProjectIconMilestone extends BaseMilestone {
-  projectId: ProjectId
-  projectIcon: string
+  project: { id: string; name: string; icon: string }
   type: 'project'
 }
 
@@ -274,11 +368,10 @@ export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
   | ChainBasicApi<'lighter'>
-  | ChainBasicApi<'zksync'>
-  | ChainBasicApi<'loopring'>
-  | ChainBasicApi<'degate3'>
+  | ChainBasicApi<'payy'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
+  | ChainBasicApi<'aztec-rpc'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
@@ -388,10 +481,10 @@ export type ProjectScalingCategory =
 export interface ProjectScalingProofSystem {
   /** Type of proof system */
   type: 'Optimistic' | 'Validity'
-  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  /** Custom display name of the proof system. Derived from the ZK Catalog projects' names when not set. */
   name?: string
-  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-  zkCatalogId?: string
+  /** Ids of the ZK Catalog projects describing the proof system. */
+  zkCatalogIds?: ProjectId[]
   /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
   challengeProtocol?: 'Interactive' | 'Single-step'
 }
@@ -527,13 +620,34 @@ export interface ProjectRiskView {
   stateValidation: TableReadyValue & {
     /** @unit seconds */
     executionDelay?: number
+    /** Whether `executionDelay` is applied on every withdrawal or only when a
+     *  challenge is raised. Treated as 'always' when omitted. */
+    executionDelayMode?: 'always' | 'if-challenged'
     /** @unit seconds */
     challengeDelay?: number
-    /** @unit ETH */
-    initialBond?: string
+    /** Defaults to ETH (rendered with Ξ prefix). Set `token` when the bond is
+     *  paid in a non-ETH token; the value is then rendered as
+     *  "<value> <token>". */
+    initialBond?: {
+      value: string
+      token?: string
+    }
+    /** Whether challenging is restricted to a whitelist. When true, the bond
+     *  amount is set by the project rather than reflecting an open economic
+     *  barrier, so values across permissioned systems aren't comparable to
+     *  permissionless ones. */
+    permissioned?: boolean
+    /** Worst-case ratio of defender funds to attacker funds required to
+     *  protect the chain in a resource-exhaustion attack. See
+     *  https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a. */
+    defenderAdvantage?:
+      | { multiplier: number; shape: 'linear' }
+      | { shape: 'log' }
+      | 'not-applicable'
+      | 'not-assessed'
   }
   dataAvailability: TableReadyValue
-  exitWindow: TableReadyValue
+  exitWindow: ExitWindowRisk
   sequencerFailure: TableReadyValue
   proposerFailure: TableReadyValue
 }
@@ -542,6 +656,13 @@ export interface ProjectScalingDa {
   layer: TableReadyValue & { projectId?: ProjectId }
   bridge: TableReadyValue & { projectId?: ProjectId }
   mode: TableReadyValue
+}
+
+export interface ProjectGovernanceInfo {
+  securityCouncil?: Record<string, string>
+  guardians?: Record<string, string>
+  upgrades?: Record<string, string>
+  tokenGovernance?: Record<string, string>
 }
 
 export interface ProjectScalingTechnology {
@@ -556,12 +677,17 @@ export interface ProjectScalingTechnology {
   exitMechanisms?: ProjectTechnologyChoice[]
   massExit?: ProjectTechnologyChoice
   otherConsiderations?: ProjectTechnologyChoice[]
-  upgradesAndGovernance?: string
-  upgradesAndGovernanceImage?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
   isUnderReview?: boolean
+}
+
+export interface ProjectUpgradesAndGovernance {
+  content?: string
+  governanceInfo?: ProjectGovernanceInfo
+  image?: string
 }
 
 export interface ProjectScalingStateDerivation {
@@ -593,6 +719,7 @@ export interface ProjectScalingStateValidationCategory {
     | 'Fraud proofs'
     // Other
     | 'No state validation'
+    | 'Slashing'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
@@ -772,6 +899,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #region zk catalog data
 export interface ProjectZkCatalogInfo {
   creator?: string
+  quantumResistant?: true
   formalVerificationLinks?: {
     name: string
     url: string
@@ -801,8 +929,7 @@ export interface ProjectZkCatalogInfo {
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
-      address: EthereumAddress
-      chain: string
+      address: ChainSpecificAddress
       overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
@@ -826,7 +953,211 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  participantCount?: number
 }
+
+// #endregion
+
+// #region defi data
+
+export type ProjectDefiCategory =
+  | 'DEX'
+  | 'Oracle'
+  | 'Prediction market'
+  | 'Stablecoin'
+
+export interface ProjectDefiInfo {
+  /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
+  category: ProjectDefiCategory
+}
+
+export type ProjectExternalDependency =
+  | {
+      type: 'tracked'
+      /** An L2BEAT project this project depends on. */
+      projectId: ProjectId
+      /** How this project depends on the referenced project. */
+      description: string
+    }
+  | {
+      type: 'not-tracked'
+      /** An external dependency that is not represented by an L2BEAT project. */
+      name: string
+      /** Icon slug under /icons, e.g. "reth" for /icons/reth.png. */
+      icon: string
+      /** How this project depends on the external dependency. */
+      description: string
+    }
+
+// #endregion
+
+// #region privacy data
+
+export interface ProjectPrivacyInfo {
+  tokens: ProjectPrivacyToken[]
+  /**
+   * A project tracks relayers either through onchain events or through
+   * Railgun Waku sampling - the two produce incompatible statistics, so
+   * mixing kinds within one project is not representable.
+   */
+  relayerTracking?: ProjectPrivacyRelayerTracking
+  summaryTrackedItemName?: string
+  /**
+   * Privacy-specific detailed description shown on the privacy project page.
+   * Falls back to display.detailedDescription when not set.
+   */
+  detailedDescription?: string
+  exitWindow: PrivacyExitWindow
+  reproducibility: PrivacySummaryValue
+  privacy: PrivacySummaryValue
+  noteDiscovery?: PrivacyNoteDiscovery
+  attributes?: PrivacyAttribute[]
+  /**
+   * Privacy-specific quantum-resistance flag. Distinct in meaning from
+   * ProjectZkCatalogInfo.quantumResistant
+   */
+  quantumResistant?: true
+  riskSummary?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
+  /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
+  zkCatalogId?: ProjectId
+}
+
+export interface PrivacyNoteDiscovery {
+  description: string
+  risks?: string[]
+}
+
+export type ProjectPrivacyRelayerTracking =
+  | {
+      type: 'onchainEvents'
+      sources: ProjectPrivacyOnchainRelayerSource[]
+    }
+  | ProjectPrivacyRailgunWakuRelayerSource
+
+/** Relayers identified by extracting their addresses from onchain withdrawal events. */
+export type ProjectPrivacyOnchainRelayerSource = {
+  address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+}
+
+/** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
+export type ProjectPrivacyRailgunWakuRelayerSource = {
+  type: 'railgunWaku'
+  chainId: number
+  sinceTimestamp: UnixTime
+}
+
+export interface PrivacyExitWindow extends ExitWindowRisk {
+  description: string
+  walkawayTest: PrivacyWalkawayTest
+}
+
+export type PrivacyWalkawayTest =
+  | { passed: true }
+  | { passed: false; reason: string }
+
+export interface PrivacySummaryValue extends TableReadyValue {
+  description: string
+}
+
+export interface PrivacyAttribute {
+  id: string
+  label: string
+  description: string
+}
+
+export interface ProjectPrivacyToken {
+  token: {
+    address: string
+    iconUrl: string | undefined
+    symbol: string
+    decimals: number
+    priceId: string
+    sinceTimestamp: UnixTime
+  }
+  buckets: ProjectPrivacyBucket[]
+}
+
+export interface ProjectPrivacyBucket {
+  id: string
+  type: 'pool' | 'denomination'
+  label: string
+  address: PrivacyBucketAddress
+  sinceTimestamp: UnixTime
+  denomination?: string
+  deposit: PrivacyFlowSource
+  withdrawal: PrivacyFlowSource
+}
+
+/**
+ * Privacy pools can live on non-EVM chains. Keep EVM addresses in their
+ * existing ERC-3770 representation and use an explicit chain/address pair
+ * where an ERC-3770 address is not applicable.
+ */
+export type PrivacyBucketAddress =
+  | ChainSpecificAddress
+  | { chain: string; address: string }
+
+export type PrivacyFlowSource = {
+  event: string
+} & PrivacyFlowExtractorConfig
+
+export type PrivacyFlowExtractorConfig =
+  | {
+      extractor: 'fixedAmount'
+      params: {
+        amount: string
+      }
+    }
+  | {
+      extractor: 'privacyPoolsValue'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'railgunShield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'umbraAmount'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'zamaWrap'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'zamaUnwrap'
+      params: {
+        rate: string
+      }
+    }
+  | {
+      extractor: 'strk20Deposit'
+      params: {
+        tokenAddress: string
+      }
+    }
+  | {
+      extractor: 'strk20Withdrawal'
+      params: {
+        tokenAddress: string
+      }
+    }
+
+export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
+export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #endregion
 
@@ -1052,6 +1383,7 @@ export interface ProjectPermission {
 
 export interface ProjectPermissionedAccount {
   name: string
+  displayName?: string
   url: string
   address: ChainSpecificAddress
   isVerified: boolean
@@ -1065,6 +1397,8 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
   programHashes?: ProjectScalingContractsProgramHash[]
+  programHashesDescription?: string
+  zkVerifiers?: ChainSpecificAddress[]
 }
 
 export interface ProjectContract {
@@ -1144,8 +1478,6 @@ export interface ProjectEscrow {
   premintedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
@@ -1175,30 +1507,33 @@ export type InteropPluginName =
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
-  | 'allbridge'
-  | 'aori'
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
+  | 'basesolbridge'
   | 'beefy-bridge'
   | 'ccip'
   | 'cctp-v1'
   | 'cctp-v2'
   | 'celer'
+  | 'butternetwork'
   | 'centrifuge'
   | 'circle-gateway'
   | 'debridge'
   | 'debridge-dln'
   | 'gaszip'
+  | 'gnosisbridge'
   | 'hyperlane'
   | 'hyperlane-eco'
   | 'hyperlane-hwr'
   | 'hyperlane-merkly-tokenbridge'
   | 'hyperlane-simple-apps'
-  | 'layerzero-v1'
+  | 'hyperliquid-bridge'
   | 'layerzero-v2'
+  | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
+  | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
   | 'mayan-mctp'
@@ -1219,7 +1554,6 @@ export type InteropPluginName =
   | 'sorare-base'
   | 'squid-coral'
   | 'stargate'
-  | 'superform'
   | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'
@@ -1232,10 +1566,20 @@ export type InteropPluginName =
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
-export interface InteropConfig {
+export interface InteropIntentConfig {
+  color: string
+  intentModel: TableReadyValue
+  userRecovery: TableReadyValue
+  solverAccess: TableReadyValue
+  settlement: TableReadyValue
+}
+
+interface InteropConfigBase {
   name?: string
   shortName?: string
-  type: InteropType
+  description?: string
+  /** Longer markdown description visible on interop detailed pages. */
+  detailedDescription?: string
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
@@ -1251,14 +1595,30 @@ export interface InteropConfig {
   /** If configured avg. duration can be split into custom labeled groups.
    The listed transfer types are intentionally allowed to be non-exhaustive. */
   durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
+  /** Contracts displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  contracts?: ProjectContracts
+  /** Permissions displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  permissions?: Record<string, ProjectPermissions>
 }
+
+export type InteropConfig =
+  | (InteropConfigBase & {
+      type: 'intent'
+      /** Intent-specific properties displayed on intent bridge pages. */
+      intent: InteropIntentConfig
+    })
+  | (InteropConfigBase & {
+      type: Exclude<InteropType, 'intent'>
+      intent?: never
+    })
 
 export type InteropPlugin = {
   plugin: InteropPluginName
   bridgeType: KnownInteropBridgeType
   chain?: string
   abstractTokenId?: string
-  transferType?: string
 }
 
 export type InteropDurationSplit = InteropDurationSplitEntry[]
@@ -1353,6 +1713,19 @@ export const StarknetTotalSupplyAmountFormulaSchema = v.object({
   decimals: v.number(),
 })
 
+export type StarknetBalanceOfAmountFormula = v.infer<
+  typeof StarknetBalanceOfAmountFormulaSchema
+>
+export const StarknetBalanceOfAmountFormulaSchema = v.object({
+  type: v.literal('starknetBalanceOf'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.string(),
+  escrowAddress: v.string(),
+  decimals: v.number(),
+})
+
 export type CirculatingSupplyAmountFormula = v.infer<
   typeof CirculatingSupplyAmountFormulaSchema
 >
@@ -1382,6 +1755,7 @@ export const AmountFormulaSchema = v.union([
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
   StarknetTotalSupplyAmountFormulaSchema,
+  StarknetBalanceOfAmountFormulaSchema,
 ])
 
 export type Formula = CalculationFormula | ValueFormula | AmountFormula
@@ -1393,6 +1767,7 @@ export type OnchainAmountFormula =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
   | StarknetTotalSupplyAmountFormula
+  | StarknetBalanceOfAmountFormula
 
 export function isOnchainAmountFormula(
   formula: Formula,
@@ -1400,7 +1775,8 @@ export function isOnchainAmountFormula(
   return (
     formula.type === 'totalSupply' ||
     formula.type === 'balanceOfEscrow' ||
-    formula.type === 'starknetTotalSupply'
+    formula.type === 'starknetTotalSupply' ||
+    formula.type === 'starknetBalanceOf'
   )
 }
 

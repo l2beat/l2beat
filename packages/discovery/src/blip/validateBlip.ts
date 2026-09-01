@@ -1,3 +1,5 @@
+import { isEnvKey } from './type'
+
 export function validateBlip(input: unknown): boolean {
   if (!Array.isArray(input)) {
     switch (typeof input) {
@@ -32,12 +34,20 @@ export function validateBlip(input: unknown): boolean {
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case '!=':
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
+    case '<':
+      return input.slice(1).every((e) => validateBlip(e)) && notEmpty
+    case '>':
+      return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'and':
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'pipe':
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'map':
       return input.length === 2 && validateBlip(input[1])
+    case 'sort':
+      return (
+        input.length === 1 || (input.length === 2 && validateBlip(input[1]))
+      )
     case 'pick':
       return input.slice(1).every((e) => validateBlip(e)) && notEmpty
     case 'get':
@@ -54,6 +64,10 @@ export function validateBlip(input: unknown): boolean {
       return input.length === 2 && validateBlip(input[1])
     case 'find':
       return input.length === 2 && validateBlip(input[1])
+    case 'env':
+      return (
+        input.length === 2 && typeof input[1] === 'string' && isEnvKey(input[1])
+      )
     case 'format':
       return input.length === 2 && typeof input[1] === 'string'
     case 'if':

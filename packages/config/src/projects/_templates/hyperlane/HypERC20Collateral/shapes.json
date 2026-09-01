@@ -1,23 +1,22 @@
 {
   "HypERC20Collateral": {
-    "hash": "0x22ecad7e3715262180975872286e858ca32b854a576c5a9d5ce70965e0669e0b",
+    "hash": "0x7529b9b2e6fa51e7c1030d2ea5960f66e474b369533ab7e860716fc195907511",
     "address": "eth:0x5ADdEB216C6dB923b4DE9449A27120da9F399021",
     "blockNumber": 22188285
   },
   "HypERC20Collateral-apxETH": {
-    "hash": "0x52d9c07270b792443fea2a84f31175c53a2a02cbc56dfdd9a5c94dfd3f1ba6f4",
+    "hash": "0xcfc36d01d2ca411cd3fe2020d65ec4507a9eb787dc22557bee79c9fe17c3d741",
     "address": "eth:0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e",
     "blockNumber": 22823856
   },
   "HypERC20Collateral-USDT": {
-    "hash": "0x2f6c18a7a1399d67a6fd7eb044c8a8586f33dc0e246c50fe34b158098244d959",
+    "hash": "0x225b851d08459a5ad672354d915308e58769041fffb0d998be533a97a850b9c5",
     "address": "eth:0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7",
     "blockNumber": 22823856
   },
   "HypERC20Collateral.sol": {
-    "hash": "0x2e9655c34acdb3e5d0827ddfa907ee72f19d0561b1755941969a5761f9e86260",
+    "hash": "0x860f6c8503137102952945884eda6aebf27e3b5d88256086ece786a9d916394c",
     "address": "eth:0x81622Ed0711b6a3800eae7005a22cdc9e0d7b454",
-    "chain": "ethereum",
     "blockNumber": 24183227
   }
 }

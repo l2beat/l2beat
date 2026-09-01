@@ -1,10 +1,19 @@
 {
   "RollupProxyBoLD": {
-    "hash": "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51",
+    "hash": "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9",
     "address": [
       "eth:0x7FC126FF51183a78C5E0437467f325f661D8Df17",
       "eth:0x6490bA0a60Cc7d3a59C9eeE135D9eeD24553a60d"
     ],
     "blockNumber": 22188285
+  },
+  "RollupProxyBoLD_robinhood": {
+    "hash": "0xf63d847cedf2798da9b8a2094930914aaa88bd781d26aa55dc6e210f542672f5",
+    "address": [
+      "eth:0xAb7A44CE7e66963d2116dCe74AB63eeF88266C82",
+      "eth:0xedC23dFC7D1e57EC07eA5ff7419634DbAe08Ed2C"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 25443718
   }
 }

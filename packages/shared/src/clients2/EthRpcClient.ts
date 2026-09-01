@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import type { Http } from './Http'
 
 export type BlockParameter =
@@ -34,6 +35,7 @@ export class EthRpcClient {
     private metricsLabel: string,
     private nextId: () => string | number = randomId,
     private timeout?: number,
+    private readonly rpcMetrics?: RpcMetricsRecorder,
   ) {}
 
   async getChainId(): Promise<bigint> {
@@ -216,41 +218,48 @@ export class EthRpcClient {
 
   async rawCall(method: string, params: unknown = []) {
     const id = this.nextId()
-    const response = await this.http.fetch(this.url, {
-      metricsLabel: this.metricsLabel,
-      method: 'POST',
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id,
-        method,
-        params,
-      }),
-      headers: { 'Content-Type': 'application/json' },
-      timeout: this.timeout,
-    })
-    let data: unknown
-    let jsonSuccess = true
+
     try {
-      data = JSON.parse(response.body)
-    } catch {
-      jsonSuccess = false
+      const response = await this.http.fetch(this.url, {
+        metricsLabel: this.metricsLabel,
+        method: 'POST',
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id,
+          method,
+          params,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+        timeout: this.timeout,
+      })
+      let data: unknown
+      let jsonSuccess = true
+      try {
+        data = JSON.parse(response.body)
+      } catch {
+        jsonSuccess = false
+      }
+      const parsed = JsonRpcResponse.safeValidate(data)
+      if (!jsonSuccess || !parsed.success) {
+        throw new Error(
+          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        )
+      }
+      const envelope = parsed.data
+      if ('error' in envelope) {
+        throw new Error(
+          `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+        )
+      }
+      if (envelope.id !== id) {
+        throw new Error('RPC call failed. ID mismatch.')
+      }
+      return envelope.result
+    } finally {
+      this.rpcMetrics?.record({
+        method,
+      })
     }
-    const parsed = JsonRpcResponse.safeValidate(data)
-    if (!jsonSuccess || !parsed.success) {
-      throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
-      )
-    }
-    const envelope = parsed.data
-    if ('error' in envelope) {
-      throw new Error(
-        `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
-      )
-    }
-    if (envelope.id !== id) {
-      throw new Error('RPC call failed. ID mismatch.')
-    }
-    return envelope.result
   }
 }
 
@@ -416,7 +425,7 @@ const RpcTransaction = v.passthroughObject({
   input: vNullableData.optional(),
   // optional on base
   nonce: vQuantity.optional(),
-  to: v.union([v.null(), vAddress]),
+  to: vNullableAddress.optional(),
   transactionIndex: v.union([v.null(), vQuantity]),
   // optional on custom transaction types
   value: vNullableQuantity.optional(),
@@ -486,7 +495,11 @@ const RpcLog = v.passthroughObject({
   // non-standard optimisation, number in sonic
   // although this is included in reth, geth and Nethermind since late 2025
   // see: https://github.com/ethereum/execution-apis/issues/295
-  blockTimestamp: v.union([vQuantity, v.number()]).transform(BigInt).optional(),
+  blockTimestamp: v
+    .union([vQuantity, v.number()])
+    // Some logs return 0x0 as block timestamp, which is invalid
+    .transform((n) => (BigInt(n) === 0n ? undefined : BigInt(n)))
+    .optional(),
 })
 
 export type RpcReceipt = v.infer<typeof RpcReceipt>

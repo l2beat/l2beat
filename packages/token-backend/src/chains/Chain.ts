@@ -1,4 +1,4 @@
-import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
+import type { ChainRecord } from '@l2beat/database'
 import { BlockscoutClient } from './clients/blockscout/BlockscoutClient'
 import { EtherscanClient } from './clients/etherscan/EtherscanClient'
 import { RpcClient } from './clients/rpc/RpcClient'

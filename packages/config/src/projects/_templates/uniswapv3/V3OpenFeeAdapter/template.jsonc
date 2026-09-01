@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "V3OpenFeeAdapter",
+  "description": "Adapter for administering a configured Uniswap v3 factory. While it holds the factory owner role, anyone can ask it to apply configured protocol fees to pools or collect accrued fees to its fixed recipient. The fee setter controls global, per-tier, and per-pool fee settings; the owner can replace the fee setter, enable factory fee tiers, or transfer factory ownership.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        { "type": "act" },
+        {
+          "type": "interact",
+          "description": "can enable new fee tiers, change the feeSetter, and transfer UniswapV3Factory ownership to a new contract."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "feeSetter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sets the protocol fee schedule (global default, per-tier defaults, per-pool overrides) that anyone can then apply to pools."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "defaultFee": {
+      "description": "Stored global protocol-fee fallback. The sentinel value represents an explicitly disabled fee; other nonzero values pack the token0 and token1 denominators into two 4-bit nibbles."
+    },
+    "tier03DefaultFee": {
+      "handler": {
+        "type": "call",
+        "method": "function defaultFees(uint24 feeTier) view returns (uint8)",
+        "args": [3000]
+      },
+      "description": "Resolved configured protocol fee for the 0.3% tier before any per-pool override."
+    }
+  }
+}

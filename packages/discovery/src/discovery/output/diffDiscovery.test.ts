@@ -120,6 +120,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         addressType: 'Contract',
         description: undefined,
+        template: undefined,
         diff: [
           {
             key: 'values.A',
@@ -136,6 +137,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_B,
         addressType: 'Contract',
         description: undefined,
+        template: undefined,
         type: 'deleted',
       },
       {
@@ -143,6 +145,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_C,
         addressType: 'Contract',
         description: undefined,
+        template: undefined,
         type: 'created',
       },
     ])
@@ -170,6 +173,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         addressType: 'Contract',
         description: 'hello world',
+        template: undefined,
         type: 'deleted',
       },
     ])
@@ -197,6 +201,7 @@ describe(diffDiscovery.name, () => {
         address: ADDRESS_A,
         addressType: 'Contract',
         description: 'hello world',
+        template: undefined,
         type: 'created',
       },
     ])
@@ -252,6 +257,7 @@ describe(diffDiscovery.name, () => {
           },
         ],
         description: 'hello sailor',
+        template: undefined,
       },
     ])
   })

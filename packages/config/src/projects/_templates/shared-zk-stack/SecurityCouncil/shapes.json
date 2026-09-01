@@ -1,7 +1,13 @@
 {
   "SecurityCouncil": {
-    "hash": "0x153a01097ad00f13ce2cb9f0178a19858cb44dd75a40132d64d7fb1450cc0bf5",
+    "hash": "0x4f09812169eacbbd38ee512ee26569b5aa3cf693dbb7cc030cb8ed7f140e89e4",
     "address": "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
     "blockNumber": 22188285
+  },
+  "SecurityCouncil_8_members": {
+    "hash": "0x6d6fce824c07d524aa2280e5844059f4c2861d8c87a2509db5ed374984be5094",
+    "address": "eth:0x59195219d1176E42f8e607e9AC114926D47f9035",
+    "chain": "ethereum",
+    "blockNumber": 25136302
   }
 }

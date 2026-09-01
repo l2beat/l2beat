@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
 import { isDeepStrictEqual } from 'util'
 import { executeBlip } from '../../../blip/executeBlip'
-import type { BlipSexp } from '../../../blip/type'
+import type { BlipEnv, BlipSexp } from '../../../blip/type'
 import { validateBlip } from '../../../blip/validateBlip'
 import type { ContractValue } from '../../output/types'
 import { orderLogs } from '../../provider/BatchingAndCachingProvider'
@@ -53,6 +53,8 @@ const setOnlySchema = v.object({
 const addAndRemoveSchema = v.object({
   ...common,
   set: v.undefined().optional(),
+  flatten: v.boolean().optional(),
+  dedupBy: oneOrMany(v.string()).optional(),
   add: oneOrMany(EventHandlerAction),
   remove: oneOrMany(EventHandlerAction).optional(),
 })
@@ -127,6 +129,13 @@ export class EventHandler implements Handler {
       logRows.push({ log, value })
     }
 
+    const env: BlipEnv = {
+      blockNumber: provider.blockNumber,
+      timestamp: provider.timestamp,
+      chainName: provider.chain,
+      address: address.toString(),
+    }
+
     let value: ContractValue | undefined
     if (this.definition.groupBy !== undefined) {
       const groupByKey = this.definition.groupBy
@@ -134,10 +143,10 @@ export class EventHandler implements Handler {
       value = {}
       for (const key in grouped) {
         // biome-ignore lint/style/noNonNullAssertion: we know it's there
-        value[key] = this.processLogs(provider.chain, grouped[key]!)
+        value[key] = this.processLogs(provider.chain, env, grouped[key]!)
       }
     } else {
-      value = this.processLogs(provider.chain, logRows)
+      value = this.processLogs(provider.chain, env, logRows)
     }
 
     return {
@@ -149,6 +158,7 @@ export class EventHandler implements Handler {
 
   processLogs(
     longChain: string,
+    env: BlipEnv,
     logRows: LogRow[],
   ): ContractValue | ContractValue[] | undefined {
     const select = ensureArray(this.definition.select ?? [])
@@ -156,17 +166,28 @@ export class EventHandler implements Handler {
     const extractArray = this.definition.set !== undefined
     if (this.definition.set !== undefined) {
       const setActions = ensureArray(this.definition.set)
-      logRows = this.executeSets(longChain, logRows, setActions)
+      logRows = this.executeSets(longChain, env, logRows, setActions)
     } else if (this.definition.add !== undefined) {
       const addActions = ensureArray(this.definition.add)
       const removeActions = ensureArray(this.definition.remove ?? [])
+      if (this.definition.flatten) {
+        logRows = flattenSelectedLogRows(logRows, select)
+      }
+
+      // `dedupBy`, when set, is the row identity (what makes two logs "the same").
+      // When omitted, the dedup key falls back to `select` (legacy behavior).
+      const dedupBy =
+        this.definition.dedupBy !== undefined
+          ? ensureArray(this.definition.dedupBy)
+          : select
 
       logRows = this.executeAddRemove(
         longChain,
+        env,
         logRows,
         addActions,
         removeActions,
-        select,
+        dedupBy,
       )
     }
 
@@ -186,6 +207,7 @@ export class EventHandler implements Handler {
 
   executeSets(
     longChain: string,
+    env: BlipEnv,
     logs: LogRow[],
     setActions: EventHandlerAction[],
   ): LogRow[] {
@@ -193,7 +215,7 @@ export class EventHandler implements Handler {
 
     for (const entry of logs) {
       const keep = setActions.some((action) =>
-        evaluateAction(longChain, entry, action),
+        evaluateAction(longChain, env, entry, action),
       )
       if (!keep) {
         continue
@@ -207,19 +229,20 @@ export class EventHandler implements Handler {
 
   executeAddRemove(
     longChain: string,
+    env: BlipEnv,
     logs: LogRow[],
     addActions: EventHandlerAction[],
     removeActions: EventHandlerAction[],
-    select: string[],
+    dedupBy: string[],
   ): LogRow[] {
     const result: Map<string, LogRow> = new Map()
 
     for (const entry of logs) {
       const add = addActions.some((action) =>
-        evaluateAction(longChain, entry, action),
+        evaluateAction(longChain, env, entry, action),
       )
       const remove = removeActions.some((action) =>
-        evaluateAction(longChain, entry, action),
+        evaluateAction(longChain, env, entry, action),
       )
 
       assert(
@@ -232,9 +255,9 @@ export class EventHandler implements Handler {
           '  3. Make sure that remove where clause is opposite to add one',
       )
 
-      const value =
-        select.length > 0 ? extractKeys(entry.value, select) : entry.value
-      const string = JSON.stringify(value)
+      const keyValue =
+        dedupBy.length > 0 ? extractKeys(entry.value, dedupBy) : entry.value
+      const string = JSON.stringify(keyValue)
 
       if (add) {
         result.set(string, entry)
@@ -245,6 +268,37 @@ export class EventHandler implements Handler {
 
     return [...result.values()]
   }
+}
+
+function flattenSelectedLogRows(logRows: LogRow[], select: string[]): LogRow[] {
+  assert(
+    select.length === 1,
+    'Event handler flatten requires exactly one selected field',
+  )
+
+  // biome-ignore lint/style/noNonNullAssertion: checked above
+  const selectedKey = select[0]!
+  const result: LogRow[] = []
+  for (const row of logRows) {
+    const selectedValue = extractKey(row.value, selectedKey)
+    assert(
+      typeof row.value === 'object' && !Array.isArray(row.value),
+      'Event handler flatten requires object log values',
+    )
+    assert(
+      Array.isArray(selectedValue),
+      `Event handler flatten requires selected field [${selectedKey}] to be an array`,
+    )
+
+    for (const item of selectedValue) {
+      result.push({
+        log: row.log,
+        value: { ...row.value, [selectedKey]: item },
+      })
+    }
+  }
+
+  return result
 }
 
 async function fetchLogs(
@@ -261,6 +315,7 @@ async function fetchLogs(
 
 function evaluateAction(
   longChain: string,
+  env: BlipEnv,
   log: LogRow,
   { event, where }: EventHandlerAction,
 ) {
@@ -270,7 +325,7 @@ function evaluateAction(
 
   return (
     eventMatch &&
-    executeBlip(prefixAddresses(longChain, log.value), where ?? true)
+    executeBlip(prefixAddresses(longChain, log.value), where ?? true, env)
   )
 }
 
@@ -287,12 +342,25 @@ function extractKeys(
   return result
 }
 
+// Supports dot-notation for reaching into nested values, e.g.
+// "config.chainSelector" for a named object or "config.1" for a tuple/struct
+// (decoded structs are positional arrays, so a nested struct field is addressed
+// by its index). Plain keys (no dot) behave as before. Safe because Solidity
+// parameter names cannot contain a dot.
 function extractKey(value: ContractValue, key: string): ContractValue {
-  assert(typeof value === 'object' && !Array.isArray(value), 'Extract keys')
-
-  const result = value[key]
-  assert(result !== undefined, `Invalid extraction key [${key}], not defined`)
-  return result
+  let current: ContractValue = value
+  for (const part of key.split('.')) {
+    assert(
+      typeof current === 'object' && current !== null,
+      `Cannot extract [${part}] from a non-object while resolving [${key}]`,
+    )
+    const next: ContractValue | undefined = Array.isArray(current)
+      ? current[Number(part)]
+      : current[part]
+    assert(next !== undefined, `Invalid extraction key [${key}], not defined`)
+    current = next
+  }
+  return current
 }
 
 function ensureArray<T>(v: T | T[]): T[] {

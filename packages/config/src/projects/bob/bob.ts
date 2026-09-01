@@ -1,11 +1,29 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
+
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
+  'DisputeGameFactory',
+  `game${respectedGameType}`,
+)
+const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaGame,
+  'KAILUA_TREASURY',
+)
+const activeKailuaVerifier = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaTreasury,
+  'KAILUA_VERIFIER',
+)
 
 export const bob: ScalingProject = opStackL2({
   ecosystemInfo: {
@@ -14,11 +32,13 @@ export const bob: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19634330 })],
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],
   additionalPurposes: ['Bitcoin DApps'],
   isPartOfSuperchain: true,
   display: {
     name: 'BOB',
+    aliases: ['Build on Bitcoin'],
     slug: 'bob',
     description:
       "BOB (Build on Bitcoin) is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs through their blocks' headers on the L2.",
@@ -84,10 +104,11 @@ export const bob: ScalingProject = opStackL2({
   ],
   nonTemplateProofSystem: {
     type: 'Optimistic',
-    name: 'OP Kailua',
-    zkCatalogId: ProjectId('risc0'),
+    name: 'Kailua',
+    zkCatalogIds: [ProjectId('risc0')],
     challengeProtocol: 'Single-step',
   },
+
   associatedTokens: ['BOB'],
   chainConfig: {
     name: 'bob',
@@ -100,4 +121,10 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
+  nonTemplateZkVerifiers: [activeKailuaVerifier],
+  nonTemplateProgramHashes: [
+    PROGRAM_HASHES(
+      discovery.getContractValue<string>(activeKailuaVerifier, 'FPVM_IMAGE_ID'),
+    ),
+  ],
 })

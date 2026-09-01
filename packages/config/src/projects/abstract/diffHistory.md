@@ -1,3 +1,1034 @@
+Generated with discovered.json: 0xe5c8041e020644b7d12e6f589512ddc3f25dfd7d
+
+# Diff at Mon, 17 Aug 2026 11:30:41 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1786434343
+- current timestamp: 1786966176
+
+## Description
+
+Abstract Multisig upgraded the boojum verifiers to version v0.30.1 (registered on the ChainTypeManager before). The new verifiers are not yet reproduced.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.13:
++        ["2026-08-16T12:38:23.000Z","0x3039621e033e2274d2efc899e880c6ccf4834e956a2c757c65295526e5fc5204",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        13
++        14
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        128849018880
++        128849018881
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.getVerifier:
+-        "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc"
++        "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0xC47D355402E78b886B628914B3b129F236fEe3cc) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66 or eth:0x35CD3865199F2D9c574f34DD72520B19842d440c depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract EraVerifierPlonk (eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract EraVerifierFflonk (eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract EraDualVerifier (eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../DualVerifier.sol => .flat/EraDualVerifier.sol} | 10 +++-
+ .../EraVerifierFflonk.sol}                         |  8 +--
+ .../EraVerifierPlonk.sol}                          | 68 +++++++++++-----------
+ 3 files changed, 46 insertions(+), 40 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786434343 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      template:
++        "shared-zk-stack/L1VerifierPlonk"
+      description:
++        "Verifies a zk-SNARK proof using an implementation of the PlonK proof system."
+      fieldMeta:
++        {"verificationKeyHash":{"severity":"HIGH","description":"keccak256 hash of the verification keys."}}
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      template:
++        "shared-zk-stack/L1VerifierFflonk"
+      description:
++        "Verifies a zk-SNARK proof using an implementation of the fflonk proof system."
+      fieldMeta:
++        {"verificationKeyHash":{"severity":"HIGH","description":"keccak256 hash of the verification keys."}}
+    }
+```
+
+Generated with discovered.json: 0xc2354bd380a64cddb7b46d6e9ba63175f265d105
+
+# Diff at Tue, 11 Aug 2026 07:46:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@57ed70b2c9af46718994f3c208ff3317bed687bf block: 1785925299
+- current timestamp: 1786434343
+
+## Description
+
+Abstract multisig upgraded boojum verifiers to the latest version (the same as zksync Era, not yet reproduced). 
+
+Config-related: added full batch lifecycle permissions to era multisig template, fixed incorrect permissions and descriptions.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.12:
++        ["2026-08-08T20:30:11.000Z","0x7b15fc436b4e0afacf42accd854927504dc817cfc752ce1a4fad75b7631d8071",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        12
++        13
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051589
++        128849018880
+      values.getSemverProtocolVersion.1:
+-        29
++        30
+      values.getSemverProtocolVersion.2:
+-        5
++        0
+      values.getVerifier:
+-        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e"
++        "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0x9f5C39a2790f38542065E7854b90407371923375) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xd22cA89e8991FCE568456914c616d303e3142395) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0xC47D355402E78b886B628914B3b129F236fEe3cc) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66 or eth:0x35CD3865199F2D9c574f34DD72520B19842d440c depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../abstract/{.flat@1785925299 => .flat}/L1VerifierFflonk.sol  |  6 +++---
+ .../abstract/{.flat@1785925299 => .flat}/L1VerifierPlonk.sol   | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785925299 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x6be789605b13Edb78749824633b9933D44B582ba) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.","role":".upgraders"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"revert unexecuted batches through this contract.","role":".reverters"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch precommitments on L1 through this contract.","role":".precommitters"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch proofs on L1 through this contract.","role":".provers"}
+      receivedPermissions.1.description:
+-        "submit batches on L1 if approved by enough Validator Multisig members."
++        "submit batches on L1 through this contract (no Validator Multisig approvals required)."
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"change the members and threshold of the Validator Multisig and set the delay between batch commitment and execution.","role":".owner"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.precommitters:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+      values.provers:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+      values.reverters:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+      values.upgraders:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+    }
+```
+
+```diff
+    EOA  (eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.","role":".upgraders"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"revert unexecuted batches through this contract.","role":".reverters"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch precommitments on L1 through this contract.","role":".precommitters"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch proofs on L1 through this contract.","role":".provers"}
+      receivedPermissions.1.description:
+-        "submit batches on L1 if approved by enough Validator Multisig members."
++        "submit batches on L1 through this contract (no Validator Multisig approvals required)."
+    }
+```
+
+Generated with discovered.json: 0xd2c1d1ade0e7897a9171fe894086823a4472de90
+
+# Diff at Wed, 05 Aug 2026 10:22:44 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1782810164
+- current timestamp: 1785925299
+
+## Description
+
+Upgraded boojum verifiers to the latest version (the same as zksync Era, not yet reproduced). Also added one validator to the validator MS and removed one ms member of a gnosis safe.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.11:
++        ["2026-08-04T11:25:23.000Z","0xb0fa77c3fac001aff58b0cbeef7894fd44b89b3f62a4bd72df9de38072811092",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        11
++        12
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051588
++        124554051589
+      values.getSemverProtocolVersion.2:
+-        4
++        5
+      values.getVerifier:
+-        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
++        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e"
+    }
+```
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.$members.2:
++        "eth:0x5CAb0d2fC3BACD6fd80E9412b77A1142652db327"
++++ severity: HIGH
+      values.multisigMembers.2:
++        "eth:0x5CAb0d2fC3BACD6fd80E9412b77A1142652db327"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0x9f5C39a2790f38542065E7854b90407371923375) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xd22cA89e8991FCE568456914c616d303e3142395) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+## Source code changes
+
+```diff
+.../abstract/{.flat@1782810164 => .flat}/L1VerifierFflonk.sol  |  6 +++---
+ .../abstract/{.flat@1782810164 => .flat}/L1VerifierPlonk.sol   | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
+Generated with discovered.json: 0xafcdf28d1d9d327ba0fe5378271ce747cc037205
+
+# Diff at Fri, 31 Jul 2026 10:00:40 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9c7afc831acca40d9607f700039fb75c4976ec78 block: 1782810164
+- current timestamp: 1782810164
+
+## Description
+
+Added committers to era validator multisig template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782810164 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x6be789605b13Edb78749824633b9933D44B582ba) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batches on L1 if approved by enough Validator Multisig members.","role":".committers"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.committers:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+    }
+```
+
+```diff
+    EOA  (eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batches on L1 if approved by enough Validator Multisig members.","role":".committers"}
+    }
+```
+
+Generated with discovered.json: 0x9ecb014dfeb6579d4f48cd8ed3343f70e4c06273
+
+# Diff at Mon, 27 Jul 2026 11:01:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@887150af6d3edad6e5fde92995bb5ecc5e48cfde block: 1782810164
+- current timestamp: 1782810164
+
+## Description
+
+shared-zk-stack now uses entrypoints rediscovery
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782810164 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xCe20135Ac0253650E28Ea14911c69F1fADD8b06f) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xdF28907A6A272fa06333a197d7F0379A0f8f00aa) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+Generated with discovered.json: 0x043479a2ac516f12307ac0e6de186b401659a519
+
+# Diff at Tue, 30 Jun 2026 09:03:50 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1781777867
+- current timestamp: 1782810164
+
+## Description
+
+Moved two validator EOAs into a 1/2 validator multisig. 
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTL.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+    }
+```
+
+```diff
+    EOA  (eth:0x6be789605b13Edb78749824633b9933D44B582ba) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".validatorsVTLFullAC"
++        ".executor"
+      receivedPermissions.0.description:
+-        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
++        "initiate batch execution on L1 if approved by enough Validator Multisig members."
+      receivedPermissions.0.from:
+-        "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","role":"admin","via":[{"address":"eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".validatorsVTLFullAC"
++        ".executor"
+      receivedPermissions.0.description:
+-        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
++        "initiate batch execution on L1 if approved by enough Validator Multisig members."
+      receivedPermissions.0.from:
+-        "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
++        "eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable]
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+```
+
+## Source code changes
+
+```diff
+.../EraMultisigValidator/EraMultisigValidator.sol  | 5790 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 1038 ++++
+ .../src/projects/abstract/.flat/ProxyAdmin.sol     |  189 +
+ 3 files changed, 7017 insertions(+)
+```
+
+Generated with discovered.json: 0xb7e1c0894385979f2d5d34e35b542258721afd83
+
+# Diff at Thu, 18 Jun 2026 10:18:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ece0bb89d93f4462f45501d91379f3ba4bc05b8a block: 1781602618
+- current timestamp: 1781777867
+
+## Description
+
+Removed 2 (out of 4) registered validators.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTL.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+    }
+```
+
+Generated with discovered.json: 0x54dca3e82ff22633382a5bbd7c7e48156a6e27c8
+
+# Diff at Tue, 16 Jun 2026 09:38:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1779442556
+- current timestamp: 1781602618
+
+## Description
+
+Add more EOAs to the VTL accessControl.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTL.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+    }
+```
+
+Generated with discovered.json: 0x7e5cfc1e501e4062176943abeb5269582a587872
+
+# Diff at Tue, 09 Jun 2026 12:43:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779442556
+- current timestamp: 1779442556
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779442556 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xe90ba8913244653fd81feec99fc63a64478532b0
+
+# Diff at Fri, 22 May 2026 09:37:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1771250356
+- current timestamp: 1779442556
+
+## Description
+
+For some reason, one EOA appeared on the disco frontend. No onchan changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+Generated with discovered.json: 0x2a937095361ddbc160a70ac873eadc609cbc0a18
+
+# Diff at Fri, 15 May 2026 12:35:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1771250356
+- current timestamp: 1771250356
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
+Generated with discovered.json: 0xd7815df287daf73e5534a451917c18d33524132a
+
+# Diff at Fri, 08 May 2026 07:50:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771250356
+- current timestamp: 1771250356
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
++        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.1:
+-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
++        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
++        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
+    }
+```
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0x57533344e91d29f927AAEBee364A33633Bd205Ab) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0x58536761C97F5037931b56efeE922471add0eEe8) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
+      sourceHashes.0:
+-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
++        "0x5a6156ab737196ad26f28ac0f8be667f64154ce292ba41d4b7bc0c693ff19dea"
+    }
+```
+
+Generated with discovered.json: 0x9d100da1550a1739d6c0fa4e8768fcf1eb124855
+
+# Diff at Tue, 05 May 2026 10:21:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771250356
+- current timestamp: 1771250356
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      deployerAddress:
++        "eth:0xC301f8B2a2C08958E6e7a286AB49A986c1f7ef6A"
+    }
+```
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E"
+    }
+```
+
+```diff
+    contract Safe (eth:0x57533344e91d29f927AAEBee364A33633Bd205Ab) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c"
+    }
+```
+
+```diff
+    contract Safe (eth:0x58536761C97F5037931b56efeE922471add0eEe8) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xbB943Cf3c5b90f2eD04F53658CCA49286601e808"
+    }
+```
+
+```diff
+    contract Safe (eth:0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x28228243eb37cd1754c85980c6F6Ce697d2a1332"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74"
+    }
+```
+
+```diff
+    contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
 Generated with discovered.json: 0x222a5583906919be7b64d71b27dfddb6edc39642
 
 # Diff at Mon, 16 Feb 2026 14:00:34 GMT:

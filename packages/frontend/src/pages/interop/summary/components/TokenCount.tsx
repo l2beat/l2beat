@@ -1,14 +1,13 @@
+import { formatInteger } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { TokenData } from '~/server/features/scaling/interop/types'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
-import { api } from '~/trpc/React'
-import { formatInteger } from '~/utils/number-format/formatInteger'
+import type { TokenData } from '~/server/features/layer2s/interop/types'
+import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
-import { TokensDialog } from '../../components/tokens/TokensDialog'
+import { SelectedChainsTokensDialog } from '../../components/tokens/TokensDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 
 export function TokenCount({
   isLoading,
@@ -20,8 +19,6 @@ export function TokenCount({
   topItems: TopItems<TokenData> | undefined
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const utils = api.useUtils()
-  const { selectionForApi } = useInteropSelectedChains()
   const hasTokens =
     (tokenCount ?? 0) > 0 && !!topItems && topItems.items.length > 0
 
@@ -56,6 +53,7 @@ export function TokenCount({
                     iconUrl: token.iconUrl,
                     volume: token.volume,
                     issuer: token.issuer,
+                    href: getInteropTokenUrl(token),
                     transferCount: token.transferCount,
                     avgDuration: token.avgDuration,
                     avgValue: token.avgValue,
@@ -67,16 +65,13 @@ export function TokenCount({
                   remainingCount: topItems.remainingCount,
                 }}
                 className="mt-4"
-                onMouseEnter={() =>
-                  utils.interop.tokens.prefetch(selectionForApi)
-                }
                 setIsOpen={setIsOpen}
               />
             ) : null}
           </>
         )}
       </div>
-      <TokensDialog
+      <SelectedChainsTokensDialog
         id={undefined}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

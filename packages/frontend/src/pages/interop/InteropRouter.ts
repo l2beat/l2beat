@@ -1,15 +1,19 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { env } from '~/env'
+import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
+import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
+import { getInteropTokenOgImage } from './token/getInteropTokenOgImage'
+import { getInteropTokenPageData } from './token/getInteropTokenPageData'
+import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
 export type InteropQuery = v.infer<typeof InteropQuery>
 const InteropQuery = v
@@ -19,10 +23,6 @@ const InteropQuery = v
       .transform((v) => v?.split(','))
       .optional(),
     to: v
-      .string()
-      .transform((v) => v?.split(','))
-      .optional(),
-    selectedChains: v
       .string()
       .transform((v) => v?.split(','))
       .optional(),
@@ -37,7 +37,7 @@ export function createInteropRouter(
   const router = express.Router()
 
   router.get('/interop', (_req, res) => {
-    res.redirect('/interop/summary')
+    res.redirect(301, '/interop/summary')
   })
 
   router.get(
@@ -88,93 +88,81 @@ export function createInteropRouter(
     },
   )
 
-  if (env.CLIENT_SIDE_INTEROP_DETAILED_PAGES) {
-    router.get(
-      '/interop/protocols/:slug',
-      validateRoute({
-        params: v.object({ slug: v.string() }),
-        query: InteropQuery,
-      }),
-      async (req, res) => {
-        const data = await getInteropProtocolPageData(req, manifest)
-        if (!data) {
-          res.status(404).send('Not found')
-          return
-        }
-        const html = await render(data, req.originalUrl)
-        res.status(200).send(html)
-      },
-    )
+  router.get('/interop/token-frameworks', async (req, res) => {
+    const data = await getInteropTokenFrameworksData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
-    router.get(
-      '/interop/protocols/:slug/internal',
-      validateRoute({
-        params: v.object({ slug: v.string() }),
-        query: InteropQuery,
-      }),
-      async (req, res) => {
-        const data = await getInteropProtocolPageData(req, manifest, 'internal')
-        if (!data) {
-          res.status(404).send('Not found')
-          return
-        }
-        const html = await render(data, req.originalUrl)
-        res.status(200).send(html)
-      },
-    )
-  }
+  router.get('/interop/intent-bridges', async (req, res) => {
+    const data = await getInteropIntentBridgesData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
   router.get(
-    '/interop/summary/internal',
+    '/interop/protocols/:slug',
     validateRoute({
-      query: InteropQuery,
+      params: v.object({ slug: v.string() }),
+      query: v.object({ update: v.string().optional() }),
     }),
     async (req, res) => {
-      const data = await getInteropSummaryData(req, manifest, cache, {
-        mode: 'internal',
+      const project = await ps.getProject({
+        slug: req.params.slug,
+        optional: ['scalingInfo', 'interopConfig'],
       })
+      if (project?.scalingInfo && project.interopConfig) {
+        res.redirect(
+          302,
+          `/layer2s/projects/${project.slug}?protocols=${project.id}#interop-flows`,
+        )
+        return
+      }
+
+      const data = await getInteropProtocolPageData(req, manifest, cache)
+      if (!data) {
+        res.status(404).send('Not found')
+        return
+      }
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
 
   router.get(
-    '/interop/non-minting/internal',
+    '/interop/tokens/:slug/opengraph-image.png',
     validateRoute({
-      query: InteropQuery,
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getInteropNonMintingData(req, manifest, cache, {
-        mode: 'internal',
-      })
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
+      const image = await getInteropTokenOgImage(req.params.slug)
+      if (!image) {
+        res.status(404).send('Not found')
+        return
+      }
+      res.setHeader('Content-Type', 'image/png')
+      res.setHeader(
+        'Cache-Control',
+        'public, max-age=86400, stale-while-revalidate=604800',
+      )
+      res.send(image)
     },
   )
 
+  // The optional issuer and symbol segments only make the URL readable - the
+  // token is resolved by the slug (its id), so they are validated away here.
   router.get(
-    '/interop/lock-and-mint/internal',
+    '/interop/tokens/:slug{/:issuer}{/:symbol}',
     validateRoute({
+      params: v.object({ slug: v.string() }),
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropLockAndMintData(req, manifest, cache, {
-        mode: 'internal',
-      })
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
-
-  router.get(
-    '/interop/burn-and-mint/internal',
-    validateRoute({
-      query: InteropQuery,
-    }),
-    async (req, res) => {
-      const data = await getInteropBurnAndMintData(req, manifest, cache, {
-        mode: 'internal',
-      })
+      const data = await getInteropTokenPageData(req, manifest, cache)
+      if (!data) {
+        res.status(404).send('Not found')
+        return
+      }
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },

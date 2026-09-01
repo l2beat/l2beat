@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
-  "timestamp": 1772615972,
-  "configHash": "0xe5f21efa4cbe01905122f3eab80b8c68449e061203ad343a8cbbcfd9a842f4d1",
+  "timestamp": 1782392290,
+  "configHash": "0x09fde1bf36f952e1f141a2e11ab00b23123ef3104dffe6d1de04f33f316d6e36",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -10,9 +10,10 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x428926e63c344a25fc6e1854be10f620c64143f66904314e15837a6734e132b1",
-        "0xd4be21971e93432f8a4269386f5c2dfa288dff859600b0a3c8d8f17fdfd895e6"
+        "0x84df19fc70189e52a6b9abb51deea95810e9d50db67af9db1820e2ec214a5ee7"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691475899,
       "sinceBlock": 17868398,
       "values": {
@@ -65,9 +66,10 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x378a22860f926f5ba4dd478549ef1dc9f126335557b56556444e5c1393bdbfef",
-        "0x6e1b7753cf25b1dc926ed1048285f85b9cc596dbcebdadc1fdabd6830ac08f1e"
+        "0x4de77467566a14c793a7bca0af81e918e20243968002febe717ff1f21830a907"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691475827,
       "sinceBlock": 17868392,
       "values": {
@@ -122,36 +124,11 @@
       "template": "polygonposbridge/RootChainManager",
       "sourceHashes": [
         "0xbbbf27b3fdffff6edc7bb78c7f8d8b0e49e427ea37c77f6c0ee0824742a1480a",
-        "0x8e1112329013d39a3a696d494a2238f100b58f447fef589f88c6ad0cf0f90fee"
+        "0xcd889fd14e5179e2b6d3dabcbe104f028f164f0788a2ba61714fe397ee08c4c3"
       ],
       "proxyType": "Polygon proxy",
       "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        }
-      ],
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691475083,
       "sinceBlock": 17868330,
       "values": {
@@ -201,6 +178,7 @@
         "0x6739012cebcf9f8a3b471a230adc99bb3840a605867d4f20a9c11bf6e7a05d96"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691244011,
       "sinceBlock": 17849224,
       "values": {
@@ -224,10 +202,11 @@
       "type": "Contract",
       "template": "polygonposbridge/StakeManagerExtension_shibarium",
       "sourceHashes": [
-        "0x6c5643dd27ff09baeb85b5fb025f64da4c191a2c42e30f5b72c33b0b8d74dbf4"
+        "0x9bdaeb8e515c332cee3b8e70fe11a27c691138bb07c09f194265c4c7e7523292"
       ],
       "proxyType": "immutable",
       "description": "Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243879,
       "sinceBlock": 17849213,
       "values": {
@@ -277,37 +256,22 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Merkle",
-      "address": "eth:0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
-      "type": "Contract",
-      "template": "polygonposbridge/Merkle",
-      "sourceHashes": [
-        "0xf1be6e7e57f3ffb6af67424c57b1907e1fd54a410e2020ae110857774ea0a4b7"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1691242415,
-      "sinceBlock": 17849092,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2": "Merkle"
-      }
-    },
-    {
       "name": "StateSender",
       "address": "eth:0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C",
       "type": "Contract",
       "template": "polygonposbridge/StateSender",
       "sourceHashes": [
-        "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
+        "0x8122ee5d6f35571649314df7645c999b72a6e3e9cd4c3d1c5959b8dc6b4e625e"
       ],
       "proxyType": "immutable",
       "description": "Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.",
       "ignoreInWatchMode": ["counter"],
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243927,
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 41883,
+        "counter": 41916,
         "isOwner": false,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "REGISTRATIONS": [
@@ -326,9 +290,10 @@
       "type": "Contract",
       "template": "polygonposbridge/StakingNFT",
       "sourceHashes": [
-        "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
+        "0x2f8aae1745ceefd7a79c9084c0f5e89a6b621a77d901454f54a62f56fdc147c6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243843,
       "sinceBlock": 17849210,
       "values": {
@@ -362,11 +327,12 @@
       "type": "Contract",
       "template": "polygonposbridge/StakingInfo",
       "sourceHashes": [
-        "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
+        "0xea1573aa122981cf085a3aaaabcb1f9813d1d6ba6001cb885c34eb170e66b6d4"
       ],
       "proxyType": "immutable",
       "description": "Contains logging and getter functions about staking.",
       "ignoreInWatchMode": ["getAccountStateRoot"],
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243831,
       "sinceBlock": 17849209,
       "values": {
@@ -405,6 +371,7 @@
       ],
       "proxyType": "immutable",
       "description": "Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243915,
       "sinceBlock": 17849216,
       "values": {
@@ -424,11 +391,12 @@
       "type": "Contract",
       "template": "shibarium/WithdrawManager",
       "sourceHashes": [
-        "0x7ff7f5fd1ef5fec15bf32c69a0cdd350dc14edf95e739c32035dddde5009e3c0",
-        "0xcdde166e8888dfe4fae172f6008fe3fbc0bcb1db2e5be1ca6519f3eff028ba7b"
+        "0x7d9cc2eae010b1f498918d01b2eb8b9e4fcc606442dd88a19c886eb87305bc33",
+        "0x883c701a7230f42f3ad022a67f3b51bd010115e6457062c888ae73a372697cb6"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager. It has blacklisting support.",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243987,
       "sinceBlock": 17849222,
       "values": {
@@ -456,7 +424,7 @@
       "template": "polygonposbridge/StakeManager_shibarium",
       "sourceHashes": [
         "0x0e16b120e42fc8b8c6ed46c538b263aa895b463415254eba82cc25e7d104a136",
-        "0xe2522e34d47444e7e217e066534ccc56536e24f4f582f8585897230965360291"
+        "0x8d135820d68f1d401fbda02ade8912687d304e46108e8045eb923c5e3a208a49"
       ],
       "proxyType": "Polygon proxy",
       "description": "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. After the shibarium hack, this contract also includes a validator blacklist managed by eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06.",
@@ -472,6 +440,7 @@
         "NFTCounter",
         "delegatorsReward"
       ],
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243867,
       "sinceBlock": 17849212,
       "values": {
@@ -514,18 +483,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 33705,
+        "currentEpoch": 34874,
         "currentValidatorSetSize": 11,
-        "currentValidatorSetTotalStake": "10974090167514730948320174",
+        "currentValidatorSetTotalStake": "10934559562404516415581018",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "210975338394165244701",
-          "2763262760844474275671",
-          "1782345025938981979802",
-          "405618133441902228408"
+          "182927944949537239035",
+          "208537100651114658045",
+          "85648334797509269415",
+          "105179677610374694691"
         ],
         "dynasty": 30,
-        "epoch": 33705,
+        "epoch": 34874,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -552,7 +521,7 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 29342,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1912012559950754480189565",
+        "rewardPerStake": "2060069022274996035563288",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -562,7 +531,7 @@
         "totalStaked": "109999000000000000000000",
         "validatorShareFactory": "eth:0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "10974090167514730948320174",
+          "amount": "10934559562404516415581018",
           "stakerCount": 11
         },
         "validatorThreshold": 15,
@@ -582,9 +551,10 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x63f5481a49da196498b6cd77450d4e12da12c7608ab022b417dbed836935e0f7",
-        "0x093a1d884a048e1f39d3bb4ebd1bab3f52d07ed9cfd823099f6ddb87098f2de2"
+        "0x1aeec81d1a7fc1dd5a972199d7c93530a87696b5811daaf2412e90d588798951"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691475539,
       "sinceBlock": 17868368,
       "values": {
@@ -629,10 +599,11 @@
       "type": "Contract",
       "template": "polygonposbridge/ExitNFT",
       "sourceHashes": [
-        "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
+        "0x79ca55a0bab6b9581de67f17b6e3027ed214d46de02ad0ed742bbb843be00cfc"
       ],
       "proxyType": "immutable",
       "description": "NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243975,
       "sinceBlock": 17849221,
       "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
@@ -643,39 +614,7 @@
     {
       "address": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DepositManager",
@@ -683,11 +622,12 @@
       "type": "Contract",
       "template": "polygonposbridge/DepositManager",
       "sourceHashes": [
-        "0x5a03169cc01515b7d5ddd8f76da3641dcf8ffd451fc1d8edede0459191021835",
-        "0x6abce1ddeb9ae9c18a0e3da61c77df366e4fc7b1837de5dbc51cdbd50fb6004c"
+        "0x19534e37270df38e4dd1fc53dbecd7cb23bee20aaea9f3b5182e828143c16e48",
+        "0x1665f22aa8d67d519ab1fd8019a1d2e32034555c0c5debd24c850f166616a992"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243951,
       "sinceBlock": 17849219,
       "values": {
@@ -716,10 +656,11 @@
       "type": "Contract",
       "template": "polygonposbridge/SlashingManager",
       "sourceHashes": [
-        "0x64d3fd0840fb5d9eedf5977cce8c443d31adfc2323458db3d2d9461d889ea994"
+        "0xb1f4fd0152227e756814840696dd4c53ec9ebb14dd1fd31b7185376ceaa2aa7c"
       ],
       "proxyType": "immutable",
       "description": "Contract that allows the consensus supermajority to slash validators.",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243891,
       "sinceBlock": 17849214,
       "values": {
@@ -746,9 +687,10 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x1d84e4aa2ca9808f7866a5d3c6c804956136d56a985525328da76b85a63238f3",
-        "0x4731842b5a3a9367e3a748bcccb6280c89c1e5428139b7cca48ed566ed74709a"
+        "0x5be5014eac44b4ee39f1fc952058fa3eda671630dca68f9f60e762ba457052f7"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691475707,
       "sinceBlock": 17868382,
       "values": {
@@ -803,9 +745,10 @@
       "address": "eth:0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3",
       "type": "Contract",
       "sourceHashes": [
-        "0xd28d2832fa5e35e810073b99fcec18faf119bfc95223abc05bfb353a1f90dfd3"
+        "0xa4f6708edf44f0bd8496c3844b3cfc77d2c6860509ea95e13456e55936ca5aae"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1732926851,
       "sinceBlock": 21296948,
       "values": { "$immutable": true, "CHAINID": 109, "networkId": "0x6d" },
@@ -821,138 +764,7 @@
     {
       "address": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
-          "description": "can update the validator registry address used to check whitelist inclusion.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
-          "description": "can update the whitelist of validators",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
-          "description": "manage critical config values like the exit period and the blacklist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "description": "can manage the validator blacklist and change other critical settings related to staking.",
-          "role": ".governance",
-          "via": [
-            { "address": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "description": "can replace all validators and change the root chain address.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x885fcE983b6a01633f764325B8c3c5D31032C995",
-          "description": "can update the root chain it references.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
-          "description": "can update how much of the slashed funds go to the proposer and reporter.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
-          "description": "can delete arbitrary checkpoints.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "role": "admin"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RLPReader",
@@ -963,6 +775,7 @@
         "0x00b47d9143f40ccd858572c752a890b6aa733e80f4a63e03fe919674f4ac55e1"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691242667,
       "sinceBlock": 17849113,
       "values": { "$immutable": true },
@@ -977,9 +790,10 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0xcd0a12ca9277d60031fd022482b8174c79dabb5d731b80609041c6778a899455",
-        "0xa949b42c0c7697496d06fe3d513ba1663e62f99796bacd265ab50e6453e4dcbb"
+        "0xb1fe0a5b7da9e556c98bcc8646ae2e8430131c3fdc5a5322b2a775ffcc034ea9"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691475959,
       "sinceBlock": 17868403,
       "values": {
@@ -1031,18 +845,11 @@
       "template": "polygonposbridge/Governance",
       "sourceHashes": [
         "0x8694e089b35ef48bca7c4041191923b03d5a5c1350e09e9074b44199d1df6cc3",
-        "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
+        "0xc574edf94d4eba85f85272edeca4466cf7e76f8b74a96462bcc5f165d91fa30a"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Simple contract that allows the owner to call an `update` function on arbitrary contracts.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "description": "can manage the validator blacklist and change other critical settings related to staking.",
-          "role": ".governance"
-        }
-      ],
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691242715,
       "sinceBlock": 17849117,
       "values": {
@@ -1065,8 +872,8 @@
       "type": "Contract",
       "template": "polygonposbridge/RootChain",
       "sourceHashes": [
-        "0x561d13767c8364feca3a6af598f52c824a2ce67ac37855df5d2f678e5fa13410",
-        "0x53df93798909c51b914d7f286a3fb02bd08bbc999d189bb089c2a7bb6f273426"
+        "0x107a4a302c3d873b2be09f4f39cf685d001c79e4afb787ef542b1747c78cf686",
+        "0x1d7673ce565b6c666b6c06891c8e2b8febcdee3a3bf0da6312de698e5af809ad"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
@@ -1075,10 +882,11 @@
         "getLastChildBlock",
         "currentHeaderBlock"
       ],
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 337020000,
+        "_nextHeaderBlock": 348710000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -1087,8 +895,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 337010000,
-        "getLastChildBlock": 15987740,
+        "currentHeaderBlock": 348700000,
+        "getLastChildBlock": 17836060,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -1096,6 +904,11 @@
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "proxyType": 2,
         "VOTE_TYPE": 2
+      },
+      "fieldMeta": {
+        "heimdallId": {
+          "description": "Fork identifier for the heimdall state bridge to bor (polygon execution). Changes with hard forks."
+        }
       },
       "implementationNames": {
         "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9": "RootChainProxy",
@@ -1108,9 +921,10 @@
       "address": "eth:0xdaF14950155DF895E9D0fd2521D05477d26F462c",
       "type": "Contract",
       "sourceHashes": [
-        "0xbcd7eec85265625afbc2eb9dda85d5f9134b5a206a965d8f040be01a92d12299"
+        "0x0add99f8a97a4574486143c004fb187c7914819c2ab0d242704a6009e292294a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1732926839,
       "sinceBlock": 21296947,
       "values": { "$immutable": true, "CHAINID": 109, "networkId": "0x6d" },
@@ -1144,6 +958,7 @@
       "proxyType": "immutable",
       "description": "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.",
       "ignoreInWatchMode": ["tokensMapped"],
+      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691243735,
       "sinceBlock": 17849201,
       "values": {
@@ -2010,14 +1825,13 @@
     ]
   },
   "usedTemplates": {
-    "polygonposbridge/DepositManager": "0x6f4da1313c9430a0d74b2b699e6c30210705857922f30262c4533dc9c0e2690e",
+    "polygonposbridge/DepositManager": "0x2a3771ea95277fc830da4bc0578c3e86f9d869b0935a283538ec041ac28b3274",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
-    "polygonposbridge/Registry": "0x5c5fe510503231c55babf2ac08b7e9cec266f6131495611ee1af5bd4a215c7a1",
+    "polygonposbridge/Registry": "0x153babaec9d06d0263f00b77d5d0270b5b20922d4895e1889e72f6100fea5a28",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
+    "polygonposbridge/RootChain": "0xab76db8d5d7d0f47b2c3e57017bf4ec89eed1681bbe979c63bee501fc0b3f246",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/SlashingManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/StakeManager_shibarium": "0x7329e87dc01248c97bcd484854e12f63f0f6214f42d3f1fcf33884380f2ab892",
@@ -2028,6 +1842,213 @@
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 24583152 },
-  "permissionsConfigHash": "0xb9418c456962c038809bed5d65324ce350af667a66cb600e40fbb5e9ba9eb525"
+  "usedBlockNumbers": { "ethereum": 25394788 },
+  "permissionsConfigHash": "0x32a4cab100c0f4e26adb5a456a4c0e11a2906cfdda31d98f142e5734a85b3b4e",
+  "permissions": {
+    "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        }
+      ]
+    },
+    "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        }
+      ]
+    },
+    "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
+          "description": "can update the validator registry address used to check whitelist inclusion.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
+          "description": "can update the whitelist of validators",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
+          "description": "manage critical config values like the exit period and the blacklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "description": "can manage the validator blacklist and change other critical settings related to staking.",
+          "role": ".governance",
+          "via": [
+            { "address": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "description": "can replace all validators and change the root chain address.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x885fcE983b6a01633f764325B8c3c5D31032C995",
+          "description": "can update the root chain it references.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
+          "description": "can update how much of the slashed funds go to the proposer and reporter.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
+          "description": "can delete arbitrary checkpoints.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "description": "can manage the validator blacklist and change other critical settings related to staking.",
+          "role": ".governance"
+        }
+      ]
+    }
+  }
 }

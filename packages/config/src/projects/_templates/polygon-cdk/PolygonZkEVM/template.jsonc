@@ -14,7 +14,12 @@
       ]
     },
     "trustedSequencer": {
-      "permissions": [{ "type": "sequence" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to commit transactions from the current layer to the host chain."
+        }
+      ]
     },
     "forceBatchAddress": {
       "severity": "HIGH",

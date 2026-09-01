@@ -1,4 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
@@ -25,14 +26,13 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { InfoIcon } from '~/icons/Info'
-import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
+import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
 } from '~/server/features/ecosystems/getEcosystemEntry'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ChartRange } from '~/utils/range/range'
 import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
@@ -45,17 +45,18 @@ export function EcosystemsActivityChart({
   id,
   name,
   entries,
-  allScalingProjectsUops,
+  allL2ProjectsUops,
   className,
   ecosystemMilestones,
 }: {
   id: string
   name: string
   entries: EcosystemEntry['liveProjects']
-  allScalingProjectsUops: number
+  allL2ProjectsUops: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
+  const trpc = useTRPC()
   const chartMeta = useMemo(() => {
     return {
       projects: {
@@ -78,17 +79,17 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [range, setRange] = useState<ChartRange>(
-    optionToRange('1y', { offset: -UnixTime.DAY }),
-  )
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range,
-    filter: {
-      type: 'projects',
-      projectIds: entries.map((project) => project.id).toSorted(),
-    },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.activity.chart.queryOptions({
+      range,
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((project) => project.id).toSorted(),
+      },
+    }),
+  )
 
   const chartData = useMemo(
     () =>
@@ -102,8 +103,8 @@ export function EcosystemsActivityChart({
     [data?.data],
   )
 
-  const stats = getStats(chartData, allScalingProjectsUops)
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const stats = getStats(chartData, allL2ProjectsUops)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
 
   return (
     <EcosystemWidget className={className}>
@@ -127,7 +128,8 @@ export function EcosystemsActivityChart({
           responsive
           data={chartData}
           className="h-44! min-h-44!"
-          margin={{ top: 20 }}
+          // Without right:1 the chart last point is not hoverable for some reason
+          margin={{ top: 20, right: 1 }}
         >
           <ChartLegend content={<ChartLegendContent />} />
           <ChartStrokeOverFillAreaComponents
@@ -240,7 +242,7 @@ function Header({
 
 function getStats(
   chartData: { projects: number | null }[] | undefined,
-  allScalingProjectsUops: number,
+  allL2ProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
@@ -256,6 +258,6 @@ function getStats(
 
   return {
     latestUops: lastWithData.projects,
-    marketShare: lastWithData.projects / allScalingProjectsUops,
+    marketShare: lastWithData.projects / allL2ProjectsUops,
   }
 }

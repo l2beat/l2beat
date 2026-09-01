@@ -104,6 +104,15 @@ export class L2CostRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('L2Cost')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigInTimeRange(
     configId: string,
     fromInclusive: UnixTime,
@@ -127,6 +136,28 @@ export class L2CostRepository extends BaseRepository {
       .distinctOn('configurationId')
       .execute()
     return rows.map((row) => row.configurationId)
+  }
+
+  async getLatestTimestampsByConfigId(): Promise<
+    { configurationId: string; latestTimestamp: UnixTime }[]
+  > {
+    const rows = await this.db
+      .selectFrom('L2Cost')
+      .select(['configurationId'])
+      .select(this.db.fn.max('timestamp').as('latestTimestamp'))
+      .groupBy('configurationId')
+      .execute()
+
+    return rows.flatMap((row) => {
+      if (row.latestTimestamp === null) {
+        return []
+      }
+
+      return {
+        configurationId: row.configurationId,
+        latestTimestamp: UnixTime.fromDate(row.latestTimestamp),
+      }
+    })
   }
 
   // #endregion

@@ -4,7 +4,9 @@ import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
 import { interopRouter } from './routers/interop'
 import { livenessRouter } from './routers/liveness'
+import { privacyRouter } from './routers/privacy'
 import { projectsRouter } from './routers/projects'
+import { searchBarRouter } from './routers/searchBar'
 import { tvsRouter } from './routers/tvs'
 
 /**
@@ -19,7 +21,9 @@ export const appRouter = router({
   da: daRouter,
   liveness: livenessRouter,
   projects: projectsRouter,
+  searchBar: searchBarRouter,
   interop: interopRouter,
+  privacy: privacyRouter,
 })
 
 // export type definition of API

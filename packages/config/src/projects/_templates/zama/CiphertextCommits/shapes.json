@@ -1,0 +1,14 @@
+{
+  "CiphertextCommits.sol": {
+    "hash": "0x70a834887489420cb7ea7044739bcc74d735be01e262a27ea23132992d21a898",
+    "address": "zama:0xC92f2dc7eF79728ed32e745020EF463270217e78",
+    "chain": "zama",
+    "blockNumber": 1858160
+  },
+  "CiphertextCommits_v0_4_0.sol": {
+    "hash": "0xa3aa22a184258ca16a5d83ce495ae0d307d4c5ec9fda8a7622d4f95728f4af03",
+    "address": "zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622",
+    "chain": "zama",
+    "blockNumber": 2121017
+  }
+}

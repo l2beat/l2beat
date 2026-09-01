@@ -2,6 +2,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TvsAmount } from '../kysely/generated/types'
+import {
+  type CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 
 export interface TvsAmountRecord {
   timestamp: UnixTime
@@ -91,6 +96,15 @@ export class TvsAmountRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('TvsAmount')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigs(
     configs: {
       configurationId: string
@@ -119,6 +133,14 @@ export class TvsAmountRepository extends BaseRepository {
       totalDeleted += Number(result.numDeletedRows)
     })
     return totalDeleted
+  }
+
+  async deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteHourlyUntil(this.db, 'TvsAmount', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteSixHourlyUntil(this.db, 'TvsAmount', dateRange)
   }
 
   async getAll(): Promise<TvsAmountRecord[]> {

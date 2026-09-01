@@ -14,7 +14,7 @@ import { IconTriangleAlert } from '../../../../icons/IconTriangleAlert'
 import { IconWebApp } from '../../../../icons/IconWebApp'
 import { useConfigModels } from '../../hooks/useConfigModels'
 import { useProjectData } from '../../hooks/useProjectData'
-import { GlobalOutputsSyncBadge, OutputsSyncBadge } from './OutputsBadge'
+import { OutputsSyncBadge } from './OutputsBadge'
 
 export function StatusRibbon() {
   const { project } = useProjectData()
@@ -45,7 +45,6 @@ export function StatusRibbon() {
         </div>
         <div className="flex items-center justify-center gap-2 px-1">
           <OutputsSyncBadge project={project} />
-          <GlobalOutputsSyncBadge project={project} />
         </div>
       </div>
       <div className="flex items-center justify-center border border-coffee-200">

@@ -20,6 +20,20 @@ describe(buildFieldTree.name, () => {
     ])
   })
 
+  it('uses a display label without changing the hidden-field identity', () => {
+    const tree = buildFieldTree([
+      field({ name: 'group-field:target', label: 'Member' }),
+    ])
+
+    expect(tree).toEqual([
+      {
+        type: 'simple',
+        property: 'Member',
+        fullKey: 'group-field:target',
+      },
+    ])
+  })
+
   it('nested fields with simple fields', () => {
     const fields = [
       field({ name: 'a.b' }),
@@ -31,6 +45,7 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'a',
+        fullKey: 'a',
         value: [
           { type: 'simple', property: 'b', fullKey: 'a.b' },
           { type: 'simple', property: 'e', fullKey: 'a.e' },
@@ -39,6 +54,7 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'c',
+        fullKey: 'c',
         value: [{ type: 'simple', property: 'd', fullKey: 'c.d' }],
       },
     ])
@@ -55,10 +71,41 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'a',
+        fullKey: 'a',
         value: [
           { type: 'simple', property: '0', fullKey: 'a[0]' },
           { type: 'simple', property: '1', fullKey: 'a[1]' },
           { type: 'simple', property: '2', fullKey: 'a[2]' },
+        ],
+      },
+    ])
+  })
+
+  it('address-keyed object map nests #key under the entry', () => {
+    const fields = [
+      field({ name: 'map.0xKeyA.inner' }),
+      field({ name: 'map.0xKeyA.#key' }),
+    ]
+    const tree = buildFieldTree(fields)
+    expect(tree).toEqual([
+      {
+        type: 'complex',
+        property: 'map',
+        fullKey: 'map',
+        value: [
+          {
+            type: 'complex',
+            property: '0xKeyA',
+            fullKey: 'map.0xKeyA',
+            value: [
+              {
+                type: 'simple',
+                property: 'inner',
+                fullKey: 'map.0xKeyA.inner',
+              },
+              { type: 'simple', property: '#key', fullKey: 'map.0xKeyA.#key' },
+            ],
+          },
         ],
       },
     ])
@@ -76,10 +123,12 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'a',
+        fullKey: 'a',
         value: [
           {
             type: 'complex',
             property: '0',
+            fullKey: 'a[0]',
             value: [
               { type: 'simple', property: '0', fullKey: 'a[0][0]' },
               { type: 'simple', property: '1', fullKey: 'a[0][1]' },
@@ -88,6 +137,7 @@ describe(buildFieldTree.name, () => {
           {
             type: 'complex',
             property: '1',
+            fullKey: 'a[1]',
             value: [
               { type: 'simple', property: '0', fullKey: 'a[1][0]' },
               { type: 'simple', property: '1', fullKey: 'a[1][1]' },
@@ -103,6 +153,7 @@ function field(f: Partial<Field>): Field {
   return mockObject<Field>({
     target: '0x0',
     name: 'change_me',
+    label: undefined,
     ...f,
   })
 }

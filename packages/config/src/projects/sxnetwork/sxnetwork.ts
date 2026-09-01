@@ -16,6 +16,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'SX Network',
+    aliases: ['SX Bet'],
     slug: 'sxnetwork',
     description:
       "SX Network is an Orbit stack Optimistic Rollup, built to scale the SX team's existing sports betting platform.",

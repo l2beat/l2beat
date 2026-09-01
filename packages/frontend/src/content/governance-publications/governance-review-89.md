@@ -52,9 +52,10 @@ For the upcoming term, the team plans to continue supporting DAO operations whil
 
 ### **Updated Voting Process: Introducing Minor Upgrades**
 
-Starknet [introduced](https://community.starknet.io/t/updated-voting-process-introducing-minor-upgrades/116148?_gl=1*w5drd9*_up*MQ..*_ga*MTkzMTMwODA3MC4xNzc0MjcxNzky*_ga_WY42TERK5P*czE3NzQyNzcwOTEkbzIkZzAkdDE3NzQyNzcwOTEkajYwJGwwJGgw) an update to its governance process by adding a new “Minor Upgrade” path alongside the existing Major and Emergency flows. The change aims to improve flexibility and speed while maintaining transparency, with all upgrades still tied to SNIPs and voted as part of versioned releases linked to specific commit hashes.
+Starknet [introduced](https://community.starknet.io/t/updated-voting-process-introducing-minor-upgrades/116148?_gl=1*w5drd9*_up*MQ..*_ga*MTkzMTMwODA3MC4xNzc0MjcxNzky*_ga_WY42TERK5P*czE3NzQyNzcwOTEkbzIkZzAkdDE3NzQyNzcwOTEkajYwJGwwJGgw) an update to its governance process by adding a new “Minor Upgrade” path alongside the existing Major and Emergency flows. The change aims to improve flexibility and speed while maintaining transparency, with all upgrades still tied to SNIPs and voted as part of versioned releases linked to specific commit hashes. 
 
 Under the new framework, Major upgrades follow a longer process with full community review and Security Council involvement, while Minor upgrades allow for faster iteration with shorter timelines and no Security Council requirement. Emergency upgrades remain reserved for critical fixes, bypassing voting but requiring post-mortem reporting. Overall, the update formalizes clearer upgrade pathways, balancing faster execution with governance oversight.
+
 ---
 
 ## **Lisk**

@@ -4,12 +4,17 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { ChartRange, type ChartResolution } from '~/utils/range/range'
+import {
+  ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
+import { isInEigendaLayerDataGap } from './utils/eigendaDataGap'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { rangeToResolution } from './utils/range'
 
 type ProjectDaThroughputChart = {
   chart: ProjectDaThroughputChartPoint[]
@@ -23,7 +28,7 @@ export type ProjectDaThroughputChartPoint = [
 
 export const ProjectDaThroughputChartParams = v.object({
   range: ChartRange,
-  includeScalingOnly: v.boolean(),
+  includeL2Only: v.boolean(),
   projectId: v.string(),
 })
 export type ProjectDaThroughputChartParams = v.infer<
@@ -45,9 +50,13 @@ export async function getProjectDaThroughputChart(
   const { grouped, from, to, maxTimestamp, syncedUntil } = data
 
   const timestamps = generateTimestamps([from, to], resolution)
+  const hasEigendaGap = params.projectId === 'eigenda' && !params.includeL2Only
 
   return {
     chart: timestamps.map((timestamp) => {
+      if (hasEigendaGap && isInEigendaLayerDataGap(timestamp, resolution)) {
+        return [timestamp, null]
+      }
       const posted =
         timestamp <= maxTimestamp ? (grouped[timestamp] ?? 0) : null
       return [timestamp, posted]
@@ -60,7 +69,7 @@ export async function getProjectDaThroughputChart(
 export async function getProjectDaThroughputChartData({
   range,
   projectId,
-  includeScalingOnly,
+  includeL2Only,
 }: ProjectDaThroughputChartParams) {
   const db = getDb()
   const resolution = rangeToResolution(range)
@@ -72,13 +81,21 @@ export async function getProjectDaThroughputChartData({
   const sovereignProjectsIds =
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId)
 
-  const throughput = await (includeScalingOnly
-    ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-        [projectId],
-        range,
-        sovereignProjectsIds,
-      )
-    : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range))
+  const [throughput, firstTimestamp] = await Promise.all([
+    includeL2Only
+      ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+          [projectId],
+          range,
+          sovereignProjectsIds,
+        )
+      : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
+    includeL2Only
+      ? db.dataAvailability.getFirstTimestampOfSummedProjectsByDaLayers(
+          [projectId],
+          sovereignProjectsIds,
+        )
+      : db.dataAvailability.getFirstTimestampByProjectIds([projectId]),
+  ])
 
   if (throughput.length === 0) {
     return undefined
@@ -105,9 +122,16 @@ export async function getProjectDaThroughputChartData({
     ? maxTimestamp
     : expectedTo
 
+  const from = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
+
   return {
     grouped,
-    from: minTimestamp,
+    from,
     to: adjustedTo,
     maxTimestamp,
     syncedUntil,
@@ -122,25 +146,11 @@ function groupByTimestampAndProjectId(
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, number> = {}
 
-  const offset = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour',
-  )
+  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
   const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
 
   for (const record of fullySyncedRecords) {
-    const timestamp = UnixTime.toStartOf(
-      record.timestamp,
-      resolution === 'daily'
-        ? 'day'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'hour',
-    )
+    const timestamp = UnixTime.toStartOf(record.timestamp, resolution)
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = Number(value)
@@ -174,7 +184,7 @@ function getMockProjectDaThroughputChart({
     }
   }
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return {
     chart: timestamps.map((timestamp) => {
       const throughputValue = Math.random() * 900_000_000 + 90_000_000

@@ -1,5 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.",
+  "description": "Contract that can be used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and permissioned addresses who can call this contract.",
   "ignoreRelatives": ["receiveUln301", "workerFeeLib", "priceFeed"]
 }

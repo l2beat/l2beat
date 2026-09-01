@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PositionManager",
+  "description": "Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins can register or remove modules and grant registered modules cross-module mint and burn power.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Only bit 0 (1), the admin role, is checked to restrict calls. Granting any other role bit gives no additional access in this contract."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the implementation of the outcome-token ledger and manage all roles."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "moduleById": {
+      "handler": {
+        "type": "array",
+        "method": "function moduleById(uint256 id) view returns (address)",
+        "indices": [1, 2, 3]
+      },
+      "description": "Registered outcome modules by id."
+    },
+    "COLLATERAL_TOKEN": {
+      "description": "Immutable collateral-token address associated with this position ledger."
+    }
+  }
+}

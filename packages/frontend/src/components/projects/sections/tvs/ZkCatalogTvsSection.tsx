@@ -1,5 +1,6 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { ZkCatalogProjectsTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogProjectsTvsChart'
@@ -8,20 +9,20 @@ import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/ExcludeRwaRestrictedTokensCheckbox'
+import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/layer2s/components/ExcludeRwaRestrictedTokensCheckbox'
 import {
-  ScalingRwaRestrictedTokensContextProvider,
-  useScalingRwaRestrictedTokensContext,
-} from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
+  L2RwaRestrictedTokensContextProvider,
+  useL2RwaRestrictedTokensContext,
+} from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import {
   TvsBreakdownSummaryBox,
   type TvsData,
-} from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
+} from '~/pages/layer2s/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type {
   DetailedTvsChartWithProjectRangesDataPoint,
   DetailedTvsChartWithProjectsRangesData,
-} from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
-import { api } from '~/trpc/React'
+} from '~/server/features/layer2s/tvs/getDetailedTvsChartWithProjectsRanges'
+import { useTRPC } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
@@ -57,7 +58,7 @@ export function ZkCatalogTvsSection({
 }: ZkCatalogTvsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <ScalingRwaRestrictedTokensContextProvider>
+      <L2RwaRestrictedTokensContextProvider>
         <TvsChartControlsContextProvider defaultRange={defaultRange}>
           <ChartControls projectsForTvs={projectsForTvs} />
           <div className="mt-4 mb-3">
@@ -72,7 +73,7 @@ export function ZkCatalogTvsSection({
           </div>
           <TvsProjectStats tvsInfo={tvsInfo} projectsForTvs={projectsForTvs} />
         </TvsChartControlsContextProvider>
-      </ScalingRwaRestrictedTokensContextProvider>
+      </L2RwaRestrictedTokensContextProvider>
     </ProjectSection>
   )
 }
@@ -87,15 +88,18 @@ function ChartControls({
     untilTimestamp?: UnixTime
   }[]
 }) {
+  const trpc = useTRPC()
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
 
-  const { data } = api.tvs.detailedChartWithProjectsRanges.useQuery({
-    projects: projectsForTvs,
-    range,
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens,
-  })
+  const { data } = useQuery(
+    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+      projects: projectsForTvs,
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    }),
+  )
 
   const timeRange = useMemo(
     () =>
@@ -227,13 +231,16 @@ function TvsProjectStats({
     untilTimestamp?: UnixTime
   }[]
 }) {
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
-  const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
-    projects: projectsForTvs,
-    range: optionToRange('7d'),
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens,
-  })
+  const trpc = useTRPC()
+  const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
+  const { data, isLoading } = useQuery(
+    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+      projects: projectsForTvs,
+      range: optionToRange('7d'),
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    }),
+  )
 
   const stats = getStats(data)
 
@@ -298,6 +305,7 @@ function getStats(
       btc: calculatePercentageChange(latest.btc, oldest.btc),
       other: calculatePercentageChange(latest.other, oldest.other),
     },
+    changePeriod: data.changePeriod,
   }
 }
 

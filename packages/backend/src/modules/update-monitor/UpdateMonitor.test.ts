@@ -136,7 +136,7 @@ describe(UpdateMonitor.name, () => {
       sendDailyReminder: mockFn().resolvesTo(undefined),
     })
     updateDiffer = mockObject<UpdateDiffer>({
-      runForProject: mockFn().resolvesTo(undefined),
+      run: mockFn().resolvesTo(undefined),
     })
   })
 
@@ -189,7 +189,7 @@ describe(UpdateMonitor.name, () => {
       // runs discovery for every project
       expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
 
-      expect(updateDiffer.runForProject).toHaveBeenCalledTimes(1)
+      expect(updateDiffer.run).toHaveBeenCalledWith([PROJECT_A], timestamp)
 
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
@@ -200,6 +200,53 @@ describe(UpdateMonitor.name, () => {
         [],
         [],
       )
+    })
+
+    // Diffs are written as one snapshot, so they run once every discovery lands.
+    it('discovers every project before diffing any of them', async () => {
+      const calls: string[] = []
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        run: mockFn(async () => {
+          calls.push('discover')
+          return { discovery: DISCOVERY_RESULT, flatSources: {} }
+        }),
+      })
+      updateDiffer = mockObject<UpdateDiffer>({
+        run: mockFn(async () => {
+          calls.push('diff')
+        }),
+      })
+
+      const updateMonitor = new UpdateMonitor(
+        discoveryRunner,
+        updateNotifier,
+        updateDiffer,
+        mockObject<ConfigReader>({
+          readDiscovery: () => ({ ...mockProject, entries: COMMITTED }),
+          readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
+          readConfig: mockFn((name: string) => mockConfig(name)),
+        }),
+        mockObject<Database>({
+          updateMonitor: mockObject<Database['updateMonitor']>({
+            findLatest: async () => undefined,
+            upsert: async () => undefined,
+          }),
+          flatSources: flatSourcesRepository,
+          updateDiff: mockObject<Database['updateDiff']>({
+            deleteAll: async () => 0,
+          }),
+        }),
+        mockObject<Clock>(),
+        discoveryOutputCache,
+        Logger.SILENT,
+        false,
+        instantWorkerPool,
+      )
+
+      await updateMonitor.update(0)
+
+      expect(calls.lastIndexOf('discover')).toBeLessThan(calls.indexOf('diff'))
+      expect(calls.filter((c) => c === 'diff').length).toEqual(1)
     })
   })
 
@@ -411,7 +458,6 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
         committed.timestamp,
         expect.anything(),
-        undefined,
       )
     })
   })

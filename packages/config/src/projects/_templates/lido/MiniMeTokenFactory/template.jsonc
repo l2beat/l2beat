@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Immutable factory used by LDO's MiniMe token implementation to create snapshot-enabled token clones.",
+  "category": "gov"
+}

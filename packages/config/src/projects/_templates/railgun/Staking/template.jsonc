@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Staking",
+  "description": "RAIL staking contract that tracks delegated voting power, enforces a {{STAKE_LOCKTIME_fmt}} unstake delay, and snapshots staking balances for governance every {{SNAPSHOT_INTERVAL_fmt}}. Its parameters define the governance voting system.",
+  "category": "gov",
+  "ignoreMethods": [
+    "currentInterval",
+    "globalsSnapshot",
+    "globalsSnapshotLength",
+    "latestGlobalsSnapshotInterval",
+    "totalStaked",
+    "totalVotingPower"
+  ],
+  "ignoreInWatchMode": ["RAILStaked"],
+  "fields": {
+    "RAILStaked": {
+      "description": "Total RAIL locked in this contract by governance participants for voting power.",
+      "handler": {
+        "type": "call",
+        "method": "function balanceOf(address account) view returns (uint256)",
+        "args": ["0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20"],
+        "address": "{{ stakingToken }}"
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "stakingToken": {
+      "description": "RAIL token contract that users lock here to obtain voting power.",
+      "severity": "HIGH"
+    },
+    "STAKE_LOCKTIME": {
+      "description": "Delay between unlocking a stake and being able to claim the underlying RAIL.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "STAKE_LOCKTIME_fmt": {
+      "copy": "STAKE_LOCKTIME",
+      "edit": ["format", "FormatSeconds"]
+    },
+    "SNAPSHOT_INTERVAL": {
+      "description": "Length of the interval used when taking governance voting-power snapshots.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "SNAPSHOT_INTERVAL_fmt": {
+      "copy": "SNAPSHOT_INTERVAL",
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

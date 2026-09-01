@@ -19,10 +19,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('metis')
 
@@ -101,7 +102,7 @@ export const metis: ScalingProject = {
     name: 'OPFP',
     challengeProtocol: 'Interactive',
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -244,6 +245,12 @@ export const metis: ScalingProject = {
         RISK_VIEW.STATE_FP_INT().description +
         'Anyone can submit challenge requests. However, permissioned actors are needed to create the challenge and to delete successfully disputed state roots. Additionally, the current permissioned actors (GameCreator and Security Council minority) can collude and finalize malicious state roots.',
       sentiment: 'bad',
+      initialBond: {
+        value: formatEther(disputeGameBond),
+        token: 'METIS',
+      },
+      permissioned: true,
+      defenderAdvantage: 'not-applicable',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -270,9 +277,10 @@ export const metis: ScalingProject = {
       },
       {
         title: 'Challenges',
-        description: `Games can only be created on demand by the permissioned GameCreator should a dispute be requested. Users can signal the need for a dispute by bonding ${formatEther(disputeGameBond)} METIS and calling the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
-          DISPUTE_TIMEOUT_PERIOD,
-        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted by the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\` minority.`,
+        description: readProjectMarkdown('metis', 'stateValidationChallenges', {
+          disputeGameBond: formatEther(disputeGameBond),
+          disputeTimeoutPeriod: formatSeconds(DISPUTE_TIMEOUT_PERIOD),
+        }),
         risks: [
           {
             category: 'Funds can be frozen if',

@@ -20,6 +20,17 @@ export interface ApiProjectResponse {
   entries: ApiProjectChain[]
 }
 
+export type ApiTvlResponse = ApiTvlEntry[]
+
+export interface ApiTvlEntry {
+  tvl: number
+  ticker: string
+  address: string
+  iconURL: string | undefined
+  balance: number
+  price: number | undefined
+}
+
 export interface ApiPreviewResponse {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
@@ -64,6 +75,51 @@ export interface ApiConfigFileResponse {
   config: string
 }
 
+export interface ApiProjectLayoutEntry {
+  name: string
+  description?: string
+}
+
+export type ApiProjectLayoutsResponse = ApiProjectLayoutEntry[]
+
+export interface ApiProjectLayoutResponse {
+  layout: unknown
+}
+
+export type ApiDiffHistorySectionKind =
+  | 'watched-changes'
+  | 'initial-discovery'
+  | 'source-code-changes'
+  | 'config-related-changes'
+
+export interface ApiDiffHistorySection {
+  kind: ApiDiffHistorySectionKind
+  body: string
+}
+
+export type ApiChainPoint =
+  | { kind: 'timestamp'; value: number }
+  | { kind: 'block'; value: number }
+
+export interface ApiDiffHistoryEntry {
+  date: string
+  current: ApiChainPoint | null
+  author: string | null
+  comparing: {
+    ref: string
+    commit: string
+    at: ApiChainPoint | null
+  } | null
+  discoveryHash: string | null
+  description: string
+  sections: ApiDiffHistorySection[]
+}
+
+export interface ApiDiffHistoryResponse {
+  total: number
+  entries: ApiDiffHistoryEntry[]
+}
+
 type RefreshReason =
   | {
       type: 'TEMPLATE_NO_LONGER_MATCHES'
@@ -93,13 +149,6 @@ export interface ApiConfigSyncStatusResponse {
   reasons: RefreshReason[]
 }
 
-export interface ApiGlobalConfigSyncStatusResponse {
-  reasons: {
-    project: string
-    reasons: RefreshReason[]
-  }[]
-}
-
 export type ApiCreateShapeResponse =
   | {
       success: true
@@ -127,6 +176,11 @@ export interface ApiHandlersResponse {
   }[]
 }
 
+export type {
+  AnalyzerApiResponse,
+  AnalyzerResultApiResponse,
+} from '@l2beat/shared-pure'
+
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'
@@ -137,6 +191,7 @@ export type ApiAddressType =
   | 'Timelock'
   | 'Untemplatized'
   | 'Contract'
+  | 'Group'
   | 'Unknown'
 
 export interface ApiAddressEntry {
@@ -247,9 +302,17 @@ export interface ApiAbiEntry {
   topic?: string
 }
 
+export interface ApiCodeSegment {
+  // `null` marks non-selectable text: the license/pragma/imports preamble and
+  // the whitespace between declarations. Joining every segment's `content` in
+  // order reproduces the original flattened source byte-for-byte.
+  name: string | null
+  content: string
+}
+
 export interface ApiCodeResponse {
   entryName: string | undefined
-  sources: { name: string; code: string }[]
+  sources: { name: string; declarations: ApiCodeSegment[] }[]
 }
 
 export interface ApiCodeSearchResponse {

@@ -1,10 +1,6 @@
 import { assert, type json, UnixTime } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import {
-  GetByProjectDataSuccessSchema,
-  GetMetricsV1SuccessSchema,
-  GetMetricsV2SuccessSchema,
-} from './types'
+import { GetByProjectResponse, GetMetricsResponse } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -16,27 +12,16 @@ export class EigenApiClient extends ClientCore {
     super($)
   }
 
-  async getMetricsV1(from: number, to: number): Promise<number> {
-    const response = await this.fetch(
-      `${this.$.url}/v1/metrics?start=${from}&end=${to}`,
-      {},
-    )
-    const json = GetMetricsV1SuccessSchema.parse(response)
-
-    return json.throughput
-  }
-
-  async getMetricsV2(from: number, to: number): Promise<number> {
+  async getMetrics(from: number, to: number): Promise<GetMetricsResponse> {
     const response = await this.fetch(
       `${this.$.url}/v2/metrics/summary?start=${from}&end=${to}`,
       {},
     )
-    const json = GetMetricsV2SuccessSchema.parse(response)
 
-    return json.total_bytes_posted
+    return GetMetricsResponse.parse(response)
   }
 
-  async getByProjectData(until: number) {
+  async getByProjectData(until: number): Promise<GetByProjectResponse> {
     const date = new Date(until * 1000).toISOString().split('T')[0]
     const response = await this.$.http.fetchRaw(
       `${this.$.perProjectUrl}/v2/stats/${date}.json`,
@@ -55,7 +40,7 @@ export class EigenApiClient extends ClientCore {
       .map((line) => line.trim())
       .map((line) => JSON.parse(line))
 
-    return GetByProjectDataSuccessSchema.parse(parsed)
+    return GetByProjectResponse.parse(parsed)
   }
 
   override validateResponse(_response: json): {

@@ -7,7 +7,7 @@ import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -20,6 +20,7 @@ import {
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import { shouldHaveNoBridgePage } from '../utils/shouldHaveNoBridgePage'
 
 export async function getDaRiskEntries(): Promise<
   TabbedDaEntries<DaRiskEntry>
@@ -27,7 +28,7 @@ export async function getDaRiskEntries(): Promise<
   const [layers, bridges, dacs, economicSecurity, projectsChangeReport] =
     await Promise.all([
       ps.getProjects({
-        select: ['daLayer', 'statuses'],
+        select: ['daLayer', 'statuses', 'display'],
         whereNot: ['archivedAt'],
       }),
       ps.getProjects({
@@ -35,7 +36,7 @@ export async function getDaRiskEntries(): Promise<
         optional: ['contracts'],
       }),
       ps.getProjects({
-        select: ['customDa', 'statuses'],
+        select: ['customDa', 'statuses', 'display'],
         whereNot: ['archivedAt'],
       }),
       getDaProjectsEconomicSecurity(),
@@ -78,7 +79,7 @@ export interface DaBridgeRiskEntry
 }
 
 function getDaRiskEntry(
-  layer: Project<'daLayer' | 'statuses'>,
+  layer: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
@@ -90,10 +91,10 @@ function getDaRiskEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarnings: getProjectVerificationWarnings(
+        verificationWarnings: getProjectVerification(
           b,
           projectsChangeReport.getChanges(b.id),
-        ),
+        ).warnings,
         underReview:
           layer.statuses.reviewStatus || b.statuses.reviewStatus
             ? 'config'
@@ -106,7 +107,7 @@ function getDaRiskEntry(
     }),
   )
 
-  if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
+  if (shouldHaveNoBridgePage(layer.daLayer, bridges.length)) {
     daBridges.unshift({
       name: 'No Bridge',
       slug: 'no-bridge',
@@ -138,14 +139,14 @@ function getDaRiskEntry(
 }
 
 function getDacEntry(
-  project: Project<'customDa' | 'statuses'>,
+  project: Project<'customDa' | 'statuses' | 'display'>,
   getTvs: (projectIds: ProjectId[]) => { latest: number; sevenDaysAgo: number },
 ): DaRiskEntry {
   const tvs = getTvs([project.id])
   const bridgeEntry: DaBridgeRiskEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,
     slug: project.slug,
-    href: `/scaling/projects/${project.slug}`,
+    href: `/layer2s/projects/${project.slug}`,
     statuses: {},
     tvs: tvs.latest,
     risks: project.customDa.risks,

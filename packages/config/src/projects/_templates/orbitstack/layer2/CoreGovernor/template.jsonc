@@ -2,9 +2,12 @@
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CoreGovernor",
   "category": "gov",
-  "description": "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the {{ l2CoreQuorumPercent }}% quorum for proposals.",
+  "description": "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).",
   "ignoreMethods": [
     "getPastCirculatingSupply",
+    "getPastTotalDelegatedVotes",
+    "maximumQuorum",
+    "minimumQuorum",
     "proposalDeadline",
     "proposalEta",
     "proposalSnapshot",
@@ -19,7 +22,7 @@
         "args": []
       },
       "edit": ["format", "Undecimal2"],
-      "description": "The percentage of the total supply that is required to pass a proposal."
+      "description": "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
     }
   }
 }

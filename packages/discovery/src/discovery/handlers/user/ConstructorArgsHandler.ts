@@ -48,16 +48,9 @@ export class ConstructorArgsHandler implements Handler {
       }
     }
 
-    const namedArgs = Object.fromEntries(
-      this.constructorFragment.inputs.map((input, index) => [
-        input.name,
-        result[index],
-      ]),
-    )
-
     return {
       field: 'constructorArgs',
-      value: namedArgs,
+      value: nameWithFragments(result, this.constructorFragment.inputs),
     }
   }
 
@@ -196,6 +189,21 @@ export function decodeConstructorArgs(
     throw new Error('Could not decode constructor args')
   }
   return longestDecodedArgs
+}
+
+function nameWithFragments(
+  values: ContractValue[],
+  inputs: ethers.utils.ParamType[],
+): Record<string, ContractValue> {
+  const result: Record<string, ContractValue> = {}
+  for (const [i, input] of inputs.entries()) {
+    let value = values[i] ?? 0
+    if (input.components && Array.isArray(value)) {
+      value = nameWithFragments(value, input.components)
+    }
+    result[input.name] = value
+  }
+  return result
 }
 
 function popLeadingZeros(data: string): string {

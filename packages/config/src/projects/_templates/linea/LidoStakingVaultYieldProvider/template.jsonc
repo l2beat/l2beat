@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["STETH"],
+  "ignoreMethods": [
+    "VALIDATOR_CONTAINER_PROOF_VERIFIER",
+    "VAULT_FACTORY",
+    "VAULT_HUB"
+  ]
+}

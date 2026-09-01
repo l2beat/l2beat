@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { ActivityLatestUopsData } from '../scaling/activity/getActivityLatestTps'
-import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import type { ActivityLatestUopsData } from '../layer2s/activity/getActivityLatestTps'
+import type { ProjectSevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import { generateTimestamps } from '../utils/generateTimestamps'
 import { getActiveEcosystemProjects } from './getActiveEcosystemProjects'
 
@@ -18,8 +18,8 @@ export type EcosystemProjectsCountData = {
 }
 
 export function getEcosystemProjectsChartData(
-  entries: Project<'ecosystemInfo', 'archivedAt' | 'isUpcoming'>[],
-  allScalingProjectsCount: number,
+  entries: Project<'ecosystemInfo', 'archivedAt'>[],
+  allL2ProjectsCount: number,
   projectsTvs: Record<string, ProjectSevenDayTvsBreakdown>,
   projectsActivity: ActivityLatestUopsData,
   startedAt: UnixTime | undefined,
@@ -35,7 +35,7 @@ export function getEcosystemProjectsChartData(
       Math.max(minTimestamp, startedAt ?? Number.NEGATIVE_INFINITY),
       UnixTime.toStartOf(UnixTime.now(), 'day'),
     ],
-    'daily',
+    'day',
   )
   const chart = timestamps.map((timestamp) => {
     const projects = getActiveEcosystemProjects(entries, timestamp)
@@ -50,7 +50,7 @@ export function getEcosystemProjectsChartData(
   return {
     chart,
     marketShare: mostRecentProjectCount
-      ? mostRecentProjectCount / allScalingProjectsCount
+      ? mostRecentProjectCount / allL2ProjectsCount
       : 0,
     stats: {
       tvsGreaterThanHundredMillion: entries.filter((p) => {

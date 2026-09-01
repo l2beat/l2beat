@@ -1,8 +1,7 @@
 {
   "name": "lumia",
   "timestamp": 1761895563,
-  "configHash": "0x2758191d8c5c462f005ef52f8d29890c5749f3270790c92c7c4b14ebd265300c",
-  "sharedModules": ["shared-polygon-cdk"],
+  "configHash": "0x57eb42768a5022beff82bc2a6b7d303593811688c1edf5fe96d073b6219d2d1d",
   "entries": [
     {
       "name": "AgglayerGateway",
@@ -14,21 +13,7 @@
     {
       "address": "eth:0x258862dec9a77db57b398c441390783293E2a7A1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "set the trusted sequencer address.",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AgglayerBridge",
@@ -54,15 +39,7 @@
     {
       "address": "eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "sign state transitions (replaces state validation for this aggchain).",
-          "role": ".aggchainSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AggchainECDSAMultisig",
@@ -76,6 +53,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
       "sinceTimestamp": 1719499031,
       "sinceBlock": 20183666,
       "values": {
@@ -362,5 +340,33 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 23695838 },
-  "permissionsConfigHash": "0x3f6a7e0b8446d98dd5a03f381b6b8a47d2fa2e4a3a4c242b35fc93b2832c6843"
+  "permissionsConfigHash": "0x3f6a7e0b8446d98dd5a03f381b6b8a47d2fa2e4a3a4c242b35fc93b2832c6843",
+  "permissions": {
+    "eth:0x258862dec9a77db57b398c441390783293E2a7A1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "set the trusted sequencer address.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
+        }
+      ]
+    },
+    "eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "role": ".aggchainSigners"
+        }
+      ]
+    }
+  }
 }

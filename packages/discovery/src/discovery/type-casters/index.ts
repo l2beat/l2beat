@@ -1,16 +1,23 @@
 import { assert } from '@l2beat/shared-pure'
 import type { BaseTypeCaster } from './BaseTypeCaster'
 import { Bytes32ToString } from './Bytes32ToString'
+import { BytesToString } from './BytesToString'
+import { CCIPCurseSubject } from './CCIPCurseSubject'
+import { CCIPOcr3Config } from './CCIPOcr3Config'
 import { ChainPrefix } from './ChainPrefix'
 import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
 import { Mapping } from './Mapping'
+import { Ocr3OffchainConfig } from './Ocr3OffchainConfig'
 import { SliceAddress } from './SliceAddress'
 import { TimeSince } from './TimeSince'
 import { Undecimal } from './Undecimal'
 
 export const TypeConverters = {
   Bytes32ToString,
+  BytesToString,
+  CCIPCurseSubject,
+  CCIPOcr3Config,
   FormatSeconds,
   Undecimal,
   Mapping,
@@ -18,6 +25,7 @@ export const TypeConverters = {
   GreaterThan,
   TimeSince,
   SliceAddress,
+  Ocr3OffchainConfig,
 }
 
 export function isCustomTypeCaster(name: string): boolean {

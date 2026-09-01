@@ -2,7 +2,33 @@ import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { type LivenessRecord, LivenessRepository } from './LivenessRepository'
+import {
+  type LivenessRecord,
+  LivenessRepository,
+  toRecord,
+} from './LivenessRepository'
+
+describe(toRecord.name, () => {
+  it('maps the ungrouped sentinel to undefined', () => {
+    const timestamp = UnixTime(1)
+
+    expect(
+      toRecord({
+        timestamp: UnixTime.toDate(timestamp),
+        blockNumber: 1,
+        txHash: '0x1234',
+        configurationId: 'config-id',
+        groupingKey: 'none',
+      }),
+    ).toEqual({
+      timestamp,
+      blockNumber: 1,
+      txHash: '0x1234',
+      configurationId: 'config-id',
+      groupingKey: undefined,
+    })
+  })
+})
 
 describeDatabase(LivenessRepository.name, (db) => {
   const repository = db.liveness
@@ -18,24 +44,28 @@ describeDatabase(LivenessRepository.name, (db) => {
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
       configurationId: txIdA,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 2 * UnixTime.HOUR,
       blockNumber: 12340,
       txHash: '0xabcdef1234567890',
       configurationId: txIdA,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
       configurationId: txIdB,
+      groupingKey: undefined,
     },
     {
       timestamp: START - 3 * UnixTime.HOUR,
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
       configurationId: txIdC,
+      groupingKey: undefined,
     },
   ]
 
@@ -54,12 +84,14 @@ describeDatabase(LivenessRepository.name, (db) => {
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
         {
           timestamp: START - 6 * UnixTime.HOUR,
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
       ]
       await repository.insertMany(newRows)
@@ -75,6 +107,96 @@ describeDatabase(LivenessRepository.name, (db) => {
 
     it('empty array', async () => {
       await expect(repository.insertMany([])).not.toBeRejected()
+    })
+
+    it('keeps the earliest transaction for each grouping key', async () => {
+      const grouped = [
+        {
+          timestamp: START - 4 * UnixTime.MINUTE,
+          blockNumber: 20,
+          txHash: '0xgrouped-later',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START - 5 * UnixTime.MINUTE,
+          blockNumber: 10,
+          txHash: '0xgrouped-earlier',
+          configurationId: txIdA,
+          groupingKey: 'epoch-1',
+        },
+        {
+          timestamp: START - 3 * UnixTime.MINUTE,
+          blockNumber: 30,
+          txHash: '0xgrouped-other-config',
+          configurationId: txIdB,
+          groupingKey: 'epoch-1',
+        },
+      ]
+
+      await repository.insertMany(grouped)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, grouped[1]!, grouped[2]!])
+    })
+
+    it('replaces a grouped transaction only when an earlier one arrives', async () => {
+      const first = {
+        timestamp: START - 4 * UnixTime.MINUTE,
+        blockNumber: 20,
+        txHash: '0xgrouped-first',
+        configurationId: txIdA,
+        groupingKey: 'epoch-1',
+      }
+      const earlier = {
+        ...first,
+        timestamp: START - 5 * UnixTime.MINUTE,
+        blockNumber: 10,
+        txHash: '0xgrouped-earlier',
+      }
+      const later = {
+        ...first,
+        timestamp: START - 3 * UnixTime.MINUTE,
+        blockNumber: 30,
+        txHash: '0xgrouped-later',
+      }
+
+      await repository.insertMany([first])
+      await repository.insertMany([earlier])
+      await repository.insertMany([later])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, earlier])
+    })
+
+    it('stores a record per grouping key for one transaction', async () => {
+      const sharedTx = {
+        timestamp: START - 4 * UnixTime.MINUTE,
+        blockNumber: 20,
+        txHash: '0xgrouped-multicall',
+        configurationId: txIdA,
+      }
+      const grouped = [
+        { ...sharedTx, groupingKey: 'epoch-1' },
+        { ...sharedTx, groupingKey: 'epoch-2' },
+      ]
+
+      await repository.insertMany(grouped)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, ...grouped])
+    })
+
+    it('rejects the same ungrouped transaction twice', async () => {
+      const record = {
+        timestamp: START - 4 * UnixTime.MINUTE,
+        blockNumber: 20,
+        txHash: '0xungrouped-duplicate',
+        configurationId: txIdA,
+        groupingKey: undefined,
+      }
+
+      await expect(repository.insertMany([record, record])).toBeRejected()
     })
 
     it('big query', async () => {
@@ -104,6 +226,30 @@ describeDatabase(LivenessRepository.name, (db) => {
   })
 
   describe(
+    LivenessRepository.prototype.getLatestTimestampsByConfigId.name,
+    () => {
+      it('returns latest timestamp for each configuration', async () => {
+        const results = await repository.getLatestTimestampsByConfigId()
+
+        expect(results).toEqualUnsorted([
+          {
+            configurationId: txIdA,
+            latestTimestamp: START - 1 * UnixTime.HOUR,
+          },
+          {
+            configurationId: txIdB,
+            latestTimestamp: START - 3 * UnixTime.HOUR,
+          },
+          {
+            configurationId: txIdC,
+            latestTimestamp: START - 3 * UnixTime.HOUR,
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
     LivenessRepository.prototype.getByConfigurationIdWithinTimeRange.name,
     () => {
       it('should return rows within given time range', async () => {
@@ -128,6 +274,7 @@ describeDatabase(LivenessRepository.name, (db) => {
             blockNumber: 12340,
             txHash: '0xabcdef1234567891',
             configurationId: txIdA,
+            groupingKey: undefined,
           },
         ]
         await repository.insertMany(NEW_DATA)
@@ -168,30 +315,35 @@ describeDatabase(LivenessRepository.name, (db) => {
             blockNumber: 12345,
             txHash: '0x1234567890abcdef',
             configurationId: txIdA,
+            groupingKey: undefined,
           },
           {
             timestamp: START - 2 * UnixTime.HOUR,
             blockNumber: 12340,
             txHash: '0xabcdef1234567890',
             configurationId: txIdA,
+            groupingKey: undefined,
           },
           {
             timestamp: START - 3 * UnixTime.HOUR - 1,
             blockNumber: 12340,
             txHash: '0xabcdef1234567891',
             configurationId: txIdA,
+            groupingKey: undefined,
           },
           {
             timestamp: START - 3 * UnixTime.HOUR,
             blockNumber: 12346,
             txHash: '0xabcdef1234567890',
             configurationId: txIdB,
+            groupingKey: undefined,
           },
           {
             timestamp: START - 4 * UnixTime.HOUR,
             blockNumber: 12346,
             txHash: '0xabcdef1234567891',
             configurationId: txIdB,
+            groupingKey: undefined,
           },
         ]
         await repository.insertMany(NEW_DATA)
@@ -221,6 +373,36 @@ describeDatabase(LivenessRepository.name, (db) => {
     })
   })
 
+  describe(LivenessRepository.prototype.deleteByConfigIds.name, () => {
+    it('deletes all rows for given configuration ids', async () => {
+      const deleted = await repository.deleteByConfigIds([
+        txIdA.toString(),
+        txIdB.toString(),
+      ])
+
+      expect(deleted).toEqual(3)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([DATA[3]!])
+    })
+
+    it('returns 0 for empty ids', async () => {
+      const deleted = await repository.deleteByConfigIds([])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted(DATA)
+    })
+
+    it('returns 0 when no matching config found', async () => {
+      const deleted = await repository.deleteByConfigIds(['non-existent-id'])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted(DATA)
+    })
+  })
+
   describe(LivenessRepository.prototype.deleteFromById.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id inclusively', async () => {
       await repository.deleteAll()
@@ -231,24 +413,28 @@ describeDatabase(LivenessRepository.name, (db) => {
           blockNumber: 12345,
           txHash: '0xabcdef1234567891',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
         {
           timestamp: START + 1 * UnixTime.HOUR,
           blockNumber: 12345,
           txHash: '0x1234567890abcdef',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
         {
           timestamp: START + 2 * UnixTime.HOUR,
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
           configurationId: txIdA,
+          groupingKey: undefined,
         },
         {
           timestamp: START + 2 * UnixTime.HOUR,
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
           configurationId: txIdB,
+          groupingKey: undefined,
         },
       ]
       await repository.insertMany(records)

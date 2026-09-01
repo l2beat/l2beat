@@ -1,59 +1,86 @@
+import { env } from '~/env'
 import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
+  ...(env.CLIENT_SIDE_HOME_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Home',
+          href: '/',
+          tags: ['pages'],
+        },
+      ]
+    : []),
   {
-    category: 'scaling',
+    category: 'l2',
     name: 'Summary',
     tags: ['pages', 'scaling'],
-    href: '/scaling/summary',
+    href: '/layer2s/summary',
   },
   {
-    category: 'scaling',
+    category: 'l2',
     name: 'Risk Analysis',
     tags: ['pages', 'scaling', 'risks'],
-    href: '/scaling/risk',
+    href: '/layer2s/risk',
   },
   {
-    category: 'scaling',
+    category: 'l2',
     name: 'Value Secured',
     tags: ['pages', 'scaling', 'tvs', 'tvl'],
-    href: '/scaling/tvs',
+    href: '/layer2s/tvs',
   },
   {
-    category: 'scaling',
+    category: 'l2',
     name: 'Activity',
     tags: ['pages', 'scaling'],
-    href: '/scaling/activity',
+    href: '/layer2s/activity',
   },
+  ...(env.CLIENT_SIDE_COMPARE_PROJECTS
+    ? [
+        {
+          category: 'l2' as const,
+          name: 'Compare Projects',
+          tags: ['pages', 'scaling', 'layer2s', 'compare'],
+          href: '/layer2s/compare',
+        },
+      ]
+    : []),
   {
-    category: 'scaling',
+    category: 'l2',
     name: 'Data Availability',
     tags: ['pages', 'scaling'],
-    href: '/scaling/data-availability',
+    href: '/layer2s/risk/data-availability',
   },
   {
-    category: 'scaling',
+    category: 'l2',
+    name: 'State Validation',
+    tags: ['pages', 'scaling', 'risks'],
+    href: '/layer2s/risk/state-validation',
+  },
+  {
+    category: 'l2',
+    name: 'Sequencing',
+    tags: ['pages', 'scaling'],
+    href: '/layer2s/risk/sequencing',
+  },
+  {
+    category: 'l2',
     name: 'Liveness',
     tags: ['pages', 'scaling'],
-    href: '/scaling/liveness',
+    href: '/layer2s/liveness',
   },
   {
-    category: 'scaling',
+    category: 'l2',
     name: 'Costs',
     tags: ['pages', 'scaling'],
-    href: '/scaling/costs',
+    href: '/layer2s/costs',
   },
   {
-    category: 'scaling',
-    name: 'Upcoming',
-    tags: ['pages', 'scaling'],
-    href: '/scaling/upcoming',
-  },
-  {
-    category: 'scaling',
+    category: 'l2',
     name: 'Archived',
     tags: ['pages', 'scaling'],
-    href: '/scaling/archived',
+    href: '/layer2s/archived',
   },
   {
     category: 'da',
@@ -110,11 +137,27 @@ export const searchBarPages = withIndex([
     href: '/interop/burn-and-mint',
   },
   {
+    category: 'interop',
+    name: 'Intent bridges',
+    tags: ['pages', 'interop', 'interoperability', 'intent-bridges'],
+    href: '/interop/intent-bridges',
+  },
+  {
     category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',
     tags: ['pages', 'zk', 'catalog'],
   },
+  ...(env.CLIENT_SIDE_DEFI_ENABLED
+    ? [
+        {
+          category: 'defi' as const,
+          name: 'DeFi',
+          href: '/defi/summary',
+          tags: ['pages', 'defi'],
+        },
+      ]
+    : []),
   {
     category: 'other',
     name: 'Donate',
@@ -125,6 +168,12 @@ export const searchBarPages = withIndex([
     category: 'other',
     name: 'Governance',
     href: '/governance',
+    tags: ['pages'],
+  },
+  {
+    category: 'other',
+    name: 'Native Rollups',
+    href: '/native-rollups',
     tags: ['pages'],
   },
   {
