@@ -26,8 +26,8 @@ export const searchBarCategories = {
   defi: {
     name: 'DeFi',
   },
-  security: {
-    name: 'Security',
+  ossification: {
+    name: 'Ossification',
   },
   tokens: {
     name: 'Tokens',

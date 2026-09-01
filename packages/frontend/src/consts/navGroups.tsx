@@ -8,8 +8,8 @@ import { DefiIcon } from '~/icons/pages/Defi'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
+import { OssificationIcon } from '~/icons/pages/Ossification'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
-import { SecurityIcon } from '~/icons/pages/Security'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -95,11 +95,11 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   },
   {
     type: 'single',
-    title: 'Security',
-    match: 'security',
-    href: '/security',
+    title: 'Ossification',
+    match: 'ossification',
+    href: '/ossification',
     icon: (
-      <SecurityIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      <OssificationIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
   {

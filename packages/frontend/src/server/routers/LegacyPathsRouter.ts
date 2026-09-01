@@ -44,7 +44,11 @@ export function createLegacyPathsRouter() {
   })
 
   router.get('/layer2s/risk/ossification', (_, res) => {
-    res.redirect(301, '/security')
+    res.redirect(301, '/ossification')
+  })
+
+  router.get('/security', (_, res) => {
+    res.redirect(301, '/ossification')
   })
 
   router.get('/scaling', (_, res) => {

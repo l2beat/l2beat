@@ -2,17 +2,17 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getSecurityData } from './getSecurityData'
+import { getOssificationData } from './getOssificationData'
 
-export function createSecurityRouter(
+export function createOssificationRouter(
   manifest: Manifest,
   render: RenderFunction,
   cache: InMemoryCache,
 ) {
   const router = express.Router()
 
-  router.get('/security', async (req, res) => {
-    const data = await getSecurityData(manifest, req.originalUrl, cache)
+  router.get('/ossification', async (req, res) => {
+    const data = await getOssificationData(manifest, req.originalUrl, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

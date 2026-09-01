@@ -10,12 +10,12 @@ interface Props extends AppLayoutProps {
   entries: OssificationSummaryEntry[]
 }
 
-export function SecurityPage({ entries, ...props }: Props) {
+export function OssificationPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader description="Ossification measures how battle-tested the code securing a project is: the share of recorded code-bug exploits (published, onchain-verified dataset) whose exploited code was younger than the project's unchanged critical perimeter. Battle-tested exposure is the value secured summed over that unchanged period — the implicit bug bounty the code has withstood. The comparison spans Layer 2, privacy, and DeFi projects classified by our team so far.">
-          Security
+          Ossification
         </MainPageHeader>
         <TableSortingProvider initialSort={{ id: '#', desc: false }}>
           <OssificationTable entries={entries} />

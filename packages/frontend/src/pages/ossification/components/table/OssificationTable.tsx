@@ -31,10 +31,7 @@ export function OssificationTable({ entries }: Props) {
 
   return (
     <PrimaryCard className="mt-4">
-      <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <h2 className="font-bold text-heading-16 md:text-heading-20">
-          Ossification
-        </h2>
+      <div className="mb-3 flex justify-end">
         <ColumnsControls columns={table.getAllColumns()} />
       </div>
       <BasicTable table={table} />

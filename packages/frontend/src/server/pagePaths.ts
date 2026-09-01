@@ -18,7 +18,7 @@ export const STATIC_PAGE_PATHS = [
   '/layer2s/liveness',
   '/layer2s/costs',
   '/layer2s/archived',
-  '/security',
+  '/ossification',
   '/interop/summary',
   '/interop/non-minting',
   '/interop/lock-and-mint',
