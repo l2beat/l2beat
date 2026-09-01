@@ -8,54 +8,50 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type {
   InclusionDelayComparison,
+  L2RiskCentralizedSequencingEntry,
   L2RiskSequencingEntry,
 } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
+import { CentralizedSequencingTable } from './components/centralized-table/CentralizedSequencingTable'
 import { InclusionDelayComparisonChart } from './components/InclusionDelayComparisonChart'
 import { L2RiskSequencingTable } from './components/table/L2RiskSequencingTable'
 
 interface Props extends AppLayoutProps {
-  entries: L2RiskSequencingEntry[]
+  decentralizedEntries: L2RiskSequencingEntry[]
+  centralizedEntries: L2RiskCentralizedSequencingEntry[]
   inclusionDelayComparison: InclusionDelayComparison | undefined
 }
 
 export function L2RiskSequencingPage({
-  entries,
+  decentralizedEntries,
+  centralizedEntries,
   inclusionDelayComparison,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="Decentralized sequencing or validating improves short-term censorship resistance compared to centralized sequencing. Actual inclusion delays under censorship depend on sequencer rotation, sampling method, stake distribution, and live non-censoring operators. Long-term censorship resistance is strongest when decentralized sequencing is paired with a deterministic host-chain path, such as forced inclusion from- or an escape hatch to Ethereum.">
+        <MainPageHeader description="Rotating block production across independent operators improves real-time censorship resistance, while deterministic host-chain inclusion provides eventual censorship resistance. No system shown here combines both guarantees today.">
           Sequencing
         </MainPageHeader>
-        <TableSortingProvider initialSort={{ id: '#', desc: false }}>
-          <L2RiskSequencingTable entries={entries} />
-        </TableSortingProvider>
-        {inclusionDelayComparison && (
-          <InclusionDelayComparisonChart
-            comparison={inclusionDelayComparison}
-          />
-        )}
-        <PrimaryCard className="border-divider max-md:border-t md:mt-6">
-          <h2 className="font-bold text-heading-16 md:text-heading-20">
-            Centralized sequencing
-          </h2>
-          <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">
-            A single operator controls transaction ordering and block
-            production. This gives users fast confirmations and high transaction
-            throughput in the best case, but adds risk of censorship: if the
-            operator refuses to include a transaction, users must rely on
-            fallback paths that are enforced by the proof system on the host
-            chain and delay their transactions significantly.
-          </p>
-          <Callout
-            color="blue"
-            body="Combining decentralized sequencing and deterministic CR gadgets results in an optimal mix of real-time and eventual censorship resistance for users. Decentralized sequencing provides real-time CR at the speed of the Rollup while Ethereum is a fallback guarantee for eventual CR in worst-case scenarios."
-            icon={<InfoIcon className="size-5" variant="blue" />}
-            className="mt-4 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
-          />
+        <PrimaryCard className="mt-4">
+          <TableSortingProvider initialSort={{ id: '#', desc: false }}>
+            <L2RiskSequencingTable entries={decentralizedEntries} />
+          </TableSortingProvider>
+          {inclusionDelayComparison && (
+            <InclusionDelayComparisonChart
+              comparison={inclusionDelayComparison}
+            />
+          )}
         </PrimaryCard>
+        <TableSortingProvider initialSort={{ id: '#', desc: false }}>
+          <CentralizedSequencingTable entries={centralizedEntries} />
+        </TableSortingProvider>
+        <Callout
+          color="blue"
+          body="A system combining decentralized sequencing for real-time censorship resistance with deterministic L1 inclusion for eventual censorship resistance would provide the strongest overall protection. No live system shown here offers that combination yet."
+          icon={<InfoIcon className="size-5" variant="blue" />}
+          className="mt-6 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
+        />
       </SideNavLayout>
     </AppLayout>
   )
