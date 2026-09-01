@@ -996,6 +996,11 @@ export type ProjectExternalDependency =
 export interface ProjectPrivacyInfo {
   tokens: ProjectPrivacyToken[]
   summaryTrackedItemName?: string
+  /**
+   * Privacy-specific detailed description shown on the privacy project page.
+   * Falls back to display.detailedDescription when not set.
+   */
+  detailedDescription?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue

@@ -140,14 +140,14 @@ export async function getPrivacyProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (details.display.detailedDescription) {
+  if (details.detailedDescription) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Protocol description',
         description: undefined,
-        detailedDescription: details.display.detailedDescription,
+        detailedDescription: details.detailedDescription,
       },
     })
   }

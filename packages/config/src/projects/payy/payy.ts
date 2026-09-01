@@ -38,7 +38,6 @@ export const payy: ScalingProject = {
     slug: 'payy',
     description:
       'Payy is a payments-focused ZK network for private stablecoin transfers, settled on Ethereum with aggregated validity proofs and validator signatures, while transaction data is kept offchain.',
-    detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
     purposes: ['Payments', 'Privacy'],
     links: {
       websites: ['https://payy.network'],
@@ -251,6 +250,7 @@ export const payy: ScalingProject = {
     content: upgradesAndGovernanceContent,
   },
   privacyInfo: {
+    detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
     // TODO: privacy flow tracking is not configured yet. Deposits could be
     // tracked via the Rollup's `MintAdded(bytes32 indexed mint_hash, uint256
     // value, bytes32 note_kind)` event, but the `Burned(address indexed token,
