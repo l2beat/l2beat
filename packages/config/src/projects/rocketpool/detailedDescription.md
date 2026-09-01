@@ -4,7 +4,7 @@ A permissioned set of {{oracleSetSize}} node operators, the oracle set, reports 
 
 ### Depositing
 
-Depositing is open to anyone, it requires a minimum of {{minimumDeposit}} ETH and enough room under the {{maximumPoolSize}} unassigned ETH pool cap (to prevent idle ETH diluting yield). The protocol keeps a fee of {{depositFee}} and calls mints rETH with the rest of the deposit. Incoming ETH first tops the token contract's redemption buffer up to {{targetCollateralRate}} of the tracked backing; the remainder is booked into RocketVault under the deposit pool's name until it is matched to a validator. Deposits can be disabled by RPL via the deposit flag in `RocketDAOProtocolSettingsDeposit` by RPL token governance or the security council. 
+Depositing is open to anyone, it requires a minimum of {{minimumDeposit}} ETH and enough room under the {{maximumPoolSize}} unassigned ETH pool cap (to prevent idle ETH diluting yield). The protocol keeps a fee of {{depositFee}} and mints rETH with the rest of the deposit. Incoming ETH first tops the token contract's redemption buffer up to {{targetCollateralRate}} of the tracked backing; the remainder is booked into RocketVault under the deposit pool's name until it is matched to a validator. Deposits can be disabled via the deposit flag in `RocketDAOProtocolSettingsDeposit` by RPL token governance or the security council. 
 
 ### Redeeming
 
@@ -18,7 +18,7 @@ Three bounds are enforced in `_updateBalances`. A report may not land until almo
 
 Reports do not expire. If the oracle set stops reporting, the last values stand indefinitely: `RocketTokenRETH` has no staleness check, so redemption and minting continue at a price that no longer tracks the validators. If the set reports falsely, each report is capped at {{maxRethDelta}}, but nothing caps the cumulative drift.
 
-The oracle set also writes the RPL price through `RocketNetworkPrices.submitPrices` and the periodic rewards tree through `RocketRewardsPool.submitRewardSnapshot`, both under the same `onlyTrustedNode` gate and oracle consensus. A seat requires a bond of {{oracleSetBond}} RPL, which the other members can burn by voting {{consensusThreshold}} the member out.
+The oracle set also writes the RPL price through `RocketNetworkPrices.submitPrices` and the periodic rewards tree through `RocketRewardsPool.submitRewardSnapshot`, both under the same `onlyTrustedNode` gate and oracle consensus. A seat requires a bond of {{oracleSetBond}} RPL, which the other members can burn by voting the member out at {{consensusThreshold}}.
 
 ### Node operators
 
@@ -26,13 +26,13 @@ Anyone can run validators for the pool. The operator posts part of each validato
 
 Operators can also be penalised in ETH. For the current validator contracts, a penalty requires {{megapoolPenaltyThreshold}} of the oracle set and is capped at {{megapoolPenaltyCap}} ETH per penalty and over a rolling window. For the legacy contracts, penalties are capped by a rate that is currently {{maxPenaltyRate}}, which disables them entirely.
 
-Operators cannot take depositors' ETH. Validator withdrawals land in a protocol contract that splits them onchain between the operator and the pool. Anyone can trigger the split; only the operator's own share is gated to the operator. Validator exits and final balances are proven against beacon-chain state through EIP-4, not reported by an oracle.
+Operators cannot take depositors' ETH. Validator withdrawals land in a protocol contract that splits them onchain between the operator and the pool. Anyone can trigger the split; only the operator's own share is gated to the operator. Validator exits and final balances are proven against beacon-chain state through EIP-4788, not reported by an oracle.
 
 ### Governance and upgrades
 
 The oracle set can upgrade the protocol core contracts by reaching the {{consensusThreshold}} threshold. An oracle-set proposal cannot open for voting until {{oracleVoteDelay}} after it is made. A successful vote records the upgrade proposal as pending and sets the earliest application time {{upgradeDelay}}. Once the delay has elapsed, `execute` is callable by any oracle-set member. 
 
-`_upgradeContract` refuses a fixed list of names outright: the vault, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract. Those addresses can never be replaced. Everything else can, including the balance oracle and the deposit pool. The exclusion does not close the registry: `_addContract` can register an entirely new name at any address, and that address immediately gains write access to the registry.
+The lane's reach is total: an executed proposal can replace or add protocol contracts, and any registered contract can write the protocol's entire state — so everything, including the deposit pool and the balance oracle, is replaceable through it. Only the vault and token contracts themselves keep their code.
 
 Token-holder governance cannot upgrade anything. `RocketDAOProtocolProposals` has no upgrade entry point, and the upgrade contract accepts no caller but the oracle set's proposal contract.
 
