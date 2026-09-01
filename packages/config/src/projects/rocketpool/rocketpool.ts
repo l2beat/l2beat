@@ -128,8 +128,6 @@ export const rocketpool: BaseProject = {
           'getVoteDelayTime',
         ),
         securityCouncilSeat: councilSeatThreshold,
-        rethSymbol: value('RocketTokenRETH', 'symbol'),
-        rplSymbol: value('RocketTokenRPL', 'symbol'),
       },
     ),
     links: {
