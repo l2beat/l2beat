@@ -130,7 +130,8 @@ export async function makeConfig(
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
-    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
+    daBeat:
+      flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env, flags)),
     ecosystems:
       flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
