@@ -102,13 +102,11 @@ export async function updateDiffHistoryForChain(
     )
     codeDiff = rerun.codeDiff
 
-    diff = diffDiscovery(
-      entriesForDiff(rerun.prevDiscovery),
-      entriesForDiff(curDiscovery),
-    )
+    const prevEntries = entriesForDiff(rerun.prevDiscovery)
+    diff = diffDiscovery(prevEntries, entriesForDiff(curDiscovery))
     configRelatedDiff = diffDiscovery(
       entriesForDiff(discoveryFromMainBranch),
-      entriesForDiff(rerun.prevDiscovery),
+      prevEntries,
     )
   } else {
     logger.info(

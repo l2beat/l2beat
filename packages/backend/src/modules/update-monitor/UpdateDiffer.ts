@@ -101,14 +101,13 @@ export class UpdateDiffer {
       return undefined
     }
 
-    const diff = diffDiscovery(
-      entriesForDiff(discovery),
-      entriesForDiff(latestDiscovery),
-    )
+    // One join, so the diff and the grading below index the same entries.
+    const latestEntries = entriesForDiff(latestDiscovery)
+    const diff = diffDiscovery(entriesForDiff(discovery), latestEntries)
 
     return this.getUpdateDiffs(
       diff,
-      entriesForDiff(latestDiscovery),
+      latestEntries,
       project,
       timestamp,
       discovery.timestamp,

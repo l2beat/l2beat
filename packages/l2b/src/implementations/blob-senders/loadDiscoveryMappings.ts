@@ -1,3 +1,4 @@
+import { attachPermissions } from '@l2beat/discovery'
 import { readdirSync, readFileSync, statSync } from 'fs'
 import { join } from 'path'
 import { receiverMapping as STATIC_RECEIVER_MAPPING } from '../find-l2/BlobsFetcher'
@@ -125,6 +126,7 @@ export function loadDiscoveryMappings(projectsPath: string): DiscoveryMappings {
     try {
       const content = readFileSync(file, 'utf8')
       const data = JSON.parse(content)
+      attachPermissions([data])
       const projectName = data.name
 
       for (const entry of data.entries || []) {
@@ -141,9 +143,7 @@ export function loadDiscoveryMappings(projectsPath: string): DiscoveryMappings {
 
         // Extract sequencers from permissions (eth: addresses only)
         if (entry.address?.startsWith('eth:')) {
-          const sequencerPerms = data.permissions?.[
-            entry.address
-          ]?.receivedPermissions?.filter(
+          const sequencerPerms = entry.receivedPermissions?.filter(
             (p: { permission: string; role?: string }) =>
               SEQUENCER_PERMISSIONS.includes(p.permission) ||
               (p.permission === 'interact' &&

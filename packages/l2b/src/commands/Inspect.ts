@@ -1,4 +1,5 @@
 import {
+  attachPermissions,
   ConfigReader,
   type ContractValue,
   getDiscoveryPaths,
@@ -37,6 +38,7 @@ export const Inspect = command({
     const templateService = new TemplateService(paths.discovery)
     const config = configReader.readConfig(args.project)
     const discovery = configReader.readDiscovery(args.project)
+    attachPermissions([discovery])
 
     let entry
     if (ChainSpecificAddress.check(args.addressOrName)) {
@@ -116,33 +118,28 @@ export const Inspect = command({
       )
     }
 
-    const permissions = discovery.permissions?.[entry.address] ?? {}
-
     if (
-      permissions.directlyReceivedPermissions &&
-      permissions.directlyReceivedPermissions.length > 0
+      entry.directlyReceivedPermissions &&
+      entry.directlyReceivedPermissions.length > 0
     ) {
       console.log(
-        `\ndirectlyReceivedPermissions (${permissions.directlyReceivedPermissions.length}):`,
+        `\ndirectlyReceivedPermissions (${entry.directlyReceivedPermissions.length}):`,
       )
-      for (const p of permissions.directlyReceivedPermissions) {
+      for (const p of entry.directlyReceivedPermissions) {
         printPermission(p, nameByAddress)
       }
     }
 
-    if (
-      permissions.receivedPermissions &&
-      permissions.receivedPermissions.length > 0
-    ) {
+    if (entry.receivedPermissions && entry.receivedPermissions.length > 0) {
       console.log(
-        `\nreceivedPermissions (${permissions.receivedPermissions.length}):`,
+        `\nreceivedPermissions (${entry.receivedPermissions.length}):`,
       )
-      for (const p of permissions.receivedPermissions) {
+      for (const p of entry.receivedPermissions) {
         printPermission(p, nameByAddress)
       }
     }
 
-    if (permissions.eoaWithUpgradePermissions) {
+    if (entry.eoaWithUpgradePermissions) {
       console.log('\neoaWithUpgradePermissions: true')
     }
   },
