@@ -3,28 +3,14 @@ import type {
   TableReadyValue,
 } from '@l2beat/config'
 import { SentimentText } from '~/components/SentimentText'
+import {
+  CENTRALIZED_SEQUENCING_FIELD_KEYS,
+  CENTRALIZED_SEQUENCING_FIELDS,
+} from './centralizedSequencingFields'
 
 interface Props {
   spec: ProjectCentralizedSequencingSpec
 }
-
-const SPEC_ROWS = [
-  { key: 'trustedPreconfirmation', label: 'Trusted preconfirmation' },
-  { key: 'trustedOrdering', label: 'Trusted ordering' },
-  { key: 'sequencer', label: 'Sequencer' },
-  {
-    key: 'realtimeCensorshipResistance',
-    label: 'Real-time censorship resistance',
-  },
-  { key: 'forcedInclusion', label: 'Forced inclusion' },
-  { key: 'inclusionDelay', label: 'Inclusion delay' },
-  { key: 'inclusionMechanics', label: 'Inclusion mechanics' },
-  { key: 'exitDelay', label: 'Exit delay' },
-  { key: 'exitEconomics', label: 'Exit economics' },
-] satisfies {
-  key: Exclude<keyof ProjectCentralizedSequencingSpec, 'type'>
-  label: string
-}[]
 
 export function CentralizedSequencingSpecSheet({ spec }: Props) {
   return (
@@ -41,13 +27,13 @@ export function CentralizedSequencingSpecSheet({ spec }: Props) {
           </tr>
         </thead>
         <tbody>
-          {SPEC_ROWS.map(({ key, label }) => (
+          {CENTRALIZED_SEQUENCING_FIELD_KEYS.map((key) => (
             <tr key={key} className="border-divider border-t">
               <th
                 scope="row"
                 className="px-4 py-3 text-left align-top font-bold text-label-value-13 text-secondary md:w-[42%] md:min-w-[220px]"
               >
-                {label}
+                {CENTRALIZED_SEQUENCING_FIELDS[key].label}
               </th>
               <td className="px-4 py-3 align-top font-medium text-label-value-14">
                 <SpecValue value={spec[key]} />

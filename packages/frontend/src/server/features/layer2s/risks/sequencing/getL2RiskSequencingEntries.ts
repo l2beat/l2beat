@@ -1,8 +1,9 @@
 import type {
   Project,
+  ProjectCentralizedSequencingSpec,
   ProjectInclusionDelayChart,
   ProjectInclusionDelayChartStakeDistribution,
-  ProjectTechnologyChoice,
+  ProjectSequencingTechnologyChoice,
   TableReadyValue,
 } from '@l2beat/config'
 import { assert, notUndefined, ProjectId } from '@l2beat/shared-pure'
@@ -44,17 +45,9 @@ export interface L2RiskSequencingEntry extends CommonProjectEntry {
   additionalCrGadgets: TableReadyValue | undefined
 }
 
-export interface L2RiskCentralizedSequencingEntry extends CommonL2Entry {
-  trustedPreconfirmation: TableReadyValue
-  trustedOrdering: TableReadyValue
-  sequencer: TableReadyValue
-  realtimeCensorshipResistance: TableReadyValue
-  forcedInclusion: TableReadyValue
-  inclusionDelay: TableReadyValue
-  inclusionMechanics: TableReadyValue
-  exitDelay: TableReadyValue
-  exitEconomics: TableReadyValue
-}
+export interface L2RiskCentralizedSequencingEntry
+  extends CommonL2Entry,
+    Omit<ProjectCentralizedSequencingSpec, 'type'> {}
 
 export interface InclusionDelayComparisonSeries {
   key: string
@@ -263,7 +256,7 @@ type SequencingValues = Pick<
 >
 
 function getSequencingValues(
-  sequencing: ProjectTechnologyChoice | undefined,
+  sequencing: ProjectSequencingTechnologyChoice | undefined,
 ): SequencingValues | undefined {
   if (sequencing?.sequencingSpec?.type !== 'sequencer-set') {
     return undefined
@@ -298,19 +291,11 @@ function getL2RiskCentralizedSequencingEntry(
   if (sequencing?.sequencingSpec?.type !== 'centralized') {
     return undefined
   }
-  const spec = sequencing.sequencingSpec
+  const { type: _, ...spec } = sequencing.sequencingSpec
 
   return {
     ...getCommonL2Entry({ project, changes }),
-    trustedPreconfirmation: spec.trustedPreconfirmation,
-    trustedOrdering: spec.trustedOrdering,
-    sequencer: spec.sequencer,
-    realtimeCensorshipResistance: spec.realtimeCensorshipResistance,
-    forcedInclusion: spec.forcedInclusion,
-    inclusionDelay: spec.inclusionDelay,
-    inclusionMechanics: spec.inclusionMechanics,
-    exitDelay: spec.exitDelay,
-    exitEconomics: spec.exitEconomics,
+    ...spec,
   }
 }
 
