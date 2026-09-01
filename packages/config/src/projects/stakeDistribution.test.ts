@@ -23,6 +23,27 @@ describe('stake distribution schema', () => {
     ).toThrow()
   })
 
+  it('rejects rolled-over calendar dates', () => {
+    expect(() =>
+      ProjectStakeDistributionSchema.parse({ ...valid, date: '2026-02-31' }),
+    ).toThrow()
+  })
+
+  it('rejects non-positive totals and counts', () => {
+    expect(() =>
+      ProjectStakeDistributionSchema.parse({ ...valid, totalStake: -1 }),
+    ).toThrow()
+    expect(() =>
+      ProjectStakeDistributionSchema.parse({ ...valid, validatorCount: 0.5 }),
+    ).toThrow()
+    expect(() =>
+      ProjectStakeDistributionSchema.parse({
+        ...valid,
+        entities: [{ name: 'A', stake: -5 }],
+      }),
+    ).toThrow()
+  })
+
   it('rejects a fetched date that does not parse as a timestamp', () => {
     expect(() =>
       ProjectStakeDistributionSchema.parse({
