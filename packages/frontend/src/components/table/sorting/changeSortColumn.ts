@@ -43,7 +43,7 @@ export function withChangeSort<TData, TValue>(
             return CHANGE_SORT_HEADERS[period]
           }
         }
-        return null
+        return ''
       },
       sortUndefined: 'last',
       sortDescFirst: true,

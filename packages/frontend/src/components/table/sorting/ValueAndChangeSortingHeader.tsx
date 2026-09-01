@@ -28,11 +28,14 @@ export function ValueAndChangeSortingHeader<TData>({
   )
 
   const changeSortColumnId = header.column.columnDef.meta?.changeSortColumnId
-  const changeColumn = changeSortColumnId
-    ? header.getContext().table.getColumn(changeSortColumnId)
-    : undefined
+  if (!changeSortColumnId) {
+    return valueSortingArrows
+  }
 
-  if (!changeColumn?.getCanSort()) {
+  const changeColumn = header.getContext().table.getColumn(changeSortColumnId)
+  assert(changeColumn, 'Expected change-sort companion column')
+
+  if (!changeColumn.getCanSort()) {
     return valueSortingArrows
   }
 
@@ -48,9 +51,10 @@ export function ValueAndChangeSortingHeader<TData>({
     changeHeaderInstance.column.columnDef.header,
     changeHeaderInstance.getContext(),
   )
-  if (changeHeader == null) {
-    return valueSortingArrows
-  }
+  assert(
+    typeof changeHeader === 'string',
+    'Expected change-sort header to render a string',
+  )
 
   return (
     <div className="flex items-end gap-2">
