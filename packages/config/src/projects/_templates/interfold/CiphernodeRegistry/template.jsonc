@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CiphernodeRegistry",
   "category": "core",
-  "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability.",
+  "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.",
   "ignoreMethods": [
     "committeePublicKey",
     "committeeThresholdMet",
@@ -13,16 +13,15 @@
     "getCommitteeNodes",
     "getCommitteeViability",
     "getDkgAnchors",
+    "getSortitionRequest",
     "isOpen",
     "publicKeyHashes",
     "rootAt",
     "roots",
-    "sortitionEntropyBlocks",
     "sortitionSeed",
-    "sortitionSeedResolved",
     "sortitionTicketPrices"
   ],
-  "ignoreRelatives": ["BLOCKHASH_HISTORY"],
+  "ignoreRelatives": ["pendingDkgFoldAttestationVerifier"],
   "ignoreInWatchMode": ["ciphernodes", "root", "treeSize"],
   "fields": {
     "owner": {
@@ -31,7 +30,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "replace the coordinator, bonding and slashing dependencies; add or remove ciphernodes; change the sortition window; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate."
+          "description": "replace the coordinator, bonding, slashing and randomness-provider dependencies; add or remove ciphernodes; change the sortition window and randomness timeout; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate. Randomness settings can only change while new requests are paused and no committees are outstanding."
         }
       ]
     },
@@ -96,7 +95,31 @@
     },
     "dkgFoldAttestationVerifier": {
       "description": "Verifier that authenticates each selected node's DKG-fold commitment before the aggregate DKG proof is accepted.",
+      "type": "CODE_CHANGE",
+      "severity": "HIGH"
+    },
+    "pendingDkgFoldAttestationVerifier": {
+      "description": "DKG-fold verifier proposed under the two-day timelock (zero when none is pending).",
       "type": "CODE_CHANGE"
+    },
+    "pendingAccusationVoteValidity": {
+      "description": "Accusation-vote validity window proposed under the two-day timelock (zero when none is pending).",
+      "type": "RISK_PARAMETER"
+    },
+    "randomnessProvider": {
+      "description": "Contract that supplies the asynchronous sortition entropy for committee selection. Automatically reset to zero, which disables new E3 requests, if a randomness request expires without a usable response (circuit breaker). Replacing it requires paused requests, no outstanding committees, and that the new provider names this registry as its only requester.",
+      "type": "CODE_CHANGE",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deliver the entropy used to select ciphernode committees for each E3."
+        }
+      ]
+    },
+    "randomnessRequestTimeout": {
+      "description": "Time window in which the randomness provider must deliver sortition entropy for an E3, bounded between 60 seconds and 1 day.",
+      "type": "RISK_PARAMETER"
     },
     "sortitionSubmissionWindow": {
       "description": "Time after entropy becomes available during which eligible operators submit a ticket for committee sortition.",
