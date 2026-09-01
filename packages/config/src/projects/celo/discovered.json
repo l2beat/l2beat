@@ -3281,8 +3281,28 @@
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25551703 },
-  "permissionsConfigHash": "0x6c41f1c7d37eef69f2b280cbe210d167855547251d259a6d4c42fa75c48251cc",
+  "permissionsConfigHash": "0x10e174faf522255297026c42cf1c0f6e7187f2e9b2b1c18a8bae7cdf5aca1a88",
   "permissions": {
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ]
+    },
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
         {
@@ -3713,6 +3733,22 @@
           "permission": "act",
           "from": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
           "role": ".GnosisSafe_modules"
+        }
+      ]
+    },
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
         }
       ]
     },

@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x5fdd7e489c736c6c335415a0ba7e2bdaa37f75b2
+
+# Diff at Tue, 01 Sep 2026 11:35:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1784806565
+- current timestamp: 1784806565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784806565 (main branch discovery), not current.
+
+```diff
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"create new zk chains (based on the current version), register tokens (ZK cluster Admin role).","role":".admin","via":[{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"interact","from":"eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).","role":".admin","via":[{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"upgrade","from":"eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31","role":"admin","via":[{"address":"eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B"},{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x0a14B696350546110a0D8acDb86226983af9D2a0","role":"admin"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x0a14B696350546110a0D8acDb86226983af9D2a0","role":"admin"}]
+    }
+```
+
 Generated with discovered.json: 0xf5b58aecc9b60bc1761a6983cc086e0fc3f96212
 
 # Diff at Mon, 27 Jul 2026 11:02:46 GMT:

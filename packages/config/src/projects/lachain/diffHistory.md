@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x245fd3a5d9c4cbe5e494c191d07fc96d1b0a805c
+
+# Diff at Tue, 01 Sep 2026 11:35:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1761642941
+- current timestamp: 1761642941
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761642941 (main branch discovery), not current.
+
+```diff
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e","role":".owner"},{"permission":"act","from":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1","role":".owner"},{"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.","role":".owner"},{"permission":"interact","from":"eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6","description":"pause / unpause the bridge.","role":".owner"},{"permission":"interact","from":"eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.","role":".owner"},{"permission":"interact","from":"eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","description":"pause, unpause and set critical escrow address references.","role":".owner"},{"permission":"interact","from":"eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076","description":"pause, resume chain migrations.","role":".owner"},{"permission":"interact","from":"eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0xe2a04d4b55138814ce73789162bd1368ec31442d
 
 # Diff at Mon, 27 Jul 2026 11:01:25 GMT:
