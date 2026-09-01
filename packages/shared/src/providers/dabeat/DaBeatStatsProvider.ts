@@ -1,10 +1,10 @@
 import { assert } from '@l2beat/shared-pure'
 import type {
-  AvailClient,
   BeaconChainClient,
   CelestiaRpcClient,
   EspressoClient,
   NearClient,
+  PolkadotRpcClient,
 } from '../../clients'
 
 export interface DaBeatStats {
@@ -18,7 +18,7 @@ export class DaBeatStatsProvider {
     private readonly beaconChainClient: BeaconChainClient | undefined,
     private readonly nearClient: NearClient | undefined,
     private readonly celestiaClient: CelestiaRpcClient | undefined,
-    private readonly availClient: AvailClient | undefined,
+    private readonly availClient: PolkadotRpcClient | undefined,
     private readonly espressoClient: EspressoClient | undefined,
   ) {}
 

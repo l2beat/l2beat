@@ -1,10 +1,10 @@
 import { expect, mockObject } from 'earl'
 import type {
-  AvailClient,
   BeaconChainClient,
   CelestiaRpcClient,
   EspressoClient,
   NearClient,
+  PolkadotRpcClient,
 } from '../../clients'
 import { DaBeatStatsProvider } from './DaBeatStatsProvider'
 
@@ -88,7 +88,7 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('routes to getAvailStats for avail project', async () => {
-      const mockAvailClient = mockObject<AvailClient>({
+      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
         getStakingEraOverview: async () => ({
           validator1: { own: 400n, total: 400n },
           validator2: { own: 600n, total: 600n },
@@ -99,7 +99,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         undefined,
-        mockAvailClient,
+        mockPolkadotRpcClient,
         undefined,
       )
 
@@ -358,7 +358,7 @@ describe(DaBeatStatsProvider.name, () => {
 
   describe(DaBeatStatsProvider.prototype.getAvailStats.name, () => {
     it('returns correct stats', async () => {
-      const mockAvailClient = mockObject<AvailClient>({
+      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
         getStakingEraOverview: async () => ({
           validator1: {
             own: 1000000000000000000n,
@@ -376,7 +376,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         undefined,
-        mockAvailClient,
+        mockPolkadotRpcClient,
         undefined,
       )
 
@@ -390,7 +390,7 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('propagates client errors', async () => {
-      const mockAvailClient = mockObject<AvailClient>({
+      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
         getStakingEraOverview: async () => {
           throw new Error('Connection failed')
         },
@@ -400,7 +400,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         undefined,
-        mockAvailClient,
+        mockPolkadotRpcClient,
         undefined,
       )
 

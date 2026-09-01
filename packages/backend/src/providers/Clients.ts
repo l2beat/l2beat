@@ -1,6 +1,5 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
-  AvailClient,
   type AztecBlockClient,
   AztecRpcClient,
   BeaconChainClient,
@@ -47,7 +46,7 @@ export interface Clients {
   celestia: CelestiaRpcClient | undefined
   celestiaDaBeat: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
-  availDaBeat: AvailClient | undefined
+  availDaBeat: PolkadotRpcClient | undefined
   eigen: EigenApiClient | undefined
   getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
@@ -71,7 +70,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let celestia: CelestiaRpcClient | undefined
   let celestiaDaBeat: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
-  let availDaBeat: AvailClient | undefined
+  let availDaBeat: PolkadotRpcClient | undefined
   let near: NearClient | undefined
   let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
@@ -334,7 +333,14 @@ export function initClients(config: Config, logger: Logger): Clients {
       logger,
       http,
     })
-    availDaBeat = new AvailClient(config.daBeat.availRpcUrl)
+    availDaBeat = new PolkadotRpcClient({
+      url: config.daBeat.availRpcUrl,
+      callsPerMinute: 100,
+      retryStrategy: 'RELIABLE',
+      sourceName: 'avail',
+      logger,
+      http,
+    })
     espresso = new EspressoClient({
       sourceName: 'espresso',
       apiUrl: config.daBeat.espressoApiUrl,
