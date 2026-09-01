@@ -122,6 +122,46 @@ describe('discovery config.jsonc', () => {
     }
   })
 
+  // A project's permissions are a snapshot of a model that spanned its whole
+  // cluster. They may be older than the shared module they mention, but they
+  // must never mention an address the cluster no longer has: rendering a path
+  // through a contract that is gone is the failure worth blocking on.
+  it('resolves every address of every permission inside its cluster', () => {
+    for (const c of configs) {
+      const cluster = new Set(
+        configReader
+          .readDiscoveryWithReferences(c.name)
+          .flatMap((d) => d.entries)
+          .filter((e) => e.type !== 'Reference')
+          .map((e) => e.address),
+      )
+
+      for (const [holder, permissions] of Object.entries(
+        getDiscovery(c.name).permissions ?? {},
+      )) {
+        const mentioned = [ChainSpecificAddress(holder)]
+        for (const permission of [
+          ...(permissions.receivedPermissions ?? []),
+          ...(permissions.directlyReceivedPermissions ?? []),
+        ]) {
+          mentioned.push(permission.from)
+          mentioned.push(...(permission.via ?? []).map((v) => v.address))
+        }
+
+        for (const address of mentioned) {
+          assert(
+            cluster.has(address),
+            [
+              `Project ${c.name} stores a permission mentioning ${address},`,
+              'but no project of its cluster discovered that address.',
+              `Run \`l2b model-permissions ${c.name}\`.`,
+            ].join(' '),
+          )
+        }
+      }
+    }
+  }).timeout(30000)
+
   it('has full discovery of each non-legacy entrypoint in its project', () => {
     // Get any config to have access to entrypoints from globalConfig.json
     const config = configs[0]
