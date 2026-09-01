@@ -1,6 +1,6 @@
 {
   "name": "shared-circle",
-  "timestamp": 1785844480,
+  "timestamp": 1788265075,
   "configHash": "0x1bec5e176090ed64ad060381de07cb71e5799dc0bff25d7eb8f38ee0b8cfbac8",
   "entries": [
     {
@@ -57,7 +57,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 486997,
+        "nextAvailableNonce": 495207,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -556,6 +556,11 @@
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
+      "address": "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
       "type": "EOA",
       "proxyType": "EOA"
@@ -577,6 +582,11 @@
     },
     {
       "address": "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -689,7 +699,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "49570651011504257",
+        "totalSupply": "50491264090809363",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -839,6 +849,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xd285766FB23198087d781FbF22D8Ddbc8b0067a3",
       "type": "EOA",
       "proxyType": "EOA"
@@ -930,7 +945,11 @@
           "eth:0xC2Bbc3A94408096EDfbfC2f61A8bBb5c9ED10a06",
           "eth:0x7Ee759ea02624E29a39b81726B72eCFF2F09c5B2",
           "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF",
-          "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971"
+          "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971",
+          "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d",
+          "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275",
+          "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E",
+          "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049"
         ],
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
@@ -1001,6 +1020,11 @@
       "implementationNames": {
         "eth:0xfd78EE919681417d192449715b2594ab58f5D002": "TokenMinterV2"
       }
+    },
+    {
+      "address": "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFE8c6a384fD37BCc4E4f8c837A570e09EDd6bCEa",
@@ -1679,8 +1703,8 @@
     "tokens/circle/TokenMinter": "0x8126e2d0f134d23c8f836039f7a31a69fe93eda8e4dbe6db0060fc7f96e06a3f",
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
-  "usedBlockNumbers": { "ethereum": 25681382 },
-  "permissionsConfigHash": "0x25015e8f6f8d154778ec531fce81be6d9cab59a92833f8e60400ab9fff5c86f4",
+  "usedBlockNumbers": { "ethereum": 25882379 },
+  "permissionsConfigHash": "0x883359499a400ce8ec6e77a0e603371272bee54e7600c6594ee70a49a93fc927",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [
@@ -2488,6 +2512,26 @@
         }
       ]
     },
+    "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
     "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266": {
       "receivedPermissions": [
         {
@@ -2545,6 +2589,26 @@
           "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "description": "mint the token in the bounds of a preset minting allowance",
           "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
         }
       ]
     },
@@ -2799,6 +2863,26 @@
       ]
     },
     "eth:0xCE4DddbfbE2c338B679c4F186d5F60B60FAa43Bd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3160,6 +3244,26 @@
           "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "description": "mint the token in the bounds of a preset minting allowance",
           "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
         }
       ]
     }
