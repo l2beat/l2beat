@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd0ee1fcbe324928e50860d9de1d7c6fb4dcced3c
+Generated with discovered.json: 0x948ff5e03ace7f898239330e17d76fb4d673e2f9
 
-# Diff at Mon, 31 Aug 2026 16:08:05 GMT:
+# Diff at Tue, 01 Sep 2026 08:20:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787834174
+- comparing to: main@aa49c62758c26aa449b48d2b116d7b4ea40373f8 block: 1787834174
 - current timestamp: 1787834174
 
 ## Description
@@ -74,6 +74,8 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
     +++ description: None
+      critical:
++        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -204,6 +206,8 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract ProxyAdmin (eth:0xd56045E68956FCe2576E680c95a4750cf8241f79) [global/ProxyAdmin] {
     +++ description: None
+      critical:
++        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -213,7 +217,7 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
     contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
-+        true
++        false
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -233,8 +237,8 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract AnchorStateRegistry (eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2) [opstack/AnchorStateRegistry_post20] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
-      fieldMeta.disputeGameFinalityDelaySeconds:
--        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds.description:
++        "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:

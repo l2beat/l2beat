@@ -2,11 +2,12 @@ import type {
   DiscoveryChangelog,
   DiscoveryChangelogEntry,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import {
   type BattleTestedExposurePoint,
   calculateBattleTestedExposure,
@@ -183,6 +184,7 @@ export async function getProjectOssification(
     now,
     historical,
     ossificationJson.criticalEvents ?? [],
+    await getProjectStart(projectId),
   )
   if (factor === undefined) {
     return undefined
@@ -206,6 +208,21 @@ export async function getProjectOssification(
       tvs: series && sampleSeries(series, from, now),
     },
   }
+}
+
+/** When the project's own chain started, from the chain config every chain
+ *  project already carries. A perimeter can contain contracts older than the
+ *  project itself — an OP-stack chain adopting the shared SuperchainConfig, say
+ *  — and their history before this point is someone else's, so it is not
+ *  charged to this project's change rate. Undefined for projects without a
+ *  chain of their own (DeFi, privacy), whose perimeter is their own from the
+ *  start. */
+async function getProjectStart(projectId: string): Promise<number | undefined> {
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    optional: ['chainConfig'],
+  })
+  return project?.chainConfig?.sinceTimestamp
 }
 
 function toOssificationContractInput(

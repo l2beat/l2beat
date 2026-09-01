@@ -20,7 +20,13 @@ has remained unchanged.
   critical contract gates maturity.
 - **Critical changes / year:** qualifying events in the trailing 36 months,
   clustered into 24-hour windows. The denominator is clipped to the observed
-  history and is at least 30 days.
+  history and to the project's own start, and is at least 30 days. A perimeter
+  can be older than the project using it — an OP-stack chain adopting the shared
+  SuperchainConfig, contracts deployed and iterated weeks before genesis — and
+  those changes are not the project's doing: mechanical history before the
+  project start is left out of both the numerator and the denominator, while
+  contract clocks, deployments and reviewed `criticalEvents` keep the full
+  history.
 
 The Security summary shows the exit window as context for the upgrade capability.
 
@@ -85,6 +91,7 @@ proof verification, nullifiers, anonymity, viewing authority).
 | `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct or dates imprecisely | Adds the specified code/state event. An entry naming both `updateId` and `contract` supersedes that update's mechanical diff events for that contract; `historical: true` events feed the change rate only and never reset the current clock |
 | `unverified` | Any current critical contract | Gates maturity, score, and exposure to zero |
 | `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Closed reviewed ledger fixed at the removal review (onchain upgrade timestamps plus reviewed `criticalEvents`; diff history is never consulted for it); affects only change history/rate, never the current clock or unverified gate |
+| `chainConfig.sinceTimestamp` | Root project only, chain projects only | The project start: mechanical events before it are not charged to this project's change rate, and the rate window begins here |
 | Project `TokenValue` series | Root project only | Supplies battle-tested exposure; it does not affect score or change rate |
 
 ## Tools and code map
@@ -94,9 +101,13 @@ proof verification, nullifiers, anonymity, viewing authority).
 - `getOssificationFactor.ts`: pure clocks, event extraction, clustering, and score.
 - `getOssificationPerimeter.ts`: lint/research closure only; it never decides runtime
   membership.
-- `scripts/ossification-lint.ts <projectId...>`: candidate worklist for missing/excess
-  flags, the severity-history audit (silenced annotated-HIGH events), and the
-  historical-ledger closure check; suggestions require judgment.
+- `scripts/ossification-lint.ts <projectId...> [--no-timestamps]`: candidate
+  worklist for missing/excess flags, the severity-history audit (silenced
+  annotated-HIGH events), the historical-ledger closure check, and the
+  timestamp audit, which re-derives every tx-anchored `criticalEvents` date
+  from its transaction receipt (RPC; skipped per chain when none is
+  configured). Worklist rows require judgment; a timestamp mismatch is an
+  error and exits non-zero.
 - `scripts/ossification-fetch-events.ts <chain:address> <eventSig>`: onchain log
   history of a field's mutation event as ready-to-review `criticalEvents`
   entries, for pre-coverage backfills.

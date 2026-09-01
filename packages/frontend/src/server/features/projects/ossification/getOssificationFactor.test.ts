@@ -670,6 +670,101 @@ describe(getOssificationFactor.name, () => {
     )
     expect(result?.lastCriticalChange).toEqual(null)
   })
+
+  /** A perimeter can be older than the project using it: an OP-stack chain
+   *  adopts a SuperchainConfig that has been upgraded for years, a chain
+   *  launches weeks after its contracts were deployed. Those changes are not
+   *  this project's doing. */
+  describe('project start', () => {
+    /** Deployed and upgraded long before the project, then again after it. */
+    const sharedEntry = entry({
+      address: ADDRESS_B,
+      name: 'SharedConfig',
+      sinceTimestamp: NOW - 4 * YEAR,
+      upgradeTimestamps: [NOW - 4 * YEAR, NOW - 2.5 * YEAR, NOW - YEAR],
+    })
+    const ownEntry = entry({
+      address: ADDRESS_A,
+      sinceTimestamp: NOW - 2 * YEAR,
+    })
+    const PROJECT_START = NOW - 2 * YEAR
+
+    it('charges changes made before the project existed to nobody', () => {
+      const before = getOssificationFactor([sharedEntry, ownEntry], [], NOW)
+      expect(before?.clusteredEventCount).toEqual(2)
+
+      const result = getOssificationFactor(
+        [sharedEntry, ownEntry],
+        [],
+        NOW,
+        [],
+        [],
+        PROJECT_START,
+      )
+      // only the upgrade the project actually lived through
+      expect(result?.clusteredEventCount).toEqual(1)
+      expect(
+        result?.contracts.find((c) => c.address === ADDRESS_B)?.codeChangeCount,
+      ).toEqual(1)
+    })
+
+    it('starts the rate window at the project, not at the oldest contract', () => {
+      const before = getOssificationFactor([sharedEntry, ownEntry], [], NOW)
+      // clipped to the 3y window by the older contract's history
+      expect(before?.windowSeconds).toEqual(3 * YEAR)
+      expect(before?.criticalChangesPerYear).toEqual(2 / 3)
+
+      const result = getOssificationFactor(
+        [sharedEntry, ownEntry],
+        [],
+        NOW,
+        [],
+        [],
+        PROJECT_START,
+      )
+      // one event over the two years the project has existed
+      expect(result?.windowSeconds).toEqual(2 * YEAR)
+      expect(result?.criticalChangesPerYear).toEqual(0.5)
+    })
+
+    it('keeps the age of a contract older than the project', () => {
+      const result = getOssificationFactor(
+        [sharedEntry, ownEntry],
+        [],
+        NOW,
+        [],
+        [],
+        PROJECT_START,
+      )
+      // the shared contract's clock is its real last change, and the timeline
+      // still shows every reset behind the clocks
+      expect(
+        result?.contracts.find((c) => c.address === ADDRESS_B)?.clockStart,
+      ).toEqual(NOW - YEAR)
+      expect(result?.lastCriticalChange).toEqual(NOW - YEAR)
+      expect(result?.perimeterResets ?? []).toInclude(NOW - 2.5 * YEAR)
+    })
+
+    it('keeps a reviewed event that a researcher attributed by hand', () => {
+      const result = getOssificationFactor(
+        [ownEntry],
+        [],
+        NOW,
+        [],
+        [
+          {
+            timestamp: PROJECT_START - DAY,
+            type: 'state',
+            source: 'tx:0xreviewed',
+            reason: 'Deployment-time setup the reviewer counted deliberately.',
+            contract: ADDRESS_A,
+          },
+        ],
+        PROJECT_START,
+      )
+      expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
+    })
+  })
 })
 
 describe(toDisplayScore.name, () => {

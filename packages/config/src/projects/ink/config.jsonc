@@ -28,6 +28,34 @@
     // doesn't follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
       "ignoreDiscovery": true
+    },
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated.
+    "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
+    // SuperchainProxyAdmin: can upgrade every core superchain contract (portal, bridges, DGF, SystemConfig, SuperchainConfig).
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
+    // ProxyAdmin (L1): can upgrade every core Ink contract (portal, bridges, DGF, SystemConfig).
+    "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79": {
+      "critical": true
+    },
+    // OP Mainnet's legacy AddressManager, discovered as a relative of the shared
+    // SuperchainProxyAdmin. It resolves implementations for OP Mainnet's own
+    // ResolvedDelegateProxies only; the SuperchainConfig that Ink shares is a plain
+    // EIP-1967 proxy (proxyType 0), and Ink's own messenger resolves through Ink's
+    // AddressManager (eth:0x9b7C9BbD...). Outside the Ink perimeter.
+    "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
+      "critical": false
     }
   }
 }

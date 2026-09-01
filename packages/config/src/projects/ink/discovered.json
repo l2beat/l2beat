@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "timestamp": 1787834174,
-  "configHash": "0x3a2dc522ee190308ab0561f40628b87c4df71206f19ed3c37a19edab9396b00d",
+  "configHash": "0xfd49699ccba30c68ce3ce386180421a64df48885963e4a6c76303356f6bc09c9",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -440,6 +440,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1771,6 +1772,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1859,7 +1861,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
@@ -2055,7 +2057,11 @@
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" }
+        "retirementTimestamp": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
       },
       "implementationNames": {
         "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2": "Proxy",

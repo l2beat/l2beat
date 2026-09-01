@@ -165,7 +165,7 @@ export const ossificationColumns = [
     },
     meta: {
       tooltip:
-        'Critical change events per year over the trailing 36 months, and the number of contracts in the critical perimeter as classified by our research team.',
+        'Critical change events per year over the trailing 36 months, or since the project launched if that is more recent, and the number of contracts in the critical perimeter as classified by our research team.',
     },
     sortDescFirst: true,
   }),

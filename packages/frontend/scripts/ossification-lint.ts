@@ -11,8 +11,15 @@
  * confirm the downgrade or, if the field was renamed rather than re-judged,
  * backfill the events under the new name via criticalEvents.
  *
+ * The timestamp audit re-derives every tx-anchored criticalEvent date from its
+ * transaction receipt. A hand-curated entry that carries a neighbouring row's
+ * timestamp is invisible to every other check but silently misdates the clock
+ * and the change rate, so it is verified against the chain.
+ *
  * Usage: npx tsx scripts/ossification-lint.ts <projectId> [<projectId> ...]
+ *          [--no-timestamps]   skip the onchain timestamp audit (offline runs)
  */
+import { formatSeconds } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 import {
@@ -29,14 +36,24 @@ import {
   extractDiffBlockSpans,
   isImplementationChangeDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
+import {
+  getRpcUrl,
+  getRpcUrlForChain,
+  getTransactionTimestamps,
+} from './ossificationRpc'
 
 async function main() {
-  const ids = process.argv.slice(2)
+  const ids = process.argv.slice(2).filter((arg) => !arg.startsWith('--'))
+  const checkTimestamps = !process.argv.includes('--no-timestamps')
   if (ids.length === 0) {
-    console.error('usage: ossification-lint.ts <projectId> [...]')
+    console.error(
+      'usage: ossification-lint.ts <projectId> [...] [--no-timestamps]',
+    )
     process.exit(1)
   }
-  const projects = await ps.getProjects({ optional: ['trackedTxsConfig'] })
+  const projects = await ps.getProjects({
+    optional: ['trackedTxsConfig', 'chainConfig'],
+  })
 
   for (const id of ids) {
     const dir = path.join(process.cwd(), '../config/src/projects', id)
@@ -84,6 +101,9 @@ async function main() {
       `flagged critical: ${flagged.size} / ${contracts.length} contracts, closure seeds: ${seeds.length}`,
     )
     auditSeverityHistory(id)
+    if (checkTimestamps) {
+      await auditEventTimestamps(id, project?.chainConfig?.name)
+    }
     if (!derived) {
       console.log('closure: no seed matched a discovered contract')
       continue
@@ -103,6 +123,138 @@ async function main() {
     }
   }
 }
+
+/** Objective errors (as opposed to the advisory worklist rows) that should
+ *  fail a scripted run. */
+let hasHardFailure = false
+
+interface AnchoredEvent {
+  hash: string
+  chain: string
+  timestamp: number
+  contract?: string
+}
+
+/** Re-derives every tx-anchored criticalEvent timestamp from its transaction.
+ *  Nothing else in the pipeline can catch a mis-transcribed date: the runtime
+ *  trusts the number, and it moves both the clock and the change rate. An
+ *  attributed event is looked up on its contract's chain; a project-level one
+ *  (a governance action on an excluded actor shell) on mainnet, falling back
+ *  to the project's own chain, where its L2 Safes live. */
+async function auditEventTimestamps(projectId: string, ownChain?: string) {
+  const ossification = readJson(
+    path.join(
+      process.cwd(),
+      '../config/src/projects',
+      projectId,
+      'ossification.json',
+    ),
+  )
+  const events =
+    (ossification?.criticalEvents as
+      | { timestamp?: number; source?: string; contract?: string }[]
+      | undefined) ?? []
+  const anchored: AnchoredEvent[] = events.flatMap((event) => {
+    const hash = /^tx:(0x[0-9a-fA-F]{64})$/.exec(event.source ?? '')?.[1]
+    if (!hash || typeof event.timestamp !== 'number') return []
+    return [
+      {
+        hash: hash.toLowerCase(),
+        chain: event.contract?.split(':')[0] ?? 'eth',
+        timestamp: event.timestamp,
+        contract: event.contract,
+      },
+    ]
+  })
+  if (anchored.length === 0) {
+    console.log('event timestamps: no tx-anchored events')
+    return
+  }
+
+  const byChain = new Map<string, AnchoredEvent[]>()
+  for (const event of anchored) {
+    byChain.set(event.chain, [...(byChain.get(event.chain) ?? []), event])
+  }
+
+  const problems: string[] = []
+  const unchecked: string[] = []
+  let verified = 0
+  const lookUp = async (
+    rpcUrl: string,
+    chain: string,
+    chainEvents: AnchoredEvent[],
+  ) => {
+    try {
+      return await getTransactionTimestamps(
+        rpcUrl,
+        chainEvents.map((event) => event.hash),
+      )
+    } catch (error) {
+      unchecked.push(
+        `${chainEvents.length} on ${chain} (RPC error: ${error instanceof Error ? error.message : String(error)})`,
+      )
+      return undefined
+    }
+  }
+  for (const [chain, chainEvents] of byChain) {
+    const rpcUrl = getRpcUrl(chain)
+    if (!rpcUrl) {
+      unchecked.push(`${chainEvents.length} on ${chain} (no RPC configured)`)
+      continue
+    }
+    const timestamps = await lookUp(rpcUrl, chain, chainEvents)
+    if (!timestamps) continue
+
+    // Project-level events carry no chain: retry the misses where the
+    // project's own governance contracts live.
+    const missed = chainEvents.filter(
+      (event) => !event.contract && !timestamps.get(event.hash),
+    )
+    const fallbackUrl = ownChain ? getRpcUrlForChain(ownChain) : undefined
+    if (missed.length > 0 && ownChain && fallbackUrl) {
+      const fallback = await lookUp(fallbackUrl, ownChain, missed)
+      for (const [hash, timestamp] of fallback ?? []) {
+        if (timestamp !== null) timestamps.set(hash, timestamp)
+      }
+    }
+
+    for (const event of chainEvents) {
+      const onchain = timestamps.get(event.hash)
+      const label = `${event.contract ? `${event.contract} ` : ''}tx:${event.hash.slice(0, 12)}`
+      if (onchain === null || onchain === undefined) {
+        // Neither chain knows the hash: a wrong guess or a bad anchor, but
+        // only a human can tell which, so it is reported rather than failed.
+        unchecked.push(
+          `${label} (not found on ${chain}${ownChain && ownChain !== chain ? ` or ${ownChain}` : ''})`,
+        )
+        continue
+      }
+      if (onchain !== event.timestamp) {
+        hasHardFailure = true
+        problems.push(
+          `${label} declared ${day(event.timestamp)} (${event.timestamp}) but the transaction is ${day(onchain)} (${onchain}), off by ${formatSeconds(Math.abs(onchain - event.timestamp))}`,
+        )
+        continue
+      }
+      verified++
+    }
+  }
+
+  if (problems.length > 0) {
+    console.log('event timestamp mismatches (declared vs transaction):')
+    for (const problem of problems.sort()) console.log(`  - ${problem}`)
+  } else {
+    console.log(
+      `event timestamps: ok (${verified} tx-anchored)${
+        unchecked.length > 0 ? `, ${unchecked.length} unchecked` : ''
+      }`,
+    )
+  }
+  for (const skipped of unchecked) console.log(`  ~ unchecked: ${skipped}`)
+}
+
+const day = (timestamp: number) =>
+  new Date(timestamp * 1000).toISOString().slice(0, 10)
 
 interface SilencedFieldHistory {
   contract: string
@@ -355,8 +507,6 @@ function auditSeverityHistory(projectId: string) {
   console.log(
     'annotated-HIGH history silenced by current severities (confirm the downgrade, or backfill via criticalEvents if the field was renamed):',
   )
-  const day = (timestamp: number) =>
-    new Date(timestamp * 1000).toISOString().slice(0, 10)
   for (const row of [...silenced.values()].sort((a, b) =>
     a.name.localeCompare(b.name),
   )) {
@@ -389,4 +539,7 @@ function readJson(file: string): Record<string, any> | undefined {
   return JSON.parse(readFileSync(file, 'utf-8'))
 }
 
-main()
+main().then(() => {
+  // advisory rows are for a human to weigh; a wrong timestamp anchor is not
+  process.exit(hasHardFailure ? 1 : 0)
+})

@@ -23,10 +23,8 @@
  * The event signature is hashed with `cast keccak` (foundry required) unless
  * a 32-byte topic0 is passed directly.
  */
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { execFileSync } from 'child_process'
-import { readFileSync } from 'fs'
-import path from 'path'
+import { getRpcUrl, rpc } from './ossificationRpc'
 
 interface Log {
   transactionHash: string
@@ -54,6 +52,11 @@ async function main() {
 
   const [shortChain, address] = target.split(':') as [string, string]
   const rpcUrl = getRpcUrl(shortChain)
+  if (!rpcUrl) {
+    throw new Error(
+      `no RPC url for ${shortChain} in packages/config/.env or environment`,
+    )
+  }
   const topic0 = /^0x[0-9a-fA-F]{64}$/.test(event)
     ? event.toLowerCase()
     : execFileSync('cast', ['keccak', event], { encoding: 'utf8' }).trim()
@@ -102,25 +105,6 @@ async function main() {
   console.log(JSON.stringify(entries, null, 2))
 }
 
-function getRpcUrl(shortChain: string): string {
-  const longName = ChainSpecificAddress.longChain(
-    `${shortChain}:0x0000000000000000000000000000000000000000` as Parameters<
-      typeof ChainSpecificAddress.longChain
-    >[0],
-  )
-  const envName = `${longName.toUpperCase().replace(/-/g, '')}_RPC_URL`
-  const envFile = readFileSync(
-    path.join(process.cwd(), '../config/.env'),
-    'utf8',
-  )
-  const match = new RegExp(`^${envName}=(.+)$`, 'm').exec(envFile)
-  const url = process.env[envName] ?? match?.[1]
-  if (!url) {
-    throw new Error(`no ${envName} in packages/config/.env or environment`)
-  }
-  return url.trim()
-}
-
 /** eth_getLogs with recursive range splitting on provider limits. */
 async function getLogsChunked(
   rpcUrl: string,
@@ -146,27 +130,6 @@ async function getLogsChunked(
       ...(await getLogsChunked(rpcUrl, address, topic0, middle + 1, toBlock)),
     ]
   }
-}
-
-let requestId = 0
-async function rpc(
-  rpcUrl: string,
-  method: string,
-  params: unknown[],
-): Promise<unknown> {
-  const response = await fetch(rpcUrl, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ jsonrpc: '2.0', id: ++requestId, method, params }),
-  })
-  const body = (await response.json()) as {
-    result?: unknown
-    error?: { message?: string }
-  }
-  if (body.error || body.result === undefined) {
-    throw new Error(`${method} failed: ${body.error?.message ?? 'no result'}`)
-  }
-  return body.result
 }
 
 main().catch((error) => {

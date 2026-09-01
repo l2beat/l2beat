@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "timestamp": 1786719775,
-  "configHash": "0x9826c8ea5bac710d62f373a6086af5c8573512208b70989a8eebe214aa2a5185",
+  "configHash": "0x84533ed6d982237462f02349cb9bf0707e1a3ea293796016395a863c4b2cbb1c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -50,6 +50,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -103,6 +104,13 @@
         "stakingValue": "1000000000000000000",
         "withdrawalLockBlocks": 3
       },
+      "fieldMeta": {
+        "rollupContract": { "severity": "HIGH" },
+        "stakingValue": { "severity": "HIGH" },
+        "challengeDeposit": { "severity": "HIGH" },
+        "withdrawalLockBlocks": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": "TransparentUpgradeableProxy",
         "eth:0xDb0734109051DaAB5c32E45e9a5ad0548B2df714": "L1Staking"
@@ -120,6 +128,11 @@
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "address": "eth:0x1199E23C0baE9710cCd9F645FA57794e5D469D06",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
@@ -145,6 +158,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ETH from L1 to L2.",
+      "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307603,
       "sinceBlock": 20996854,
@@ -169,6 +183,7 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": "TransparentUpgradeableProxy",
         "eth:0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c": "L1ETHGateway"
@@ -193,6 +208,54 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L1USDCGateway",
+      "address": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+      "type": "Contract",
+      "template": "morph/L1USDCGateway",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xcd00783733f56a712c82450032bb59446d5ecd1f5843a5aafb55a3ab38602244"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge USDC tokens from L1 to L2.",
+      "critical": true,
+      "ignoreInWatchMode": ["totalBridgedUSDC"],
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
+      "sinceTimestamp": 1731486323,
+      "sinceBlock": 21177561,
+      "values": {
+        "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+        "$implementation": "eth:0xB409E42e8284244F56edf9cB24b2A1f227DC3cE0",
+        "$pastUpgrades": [
+          [
+            "2024-11-13T08:25:23.000Z",
+            "0x3d909b5e29529ad2628f9abf1921030a094c6f2fae693979d8c009eb6638c1b3",
+            ["eth:0x98dF320641C2E65ab4BbeF1e6f6C66D9B50EdE5F"]
+          ],
+          [
+            "2024-11-13T09:24:11.000Z",
+            "0x47a8274c298fdebabdb61ccf7b85b39c4a04abf93d4fca8114e010ddf17aec3a",
+            ["eth:0xB409E42e8284244F56edf9cB24b2A1f227DC3cE0"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "circleCaller": "eth:0x0000000000000000000000000000000000000000",
+        "counterpart": "eth:0xc5e44E2fFe9523809146eD17D62bb382ECCf426B",
+        "depositPaused": false,
+        "l2USDC": "eth:0xe34c91815d7fc18A9e2148bcD4241d0a5848b693",
+        "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+        "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+        "totalBridgedUSDC": 530997863588,
+        "withdrawPaused": false
+      },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "implementationNames": {
+        "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289": "TransparentUpgradeableProxy",
+        "eth:0xB409E42e8284244F56edf9cB24b2A1f227DC3cE0": "L1USDCGateway"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
       "type": "Contract",
@@ -201,6 +264,7 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -210,6 +274,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
           "role": "admin"
         },
         {
@@ -234,7 +303,17 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535",
           "role": "admin"
         },
         {
@@ -292,6 +371,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
+      "critical": true,
       "ignoreInWatchMode": [
         "pendingQueueIndex",
         "nextCrossDomainMessageIndex",
@@ -337,6 +417,12 @@
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "maxGasLimit": { "severity": "HIGH" },
+        "whitelistChecker": { "severity": "HIGH" },
+        "l2BaseFee": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "TransparentUpgradeableProxy",
         "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa": "L1MessageQueueWithGasPriceOracle"
@@ -366,6 +452,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
+      "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307651,
       "sinceBlock": 20996858,
@@ -392,6 +479,7 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": "TransparentUpgradeableProxy",
         "eth:0x75BC012fA81DF052baFc4EF9255Af29B6C4e5301": "L1StandardERC20Gateway"
@@ -441,6 +529,16 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x5300000000000000000000000000000000000016",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5300000000000000000000000000000000000020",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TimelockController",
       "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
       "type": "Contract",
@@ -451,6 +549,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A timelock with access control. The current minimum delay is 0s.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -550,6 +649,7 @@
       ],
       "proxyType": "immutable",
       "description": "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.",
+      "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1737359447,
       "sinceBlock": 21664323,
@@ -568,6 +668,10 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "rollup": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1, 2]
+      },
+      "fieldMeta": {
+        "latestVerifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": "MultipleVersionRollupVerifier"
@@ -662,6 +766,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.",
+      "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307555,
       "sinceBlock": 20996850,
@@ -682,10 +787,34 @@
         ],
         "$upgradeCount": 2,
         "defaultERC20Gateway": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+        "erc20Gateways": {
+          "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "eth:0x788890Ba6f105ccA373c4ff01055CD34De01877F",
+          "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "eth:0xC7c542d4c390ed29e976e5BaDAE27b9FfaC82504": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+          "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "eth:0xA00Bc264cdA71d4cBFdA64Fed2482A2c99A62575",
+          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+          "eth:0x93642584E3df107c545B950fDE39ec87C219bb14": "eth:0x6C5C4e930b7B53F482B2F2ed5f37CF78C15a9388",
+          "eth:0x1292c9CD6a0Ec0659FB32c4B537A446f7cEA95cd": "eth:0x5B2FB4559eB2Df181F571B46a7fCED29E904a6cC",
+          "eth:0x9776479041b09Fd05a39367489abb43697a6E555": "eth:0x5B2FB4559eB2Df181F571B46a7fCED29E904a6cC",
+          "eth:0x54D2252757e1672EEaD234D27B1270728fF90581": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "eth:0x11eeF04c884E24d9B7B4760e7476D06ddF797f36": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "eth:0xE66747a101bFF2dBA3697199DCcE5b743b454759": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "eth:0x61EC85aB89377db65762E234C946b5c25A56E99e": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "eth:0x6f259637dcD74C767781E37Bc6133cd6A68aa161": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
+        },
         "ethGateway": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
         "gatewayInContext": "eth:0x0000000000000000000000000000000000000000",
         "gateways": ["eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"],
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+      },
+      "fieldMeta": {
+        "gateways": { "severity": "HIGH" },
+        "erc20Gateways": { "severity": "HIGH" },
+        "ethGateway": { "severity": "HIGH" },
+        "defaultERC20Gateway": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "TransparentUpgradeableProxy",
@@ -703,6 +832,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchChallenged",
         "lastCommittedBatchIndex",
@@ -832,7 +962,15 @@
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
       "fieldMeta": {
+        "verifier": { "severity": "HIGH" },
+        "finalizationPeriodSeconds": { "severity": "HIGH" },
+        "proofWindow": { "severity": "HIGH" },
+        "l1StakingContract": { "severity": "HIGH" },
+        "messageQueue": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "owner": { "severity": "HIGH" },
         "getMinDelayFormatted": {
+          "severity": "HIGH",
           "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"
         }
       },
@@ -876,6 +1014,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -965,10 +1104,12 @@
       "name": "ZkEvmVerifierV1",
       "address": "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624",
       "type": "Contract",
+      "template": "morph/ZkEvmVerifierV1",
       "sourceHashes": [
         "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
       ],
       "proxyType": "immutable",
+      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1779335891,
       "sinceBlock": 25141074,
@@ -979,6 +1120,7 @@
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
       },
+      "fieldMeta": { "programVkey": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624": "ZkEvmVerifierV1"
       }
@@ -1000,6 +1142,48 @@
       "address": "eth:0xA52Bb0BEBfadEDA9DfFFa3Ba5eBFE86d9f6dB321",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "L1CustomERC20Gateway",
+      "address": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "type": "Contract",
+      "template": "morph/L1CustomERC20Gateway",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x73d44790df9012314540b2889320f924f433b5515fd5305da95db6027f9e9bcf"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge ERC20 tokens with custom L2 representations from L1 to L2. It allows to change the token mappings.",
+      "critical": true,
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
+      "sinceTimestamp": 1729307783,
+      "sinceBlock": 20996869,
+      "values": {
+        "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+        "$implementation": "eth:0x833cfC8cFbc77365bD184025AdFD2fe01112b0Dc",
+        "$pastUpgrades": [
+          [
+            "2024-10-19T03:16:23.000Z",
+            "0x2d8afe39a176bb5a4291b3a4955fe1e924d413344273b47699e8876691d8e956",
+            ["eth:0x98dF320641C2E65ab4BbeF1e6f6C66D9B50EdE5F"]
+          ],
+          [
+            "2024-10-19T12:37:23.000Z",
+            "0xdd44d4d670ecc38911efb3e5872de8502abcaa52f5aa382b0e8a7b6e791b3e51",
+            ["eth:0x833cfC8cFbc77365bD184025AdFD2fe01112b0Dc"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "counterpart": "eth:0x5300000000000000000000000000000000000016",
+        "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+        "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
+      },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "implementationNames": {
+        "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1": "TransparentUpgradeableProxy",
+        "eth:0x833cfC8cFbc77365bD184025AdFD2fe01112b0Dc": "L1CustomERC20Gateway"
+      }
     },
     {
       "address": "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497",
@@ -1068,6 +1252,12 @@
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "description": "manage L2 base fee, max gas limit and set the whitelist checker contract.",
           "role": ".owner"
         },
         {
@@ -1199,6 +1389,11 @@
       ]
     },
     {
+      "address": "eth:0xc5e44E2fFe9523809146eD17D62bb382ECCf426B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EnforcedTxGateway",
       "address": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
       "type": "Contract",
@@ -1209,6 +1404,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.",
+      "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729308143,
       "sinceBlock": 20996899,
@@ -1243,6 +1439,14 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "messageQueue": { "severity": "HIGH" },
+        "paused": {
+          "severity": "MEDIUM",
+          "description": "Whether forced transactions are paused. Affects the sequencer failure risk."
+        }
+      },
       "implementationNames": {
         "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": "TransparentUpgradeableProxy",
         "eth:0xCb13746Fc891fC2e7D824870D00a26F43fE6123e": "EnforcedTxGateway"
@@ -1265,6 +1469,54 @@
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "name": "L1USDCGatewayLegacy",
+      "address": "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535",
+      "type": "Contract",
+      "template": "morph/L1USDCGateway",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xcd00783733f56a712c82450032bb59446d5ecd1f5843a5aafb55a3ab38602244"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge USDC tokens from L1 to L2.",
+      "critical": true,
+      "ignoreInWatchMode": ["totalBridgedUSDC"],
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
+      "sinceTimestamp": 1729308239,
+      "sinceBlock": 20996907,
+      "values": {
+        "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+        "$implementation": "eth:0xe11DeE885e5D38e4dc477219F50a6B1cF5DC298a",
+        "$pastUpgrades": [
+          [
+            "2024-10-19T03:23:59.000Z",
+            "0x2db1c37725ef72c0aaaab9b8b56658604bb38faa2e923755f3d79797654d6efb",
+            ["eth:0x98dF320641C2E65ab4BbeF1e6f6C66D9B50EdE5F"]
+          ],
+          [
+            "2024-10-30T07:51:59.000Z",
+            "0x35bf7e03fd234bc9e9b6e16e46c8a2008f7534a840439b6e208bd8da52804f67",
+            ["eth:0xe11DeE885e5D38e4dc477219F50a6B1cF5DC298a"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "circleCaller": "eth:0x0000000000000000000000000000000000000000",
+        "counterpart": "eth:0x5300000000000000000000000000000000000020",
+        "depositPaused": true,
+        "l2USDC": "eth:0x1199E23C0baE9710cCd9F645FA57794e5D469D06",
+        "messenger": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+        "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+        "totalBridgedUSDC": 1182305879,
+        "withdrawPaused": false
+      },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "implementationNames": {
+        "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535": "TransparentUpgradeableProxy",
+        "eth:0xe11DeE885e5D38e4dc477219F50a6B1cF5DC298a": "L1USDCGateway"
+      }
     },
     {
       "address": "eth:0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
@@ -1296,10 +1548,13 @@
       "name": "ZkEvmVerifierV1",
       "address": "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692",
       "type": "Contract",
+      "template": "morph/ZkEvmVerifierV1",
       "sourceHashes": [
         "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
       ],
       "proxyType": "immutable",
+      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "critical": true,
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1780291583,
       "sinceBlock": 25220423,
@@ -1310,6 +1565,7 @@
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
       },
+      "fieldMeta": { "programVkey": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": "ZkEvmVerifierV1"
       }
@@ -1325,6 +1581,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307111,
@@ -1360,6 +1617,13 @@
         "rollup": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "xDomainMessageSender": "eth:0x000000000000000000000000000000000000dEaD"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" },
+        "messageQueue": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304": "TransparentUpgradeableProxy",
         "eth:0x0cC37d5239F9027A1269f53D83c73084D538f3a9": "L1CrossDomainMessenger"
@@ -1377,6 +1641,11 @@
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "address": "eth:0xe34c91815d7fc18A9e2148bcD4241d0a5848b693",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
@@ -1460,6 +1729,12 @@
           "role": ".owner"
         },
         {
+          "permission": "interact",
+          "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "description": "set critical configs and contract references and pause/unpause.",
+          "role": ".owner"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "role": "admin",
@@ -1471,6 +1746,15 @@
         {
           "permission": "upgrade",
           "from": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
           "role": "admin",
           "via": [
             { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
@@ -1523,7 +1807,25 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535",
           "role": "admin",
           "via": [
             { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
@@ -1629,6 +1931,7 @@
       ],
       "proxyType": "immutable",
       "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",
+      "critical": true,
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729328435,
       "sinceBlock": 20998580,
@@ -1691,6 +1994,12 @@
       "event Upgraded(address indexed implementation)"
     ],
     "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1940,6 +2249,30 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0x833cfC8cFbc77365bD184025AdFD2fe01112b0Dc": [
+      "constructor()",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address _l1Token) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
+    ],
     "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -1966,6 +2299,12 @@
       "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
       "function verifyPlonk(bytes proof, bytes publicInputHash) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB": [
       "constructor(uint64 _chainID)",
@@ -2043,10 +2382,47 @@
       "function verifier() view returns (address)",
       "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
     ],
+    "eth:0xB409E42e8284244F56edf9cB24b2A1f227DC3cE0": [
+      "constructor(address _l1USDC, address _l2USDC)",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "function burnAllLockedUSDC()",
+      "function circleCaller() view returns (address)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function depositPaused() view returns (bool)",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function l1USDC() view returns (address)",
+      "function l2USDC() view returns (address)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function pauseDeposit(bool _paused)",
+      "function pauseWithdraw(bool _paused)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function totalBridgedUSDC() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateCircleCaller(address _caller)",
+      "function withdrawPaused() view returns (bool)"
+    ],
     "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": [
       "constructor(address _singleton)"
     ],
     "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -2161,6 +2537,37 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0xe11DeE885e5D38e4dc477219F50a6B1cF5DC298a": [
+      "constructor(address _l1USDC, address _l2USDC)",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "function burnAllLockedUSDC()",
+      "function circleCaller() view returns (address)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function depositPaused() view returns (bool)",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function l1USDC() view returns (address)",
+      "function l2USDC() view returns (address)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function pauseDeposit(bool _paused)",
+      "function pauseWithdraw(bool _paused)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function totalBridgedUSDC() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateCircleCaller(address _caller)",
+      "function withdrawPaused() view returns (bool)"
+    ],
     "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
       "constructor(address _singleton)"
     ],
@@ -2218,17 +2625,20 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "morph/EnforcedTxGateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "morph/L1CrossDomainMessenger": "0xe6eb973e1da6d70fff6409b261940b9e4415bd0bb740942fef25bb8778aa4e37",
-    "morph/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "morph/L1GatewayRouter": "0x75d8f72d7a567ebdd261b1cd49fbe60bb70eba6eba7f76e062da2077aef8766b",
-    "morph/L1MessageQueueWithGasPriceOracle": "0x8750025a157f931a42c275d73ea945ade8e900a0069627cde82c9ee24e88ab65",
-    "morph/L1Staking": "0x3628b27131bceae20a3ba1e6858e52dc3afb537e7624b0d369b877bbca4d9830",
-    "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "morph/EnforcedTxGateway": "0x92aa7b2a8a4cc4450cf6c845dce6c7d48f288c2272149767e8410a18882dfee2",
+    "morph/L1CrossDomainMessenger": "0x32477bc6c21cc5857c793882e27036efd69fc10169bc9f62aeebd8b7375c9b50",
+    "morph/L1CustomERC20Gateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "morph/L1ETHGateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "morph/L1GatewayRouter": "0x031336dd53fa5ca6d56bda69789d3a5edc31428b6c350f5d2a04a85065cf0082",
+    "morph/L1MessageQueueWithGasPriceOracle": "0xf546a7b8fd8abf53f6e0e0d72d0899dca155e6a59a2316cdbcee77df84639a0c",
+    "morph/L1Staking": "0x49db1a079a26c99b3ca3fc6f125aeb1433197d91631f4f66f94467f56977cd3c",
+    "morph/L1StandardERC20Gateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "morph/L1USDCGateway": "0x4284ddb0eb593a452660fbbe98b36d6578d94366c9c88c3a8a4341ab80883e50",
     "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
-    "morph/Rollup": "0xebf506a5dc75ed310a1a6d083343337d766e473d2fff9c4647dfea249d5d206b",
-    "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d"
+    "morph/Rollup": "0x388bf096220966342b9bd5f0f838bbbc677018a71f3299c490cfde59331b4b71",
+    "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
+    "morph/ZkEvmVerifierV1": "0x8e1f5b8466dae2cb22b31719b8cb647638300e4327cbbfcf6cca97ef35af4213"
   },
   "usedBlockNumbers": { "ethereum": 25754044 },
-  "permissionsConfigHash": "0x3a0164d1a1a67ed67e2926da0984cd1a6ddc0562e77e5c7fca50279ac22ce46e"
+  "permissionsConfigHash": "0x9780efd92ec3c8df4093a6e1baf2d6407b81ee017cadda3833ed56017b3e55f7"
 }

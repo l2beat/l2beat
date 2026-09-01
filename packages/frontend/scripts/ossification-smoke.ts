@@ -14,6 +14,10 @@ const IDS = [
   'scroll',
   'linea',
   'starknet',
+  'mantle',
+  'lighter',
+  'ink',
+  'morph',
 ]
 
 async function main() {

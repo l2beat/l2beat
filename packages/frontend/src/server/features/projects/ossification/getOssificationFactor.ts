@@ -127,7 +127,14 @@ export interface OssificationHistoricalContract {
 
 interface ContractRecord {
   entry: OssificationContractInput
-  diffEvents: { timestamp: number; type: OssificationChangeType }[]
+  /** `reviewed` marks an event that came from ossification.json rather than
+   *  from mechanical history: a researcher attributed it to this project by
+   *  hand, so `projectStart` never drops it. */
+  diffEvents: {
+    timestamp: number
+    type: OssificationChangeType
+    reviewed?: boolean
+  }[]
   highFields: Set<string>
 }
 
@@ -137,10 +144,18 @@ export function getOssificationFactor(
   now: number = UnixTime.now(),
   historical: OssificationHistoricalContract[] = [],
   criticalEvents: OssificationCriticalEvent[] = [],
+  projectStart: number | undefined = undefined,
 ): OssificationFactor | undefined {
   if (entries.length === 0) {
     return undefined
   }
+  /** Mechanical history before the project existed belongs to whoever else was
+   *  using the shared contract, so it is not charged to this project's change
+   *  rate. Ages are physical, so clocks, deployments and the reset timeline
+   *  keep the full history; reviewed criticalEvents are attributed by hand and
+   *  are never clamped. */
+  const isAttributable = (timestamp: number) =>
+    projectStart === undefined || timestamp >= projectStart
 
   const records = new Map<string, ContractRecord>()
   const currentByAddress = new Map<string, ContractRecord>()
@@ -193,23 +208,33 @@ export function getOssificationFactor(
   mergeCriticalUpdates(criticalUpdates, reviewedEvents.counted)
 
   const breakdowns: OssificationContractBreakdown[] = []
+  /** Reviewed events are attributed by hand, mechanical ones only from the
+   *  project's own history onward. */
   const changeEvents: number[] = [
     ...reviewedEvents.standaloneCurrent,
     ...reviewedEvents.standaloneHistorical,
   ]
-  for (const record of records.values()) {
-    const breakdown = getContractBreakdown(record, now)
-    breakdowns.push(breakdown)
-    changeEvents.push(
-      ...getCodeChangeTimestamps(record.entry),
+  /** Unclamped: the timeline must not contradict the clocks. */
+  const allChangeEvents: number[] = [...changeEvents]
+  const collect = (record: ContractRecord) => {
+    const upgrades = getCodeChangeTimestamps(record.entry)
+    allChangeEvents.push(
+      ...upgrades,
       ...record.diffEvents.map((event) => event.timestamp),
+    )
+    changeEvents.push(
+      ...upgrades.filter(isAttributable),
+      ...record.diffEvents
+        .filter((event) => event.reviewed || isAttributable(event.timestamp))
+        .map((event) => event.timestamp),
     )
   }
+  for (const record of records.values()) {
+    breakdowns.push(getContractBreakdown(record, now, isAttributable))
+    collect(record)
+  }
   for (const record of historicalRecords) {
-    changeEvents.push(
-      ...getCodeChangeTimestamps(record.entry),
-      ...record.diffEvents.map((event) => event.timestamp),
-    )
+    collect(record)
   }
 
   const contractClockStart = getProjectClockStart(breakdowns)
@@ -231,28 +256,36 @@ export function getOssificationFactor(
   breakdowns.sort((a, b) => (b.clockStart ?? 0) - (a.clockStart ?? 0))
 
   changeEvents.sort((a, b) => a - b)
+  allChangeEvents.sort((a, b) => a - b)
   const clusters = clusterEvents(changeEvents)
   const deployments = [...records.values(), ...historicalRecords].flatMap(
     (record) => record.entry.sinceTimestamp ?? [],
   )
   const perimeterResets = clusterEvents(
-    [...changeEvents, ...deployments].sort((a, b) => a - b),
+    [...allChangeEvents, ...deployments].sort((a, b) => a - b),
   )
 
   const observationStart = getObservationStart(
     [...records.values(), ...historicalRecords],
     reviewedEvents.counted,
   )
+  // The denominator must match the numerator: dropping pre-history events
+  // without moving the window start would understate the rate instead of
+  // scoping it.
+  const scopedObservationStart =
+    observationStart === null
+      ? null
+      : Math.max(observationStart, projectStart ?? observationStart)
   const windowFrom = Math.max(
     now - RATE_WINDOW_SECONDS,
-    observationStart ?? now - RATE_WINDOW_SECONDS,
+    scopedObservationStart ?? now - RATE_WINDOW_SECONDS,
   )
   const windowSeconds = Math.max(now - windowFrom, MIN_RATE_WINDOW_SECONDS)
   const clusteredEventCount = clusters.filter(
     (cluster) => cluster >= windowFrom,
   ).length
 
-  const lastCriticalChange = changeEvents.at(-1) ?? null
+  const lastCriticalChange = allChangeEvents.at(-1) ?? null
   return {
     score: toDisplayScore(maturity),
     maturity,
@@ -322,14 +355,20 @@ function collectCriticalEvents(
 
     standalone.counted.push(event)
     if (record) {
-      if (
-        !record.diffEvents.some(
-          (existing) =>
-            existing.timestamp === event.timestamp &&
-            existing.type === event.type,
-        )
-      ) {
-        record.diffEvents.push({ timestamp: event.timestamp, type: event.type })
+      const duplicate = record.diffEvents.find(
+        (existing) =>
+          existing.timestamp === event.timestamp &&
+          existing.type === event.type,
+      )
+      if (duplicate) {
+        // the reviewer stands behind this timestamp either way
+        duplicate.reviewed = true
+      } else {
+        record.diffEvents.push({
+          timestamp: event.timestamp,
+          type: event.type,
+          reviewed: true,
+        })
       }
     } else {
       standalone[
@@ -544,14 +583,20 @@ function getUpdateEventTimestamp(
 function getContractBreakdown(
   record: ContractRecord,
   now: number,
+  isAttributable: (timestamp: number) => boolean,
 ): OssificationContractBreakdown {
   const { entry, diffEvents } = record
+  // The clock is the contract's physical age and keeps its whole history; the
+  // counts feed the project's change rate and are scoped the same way it is.
   const lastReset = Math.max(
     entry.sinceTimestamp ?? Number.NEGATIVE_INFINITY,
     entry.upgradeTimestamps.at(-1) ?? Number.NEGATIVE_INFINITY,
     diffEvents.at(-1)?.timestamp ?? Number.NEGATIVE_INFINITY,
   )
   const clockStart = Number.isFinite(lastReset) ? lastReset : null
+  const counted = diffEvents.filter(
+    (event) => event.reviewed || isAttributable(event.timestamp),
+  )
 
   return {
     name: entry.name,
@@ -560,10 +605,9 @@ function getContractBreakdown(
     clockStart,
     ageSeconds: clockStart !== null ? Math.max(0, now - clockStart) : null,
     codeChangeCount:
-      getCodeChangeTimestamps(entry).length +
-      diffEvents.filter((event) => event.type === 'code').length,
-    stateChangeCount: diffEvents.filter((event) => event.type === 'state')
-      .length,
+      getCodeChangeTimestamps(entry).filter(isAttributable).length +
+      counted.filter((event) => event.type === 'code').length,
+    stateChangeCount: counted.filter((event) => event.type === 'state').length,
   }
 }
 
