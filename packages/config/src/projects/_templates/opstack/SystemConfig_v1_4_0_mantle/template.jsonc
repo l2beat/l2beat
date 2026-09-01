@@ -20,6 +20,9 @@
       }
     },
     "opStackDA": {
+      // heuristic detection from recent batcher txs; can flap between blob
+      // and alt-DA readings, so MEDIUM (review + monitor) instead of HIGH.
+      "severity": "MEDIUM",
       "handler": {
         "type": "opStackDA",
         "sequencerAddress": "{{ batcherHash }}"

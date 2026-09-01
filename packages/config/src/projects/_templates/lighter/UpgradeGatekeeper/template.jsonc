@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is {{approvedUpgradeNoticePeriodFmt}} and can be entirely skipped by {{securityCouncilAddress}}.",
+  "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is {{approvedUpgradeNoticePeriodFmt}} and can be entirely skipped by {{securityCouncilAddress}}. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.",
+  "critical": true,
   "fields": {
     "securityCouncilAddress": {
       "permissions": [
@@ -16,8 +17,13 @@
       ],
       "severity": "HIGH"
     },
+    "managedContracts": {
+      "severity": "HIGH",
+      "description": "The proxies whose implementations this gatekeeper can upgrade."
+    },
     "approvedUpgradeNoticePeriodFmt": {
-      "description": "upgrade delay, can be skipped by the 'securityCouncil' role.",
+      "severity": "HIGH",
+      "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored).",
       "handler": {
         "type": "call",
         "method": "function approvedUpgradeNoticePeriod() view returns (uint256)",

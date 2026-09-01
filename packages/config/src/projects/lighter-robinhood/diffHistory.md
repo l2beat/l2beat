@@ -1,3 +1,177 @@
+Generated with discovered.json: 0xe98cb63c143d2dbe596504368d06c1941b5f5221
+
+# Diff at Tue, 01 Sep 2026 07:15:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@58d130dd81e18684eafef31edfa3067a670f33c6 block: 1787570584
+- current timestamp: 1787570584
+
+## Description
+
+add ossification critical flags and severities for mantle and lighter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787570584 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      description:
+-        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb."
++        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished."
+      deployerAddress:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
+-        1782477747
+      sinceBlock:
+-        229410
+      fieldMeta.approvedUpgradeNoticePeriodFmt.description:
+-        "upgrade delay, can be skipped by the 'securityCouncil' role."
++        "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
+      fieldMeta.approvedUpgradeNoticePeriodFmt.severity:
++        "HIGH"
+      fieldMeta.managedContracts:
++        {"severity":"HIGH","description":"The proxies whose implementations this gatekeeper can upgrade."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A] {
+    +++ description: None
+      sourceHashes:
+-        ["0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"]
+      deployerAddress:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
+-        1784265403
+      sinceBlock:
+-        11861471
+      implementationNames.robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10:
+-        "DesertVerifier"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract  (robinhood:0x8Caf9FF9392F39E87cBC65A130c026caaCD321ef) [N/A] {
+    +++ description: None
+      name:
+-        "SafeL2"
++        ""
+      template:
+-        "GnosisSafe"
+      sourceHashes:
+-        ["0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5","0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"]
+      deployerAddress:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
+-        1785839071
+      sinceBlock:
+-        27550158
+      values.domainSeparator:
+-        "0xda28b13beabe13ff80eb75eca6be46a2c6f9683ee25a65ab4945112481db9068"
+      values.getChainId:
+-        4663
+      values.nonce:
+-        7
+      values.VERSION:
+-        "1.4.1"
+      implementationNames.robinhood:0x8Caf9FF9392F39E87cBC65A130c026caaCD321ef:
+-        "SafeProxy"
++        ""
+      implementationNames.robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762:
+-        "SafeL2"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      sourceHashes:
+-        ["0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6","0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"]
+      deployerAddress:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
+-        1782477747
+      sinceBlock:
+-        229410
+      values.getMaster:
+-        "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716"
+      values.getTarget:
+-        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
+      implementationNames.robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d:
+-        "Proxy"
++        ""
+      implementationNames.robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90:
+-        "ZkLighter"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.0:
+-        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6"
++        null
+      deployerAddress:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
+-        1782477747
+      sinceBlock:
+-        229410
+      values.getMaster:
+-        "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716"
+      values.getTarget:
+-        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
+      implementationNames.robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31:
+-        "Proxy"
++        ""
+      unverified:
++        true
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      sourceHashes.0:
+-        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6"
++        null
+      deployerAddress:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
+      sinceTimestamp:
+-        1782477747
+      sinceBlock:
+-        229410
+      values.getMaster:
+-        "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716"
+      values.getTarget:
+-        "robinhood:0x3468Dcab5a2D81Af207B3e301DFA889321989a61"
+      implementationNames.robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7:
+-        "Proxy"
++        ""
+      unverified:
++        true
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xa8b8ed61af7057d7a31013acf9bbbb844e171ca2
 
 # Diff at Mon, 24 Aug 2026 11:55:55 GMT:

@@ -1,0 +1,322 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1737273383,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xa52f3641ad982d5b0e09c7ac1e79cb581a48079ba93b13363754ddb41a94858e",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v2, before discovery coverage)."
+    },
+    {
+      "timestamp": 1737273383,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "source": "tx:0xa52f3641ad982d5b0e09c7ac1e79cb581a48079ba93b13363754ddb41a94858e",
+      "reason": "Replaced a ZkLighter rollup implementation holding all user funds (UpgradeGatekeeper upgrade v2, before discovery coverage)."
+    },
+    {
+      "timestamp": 1737274307,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x6c8d7629d060da8f8d1f7a9820217af1a9154dbefaea7187fc8ba562726196a4",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v3, before discovery coverage)."
+    },
+    {
+      "timestamp": 1737274307,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "source": "tx:0x6c8d7629d060da8f8d1f7a9820217af1a9154dbefaea7187fc8ba562726196a4",
+      "reason": "Replaced a ZkLighter rollup implementation holding all user funds (UpgradeGatekeeper upgrade v3, before discovery coverage)."
+    },
+    {
+      "timestamp": 1737623471,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xe19967ba9f4ce12ae96045591b4b02f9b6eed92235b7ec2232995f920fe68652",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v4, before discovery coverage)."
+    },
+    {
+      "timestamp": 1737623471,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "source": "tx:0xe19967ba9f4ce12ae96045591b4b02f9b6eed92235b7ec2232995f920fe68652",
+      "reason": "Replaced a ZkLighter rollup implementation holding all user funds (UpgradeGatekeeper upgrade v4, before discovery coverage)."
+    },
+    {
+      "timestamp": 1738734107,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x18780be243d7fcc3c504858b5fe099db9bbffb22ca12d2de82d72d4a0d5b5ef4",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v5, before discovery coverage)."
+    },
+    {
+      "timestamp": 1738978247,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xd83aa9e44f299fddb8764ad1d8274589acf094581286c45ea4c4544e2f1c129c",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v6, before discovery coverage)."
+    },
+    {
+      "timestamp": 1739428271,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xea950a8fd87d104c1c1b22fac0c4a277aa36598b0f7e071d8c466116337d2632",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v7, before discovery coverage)."
+    },
+    {
+      "timestamp": 1741186235,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xd8586f11ba976b871d537161df62cd5fc5b61d619a088187d1130b699642ee5f",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v8, before discovery coverage)."
+    },
+    {
+      "timestamp": 1741647971,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x25725c327e42148cd5e2ffb9f74ea51e30861909cf547f8df5ff69f97068aca4",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v9, before discovery coverage)."
+    },
+    {
+      "timestamp": 1742944463,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xfc21149bf7617045c6d712a98f8f295bbbd11711b3735bd8b5eb820a13fc9d2f",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v10, before discovery coverage)."
+    },
+    {
+      "timestamp": 1742944463,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "source": "tx:0xfc21149bf7617045c6d712a98f8f295bbbd11711b3735bd8b5eb820a13fc9d2f",
+      "reason": "Replaced a ZkLighter rollup implementation holding all user funds (UpgradeGatekeeper upgrade v10, before discovery coverage)."
+    },
+    {
+      "timestamp": 1742961371,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x58a0982c3ece1185b2c2fa85177c16a528e8e002a8fb39a29a6e92a53cd543b3",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v11, before discovery coverage)."
+    },
+    {
+      "timestamp": 1742961371,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "source": "tx:0x58a0982c3ece1185b2c2fa85177c16a528e8e002a8fb39a29a6e92a53cd543b3",
+      "reason": "Replaced a ZkLighter rollup implementation holding all user funds (UpgradeGatekeeper upgrade v11, before discovery coverage)."
+    },
+    {
+      "timestamp": 1743007751,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x49fb99191c71c9e8cdf81fc1f39c6ebb4cd012002e3537f78219fce7c95481b3",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v12, before discovery coverage)."
+    },
+    {
+      "timestamp": 1743039731,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x1be04f1a8d9fb527e6950565216e2c9bb3b68f5cf92b5cdb5616358b4e2024ee",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v13, before discovery coverage)."
+    },
+    {
+      "timestamp": 1743105779,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x192616679ecfef3d096b82630517e5494932344b92ea66301c2d6adf01428eb3",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v14, before discovery coverage)."
+    },
+    {
+      "timestamp": 1743280139,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x295b2538276bbf46b967c964d1723e278a171c83f46d63323c4dc104328155aa",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v15, before discovery coverage)."
+    },
+    {
+      "timestamp": 1744136747,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xbe31d7f434b7f0c46bed3783f1d1c8720980f73e0d0c6d11e30f5aeb40d94e74",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v16, before discovery coverage)."
+    },
+    {
+      "timestamp": 1744137119,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x296fed36fd00f8794a7f1185f12dae23230a6a895a3043c7311b2a0a0ace3182",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v17, before discovery coverage)."
+    },
+    {
+      "timestamp": 1744214807,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x0c2030d4ae004157d7da714d008d61835572a9175b0873385bbf60065d3b1216",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v18, before discovery coverage)."
+    },
+    {
+      "timestamp": 1744553687,
+      "type": "state",
+      "source": "tx:0xa76a0c87d0b50a28b2d8a8d182aab05c8ea574b041a6c44a820ad61079fdea1f",
+      "reason": "Raised the security council Safe threshold from 1 to 2; the security council can instantly remove the upgrade delay and the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1746132095,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xd93d24e203a43d9862fad372387bf7d0bd20acd9c74a715f67a520c557f27a9d",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v19, before discovery coverage)."
+    },
+    {
+      "timestamp": 1746235007,
+      "type": "state",
+      "source": "tx:0x80cc5eaeee5c03d6fbd26a0f1b64784f82aff94c8e2ac138e8630c56b6f25beb",
+      "reason": "Raised the security council Safe threshold from 2 to 3; the security council can instantly remove the upgrade delay and the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1746578783,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xd0ebdde6dc3bd12f1ada1ebe002b7805f43067d789bbc89c54b34658c6203073",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v20, before discovery coverage)."
+    },
+    {
+      "timestamp": 1749280235,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xadce4652999d2a125b9fd0f731d9547c1384a63803883e76fb2ccc7dd9eac847",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v21, before discovery coverage)."
+    },
+    {
+      "timestamp": 1749291395,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x1407c2b02575b8ae48f646dc8131055c2b579b03af5392dfbf0eba256703db64",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v22, before discovery coverage)."
+    },
+    {
+      "timestamp": 1749312011,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x2a7ddd9795b8621074d545d4ff9bedb9b61c0eb8178bce6ef59981ddfdb13fc1",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v23, before discovery coverage)."
+    },
+    {
+      "timestamp": 1749325667,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x689cea75d744b55555bd05ba092d468e1dd7da8e0f4fa848e8b857727d44ce5b",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v24, before discovery coverage)."
+    },
+    {
+      "timestamp": 1750721747,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x655490635753f123dbaecee43de8fa35e4ae371846f3513be55d3b1f05ef8500",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v25, before discovery coverage)."
+    },
+    {
+      "timestamp": 1750803935,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x2b7865579b7e0fcb3df93cbb74602838ec7313e7bc1f3d393044f6f6034d68d1",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v26, before discovery coverage)."
+    },
+    {
+      "timestamp": 1751596559,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x494008324ee2bb06c0dd3f6aaba333673d76bac77d96fb146d4769fd8c6465a3",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v27, before discovery coverage)."
+    },
+    {
+      "timestamp": 1751597051,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x9b0131952945bb0a0568aaf9e96983d5b1e34c24973688fd3f9870fa6755d22a",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v28, before discovery coverage)."
+    },
+    {
+      "timestamp": 1753750139,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0x4f40afbb6048ab0747305427c025439422d4faf28b972552e3d1792f8c21d2f2",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v29, before discovery coverage)."
+    },
+    {
+      "timestamp": 1755635903,
+      "type": "code",
+      "contract": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+      "source": "tx:0xf2e42f9cfc2bed3790856bbf59b356b50c41c484918019f458576582d2a137b3",
+      "reason": "Replaced the ZK verifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper upgrade v30, before discovery coverage)."
+    },
+    {
+      "timestamp": 1755635903,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "source": "tx:0xf2e42f9cfc2bed3790856bbf59b356b50c41c484918019f458576582d2a137b3",
+      "reason": "Replaced a ZkLighter rollup implementation holding all user funds (UpgradeGatekeeper upgrade v30, before discovery coverage)."
+    },
+    {
+      "timestamp": 1759348271,
+      "type": "code",
+      "contract": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+      "source": "tx:0xe14eed4202c18ee491ad3f6f382893c9fd751830675263589550b0c30c23a704",
+      "reason": "Replaced a ZkLighter rollup implementation holding all user funds (UpgradeGatekeeper upgrade v31, before discovery coverage)."
+    },
+    {
+      "timestamp": 1767804407,
+      "type": "state",
+      "source": "tx:0x66eeeda6e1543c02dfa224c19090b1c02e9a16205ea0ae894368be570a332f09",
+      "reason": "Raised the Lighter Multisig 2 threshold from 2 to 3 while it held the UpgradeGatekeeper master and network governor roles; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1778870699,
+      "type": "state",
+      "source": "tx:0xdc604af05485bffd195ec19b51556661a4c73514eee505d79abda7cbd8195eec",
+      "reason": "Raised the security council Safe threshold from 3 to 4; the security council can instantly remove the upgrade delay and the Safe shell itself is outside the contract perimeter."
+    }
+  ],
+  "historicalContracts": [
+    {
+      "address": "eth:0x59406a5dce71a4f631f9cd5d41996a19d6fdf184",
+      "name": "DesertVerifier",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 0,
+      "lastSeenAt": 1761225944,
+      "lastSeenCommit": "4c88398b47ab20500fc8a9a3863d4a7967ec53d2",
+      "note": "Former desert-mode (escape hatch) exit-proof verifier; immutable and replaced through the HIGH desertVerifier pointer on the Lighter contract (the current DesertVerifier is critical today)."
+    },
+    {
+      "address": "eth:0x9bc70c62823babfed57698d458833da55d0c88a4",
+      "name": "DesertVerifier",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 0,
+      "lastSeenAt": 1764605112,
+      "lastSeenCommit": "2ff2c0fcad19f3cf20f79b990ed6b3c41d29f33f",
+      "note": "Former desert-mode (escape hatch) exit-proof verifier; immutable and replaced through the HIGH desertVerifier pointer on the Lighter contract (the current DesertVerifier is critical today)."
+    },
+    {
+      "address": "eth:0xd4460475f00307845082d3a146f36661354fbc67",
+      "name": "DesertVerifier",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 0,
+      "lastSeenAt": 1778662326,
+      "lastSeenCommit": "170a9eff7fb05e32aa0bda5ee3356b12ec6a4691",
+      "note": "Former desert-mode (escape hatch) exit-proof verifier; immutable and replaced through the HIGH desertVerifier pointer on the Lighter contract (the current DesertVerifier is critical today)."
+    },
+    {
+      "address": "eth:0x2adbd91742b64105a097bc37d20ebbca9a496085",
+      "name": "DesertVerifier",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 0,
+      "lastSeenAt": 1784118314,
+      "lastSeenCommit": "f7af7acf78353eb0f2e778e3bdc15c8a9812fea6",
+      "note": "Former desert-mode (escape hatch) exit-proof verifier; immutable and replaced through the HIGH desertVerifier pointer on the Lighter contract (the current DesertVerifier is critical today)."
+    }
+  ]
+}
