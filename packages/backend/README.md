@@ -89,6 +89,15 @@ FEATURES=tvs,!tvs.arbitrum
 FEATURES=tvs,!tvs.*,tvs.ethereum
 ```
 
+Note that a flag is enabled whenever any of its parents is, so `FEATURES=*` turns on every feature
+including those that require their own environment variables. Missing ones throw at startup rather
+than being silently skipped. For example `interop.relay` requires `INTEROP_RELAY_API_KEY`, so a
+broad setup either supplies the key or opts out explicitly:
+
+```sh
+FEATURES=*,!interop.relay
+```
+
 ### Common env variables
 
 - `COINGECKO_API_KEY` - Optional. Speeds up price collection. See
