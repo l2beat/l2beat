@@ -12,6 +12,7 @@ import type {
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
+import type { DefiTvlConfig } from '../modules/defi-tvl/types'
 import type { PrivacyConfig } from '../modules/privacy/types'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
@@ -36,6 +37,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
+  readonly defiTvl: DefiTvlConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
