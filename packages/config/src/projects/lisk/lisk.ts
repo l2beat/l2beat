@@ -18,9 +18,11 @@ export const lisk: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Lisk',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'lisk',
     headerWarning:
       'Lisk Chain will shut down on October 31, 2026. See the [announcement](https://lisk.com/blog/posts/introducing-the-new-lisk) and withdraw your funds to Ethereum.',
