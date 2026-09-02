@@ -1,0 +1,106 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "wBETH",
+  "category": "core",
+  "description": "Liquid staking token ({{ symbol }}) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance; {{ totalSupply }} is the live supply.",
+  "ignoreInWatchMode": ["totalSupply", "exchangeRate"],
+  "ignoreMethods": [
+    "DOMAIN_SEPARATOR",
+    "PERMIT_TYPEHASH",
+    "TRANSFER_WITH_AUTHORIZATION_TYPEHASH",
+    "RECEIVE_WITH_AUTHORIZATION_TYPEHASH",
+    "CANCEL_AUTHORIZATION_TYPEHASH"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the oracle, operator, ethReceiver, masterMinter, pauser, blacklister and rescuer addresses at any time, with no delay. Replacing the oracle removes the rate limit that the current oracle contract enforces."
+        }
+      ]
+    },
+    "masterMinter": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure minters and their allowances. A minter can mint wBETH to any address with no ETH backing, up to its allowance."
+        }
+      ]
+    },
+    "minters": {
+      "handler": {
+        "type": "event",
+        "select": "minter",
+        "add": { "event": "MinterConfigured" },
+        "remove": { "event": "MinterRemoved" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to mint wBETH without depositing ETH, within the allowance the masterMinter set.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint wBETH to itself or to any address with no ETH backing, up to its minter allowance, and burn its own balance."
+        }
+      ]
+    },
+    "pauser": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause the token. While paused, transfers, deposits (mint) and redemption requests (burn) all revert."
+        }
+      ]
+    },
+    "blacklister": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "blacklist any address, blocking it from transferring, receiving, depositing or redeeming."
+        }
+      ]
+    },
+    "rescuer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer any ERC20 held by this contract to any address."
+        }
+      ]
+    },
+    "oracle": {
+      "severity": "HIGH",
+      "description": "The only address that can write the wBETH:ETH exchange rate.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the exchange rate used for minting and redemption. The token itself only requires the new rate to be at least 1e18; any tighter bound comes from the oracle contract."
+        }
+      ]
+    },
+    "operator": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "move any amount of the ETH held by this contract to the ethReceiver or to the unwrap contract."
+        }
+      ]
+    },
+    "ethReceiver": {
+      "severity": "HIGH",
+      "description": "Address that receives deposited ETH when the operator calls moveToStakingAddress(). The staking that follows happens off-chain from this address."
+    },
+    "exchangeRate": {
+      "description": "ETH per wBETH, scaled by 1e18. Written by the oracle; read by deposit() and requestWithdrawEth().",
+      "edit": ["format", "Undecimal18"]
+    },
+    "_UNWRAP_ETH_ADDRESS": {
+      "description": "Hard-coded unwrap contract that receives redemption claims; changing it needs an implementation upgrade."
+    }
+  }
+}

@@ -63,6 +63,7 @@ import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
 import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
 import { uniswapv4 } from '../projects/uniswapv4/uniswapv4'
+import { wbeth } from '../projects/wbeth/wbeth'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
@@ -142,6 +143,7 @@ export const refactored: BaseProject[] = [
   chainlink,
   uniswapv3,
   uniswapv4,
+  wbeth,
   polymarket,
   // privacy
   cloaked,

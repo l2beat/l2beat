@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OperatorWallet",
+  "category": "core",
+  "canActIndependently": false,
+  "description": "Binance's minting wallet. It is the only configured wBETH minter and its allowance is unlimited. Its operator or owner can mint wBETH to itself or to a registered hot wallet with no ETH deposited on-chain; this is how wBETH is issued to users who wrap BETH on the exchange, and it accounts for nearly all of the supply. The owner can also add hot wallets, pause the wallet, and execute arbitrary calls from it, which lets it mint to any address.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint unbacked wBETH to any address (through execTransaction), add or remove hot wallets, replace the operator, pause the wallet, and withdraw anything the wallet holds."
+        }
+      ]
+    },
+    "operator": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint unbacked wBETH to a registered hot wallet and transfer tokens held here to a hot wallet."
+        }
+      ]
+    },
+    "hotWallets": {
+      "handler": {
+        "type": "array",
+        "method": "hotWallets",
+        "length": "{{ numOfHotWallets }}"
+      },
+      "description": "Binance exchange wallets that minted wBETH can be sent to."
+    }
+  }
+}

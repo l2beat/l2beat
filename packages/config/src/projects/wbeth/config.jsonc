@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "wbeth",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 60,
+  "initialAddresses": [
+    // wBETH token (FiatTokenProxy → WrapTokenV3ETH). The unwrap contract, the
+    // rate-limited oracle and every key are reachable from it.
+    "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+    // Binance's minting wallet. It is the token's only configured minter, but the
+    // minter mapping is not enumerable and nothing on-chain points at this address,
+    // so it has to be seeded. Found through the token's MinterConfigured event.
+    "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6"
+  ],
+  "names": {
+    "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1": "wBETH",
+    "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196": "UnwrapTokenV1ETH",
+    "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06": "ExchangeRateUpdater",
+    "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6": "OperatorWallet"
+  }
+}
