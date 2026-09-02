@@ -93,8 +93,6 @@ export const rocketpool: BaseProject = {
           'RocketDAOProtocolSettingsNetwork',
           'getMaxRethDelta',
         ),
-        securityCouncilSize,
-        securityCouncilQuorum: membersNeeded('RocketDAOSecurity'),
         upgradeVetoQuorum: percent(
           'RocketDAOProtocolSettingsSecurity',
           'getUpgradeVetoQuorum',

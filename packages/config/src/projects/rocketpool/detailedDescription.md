@@ -36,9 +36,9 @@ The lane's reach is total: an executed proposal can replace or add protocol cont
 
 RPL governance cannot upgrade anything. `RocketDAOProtocolProposals` has no upgrade entry point, and the upgrade contract accepts no caller but the oracle set's proposal contract.
 
-#### The security council
+**The security council**
 
-`RocketDAOSecurity.getMemberCount` returns {{securityCouncilSize}}, and a council proposal needs {{securityCouncilQuorum}} of those seats to pass. Membership is held by a {{securityCouncilSeat}} Safe. The council holds two powers:
+Membership is held by a {{securityCouncilSeat}} Safe. The council holds two powers:
 
 It can cancel a pending upgrade. `RocketDAOSecurityUpgrade.proposeVeto` requires the change to still be inside its waiting period and passes at {{upgradeVetoQuorum}} of the council's seats. `RocketDAOProposal.getState` returns `Succeeded` the moment votes reach the threshold rather than at the end of the voting window, so a veto needs to land inside that window.
 
@@ -46,12 +46,12 @@ It can also flip an allowlist of settings. `RocketDAOSecurityProposals.proposalS
 
 Council membership is set by RPL governance, not by the council: `RocketDAOProtocolProposals.proposalSecurityInvite`, `proposalSecurityKick`, and `proposalSecurityReplace`.
 
-#### RPL governance
+**RPL governance**
 
 Voting is by registered node operators through `RocketDAOProtocolProposal`, weighted by the square root of their staked RPL and counted only up to {{votingStakeCap}} of their bonded ETH's value; RPL held outside a registered node carries no vote. Voting power is proven optimistically rather than tallied on-chain: a proposer stakes {{proposalBond}} RPL on a claimed voting-power tree, anyone can stake {{challengeBond}} RPL to challenge a node of it, and a challenge left unanswered for {{challengePeriod}} defeats the proposal and transfers the bond to the challengers, refereed by `RocketDAOProtocolVerifier`. A proposal needs {{proposalQuorum}} of voting power in support and is blocked by {{proposalVetoQuorum}} voting to veto.
 
 What passes can set any protocol parameter, split reward inflation between claimant groups, spend the treasury through `RocketClaimDAO`, and change the security council's membership.
 
-#### The guardian
+**The guardian**
 
 RocketStorage.getGuardian is an externally owned account left from deployment. Its original admin powers are permanently disabled, but two remain live. It can set the penalty ceiling for legacy validators (RocketMinipoolPenalty.setMaxPenaltyRate) with no upper bound; governance cannot reach or revoke this power. It can also repair the public-key index for existing validators (fixPubkeys), but only to values already recorded on-chain, and nothing that moves funds reads that index. The guardian can hand the role to another address.
