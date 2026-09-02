@@ -41,7 +41,7 @@ export function DaThroughputPublicTable({ items }: Props) {
   )
 }
 
-export function toTableEntry(
+function toTableEntry(
   entry: DaThroughputEntry,
   includeL2Only: boolean,
 ): DaThroughputTableData {
