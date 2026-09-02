@@ -8,6 +8,7 @@ import { getActivityConfig } from './features/activity'
 import { getBackofficeConfig } from './features/backoffice'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
+import { getDefiTvlConfig } from './features/defiTvl'
 import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getInteropFeatureConfig } from './features/interop'
 import { getPrivacyConfig } from './features/privacy'
@@ -113,6 +114,13 @@ export async function makeConfig(
         ps,
         flags,
         env.optionalInteger('TVS_SINCE_TIMESTAMP'),
+      )),
+    defiTvl:
+      flags.isEnabled('defi-tvl') &&
+      (await getDefiTvlConfig(
+        ps,
+        flags,
+        env.string('DEFILLAMA_API_URL', 'https://api.llama.fi'),
       )),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
