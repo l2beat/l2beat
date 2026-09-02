@@ -5,7 +5,7 @@ import { RelayApiClient } from './RelayApiClient'
 
 describe(RelayApiClient.name, () => {
   it('rejects a non-positive rate limit', () => {
-    const httpClient = mockObject<HttpClient>({ fetch: mockFn() })
+    const httpClient = mockObject<HttpClient>({ fetchRaw: mockFn() })
 
     expect(
       () =>
@@ -18,45 +18,47 @@ describe(RelayApiClient.name, () => {
   describe(RelayApiClient.prototype.getRequests.name, () => {
     it('calls v3 with an API key and normalizes the indexed fields', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(
-          page(
-            [
-              request('a', {
-                inTxs: [
-                  {
-                    txHash: txHash('1'),
-                    chainId: 1,
-                    timestamp: 100,
-                  },
-                ],
-                outTxs: [
-                  {
-                    txHash: txHash('2'),
-                    chainId: 10,
-                    timestamp: 200,
-                  },
-                ],
-                route: {
-                  quoted: {
-                    origin: {
-                      inputCurrency: amount('quoted-in', '0xquoted'),
+        fetchRaw: mockFn().resolvesTo(
+          ok(
+            page(
+              [
+                request('a', {
+                  inTxs: [
+                    {
+                      txHash: txHash('1'),
+                      chainId: 1,
+                      timestamp: 100,
                     },
-                    destination: {
-                      outputCurrency: amount('quoted-out', '0xquoted'),
+                  ],
+                  outTxs: [
+                    {
+                      txHash: txHash('2'),
+                      chainId: 10,
+                      timestamp: 200,
+                    },
+                  ],
+                  route: {
+                    quoted: {
+                      origin: {
+                        inputCurrency: amount('quoted-in', '0xquoted'),
+                      },
+                      destination: {
+                        outputCurrency: amount('quoted-out', '0xquoted'),
+                      },
+                    },
+                    actual: {
+                      origin: {
+                        inputCurrency: amount('actual-in', '0xsource'),
+                      },
+                      destination: {
+                        outputCurrency: amount('actual-out', '0xdestination'),
+                      },
                     },
                   },
-                  actual: {
-                    origin: {
-                      inputCurrency: amount('actual-in', '0xsource'),
-                    },
-                    destination: {
-                      outputCurrency: amount('actual-out', '0xdestination'),
-                    },
-                  },
-                },
-              }),
-            ],
-            undefined,
+                }),
+              ],
+              undefined,
+            ),
           ),
         ),
       })
@@ -78,7 +80,7 @@ describe(RelayApiClient.name, () => {
         updatedAt: '2026-08-24T15:03:00.000Z',
       })
 
-      const [url, init] = httpClient.fetch.calls[0]?.args ?? []
+      const [url, init] = httpClient.fetchRaw.calls[0]?.args ?? []
       expect(url as string).toInclude('/requests/v3?')
       expect(url as string).toInclude('startTimestamp=100')
       expect(url as string).toInclude('endTimestamp=200')
@@ -89,20 +91,22 @@ describe(RelayApiClient.name, () => {
       const quotedInput = amount('quoted-in', '0xsource')
       const quotedOutput = amount('quoted-out', '0xdestination')
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(
-          page(
-            [
-              request('a', {
-                route: {
-                  actual: null,
-                  quoted: {
-                    origin: { inputCurrency: quotedInput },
-                    destination: { outputCurrency: quotedOutput },
+        fetchRaw: mockFn().resolvesTo(
+          ok(
+            page(
+              [
+                request('a', {
+                  route: {
+                    actual: null,
+                    quoted: {
+                      origin: { inputCurrency: quotedInput },
+                      destination: { outputCurrency: quotedOutput },
+                    },
                   },
-                },
-              }),
-            ],
-            undefined,
+                }),
+              ],
+              undefined,
+            ),
           ),
         ),
       })
@@ -112,14 +116,71 @@ describe(RelayApiClient.name, () => {
       expect(result.requests[0]?.sourceCurrency).toEqual(quotedInput)
       expect(result.requests[0]?.destinationCurrency).toEqual(quotedOutput)
     })
+
+    it('keeps incomplete actual data and warns instead of merging the quote', async () => {
+      const warn = mockFn().returns(undefined)
+      const logger = mockObject<Logger>({
+        for: mockFn().returns(mockObject<Logger>({ warn })),
+      })
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(
+          ok(
+            page(
+              [
+                request('a', {
+                  route: {
+                    quoted: {
+                      origin: {
+                        inputCurrency: amount('quoted-in', '0xquoted'),
+                      },
+                    },
+                    actual: {
+                      origin: {
+                        inputCurrency: { currency: { address: '0xsource' } },
+                      },
+                    },
+                  },
+                }),
+              ],
+              undefined,
+            ),
+          ),
+        ),
+      })
+
+      const result = await createClient(httpClient, logger).getRequests()
+
+      expect(result.requests[0]?.sourceCurrency?.amount).toEqual(undefined)
+      expect(result.requests[0]?.sourceCurrency?.currency?.address).toEqual(
+        '0xsource',
+      )
+      expect(warn).toHaveBeenOnlyCalledWith('Incomplete actual route data', {
+        requests: 1,
+        missingAmount: 1,
+        missingAddress: 0,
+        sampleIds: ['a'],
+      })
+    })
+
+    it('accepts an explicitly null status', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(
+          ok(page([{ ...request('a'), status: null }], undefined)),
+        ),
+      })
+
+      const result = await createClient(httpClient).getRequests()
+
+      expect(result.requests[0]?.status).toEqual(undefined)
+    })
   })
 
   describe(RelayApiClient.prototype.getAllRequests.name, () => {
     it('paginates until the response is complete', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn()
-          .resolvesToOnce(page([request('a')], 'cursor-1'))
-          .resolvesToOnce(page([request('b')], undefined)),
+        fetchRaw: mockFn()
+          .resolvesToOnce(ok(page([request('a')], 'cursor-1')))
+          .resolvesToOnce(ok(page([request('b')], undefined))),
       })
       const client = createClient(httpClient)
 
@@ -131,7 +192,7 @@ describe(RelayApiClient.name, () => {
 
     it('reports the cursor when the request limit is reached', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(page([request('a')], 'cursor-1')),
+        fetchRaw: mockFn().resolvesTo(ok(page([request('a')], 'cursor-1'))),
       })
       const client = createClient(httpClient)
 
@@ -143,54 +204,54 @@ describe(RelayApiClient.name, () => {
 
     it('always sorts by updatedAt ascending', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(page([request('a')], undefined)),
+        fetchRaw: mockFn().resolvesTo(ok(page([request('a')], undefined))),
       })
       const client = createClient(httpClient)
 
       await client.getAllRequests({ limit: 500 })
 
-      const url = httpClient.fetch.calls[0]?.args[0] as string
+      const url = httpClient.fetchRaw.calls[0]?.args[0] as string
       expect(url).toInclude('sortBy=updatedAt')
       expect(url).toInclude('sortDirection=asc')
     })
 
     it('retries a rate-limited page at the same cursor', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn()
-          .resolvesToOnce(page([request('a')], 'cursor-1'))
-          .rejectsWithOnce(new Error('HTTP error: 429 Too Many Requests'))
-          .resolvesToOnce(page([request('b')], undefined)),
+        fetchRaw: mockFn()
+          .resolvesToOnce(ok(page([request('a')], 'cursor-1')))
+          .resolvesToOnce(httpError(429, 'Too Many Requests'))
+          .resolvesToOnce(ok(page([request('b')], undefined))),
       })
       const client = createClient(httpClient)
 
       const result = await client.getAllRequests({ limit: 500 })
 
       expect(result.requests.map((r) => r.id)).toEqual(['a', 'b'])
-      expect(httpClient.fetch).toHaveBeenCalledTimes(3)
-      const failedUrl = httpClient.fetch.calls[1]?.args[0] as string
-      const retriedUrl = httpClient.fetch.calls[2]?.args[0] as string
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(3)
+      const failedUrl = httpClient.fetchRaw.calls[1]?.args[0] as string
+      const retriedUrl = httpClient.fetchRaw.calls[2]?.args[0] as string
       expect(failedUrl).toEqual(retriedUrl)
       expect(retriedUrl).toInclude('continuation=cursor-1')
     })
 
     it('throws a permanent later-page failure instead of returning a partial window', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn()
-          .resolvesToOnce(page([request('a')], 'cursor-1'))
-          .rejectsWithOnce(new Error('HTTP error: 401 Unauthorized')),
+        fetchRaw: mockFn()
+          .resolvesToOnce(ok(page([request('a')], 'cursor-1')))
+          .resolvesToOnce(httpError(401, 'Unauthorized')),
       })
       const client = createClient(httpClient)
 
       await expect(client.getAllRequests({ limit: 500 })).toBeRejectedWith(
-        'HTTP error: 401 Unauthorized',
+        'Relay API error: 401 Unauthorized',
       )
-      expect(httpClient.fetch).toHaveBeenCalledTimes(2)
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(2)
     })
 
     it('throws an exhausted transient later-page failure instead of returning a partial window', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn()
-          .resolvesToOnce(page([request('a')], 'cursor-1'))
+        fetchRaw: mockFn()
+          .resolvesToOnce(ok(page([request('a')], 'cursor-1')))
           .rejectsWith(new Error('network timeout')),
       })
       const client = createClient(httpClient)
@@ -198,35 +259,35 @@ describe(RelayApiClient.name, () => {
       await expect(client.getAllRequests({ limit: 500 })).toBeRejectedWith(
         'network timeout',
       )
-      expect(httpClient.fetch).toHaveBeenCalledTimes(5)
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(5)
     })
 
     it('rejects an unchanged continuation cursor', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(page([request('a')], 'cursor-1')),
+        fetchRaw: mockFn().resolvesTo(ok(page([request('a')], 'cursor-1'))),
       })
       const client = createClient(httpClient)
 
       await expect(
         client.getAllRequests({ limit: 500, continuation: 'cursor-1' }),
       ).toBeRejectedWith('unchanged continuation cursor')
-      expect(httpClient.fetch).toHaveBeenCalledTimes(1)
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(1)
     })
 
     it('rejects an invalid request limit before calling the API', async () => {
-      const httpClient = mockObject<HttpClient>({ fetch: mockFn() })
+      const httpClient = mockObject<HttpClient>({ fetchRaw: mockFn() })
       const client = createClient(httpClient)
 
       await expect(client.getAllRequests({ limit: 0 })).toBeRejectedWith(
         'limit must be a positive integer',
       )
-      expect(httpClient.fetch).toHaveBeenCalledTimes(0)
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(0)
     })
   })
 })
 
-function createClient(httpClient: HttpClient) {
-  return new RelayApiClient(httpClient, Logger.SILENT, 'api-key', {
+function createClient(httpClient: HttpClient, logger: Logger = Logger.SILENT) {
+  return new RelayApiClient(httpClient, logger, 'api-key', {
     callsPerMinute: 1_000_000_000,
     initialRetryDelayMs: 0,
   })
@@ -234,6 +295,26 @@ function createClient(httpClient: HttpClient) {
 
 function page(requests: unknown[], continuation: string | undefined) {
   return { requests, continuation }
+}
+
+function ok(body: unknown) {
+  return {
+    ok: true,
+    status: 200,
+    statusText: 'OK',
+    json: async () => body,
+    text: async () => JSON.stringify(body),
+  }
+}
+
+function httpError(status: number, statusText: string) {
+  return {
+    ok: false,
+    status,
+    statusText,
+    json: async () => ({}),
+    text: async () => `{"statusCode":${status}}`,
+  }
 }
 
 function request(id: string, data: Record<string, unknown> = {}) {

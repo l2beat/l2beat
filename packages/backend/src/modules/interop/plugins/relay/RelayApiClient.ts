@@ -67,7 +67,7 @@ const RelayV3Response = v.object({
   requests: v.array(
     v.object({
       id: v.string(),
-      status: v.string().optional(),
+      status: v.union([v.string(), v.null()]).optional(),
       data: v.object({
         inTxs: v.array(Transaction).optional(),
         outTxs: v.array(Transaction).optional(),
@@ -157,6 +157,7 @@ export class RelayApiClient {
     const url = `${API_URL}/requests/v3?${new URLSearchParams(queryParams)}`
     const data = await this.fetchWithRetry(url)
     const parsed = RelayV3Response.parse(data)
+    this.warnOnIncompleteActualData(parsed.requests)
 
     return {
       requests: parsed.requests.map(normalizeRequest),
@@ -199,14 +200,60 @@ export class RelayApiClient {
     return result
   }
 
+  /**
+   * `normalizeRequest` only falls back to the quoted route when the actual one
+   * is missing entirely. Quoted amounts routinely differ from settled ones, so
+   * filling a partially present actual route from the quote would fabricate
+   * values. We surface how often that gap appears instead of merging it away.
+   */
+  private warnOnIncompleteActualData(requests: RelayV3Request[]) {
+    let missingAmount = 0
+    let missingAddress = 0
+    const sampleIds: string[] = []
+
+    for (const request of requests) {
+      if (request.status !== 'success') {
+        continue
+      }
+
+      const actual = request.data.route?.actual
+      let incomplete = false
+      for (const currency of [
+        actual?.origin?.inputCurrency,
+        actual?.destination?.outputCurrency,
+      ]) {
+        if (!currency) {
+          continue
+        }
+        if (currency.amount === undefined) {
+          missingAmount++
+          incomplete = true
+        }
+        if (currency.currency?.address === undefined) {
+          missingAddress++
+          incomplete = true
+        }
+      }
+
+      if (incomplete && sampleIds.length < 3) {
+        sampleIds.push(request.id)
+      }
+    }
+
+    if (missingAmount > 0 || missingAddress > 0) {
+      this.logger.warn('Incomplete actual route data', {
+        requests: requests.length,
+        missingAmount,
+        missingAddress,
+        sampleIds,
+      })
+    }
+  }
+
   private async fetchWithRetry(url: string): Promise<unknown> {
     for (let attempt = 1; ; attempt++) {
       try {
-        return await this.rateLimiter.call(() =>
-          this.httpClient.fetch(url, {
-            headers: { 'x-api-key': this.apiKey },
-          }),
-        )
+        return await this.rateLimiter.call(() => this.fetchPage(url))
       } catch (error) {
         if (
           attempt >= this.options.maxAttempts ||
@@ -230,6 +277,33 @@ export class RelayApiClient {
       }
     }
   }
+
+  private async fetchPage(url: string): Promise<unknown> {
+    const response = await this.httpClient.fetchRaw(url, {
+      headers: { 'x-api-key': this.apiKey },
+    })
+
+    if (!response.ok) {
+      throw new RelayHttpError(
+        response.status,
+        response.statusText,
+        await response.text(),
+      )
+    }
+
+    return await response.json()
+  }
+}
+
+/** Carries the HTTP status so retryability does not depend on message text. */
+class RelayHttpError extends Error {
+  constructor(
+    readonly status: number,
+    statusText: string,
+    body: string,
+  ) {
+    super(`Relay API error: ${status} ${statusText} ${body.slice(0, 200)}`)
+  }
 }
 
 function normalizeRequest(request: RelayV3Request): RelayRequest {
@@ -239,7 +313,7 @@ function normalizeRequest(request: RelayV3Request): RelayRequest {
 
   return {
     id: request.id,
-    status: request.status,
+    status: request.status ?? undefined,
     sourceTx: normalizeTransaction(request.data.inTxs?.[0]),
     destinationTx: normalizeTransaction(request.data.outTxs?.[0]),
     sourceCurrency:
@@ -269,15 +343,10 @@ function normalizeTransaction(
 }
 
 function isRetryableRelayError(error: unknown): boolean {
-  if (!(error instanceof Error)) {
-    return true
+  if (error instanceof RelayHttpError) {
+    return error.status === 408 || error.status === 429 || error.status >= 500
   }
 
-  const match = /^HTTP error: (\d{3})/.exec(error.message)
-  if (!match) {
-    return true
-  }
-
-  const status = Number(match[1])
-  return status === 408 || status === 429 || status >= 500
+  // Network failures, timeouts and malformed bodies are worth another attempt.
+  return true
 }
