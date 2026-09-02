@@ -26,6 +26,7 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
+import { formatDaThroughputValue } from './formatDaThroughputValue'
 import { getDaDataParams } from './getDaDataParams'
 
 export type ProjectChartDataWithConfiguredThroughput = [
@@ -164,7 +165,7 @@ export function ProjectDaAbsoluteThroughputChart({
           filterNull={false}
           content={
             <ProjectDaThroughputCustomTooltip
-              unit={unit}
+              denominator={denominator}
               resolution={resolution}
               dataGap={dataGap}
             />
@@ -187,11 +188,11 @@ export function ProjectDaAbsoluteThroughputChart({
 export function ProjectDaThroughputCustomTooltip({
   payload,
   label,
-  unit,
+  denominator,
   resolution,
   dataGap,
 }: CustomChartTooltipProps & {
-  unit: string
+  denominator: number
   resolution: ChartResolution
   dataGap?: [number, number]
 }) {
@@ -237,7 +238,7 @@ export function ProjectDaThroughputCustomTooltip({
                 </span>
               ) : (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {(entry.value ?? 0).toFixed(2)} {unit}
+                  {formatDaThroughputValue(entry.value ?? 0, denominator)}
                 </span>
               )}
             </div>

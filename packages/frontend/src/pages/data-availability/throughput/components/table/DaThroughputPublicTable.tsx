@@ -41,12 +41,20 @@ export function DaThroughputPublicTable({ items }: Props) {
   )
 }
 
-function toTableEntry(
+export function toTableEntry(
   entry: DaThroughputEntry,
   includeL2Only: boolean,
 ): DaThroughputTableData {
+  const data = includeL2Only ? entry.l2OnlyData : entry.data
+  const syncWarning = data?.syncWarning
+
   return {
     ...entry,
-    data: includeL2Only ? entry.l2OnlyData : entry.data,
+    data,
+    statuses: {
+      ...entry.statuses,
+      syncWarning,
+    },
+    isSynced: !syncWarning,
   }
 }
