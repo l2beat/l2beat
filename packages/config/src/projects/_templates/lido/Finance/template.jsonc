@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Lido DAO's Aragon Finance application. ACL roles create and execute one-time or recurring treasury payments and change their budgets, recipients, amounts and accounting period.",
   "category": "gov",
+  "canActIndependently": false,
   "ignoreMethods": ["getPayment", "getTransaction", "nextPaymentTime"],
   "ignoreRelatives": ["getRecoveryVault"],
   "ignoreInWatchMode": [
@@ -20,7 +21,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "create one-time or recurring DAO payments."
+          "description": "create one-time or recurring DAO payments out of the Agent's assets, within the limits set on the role's ACL parameters."
         }
       ]
     },

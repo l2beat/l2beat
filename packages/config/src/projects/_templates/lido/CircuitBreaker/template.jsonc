@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Emergency pause coordinator. The admin assigns one heartbeat-gated pauser to each registered protocol contract; a live pauser can trigger one time-bounded pause before its assignment is consumed.",
   "category": "gov",
+  "canActIndependently": false,
   "fields": {
     "ADMIN": {
       "permissions": [
@@ -34,7 +35,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
+          "description": "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
         }
       ]
     }

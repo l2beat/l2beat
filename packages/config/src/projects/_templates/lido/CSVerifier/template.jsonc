@@ -3,6 +3,7 @@
   "displayName": "Community Staking Module Verifier",
   "description": "Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreRelatives": ["BEACON_ROOTS"],
   "fields": {
     "accessControl": {

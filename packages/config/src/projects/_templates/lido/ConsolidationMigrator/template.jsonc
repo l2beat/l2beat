@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": ["getAllowedTargets"],
   "fields": {
     "accessControl": {

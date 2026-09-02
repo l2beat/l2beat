@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Aragon TokenManager for LDO. Its ACL roles can issue supply, mint or burn LDO, assign vested balances, and revoke vesting.",
   "category": "gov",
+  "canActIndependently": false,
   "ignoreRelatives": ["getRecoveryVault"],
   "fields": {
     "aragonPermissions": {

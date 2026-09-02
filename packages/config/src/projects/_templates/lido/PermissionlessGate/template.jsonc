@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Permissionless Community Staking Module onboarding contract. Any address can create a node operator using its fixed bond curve by depositing ETH, stETH or wstETH.",
   "category": "core",
+  "canActIndependently": false,
   "fields": {
     "accessControl": {
       "handler": { "type": "accessControl", "includeEmptyRoles": true }

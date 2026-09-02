@@ -2,6 +2,9 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Price router that reads token prices from the Chainlink Feed Registry, either directly in USD or via an ETH/USD bridge feed for ETH-quoted tokens, and reports them normalized to 18 decimals.",
   "category": "core",
+  // The Feed Registry and the ETH/USD bridge feed are Chainlink deployments. Following
+  // them would pull Chainlink's whole forwarder/multisig permission graph into Lido.
+  "ignoreRelatives": ["FEED_REGISTRY", "ethUsdBridge"],
   "fields": {
     "ADMIN": {
       "permissions": [

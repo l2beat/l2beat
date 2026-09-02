@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Validates validator ownership proofs and submits EIP-7251 consolidation requests through the protocol consolidation-request predeploy. It rate-limits the amount consolidated and preserves its ETH balance across requests.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreRelatives": ["BEACON_ROOTS"],
   "ignoreInWatchMode": ["getConsolidationRequestLimitFullInfo"],
   "fields": {

@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Guardian-based circuit breaker for legacy staking-module deposits. Guardians can collectively pause deposits if a malicious or stale deposit is observed, while the owner configures guardians and resumes deposits.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": [
     "canDeposit",
     "getLastDepositBlock",
