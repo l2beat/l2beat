@@ -4,16 +4,34 @@ export interface SyncedEnvEntry {
 }
 
 const ENV_KEY = /^[A-Za-z_][A-Za-z0-9_]*$/
-// These variables configure env:sync itself. If the sheet could set them, it
-// could also redirect where every future sync reads from.
+// Variables configuring env:sync itself must never come from the sheet,
+// otherwise the sheet could redirect where future syncs read from.
 const LOCAL_ONLY_KEY_PREFIX = 'GOOGLE_SHEETS_'
 
-const WARNING_LINE_1 =
-  '# This section is synced from Google Sheets. Do not edit it manually.'
-const WARNING_LINE_2 =
-  '# Put local overrides below this block. env:sync rewrites everything between the markers.'
 const START_MARKER = '# >>> GOOGLE_SHEETS_SYNC_START >>>'
 const END_MARKER = '# <<< GOOGLE_SHEETS_SYNC_END <<<'
+const LINE_WIDTH = 74
+
+const HEADER_TEXT = [
+  'SYNCED SECTION - DO NOT EDIT ANYTHING BETWEEN THE MARKERS',
+  '',
+  'Everything here is overwritten by `pnpm env:sync` (run it in',
+  'packages/backend) with the values from the shared Google Sheet.',
+  '',
+  'To use a different value, define the variable again BELOW the',
+  'END marker: the last definition in this file wins.',
+]
+
+const FOOTER_TEXT = [
+  'END OF THE SYNCED SECTION - put your own variables and overrides',
+  'below this line.',
+]
+
+// Written above the start marker by earlier versions, removed when found.
+const LEGACY_WARNING_LINES = [
+  '# This section is synced from Google Sheets. Do not edit it manually.',
+  '# Put local overrides below this block. env:sync rewrites everything between the markers.',
+]
 
 export function parseGoogleSheetRows(rows: string[][]): SyncedEnvEntry[] {
   const result: SyncedEnvEntry[] = []
@@ -64,10 +82,10 @@ export function parseGoogleSheetRows(rows: string[][]): SyncedEnvEntry[] {
 export function upsertGoogleSheetsEnvSection(
   currentContent: string,
   entries: SyncedEnvEntry[],
+  syncedAt: Date,
 ): string {
-  // Follow the line endings already used in the file instead of normalizing it.
   const eol = currentContent.includes('\r\n') ? '\r\n' : '\n'
-  const section = renderManagedSection(entries, eol)
+  const section = renderManagedSection(entries, syncedAt, eol)
   const block = findManagedBlock(currentContent)
 
   if (block) {
@@ -82,7 +100,6 @@ export function upsertGoogleSheetsEnvSection(
     return `${section}${eol}`
   }
 
-  // Keep the developer's content byte-for-byte, separated by one blank line.
   const separator = currentContent.startsWith(eol) ? eol : `${eol}${eol}`
   return `${section}${separator}${ensureTrailingNewline(currentContent, eol)}`
 }
@@ -92,9 +109,8 @@ interface TextRange {
   end: number
 }
 
-// The same matcher detects the block and delimits the replacement, so the two
-// can never disagree. Markers are recognized as whole lines only, which means
-// marker text inside a quoted value is ignored.
+// Markers are matched as whole lines by prefix, so the decoration after them
+// can change freely, while marker text inside a quoted value is ignored.
 function findManagedBlock(content: string): TextRange | undefined {
   const starts = findMarkerLines(content, START_MARKER)
   const ends = findMarkerLines(content, END_MARKER)
@@ -118,7 +134,7 @@ function findManagedBlock(content: string): TextRange | undefined {
   }
 
   return {
-    start: startOfWarningLines(content, start.start),
+    start: startOfLegacyWarningLines(content, start.start),
     end: end.end,
   }
 }
@@ -133,9 +149,7 @@ function findMarkerLines(content: string, marker: string): TextRange[] {
     const line = content.slice(lineStart, lineEnd)
     const lineBody = line.endsWith('\r') ? line.slice(0, -1) : line
 
-    if (lineBody.trim() === marker) {
-      // The range covers the whole marker line but leaves its terminator
-      // (\n or \r\n) untouched.
+    if (lineBody.trim().startsWith(marker)) {
       result.push({ start: lineStart, end: lineStart + lineBody.length })
     }
 
@@ -145,10 +159,10 @@ function findMarkerLines(content: string, marker: string): TextRange[] {
   return result
 }
 
-function startOfWarningLines(content: string, markerStart: number): number {
+function startOfLegacyWarningLines(content: string, markerStart: number) {
   const before = content.slice(0, markerStart)
   for (const eol of ['\r\n', '\n']) {
-    const warning = `${WARNING_LINE_1}${eol}${WARNING_LINE_2}${eol}`
+    const warning = `${LEGACY_WARNING_LINES.join(eol)}${eol}`
     if (before.endsWith(warning)) {
       return markerStart - warning.length
     }
@@ -156,24 +170,49 @@ function startOfWarningLines(content: string, markerStart: number): number {
   return markerStart
 }
 
-function renderManagedSection(entries: SyncedEnvEntry[], eol: string) {
+function renderManagedSection(
+  entries: SyncedEnvEntry[],
+  syncedAt: Date,
+  eol: string,
+) {
   const body = entries.map((entry) => {
     assertRenderableValue(entry.key, entry.value)
     return `${entry.key}=${quoteForEnv(entry.value)}`
   })
 
   return [
-    WARNING_LINE_1,
-    WARNING_LINE_2,
-    START_MARKER,
+    dashedLine(`${START_MARKER} `),
+    ...box(HEADER_TEXT),
+    dashedLineEndingWith(`last synced: ${formatUtc(syncedAt)}`),
+    '',
     ...body,
-    END_MARKER,
+    '',
+    dashedLine('# '),
+    ...box(FOOTER_TEXT),
+    dashedLine(`${END_MARKER} `),
   ].join(eol)
 }
 
-// Bash (`source .env`) and dotenv only agree on how to read bare digits and
-// single-quoted values, and a single quote cannot be represented inside the
-// latter, so anything else is rejected instead of being written ambiguously.
+function box(lines: string[]) {
+  return ['', ...lines, ''].map(
+    (line) => `# |${`   ${line}`.padEnd(LINE_WIDTH - 4)}|`,
+  )
+}
+
+function dashedLine(prefix: string) {
+  return prefix.padEnd(LINE_WIDTH, '-')
+}
+
+function dashedLineEndingWith(note: string) {
+  return `${'# '.padEnd(LINE_WIDTH - note.length - 1, '-')} ${note}`
+}
+
+function formatUtc(date: Date) {
+  return `${date.toISOString().slice(0, 16).replace('T', ' ')} UTC`
+}
+
+// Bash (`source .env`) and dotenv only agree on bare digits and single-quoted
+// values, and a single quote cannot be represented inside the latter.
 function assertRenderableValue(key: string, value: string) {
   if (value.includes('\n') || value.includes('\r')) {
     throw new Error(`Multiline values are not supported: ${key}`)

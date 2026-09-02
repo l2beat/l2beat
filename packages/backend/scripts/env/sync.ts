@@ -85,7 +85,7 @@ async function main() {
     const currentEnv = existsSync(ENV_PATH)
       ? readFileSync(ENV_PATH, 'utf8')
       : ''
-    writeEnvFile(upsertGoogleSheetsEnvSection(currentEnv, entries))
+    writeEnvFile(upsertGoogleSheetsEnvSection(currentEnv, entries, new Date()))
 
     console.log(`Synced ${entries.length} variables to ${ENV_PATH}`)
   } finally {
