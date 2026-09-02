@@ -968,6 +968,28 @@ export type ProjectDefiCategory =
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
+  tvl?: ProjectDefiTvlConfig
+}
+
+export type ProjectDefiTvlConfig =
+  | {
+      source: 'l2beat'
+    }
+  | {
+      source: 'defillama'
+      /** DeFiLlama protocol slug used by /protocol/{slug}. */
+      protocolSlug: string
+      /** First timestamp included in the historical import. */
+      sinceTimestamp: UnixTime
+      /** Explicit allowlist of researched chains. */
+      chains: ProjectDefiTvlChain[]
+    }
+
+export interface ProjectDefiTvlChain {
+  /** L2BEAT chain name persisted in the database. */
+  chain: string
+  /** Exact key used by DeFiLlama in chainTvls/currentChainTvls. */
+  providerChain: string
 }
 
 export type ProjectExternalDependency =

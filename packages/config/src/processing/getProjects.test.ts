@@ -392,6 +392,32 @@ describe('getProjects', () => {
     }
   })
 
+  describe('DeFi TVL sources', () => {
+    for (const project of projects) {
+      const tvl = project.defiInfo?.tvl
+      if (!tvl) continue
+
+      if (tvl.source === 'l2beat') {
+        it(`${project.id} has TVS config for its L2BEAT TVL source`, () => {
+          expect(project.tvsConfig).not.toEqual(undefined)
+        })
+      } else {
+        it(`${project.id} has a complete external TVL scope`, () => {
+          expect(project.tvsConfig).toEqual(undefined)
+          expect(tvl.protocolSlug.length).toBeGreaterThan(0)
+          expect(tvl.sinceTimestamp).toBeGreaterThan(0)
+          expect(tvl.chains.length).toBeGreaterThan(0)
+          expect(new Set(tvl.chains.map((chain) => chain.chain)).size).toEqual(
+            tvl.chains.length,
+          )
+          expect(
+            new Set(tvl.chains.map((chain) => chain.providerChain)).size,
+          ).toEqual(tvl.chains.length)
+        })
+      }
+    }
+  })
+
   describe('privacy projects', () => {
     for (const project of projects) {
       if (!project.privacyInfo) continue

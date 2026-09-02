@@ -155,6 +155,12 @@ export const uniswapv3: BaseProject = {
   },
   defiInfo: {
     category: 'DEX',
+    tvl: {
+      source: 'defillama',
+      protocolSlug: 'uniswap-v3',
+      sinceTimestamp: UnixTime(1620172800),
+      chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
+    },
   },
   // Declared empty on purpose: v3 has no oracle, no bridge, no external
   // contract its operation depends on. The section renders an explicit
