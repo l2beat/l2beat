@@ -192,7 +192,7 @@ describe(getDefiSummaryEntries.name, () => {
     env.MOCK = originalMock
   })
 
-  it('generates mock TVL only for projects with tvsConfig', async () => {
+  it('generates mock TVL only for projects with a configured TVL source', async () => {
     env.MOCK = true
 
     const entries = await getDefiSummaryEntries([
@@ -211,13 +211,21 @@ describe(getDefiSummaryEntries.name, () => {
         id: 'uniswapv3',
         name: 'Uniswap V3',
         category: 'DEX',
+        tvl: {
+          source: 'defillama',
+          protocolSlug: 'uniswap-v3',
+          sinceTimestamp: UnixTime(1_620_172_800),
+          chains: [{ chain: 'ethereum', providerChain: 'Ethereum' }],
+        },
       }),
     ])
 
     const byId = new Map(entries.map((entry) => [entry.id, entry]))
     expect(byId.get('liquityv2')?.totalValueLockedUsd).not.toEqual(undefined)
     expect(byId.get('chainlink')?.totalValueLockedUsd).toEqual(undefined)
-    expect(byId.get('uniswapv3')?.totalValueLockedUsd).toEqual(undefined)
+    expect(byId.get('uniswapv3')?.totalValueLockedUsd).not.toEqual(undefined)
+    expect(byId.get('liquityv2')?.tvlDataSource).toEqual('L2BEAT')
+    expect(byId.get('uniswapv3')?.tvlDataSource).toEqual('DeFiLlama')
   })
 })
 
@@ -226,12 +234,14 @@ function defiProject({
   name,
   category,
   tvsConfig,
+  tvl,
   externalDependencies,
 }: {
   id: string
   name: string
   category: DefiProject['defiInfo']['category']
   tvsConfig?: DefiProject['tvsConfig']
+  tvl?: DefiProject['defiInfo']['tvl']
   externalDependencies?: DefiProject['externalDependencies']
 }): DefiProject {
   return {
@@ -245,7 +255,10 @@ function defiProject({
       links: {},
       badges: [],
     },
-    defiInfo: { category },
+    defiInfo: {
+      category,
+      tvl: tvl ?? (tvsConfig !== undefined ? { source: 'l2beat' } : undefined),
+    },
     statuses: {
       yellowWarning: undefined,
       redWarning: undefined,
