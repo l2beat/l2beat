@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type {
@@ -26,7 +26,6 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
-import { formatDaThroughputValue } from './formatDaThroughputValue'
 import { getDaDataParams } from './getDaDataParams'
 
 export type ProjectChartDataWithConfiguredThroughput = [
@@ -238,7 +237,7 @@ export function ProjectDaThroughputCustomTooltip({
                 </span>
               ) : (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {formatDaThroughputValue(entry.value ?? 0, denominator)}
+                  {formatBytes((entry.value ?? 0) * denominator)}
                 </span>
               )}
             </div>
