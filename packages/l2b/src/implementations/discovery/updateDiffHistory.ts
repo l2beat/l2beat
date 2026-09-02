@@ -18,10 +18,6 @@ import {
   TemplateService,
 } from '@l2beat/discovery'
 import {
-  buildDiscoveryChangelog,
-  serializeDiscoveryChangelog,
-} from '@l2beat/shared'
-import {
   assert,
   formatAsciiBorder,
   withoutUndefinedKeys,
@@ -32,6 +28,7 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { relative } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../common/getPlainLogger'
+import { updateChangelog } from './changelog/updateChangelog'
 import { updateDiffHistoryHash } from './hashing'
 import {
   rediscoverStructureOnBlock,
@@ -146,7 +143,8 @@ export async function updateDiffHistoryForChain(
   }
 
   const anyDiffs = diff.length > 0 || configRelatedDiff.length > 0
-  if (!diffHistoryExists || anyDiffs) {
+  const writesNewEntry = !diffHistoryExists || anyDiffs
+  if (writesNewEntry) {
     const newHistoryEntry = generateDiffHistoryMarkdown(
       discoveryFromMainBranch?.timestamp,
       curDiscovery.timestamp,
@@ -175,42 +173,13 @@ export async function updateDiffHistoryForChain(
     updateDiffHistoryHash(configReader, diffHistoryPath, projectName)
   }
 
-  updateChangelog(discoveryFolder, logger)
-}
-
-/**
- * changelog.json is the machine-readable projection of diffHistory.md's
- * watched changes (consumed by the ossification factor instead of parsing
- * markdown at runtime). It is maintained only for projects that opted in —
- * seeded once by frontend/scripts/ossification-build-changelog.ts — and from
- * then on regenerated here from the exact diffHistory.md content this run
- * produced, so the two artifacts cannot drift.
- */
-function updateChangelog(discoveryFolder: string, logger: Logger) {
-  const changelogPath = `${discoveryFolder}/changelog.json`
-  const { content: changelogOnMainBranch } = getFileVersionOnMainBranch(
-    changelogPath,
-    logger,
-  )
-  const maintained = existsSync(changelogPath) || changelogOnMainBranch !== ''
-  if (!maintained) {
-    return
-  }
-
-  const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
-  const diffHistory = existsSync(diffHistoryPath)
-    ? readFileSync(diffHistoryPath, 'utf-8')
-    : ''
-  const serialized = serializeDiscoveryChangelog(
-    buildDiscoveryChangelog(diffHistory),
-  )
-  const current = existsSync(changelogPath)
-    ? readFileSync(changelogPath, 'utf-8')
-    : undefined
-  if (current !== serialized) {
-    writeFileSync(changelogPath, serialized)
-    logger.info(`Updated ${changelogPath}`)
-  }
+  // The entry this run wrote is recorded from the diff itself; an initial
+  // discovery lists every contract as created and is not a change.
+  const newEntry =
+    writesNewEntry && discoveryFromMainBranch !== undefined
+      ? { timestamp: curDiscovery.timestamp, diff }
+      : undefined
+  updateChangelog(discoveryFolder, newEntry, (message) => logger.info(message))
 }
 
 function removeIgnoredFields(diffs: DiscoveryDiff[]) {

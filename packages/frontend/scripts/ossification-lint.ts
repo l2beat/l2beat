@@ -19,23 +19,27 @@
  * Usage: npx tsx scripts/ossification-lint.ts <projectId> [<projectId> ...]
  *          [--no-timestamps]   skip the onchain timestamp audit (offline runs)
  */
+import type {
+  DiscoveryChangelog,
+  DiscoveryChangelogEntry,
+  DiscoveryChangelogField,
+} from '@l2beat/shared'
 import { formatSeconds } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
+import {
+  appendedUpgradeTimestamp,
+  canonicalDiffField,
+  isImplementationChangeField,
+  isRepresentationOnly,
+} from '~/server/features/projects/ossification/changelogFields'
 import {
   collectEscrowSeeds,
   type DiscoveredEntryLite,
   deriveOssificationPerimeter,
   getTrackedTxSeeds,
 } from '~/server/features/projects/ossification/getOssificationPerimeter'
-import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
-import {
-  extractDiffBlockAddress,
-  extractDiffBlockFieldChanges,
-  extractDiffBlockSpans,
-  isImplementationChangeDiffBody,
-} from '~/utils/diffHistory/diffHistoryMarkdown'
 import {
   getRpcUrl,
   getRpcUrlForChain,
@@ -353,7 +357,10 @@ function auditSeverityHistory(projectId: string) {
   const knownUpdateIds = new Set<string>()
   const updatesByProject = new Map(
     projectIds.map((id) => {
-      const updates = getDiscoveryUpdates(id, Number.POSITIVE_INFINITY)
+      const changelog = readJson(path.join(root, id, 'changelog.json')) as
+        | DiscoveryChangelog
+        | undefined
+      const updates: DiscoveryChangelogEntry[] = changelog?.entries ?? []
       for (const update of updates) knownUpdateIds.add(update.id)
       return [id, updates] as const
     }),
@@ -389,96 +396,101 @@ function auditSeverityHistory(projectId: string) {
 
   const silenced = new Map<string, SilencedFieldHistory>()
   const ledgerGaps: string[] = []
+  /** The recorded severity is the judgment frozen at review time; the runtime
+   *  ignores it, so a HIGH recorded then and not HIGH now is silenced. */
+  const annotatedHigh = (field: DiscoveryChangelogField) =>
+    field.severity === 'HIGH' && !isRepresentationOnly(field)
   for (const id of projectIds) {
     for (const update of updatesByProject.get(id) ?? []) {
       const superseded = supersededByUpdate.get(update.id)
-      for (const section of update.sections) {
-        if (section.kind !== 'watched-changes') continue
-        for (const { content } of extractDiffBlockSpans(section.body)) {
-          const address = extractDiffBlockAddress(content)
-          if (!address) continue
-          if (superseded?.has(address)) continue
+      for (const change of update.changes) {
+        const address = change.address
+        if (superseded?.has(address)) continue
+        const fields = change.fields ?? []
 
-          // Historical contracts are a closed reviewed ledger: diff history is
-          // inert for them, so anything counted-looking here is either
-          // unconverted evidence or an unrepresented upgrade.
-          const historicalContract = historicalByAddress.get(address)
-          if (historicalContract) {
-            const day = update.timestamp
-              ? new Date(update.timestamp * 1000).toISOString().slice(0, 10)
-              : '???'
-            if (isImplementationChangeDiffBody(content)) {
-              const ledger = historicalContract.upgradeTimestamps ?? []
-              // The appended $pastUpgrades entries carry exact onchain
-              // timestamps; each must be represented in the closed ledger —
-              // a non-empty but incomplete ledger is still a gap.
-              const appended = extractAppendedUpgradeTimestamps(content)
-              const unrepresented = appended.filter(
-                (timestamp) => !ledger.includes(timestamp),
+        // Historical contracts are a closed reviewed ledger: diff history is
+        // inert for them, so anything counted-looking here is either
+        // unconverted evidence or an unrepresented upgrade.
+        const historicalContract = historicalByAddress.get(address)
+        if (historicalContract) {
+          const day = update.timestamp
+            ? new Date(update.timestamp * 1000).toISOString().slice(0, 10)
+            : '???'
+          if (fields.some(isImplementationChangeField)) {
+            const ledger = historicalContract.upgradeTimestamps ?? []
+            // The appended $pastUpgrades entries carry exact onchain
+            // timestamps; each must be represented in the closed ledger —
+            // a non-empty but incomplete ledger is still a gap.
+            const unrepresented = fields
+              .map(appendedUpgradeTimestamp)
+              .filter(
+                (timestamp): timestamp is number =>
+                  timestamp !== undefined && !ledger.includes(timestamp),
               )
-              if (ledger.length === 0) {
-                ledgerGaps.push(
-                  `${historicalContract.name ?? address}: implementation change ${day} (${update.id}) but upgradeTimestamps is empty — backfill the onchain upgrade history`,
-                )
-              } else if (unrepresented.length > 0) {
-                ledgerGaps.push(
-                  `${historicalContract.name ?? address}: onchain upgrade(s) ${unrepresented
-                    .map((timestamp) =>
-                      new Date(timestamp * 1000).toISOString().slice(0, 10),
-                    )
-                    .join(', ')} (${update.id}) missing from upgradeTimestamps`,
-                )
-              }
-              continue
-            }
-            for (const change of extractDiffBlockFieldChanges(content)) {
-              if (!change.annotatedHigh || change.unchanged) continue
-              if (
-                reviewedDowngrades.has(
-                  `${historicalContract.address.toLowerCase()}#${change.field.toLowerCase()}`,
-                )
-              ) {
-                continue
-              }
+            if (ledger.length === 0) {
               ledgerGaps.push(
-                `${historicalContract.name ?? address}: HIGH-annotated ${change.field} change ${day} (${update.id}) — convert to a historical criticalEvent with its onchain anchor, or acknowledge`,
+                `${historicalContract.name ?? address}: implementation change ${day} (${update.id}) but upgradeTimestamps is empty — backfill the onchain upgrade history`,
+              )
+            } else if (unrepresented.length > 0) {
+              ledgerGaps.push(
+                `${historicalContract.name ?? address}: onchain upgrade(s) ${unrepresented
+                  .map((timestamp) =>
+                    new Date(timestamp * 1000).toISOString().slice(0, 10),
+                  )
+                  .join(', ')} (${update.id}) missing from upgradeTimestamps`,
               )
             }
             continue
           }
-
-          if (!criticalKeys.has(address)) continue
-          const entry = entryByAddress.get(address)
-          if (!entry) continue
-          for (const change of extractDiffBlockFieldChanges(content)) {
-            if (!change.annotatedHigh || change.unchanged) continue
-            const meta = entry.fieldMeta?.[change.field]
-            if (meta?.severity === 'HIGH') continue
+          for (const field of fields) {
+            const name = canonicalDiffField(field.key)
+            if (!name || !annotatedHigh(field)) continue
             if (
               reviewedDowngrades.has(
-                `${entry.address?.toLowerCase()}#${change.field.toLowerCase()}`,
+                `${historicalContract.address.toLowerCase()}#${name.toLowerCase()}`,
               )
             ) {
               continue
             }
-            const key = `${entry.address}#${change.field}`
-            const existing = silenced.get(key)
-            const timestamp = update.timestamp ?? 0
-            if (existing) {
-              existing.count++
-              existing.last = Math.max(existing.last, timestamp)
-              existing.first = Math.min(existing.first, timestamp)
-            } else {
-              silenced.set(key, {
-                contract: entry.address ?? address,
-                name: entry.name ?? address,
-                field: change.field,
-                status: meta === undefined ? 'absent' : 'downgraded',
-                count: 1,
-                first: timestamp,
-                last: timestamp,
-              })
-            }
+            ledgerGaps.push(
+              `${historicalContract.name ?? address}: HIGH-annotated ${name} change ${day} (${update.id}) — convert to a historical criticalEvent with its onchain anchor, or acknowledge`,
+            )
+          }
+          continue
+        }
+
+        if (!criticalKeys.has(address)) continue
+        const entry = entryByAddress.get(address)
+        if (!entry) continue
+        for (const field of fields) {
+          const name = canonicalDiffField(field.key)
+          if (!name || !annotatedHigh(field)) continue
+          const meta = entry.fieldMeta?.[name]
+          if (meta?.severity === 'HIGH') continue
+          if (
+            reviewedDowngrades.has(
+              `${entry.address?.toLowerCase()}#${name.toLowerCase()}`,
+            )
+          ) {
+            continue
+          }
+          const key = `${entry.address}#${name}`
+          const existing = silenced.get(key)
+          const timestamp = update.timestamp ?? 0
+          if (existing) {
+            existing.count++
+            existing.last = Math.max(existing.last, timestamp)
+            existing.first = Math.min(existing.first, timestamp)
+          } else {
+            silenced.set(key, {
+              contract: entry.address ?? address,
+              name: entry.name ?? address,
+              field: name,
+              status: meta === undefined ? 'absent' : 'downgraded',
+              count: 1,
+              first: timestamp,
+              last: timestamp,
+            })
           }
         }
       }
@@ -514,23 +526,6 @@ function auditSeverityHistory(projectId: string) {
       `  - ${row.name} ${row.field} [${row.status}] ${row.count} event(s), ${day(row.first)} .. ${day(row.last)}`,
     )
   }
-}
-
-/** Onchain timestamps of freshly appended $pastUpgrades entries (added,
- *  nothing removed, single-index key), mirroring the runtime's rule. */
-function extractAppendedUpgradeTimestamps(content: string): number[] {
-  const timestamps: number[] = []
-  for (const change of extractDiffBlockFieldChanges(content)) {
-    if (!/^\$pastUpgrades\.\d+$/.test(change.path)) continue
-    if (change.removed.length > 0) continue
-    const match = /^\["(\d{4}-\d{2}-\d{2}T[0-9:.]+Z)"/.exec(
-      change.added[0] ?? '',
-    )
-    if (match?.[1] === undefined) continue
-    const parsed = Date.parse(match[1])
-    if (Number.isFinite(parsed)) timestamps.push(Math.floor(parsed / 1000))
-  }
-  return timestamps
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: ad-hoc JSON inspection

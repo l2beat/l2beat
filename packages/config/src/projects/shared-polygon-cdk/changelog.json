@@ -48,6 +48,7 @@
             },
             {
               "key": "values.rollupsDataV2.27",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0xB07134fF28e74a90667Ab5e3F7271a542D6E0358\",\"chainID\":3377,\"verifier\":\"eth:0x0000000000000000000000000000000000000000\",\"forkID\":0,\"rollupTypeID\":14,\"rollupVerifierType\":2,\"programVKey\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
               ]
@@ -210,6 +211,7 @@
             },
             {
               "key": "values.rollupsDataV2.26",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0x5DdF600b83eaa5eC7F8e89315F9D8CaC5E7406b4\",\"chainID\":13371,\"verifier\":\"eth:0x0000000000000000000000000000000000000000\",\"forkID\":0,\"rollupTypeID\":14,\"rollupVerifierType\":2,\"programVKey\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
               ]
@@ -512,6 +514,7 @@
             },
             {
               "key": "values.rollupsDataV2.25",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0xE369D0C2aee9B32c3b0EC54443890bEDF11Ef6D4\",\"chainID\":125125,\"verifier\":\"eth:0x0000000000000000000000000000000000000000\",\"forkID\":0,\"rollupTypeID\":13,\"rollupVerifierType\":2,\"programVKey\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
               ]
@@ -571,6 +574,7 @@
             },
             {
               "key": "values.aggchainMultisigHash",
+              "severity": "HIGH",
               "added": [
                 "\"0x5fea5922ef634456425d2e3251455050449b5c787cdca45b6733d5b624d39591\""
               ]
@@ -1351,12 +1355,14 @@
             },
             {
               "key": "values.rollupsDataV2.23",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0xEB7eeB10CC04447262715ddaF7C7B111141c2358\",\"chainID\":6767,\"verifier\":\"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459\",\"forkID\":12,\"rollupTypeID\":11,\"rollupVerifierType\":1,\"programVKey\":\"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30\"}"
               ]
             },
             {
               "key": "values.rollupsDataV2.24",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0x7A7db0e6006827825ccfEA7eaA0d12979b6f9968\",\"chainID\":6360,\"verifier\":\"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459\",\"forkID\":12,\"rollupTypeID\":11,\"rollupVerifierType\":1,\"programVKey\":\"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30\"}"
               ]
@@ -1621,6 +1627,7 @@
             },
             {
               "key": "values.rollupsDataV2.22",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8\",\"chainID\":3864,\"verifier\":\"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459\",\"forkID\":12,\"rollupTypeID\":11,\"rollupVerifierType\":1,\"programVKey\":\"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30\"}"
               ]
@@ -1653,6 +1660,7 @@
             },
             {
               "key": "values.rollupsDataV2.21",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b\",\"chainID\":8338,\"verifier\":\"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459\",\"forkID\":12,\"rollupTypeID\":11,\"rollupVerifierType\":1,\"programVKey\":\"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30\"}"
               ]
@@ -1679,6 +1687,7 @@
             },
             {
               "key": "values.rollupsDataV2.20",
+              "severity": "LOW",
               "added": [
                 "{\"rollupContract\":\"eth:0xaf6a4CDe41B9C7FCe858E1B875765cdEDB8f84c8\",\"chainID\":838,\"verifier\":\"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459\",\"forkID\":12,\"rollupTypeID\":11,\"rollupVerifierType\":1,\"programVKey\":\"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30\"}"
               ]
@@ -2050,6 +2059,7 @@
             },
             {
               "key": "values.proxiedTokensManager",
+              "severity": "HIGH",
               "added": [
                 "\"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF\""
               ]
@@ -4512,6 +4522,7 @@
             },
             {
               "key": "values.rollupsDataV2.19",
+              "severity": "MEDIUM",
               "added": [
                 "{\"rollupContract\":\"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC\",\"chainID\":938,\"verifier\":\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",\"forkID\":9,\"rollupTypeID\":4,\"rollupVerifierType\":0,\"programVKey\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
               ]
@@ -5315,6 +5326,7 @@
             },
             {
               "key": "values.rollupsDataV2.18",
+              "severity": "MEDIUM",
               "added": [
                 "{\"rollupContract\":\"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC\",\"chainID\":938,\"verifier\":\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",\"forkID\":9,\"rollupTypeID\":4,\"rollupVerifierType\":0,\"programVKey\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
               ]
@@ -5935,6 +5947,7 @@
             },
             {
               "key": "values.rollupsDataV2.17",
+              "severity": "MEDIUM",
               "added": [
                 "{\"rollupContract\":\"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC\",\"chainID\":938,\"verifier\":\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",\"forkID\":9,\"rollupTypeID\":4,\"rollupVerifierType\":0,\"programVKey\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
               ]
@@ -6425,12 +6438,14 @@
             },
             {
               "key": "values.rollupsDataV2.16",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC\",938,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"]"
               ]
             },
             {
               "key": "values.rollupsDataV2.15.6",
+              "severity": "MEDIUM",
               "removed": [
                 "938"
               ],
@@ -6440,6 +6455,7 @@
             },
             {
               "key": "values.rollupsDataV2.15.5",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC\""
               ],
@@ -6449,6 +6465,7 @@
             },
             {
               "key": "values.rollupsDataV2.15.4",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -6458,6 +6475,7 @@
             },
             {
               "key": "values.rollupsDataV2.15.3",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -6467,6 +6485,7 @@
             },
             {
               "key": "values.rollupsDataV2.15.2",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6476,6 +6495,7 @@
             },
             {
               "key": "values.rollupsDataV2.15.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -6485,6 +6505,7 @@
             },
             {
               "key": "values.rollupsDataV2.14.6",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xA87df42CD53E998b3A610B8bCe3719871b0bb940\""
               ],
@@ -6494,6 +6515,7 @@
             },
             {
               "key": "values.rollupsDataV2.14.5",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -6503,6 +6525,7 @@
             },
             {
               "key": "values.rollupsDataV2.14.4",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -6512,6 +6535,7 @@
             },
             {
               "key": "values.rollupsDataV2.14.3",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6521,6 +6545,7 @@
             },
             {
               "key": "values.rollupsDataV2.14.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -6530,6 +6555,7 @@
             },
             {
               "key": "values.rollupsDataV2.14.1",
+              "severity": "MEDIUM",
               "removed": [
                 "511252203"
               ],
@@ -6539,6 +6565,7 @@
             },
             {
               "key": "values.rollupsDataV2.13.6",
+              "severity": "MEDIUM",
               "removed": [
                 "999"
               ],
@@ -6548,6 +6575,7 @@
             },
             {
               "key": "values.rollupsDataV2.13.5",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xB234F18738d9531CAD6ae6d9A587d09fe200272C\""
               ],
@@ -6557,6 +6585,7 @@
             },
             {
               "key": "values.rollupsDataV2.13.4",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -6566,6 +6595,7 @@
             },
             {
               "key": "values.rollupsDataV2.13.3",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -6575,6 +6605,7 @@
             },
             {
               "key": "values.rollupsDataV2.13.2",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6584,6 +6615,7 @@
             },
             {
               "key": "values.rollupsDataV2.13.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -6593,6 +6625,7 @@
             },
             {
               "key": "values.rollupsDataV2.12.6",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x78253E2E6120164bd826668A4C96Db20f78A94c9\""
               ],
@@ -6602,6 +6635,7 @@
             },
             {
               "key": "values.rollupsDataV2.12.5",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -6611,6 +6645,7 @@
             },
             {
               "key": "values.rollupsDataV2.12.4",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -6620,6 +6655,7 @@
             },
             {
               "key": "values.rollupsDataV2.12.3",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6629,6 +6665,7 @@
             },
             {
               "key": "values.rollupsDataV2.12.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -6638,6 +6675,7 @@
             },
             {
               "key": "values.rollupsDataV2.12.1",
+              "severity": "MEDIUM",
               "removed": [
                 "31415"
               ],
@@ -6647,6 +6685,7 @@
             },
             {
               "key": "values.rollupsDataV2.12.0",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -6656,6 +6695,7 @@
             },
             {
               "key": "values.rollupsDataV2.11.6",
+              "severity": "MEDIUM",
               "removed": [
                 "623"
               ],
@@ -6665,6 +6705,7 @@
             },
             {
               "key": "values.rollupsDataV2.11.5",
+              "severity": "MEDIUM",
               "removed": [
                 "7"
               ],
@@ -6674,6 +6715,7 @@
             },
             {
               "key": "values.rollupsDataV2.11.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8\""
               ],
@@ -6683,6 +6725,7 @@
             },
             {
               "key": "values.rollupsDataV2.11.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\""
               ],
@@ -6692,6 +6735,7 @@
             },
             {
               "key": "values.rollupsDataV2.11.0",
+              "severity": "MEDIUM",
               "removed": [
                 "12"
               ],
@@ -6701,6 +6745,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.6",
+              "severity": "MEDIUM",
               "removed": [
                 "196"
               ],
@@ -6710,6 +6755,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.5",
+              "severity": "MEDIUM",
               "removed": [
                 "8"
               ],
@@ -6719,6 +6765,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.4",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6728,6 +6775,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507\""
               ],
@@ -6737,6 +6785,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB\""
               ],
@@ -6746,6 +6795,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -6755,6 +6805,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.0",
+              "severity": "MEDIUM",
               "removed": [
                 "13"
               ],
@@ -6764,6 +6815,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.6",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80\""
               ],
@@ -6773,6 +6825,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.2",
+              "severity": "MEDIUM",
               "removed": [
                 "3776"
               ],
@@ -6782,6 +6835,7 @@
             },
             {
               "key": "values.rollupsDataV2.8.6",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858\""
               ],
@@ -6791,6 +6845,7 @@
             },
             {
               "key": "values.rollupsDataV2.8.5",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -6800,6 +6855,7 @@
             },
             {
               "key": "values.rollupsDataV2.8.4",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -6809,6 +6865,7 @@
             },
             {
               "key": "values.rollupsDataV2.8.3",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6818,6 +6875,7 @@
             },
             {
               "key": "values.rollupsDataV2.8.2",
+              "severity": "MEDIUM",
               "removed": [
                 "1511670449"
               ],
@@ -6827,6 +6885,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB\""
               ],
@@ -6836,6 +6895,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.2",
+              "severity": "MEDIUM",
               "removed": [
                 "2355"
               ],
@@ -6845,6 +6905,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -6854,6 +6915,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.6",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -6863,6 +6925,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.5",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -6872,6 +6935,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.4",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6881,6 +6945,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.3",
+              "severity": "MEDIUM",
               "removed": [
                 "4913"
               ],
@@ -6890,6 +6955,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x88AaB361f108C3c959F2928Da3cD8e47298016B5\""
               ],
@@ -6899,6 +6965,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.6",
+              "severity": "MEDIUM",
               "removed": [
                 "1702448187"
               ],
@@ -6908,6 +6975,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.5",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -6917,6 +6985,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.4",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -6926,6 +6995,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.3",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -6935,6 +7005,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -6944,6 +7015,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238\""
               ],
@@ -6953,6 +7025,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.0",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -6962,6 +7035,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.4",
+              "severity": "MEDIUM",
               "removed": [
                 "752025"
               ],
@@ -6971,6 +7045,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\""
               ],
@@ -6980,6 +7055,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789\""
               ],
@@ -6989,6 +7065,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.6",
+              "severity": "MEDIUM",
               "removed": [
                 "7"
               ],
@@ -6998,6 +7075,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.5",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -7007,6 +7085,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.4",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xb1714954bBc0162A36FB44934F3216aCE81C40d7\""
               ],
@@ -7016,6 +7095,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.3",
+              "severity": "MEDIUM",
               "removed": [
                 "3344"
               ],
@@ -7025,6 +7105,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\""
               ],
@@ -7034,6 +7115,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -7043,6 +7125,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.0",
+              "severity": "MEDIUM",
               "removed": [
                 "12"
               ],
@@ -7052,6 +7135,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.6",
+              "severity": "MEDIUM",
               "removed": [
                 "1"
               ],
@@ -7061,6 +7145,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.5",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7\""
               ],
@@ -7070,6 +7155,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.4",
+              "severity": "MEDIUM",
               "removed": [
                 "9369"
               ],
@@ -7079,6 +7165,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63\""
               ],
@@ -7088,6 +7175,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.2",
+              "severity": "MEDIUM",
               "removed": [
                 "12"
               ],
@@ -7097,6 +7185,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.1",
+              "severity": "MEDIUM",
               "removed": [
                 "10"
               ],
@@ -7106,6 +7195,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.0",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f\""
               ],
@@ -7115,6 +7205,7 @@
             },
             {
               "key": "values.rollupsDataV2.1.6",
+              "severity": "MEDIUM",
               "removed": [
                 "7"
               ],
@@ -7124,6 +7215,7 @@
             },
             {
               "key": "values.rollupsDataV2.1.4",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\""
               ],
@@ -7133,6 +7225,7 @@
             },
             {
               "key": "values.rollupsDataV2.1.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -7142,6 +7235,7 @@
             },
             {
               "key": "values.rollupsDataV2.1.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x92726F7dE49300DBdb60930066bc1d0803c0740B\""
               ],
@@ -7151,6 +7245,7 @@
             },
             {
               "key": "values.rollupsDataV2.1.1",
+              "severity": "MEDIUM",
               "removed": [
                 "994873017"
               ],
@@ -7160,6 +7255,7 @@
             },
             {
               "key": "values.rollupsDataV2.0.6",
+              "severity": "MEDIUM",
               "removed": [
                 "6"
               ],
@@ -7169,6 +7265,7 @@
             },
             {
               "key": "values.rollupsDataV2.0.5",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -7178,6 +7275,7 @@
             },
             {
               "key": "values.rollupsDataV2.0.4",
+              "severity": "MEDIUM",
               "removed": [
                 "1101"
               ],
@@ -7187,6 +7285,7 @@
             },
             {
               "key": "values.rollupsDataV2.0.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\""
               ],
@@ -7196,6 +7295,7 @@
             },
             {
               "key": "values.rollupsDataV2.0.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x519E42c24163192Dca44CD3fBDCEBF6be9130987\""
               ],
@@ -7205,6 +7305,7 @@
             },
             {
               "key": "values.rollupsDataV2.0.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -7214,6 +7315,7 @@
             },
             {
               "key": "values.rollupsDataV2.0.0",
+              "severity": "MEDIUM",
               "removed": [
                 "12"
               ],
@@ -7254,6 +7356,7 @@
           "fields": [
             {
               "key": "values.rollupsDataV2.10.6",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -7263,6 +7366,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.5",
+              "severity": "MEDIUM",
               "removed": [
                 "1"
               ],
@@ -7272,6 +7376,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.4",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7\""
               ],
@@ -7281,6 +7386,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.3",
+              "severity": "MEDIUM",
               "removed": [
                 "9369"
               ],
@@ -7290,6 +7396,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512\""
               ],
@@ -7299,6 +7406,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63\""
               ],
@@ -7308,6 +7416,7 @@
             },
             {
               "key": "values.rollupsDataV2.10.0",
+              "severity": "MEDIUM",
               "removed": [
                 "12"
               ],
@@ -7317,6 +7426,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.6",
+              "severity": "MEDIUM",
               "removed": [
                 "196"
               ],
@@ -7326,6 +7436,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.5",
+              "severity": "MEDIUM",
               "removed": [
                 "8"
               ],
@@ -7335,6 +7446,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.4",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -7344,6 +7456,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507\""
               ],
@@ -7353,6 +7466,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB\""
               ],
@@ -7362,6 +7476,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -7371,6 +7486,7 @@
             },
             {
               "key": "values.rollupsDataV2.9.0",
+              "severity": "MEDIUM",
               "removed": [
                 "13"
               ],
@@ -7380,6 +7496,7 @@
             },
             {
               "key": "values.rollupsDataV2.8.6",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80\""
               ],
@@ -7389,6 +7506,7 @@
             },
             {
               "key": "values.rollupsDataV2.8.2",
+              "severity": "MEDIUM",
               "removed": [
                 "3776"
               ],
@@ -7398,6 +7516,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.6",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858\""
               ],
@@ -7407,6 +7526,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.5",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -7416,6 +7536,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.4",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -7425,6 +7546,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.3",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -7434,6 +7556,7 @@
             },
             {
               "key": "values.rollupsDataV2.7.2",
+              "severity": "MEDIUM",
               "removed": [
                 "1511670449"
               ],
@@ -7443,6 +7566,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB\""
               ],
@@ -7452,6 +7576,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.2",
+              "severity": "MEDIUM",
               "removed": [
                 "2355"
               ],
@@ -7461,6 +7586,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -7470,6 +7596,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.6",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -7479,6 +7606,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.5",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -7488,6 +7616,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.4",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -7497,6 +7626,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.3",
+              "severity": "MEDIUM",
               "removed": [
                 "4913"
               ],
@@ -7506,6 +7636,7 @@
             },
             {
               "key": "values.rollupsDataV2.5.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x88AaB361f108C3c959F2928Da3cD8e47298016B5\""
               ],
@@ -7515,6 +7646,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.6",
+              "severity": "MEDIUM",
               "removed": [
                 "1702448187"
               ],
@@ -7524,6 +7656,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.5",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -7533,6 +7666,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.4",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -7542,6 +7676,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.3",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -7551,6 +7686,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -7560,6 +7696,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238\""
               ],
@@ -7569,6 +7706,7 @@
             },
             {
               "key": "values.rollupsDataV2.4.0",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -7578,6 +7716,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.4",
+              "severity": "MEDIUM",
               "removed": [
                 "752025"
               ],
@@ -7587,6 +7726,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.3",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\""
               ],
@@ -7596,6 +7736,7 @@
             },
             {
               "key": "values.rollupsDataV2.3.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789\""
               ],
@@ -7605,6 +7746,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.6",
+              "severity": "MEDIUM",
               "removed": [
                 "7"
               ],
@@ -7614,6 +7756,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.5",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -7623,6 +7766,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.4",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xb1714954bBc0162A36FB44934F3216aCE81C40d7\""
               ],
@@ -7632,6 +7776,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.3",
+              "severity": "MEDIUM",
               "removed": [
                 "3344"
               ],
@@ -7641,6 +7786,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\""
               ],
@@ -7650,6 +7796,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.1",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
               ],
@@ -7659,6 +7806,7 @@
             },
             {
               "key": "values.rollupsDataV2.2.0",
+              "severity": "MEDIUM",
               "removed": [
                 "12"
               ],
@@ -7963,6 +8111,7 @@
           "fields": [
             {
               "key": "values.rollupsDataV2.6.4",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -7972,6 +8121,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.3",
+              "severity": "MEDIUM",
               "removed": [
                 "9"
               ],
@@ -7981,6 +8131,7 @@
             },
             {
               "key": "values.rollupsDataV2.6.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -8016,6 +8167,7 @@
             },
             {
               "key": "values.rollupsDataV2.15",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0xb1714954bBc0162A36FB44934F3216aCE81C40d7\",3344,\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\",12,7,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"]"
               ]
@@ -8054,6 +8206,7 @@
             },
             {
               "key": "values.rollupsDataV2.14",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8\",623,\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\",12,7,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"]"
               ]
@@ -8359,6 +8512,7 @@
             },
             {
               "key": "values.rollupsDataV2",
+              "severity": "MEDIUM",
               "added": [
                 "[[\"0x519E42c24163192Dca44CD3fBDCEBF6be9130987\",1101,\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\",12,6,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80\",3776,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507\",196,\"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB\",13,8,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x88AaB361f108C3c959F2928Da3cD8e47298016B5\",4913,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858\",1511670449,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238\",1702448187,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x92726F7dE49300DBdb60930066bc1d0803c0740B\",994873017,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x78253E2E6120164bd826668A4C96Db20f78A94c9\",31415,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0xA87df42CD53E998b3A610B8bCe3719871b0bb940\",511252203,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB\",2355,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0xB234F18738d9531CAD6ae6d9A587d09fe200272C\",999,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC\",938,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",9,4,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789\",752025,\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\",12,7,0,\"0x0000000000000000000000000000000000000000000000000000000000000000\"],[\"0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7\",9369,\"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63\",12,9,1,\"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512\"]]"
               ]
@@ -8468,6 +8622,7 @@
           "fields": [
             {
               "key": "values.rollupsData.0.3",
+              "severity": "MEDIUM",
               "removed": [
                 "5"
               ],
@@ -8477,6 +8632,7 @@
             },
             {
               "key": "values.rollupsData.0.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0xc521580cd8586Cc688A7430F9DcE0f6A803F2883\""
               ],
@@ -8591,6 +8747,7 @@
           "fields": [
             {
               "key": "values.rollupsData.2.3",
+              "severity": "MEDIUM",
               "removed": [
                 "4"
               ],
@@ -8600,6 +8757,7 @@
             },
             {
               "key": "values.rollupsData.2.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -8650,6 +8808,7 @@
             },
             {
               "key": "values.rollupsData.12",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789\",752025,\"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D\",7]"
               ]
@@ -8884,6 +9043,7 @@
             },
             {
               "key": "values.rollupsData.11",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC\",938,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -8936,6 +9096,7 @@
           "fields": [
             {
               "key": "values.rollupsData.0.3",
+              "severity": "MEDIUM",
               "removed": [
                 "3"
               ],
@@ -8945,6 +9106,7 @@
             },
             {
               "key": "values.rollupsData.0.2",
+              "severity": "MEDIUM",
               "removed": [
                 "\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\""
               ],
@@ -9032,6 +9194,7 @@
             },
             {
               "key": "values.rollupsData.10",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0xB234F18738d9531CAD6ae6d9A587d09fe200272C\",999,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -9105,6 +9268,7 @@
             },
             {
               "key": "values.rollupsData.9",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB\",2355,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -9157,6 +9321,7 @@
             },
             {
               "key": "values.rollupsData.8",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0xA87df42CD53E998b3A610B8bCe3719871b0bb940\",511252203,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -9240,6 +9405,7 @@
             },
             {
               "key": "values.rollupsData.7",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x78253E2E6120164bd826668A4C96Db20f78A94c9\",31415,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -9266,6 +9432,7 @@
             },
             {
               "key": "values.rollupsData.6",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x92726F7dE49300DBdb60930066bc1d0803c0740B\",994873017,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -9292,6 +9459,7 @@
             },
             {
               "key": "values.rollupsData.5",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238\",1702448187,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -9318,6 +9486,7 @@
             },
             {
               "key": "values.rollupsData.4",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858\",1511670449,\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\",4]"
               ]
@@ -9344,6 +9513,7 @@
             },
             {
               "key": "values.rollupsData.3",
+              "severity": "MEDIUM",
               "added": [
                 "[\"0x88AaB361f108C3c959F2928Da3cD8e47298016B5\",\"0x0775e11309d75aA6b0967917fB0213C5673eDf81\"]"
               ]

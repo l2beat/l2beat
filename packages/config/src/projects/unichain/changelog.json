@@ -386,6 +386,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x6D0462850F7B87403660CC9f4F89346483108512\""
               ],
@@ -395,6 +396,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02\""
               ],
@@ -650,6 +652,7 @@
             },
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "30000000"
               ],
@@ -1085,6 +1088,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x42891199E6abD6A346E26B7d187EF5657FDfF603\""
               ],
@@ -1094,6 +1098,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x5581F65C63B8CCbBe4A06626C336531160E2D8B5\""
               ],
@@ -1516,6 +1521,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x4F0f6B7877A174A4fd41DF80dB80DeF8883bc772\""
               ],
@@ -1525,6 +1531,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xC56EF9c3F3e9fD6713055b4577AC4AF8303E63e1\""
               ],
@@ -1958,6 +1965,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x57a3B42698DC1e4Fb905c9ab970154e178296991\""
               ],
@@ -1967,6 +1975,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x485272c0703020e1354328A1aBa3ca767997BEd3\""
               ],
@@ -2002,6 +2011,9 @@
               ]
             }
           ]
+        },
+        {
+          "address": "0x352f1defb49718e7ea411687e850aa8d6299f7ac"
         },
         {
           "address": "0x3b73fa8d82f511a3cae17b5a26e4e1a2d5e2f2a4"
@@ -2304,6 +2316,7 @@
             },
             {
               "key": "values.paused",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]

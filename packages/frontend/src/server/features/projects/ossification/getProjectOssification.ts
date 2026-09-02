@@ -118,9 +118,9 @@ export async function getProjectOssification(
     ]),
   ]
   const critical: (DiscoveredEntryLite & { address: string })[] = []
-  // changelog.json is the machine-readable projection of diffHistory.md's
-  // watched changes, maintained by l2b for opted-in projects and verified by
-  // scripts/ossification-build-changelog.ts --check.
+  // changelog.json holds the watched changes of every diffHistory.md entry,
+  // recorded by l2b from the discovery diff itself for opted-in projects and
+  // pinned to the markdown's entry identity by changelogIntegrity.test.ts.
   const changelog: DiscoveryChangelogEntry[] = []
   for (const id of projectIds) {
     const discovered = readProjectJson(id, 'discovered.json') as

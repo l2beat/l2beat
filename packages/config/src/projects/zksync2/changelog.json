@@ -25,6 +25,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "128849018880"
               ],
@@ -102,6 +103,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "124554051589"
               ],
@@ -188,6 +190,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "124554051588"
               ],
@@ -262,12 +265,14 @@
             },
             {
               "key": "values.multisigMembers.3",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b\""
               ]
             },
             {
               "key": "values.multisigMembers.7",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x2400D5d69043d9BE4fF32c6F8F28047d605ad976\""
               ]
@@ -309,24 +314,28 @@
             },
             {
               "key": "values.multisigMembers.2",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F\""
               ]
             },
             {
               "key": "values.multisigMembers.3",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b\""
               ]
             },
             {
               "key": "values.multisigMembers.6",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626\""
               ]
             },
             {
               "key": "values.multisigMembers.7",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x809bc2e1519641B482730330922950a4972a2227\""
               ]
@@ -453,6 +462,7 @@
             },
             {
               "key": "values.threshold",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -534,6 +544,30 @@
           ]
         },
         {
+          "address": "eth:0x3068415e0f857a5eed03302a1f7e44f67468d2bc",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x3f0009d00cc78979d00eb635490f23e8d6acc481",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x4a333c167ce76c46149c6b0197977ae02aaec929",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x5c7e59dba6557c7dab3b69ccd3e309d1965cf1b1",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x7408a268e5e6e8f08917c5b71015f4b9044970c7",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0xaf0b2b58289857e9a6cf91fd30410ddcad9d9b28",
+          "status": "deleted"
+        },
+        {
           "address": "eth:0xd972d03c8a45ef3c7937a279d998e4aeccc2b63d",
           "status": "deleted"
         },
@@ -542,7 +576,15 @@
           "status": "deleted"
         },
         {
+          "address": "eth:0xfadb20191ab38362c50f52909817b74214ca79ae",
+          "status": "deleted"
+        },
+        {
           "address": "eth:0x0d8d1be440f997bdb9ca44c0140fd12551f99bbb",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x4e4943346848c4867f81dfb37c4ca9c5715a7828",
           "status": "created"
         },
         {
@@ -648,6 +690,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "124554051587"
               ],
@@ -731,11 +774,39 @@
           ]
         },
         {
+          "address": "eth:0x3068415e0f857a5eed03302a1f7e44f67468d2bc",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x3f0009d00cc78979d00eb635490f23e8d6acc481",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x4a333c167ce76c46149c6b0197977ae02aaec929",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x5c7e59dba6557c7dab3b69ccd3e309d1965cf1b1",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x7408a268e5e6e8f08917c5b71015f4b9044970c7",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xaf0b2b58289857e9a6cf91fd30410ddcad9d9b28",
+          "status": "created"
+        },
+        {
           "address": "eth:0xd972d03c8a45ef3c7937a279d998e4aeccc2b63d",
           "status": "created"
         },
         {
           "address": "eth:0xe222d6354b49eaf8a7099fc4e7f9c0b4fe72d1e7",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xfadb20191ab38362c50f52909817b74214ca79ae",
           "status": "created"
         }
       ]
@@ -764,6 +835,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "124554051586"
               ],
@@ -868,6 +940,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "124554051586"
               ],
@@ -902,6 +975,10 @@
         {
           "address": "gateway:0xfa7c56b328beb5deb9218f3a4b60adc59bb6ad8d",
           "status": "deleted"
+        },
+        {
+          "address": "eth:0x4f06ef57618b16959879fc86e65eda0bd629a12b",
+          "status": "created"
         },
         {
           "address": "gateway:0x7e81f6502209f1a114065a8f70820ab5e28ee369",
@@ -1096,6 +1173,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "120259084289"
               ],
@@ -1345,6 +1423,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "120259084289"
               ],
@@ -1399,6 +1478,17 @@
         {
           "address": "gateway:0xe841b98e524d827bba664d19cb736c817707e730",
           "status": "deleted"
+        },
+        {
+          "address": "gateway:0xf41eca3047b37dc7d88849de4a4dc07937ad6bc4"
+        },
+        {
+          "address": "eth:0x4d335c5c08fec91a39965351abb6e315ad2e9ff3",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xe689e79a06d3d09f99c21e534ccf6a8b7c9b3c45",
+          "status": "created"
         },
         {
           "address": "gateway:0x5e12d7e0bb68029afbec83ccb9e8ede6019ef073",
@@ -1610,6 +1700,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "120259084288"
               ],
@@ -1747,6 +1838,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "120259084288"
               ],
@@ -2578,6 +2670,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "115964116992"
               ],
@@ -2880,6 +2973,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "111669149696"
               ],
@@ -2940,6 +3034,7 @@
           "fields": [
             {
               "key": "values.getTransactionFilterer",
+              "severity": "HIGH",
               "removed": [
                 "\"0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f\""
               ],
@@ -2964,6 +3059,7 @@
           "fields": [
             {
               "key": "values.getTransactionFilterer",
+              "severity": "HIGH",
               "removed": [
                 "\"0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78\""
               ],
@@ -2992,6 +3088,7 @@
           "fields": [
             {
               "key": "values.getTransactionFilterer",
+              "severity": "HIGH",
               "removed": [
                 "\"0x0000000000000000000000000000000000000000\""
               ],
@@ -3361,6 +3458,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "HIGH",
               "removed": [
                 "107374182400"
               ],
@@ -3424,6 +3522,7 @@
             },
             {
               "key": "values.getDAValidatorPair",
+              "severity": "HIGH",
               "added": [
                 "[\"0x72213dfe8CA61B0A782970dCFebFb877778f9119\",\"0xfa96A3Da88f201433911bEFf3Ecc434CB1222731\"]"
               ]
@@ -3436,6 +3535,7 @@
             },
             {
               "key": "values.getTransactionFilterer",
+              "severity": "HIGH",
               "added": [
                 "\"0x0000000000000000000000000000000000000000\""
               ]
@@ -3709,6 +3809,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "MEDIUM",
               "removed": [
                 "103079215106"
               ],
@@ -3808,6 +3909,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "MEDIUM",
               "removed": [
                 "103079215105"
               ],
@@ -3846,12 +3948,14 @@
             },
             {
               "key": "values.getOwners.7",
+              "severity": "LOW",
               "removed": [
                 "\"0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df\""
               ]
             },
             {
               "key": "values.getOwners.6",
+              "severity": "LOW",
               "removed": [
                 "\"0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF\""
               ],
@@ -3861,6 +3965,7 @@
             },
             {
               "key": "values.getOwners.5",
+              "severity": "LOW",
               "removed": [
                 "\"0x9dF8bc0918F357c766A5697E031fF5237c05747A\""
               ],
@@ -3870,6 +3975,7 @@
             },
             {
               "key": "values.getOwners.4",
+              "severity": "LOW",
               "removed": [
                 "\"0x702caCafA54B88e9c54449563Fb2e496e85c78b7\""
               ],
@@ -3879,6 +3985,7 @@
             },
             {
               "key": "values.getOwners.3",
+              "severity": "LOW",
               "removed": [
                 "\"0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f\""
               ],
@@ -4666,6 +4773,7 @@
             },
             {
               "key": "values.getProtocolVersion",
+              "severity": "MEDIUM",
               "removed": [
                 "22"
               ],
@@ -4684,6 +4792,7 @@
             },
             {
               "key": "values.getVerifierParams.1",
+              "severity": "LOW",
               "removed": [
                 "\"0x400a4b532c6f072c00d1806ef299300d4c104f4ac55bd8698ade78894fcadc0a\""
               ],
@@ -4693,6 +4802,7 @@
             },
             {
               "key": "values.getVerifierParams.0",
+              "severity": "LOW",
               "removed": [
                 "\"0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080\""
               ],
@@ -4838,6 +4948,7 @@
           "fields": [
             {
               "key": "values.getProtocolVersion",
+              "severity": "MEDIUM",
               "removed": [
                 "21"
               ],
@@ -4847,6 +4958,7 @@
             },
             {
               "key": "values.getVerifierParams.1",
+              "severity": "LOW",
               "removed": [
                 "\"0x062362cb3eaf1f631406cbe19bf2a2c5d0d9ea69d069309a6003addae9f387be\""
               ],

@@ -37,6 +37,7 @@
             },
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"2733003247060056328192560178934419513655729851806095615814023997114795707702\""
               ],
@@ -213,6 +214,7 @@
             },
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"918745833886511857768061986591752808672496300091957204265383861063635175685\""
               ],
@@ -369,6 +371,7 @@
             },
             {
               "key": "values.withdrawalLimitStatus",
+              "severity": "HIGH",
               "removed": [
                 "\"inactive\""
               ],
@@ -396,12 +399,14 @@
             },
             {
               "key": "values.tokenHaltCompleted",
+              "severity": "HIGH",
               "added": [
                 "[\"eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599\"]"
               ]
             },
             {
               "key": "values.tokenHaltSignalled",
+              "severity": "HIGH",
               "added": [
                 "[\"eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599\"]"
               ]
@@ -461,12 +466,14 @@
             },
             {
               "key": "values.tokenHaltCompleted",
+              "severity": "HIGH",
               "added": [
                 "[\"eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97\"]"
               ]
             },
             {
               "key": "values.tokenHaltSignalled",
+              "severity": "HIGH",
               "added": [
                 "[\"eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97\"]"
               ]
@@ -555,6 +562,7 @@
             },
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"793595346346724189681221050719974054861327641387231526786912662354259445535\""
               ],
@@ -629,6 +637,7 @@
             },
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"2534935718742676028234156221136000178296467523045214874259117268197132196876\""
               ],
@@ -684,12 +693,14 @@
           "fields": [
             {
               "key": "values.$admin.2",
+              "severity": "HIGH",
               "removed": [
                 "\"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361\""
               ]
             },
             {
               "key": "values.$admin.1",
+              "severity": "HIGH",
               "removed": [
                 "\"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec\""
               ],
@@ -818,12 +829,14 @@
           "fields": [
             {
               "key": "values.$admin.2",
+              "severity": "HIGH",
               "removed": [
                 "\"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361\""
               ]
             },
             {
               "key": "values.$admin.1",
+              "severity": "HIGH",
               "removed": [
                 "\"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec\""
               ],
@@ -1381,6 +1394,7 @@
           "fields": [
             {
               "key": "values.$admin",
+              "severity": "HIGH",
               "removed": [
                 "\"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec\""
               ],
@@ -1437,6 +1451,7 @@
           "fields": [
             {
               "key": "values.$admin.2",
+              "severity": "HIGH",
               "added": [
                 "\"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361\""
               ]
@@ -1624,6 +1639,7 @@
           "fields": [
             {
               "key": "values.$admin",
+              "severity": "HIGH",
               "removed": [
                 "\"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec\""
               ],
@@ -1659,6 +1675,7 @@
           "fields": [
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"2231644845387633655859130162745748394456578773184260372693322394988769337368\""
               ],
@@ -1817,6 +1834,7 @@
             },
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"2397984267054479079853548842566103781972463965746662494980785692480538410509\""
               ],
@@ -2659,6 +2677,7 @@
             },
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"853638403225561750106379562222782223909906501242604214771127703946595519856\""
               ],
@@ -3256,6 +3275,7 @@
             },
             {
               "key": "values.programHash",
+              "severity": "HIGH",
               "removed": [
                 "\"3383082961563516565935611087683915026448707331436034043529592588079494402084\""
               ],
@@ -3585,6 +3605,7 @@
           "fields": [
             {
               "key": "values.programHash",
+              "severity": "MEDIUM",
               "removed": [
                 "\"109586309220455887239200613090920758778188956576212125550190099009305121410\""
               ],

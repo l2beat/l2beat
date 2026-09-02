@@ -1,24 +1,17 @@
 /**
- * changelog.json: a deterministic, machine-readable projection of a project's
- * diffHistory.md watched changes. It records mechanical facts only — entry
- * identity, run timestamp, and per-contract field diffs with raw values —
- * never classifications (severity, code vs state), so downstream judgments
- * stay retroactively re-appliable.
+ * changelog.json: the structured record of a project's watched discovery
+ * changes, one entry per diffHistory.md entry that carried any. l2b writes each
+ * entry straight from the DiscoveryDiff it just computed (see
+ * packages/l2b .../discovery/changelog), so the file never depends on parsing
+ * the markdown it sits next to. Entry identity is shared with the markdown
+ * through `getDiffHistoryEntryId`, derived from header facts only.
  *
- * l2b regenerates the file from the diffHistory.md content it just composed
- * whenever the file is already maintained for a project (see
- * updateDiffHistory), and `buildDiscoveryChangelog` is the single converter
- * shared by l2b, the one-time backfill, and the CI `--check`, so the two
- * artifacts cannot drift.
+ * Entries record what was observed, never what it means: raw values, the
+ * severity in force at run time, created/deleted status. Consumers apply
+ * current judgment on top (the ossification runtime, for instance, evaluates
+ * fields against today's fieldMeta severity, not the recorded one).
  */
-import {
-  extractDiffBlockAddress,
-  extractDiffBlockFieldChanges,
-  extractDiffBlockSpans,
-  extractDiffBlockStatus,
-} from '@l2beat/shared-pure'
-import type { ChainPoint, DiffHistoryEntry } from './DiffHistoryParser'
-import { DiffHistoryParser } from './DiffHistoryParser'
+import type { ChainPoint } from './DiffHistoryParser'
 import { hashJson } from './hashJson'
 
 export interface DiscoveryChangelog {
@@ -39,18 +32,25 @@ export interface DiscoveryChangelogEntry {
 }
 
 export interface DiscoveryChangelogContract {
-  /** Lowercased address as written in the block header (chain-prefixed for
-   *  modern entries, bare for legacy ones). */
+  /** Lowercased address (chain-prefixed for modern entries, bare for legacy
+   *  ones migrated from old markdown). */
   address: string
   status?: 'created' | 'deleted'
   fields?: DiscoveryChangelogField[]
 }
 
+export type DiscoveryChangelogSeverity = 'HIGH' | 'MEDIUM' | 'LOW'
+
 export interface DiscoveryChangelogField {
-  /** Path exactly as written in the diff block, prefix included. */
+  /** Diff path exactly as produced by discovery, prefix included, e.g.
+   *  "values.latestVerifier.9.verifier" or (legacy) "upgradeability.admin". */
   key: string
   removed?: string[]
   added?: string[]
+  /** Severity the field carried when the change was recorded. Informational:
+   *  a frozen snapshot of the judgment at the time, useful for auditing later
+   *  re-classifications. */
+  severity?: DiscoveryChangelogSeverity
 }
 
 /** Stable identity of a diffHistory.md entry. Inputs are exactly the fields
@@ -93,53 +93,6 @@ export function getDiffHistoryEntryTimestamp(
   }
   const timestamp = Date.parse(date)
   return Number.isFinite(timestamp) ? Math.floor(timestamp / 1000) : null
-}
-
-export function buildDiscoveryChangelog(
-  diffHistoryContent: string,
-): DiscoveryChangelog {
-  const entries: DiscoveryChangelogEntry[] = []
-  const idFor = createDiffHistoryEntryIdFactory()
-  for (const entry of new DiffHistoryParser().parse(diffHistoryContent)) {
-    // ids are assigned to every entry (before filtering) so ordinals agree
-    // with other consumers of the same file
-    const id = idFor(entry.date, entry.current)
-    const changes = extractEntryChanges(entry)
-    if (changes.length === 0) continue
-    entries.push({
-      id,
-      timestamp: getDiffHistoryEntryTimestamp(entry.date, entry.current),
-      changes,
-    })
-  }
-  return { formatVersion: 1, entries }
-}
-
-function extractEntryChanges(
-  entry: DiffHistoryEntry,
-): DiscoveryChangelogContract[] {
-  const changes: DiscoveryChangelogContract[] = []
-  for (const section of entry.sections) {
-    if (section.kind !== 'watched-changes') continue
-    for (const { content } of extractDiffBlockSpans(section.body)) {
-      const address = extractDiffBlockAddress(content)
-      if (!address) continue
-      const status = extractDiffBlockStatus(content)
-      const fields = extractDiffBlockFieldChanges(content).map(
-        (change): DiscoveryChangelogField => ({
-          key: change.key,
-          ...(change.removed.length > 0 ? { removed: change.removed } : {}),
-          ...(change.added.length > 0 ? { added: change.added } : {}),
-        }),
-      )
-      changes.push({
-        address,
-        ...(status ? { status } : {}),
-        ...(fields.length > 0 ? { fields } : {}),
-      })
-    }
-  }
-  return changes
 }
 
 export function serializeDiscoveryChangelog(

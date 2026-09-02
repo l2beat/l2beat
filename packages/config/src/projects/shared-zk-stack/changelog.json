@@ -62,18 +62,21 @@
           "fields": [
             {
               "key": "values.emergencyUpgradesExecuted.17",
+              "severity": "HIGH",
               "added": [
                 "\"0xbff51b5d2dd05fdf9d274087e42bb3d98b3ff192cc869c6fc6bf59054989210a\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.18",
+              "severity": "HIGH",
               "added": [
                 "\"0xeec819f2b758182b9270a85fb1bdea469d69e48fdb90f2c7177500b6fa1bf5e3\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.19",
+              "severity": "HIGH",
               "added": [
                 "\"0xb1660380be18f4cf30cb1a253d3e91da3e584ca7ae82d7d6fd9675a722d6da5e\""
               ]
@@ -166,18 +169,21 @@
           "fields": [
             {
               "key": "values.emergencyUpgradesExecuted.14",
+              "severity": "HIGH",
               "added": [
                 "\"0xaea95768201a44ce4ef619ef097306ba35fe618e0ed279a29fe7026b1e6ff59b\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.15",
+              "severity": "HIGH",
               "added": [
                 "\"0x351bd26b0db85aa9a209c61f4eefae078ffcbd2cb77c8408a2aaba775812bc3d\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.16",
+              "severity": "HIGH",
               "added": [
                 "\"0xff0383a64e8bd76bcdffc84a15f2c5061c423ef9d74cde6c0bc9ffca57428cdf\""
               ]
@@ -247,18 +253,21 @@
           "fields": [
             {
               "key": "values.emergencyUpgradesExecuted.11",
+              "severity": "HIGH",
               "added": [
                 "\"0x03264a5977425fc58cac85729ef3eb6b3c60a6916f1e54ba2cd74b76fb6ba31f\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.12",
+              "severity": "HIGH",
               "added": [
                 "\"0x5925465d7a8bc46307b7867fcda93e445af7e6479370d34be058639453b4651a\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.13",
+              "severity": "HIGH",
               "added": [
                 "\"0x42432d865969ab601b7f4016895e1426f224bc02a1250008742443ac89511e8d\""
               ]
@@ -967,18 +976,21 @@
           "fields": [
             {
               "key": "values.emergencyUpgradesExecuted.8",
+              "severity": "HIGH",
               "added": [
                 "\"0xd43cd5f78cdd867d5a50faa742bfac7f46020df62180fb044419f339bd1d86fa\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.9",
+              "severity": "HIGH",
               "added": [
                 "\"0xa5597c46cad0a0ee3fe1304bf0fa99c9314083c4a9a663fceb3fdf9f648f9258\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.10",
+              "severity": "HIGH",
               "added": [
                 "\"0x242217717fcebdc4c9fc1bba134ee7b2131deb4dca151a69ad05ff61b6c9c12e\""
               ]
@@ -1059,18 +1071,21 @@
           "fields": [
             {
               "key": "values.emergencyUpgradesExecuted.5",
+              "severity": "HIGH",
               "added": [
                 "\"0x3320daee09efe92dc2c2f56107b3c4b9c36a6328205541cf2dd52ccba6a4a72f\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.6",
+              "severity": "HIGH",
               "added": [
                 "\"0x92bc8dca06e8c709dbcae55551cdb8516705217e39c1b1685573235b30aeac02\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.7",
+              "severity": "HIGH",
               "added": [
                 "\"0x17aa13607bb1d07380691d4ae3dcf15bcd0039a8d0c686b276a0993199c9d20d\""
               ]
@@ -1500,6 +1515,9 @@
               ]
             }
           ]
+        },
+        {
+          "address": "zksync:0xf41eca3047b37dc7d88849de4a4dc07937ad6bc4"
         }
       ]
     },
@@ -1847,6 +1865,7 @@
           "fields": [
             {
               "key": "values.daPairs.3",
+              "severity": "HIGH",
               "added": [
                 "{\"l1DAValidator\":\"eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119\",\"l2DAValidator\":\"eth:0x177aB33Cf2EAce3d03318d59CBFE955aFEf2326A\",\"status\":true}"
               ]
@@ -1889,6 +1908,7 @@
           "fields": [
             {
               "key": "values.migrationPaused",
+              "severity": "HIGH",
               "removed": [
                 "false"
               ],
@@ -2140,18 +2160,21 @@
           "fields": [
             {
               "key": "values.emergencyUpgradesExecuted.2",
+              "severity": "HIGH",
               "added": [
                 "\"0x9566d2c3ede4eb9a53f71f5f94bdf0e07db77ed92e421f399868d1db1a5622c6\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.3",
+              "severity": "HIGH",
               "added": [
                 "\"0x820d3989346828f564c6322b3b47631996ea66f7a826213d95ad69ded62adcdc\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.4",
+              "severity": "HIGH",
               "added": [
                 "\"0x8902737c0457ffdc1623387ed17201ccd6184b4cfef9c62dd5f00208e4b6e563\""
               ]
@@ -2206,6 +2229,7 @@
           "fields": [
             {
               "key": "values.migrations.0",
+              "severity": "HIGH",
               "added": [
                 "{\"chainId\":324,\"assetId\":\"0x4322964cbd328346d5f59803d2974742a54a69e59fd8b8d4ca5c64773646bf7a\",\"settlementLayerChainId\":9075}"
               ]
@@ -2484,6 +2508,7 @@
             },
             {
               "key": "values.migrationPaused",
+              "severity": "HIGH",
               "removed": [
                 "true"
               ],
@@ -2944,6 +2969,7 @@
           "fields": [
             {
               "key": "values.daPairs.2",
+              "severity": "HIGH",
               "added": [
                 "{\"l1DAValidator\":\"0x72213dfe8CA61B0A782970dCFebFb877778f9119\",\"l2DAValidator\":\"0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281\",\"status\":true}"
               ]
@@ -3087,6 +3113,7 @@
           "fields": [
             {
               "key": "values.migrationPaused",
+              "severity": "HIGH",
               "removed": [
                 "false"
               ],
@@ -3096,6 +3123,7 @@
             },
             {
               "key": "values.settlementLayers.9075",
+              "severity": "HIGH",
               "added": [
                 "true"
               ]
@@ -3604,12 +3632,14 @@
           "fields": [
             {
               "key": "values.emergencyUpgradesExecuted.1",
+              "severity": "HIGH",
               "added": [
                 "\"0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13\""
               ]
             },
             {
               "key": "values.emergencyUpgradesExecuted.0",
+              "severity": "HIGH",
               "removed": [
                 "\"0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13\""
               ],
@@ -4138,6 +4168,24 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "2e092906",
+      "timestamp": 1746789714,
+      "changes": [
+        {
+          "address": "0xa08b9912416e8adc4d9c21fae1415d3318a129a8"
+        }
+      ]
+    },
+    {
+      "id": "b4a10800",
+      "timestamp": 1746697811,
+      "changes": [
+        {
+          "address": "0xa08b9912416e8adc4d9c21fae1415d3318a129a8"
         }
       ]
     },
@@ -4734,6 +4782,7 @@
           "fields": [
             {
               "key": "values.daPairs.1",
+              "severity": "HIGH",
               "added": [
                 "{\"l1DAValidator\":\"0x72213dfe8CA61B0A782970dCFebFb877778f9119\",\"l2DAValidator\":\"0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281\",\"status\":true}"
               ]
@@ -6172,12 +6221,14 @@
             },
             {
               "key": "values.migrationPaused",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.settlementLayers",
+              "severity": "HIGH",
               "added": [
                 "{}"
               ]
@@ -6493,6 +6544,7 @@
             },
             {
               "key": "values.emergencyUpgradesExecuted",
+              "severity": "HIGH",
               "added": [
                 "[\"0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13\"]"
               ]
@@ -7296,7 +7348,7 @@
           ]
         },
         {
-          "address": "l2->l1",
+          "address": "0x3701fb675bcd4a85eb11a2467628bbe193f6e6a8",
           "status": "deleted"
         },
         {
@@ -7358,7 +7410,7 @@
           "status": "deleted"
         },
         {
-          "address": "l2->l1",
+          "address": "0x085b8b6407f150d62adb1ef926f7f304600ec714",
           "status": "created"
         },
         {
@@ -8110,6 +8162,7 @@
           "fields": [
             {
               "key": "values.grvtThirdBatchTS",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -8130,6 +8183,7 @@
           "fields": [
             {
               "key": "values.treasureThirdBatchTS",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -8195,6 +8249,7 @@
           "fields": [
             {
               "key": "values.abstractThirdBatchTS",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -8232,6 +8287,7 @@
           "fields": [
             {
               "key": "values.sophonTenthBatchTS",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -8263,6 +8319,7 @@
           "fields": [
             {
               "key": "values.zeronetworkTenthBatchTS",
+              "severity": "MEDIUM",
               "removed": [
                 "0"
               ],
@@ -9058,6 +9115,7 @@
           "fields": [
             {
               "key": "values.getOwners.4",
+              "severity": "LOW",
               "removed": [
                 "\"0x9dF8bc0918F357c766A5697E031fF5237c05747A\""
               ],

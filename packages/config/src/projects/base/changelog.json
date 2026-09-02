@@ -14,6 +14,7 @@
           "fields": [
             {
               "key": "values.game621",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919\""
               ],
@@ -75,6 +76,7 @@
           "fields": [
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0x3354226FDDD041367AE68F7245Cd5166e11013f3\""
               ],
@@ -84,6 +86,7 @@
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0xE32f95a9c06159c3cB3DC39f7573215ddAB86E59\""
               ],
@@ -142,6 +145,7 @@
           "fields": [
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0xCD5C52b857A8E4B3883997b856b730D76938B38C\""
               ],
@@ -151,6 +155,7 @@
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0x0BcBdab1Adf24461682e9DE37AFc0548C462ca10\""
               ],
@@ -171,6 +176,7 @@
           "fields": [
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0xCD5C52b857A8E4B3883997b856b730D76938B38C\""
               ],
@@ -180,6 +186,7 @@
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0x0BcBdab1Adf24461682e9DE37AFc0548C462ca10\""
               ],
@@ -200,6 +207,7 @@
           "fields": [
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0xBb82fe2b294F7a9F74aF2ad32DF3B2d61abd4BEC\""
               ],
@@ -209,6 +217,7 @@
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0x1A095fE4895D142955c36F958be2a9e53c41224f\""
               ],
@@ -229,6 +238,7 @@
           "fields": [
             {
               "key": "values.getExpectedImageHash",
+              "severity": "HIGH",
               "removed": [
                 "\"0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c\""
               ],
@@ -238,6 +248,7 @@
             },
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0x8a2B99252bad63813e704237Bf2A40A6a4cEBda9\""
               ],
@@ -247,6 +258,7 @@
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0xf3aef21F74AD989812D066ad3e51b986ED312875\""
               ],
@@ -261,6 +273,7 @@
           "fields": [
             {
               "key": "values.game621",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xeEcb8A5944B217585817E802702b1262a049D259\""
               ],
@@ -309,6 +322,7 @@
           "fields": [
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0xBeF9176fa15489735Cc8B1ddD97E53b4a656287e\""
               ],
@@ -318,6 +332,7 @@
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "LOW",
               "removed": [
                 "\"eth:0xB830004297a91c10ed7428f462FCf0cc5073e9A2\""
               ],
@@ -338,12 +353,14 @@
           "fields": [
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xA200e289262F76dD422f688e65C453F5aeF7709B\""
               ]
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xB830004297a91c10ed7428f462FCf0cc5073e9A2\""
               ]
@@ -361,12 +378,14 @@
           "fields": [
             {
               "key": "values.getRegisteredSigners.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xA4F50DA2549C7E79C175a1359e7DAa97139Dd611\""
               ]
             },
             {
               "key": "values.getRegisteredSigners.1",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xBeF9176fa15489735Cc8B1ddD97E53b4a656287e\""
               ]
@@ -437,18 +456,21 @@
             },
             {
               "key": "values.game0",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x0000000000000000000000000000000000000000\""
               ]
             },
             {
               "key": "values.game1",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A\""
               ]
             },
             {
               "key": "values.game621",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xeEcb8A5944B217585817E802702b1262a049D259\""
               ]
@@ -529,6 +551,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -599,6 +622,7 @@
             },
             {
               "key": "values.disputeGameFinalityDelaySeconds",
+              "severity": "HIGH",
               "removed": [
                 "302400"
               ],
@@ -650,6 +674,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -659,6 +684,7 @@
             },
             {
               "key": "values.retirementTimestamp",
+              "severity": "HIGH",
               "removed": [
                 "1759862579"
               ],
@@ -1459,6 +1485,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x979Cb7E329bA213fB9d6c5F7771eC6a3109BDC93\""
               ],
@@ -1468,6 +1495,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2\""
               ],
@@ -2091,6 +2119,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xe4066890367BF8A51d58377431808083A01b1E0c\""
               ],
@@ -2100,6 +2129,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec\""
               ],
@@ -2603,6 +2633,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xAB91FB6cef84199145133f75cBD96B8a31F184ED\""
               ],
@@ -2612,6 +2643,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49\""
               ],
@@ -3040,6 +3072,9 @@
         {
           "address": "0x126a736b18e0a64fba19d421647a530e327e112c",
           "status": "deleted"
+        },
+        {
+          "address": "0x352f1defb49718e7ea411687e850aa8d6299f7ac"
         },
         {
           "address": "0x95703e0982140d16f8eba6d158fccede42f04a4c",
@@ -6163,6 +6198,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "120000000"
               ],
@@ -6324,6 +6360,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "112500000"
               ],
@@ -6842,6 +6879,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "90000000"
               ],
@@ -6862,6 +6900,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "75000000"
               ],
@@ -6994,6 +7033,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "60000000"
               ],
@@ -7014,6 +7054,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "45000000"
               ],
@@ -7034,6 +7075,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "30000000"
               ],

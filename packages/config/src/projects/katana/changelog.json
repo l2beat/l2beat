@@ -37,6 +37,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0xe3fbe1170998c9f380d29247864dd07f2f17367a23ae5e0fa409ebd371d97d6f\""
               ],
@@ -183,6 +184,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0x3cb66b8472d88440173415d4d4a316b9df81ac208e63e02829f823fccbe3f547\""
               ],
@@ -296,6 +298,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde\""
               ],
@@ -712,6 +715,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00\""
               ],
@@ -898,6 +902,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0xf7803dc0ac1322b6bff3d4f9a48ffd57102e4076d8e40333dd72084f0cf9cc68\""
               ],
@@ -974,6 +979,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0xfda6f1430e8363d3850cb5ff3f026f6ce01ad0fad017cb06a1dcbeb72c00304d\""
               ],
@@ -1551,6 +1557,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793\""
               ],
@@ -1673,6 +1680,10 @@
           ]
         },
         {
+          "address": "eth:0xab3506507449bf1880f3337825efd19ac89e235e",
+          "status": "deleted"
+        },
+        {
           "address": "eth:0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
           "fields": [
             {
@@ -1695,6 +1706,7 @@
             },
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "60000000"
               ],
@@ -1703,6 +1715,22 @@
               ]
             }
           ]
+        },
+        {
+          "address": "eth:0xcab31b6a7b4d2ecd562a09e2bfa46535a18862f9",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0xead77b01ea770839f7f576cd1516ff6a298d9db2",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x3038b4dbf022e80169b2a068290d4a3a8b87d3b5",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xd9478f759a13bfa1d9dab3cdf5ff0c099d5efcfc",
+          "status": "created"
         }
       ]
     },
@@ -2050,6 +2078,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0x4a6e8c6abb9ec46b76062d422b6d87bb4b7e0304b4b06d554037828ce3006650\""
               ],
@@ -2178,6 +2207,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "removed": [
                 "\"0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e\""
               ],
@@ -2325,6 +2355,7 @@
             },
             {
               "key": "values.aggchainMultisigHash",
+              "severity": "HIGH",
               "added": [
                 "\"0xa57d26181a2caeea2b3fd5057d852d665445bd502aac8281622f922335bcc7d7\""
               ]
@@ -2385,6 +2416,7 @@
             },
             {
               "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
               "added": [
                 "\"0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e\""
               ]
@@ -2397,12 +2429,14 @@
             },
             {
               "key": "values.useDefaultSigners",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.useDefaultVkeys",
+              "severity": "HIGH",
               "added": [
                 "true"
               ]
@@ -2512,6 +2546,7 @@
           "fields": [
             {
               "key": "values.rangeVkeyCommitment",
+              "severity": "HIGH",
               "removed": [
                 "\"0x2ebb1e0d5380158f22adf3750cc6056100a133d274fd7c5b457148ff29dfe173\""
               ],

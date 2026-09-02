@@ -326,6 +326,7 @@
             },
             {
               "key": "values.yieldProviderCount",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -471,36 +472,42 @@
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
+              "severity": "HIGH",
               "added": [
                 "0"
               ]
@@ -666,42 +673,49 @@
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.livenessRecoveryOperator",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D\""
               ]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
+              "severity": "HIGH",
               "added": [
                 "0"
               ]
@@ -744,6 +758,7 @@
             },
             {
               "key": "values.shnarfProvider",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F\""
               ]
@@ -854,36 +869,42 @@
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
+              "severity": "HIGH",
               "added": [
                 "0"
               ]
@@ -958,72 +979,84 @@
             },
             {
               "key": "values.isPaused_COMPLETE_TOKEN_BRIDGING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_FINALIZATION",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_GENERAL",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_INITIATE_TOKEN_BRIDGING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_L1_L2",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_L2_L1",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
+              "severity": "HIGH",
               "added": [
                 "0"
               ]
@@ -1261,6 +1294,7 @@
             },
             {
               "key": "values.yieldManager",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94\""
               ]

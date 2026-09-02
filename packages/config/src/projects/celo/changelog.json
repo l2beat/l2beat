@@ -149,6 +149,7 @@
           "fields": [
             {
               "key": "values.game42",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1\""
               ],
@@ -806,6 +807,7 @@
             },
             {
               "key": "values.game42",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xc5bd131ceAEb72F15C66418bc2668332AB99DE37\""
               ],
@@ -815,6 +817,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5\""
               ],
@@ -824,6 +827,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02\""
               ],
@@ -1057,6 +1061,7 @@
           "fields": [
             {
               "key": "values.game42",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e\""
               ],
@@ -1154,6 +1159,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "1"
               ],
@@ -1168,6 +1174,7 @@
           "fields": [
             {
               "key": "values.game42",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x0000000000000000000000000000000000000000\""
               ],
@@ -1326,6 +1333,9 @@
         {
           "address": "0x126a736b18e0a64fba19d421647a530e327e112c",
           "status": "deleted"
+        },
+        {
+          "address": "0x352f1defb49718e7ea411687e850aa8d6299f7ac"
         },
         {
           "address": "0x95703e0982140d16f8eba6d158fccede42f04a4c",

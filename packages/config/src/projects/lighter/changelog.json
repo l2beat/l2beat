@@ -306,6 +306,7 @@
             },
             {
               "key": "values.desertVerifier",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x2aDBd91742B64105a097bC37D20Ebbca9a496085\""
               ],
@@ -494,6 +495,7 @@
             },
             {
               "key": "values.desertVerifier",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xd4460475F00307845082d3a146f36661354FBc67\""
               ],
@@ -1687,6 +1689,7 @@
           "fields": [
             {
               "key": "values.getMaster",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41\""
               ],
@@ -1782,6 +1785,7 @@
             },
             {
               "key": "values.desertVerifier",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x9BC70c62823BabFed57698d458833da55D0c88A4\""
               ],
@@ -1925,6 +1929,7 @@
           "fields": [
             {
               "key": "values.networkGovernor",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41\""
               ],
@@ -2161,6 +2166,7 @@
             },
             {
               "key": "values.desertVerifier",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184\""
               ],

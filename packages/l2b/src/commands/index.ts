@@ -32,6 +32,7 @@ import { InitTemplate } from './InitTemplate'
 import { Inspect } from './Inspect'
 import { Leaks } from './Leaks'
 import { MatchFlat } from './MatchFlat'
+import { MigrateChangelog } from './MigrateChangelog'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
@@ -86,6 +87,7 @@ export function getSubcommands() {
     Inspect,
     Leaks,
     MatchFlat,
+    MigrateChangelog,
     Minters,
     ModelPermissions,
     OPConfigs,

@@ -45,6 +45,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "1"
               ],
@@ -59,6 +60,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336\""
               ],
@@ -82,6 +84,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "1"
               ],
@@ -304,6 +307,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x0000000000000000000000000000000000000000\""
               ],

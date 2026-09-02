@@ -1013,24 +1013,28 @@
             },
             {
               "key": "values.game0",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x0000000000000000000000000000000000000000\""
               ]
             },
             {
               "key": "values.game1",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e\""
               ]
             },
             {
               "key": "values.game621",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x0000000000000000000000000000000000000000\""
               ]
             },
             {
               "key": "values.game8",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC\""
               ]
@@ -1119,6 +1123,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -1550,6 +1555,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -1892,6 +1898,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C\""
               ],
@@ -1901,6 +1908,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x467E6a8D6916E7394F9715b4DE9339ee36887382\""
               ],
@@ -2401,6 +2409,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x5F5BEa598Fdf8DF30d56808E8b793da8FC7f3028\""
               ],
@@ -2410,6 +2419,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f\""
               ],
@@ -2800,6 +2810,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x1a20c06a80260AA45adA0F9F59b334560eE3FEf1\""
               ],
@@ -2809,6 +2820,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x46DDe051eb4561694DC1F0286eBe940d9E90fbe9\""
               ],
@@ -3236,6 +3248,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x3cCF7C31a3A8C1b8aaA9A18FC2d010dDE4262342\""
               ],
@@ -3245,6 +3258,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x40641A4023f0F4C66D7f8Ade16497f4C947A7163\""
               ],
@@ -3288,6 +3302,9 @@
         {
           "address": "0x2fc99fd16d8d3f6f66d164aa84e244c567e58a3d",
           "status": "deleted"
+        },
+        {
+          "address": "0x352f1defb49718e7ea411687e850aa8d6299f7ac"
         },
         {
           "address": "0x3ccf7c31a3a8c1b8aaa9a18fc2d010dde4262342",
@@ -3460,6 +3477,7 @@
             },
             {
               "key": "values.paused",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]

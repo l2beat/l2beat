@@ -10,6 +10,7 @@
           "fields": [
             {
               "key": "values.referralHasExpired",
+              "severity": "HIGH",
               "removed": [
                 "false"
               ],
@@ -45,6 +46,7 @@
             },
             {
               "key": "values.callProxyImplementation",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""
               ],
@@ -78,18 +80,21 @@
           "fields": [
             {
               "key": "values.customImplOperators.8",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b\""
               ]
             },
             {
               "key": "values.customImplOperators.9",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xA410aEA6d7ad518165c214a42730A19fB3828170\""
               ]
             },
             {
               "key": "values.customProxyImplementations.4",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""
               ]
@@ -223,18 +228,21 @@
           "fields": [
             {
               "key": "values.customImplOperators.6",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426\""
               ]
             },
             {
               "key": "values.customImplOperators.7",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE\""
               ]
             },
             {
               "key": "values.customProxyImplementations.3",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""
               ]
@@ -312,18 +320,21 @@
           "fields": [
             {
               "key": "values.customImplOperators.4",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C\""
               ]
             },
             {
               "key": "values.customImplOperators.5",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A\""
               ]
             },
             {
               "key": "values.customProxyImplementations.2",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""
               ]
@@ -373,18 +384,21 @@
             },
             {
               "key": "values.customImplOperators.2",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284\""
               ]
             },
             {
               "key": "values.customImplOperators.3",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526\""
               ]
             },
             {
               "key": "values.customProxyImplementations.1",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""
               ]
@@ -585,12 +599,14 @@
             },
             {
               "key": "values.customImplOperators",
+              "severity": "HIGH",
               "added": [
                 "[\"eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c\",\"eth:0xfE325F97146124F3767bFA59899Fa4177fd46D2f\"]"
               ]
             },
             {
               "key": "values.customProxyImplementations",
+              "severity": "HIGH",
               "added": [
                 "[\"eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\"]"
               ]

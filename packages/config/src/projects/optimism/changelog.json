@@ -1132,6 +1132,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -1470,6 +1471,7 @@
             },
             {
               "key": "values.respectedGameType",
+              "severity": "HIGH",
               "removed": [
                 "0"
               ],
@@ -1582,24 +1584,28 @@
             },
             {
               "key": "values.game0",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x0000000000000000000000000000000000000000\""
               ]
             },
             {
               "key": "values.game1",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e\""
               ]
             },
             {
               "key": "values.game621",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x0000000000000000000000000000000000000000\""
               ]
             },
             {
               "key": "values.game8",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC\""
               ]
@@ -2179,6 +2185,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x478c26109b169a840D61E95B19512FF0b5F19c87\""
               ],
@@ -2188,6 +2195,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf\""
               ],
@@ -2753,6 +2761,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x22F2AfB837156246187Cd2652ad281eE08EBBB9d\""
               ],
@@ -2762,6 +2771,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xbF2027A15e1a6ceE76257ED9bB623C8dC08D4EF7\""
               ],
@@ -3140,6 +3150,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xd73Dd0F5665055B03eA0bFcac49bd4d26F1FFA4F\""
               ],
@@ -3149,6 +3160,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xEcca4BFbD017002abf25Aeebf2B21b903A5fC124\""
               ],
@@ -3320,6 +3332,7 @@
             },
             {
               "key": "values.paused",
+              "severity": "HIGH",
               "added": [
                 "false"
               ]
@@ -3409,6 +3422,9 @@
         {
           "address": "0x323dfc63c9b83cb83f40325aab74b245937cbdf0",
           "status": "deleted"
+        },
+        {
+          "address": "0x352f1defb49718e7ea411687e850aa8d6299f7ac"
         },
         {
           "address": "0x543ba4aadbab8f9025686bd03993043599c6fb04"
@@ -3746,6 +3762,7 @@
             },
             {
               "key": "values.gameImpls.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x89D68b1D63AAA0db4af1163e81f56B76934292F8\""
               ],
@@ -3755,6 +3772,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xa1E0baCde89d899B3f24eEF3D179cC335A24E777\""
               ],
@@ -3847,6 +3865,7 @@
             },
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "60000000"
               ],
@@ -4134,6 +4153,9 @@
               ]
             }
           ]
+        },
+        {
+          "address": "0x6b1bae59d09fccbddb6c6cceb07b7279367c4e3b"
         }
       ]
     },
@@ -6104,6 +6126,7 @@
           "fields": [
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "30000000"
               ],

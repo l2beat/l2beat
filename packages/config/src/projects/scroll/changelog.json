@@ -185,6 +185,7 @@
             },
             {
               "key": "values.Executor.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
               ],
@@ -319,12 +320,14 @@
             },
             {
               "key": "values.Executor.0",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
               ]
             },
             {
               "key": "values.Executor.1",
+              "severity": "HIGH",
               "added": [
                 "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
               ]
@@ -406,6 +409,7 @@
             },
             {
               "key": "values.Executor.1",
+              "severity": "HIGH",
               "removed": [
                 "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
               ],
@@ -500,12 +504,14 @@
             },
             {
               "key": "values.Executor.1",
+              "severity": "HIGH",
               "removed": [
                 "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
               ]
             },
             {
               "key": "values.Executor.2",
+              "severity": "HIGH",
               "added": [
                 "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
               ]
@@ -2322,6 +2328,7 @@
             },
             {
               "key": "values.paused",
+              "severity": "HIGH",
               "removed": [
                 "true"
               ],

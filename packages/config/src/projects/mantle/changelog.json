@@ -219,6 +219,7 @@
             },
             {
               "key": "values.gasLimit",
+              "severity": "LOW",
               "removed": [
                 "200000000000"
               ],

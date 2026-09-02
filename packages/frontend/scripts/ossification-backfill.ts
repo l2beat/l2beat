@@ -11,18 +11,13 @@
  * Usage: npx tsx scripts/ossification-backfill.ts <projectId> [...] [--json]
  */
 
+import type { DiscoveryChangelog } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { execFileSync } from 'child_process'
-import { readFileSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import path from 'path'
+import { isImplementationChangeField } from '~/server/features/projects/ossification/changelogFields'
 import { parseUpgradeTimestamps } from '~/server/features/projects/ossification/parseUpgradeTimestamps'
-import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
-import {
-  extractDiffBlockAddress,
-  extractDiffBlockSpans,
-  isHighSeverityDiffBody,
-  isImplementationChangeDiffBody,
-} from '~/utils/diffHistory/diffHistoryMarkdown'
 
 const REPO_ROOT = path.join(process.cwd(), '../..')
 interface HistoricalContract {
@@ -205,23 +200,32 @@ function countDiffEvents(
     if (bare) byAddress.set(bare, address)
   }
   const counts = new Map<string, number>()
-  for (const update of getDiscoveryUpdates(
+  const changelogPath = path.join(
+    REPO_ROOT,
+    'packages/config/src/projects',
     projectId,
-    Number.POSITIVE_INFINITY,
-  )) {
+    'changelog.json',
+  )
+  if (!existsSync(changelogPath)) {
+    console.error(
+      `${projectId}: no changelog.json — run \`l2b migrate-changelog ${projectId}\` first; diff event counts will be zero`,
+    )
+    return counts
+  }
+  const changelog = JSON.parse(
+    readFileSync(changelogPath, 'utf-8'),
+  ) as DiscoveryChangelog
+  for (const update of changelog.entries) {
     if (update.timestamp === null) continue
-    for (const section of update.sections) {
-      if (section.kind !== 'watched-changes') continue
-      for (const { content } of extractDiffBlockSpans(section.body)) {
-        const match = extractDiffBlockAddress(content)
-        const address = match && byAddress.get(match)
-        if (!address) continue
-        if (isImplementationChangeDiffBody(content)) {
-          if (hasPastUpgrades.has(address)) continue
-          counts.set(address, (counts.get(address) ?? 0) + 1)
-        } else if (isHighSeverityDiffBody(content)) {
-          counts.set(address, (counts.get(address) ?? 0) + 1)
-        }
+    for (const change of update.changes) {
+      const address = byAddress.get(change.address)
+      if (!address) continue
+      const fields = change.fields ?? []
+      if (fields.some(isImplementationChangeField)) {
+        if (hasPastUpgrades.has(address)) continue
+        counts.set(address, (counts.get(address) ?? 0) + 1)
+      } else if (fields.some((field) => field.severity === 'HIGH')) {
+        counts.set(address, (counts.get(address) ?? 0) + 1)
       }
     }
   }

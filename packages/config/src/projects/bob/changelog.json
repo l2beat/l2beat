@@ -104,36 +104,42 @@
             },
             {
               "key": "values.callsExecuted.12",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377\",\"index\":0,\"target\":\"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711\",\"value\":0,\"data\":\"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609\"}"
               ]
             },
             {
               "key": "values.callsExecuted.13",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985\",\"index\":0,\"target\":\"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711\",\"value\":0,\"data\":\"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609\"}"
               ]
             },
             {
               "key": "values.callsExecuted.14",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d\",\"index\":0,\"target\":\"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711\",\"value\":0,\"data\":\"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609\"}"
               ]
             },
             {
               "key": "values.callsExecuted.15",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0x89a458a6781bd045d785361e429a3df71167dff9e14996fa5f98ca7c5eb9d4c3\",\"index\":0,\"target\":\"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711\",\"value\":0,\"data\":\"0xd547741fb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412\"}"
               ]
             },
             {
               "key": "values.callsExecuted.16",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0x4acc61e26f03e0270258c3fe8aec76d8ce5c80e8e100972e3091fc77c8882819\",\"index\":0,\"target\":\"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711\",\"value\":0,\"data\":\"0xd547741fd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412\"}"
               ]
             },
             {
               "key": "values.callsExecuted.17",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0xf239631e46b22677b2b8b3b35d3780a1de298d9234c6906ce98aa3168d52cc97\",\"index\":0,\"target\":\"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711\",\"value\":0,\"data\":\"0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412\"}"
               ]
@@ -257,6 +263,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF\""
               ],
@@ -422,6 +429,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a\""
               ],
@@ -465,6 +473,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b\""
               ],
@@ -501,6 +510,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x1E987CF54A39CA2AC5FdC97DCaFbbB805ef356bD\""
               ],
@@ -816,6 +826,7 @@
             },
             {
               "key": "values.gameImpls.1",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A\""
               ],
@@ -1174,6 +1185,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xe65E24a2130d0a52A0f9B988dFA06D5759eBa22B\""
               ],
@@ -1213,6 +1225,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44\""
               ],
@@ -1245,12 +1258,14 @@
           "fields": [
             {
               "key": "values.callsExecuted.10",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b\",\"index\":0,\"target\":\"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319\",\"value\":0,\"data\":\"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000\"}"
               ]
             },
             {
               "key": "values.callsExecuted.11",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc\",\"index\":0,\"target\":\"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319\",\"value\":0,\"data\":\"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000\"}"
               ]
@@ -1314,6 +1329,7 @@
           "fields": [
             {
               "key": "values.callsExecuted.9",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb\",\"index\":0,\"target\":\"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319\",\"value\":0,\"data\":\"0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782\"}"
               ]
@@ -1374,6 +1390,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a\""
               ],
@@ -1455,6 +1472,7 @@
           "fields": [
             {
               "key": "values.callsExecuted.8",
+              "severity": "HIGH",
               "added": [
                 "{\"id\":\"0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db\",\"index\":0,\"target\":\"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319\",\"value\":0,\"data\":\"0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696\"}"
               ]
@@ -1527,6 +1545,7 @@
           "fields": [
             {
               "key": "values.game1337",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb\""
               ],

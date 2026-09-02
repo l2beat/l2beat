@@ -10,6 +10,7 @@
           "fields": [
             {
               "key": "values.proposalCount",
+              "severity": "HIGH",
               "removed": [
                 "27"
               ],
@@ -30,6 +31,7 @@
           "fields": [
             {
               "key": "values.proposalCount",
+              "severity": "HIGH",
               "removed": [
                 "26"
               ],
@@ -50,6 +52,7 @@
           "fields": [
             {
               "key": "values.$implementation",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b\""
               ],
@@ -70,6 +73,7 @@
           "fields": [
             {
               "key": "values.proposalCount",
+              "severity": "HIGH",
               "removed": [
                 "25"
               ],
@@ -90,6 +94,7 @@
           "fields": [
             {
               "key": "values.$implementation",
+              "severity": "HIGH",
               "removed": [
                 "\"eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b\""
               ],
@@ -99,6 +104,7 @@
             },
             {
               "key": "values.intervalBP",
+              "severity": "HIGH",
               "removed": [
                 "200"
               ],
@@ -113,6 +119,7 @@
           "fields": [
             {
               "key": "values.proposalCount",
+              "severity": "HIGH",
               "removed": [
                 "23"
               ],
