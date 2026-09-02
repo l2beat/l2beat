@@ -74,6 +74,9 @@ does not consider it confidential — the real security comes from the browser l
 is safe to share alongside the client ID. The full sheet URL is used so the sync script knows which
 spreadsheet tab to read.
 
+Sheet values must be single-line and must not contain single quotes. Rows for `GOOGLE_SHEETS_*`
+variables are rejected, because they configure the sync itself and must stay local.
+
 ### Database
 
 For local development you set the following variables:

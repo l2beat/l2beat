@@ -4,6 +4,9 @@ export interface SyncedEnvEntry {
 }
 
 const ENV_KEY = /^[A-Za-z_][A-Za-z0-9_]*$/
+// These variables configure env:sync itself. If the sheet could set them, it
+// could also redirect where every future sync reads from.
+const LOCAL_ONLY_KEY_PREFIX = 'GOOGLE_SHEETS_'
 
 const WARNING_LINE_1 =
   '# This section is synced from Google Sheets. Do not edit it manually.'
@@ -39,13 +42,17 @@ export function parseGoogleSheetRows(rows: string[][]): SyncedEnvEntry[] {
       throw new Error(`Invalid env variable name: ${key}`)
     }
 
+    if (key.startsWith(LOCAL_ONLY_KEY_PREFIX)) {
+      throw new Error(
+        `${key} configures env:sync itself and must stay local, remove it from the sheet`,
+      )
+    }
+
     if (seen.has(key)) {
       throw new Error(`Duplicate env variable name: ${key}`)
     }
 
-    if (value.includes('\n') || value.includes('\r')) {
-      throw new Error(`Multiline values are not supported: ${key}`)
-    }
+    assertRenderableValue(key, value)
 
     seen.add(key)
     result.push({ key, value })
@@ -57,71 +64,131 @@ export function parseGoogleSheetRows(rows: string[][]): SyncedEnvEntry[] {
 export function upsertGoogleSheetsEnvSection(
   currentContent: string,
   entries: SyncedEnvEntry[],
-) {
-  const normalized = currentContent.replace(/\r\n/g, '\n')
-  const startCount = countOccurrences(normalized, START_MARKER)
-  const endCount = countOccurrences(normalized, END_MARKER)
+): string {
+  // Follow the line endings already used in the file instead of normalizing it.
+  const eol = currentContent.includes('\r\n') ? '\r\n' : '\n'
+  const section = renderManagedSection(entries, eol)
+  const block = findManagedBlock(currentContent)
 
-  if (startCount !== endCount) {
+  if (block) {
+    const updated =
+      currentContent.slice(0, block.start) +
+      section +
+      currentContent.slice(block.end)
+    return ensureTrailingNewline(updated, eol)
+  }
+
+  if (currentContent.trim() === '') {
+    return `${section}${eol}`
+  }
+
+  // Keep the developer's content byte-for-byte, separated by one blank line.
+  const separator = currentContent.startsWith(eol) ? eol : `${eol}${eol}`
+  return `${section}${separator}${ensureTrailingNewline(currentContent, eol)}`
+}
+
+interface TextRange {
+  start: number
+  end: number
+}
+
+// The same matcher detects the block and delimits the replacement, so the two
+// can never disagree. Markers are recognized as whole lines only, which means
+// marker text inside a quoted value is ignored.
+function findManagedBlock(content: string): TextRange | undefined {
+  const starts = findMarkerLines(content, START_MARKER)
+  const ends = findMarkerLines(content, END_MARKER)
+
+  if (starts.length === 0 && ends.length === 0) {
+    return undefined
+  }
+
+  if (starts.length !== ends.length) {
     throw new Error('Google Sheets sync markers are broken in .env')
   }
 
-  if (startCount > 1) {
+  if (starts.length > 1) {
     throw new Error('Google Sheets sync markers appear more than once in .env')
   }
 
-  const section = renderManagedSection(entries)
-  const pattern = new RegExp(
-    `(?:${escapeForRegex(WARNING_LINE_1)}\\n${escapeForRegex(WARNING_LINE_2)}\\n)?${escapeForRegex(START_MARKER)}\\n[\\s\\S]*?\\n${escapeForRegex(END_MARKER)}`,
-  )
-
-  if (pattern.test(normalized)) {
-    return ensureTrailingNewline(normalized.replace(pattern, section))
+  const start = starts[0]
+  const end = ends[0]
+  if (!start || !end || start.start > end.start) {
+    throw new Error('Google Sheets sync markers are broken in .env')
   }
 
-  const rest = normalized.replace(/^\n+/, '')
-  if (rest === '') {
-    return `${section}\n`
+  return {
+    start: startOfWarningLines(content, start.start),
+    end: end.end,
   }
-
-  return `${section}\n\n${ensureTrailingNewline(rest)}`
 }
 
-function renderManagedSection(entries: SyncedEnvEntry[]) {
-  const body = entries
-    .map((entry) => `${entry.key}=${quoteForEnv(entry.value)}`)
-    .join('\n')
+function findMarkerLines(content: string, marker: string): TextRange[] {
+  const result: TextRange[] = []
+  let lineStart = 0
 
-  return [WARNING_LINE_1, WARNING_LINE_2, START_MARKER, body, END_MARKER]
-    .filter((line, index) => line !== '' || index < 3)
-    .join('\n')
+  while (lineStart < content.length) {
+    const newlineIndex = content.indexOf('\n', lineStart)
+    const lineEnd = newlineIndex === -1 ? content.length : newlineIndex
+    const line = content.slice(lineStart, lineEnd)
+    const lineBody = line.endsWith('\r') ? line.slice(0, -1) : line
+
+    if (lineBody.trim() === marker) {
+      // The range covers the whole marker line but leaves its terminator
+      // (\n or \r\n) untouched.
+      result.push({ start: lineStart, end: lineStart + lineBody.length })
+    }
+
+    lineStart = lineEnd + 1
+  }
+
+  return result
+}
+
+function startOfWarningLines(content: string, markerStart: number): number {
+  const before = content.slice(0, markerStart)
+  for (const eol of ['\r\n', '\n']) {
+    const warning = `${WARNING_LINE_1}${eol}${WARNING_LINE_2}${eol}`
+    if (before.endsWith(warning)) {
+      return markerStart - warning.length
+    }
+  }
+  return markerStart
+}
+
+function renderManagedSection(entries: SyncedEnvEntry[], eol: string) {
+  const body = entries.map((entry) => {
+    assertRenderableValue(entry.key, entry.value)
+    return `${entry.key}=${quoteForEnv(entry.value)}`
+  })
+
+  return [
+    WARNING_LINE_1,
+    WARNING_LINE_2,
+    START_MARKER,
+    ...body,
+    END_MARKER,
+  ].join(eol)
+}
+
+// Bash (`source .env`) and dotenv only agree on how to read bare digits and
+// single-quoted values, and a single quote cannot be represented inside the
+// latter, so anything else is rejected instead of being written ambiguously.
+function assertRenderableValue(key: string, value: string) {
+  if (value.includes('\n') || value.includes('\r')) {
+    throw new Error(`Multiline values are not supported: ${key}`)
+  }
+  if (value.includes("'")) {
+    throw new Error(`Values must not contain single quotes: ${key}`)
+  }
 }
 
 const DIGITS_ONLY = /^\d+$/
 
 function quoteForEnv(value: string) {
-  if (DIGITS_ONLY.test(value)) {
-    return value
-  }
-  if (!value.includes("'")) {
-    return `'${value}'`
-  }
-  const escaped = value
-    .replaceAll('\\', '\\\\')
-    .replaceAll('"', '\\"')
-    .replaceAll('$', '\\$')
-    .replaceAll('`', '\\`')
-  return `"${escaped}"`
+  return DIGITS_ONLY.test(value) ? value : `'${value}'`
 }
 
-function countOccurrences(input: string, pattern: string) {
-  return input.split(pattern).length - 1
-}
-
-function escapeForRegex(input: string) {
-  return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
-
-function ensureTrailingNewline(input: string) {
-  return input.endsWith('\n') ? input : `${input}\n`
+function ensureTrailingNewline(input: string, eol: string) {
+  return input.endsWith('\n') ? input : `${input}${eol}`
 }

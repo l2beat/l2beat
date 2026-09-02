@@ -1,10 +1,18 @@
 import { spawn } from 'node:child_process'
 import { createHash, randomBytes } from 'node:crypto'
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import { createServer } from 'node:http'
-import type { AddressInfo } from 'node:net'
+import {
+  existsSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs'
+import { createServer, type Server, type ServerResponse } from 'node:http'
 import path from 'node:path'
 import { getEnv } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
+import { config as loadDotenv } from 'dotenv'
 import {
   parseGoogleSheetRows,
   upsertGoogleSheetsEnvSection,
@@ -14,6 +22,13 @@ const GOOGLE_SHEETS_SCOPE =
   'https://www.googleapis.com/auth/spreadsheets.readonly'
 const PACKAGE_ROOT = path.join(__dirname, '..', '..')
 const ENV_PATH = path.join(PACKAGE_ROOT, '.env')
+// Named to match the `*.env` gitignore pattern in case a crash leaves it behind.
+const TEMP_ENV_PATH = path.join(PACKAGE_ROOT, '.tmp.env')
+
+// Organization logins with 2FA can easily take longer than a couple of minutes.
+const LOGIN_TIMEOUT_MS = 5 * 60_000
+const REQUEST_TIMEOUT_MS = 15_000
+const REVOKE_TIMEOUT_MS = 5_000
 
 interface OAuthTokens {
   access_token: string
@@ -27,35 +42,37 @@ interface SheetsResponse {
 interface SpreadsheetMetadataResponse {
   sheets?: {
     properties?: {
-      index?: number
       sheetId?: number
       title?: string
     }
   }[]
 }
 
+const http = new HttpClient()
+let issuedTokens: OAuthTokens | undefined
+
 async function main() {
+  // The script configures itself from the .env it manages, no matter which
+  // directory it is started from. Variables already exported in the shell
+  // still take precedence, as with any dotenv-loaded config.
+  loadDotenv({ path: ENV_PATH })
   const env = getEnv()
   const clientId = env.string('GOOGLE_SHEETS_CLIENT_ID')
   const clientSecret = env.optionalString('GOOGLE_SHEETS_CLIENT_SECRET')
   const sheetUrl = env.string('GOOGLE_SHEETS_ENV_URL')
-  const currentEnv = existsSync(ENV_PATH) ? readFileSync(ENV_PATH, 'utf8') : ''
   const { spreadsheetId, sheetId } = parseSpreadsheetUrl(sheetUrl)
 
-  let tokens: OAuthTokens | undefined
+  revokeIssuedTokensOnSignals()
 
   try {
-    tokens = await authenticate(clientId, clientSecret)
+    issuedTokens = await authenticate(clientId, clientSecret)
+    const accessToken = issuedTokens.access_token
 
-    const sheetTitle = await getSheetTitle(
-      tokens.access_token,
-      spreadsheetId,
-      sheetId,
-    )
+    const sheetTitle = await getSheetTitle(accessToken, spreadsheetId, sheetId)
     const rows = await getSheetRows(
-      tokens.access_token,
+      accessToken,
       spreadsheetId,
-      `${toA1SheetName(sheetTitle)}!A:B`,
+      toA1SheetName(sheetTitle),
     )
     const entries = parseGoogleSheetRows(rows)
 
@@ -63,24 +80,25 @@ async function main() {
       throw new Error('The selected Google Sheet tab is empty')
     }
 
-    const nextEnv = upsertGoogleSheetsEnvSection(currentEnv, entries)
-    writeFileSync(ENV_PATH, nextEnv)
+    // Read .env as late as possible so that edits made while the browser login
+    // was pending are not overwritten.
+    const currentEnv = existsSync(ENV_PATH)
+      ? readFileSync(ENV_PATH, 'utf8')
+      : ''
+    writeEnvFile(upsertGoogleSheetsEnvSection(currentEnv, entries))
 
     console.log(`Synced ${entries.length} variables to ${ENV_PATH}`)
   } finally {
-    const tokenToRevoke = tokens?.refresh_token ?? tokens?.access_token
-    if (tokenToRevoke) {
-      await revokeToken(tokenToRevoke).catch(() => undefined)
-    }
+    await revokeIssuedTokens()
   }
 }
 
 async function authenticate(clientId: string, clientSecret?: string) {
-  const codeVerifier = base64Url(randomBytes(32))
-  const codeChallenge = base64Url(
-    createHash('sha256').update(codeVerifier).digest(),
-  )
-  const state = base64Url(randomBytes(16))
+  const codeVerifier = randomBytes(32).toString('base64url')
+  const codeChallenge = createHash('sha256')
+    .update(codeVerifier)
+    .digest('base64url')
+  const state = randomBytes(16).toString('base64url')
   const server = createServer()
 
   await new Promise<void>((resolve, reject) => {
@@ -93,7 +111,7 @@ async function authenticate(clientId: string, clientSecret?: string) {
     throw new Error('Failed to start local OAuth callback server')
   }
 
-  const redirectUri = `http://127.0.0.1:${(address as AddressInfo).port}`
+  const redirectUri = `http://127.0.0.1:${address.port}`
   const authorizationUrl = new URL(
     'https://accounts.google.com/o/oauth2/v2/auth',
   )
@@ -120,62 +138,81 @@ async function authenticate(clientId: string, clientSecret?: string) {
   })
 }
 
-function waitForAuthorizationCode(
-  server: ReturnType<typeof createServer>,
-  expectedState: string,
-) {
+function waitForAuthorizationCode(server: Server, expectedState: string) {
   return new Promise<string>((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      server.close()
-      reject(new Error('Timed out waiting for Google login'))
-    }, 120_000)
+    const timeout = setTimeout(
+      () => settle({ error: new Error('Timed out waiting for Google login') }),
+      LOGIN_TIMEOUT_MS,
+    )
 
-    server.once('request', (request, response) => {
-      try {
-        const url = new URL(request.url ?? '/', 'http://127.0.0.1')
-        const error = url.searchParams.get('error')
-        const state = url.searchParams.get('state')
-        const code = url.searchParams.get('code')
-
-        if (error) {
-          throw new Error(`Google login failed: ${error}`)
-        }
-
-        if (state !== expectedState) {
-          throw new Error('Google login failed: invalid state')
-        }
-
-        if (!code) {
-          throw new Error('Google login failed: missing authorization code')
-        }
-
-        response.writeHead(200, {
-          'Content-Type': 'text/html; charset=utf-8',
-        })
-        response.end(
-          '<!doctype html><title>Google login complete</title><p>You can close this window.</p>',
-        )
-
-        clearTimeout(timeout)
-        server.close()
-        resolve(code)
-      } catch (error) {
-        response.writeHead(400, {
-          'Content-Type': 'text/html; charset=utf-8',
-        })
-        response.end('<!doctype html><title>Google login failed</title>')
-
-        clearTimeout(timeout)
-        server.close()
-        reject(error)
-      }
-    })
-
-    server.once('error', (error) => {
+    function settle(outcome: { code: string } | { error: Error }) {
       clearTimeout(timeout)
-      reject(error)
+      server.close()
+      server.closeAllConnections()
+      if ('code' in outcome) {
+        resolve(outcome.code)
+      } else {
+        reject(outcome.error)
+      }
+    }
+
+    server.on('request', (request, response) => {
+      const url = new URL(request.url ?? '/', 'http://127.0.0.1')
+
+      // Only the redirect carrying this run's state is Google's answer. Anything
+      // else (favicon requests, port scanners, other local software) is ignored
+      // instead of aborting the login.
+      if (url.searchParams.get('state') !== expectedState) {
+        response.writeHead(404).end()
+        return
+      }
+
+      const error = url.searchParams.get('error')
+      const code = url.searchParams.get('code')
+
+      if (error !== null || code === null) {
+        respondHtml(
+          response,
+          400,
+          'Google login failed',
+          'Go back to the terminal for details.',
+          () =>
+            settle({
+              error: new Error(
+                error !== null
+                  ? `Google login failed: ${error}`
+                  : 'Google login failed: missing authorization code',
+              ),
+            }),
+        )
+        return
+      }
+
+      respondHtml(
+        response,
+        200,
+        'Google login complete',
+        'You can close this window.',
+        () => settle({ code }),
+      )
     })
+
+    server.on('error', (error) => settle({ error }))
   })
+}
+
+function respondHtml(
+  response: ServerResponse,
+  status: number,
+  title: string,
+  message: string,
+  onFlushed: () => void,
+) {
+  response.writeHead(status, { 'Content-Type': 'text/html; charset=utf-8' })
+  response.end(
+    `<!doctype html><title>${title}</title><p>${message}</p>`,
+    onFlushed,
+  )
 }
 
 async function exchangeAuthorizationCode(parameters: {
@@ -184,7 +221,7 @@ async function exchangeAuthorizationCode(parameters: {
   code: string
   codeVerifier: string
   redirectUri: string
-}) {
+}): Promise<OAuthTokens> {
   const body = new URLSearchParams({
     client_id: parameters.clientId,
     code: parameters.code,
@@ -197,19 +234,23 @@ async function exchangeAuthorizationCode(parameters: {
     body.set('client_secret', parameters.clientSecret)
   }
 
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+  const tokens = await fetchGoogleJson<Partial<OAuthTokens>>(
+    'https://oauth2.googleapis.com/token',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
     },
-    body,
-  })
+  )
 
-  if (!response.ok) {
-    throw new Error(await formatGoogleError(response))
+  if (typeof tokens.access_token !== 'string' || tokens.access_token === '') {
+    throw new Error('Google token response did not include an access token')
   }
 
-  return (await response.json()) as OAuthTokens
+  return {
+    access_token: tokens.access_token,
+    refresh_token: tokens.refresh_token,
+  }
 }
 
 async function getSheetTitle(
@@ -217,35 +258,29 @@ async function getSheetTitle(
   spreadsheetId: string,
   sheetId: number | undefined,
 ) {
-  const response = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(spreadsheetId)}?fields=sheets(properties(sheetId%2Ctitle%2Cindex))`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
+  const url = new URL(
+    `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(spreadsheetId)}`,
+  )
+  url.searchParams.set('fields', 'sheets(properties(sheetId,title))')
+
+  const data = await fetchGoogleJson<SpreadsheetMetadataResponse>(
+    url.toString(),
+    { headers: authorizationHeader(accessToken) },
   )
 
-  if (!response.ok) {
-    throw new Error(await formatGoogleError(response))
-  }
-
-  const data = (await response.json()) as SpreadsheetMetadataResponse
-  const sheets =
-    data.sheets
-      ?.flatMap((sheet) => (sheet.properties ? [sheet.properties] : []))
-      .sort((a, b) => (a.index ?? 0) - (b.index ?? 0)) ?? []
-
+  // The API returns tabs in display order, so the first one is the default tab.
+  const sheets = data.sheets ?? []
   const selectedSheet =
     sheetId === undefined
       ? sheets[0]
-      : sheets.find((sheet) => sheet.sheetId === sheetId)
+      : sheets.find((sheet) => sheet.properties?.sheetId === sheetId)
+  const title = selectedSheet?.properties?.title
 
-  if (!selectedSheet?.title) {
+  if (!title) {
     throw new Error('Could not find the selected tab in Google Sheets')
   }
 
-  return selectedSheet.title
+  return title
 }
 
 async function getSheetRows(
@@ -253,30 +288,89 @@ async function getSheetRows(
   spreadsheetId: string,
   range: string,
 ) {
-  const response = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(spreadsheetId)}/values/${encodeURIComponent(range)}?majorDimension=ROWS`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
+  const url = new URL(
+    `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(spreadsheetId)}/values/${encodeURIComponent(range)}`,
   )
+  url.searchParams.set('majorDimension', 'ROWS')
+
+  const data = await fetchGoogleJson<SheetsResponse>(url.toString(), {
+    headers: authorizationHeader(accessToken),
+  })
+  return data.values ?? []
+}
+
+function authorizationHeader(accessToken: string) {
+  return { Authorization: `Bearer ${accessToken}` }
+}
+
+async function fetchGoogleJson<T>(
+  url: string,
+  init: {
+    method?: string
+    headers?: Record<string, string>
+    body?: URLSearchParams
+  },
+): Promise<T> {
+  const response = await http.fetchRaw(url, {
+    ...init,
+    timeout: REQUEST_TIMEOUT_MS,
+  })
 
   if (!response.ok) {
     throw new Error(await formatGoogleError(response))
   }
 
-  const data = (await response.json()) as SheetsResponse
-  return data.values ?? []
+  return (await response.json()) as T
 }
 
-async function revokeToken(token: string) {
-  await fetch(
-    `https://oauth2.googleapis.com/revoke?token=${encodeURIComponent(token)}`,
-    {
+function revokeIssuedTokensOnSignals() {
+  for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+    process.once(signal, () => {
+      // Ctrl+C would otherwise skip the `finally` in main() and leave the
+      // token valid until it expires.
+      revokeIssuedTokens().finally(() =>
+        process.exit(signal === 'SIGINT' ? 130 : 143),
+      )
+    })
+  }
+}
+
+async function revokeIssuedTokens() {
+  const tokens = issuedTokens
+  issuedTokens = undefined
+
+  // Revoking the refresh token also invalidates the access token issued with it.
+  const token = tokens?.refresh_token ?? tokens?.access_token
+  if (!token) {
+    return
+  }
+
+  try {
+    await http.fetchRaw('https://oauth2.googleapis.com/revoke', {
       method: 'POST',
-    },
-  )
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ token }),
+      timeout: REVOKE_TIMEOUT_MS,
+    })
+  } catch {
+    // Best effort only: the token expires on its own and there is nothing
+    // more that can be done about it here.
+  }
+}
+
+function writeEnvFile(content: string) {
+  // Write to a temporary file and rename it over .env so that a crash in the
+  // middle of the write can never leave the developer's local secrets truncated.
+  const mode = existsSync(ENV_PATH) ? statSync(ENV_PATH).mode & 0o777 : 0o600
+
+  try {
+    rmSync(TEMP_ENV_PATH, { force: true })
+    writeFileSync(TEMP_ENV_PATH, content, { mode })
+    renameSync(TEMP_ENV_PATH, ENV_PATH)
+  } catch (error) {
+    rmSync(TEMP_ENV_PATH, { force: true })
+    throw error
+  }
 }
 
 function parseSpreadsheetUrl(rawUrl: string) {
@@ -287,51 +381,51 @@ function parseSpreadsheetUrl(rawUrl: string) {
     throw new Error('GOOGLE_SHEETS_ENV_URL is not a valid Google Sheets URL')
   }
 
+  // Google puts the tab id in the query (?gid=) and/or in the hash (#gid=).
   const hashParams = new URLSearchParams(url.hash.replace(/^#/, ''))
-  const rawSheetId = url.searchParams.get('gid') ?? hashParams.get('gid')
+  const rawSheetId = [url.searchParams.get('gid'), hashParams.get('gid')].find(
+    (value): value is string => value !== null && value !== '',
+  )
 
-  if (rawSheetId === null) {
+  if (rawSheetId === undefined) {
     return { spreadsheetId, sheetId: undefined }
   }
 
-  const sheetId = Number(rawSheetId)
-  if (!Number.isInteger(sheetId)) {
+  if (!/^\d+$/.test(rawSheetId)) {
     throw new Error('GOOGLE_SHEETS_ENV_URL contains an invalid gid')
   }
 
-  return { spreadsheetId, sheetId }
+  return { spreadsheetId, sheetId: Number(rawSheetId) }
 }
 
 function toA1SheetName(title: string) {
   return `'${title.replaceAll("'", "''")}'`
 }
 
-function base64Url(buffer: Buffer) {
-  return buffer
-    .toString('base64')
-    .replaceAll('+', '-')
-    .replaceAll('/', '_')
-    .replace(/=+$/g, '')
-}
-
 function openBrowser(url: string) {
-  const command =
-    process.platform === 'darwin'
-      ? 'open'
-      : process.platform === 'win32'
-        ? 'cmd'
-        : 'xdg-open'
-  const args = process.platform === 'win32' ? ['/c', 'start', '', url] : [url]
+  const child =
+    process.platform === 'win32'
+      ? // `start` takes its first quoted argument as the window title, and the
+        // URL has to be quoted so that cmd does not split it on `&`.
+        spawn('cmd', ['/c', 'start', '""', `"${url}"`], {
+          detached: true,
+          stdio: 'ignore',
+          windowsVerbatimArguments: true,
+        })
+      : spawn(process.platform === 'darwin' ? 'open' : 'xdg-open', [url], {
+          detached: true,
+          stdio: 'ignore',
+        })
 
-  const child = spawn(command, args, {
-    detached: true,
-    stdio: 'ignore',
-  })
   child.on('error', () => undefined)
   child.unref()
 }
 
-async function formatGoogleError(response: Response) {
+async function formatGoogleError(response: {
+  status: number
+  statusText: string
+  text(): Promise<string>
+}) {
   const text = await response.text()
 
   try {
