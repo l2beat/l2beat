@@ -62,8 +62,7 @@ const queueRolesOnOwner = ['owner', 'pauser', 'blacklister'].every(
   (role) => value('UnwrapTokenV1ETH', role) === ownerKey,
 )
 const oracleOwnedByOwner = value('ExchangeRateUpdater', 'owner') === ownerKey
-const oneAdminKey =
-  tokenRolesOnOwner && queueRolesOnOwner && oracleOwnedByOwner
+const oneAdminKey = tokenRolesOnOwner && queueRolesOnOwner && oracleOwnedByOwner
 const adminKeyPhrase = oneAdminKey
   ? 'a single externally owned account is owner, master minter, pauser and blacklister of the token, owner, pauser and blacklister of the redemption queue, and owner of the oracle'
   : 'a small set of externally owned accounts hold the owner, master minter, pauser and blacklister roles across the token, the redemption queue and the oracle'
@@ -119,7 +118,8 @@ export const wbeth: BaseProject = {
         url: 'https://github.com/peckshield/publications/blob/master/audit_reports/PeckShield-Audit-Report-wBETH-v1.0.pdf',
       },
       {
-        title: 'PeckShield audit of wBETH v2 and the unwrap contract (September 2023)',
+        title:
+          'PeckShield audit of wBETH v2 and the unwrap contract (September 2023)',
         url: 'https://github.com/peckshield/publications/blob/master/audit_reports/PeckShield-Audit-Report-wBETHV2-v1.0.pdf',
       },
     ],
