@@ -6,9 +6,13 @@ A permissioned set of {{oracleSetSize}} node operators, the oracle set, reports 
 
 Depositing is open to anyone, it requires a minimum of {{minimumDeposit}} ETH and enough room under the {{maximumPoolSize}} unassigned ETH pool cap (to prevent idle ETH diluting yield). The protocol keeps a fee of {{depositFee}} and mints rETH with the rest of the deposit. Incoming ETH first tops the token contract's redemption buffer up to {{targetCollateralRate}} of the tracked backing; the remainder is booked into RocketVault under the deposit pool's name until it is matched to a validator. Deposits can be disabled via the deposit flag in `RocketDAOProtocolSettingsDeposit` by RPL token governance or the security council. 
 
+![Rocket Pool deposit flow](/images/architecture/rocketpool-deposits.png#center)
+
 ### Redeeming
 
 Redeeming is permissionless, although it does depend on liquidity: redeeming requires the ETH held by the rETH token contract plus the deposit pool's unassigned surplus to cover the payout. Governance targets a buffer of {{targetCollateralRate}} of the token's backing and when the buffer is thin, as it is whenever the validator queue is absorbing deposits, onchain redemption reverts and holders have to use the secondary market or wait. Staked ETH is not redeemable on demand: the protocol does not implement EIP-7002, so no contract can trigger a validator exit; ETH comes back only when validators leave the beacon chain, at the operator's initiative or through slashing.
+
+![Rocket Pool rewards and withdrawal flow](/images/architecture/rocketpool-withdrawals.png#center)
 
 ### The exchange rate
 

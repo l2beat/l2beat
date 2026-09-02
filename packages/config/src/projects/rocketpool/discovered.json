@@ -1,6 +1,6 @@
 {
   "name": "rocketpool",
-  "timestamp": 1788348095,
+  "timestamp": 1788348224,
   "configHash": "0xa6a9822ddd71880057980f9e2c341ca5e55c753ecf65ea6e21995f167d043aff",
   "entries": [
     {
@@ -979,7 +979,7 @@
         {
           "permission": "interact",
           "from": "eth:0x84aE6D61Df5c6ba7196b5C76Bcb112B8a689aD37",
-          "description": "a security council seat: can veto a pending contract upgrade while it waits out its delay, and can instantly flip the protocol settings that governance has allowlisted (deposit, registration, and oracle on/off switches).",
+          "description": "a security council seat: can veto a pending contract upgrade while it waits out its delay, and can instantly flip the protocol settings that governance has allowlisted.",
           "role": ".members"
         }
       ],
@@ -1572,14 +1572,14 @@
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
         "decimals": 18,
-        "getCollateralRate": 5552218,
+        "getCollateralRate": 6489244,
         "getExchangeRate": "1170882039540397857",
-        "getTotalCollateral": 2066435082000,
+        "getTotalCollateral": 2415178776227,
         "name": "Rocket Pool ETH",
         "networkSettings": "eth:0x67Fd03a5095197D1aD1F932BC55E022C420b1153",
         "symbol": "rETH",
         "targetCollateralRate": "1",
-        "totalSupply": "317864518293440625275986",
+        "totalSupply": "317864460884167403191891",
         "transferDelayBlocks": 0,
         "version": 1
       },
@@ -4599,6 +4599,6 @@
     "rocketpool/RocketUpgradeOneDotTwo": "0x327a0ba9225fde0a0eb14e2dc57a9de8dbdc2609e8145ddd325d2cc5099d7be5",
     "rocketpool/RocketVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25889274 },
-  "permissionsConfigHash": "0x6e9014273a5438b6544ea345da3dcca71693c4da8c9d5694e8592272f5eaeafe"
+  "usedBlockNumbers": { "ethereum": 25889284 },
+  "permissionsConfigHash": "0xd9fe1707abed60b37a2eac7913b7ffb6343b249b4f22af6f69c2a2a11c2f88d5"
 }

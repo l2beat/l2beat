@@ -18,7 +18,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "a security council seat: can veto a pending contract upgrade while it waits out its delay, and can instantly flip the protocol settings that governance has allowlisted (deposit, registration, and oracle on/off switches)."
+          "description": "a security council seat: can veto a pending contract upgrade while it waits out its delay, and can instantly flip the protocol settings that governance has allowlisted."
         }
       ],
       "severity": "HIGH",

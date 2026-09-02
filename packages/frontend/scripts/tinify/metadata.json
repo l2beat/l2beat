@@ -1632,6 +1632,7 @@
   "static/meta-images/defi/projects/polymarket/opengraph-image.png": "3a2063cadb6cd005bbe0d3c058033ed8",
   "static/meta-images/privacy/projects/payy/opengraph-image.png": "45949435ae3803f1fbafa478e33ffb7d",
   "static/icons/rocketpool.png": "19f13b3a357554584cfb97965ce06f8d",
-  "static/images/architecture/rocketpool.png": "1b8ac83d84d7649f946908fc809b6e28",
-  "static/meta-images/defi/projects/rocketpool/opengraph-image.png": "447e8aefe3f2bdccb736f588751d591a"
+  "static/meta-images/defi/projects/rocketpool/opengraph-image.png": "447e8aefe3f2bdccb736f588751d591a",
+  "static/images/architecture/rocketpool-deposits.png": "2cd9383ba7063a677fbd56827d65534f",
+  "static/images/architecture/rocketpool-withdrawals.png": "1dfa91d98df667128d64215450e217d4"
 }
