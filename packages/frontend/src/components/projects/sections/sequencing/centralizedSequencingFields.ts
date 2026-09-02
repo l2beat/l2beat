@@ -6,20 +6,11 @@ export type CentralizedSequencingFieldKey = Exclude<
 >
 
 interface CentralizedSequencingFieldMeta {
-  /** Row label on the project-page spec sheet. */
   label: string
-  /** Column header on the sequencing risk table. */
   header: string
-  /** Column tooltip on the sequencing risk table. */
   tooltip: string
 }
 
-/**
- * Single source of field metadata for both centralized-sequencing renderers.
- * The Record is keyed by the spec's own fields, so adding a field to
- * ProjectCentralizedSequencingSpec fails compilation here until it gets
- * metadata — neither UI can silently drop it.
- */
 export const CENTRALIZED_SEQUENCING_FIELDS: Record<
   CentralizedSequencingFieldKey,
   CentralizedSequencingFieldMeta

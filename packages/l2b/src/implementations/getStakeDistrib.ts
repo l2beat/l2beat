@@ -309,11 +309,6 @@ export class StakeDistributionFetcher {
   }
 }
 
-/**
- * Maps a fetched dataset to the stake-distribution.json shape consumed by
- * config. Fields absent from the dataset stay absent in the output so a
- * regeneration never silently drops source metadata.
- */
 export function extractStakeDistribution(
   dataset: StakingDataset,
   limit: number,
