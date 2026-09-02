@@ -12,7 +12,7 @@ Because validator balances, exits and slashings live on the consensus layer, Lid
 
 ### Deposits, DSM and withdrawals
 
-New validator deposits flow only through the Deposit Security Module: {{dsmGuardians}} guardians (quorum {{dsmQuorum}}) sign the current deposit root to guard against the [deposit-frontrunning attack](https://hackmd.io/@lido/HJfjMgW56), and any single guardian can pause deposits. Withdrawals are requested into the WithdrawalQueue (minting an unstETH NFT) and can only be finalized inside the oracle report, paying the lesser of the rate at request time and the report’s share rate.
+Deposits of pooled ETH into new validators flow only through the Deposit Security Module (stVaults deposit through the PredepositGuarantee instead): {{dsmGuardians}} guardians (quorum {{dsmQuorum}}) sign off on the current deposit-contract root and key set before each deposit, guarding against the [deposit-frontrunning attack](https://hackmd.io/@lido/HJfjMgW56), in which a node operator pre-registers one of its validator keys with its own withdrawal credentials so that Lido’s deposit to that key would end up under the operator’s control; any single guardian can pause deposits. Withdrawals are requested into the WithdrawalQueue (minting an unstETH NFT) and can only be finalized inside the oracle report, paying the lesser of the rate at request time and the report’s share rate.
 
 ![Lido withdrawal flow](/images/architecture/lido-withdrawals.png#center)
 

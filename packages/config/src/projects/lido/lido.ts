@@ -110,15 +110,7 @@ export const lido: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
   },
-  externalDependencies: [
-    {
-      type: 'not-tracked',
-      name: 'Ethereum consensus layer',
-      icon: 'ethereum',
-      description:
-        'Staked ETH, validator balances, exits and slashings live on the beacon chain, which Lido’s contracts cannot read directly. Aggregate accounting and withdrawal finalization depend on the oracle committee reporting consensus-layer state; targeted facts use trustless EIP-4788 beacon-root proofs. A halt or corruption of the consensus layer halts rebases and withdrawal finalization.',
-    },
-  ],
+  externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
