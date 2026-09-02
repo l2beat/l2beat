@@ -1,0 +1,179 @@
+{
+  "title": "Monthly Updates - August 2026",
+  "startDate": "2026-08-01",
+  "endDate": "2026-08-31",
+  "publishedOn": "2026-09-01",
+  "description": "Explore the most important August developments across major ecosystems — from payment infrastructure and stablecoin adoption to enterprise tokenization, protocol upgrades, verifiable AI research, and developer tooling improvements.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "Arbitrum Opens Singapore Buildathon With $115K in Prizes",
+          "content": "Arbitrum [opened](https://arbitrum-singapore.hackquest.io/?utm_source=twitter&utm_medium=social&utm_campaign=oh-singapore-buildathon) registrations for its three-week Open House Singapore Buildathon, an online program where teams can build with Solidity or Stylus and deploy on Arbitrum One, Robinhood Chain, Arbitrum Sepolia, or other Arbitrum chains.\n\nThe program includes $115,000 USDC in total funding, split between $70,000 in main prizes, $15,000 for promising products, and up to $30,000 in milestone-based grants. The top three teams can also earn a spot at the in-person Founder House in Singapore, where they will work with Arbitrum's technical team, mentors, and ecosystem founders."
+        },
+        {
+          "title": "Variational Reaches New All-Time High on Arbitrum",
+          "content": "Variational [reached](https://x.com/arbitrum/status/2092297046422106352) a new all-time high of more than $2.1 billion in 24-hour trading volume, alongside $1.5 billion in open interest.\n\nThe platform offers access to more than 500 crypto and traditional finance markets with on-chain settlement. Built on Arbitrum, Variational has grown into one of the network’s largest perpetuals trading platforms."
+        },
+        {
+          "title": "Venmo Adds PYUSD Support on Arbitrum",
+          "content": "Eligible Venmo users can now buy, sell, send, and use PYUSD [on Arbitrum](https://x.com/arbitrum/status/2092247070669189177), expanding stablecoin access through one of the largest consumer payment platforms in the U.S.\n\nVenmo serves more than 67 million monthly active accounts, giving Arbitrum and PYUSD another distribution channel for consumer stablecoin payments and transfers."
+        },
+        {
+          "title": "ArbOS Elara Goes Live on Arbitrum",
+          "content": "Following governance approval, ArbOS Elara is [now live](https://x.com/arbitrum/status/2090504561509183683) across the Arbitrum Platform. The upgrade introduces protocol-level compliance filtering, customizable priority fees, and an alternative data API for dedicated Arbitrum chains.\n\nOn Arbitrum One, Elara also introduces improved base fee tuning and increases capacity for Stylus contracts by 4x."
+        },
+        {
+          "title": "Slash Adds Stablecoin Payments on Arbitrum",
+          "content": "Business banking platform Slash [added](https://x.com/arbitrum/status/2090470074352009582) support for USDC and USDT payments on Arbitrum, allowing eligible businesses to receive stablecoins with the option to automatically convert incoming payments to USD.\n\nThe service is available to eligible businesses across more than 130 countries, expanding access to stablecoin-based payment rails through Arbitrum."
+        },
+        {
+          "title": "Robinhood Chain Commits $1M to Arbitrum Open House",
+          "content": "Robinhood Chain [committed](https://x.com/arbitrum/status/2090432300936994858) $1 million in funding for early-stage teams participating in Arbitrum’s Open House Buildathon.\n\nThe three-week online program is aimed at founders building on-chain financial products, providing participating teams with an opportunity to develop projects and access funding from Robinhood Chain."
+        },
+        {
+          "title": "T3tris Reaches $12M in TVL Across Arbitrum and Robinhood Chain",
+          "content": "T3tris [reached](https://x.com/arbitrum/status/2088029791047827756) $12 million in TVL across Arbitrum One and Robinhood Chain after launching in July. The asset management platform was previously one of ten teams selected for Arbitrum’s first Mentorship Program.\n\nDuring the program, T3tris developed its product and go-to-market strategy, placed third at Demo Day, and progressed from stealth to an on-chain launch."
+        },
+        {
+          "title": "ZeroDev Offers Programmable Account Tools to Arbitrum Developers",
+          "content": "ZeroDev is [offering](https://x.com/arbitrum/status/2089400435865993724) Arbitrum teams three free months of its Grow Plan, providing access to programmable accounts infrastructure.\n\nThe package includes 100,000 credits, smart accounts, gas sponsorship, and embedded wallets, giving developers additional tools to simplify onboarding and transaction experiences in Arbitrum applications."
+        },
+        {
+          "title": "Robinhood Chain Surpasses $1B in TVL",
+          "content": "Robinhood Chain surpassed [$1 billion in TVS](https://l2beat.com/layer2s/projects/robinhood#tvs), reaching the milestone roughly a month after its launch.\n\nBuilt using Arbitrum technology, the network has seen rapid early growth, alongside the [$5 million](https://x.com/arbitrum/status/2089382121924104414) in cumulative fee revenue reported earlier in August."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "ZK Transparency Filing Expands to Bloomberg Terminals",
+          "content": "ZKsync’s B2 Token Transparency Filing from Blockworks is [now accessible](https://x.com/zksync/status/2090010111636869322) across more than 350,000 Bloomberg Terminals, expanding the availability of information about ZK governance, token structure, market arrangements, and other disclosures to institutional market participants.\n\nThe filing is part of Blockworks’ Token Transparency Framework, which aims to standardize disclosures for crypto assets and make token information more accessible to traditional capital markets."
+        },
+        {
+          "title": "ADI Chain and Shipfinex Partner to Tokenize Maritime Assets",
+          "content": "ADI Chain, powered by ZKsync, [partnered](https://x.com/zksync/status/2088367432356319425) with Shipfinex to bring tokenized commercial vessels on-chain as a new regulated category of real-world assets.\n\nThe initiative aims to broaden access to maritime finance by enabling investment in an asset class that has traditionally been accessible to a relatively limited group of market participants."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Ether.fi Cash Expands Payments and Credit Infrastructure on OP Mainnet",
+          "content": "Ether.fi Cash [is moving](https://x.com/Optimism/status/2087915893938331750) the credit backend supporting more than 70,000 cardholders to a dedicated Aave V4 instance on OP Mainnet. The integration will allow users to borrow against a broader range of assets, including tokenized stocks and metals.\n\nThe move builds on ether.fi Cash’s growing activity on OP Mainnet, where around 29% of crypto card spending [settles](https://x.com/Optimism/status/2086796502324633614), with ether.fi accounting for most of that volume. Optimism reports median fees of around $0.00001, sub-250ms finality, and 99.99% uptime supporting the product’s payment activity."
+        },
+        {
+          "title": "DB Securities Partners With Optimism on Tokenized Securities",
+          "content": "DB Securities [partnered](https://x.com/Optimism/status/2085014049805455484) with Optimism to bring the underlying assets of tokenized securities on-chain, marking a notable move in South Korea, where the sector has largely relied on permissioned distributed ledgers.\n\nThe collaboration explores how public blockchain infrastructure can support regulated tokenized assets and connect traditional financial markets with on-chain infrastructure."
+        },
+        {
+          "title": "Subblocks Live on OP Sepolia and OP Mainnet",
+          "content": "OP Labs [activated](https://x.com/OPLabsPBC/status/2088623384494014551) subblocks on OP Sepolia on August 17 and on OP Mainnet on [August 31, 2026](https://status.optimism.io/cmthk6pbx0at41ms2q9i1iqlu), reducing pre-confirmation times from 250ms to 200ms.\n\nThe update zeroes out several fields in the subblock payload (`state_root`, `block_hash`, `withdrawals_root`, and `withdrawals`). Teams consuming the subblock stream directly should review their integrations to ensure these values do not impact downstream state, balances, or proofs."
+        },
+        {
+          "title": "Whitechain Migrates to the OP Stack",
+          "content": "Whitechain [announced](https://x.com/Optimism/status/2089721724581388651) its transition from a standalone Proof of Authority L1 to an Ethereum L2 powered by the OP Stack. As part of the migration, the Whitechain Sepolia Testnet went live on August 18.\n\nThe move brings Whitechain into the broader OP Stack ecosystem while shifting its settlement architecture to Ethereum."
+        },
+        {
+          "title": "OP Added to Paxos Crypto Brokerage",
+          "content": "Paxos [added](https://x.com/Optimism/status/2092233444684136754) OP to its Crypto Brokerage platform, making the token available to financial institutions that use Paxos to offer digital asset trading to their clients.\n\nOP was added alongside APT and TRX, expanding the platform’s supported assets to 32 tokens."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Revolut Launches Euro Stablecoin EURR on Polygon",
+          "content": "Revolut [launched](https://x.com/0xPolygon/status/2092631222254182707) EURR, its first euro-backed stablecoin, with support on Polygon. The stablecoin is being rolled out directly through the Revolut app.\n\nThe launch brings a euro-denominated stablecoin from one of Europe’s largest fintech platforms to Polygon, expanding the network’s growing stablecoin and payments ecosystem."
+        },
+        {
+          "title": "Polygon Joins Bank of England’s Digital Pound Lab",
+          "content": "Polygon [was selected](https://polygon.technology/blog/polygon-labs-joins-nobo-finance-and-dun-bradstreet-in-phase-2-of-the-bank-of-englands-digital-pound-lab) to participate in the Bank of England’s Digital Pound Lab alongside NOBO and Dun & Bradstreet, exploring potential infrastructure for a digital pound and cross-border settlement.\n\nAs part of the initiative, Polygon will use its Open Money Stack to test cross-border trade finance and simulate settlement using stablecoin infrastructure, exploring how on-chain systems could support international money movement."
+        },
+        {
+          "title": "OKX Launches POL Rewards Campaign in Europe",
+          "content": "OKX [launched](https://x.com/0xPolygon/status/2093345634271023457) a promotional campaign for POL holders in Europe, offering an 8% deposit bonus for users who transfer POL to the platform, alongside the opportunity to earn up to 12% APY for one month.\n\nThe campaign runs through August 31 and expands the incentives available to POL holders through centralized exchanges in Europe. It also provides another distribution channel for Polygon’s native token as the ecosystem continues to expand access to POL across trading and financial platforms."
+        },
+        {
+          "title": "Lawson Tests JPYC Stablecoin Payments on Polygon",
+          "content": "Japanese convenience store Lawson [completed](https://x.com/0xPolygon/status/2085509701534711836) a demonstration of stablecoin payments at a point-of-sale register using JPYC, with transactions settled on Polygon. Customers were able to display a barcode through HashPort Wallet and complete the payment directly at the store’s existing checkout system.\n\nThe demonstration was conducted with HashPort and marks Japan’s first stablecoin payment at a convenience store. Polygon provided the settlement infrastructure, enabling JPYC transactions to clear in real time with transaction fees at a fraction of a cent."
+        },
+        {
+          "title": "Charm Expands Onchain FX Activity on Polygon",
+          "content": "Charm [highlighted](https://x.com/0xPolygon/status/2085826205098406173) the performance of its stablecoin liquidity vault on Polygon, which generates returns from decentralized exchange trading fees rather than token incentives. The vault reported a 30-day net yield of 17% and a 283-day yield of 24.2%, after impermanent loss and management fees.\n\nThe vault provides liquidity for stablecoin trading on Polygon, supporting on-chain foreign exchange activity while allowing liquidity providers to capture fees generated by swaps."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "Eigen Labs Launches Yukon for Open Frontier Research",
+          "content": "Eigen Labs [introduced](https://x.com/eigenlabs/status/2087571639605289355) Yukon Research, a platform designed to open complex research problems to a distributed network of human researchers and AI systems, allowing multiple approaches to be explored in parallel and the strongest results to be iterated on.\n\nDuring its first two months, Yukon reported improvements across several research areas, including outperforming a Google frontier result in quantum circuits by more than 50% and making Poolside’s open-weight model run 2.6x faster. The initiative explores how coordinated human and AI research can accelerate progress on measurable technical problems."
+        },
+        {
+          "title": "Darkbloom Becomes a Paid Provider on OpenRouter",
+          "content": "Darkbloom [became](https://x.com/eigenlabs/status/2090937606620303675) a paid inference provider on OpenRouter, marking a new milestone for Eigen Labs’ distributed AI network. The platform has served around 4.5 billion tokens, up 113% month over month, while operating entirely on consumer Apple Silicon.\n\nAround 250 Macs were actively providing compute at the time of the announcement, with operators earning between $120 and $200 per month on average. Darkbloom also reported approximately $102,000 in annual recurring revenue as it moves from free inference toward a paid distributed compute model."
+        },
+        {
+          "title": "Yukon Expands Post-Quantum Ethereum Research to x86",
+          "content": "Eigen Labs [expanded](https://x.com/eigenlabs/status/2089784019080892497) the SNARK.fast research challenge to x86 Linux after Yukon participants achieved a 3x performance improvement for post-quantum Ethereum cryptography on Mac hardware. The initiative is being developed alongside the Ethereum Foundation, Succinct Labs, and Espresso Systems.\n\nThe new phase focuses on the hardware commonly used across Ethereum infrastructure, allowing researchers and AI agents to explore improvements including vectorization, threading, memory layout, cache behavior, and proof scheduling. Valid performance improvements submitted through the challenge become the new public baseline for subsequent research."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Nethermind Joins Chainlink as a Node Operator",
+          "content": "Nethermind [joined](https://x.com/Nethermind/status/2090106944660943215) the Chainlink Network as a node operator and strategic technology provider, contributing infrastructure to help secure Chainlink services including CCIP and Data Feeds.\n\nThe collaboration combines Nethermind’s infrastructure and security expertise with Chainlink’s interoperability and data infrastructure, with a focus on supporting institutions bringing financial products and assets on-chain."
+        },
+        {
+          "title": "Nethermind Optimizes Noir Proof Verification on Stellar",
+          "content": "Nethermind [optimized](https://x.com/Nethermind/status/2084561746673430851) the Noir verifier on Stellar by moving field arithmetic and multi-scalar multiplication from WASM execution to Stellar’s native BN254 host functions. The change reduced proof verification from 224.8 million CPU instructions to around 80 million, lowering its share of the transaction budget from more than half to roughly 20%.\n\nThe improvement was consistent across eight tested circuits, leaving significantly more execution capacity for application logic. On Stellar Testnet, Nethermind also verified a shielded pool proof with an actual transaction fee of 0.01242 XLM."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Machine Stack Advances Fraud-Proof Tooling with v0.21.0",
+          "content": "Cartesi’s Machine Emulator [v0.21.0](https://github.com/cartesi/machine-emulator/releases/tag/v0.21.0) is now released, bringing improvements for machine-based verification and fraud proofs. The release adds revamped documentation explaining the verification game, new CLI capabilities for computing computation hashes and generating output proofs, and Lua helpers for prototyping fraud-proof protocols.\n\nThe release also introduces NVRAM address ranges for more efficient persistent state, rolling stored machines with snapshot-based reverts, stronger snapshot durability guarantees, and additional hardening around advance-state outcomes. It is accompanied by updates to machine-guest-tools [v0.18.0](https://github.com/cartesi/machine-guest-tools/releases/tag/v0.18.0), machine-linux-image [v0.21.0](https://github.com/cartesi/machine-linux-image/releases/tag/v0.21.0), and machine-solidity-step [v0.15.0](https://github.com/cartesi/machine-solidity-step/releases/tag/v0.15.0), bringing the wider machine stack in line with the new emulator."
+        },
+        {
+          "title": "Major Updates to Rollups Contracts and Developer Tooling",
+          "content": "The Rollups Contracts stack saw several incremental releases, with deposit refunds, additional machine validation checks on claim submissions, and broader contract hardening introduced in [3.0.0-alpha.7](https://github.com/cartesi/rollups-contracts/releases/tag/v3.0.0-alpha.7).\n\nSubsequent releases improved the developer experience with new Etherscan and Sourcify verification targets, more accessible deployment artifacts, and a USDC-like token for devnet testing, while also updating the machine-solidity-step dependency. The latest [3.0.0-alpha.9](https://github.com/cartesi/rollups-contracts/releases/tag/v3.0.0-alpha.9) release further improves compatibility and reproducibility of release artifacts, rounding out a series of changes aimed at making the contracts safer and easier to build, verify, and integrate."
+        },
+        {
+          "title": "TypeScript Tooling Aligns with the Latest Rollups Stack",
+          "content": "The Cartesi TypeScript tooling received a major update in August, with `@cartesi/client`, `@cartesi/react`, `@cartesi/codec`, and `@cartesi/wagmi-plugin` aligning with Rollups Contracts 3.0.0-alpha.9.\n\nThe update brings the latest contract ABIs and deployment addresses across supported networks, adds devnet contract addresses and test tokens, and incorporates the new RefundOutputBuilder and withdrawal tooling. It also updates the client to work with the latest Rollups Node schema while moving deployment artifact consumption to the newer plaintext format introduced by the contracts stack. Read the docs [here](https://cartesi.github.io/rollups-ts/)."
+        },
+        {
+          "title": "Sequencer Alpha Expands Testing Across Environments",
+          "content": "The Cartesi Sequencer is progressing through its early alpha phase, with [v0.1.0-alpha.9](https://github.com/cartesi/sequencer/releases/tag/v0.1.0-alpha.9) now available with documentation and examples to help developers get started.\n\nThe release also includes canonical machine images for Devnet and Sepolia and wallet-sequencer binaries for Linux on amd64 and arm64, making it easier for developers and early testers to run and validate the Sequencer across environments."
+        },
+        {
+          "title": "35 Years of Linux: The Stack Cartesi Machine Runs",
+          "content": "Linux, the software stack Cartesi Machine boots directly on RISC-V, turned 35. Three and a half decades of battle-tested software, with open-source code scrutinized by a massive community of contributors around the world.\n\nCartesi builds on that foundation instead of reinventing the wheel: developers get the real Linux stack, the same languages, libraries, and tools they already know, running inside a deterministic RISC-V machine that Ethereum can verify. That means dApp logic is not limited to what fits inside the EVM; it can lean on decades of hardened Linux infrastructure, backed by Ethereum's security through fraud proofs. Cartesi [joined in celebrating the event](https://x.com/cartesiproject/status/2092292063718973745?s=20) alongside the extended ecosystem."
+        }
+      ]
+    }
+  ]
+}
