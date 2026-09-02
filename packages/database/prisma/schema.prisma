@@ -266,6 +266,19 @@ model TokenValue {
   @@index([projectId, timestamp, tokenId, valueForProject, valueForSummary])
 }
 
+model DefiTvl {
+  timestamp       DateTime @db.Timestamp(6)
+  sourceTimestamp DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  chain           String   @db.VarChar(255)
+  valueUsd        Float    @db.DoublePrecision
+
+  @@id([timestamp, configurationId, chain])
+  @@index([configurationId])
+  @@index([projectId, timestamp(sort: Desc)])
+}
+
 model TokenMetadata {
   tokenId      String  @db.VarChar(255)
   projectId    String  @db.VarChar(255)
