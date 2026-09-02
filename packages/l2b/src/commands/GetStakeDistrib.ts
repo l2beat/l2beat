@@ -74,8 +74,6 @@ export const GetStakeDistrib = command({
   },
 })
 
-// DUNE_API_KEY conventionally lives in packages/backend/.env. Existing
-// environment variables always take precedence over .env files.
 function loadDotenvFiles(): void {
   const { root } = getDiscoveryPaths()
   loadEnv({ path: path.join(root, 'packages/backend/.env') })

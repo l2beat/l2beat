@@ -49,9 +49,6 @@ export function CentralizedSequencingSpecSheet({ spec }: Props) {
 function SpecValue({ value }: { value: TableReadyValue }) {
   return (
     <>
-      {/* Every row carries a research description, so values without an
-          explicit sentiment still render through SentimentText to keep the
-          description tooltip. */}
       <SentimentText
         sentiment={value.sentiment ?? 'neutral'}
         description={value.description}
