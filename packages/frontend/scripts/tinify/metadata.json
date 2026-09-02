@@ -1634,5 +1634,7 @@
   "static/meta-images/publications/monthly-update-2026-08.png": "8c331a692f776f7f375651b63f5fb72a",
   "static/images/architecture/umbra.png": "3a3a3ab137b795d6b92cc25de3a89f52",
   "static/icons/wbeth.png": "a8f39bda0d8e008e44e2c5864c467c4f",
-  "static/meta-images/defi/projects/wbeth/opengraph-image.png": "259786623e042c8c2a1a807231c8e211"
+  "static/meta-images/defi/projects/wbeth/opengraph-image.png": "259786623e042c8c2a1a807231c8e211",
+  "static/images/architecture/wbeth-deposits.png": "6ecf2f2ac53f0b7c21767a7e062b4000",
+  "static/images/architecture/wbeth-withdrawals.png": "c1e3bcf13b275e10f2917876461a174e"
 }

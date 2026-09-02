@@ -20,6 +20,8 @@ Since launch, on-chain deposits account for a small fraction of the supply: abou
 
 The consequence is that the {{symbol}} supply is not backed by ETH in any contract. It is backed by Binance's statement that an equal amount of BETH is held against it and that BETH is backed by validators Binance runs. The token contract can verify none of that; it only checks the minter's allowance, which is effectively unlimited.
 
+![wBETH deposit and minting flow](/images/architecture/wbeth-deposits.png#center)
+
 ### The exchange rate
 
 `exchangeRate()` is one storage slot. `updateExchangeRate(newRate)` is `onlyOracle` and requires only `newRate >= 1e18`; the token does not compare the new value with the old one, does not check a timestamp, and reads no balance anywhere. `deposit()` and `requestWithdrawEth()` both use whatever the slot holds.
@@ -35,6 +37,8 @@ Nothing derives the rate from validators. It is Binance's daily statement of the
 `WrapTokenV3ETH.requestWithdrawEth(wbethAmount)` is open to any holder. It computes `ethAmount = wbethAmount × exchangeRate() / 1e18`, burns the tokens, and calls `UnwrapTokenV1ETH.requestWithdraw`, which is `onlyWrapTokenAddress`, to record a claim for that amount. The claim is paid by `claimWithdraw(index)` once three conditions hold: at least `lockTime` ({{lockTime}}; the operator can change it, with a floor of {{minLockTime}}, and it stood at 60 days for part of late 2025) has passed since the request; the claim has been allocated, which happens automatically on request if the queue already held enough ETH and the request is at the head of the line, and otherwise only when the operator calls `allocate()`; and the contract's ETH balance covers it. The queue holds no ETH of its own. Only ETH sent by the token operator or the `rechargeAddress` counts toward allocation, and the operator can move any surplus back out with `moveToBackAddress`.
 
 So the redemption path is contractual in form and discretionary in substance. Any holder who is not blacklisted can, while the token is not paused, burn and record a claim, but whether and when ETH arrives to pay it depends on Binance's operator keeping the queue funded. `claimWithdraw` also reverts while the queue is paused or the claimant is blacklisted. {{claimsRecorded}} claims have been recorded in the queue's lifetime; most redemption happens on the exchange rather than through this contract.
+
+![wBETH exchange rate and withdrawal flow](/images/architecture/wbeth-withdrawals.png#center)
 
 ### The keys
 
