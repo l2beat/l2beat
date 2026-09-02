@@ -43,6 +43,7 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
 }
 
 interface DaThroughputEntryData {
+  syncWarning: string | undefined
   /**
    * @unit B/s - bytes per second
    */
@@ -89,11 +90,9 @@ function getDaThroughputEntry(
   l2OnlyData: ThroughputTableData['l2OnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
-  const syncWarning = data?.syncedUntil
-    ? getThroughputSyncWarning(UnixTime(data.syncedUntil), {
-        pastDaySynced: true,
-      })
-    : undefined
+  const entryData = withSyncWarning(data)
+  const l2OnlyEntryData = withSyncWarning(l2OnlyData)
+  const syncWarning = entryData?.syncWarning
   const href = `/data-availability/projects/${project.slug}/${bridge ? bridge.slug : 'no-bridge'}`
   return {
     ...getCommonDaEntry({ project, href, syncWarning }),
@@ -102,8 +101,23 @@ function getDaThroughputEntry(
           fullUnit: true,
         })
       : undefined,
-    data,
-    l2OnlyData,
+    data: entryData,
+    l2OnlyData: l2OnlyEntryData,
     isSynced: !syncWarning,
+  }
+}
+
+function withSyncWarning(
+  data: ThroughputTableData['data'][string] | undefined,
+): DaThroughputEntryData | undefined {
+  if (!data) return undefined
+
+  return {
+    ...data,
+    syncWarning: data.syncedUntil
+      ? getThroughputSyncWarning(UnixTime(data.syncedUntil), {
+          pastDaySynced: true,
+        })
+      : undefined,
   }
 }

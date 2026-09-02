@@ -114,7 +114,7 @@ export function MonthlyUpdateThroughputChart({
             filterNull={false}
             content={
               <ProjectDaThroughputCustomTooltip
-                unit={unit}
+                denominator={denominator}
                 resolution={rangeToResolution([from, to])}
               />
             }

@@ -1,0 +1,115 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "CCIP 2.0 USDC lock/release pool. Each configured remote chain has a separate USDC lockbox, and authorized callers move liquidity into or out of that chain's lockbox. It also supports a staged migration of a lane from lock/release liquidity to canonical Circle CCTP.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure remote chains, their distinct USDC lockboxes and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers."
+        },
+        {
+          "type": "interact",
+          "description": "stage or cancel a lane's CCTP migration, set its burn accounting and Circle migrator, and withdraw fee-token balances to an arbitrary recipient."
+        }
+      ]
+    },
+    "getAllAuthorizedCallers": {
+      "description": "Addresses allowed to invoke the pool's lock-or-burn and release-or-mint flows.",
+      "edit": ["sort"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "move USDC into or out of the lockbox selected for a configured remote chain."
+        }
+      ]
+    },
+    "getAllLockBoxConfigs": {
+      "description": "Distinct USDC custody lockbox selected for each lock/release route.",
+      "edit": [
+        "pipe",
+        ["map", ["set", "remoteChainSelector", ["format", "CCIPChainName"]]],
+        ["sort", ["get", "remoteChainSelector"]]
+      ]
+    },
+    "getAllowedFinalityConfig": {
+      "description": "Finality modes accepted by this pool. Full finality is always accepted; the decoded fields additionally show support for the safe head, the minimum block depth, and any currently unassigned flags.",
+      "edit": ["format", "CCIPAllowedFinality"]
+    },
+    "getAdvancedPoolHooks": {
+      "description": "Optional hook used only to return token-specific required CCVs. This pool disables preflight and postflight hook calls.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "require token-specific CCVs or block transfers by reverting the CCV query."
+        }
+      ]
+    },
+    "getSupportedChains": {
+      "description": "Remote chains currently configured on this child pool.",
+      "edit": ["pipe", ["map", ["format", "CCIPChainName"]], ["sort"]]
+    },
+    "circleUSDCMigrator": {
+      "description": "Address selected by the owner to execute the burn for the currently proposed CCTP lane migration.",
+      "handler": {
+        "type": "event",
+        "select": "migratorAddress",
+        "set": {
+          "event": "event CircleMigratorAddressSet(address migratorAddress)"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "burn the owner-snapshotted USDC amount for the currently proposed lane migration."
+        }
+      ]
+    },
+    "migratedChains": {
+      "description": "Remote chains whose lock/release liquidity migration to CCTP has been executed.",
+      "handler": {
+        "type": "event",
+        "select": "remoteChainSelector",
+        "add": {
+          "event": "event CCTPMigrationExecuted(uint64 remoteChainSelector, uint256 USDCBurned)"
+        }
+      },
+      "edit": ["pipe", ["map", ["format", "CCIPChainName"]], ["sort"]]
+    },
+    "getCurrentProposedCCTPChainMigration": {
+      "description": "Remote chain with a staged CCTP migration, or none when no proposal is active.",
+      "edit": ["if", ["=", 0], "none", ["format", "CCIPChainName"]]
+    },
+    "getLockedUSDCToBurn": {
+      "description": "Owner-set USDC snapshot for the currently proposed lane migration, before exclusions."
+    },
+    "rateLimitAdmin": {
+      "copy": "getDynamicConfig",
+      "edit": ["get", "rateLimitAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change this pool's inbound and outbound rate limits."
+        }
+      ]
+    },
+    "feeAdmin": {
+      "copy": "getDynamicConfig",
+      "edit": ["get", "feeAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw fee-token balances held by this pool to an arbitrary recipient."
+        }
+      ]
+    },
+    "getRmnProxy": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block this pool's transfers when RMN marks a remote chain or the global subject as cursed."
+        }
+      ]
+    }
+  }
+}

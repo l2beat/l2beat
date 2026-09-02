@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.",
+  "category": "core",
+  "ignoreMethods": ["getAllSourceChainConfigs", "getStaticConfig"],
+  "ignoreRelatives": ["owner"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, disable, or reconfigure source routes, including their local Router, accepted source OnRamps, default CCVs, and lane-mandated CCVs."
+        }
+      ]
+    },
+    "staticConfig": {
+      "description": "Immutable destination-chain configuration: local chain selector, exact-gas parameters, RMNRemote, and TokenAdminRegistry.",
+      "handler": {
+        "type": "call",
+        "method": "getStaticConfig",
+        "args": []
+      },
+      "edit": ["set", "localChainSelector", ["format", "CCIPChainName"]]
+    },
+    "sourceChainConfigs": {
+      "description": "Current inbound route configuration reconstructed from SourceChainConfigSet events and keyed by source-chain name. Each route selects the local Router, enables or disables the lane, lists accepted source-chain OnRamp byte strings, and sets the default and mandatory local CCV resolvers used during message verification.",
+      "handler": {
+        "type": "event",
+        "groupBy": "sourceChainSelector",
+        "select": "sourceConfig",
+        "set": {
+          "event": "event SourceChainConfigSet(uint64 indexed sourceChainSelector, (address router, uint64 sourceChainSelector, bool isEnabled, bytes[] onRamps, address[] defaultCCVs, address[] laneMandatedCCVs) sourceConfig)"
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "pipe",
+            [
+              "shape",
+              "router",
+              "sourceChainSelector",
+              "isEnabled",
+              "onRamps",
+              "defaultCCVs",
+              "laneMandatedCCVs"
+            ],
+            ["delete", "sourceChainSelector"]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    }
+  }
+}

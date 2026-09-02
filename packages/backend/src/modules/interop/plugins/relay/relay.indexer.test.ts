@@ -1,13 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import type { GetRequestsResponse, RelayApiClient } from './RelayApiClient'
-import { RelayIndexer, RelayRootIndexer } from './relay.indexer'
+import {
+  RelayIndexer,
+  RelayRootIndexer,
+  TokenReceived,
+  TokenSent,
+} from './relay.indexer'
 
 const FROM = 1787583059
 const BATCH_SIZE = 60
@@ -87,7 +92,7 @@ describe(RelayIndexer.name, () => {
       const indexer = createIndexer(relayApiClient)
 
       await expect(indexer.update(FROM, FROM + 10_000)).toBeRejectedWith(
-        'incomplete after 3 requests',
+        'exceeds INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE=10000',
       )
     })
 
@@ -102,6 +107,84 @@ describe(RelayIndexer.name, () => {
 
       expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
+
+    it('creates events from normalized v3 request fields', async () => {
+      const sourceToken = '0x1111111111111111111111111111111111111111'
+      const destinationToken = '0x2222222222222222222222222222222222222222'
+      const relayApiClient = clientReturning({
+        requests: [
+          {
+            id: 'request-1',
+            status: 'success',
+            sourceTx: {
+              hash: `0x${'1'.repeat(64)}`,
+              chainId: 1,
+              timestamp: 100,
+            },
+            destinationTx: {
+              hash: `0x${'2'.repeat(64)}`,
+              chainId: 10,
+              timestamp: 200,
+            },
+            sourceCurrency: {
+              amount: '123',
+              currency: { address: sourceToken },
+            },
+            destinationCurrency: {
+              amount: '456',
+              currency: { address: destinationToken },
+            },
+            createdAt: '2026-08-24T14:50:59.000Z',
+            updatedAt: '2026-08-24T14:51:00.000Z',
+          },
+        ],
+      })
+      const saveNewEvents =
+        mockFn<InteropEventStore['saveNewEvents']>().resolvesTo(undefined)
+      const indexer = createIndexer(relayApiClient, {
+        chains: [
+          { id: 1, name: 'ethereum' },
+          { id: 10, name: 'optimism' },
+        ],
+        trackedChains: ['ethereum', 'optimism'],
+        interopEventStore: mockObject<InteropEventStore>({ saveNewEvents }),
+      })
+
+      await indexer.update(FROM, FROM + BATCH_SIZE)
+
+      const events = saveNewEvents.calls[0]?.args[0] ?? []
+      expect(
+        events.map((event) => ({
+          type: event.type,
+          args: event.args,
+          chain: event.ctx.chain,
+          txHash: event.ctx.txHash,
+        })),
+      ).toEqual([
+        {
+          type: TokenSent.type,
+          args: {
+            id: 'request-1',
+            amount: '123',
+            token: Address32.from(sourceToken),
+            $dstChain: 'optimism',
+          },
+          chain: 'ethereum',
+          txHash: `0x${'1'.repeat(64)}`,
+        },
+        {
+          type: TokenReceived.type,
+          args: {
+            id: 'request-1',
+            amount: '456',
+            token: Address32.from(destinationToken),
+            $srcChain: 'ethereum',
+          },
+          chain: 'optimism',
+          txHash: `0x${'2'.repeat(64)}`,
+        },
+      ])
+    })
   })
 })
 
@@ -115,17 +198,23 @@ function manyInSameSecond(count: number, second: string) {
   return Array.from({ length: count }, (_, i) => ({
     id: `0x${i}`,
     status: 'success',
-    data: {},
     createdAt: `${second}.000Z`,
     updatedAt: `${second}.${String(i % 1000).padStart(3, '0')}Z`,
   }))
 }
 
-function createIndexer(relayApiClient: RelayApiClient) {
+function createIndexer(
+  relayApiClient: RelayApiClient,
+  options: {
+    chains?: { id: number; name: string }[]
+    trackedChains?: string[]
+    interopEventStore?: InteropEventStore
+  } = {},
+) {
   return new RelayIndexer(
-    [],
+    options.chains ?? [],
     mockObject<InteropConfigStore>({ get: mockFn().returns(undefined) }),
-    ['ethereum'],
+    options.trackedChains ?? ['ethereum'],
     {
       batchSize: BATCH_SIZE,
       maxRequestsPerUpdate: MAX_REQUESTS_PER_UPDATE,
@@ -133,7 +222,7 @@ function createIndexer(relayApiClient: RelayApiClient) {
     },
     relayApiClient,
     mockObject<Database>(),
-    mockObject<InteropEventStore>(),
+    options.interopEventStore ?? mockObject<InteropEventStore>(),
     new RelayRootIndexer(Logger.SILENT, SAFE_TIME_OFFSET),
     mockObject<IndexerService>(),
     Logger.SILENT,

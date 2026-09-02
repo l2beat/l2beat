@@ -272,11 +272,15 @@ export interface InteropFeatureConfig {
     chains: { id: number; name: string }[]
     configIntervalMs: number
   }
-  relay: {
-    batchSize: number
-    maxRequestsPerUpdate: number
-    safeTimeOffset: number
-  }
+  relay:
+    | {
+        apiKey: string
+        batchSize: number
+        callsPerMinute: number
+        maxRequestsPerUpdate: number
+        safeTimeOffset: number
+      }
+    | false
   inMemoryEventCap: number
   oneSidedChains: string[]
 }
