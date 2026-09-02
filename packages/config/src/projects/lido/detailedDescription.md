@@ -2,7 +2,7 @@ Lido is Ethereum’s largest liquid staking protocol. Users deposit ETH and rece
 
 ### Staking and node operators
 
-Deposited ETH is buffered in the Lido contract, then routed by the StakingRouter across four staking modules — the curated Node Operators Registry, Simple DVT, the permissionless Community Staking Module, and the MaxEB Curated Module v2. Withdrawal credentials for pooled validators are set by the router to the protocol’s WithdrawalVault, not by operators, so operators can never redirect user principal. Their misbehavior can only degrade yield (socialized to stETH holders), is increasingly bonded (CSM/CMv2), and their validators can be force-exited via EIP-7002.
+Deposited ETH is buffered in the Lido contract, then routed by the StakingRouter across four staking modules — the curated Node Operators Registry, Simple DVT, the permissionless Community Staking Module, and the MaxEB Curated Module v2. Withdrawal credentials for pooled validators are set by the router to the protocol’s WithdrawalVault, not by operators, so operators can never redirect user principal. Their misbehavior can only degrade yield (socialized to stETH holders), they post a bond in the newer modules (CSM/CMv2), and their validators can be force-exited via EIP-7002.
 
 ![Lido deposit flow](/images/architecture/lido-deposits.png#center)
 
@@ -12,7 +12,7 @@ Because validator balances, exits and slashings live on the consensus layer, Lid
 
 ### Deposits, DSM and withdrawals
 
-New validator deposits flow only through the Deposit Security Module: {{dsmGuardians}} guardians (quorum {{dsmQuorum}}) sign the current deposit root to guard against the deposit-frontrunning attack, and any single guardian can pause deposits. Withdrawals are requested into the WithdrawalQueue (minting an unstETH NFT) and can only be finalized inside the oracle report, paying the lesser of the rate at request time and the report’s share rate.
+New validator deposits flow only through the Deposit Security Module: {{dsmGuardians}} guardians (quorum {{dsmQuorum}}) sign the current deposit root to guard against the [deposit-frontrunning attack](https://hackmd.io/@lido/HJfjMgW56), and any single guardian can pause deposits. Withdrawals are requested into the WithdrawalQueue (minting an unstETH NFT) and can only be finalized inside the oracle report, paying the lesser of the rate at request time and the report’s share rate.
 
 ![Lido withdrawal flow](/images/architecture/lido-withdrawals.png#center)
 
