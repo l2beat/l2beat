@@ -23,7 +23,8 @@
       },
       "permissions": [
         {
-          "type": "member"
+          "type": "interact",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades."
         }
       ],
       "severity": "HIGH",

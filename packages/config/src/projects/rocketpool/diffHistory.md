@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe3ca8e9e9ba1db8c028035b7dd9bc3cf6c0c65cc
+Generated with discovered.json: 0x55a883c0bcdc2e5a8797f86cd1ab95f3556f9821
 
-# Diff at Thu, 27 Aug 2026 07:41:33 GMT:
+# Diff at Wed, 02 Sep 2026 11:22:41 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1787816426
+- current timestamp: 1788348095
 
 ## Description
 
@@ -169,7 +169,7 @@ Initial discovery of Rocket Pool. RocketStorage is the only seed; every other co
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0x6C565aF34f15dE064b56afEdF7B0F59C15bB20FE) [GnosisSafe]
+    contract SecurityCouncilSafe (eth:0x6C565aF34f15dE064b56afEdF7B0F59C15bB20FE) [GnosisSafe]
     +++ description: None
 ```
 
@@ -188,7 +188,7 @@ Initial discovery of Rocket Pool. RocketStorage is the only seed; every other co
 ```diff
 +   Status: CREATED
     contract RocketDAOSecurity (eth:0x84aE6D61Df5c6ba7196b5C76Bcb112B8a689aD37) [rocketpool/RocketDAOSecurity]
-    +++ description: Membership register for the security council. Seats currently filled: 1. Each seat carries one vote and a proposal passes once votes for it reach 0.51. Members post no bond. Membership is set by token-holder governance, not by the council itself.
+    +++ description: Membership register for the security council. Seats currently filled: 1. Each seat carries one vote and a proposal passes once votes for it reach 0.51. Members post no bond. Membership is set by RPL governance, not by the council itself.
 ```
 
 ```diff

@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RocketDAOSecurity",
   "category": "gov",
-  "description": "Membership register for the security council. Seats currently filled: {{ memberCount }}. Each seat carries one vote and a proposal passes once votes for it reach {{ quorumVotes }}. Members post no bond. Membership is set by token-holder governance, not by the council itself.",
+  "description": "Membership register for the security council. Seats currently filled: {{ memberCount }}. Each seat carries one vote and a proposal passes once votes for it reach {{ quorumVotes }}. Members post no bond. Membership is set by RPL governance, not by the council itself.",
   "ignoreMethods": [
     "getMemberAt",
     "getMemberCount",
@@ -17,7 +17,8 @@
       },
       "permissions": [
         {
-          "type": "member"
+          "type": "interact",
+          "description": "a security council seat: can veto a pending contract upgrade while it waits out its delay, and can instantly flip the protocol settings that governance has allowlisted (deposit, registration, and oracle on/off switches)."
         }
       ],
       "severity": "HIGH",

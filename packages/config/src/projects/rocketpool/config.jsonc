@@ -22,6 +22,8 @@
     // Override the two globalTokens display names so the entries keep their
     // contract names, which is what the page description resolves them by.
     "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "RocketTokenRETH",
-    "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": "RocketTokenRPL"
+    "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": "RocketTokenRPL",
+    // The security council's only seat.
+    "eth:0x6C565aF34f15dE064b56afEdF7B0F59C15bB20FE": "SecurityCouncilSafe"
   }
 }
