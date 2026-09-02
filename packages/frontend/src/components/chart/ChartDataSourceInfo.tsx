@@ -23,7 +23,7 @@ export function ChartDataSourceInfo({ dataSource, href, scope }: Props) {
   )
   return (
     <>
-      <div className="font-medium text-2xs text-secondary max-sm:hidden">
+      <div className="font-medium text-2xs text-secondary [overflow-wrap:anywhere] max-sm:hidden">
         Data source: {source}
         {scope ? ` · ${scope}` : null}
       </div>
@@ -37,7 +37,7 @@ export function ChartDataSourceInfo({ dataSource, href, scope }: Props) {
             <DrawerTitle className="font-semibold text-[18px] text-primary">
               Data source
             </DrawerTitle>
-            <DrawerDescription className="font-normal text-primary">
+            <DrawerDescription className="font-normal text-primary [overflow-wrap:anywhere]">
               {source}
               {scope ? ` · ${scope}` : null}
             </DrawerDescription>
