@@ -2,6 +2,7 @@ import { createCallerFactory, router } from '~/server/trpc/trpc'
 import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
+import { defiRouter } from './routers/defi'
 import { interopRouter } from './routers/interop'
 import { livenessRouter } from './routers/liveness'
 import { privacyRouter } from './routers/privacy'
@@ -19,6 +20,7 @@ export const appRouter = router({
   costs: costsRouter,
   tvs: tvsRouter,
   da: daRouter,
+  defi: defiRouter,
   liveness: livenessRouter,
   projects: projectsRouter,
   searchBar: searchBarRouter,

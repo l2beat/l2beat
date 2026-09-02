@@ -10,6 +10,7 @@ import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
@@ -57,9 +58,16 @@ const columns = [
       }
 
       return (
-        <span className="font-medium text-sm">
-          {formatCurrency(value, 'usd')}
-        </span>
+        <TwoRowCell className="text-right">
+          <TwoRowCell.First className="font-medium text-sm">
+            {formatCurrency(value, 'usd')}
+          </TwoRowCell.First>
+          {ctx.row.original.tvlDataSource && (
+            <TwoRowCell.Second>
+              {ctx.row.original.tvlDataSource}
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
       )
     },
     sortUndefined: 'last',

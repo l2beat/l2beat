@@ -24,7 +24,7 @@ import { formatTimestamp } from '~/utils/dates'
 
 interface TvsValueChartDataPoint {
   timestamp: number
-  value: number
+  value: number | null
 }
 
 interface Props {
@@ -121,7 +121,9 @@ function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formatCurrency(Number(entry.value ?? 0), 'usd')}
+                {entry.value === null || entry.value === undefined
+                  ? 'No data'
+                  : formatCurrency(Number(entry.value), 'usd')}
               </span>
             </div>
           )
