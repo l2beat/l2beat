@@ -4458,7 +4458,7 @@
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
   "usedBlockNumbers": { "ethereum": 25882355 },
-  "permissionsConfigHash": "0x070f535745973dea432a8383813f3fa92629b8cb276c8d4a45fd54b737296a33",
+  "permissionsConfigHash": "0x4f0de9cbd2216fa44ba0e0af6270ab4bc9e06c2b7f2e3eca6ed6eaf3747f62d2",
   "permissions": {
     "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438": {
       "receivedPermissions": [
@@ -5385,6 +5385,22 @@
           "via": [
             { "address": "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351" }
           ]
+        }
+      ]
+    },
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
         }
       ]
     },
