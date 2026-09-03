@@ -182,6 +182,7 @@ describe(UpdateDiffer.name, () => {
       const result = updateDiffer.getUpdateDiffs(
         [diff],
         mockObject<EntryParameters[]>(),
+        mockObject<EntryParameters[]>(),
         PROJECT_A,
         timestamp,
         123,
@@ -226,6 +227,7 @@ describe(UpdateDiffer.name, () => {
       const result = updateDiffer.getUpdateDiffs(
         [diff],
         mockObject<EntryParameters[]>(),
+        mockObject<EntryParameters[]>(),
         PROJECT_A,
         timestamp,
         123,
@@ -251,6 +253,7 @@ describe(UpdateDiffer.name, () => {
       string,
       { key: string; before?: string; after?: string },
       string[],
+      string[],
       boolean,
     ][] = [
       [
@@ -259,6 +262,7 @@ describe(UpdateDiffer.name, () => {
           key: 'receivedPermissions',
           after: json([{ permission: 'upgrade' }]),
         },
+        [],
         ['upgrade'],
         true,
       ],
@@ -268,6 +272,7 @@ describe(UpdateDiffer.name, () => {
           key: 'receivedPermissions',
           before: json([{ permission: 'upgrade' }]),
         },
+        ['upgrade'],
         [],
         true,
       ],
@@ -277,6 +282,7 @@ describe(UpdateDiffer.name, () => {
           key: 'receivedPermissions',
           before: json([{ permission: 'interact' }]),
         },
+        ['interact'],
         [],
         false,
       ],
@@ -286,6 +292,7 @@ describe(UpdateDiffer.name, () => {
           key: 'receivedPermissions.1',
           before: json({ permission: 'upgrade' }),
         },
+        ['interact', 'upgrade'],
         ['interact'],
         true,
       ],
@@ -295,6 +302,7 @@ describe(UpdateDiffer.name, () => {
           key: 'receivedPermissions.0',
           before: json({ permission: 'interact' }),
         },
+        ['interact', 'upgrade'],
         ['upgrade'],
         false,
       ],
@@ -304,6 +312,7 @@ describe(UpdateDiffer.name, () => {
           key: 'receivedPermissions.1',
           after: json({ permission: 'upgrade' }),
         },
+        ['interact'],
         ['interact', 'upgrade'],
         true,
       ],
@@ -314,6 +323,7 @@ describe(UpdateDiffer.name, () => {
           before: json('upgrade'),
           after: json('interact'),
         },
+        ['upgrade'],
         ['interact'],
         true,
       ],
@@ -324,6 +334,7 @@ describe(UpdateDiffer.name, () => {
           before: json('interact'),
           after: json('act'),
         },
+        ['interact'],
         ['act'],
         false,
       ],
@@ -335,6 +346,7 @@ describe(UpdateDiffer.name, () => {
           after: json('0xb'),
         },
         ['upgrade'],
+        ['upgrade'],
         true,
       ],
       [
@@ -345,11 +357,12 @@ describe(UpdateDiffer.name, () => {
           after: json('0xb'),
         },
         ['interact'],
+        ['interact'],
         false,
       ],
     ]
 
-    for (const [label, field, latest, expected] of upgradeCases) {
+    for (const [label, field, previous, latest, expected] of upgradeCases) {
       it(`grades an upgrader change: ${label}`, () => {
         const updateDiffer = new UpdateDiffer(
           mockObject<ConfigReader>({
@@ -361,16 +374,19 @@ describe(UpdateDiffer.name, () => {
         )
         const address = ChainSpecificAddress.random()
 
+        const asEntries = (names: string[]) => [
+          mockObject<EntryParameters>({
+            address,
+            receivedPermissions: names.map((permission) =>
+              mockObject<ReceivedPermission>({ permission } as never),
+            ),
+          }),
+        ]
+
         const result = updateDiffer.getUpdateDiffs(
           [{ address, addressType: 'Contract', diff: [field] }],
-          [
-            mockObject<EntryParameters>({
-              address,
-              receivedPermissions: latest.map((permission) =>
-                mockObject<ReceivedPermission>({ permission } as never),
-              ),
-            }),
-          ],
+          asEntries(previous),
+          asEntries(latest),
           PROJECT_A,
           UnixTime.now(),
           123,
@@ -427,6 +443,7 @@ describe(UpdateDiffer.name, () => {
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
+        latestDiscovery.entries,
         latestDiscovery.entries,
         PROJECT_A,
         timestamp,
