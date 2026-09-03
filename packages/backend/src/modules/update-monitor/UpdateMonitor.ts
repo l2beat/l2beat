@@ -72,12 +72,16 @@ export class UpdateMonitor {
     })
 
     const allProjects = this.configReader.readAllDiscoveredProjects()
-    const enabledProjects = shuffle(allProjects).filter(
+    const activeProjects = allProjects.filter(
+      (project) => !this.configReader.readConfig(project).archived,
+    )
+    const enabledProjects = shuffle(activeProjects).filter(
       (project) => !this.disabledProjects.includes(project),
     )
 
     this.logger.info('Processing projects', {
       total: allProjects.length,
+      archived: allProjects.length - activeProjects.length,
       enabled: enabledProjects.length,
       disabled: this.disabledProjects.length,
       disabledProjects: this.disabledProjects,
