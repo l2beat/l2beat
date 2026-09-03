@@ -10,13 +10,6 @@ const discovery = new ProjectDiscovery('wbeth')
 const value = (contract: string, key: string): string =>
   String(discovery.getContractValue<string | number>(contract, key))
 
-// 18-decimals wei string -> whole tokens with thousands separators.
-const whole = (contract: string, key: string): string =>
-  (
-    BigInt(discovery.getContractValue<string>(contract, key)) /
-    10n ** 18n
-  ).toLocaleString('en-US')
-
 // Durations are read raw so the page can spell the unit out; the template
 // keeps its own short-form copy.
 const duration = (contract: string, key: string): string =>
@@ -91,8 +84,6 @@ export const wbeth: BaseProject = {
     description: `${value('wBETH', 'symbol')} is Binance's liquid staking token for ETH staked through the exchange. Onchain, anyone can mint it by depositing ETH at the current exchange rate and redeem it into a queue that pays out after ${duration('UnwrapTokenV1ETH', 'lockTimeSeconds')}, but the ETH does not stay in the contracts: an operator key moves it to a Binance-controlled address and the validators are run and accounted for off-chain. The exchange rate is a single number written by a Binance bot through a rate limiter that allows a cumulative move of ${rateCapPercent} per ${rateCapInterval}; nothing onchain ties it to validator balances. Every role is held by Binance keys: ${adminKeyPhrase}, with no delay, and ${upgradePhrase} instantly.`,
     detailedDescription: readProjectMarkdown('wbeth', 'detailedDescription', {
       symbol: value('wBETH', 'symbol'),
-      exchangeRate: value('wBETH', 'exchangeRate'),
-      totalSupply: whole('wBETH', 'totalSupply'),
       rateCapPercent,
       rateCapInterval,
       oracleCallerCount,
