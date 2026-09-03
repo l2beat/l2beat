@@ -6,6 +6,44 @@ import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 describe(extractPricesAndAmounts.name, () => {
   const ADDRESS = EthereumAddress.random()
+
+  it('should map an aggregate escrow balance to one sync config', () => {
+    const tokenAddress = EthereumAddress(
+      '0x1111111111111111111111111111111111111111',
+    )
+    const escrowAddresses = [
+      EthereumAddress('0x3333333333333333333333333333333333333333'),
+      EthereumAddress('0x2222222222222222222222222222222222222222'),
+    ]
+    const token = mockObject<TvsToken>({
+      priceId: 'price-RAIN',
+      amount: {
+        type: 'balanceOfEscrows',
+        address: tokenAddress,
+        chain: 'arbitrum',
+        escrowAddresses,
+        decimals: 18,
+        sinceTimestamp: UnixTime(100),
+      },
+      valueForProject: undefined,
+      valueForSummary: undefined,
+    })
+
+    const result = extractPricesAndAmounts([token])
+
+    expect(result.amounts).toEqual([
+      {
+        id: '0bfc4b5a383e',
+        type: 'balanceOfEscrows',
+        address: tokenAddress,
+        chain: 'arbitrum',
+        escrowAddresses,
+        decimals: 18,
+        sinceTimestamp: UnixTime(100),
+      },
+    ])
+  })
+
   it('should map amount formulas to sync configs', async () => {
     const tokens = [
       mockObject<TvsToken>({

@@ -57,6 +57,7 @@ function collectAddressesFromFormula(
     case 'totalSupply':
     case 'starknetTotalSupply':
     case 'circulatingSupply':
+    case 'balanceOfEscrows':
       if (formula.address !== 'native') {
         addresses.push({
           address: formula.address,

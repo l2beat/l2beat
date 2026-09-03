@@ -1,5 +1,6 @@
 import type {
   BalanceOfEscrowAmountFormula,
+  BalanceOfEscrowsAmountFormula,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
   StarknetBalanceOfAmountFormula,
@@ -40,6 +41,9 @@ export interface AmountConfigBase {
 export type BalanceOfEscrowAmountConfig = BalanceOfEscrowAmountFormula &
   AmountConfigBase
 
+export type BalanceOfEscrowsAmountConfig = BalanceOfEscrowsAmountFormula &
+  AmountConfigBase
+
 export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
   AmountConfigBase
 
@@ -56,6 +60,7 @@ export type ConstAmountConfig = ConstAmountFormula & AmountConfigBase
 
 export type AmountConfig =
   | BalanceOfEscrowAmountConfig
+  | BalanceOfEscrowsAmountConfig
   | TotalSupplyAmountConfig
   | StarknetTotalSupplyAmountConfig
   | StarknetBalanceOfAmountConfig
@@ -64,6 +69,7 @@ export type AmountConfig =
 
 export type OnchainAmountConfig =
   | BalanceOfEscrowAmountConfig
+  | BalanceOfEscrowsAmountConfig
   | TotalSupplyAmountConfig
   | StarknetTotalSupplyAmountConfig
   | StarknetBalanceOfAmountConfig
@@ -74,6 +80,7 @@ export function isOnchainAmountConfig(
   return (
     config.type === 'totalSupply' ||
     config.type === 'balanceOfEscrow' ||
+    config.type === 'balanceOfEscrows' ||
     config.type === 'starknetTotalSupply' ||
     config.type === 'starknetBalanceOf'
   )

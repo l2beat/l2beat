@@ -53,6 +53,8 @@ function Formula({
     case 'balanceOfEscrow':
     case 'starknetBalanceOf':
       return <BalanceOfEscrow formula={formula} />
+    case 'balanceOfEscrows':
+      return <BalanceOfEscrows formula={formula} />
     case 'circulatingSupply':
       return <CirculatingSupply formula={formula} />
     case 'calculation':
@@ -112,6 +114,26 @@ function BalanceOfEscrow({
     <p>
       Balance of <TokenAddressCell {...formula.addressMeta} /> in{' '}
       <TokenAddressCell {...formula.escrowAddressMeta} />
+    </p>
+  )
+}
+
+function BalanceOfEscrows({
+  formula,
+}: {
+  formula: Extract<
+    ProjectTvsBreakdownTokenEntry['formula'],
+    { type: 'balanceOfEscrows' }
+  >
+}) {
+  const count = formatter.format(formula.escrowAddresses.length)
+  if (formula.addressMeta.address === 'native') {
+    return <p>Combined native balance across {count} addresses</p>
+  }
+  return (
+    <p>
+      Combined balance of <TokenAddressCell {...formula.addressMeta} /> across{' '}
+      {count} addresses
     </p>
   )
 }

@@ -218,7 +218,13 @@ type FormulaWithMeta =
     })
   | (Extract<
       Formula,
-      { type: 'circulatingSupply' | 'totalSupply' | 'starknetTotalSupply' }
+      {
+        type:
+          | 'balanceOfEscrows'
+          | 'circulatingSupply'
+          | 'totalSupply'
+          | 'starknetTotalSupply'
+      }
     > & {
       addressMeta: AddressData
     })
@@ -264,7 +270,8 @@ function withExplorerUrl(
       }
     case 'circulatingSupply':
     case 'totalSupply':
-    case 'starknetTotalSupply': {
+    case 'starknetTotalSupply':
+    case 'balanceOfEscrows': {
       return {
         ...formula,
         addressMeta: processAddress(

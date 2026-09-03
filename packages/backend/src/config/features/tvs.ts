@@ -72,6 +72,7 @@ export async function getTvsConfig(
           case 'circulatingSupply':
             return CirculatingSupplyAmountIndexer.SOURCE()
           case 'balanceOfEscrow':
+          case 'balanceOfEscrows':
           case 'totalSupply':
           case 'starknetTotalSupply':
           case 'starknetBalanceOf':

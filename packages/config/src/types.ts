@@ -1689,6 +1689,29 @@ export const BalanceOfEscrowAmountFormulaSchema = v.object({
   escrowAddress: v.string().transform(EthereumAddress),
 })
 
+export type BalanceOfEscrowsAmountFormula = v.infer<
+  typeof BalanceOfEscrowsAmountFormulaSchema
+>
+export const BalanceOfEscrowsAmountFormulaSchema = v.object({
+  type: v.literal('balanceOfEscrows'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.union([
+    v.string().transform(EthereumAddress),
+    v.literal('native'),
+  ]),
+  decimals: v.number(),
+  escrowAddresses: v
+    .array(v.string().transform(EthereumAddress))
+    .check(
+      (addresses) =>
+        addresses.length > 0 &&
+        new Set(addresses.map((address) => address.toLowerCase())).size ===
+          addresses.length,
+    ),
+})
+
 export type TotalSupplyAmountFormula = v.infer<
   typeof TotalSupplyAmountFormulaSchema
 >
@@ -1751,6 +1774,7 @@ export const ConstAmountFormulaSchema = v.object({
 export type AmountFormula = v.infer<typeof AmountFormulaSchema>
 export const AmountFormulaSchema = v.union([
   BalanceOfEscrowAmountFormulaSchema,
+  BalanceOfEscrowsAmountFormulaSchema,
   TotalSupplyAmountFormulaSchema,
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
@@ -1765,6 +1789,7 @@ export function isAmountFormula(formula: Formula): boolean {
 
 export type OnchainAmountFormula =
   | BalanceOfEscrowAmountFormula
+  | BalanceOfEscrowsAmountFormula
   | TotalSupplyAmountFormula
   | StarknetTotalSupplyAmountFormula
   | StarknetBalanceOfAmountFormula
@@ -1775,6 +1800,7 @@ export function isOnchainAmountFormula(
   return (
     formula.type === 'totalSupply' ||
     formula.type === 'balanceOfEscrow' ||
+    formula.type === 'balanceOfEscrows' ||
     formula.type === 'starknetTotalSupply' ||
     formula.type === 'starknetBalanceOf'
   )
