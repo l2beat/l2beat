@@ -104,7 +104,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
       },
     ])
     expect(graph.nodes[1]?.deployments[0]).toEqual({
-      chain: { name: 'Base', iconUrl: undefined },
+      chain: { id: 'base', name: 'Base', iconUrl: undefined },
       address: '0xb1',
       symbol: 'USDC',
       explorerUrl: 'https://basescan.org/address/0xb1',
