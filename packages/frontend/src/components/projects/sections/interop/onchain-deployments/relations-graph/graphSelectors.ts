@@ -178,7 +178,7 @@ export function getSameChainAlternatives(
     const others = all
       .filter(
         (item) =>
-          item.deployment.chain.name === own.chain.name &&
+          item.deployment.chain.id === own.chain.id &&
           !(
             item.node.id === node.id && item.deployment.address === own.address
           ),

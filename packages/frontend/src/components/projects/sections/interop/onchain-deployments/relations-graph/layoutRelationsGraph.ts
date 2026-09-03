@@ -48,7 +48,7 @@ export function layoutRelationsGraph(
     layers.flatMap((layer, index) => layer.map((node) => [node.id, index])),
   )
   const primaryParent = getPrimaryParents(edges, layerOf)
-  const order = orderWithinLayers(layers, edges, primaryParent)
+  const order = orderWithinLayers(layers, edges, primaryParent, layerOf)
 
   const extent = Math.max(
     0,
@@ -167,12 +167,10 @@ function orderWithinLayers(
   layers: LayoutNode[][],
   edges: LayoutEdge[],
   primaryParent: ReadonlyMap<string, string>,
+  layerOf: ReadonlyMap<string, number>,
 ): Map<string, number> {
   const nodeOf = new Map(layers.flat().map((node) => [node.id, node]))
   const width = (id: string) => nodeOf.get(id)?.width ?? 0
-  const layerOf = new Map(
-    layers.flatMap((layer, index) => layer.map((node) => [node.id, index])),
-  )
 
   const children = new Map<string, string[]>()
   for (const [child, parent] of primaryParent) {
