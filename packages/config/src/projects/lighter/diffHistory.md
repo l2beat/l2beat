@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x91e254945636e1ac539369810b2b598d7f1460ab
+
+# Diff at Thu, 03 Sep 2026 10:46:39 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9f7b07492346f74d16743dd75dd367045293d930 block: 1787738123
+- current timestamp: 1788432281
+
+## Description
+
+New verifier deployed (no sources published yet). Also, 7702 EOA delegation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x0d8be483cc5fa59dfb77bb3b3858ff01fb2ff458dc1e441e34f79ecc6c95858a","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        67
++        68
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x2bdf2a91d1eee5475a67f9eacc65aa114fe720836d91f4ec076ef9e1e19c9675"
++        "0x6a9f25dcb10a9155c210780fa3cb38f68ba814f2a1c593ce45855a2ad56d10b1"
+      values.$implementation:
+-        "eth:0xB1386c4266974D81256afB9908e104B00587112A"
++        "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C"
+      values.getTarget:
+-        "eth:0xB1386c4266974D81256afB9908e104B00587112A"
++        "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C"
+      implementationNames.eth:0xB1386c4266974D81256afB9908e104B00587112A:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                      | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+```
+
 Generated with discovered.json: 0x9b2168889524b4adab2ef07d4899ff6a35ed6608
 
 # Diff at Wed, 26 Aug 2026 09:56:58 GMT:
