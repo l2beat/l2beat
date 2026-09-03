@@ -8710,6 +8710,53 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "arbitrum-sUSDai",
+      "priceId": "susdai",
+      "symbol": "sUSDai",
+      "name": "Staked USDai",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55861/large/sUSDai_Token_Full_Glyph.png?1755229072",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1750982400
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "susdai",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "sinceTimestamp": 1750982400
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usdai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x0A1a1A107E45b7Ced86833863f482BC5f4ed82EF",
+              "chain": "arbitrum",
+              "escrowAddress": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+              "decimals": 18,
+              "sinceTimestamp": 1750982400
+            }
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "arbitrum-sUSDz",
       "priceId": "anzen-staked-usdz",
