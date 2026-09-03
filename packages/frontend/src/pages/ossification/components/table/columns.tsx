@@ -1,8 +1,11 @@
 import type { Sentiment } from '@l2beat/config'
-import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { Badge } from '~/components/badge/Badge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import {
+  ChangeRateValue,
+  ExposureValue,
+  UnverifiedBadge,
+} from '~/components/ossification/OssificationValues'
 import { SentimentText } from '~/components/SentimentText'
 import { ExitWindowCell } from '~/components/table/cells/ExitWindowCell'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
@@ -75,14 +78,7 @@ export const ossificationColumns = [
           <TwoRowCell>
             <TwoRowCell.First className="flex items-center">
               <span className="tabular-nums">0</span>
-              <Badge
-                type="error"
-                size="extraSmall"
-                padding="small"
-                className="ml-1.5 uppercase"
-              >
-                Unverified
-              </Badge>
+              <UnverifiedBadge className="ml-1.5" />
             </TwoRowCell.First>
             {sinceLine}
           </TwoRowCell>
@@ -127,16 +123,7 @@ export const ossificationColumns = [
   columnHelper.accessor((entry) => entry.exposure ?? undefined, {
     id: 'exposure',
     header: 'Battle-tested\nexposure',
-    cell: (ctx) => {
-      const exposure = ctx.row.original.exposure
-      if (exposure === null) return <NotApplicableBadge />
-      return (
-        <span className="tabular-nums">
-          {formatCurrency(exposure, 'usd')}
-          <span className="ml-0.5 text-secondary text-xs">·years</span>
-        </span>
-      )
-    },
+    cell: (ctx) => <ExposureValue exposure={ctx.row.original.exposure} />,
     meta: {
       tooltip:
         'Value secured summed up over the ossified period — the implicit bug bounty the code has withstood, in dollar-years (Example: 6 months of constant 10M TVS without critical code changes gives a value of 5M, 3 years give 30M).',
@@ -150,12 +137,11 @@ export const ossificationColumns = [
       const contractCount = ctx.row.original.contractCount
       return (
         <TwoRowCell>
-          <TwoRowCell.First className="tabular-nums">
-            {ctx.row.original.clusteredEventCount === 0
-              ? '0'
-              : ctx.getValue() >= 10
-                ? ctx.getValue().toFixed(0)
-                : ctx.getValue().toFixed(1)}
+          <TwoRowCell.First>
+            <ChangeRateValue
+              rate={ctx.getValue()}
+              eventCount={ctx.row.original.clusteredEventCount}
+            />
           </TwoRowCell.First>
           <TwoRowCell.Second className="mt-0.5">
             {`across ${contractCount} ${contractCount === 1 ? 'contract' : 'contracts'}`}

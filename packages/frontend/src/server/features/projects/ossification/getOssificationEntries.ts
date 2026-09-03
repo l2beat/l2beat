@@ -45,30 +45,18 @@ export async function getOssificationEntries(): Promise<
         project.id,
         project.ossificationInfo,
       )
+      const section = getSection(project)
 
       return {
         slug: project.slug,
         name: project.name,
         shortName: project.shortName,
         description: project.display.description,
-        category: project.scalingInfo
-          ? project.scalingInfo.layer === 'layer3'
-            ? 'Layer 3'
-            : 'Layer 2'
-          : project.privacyInfo
-            ? 'Privacy'
-            : project.defiInfo
-              ? 'DeFi'
-              : undefined,
+        category: section?.category,
         isUnderReview: !!project.statuses.reviewStatus,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: project.scalingInfo
-          ? `/layer2s/projects/${project.slug}#ossification`
-          : project.privacyInfo
-            ? `/privacy/projects/${project.slug}#ossification`
-            : project.defiInfo
-              ? `/defi/projects/${project.slug}#ossification`
-              : undefined,
+        href:
+          section && `/${section.path}/projects/${project.slug}#ossification`,
         score: ossification.score,
         isUnverified: ossification.contracts.some(
           (contract) => !contract.isVerified,
@@ -89,4 +77,23 @@ export async function getOssificationEntries(): Promise<
   return entries.sort(
     (a, b) => b.score - a.score || (b.exposure ?? 0) - (a.exposure ?? 0),
   )
+}
+
+/** Which part of the site the project lives in; the table mixes them. */
+function getSection(project: {
+  scalingInfo?: { layer: string }
+  privacyInfo?: unknown
+  defiInfo?: unknown
+}):
+  | { path: string; category: OssificationSummaryEntry['category'] }
+  | undefined {
+  if (project.scalingInfo) {
+    return {
+      path: 'layer2s',
+      category: project.scalingInfo.layer === 'layer3' ? 'Layer 3' : 'Layer 2',
+    }
+  }
+  if (project.privacyInfo) return { path: 'privacy', category: 'Privacy' }
+  if (project.defiInfo) return { path: 'defi', category: 'DeFi' }
+  return undefined
 }

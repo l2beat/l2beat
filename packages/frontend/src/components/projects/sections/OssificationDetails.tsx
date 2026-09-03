@@ -1,8 +1,21 @@
 import type { OssificationContractBreakdown } from '@l2beat/shared'
-import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
-import { Badge } from '~/components/badge/Badge'
+import { formatSeconds } from '@l2beat/shared-pure'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import {
+  ChangeRateValue,
+  ExposureValue,
+  UnverifiedBadge,
+} from '~/components/ossification/OssificationValues'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableHeaderRow,
+  TableRow,
+} from '~/components/table/Table'
 import type { ProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 
 export interface OssificationDetailsProps {
@@ -29,19 +42,12 @@ export function OssificationDetails({
           over that unchanged period — the implicit bug bounty the code has
           withstood.
         </p>
-        <ChartStats className="md:grid-cols-2 lg:grid-cols-4">
+        <ChartStats>
           <ChartStatsItem label="Ossification %" className="max-md:h-7">
             <span className="tabular-nums">{ossification.score}</span>
           </ChartStatsItem>
           <ChartStatsItem label="Battle-tested exposure" className="max-md:h-7">
-            {ossification.exposure !== null ? (
-              <span className="tabular-nums">
-                {formatCurrency(ossification.exposure, 'usd')}
-                <span className="ml-0.5 text-secondary text-xs">·years</span>
-              </span>
-            ) : (
-              <NotApplicableBadge />
-            )}
+            <ExposureValue exposure={ossification.exposure} />
           </ChartStatsItem>
           <ChartStatsItem label="Last change" className="max-md:h-7">
             {`${formatSeconds(ossification.projectAgeSeconds)} ago`}
@@ -50,13 +56,10 @@ export function OssificationDetails({
             label="Critical changes / year"
             className="max-md:h-7"
           >
-            {ossification.clusteredEventCount === 0 ? (
-              '0'
-            ) : (
-              <span className="tabular-nums">
-                {formatRate(ossification.criticalChangesPerYear)}
-              </span>
-            )}
+            <ChangeRateValue
+              rate={ossification.criticalChangesPerYear}
+              eventCount={ossification.clusteredEventCount}
+            />
           </ChartStatsItem>
         </ChartStats>
         <ContractBreakdownTable contracts={ossification.contracts} />
@@ -76,59 +79,41 @@ function ContractBreakdownTable({
         Per-contract breakdown ({contracts.length}{' '}
         {contracts.length === 1 ? 'contract' : 'contracts'})
       </summary>
-      <div className="overflow-x-auto border-divider border-t">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left text-2xs text-secondary uppercase">
-              <th className="px-4 py-2 font-medium">Contract</th>
-              <th className="px-4 py-2 text-right font-medium">Age</th>
-              <th className="px-4 py-2 text-right font-medium">Code changes</th>
-              <th className="px-4 py-2 text-right font-medium">
-                State changes
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className="border-divider border-t">
+        <Table>
+          <TableHeader>
+            <TableHeaderRow>
+              <TableHead>Contract</TableHead>
+              <TableHead align="right">Age</TableHead>
+              <TableHead align="right">Code changes</TableHead>
+              <TableHead align="right">State changes</TableHead>
+            </TableHeaderRow>
+          </TableHeader>
+          <TableBody>
             {contracts.map((contract) => (
-              <tr
-                key={contract.address}
-                className="border-divider border-t text-primary"
-              >
-                <td className="px-4 py-2">
-                  <span className="font-medium">{contract.name}</span>
-                  {!contract.isVerified && (
-                    <Badge
-                      type="error"
-                      size="extraSmall"
-                      padding="small"
-                      className="ml-2 uppercase"
-                    >
-                      Unverified
-                    </Badge>
-                  )}
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-right tabular-nums">
+              <TableRow key={contract.address} highlightId={undefined}>
+                <TableCell className="font-medium">
+                  {contract.name}
+                  {!contract.isVerified && <UnverifiedBadge className="ml-2" />}
+                </TableCell>
+                <TableCell align="right" className="tabular-nums">
                   {contract.ageSeconds !== null ? (
                     formatSeconds(contract.ageSeconds)
                   ) : (
                     <NotApplicableBadge />
                   )}
-                </td>
-                <td className="px-4 py-2 text-right tabular-nums">
+                </TableCell>
+                <TableCell align="right" className="tabular-nums">
                   {contract.codeChangeCount}
-                </td>
-                <td className="px-4 py-2 text-right tabular-nums">
+                </TableCell>
+                <TableCell align="right" className="tabular-nums">
                   {contract.stateChangeCount}
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </details>
   )
-}
-
-function formatRate(rate: number): string {
-  return rate >= 10 ? rate.toFixed(0) : rate.toFixed(1)
 }

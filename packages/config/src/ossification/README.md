@@ -9,9 +9,11 @@ has remained unchanged.
   within the published exploit-age curve — the share of recorded code-bug
   exploits whose exploited code was younger. Incident research and curve
   construction live in the standalone `ossification-dataset` repository
-  (`dist/latest/curve.json`, validated against
-  `schema/release-curve.schema.json`); `packages/shared/src/ossification/ossificationCurve.ts`
-  is its generated runtime projection, stamped with the source dataset commit.
+  (`dist/latest/incidents.json`, one curve row per reviewed incident, validated
+  against `schema/release-incidents.schema.json`);
+  `packages/shared/src/ossification/ossificationCurve.ts` is its generated
+  runtime projection (the rows' `codeAgeSeconds`), stamped with the source
+  dataset commit.
   Regenerate with `l2b ossification curve`, verify with `--check`.
 - **Last change:** age of the project clock. The clock starts at the newest
   deployment or qualifying change in the current perimeter.
