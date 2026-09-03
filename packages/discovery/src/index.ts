@@ -77,6 +77,7 @@ export {
   type DiscoveryDiff,
   diffDiscovery,
   entriesForDiff,
+  entriesForDiffPair,
 } from './discovery/output/diffDiscovery'
 export {
   contractDiffToMarkdown,

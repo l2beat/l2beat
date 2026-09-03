@@ -15,7 +15,7 @@ import {
   DiscoveryRegistry,
   diffDiscovery,
   discoveryDiffToMarkdown,
-  entriesForDiff,
+  entriesForDiffPair,
   getDiscoveryPaths,
   modelPermissions,
   TemplateService,
@@ -104,19 +104,18 @@ export async function updateDiffHistoryForChain(
     )
     codeDiff = rerun.codeDiff
 
-    const prevEntries = entriesForDiff(rerun.prevDiscovery)
-    diff = diffDiscovery(prevEntries, entriesForDiff(curDiscovery))
+    diff = diffDiscovery(
+      ...entriesForDiffPair(rerun.prevDiscovery, curDiscovery),
+    )
     configRelatedDiff = diffDiscovery(
-      entriesForDiff(discoveryFromMainBranch),
-      prevEntries,
+      ...entriesForDiffPair(discoveryFromMainBranch, rerun.prevDiscovery),
     )
   } else {
     logger.info(
       'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
-      entriesForDiff(discoveryFromMainBranch),
-      entriesForDiff(curDiscovery),
+      ...entriesForDiffPair(discoveryFromMainBranch, curDiscovery),
     )
   }
 
