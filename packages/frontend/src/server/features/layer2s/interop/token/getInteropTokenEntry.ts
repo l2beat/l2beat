@@ -4,21 +4,10 @@ import type { InteropTokenOnchainDeploymentsRow } from '~/components/projects/se
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { getLogger } from '~/server/utils/logger'
-import {
-  aggregatePairStats,
-  deploymentPairKey,
-  type InteropTokenStats,
-  NO_STATS,
-  pairSideKey,
-  pickStats,
-} from '../utils/aggregatePairStats'
 import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
 import { toInteropProjectIconListItems } from '../utils/toInteropProjectIconListItem'
-import {
-  type ChainDisplayInfoMap,
-  getChainDisplayInfo,
-  getExplorerAddressUrl,
-} from './getChainDisplayInfo'
+import { deploymentKey } from './buildTokenRelationsGraph'
+import { getChainDisplayInfo } from './getChainDisplayInfo'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import type { InteropTokenRelations } from './getInteropTokenRelations'
 import {
@@ -67,9 +56,6 @@ export function getInteropTokenEntry(
       projectsWithChains,
     )
     const resolveProjects = createInteropProjectResolver(interopProjects)
-    const deploymentStats =
-      relations.pairStats &&
-      aggregatePairStats(relations.pairStats, pairSideKey)
     const relationsGraph = getInteropTokenRelationsGraph(
       tokenId,
       deployments,
@@ -77,22 +63,30 @@ export function getInteropTokenEntry(
       chainInfoMap,
       resolveProjects,
     )
+    const byKey = new Map(deployments.map((d) => [deploymentKey(d), d]))
     sections.push({
       type: 'InteropTokenOnchainDeploymentsSection',
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
-        deployments: deployments
-          .map((deployment) =>
-            toDeploymentRow(
-              deployment,
-              chainInfoMap,
-              resolveMinters(deployment, tokenId, resolveProjects),
-              deployment.isSupported
-                ? pickStats(deploymentStats, deploymentPairKey(deployment))
-                : NO_STATS,
-            ),
-          )
+        deployments: relationsGraph.nodes
+          .flatMap((node) => node.deployments)
+          .flatMap((deployment) => {
+            const source = byKey.get(
+              deploymentKey({
+                chain: deployment.chain.id,
+                address: deployment.address,
+              }),
+            )
+            if (!source) return []
+            return [
+              {
+                ...deployment,
+                minters: resolveMinters(source, tokenId, resolveProjects),
+                isSupported: source.isSupported,
+              },
+            ]
+          })
           .sort(
             (a, b) =>
               (b.volume ?? -1) - (a.volume ?? -1) ||
@@ -157,25 +151,4 @@ function resolveMinters(
   )
 
   return toInteropProjectIconListItems(projects)
-}
-
-function toDeploymentRow(
-  deployment: InteropTokenOnchainDeployment,
-  chainInfoMap: ChainDisplayInfoMap,
-  minters: InteropTokenOnchainDeploymentsRow['minters'],
-  stats: InteropTokenStats,
-): InteropTokenOnchainDeploymentsRow {
-  const chain = chainInfoMap.get(deployment.chain)
-  return {
-    chain: {
-      name: chain?.name ?? deployment.chain,
-      iconUrl: chain?.iconUrl,
-    },
-    address: deployment.address,
-    explorerUrl: getExplorerAddressUrl(chain, deployment.address),
-    symbol: deployment.symbol,
-    minters,
-    isSupported: deployment.isSupported,
-    ...stats,
-  }
 }

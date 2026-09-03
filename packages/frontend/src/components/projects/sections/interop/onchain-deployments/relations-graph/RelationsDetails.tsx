@@ -29,7 +29,7 @@ import {
   isCluster,
   type RelationsPath,
 } from './graphSelectors'
-import { shortAddress } from './RelationsNode'
+import { shortAddress, Volume } from './RelationsNode'
 
 const MAX_BACKING_PATHS = 2
 const MAX_BACKED_PATHS = 3
@@ -67,7 +67,7 @@ export function RelationsDetails({
             <span className="-space-x-2 flex shrink-0">
               {node.deployments.slice(0, 3).map((deployment) => (
                 <span
-                  key={`${deployment.chain.name}|${deployment.address}`}
+                  key={`${deployment.chain.id}|${deployment.address}`}
                   className="rounded-full border-2 border-surface-primary bg-surface-primary"
                 >
                   <ChainIcon iconUrl={deployment.chain.iconUrl} alt="" />
@@ -120,7 +120,7 @@ export function RelationsDetails({
           <ul className="divide-y divide-divider">
             {node.deployments.map((deployment) => (
               <li
-                key={`${deployment.chain.name}|${deployment.address}`}
+                key={`${deployment.chain.id}|${deployment.address}`}
                 className="flex items-center justify-between gap-2 py-2 text-label-value-13"
               >
                 <span className="flex min-w-0 items-center gap-1.5">
@@ -128,7 +128,7 @@ export function RelationsDetails({
                   <span className="truncate">{deployment.chain.name}</span>
                   <Address deployment={deployment} />
                 </span>
-                <Volume value={deployment.volume} />
+                <Volume value={deployment.volume} className="font-medium" />
               </li>
             ))}
           </ul>
@@ -183,7 +183,7 @@ export function RelationsDetails({
       </Section>
 
       {details.alternatives.map((group) => (
-        <Section key={group.chain.name} title={`Also on ${group.chain.name}`}>
+        <Section key={group.chain.id} title={`Also on ${group.chain.name}`}>
           <ul className="divide-y divide-divider">
             {group.others.map(({ node: other, deployment }) => (
               <li
@@ -202,7 +202,7 @@ export function RelationsDetails({
                     bridges={getMinters(graph, other)}
                   />
                 </span>
-                <Volume value={deployment.volume} />
+                <Volume value={deployment.volume} className="font-medium" />
               </li>
             ))}
           </ul>
@@ -409,14 +409,6 @@ function Address({
   ) : (
     <span className={cn('text-label-value-12 text-secondary', className)}>
       {label}
-    </span>
-  )
-}
-
-function Volume({ value }: { value: number | null }) {
-  return (
-    <span className="shrink-0 font-medium tabular-nums">
-      {value === null ? '—' : formatCurrency(value, 'usd')}
     </span>
   )
 }

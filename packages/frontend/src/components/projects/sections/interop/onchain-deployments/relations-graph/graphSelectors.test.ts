@@ -90,7 +90,7 @@ function node(
     avgDuration: null,
     bridges: [],
     deployments: deployments.map(([chain, address, volume]) => ({
-      chain: { name: chain, iconUrl: undefined },
+      chain: { id: chain, name: chain, iconUrl: undefined },
       address,
       symbol: 'USDC',
       explorerUrl: undefined,
