@@ -15,6 +15,9 @@ CREATE TABLE "PrivacyAnonymitySetEvent" (
 );
 
 -- CreateIndex
+CREATE INDEX "PrivacyAnonymitySetEvent_projectId_timestamp_idx" ON "PrivacyAnonymitySetEvent"("projectId", "timestamp");
+
+-- CreateIndex
 CREATE INDEX "PrivacyAnonymitySetEvent_projectId_bucketId_timestamp_idx" ON "PrivacyAnonymitySetEvent"("projectId", "bucketId", "timestamp");
 
 -- CreateIndex

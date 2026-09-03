@@ -329,6 +329,7 @@ model PrivacyAnonymitySetEvent {
   amount          Decimal  @db.Decimal(80, 0)
 
   @@id([configurationId, txHash, logIndex])
+  @@index([projectId, timestamp])
   @@index([projectId, bucketId, timestamp])
   @@index([configurationId, blockNumber])
   @@index([configurationId, timestamp])
