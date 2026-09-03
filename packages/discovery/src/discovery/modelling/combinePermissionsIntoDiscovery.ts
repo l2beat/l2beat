@@ -6,6 +6,7 @@ import type {
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
+import { getReachableEntries } from '../utils/reachable'
 
 // Permissions are stored outside `entries`, in one map keyed by the address
 // that holds them, so that an entry stays a description of a contract and
@@ -48,14 +49,47 @@ export function combinePermissionsIntoDiscovery(
     byAddress[receiver] = permissionEntry
   }
 
+  const reachable = reachableFromEntrypoints(
+    discovery,
+    clusterEntries,
+    byAddress,
+  )
+
   const sorted: Record<string, PermissionEntry> = {}
   for (const address of Object.keys(byAddress).sort()) {
+    if (!reachable.has(address)) {
+      continue
+    }
     const permissionEntry = byAddress[address]
     assert(permissionEntry !== undefined)
     sorted[address] = permissionEntry
   }
 
   discovery.permissions = Object.keys(sorted).length === 0 ? undefined : sorted
+}
+
+// A reference points at one specific deployment inside a shared module, not at
+// everything else that module discovered, so a project holds only the part of
+// the cluster its own entrypoints reach. This is the same filter the read side
+// applies in ProjectDiscovery: storing more than that would store what nothing
+// ever shows.
+function reachableFromEntrypoints(
+  discovery: DiscoveryOutput,
+  clusterEntries: EntryParameters[],
+  byAddress: Record<string, PermissionEntry>,
+): Set<string> {
+  // Reachability walks issued permissions, so they have to be on the entries
+  // before it runs. The copy keeps them off the entries that get written.
+  const withPermissions = clusterEntries
+    .filter((entry) => entry.type !== 'Reference')
+    .map((entry) => ({ ...entry, ...(byAddress[entry.address] ?? {}) }))
+
+  const entrypoints = discovery.entries.map((entry) => entry.address)
+  return new Set(
+    getReachableEntries(withPermissions, entrypoints).map((entry) =>
+      entry.address.toString(),
+    ),
+  )
 }
 
 function buildPermissionEntry(
