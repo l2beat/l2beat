@@ -46,6 +46,14 @@ export interface InteropTokenRelationsGraph {
   edges: InteropTokenRelationsEdge[]
 }
 
+/** Something to draw: an edge, or a cluster of deployments. */
+export function hasTokenRelations(graph: InteropTokenRelationsGraph): boolean {
+  return (
+    graph.edges.length > 0 ||
+    graph.nodes.some((node) => node.deployments.length > 1)
+  )
+}
+
 export function getInteropTokenRelationsGraph(
   tokenId: string,
   deployments: InteropTokenOnchainDeployment[],
@@ -87,7 +95,9 @@ export function getInteropTokenRelationsGraph(
   return {
     nodes: graph.nodes.map((node) => ({
       id: node.id,
-      ...pickStats(nodeStats, node.id),
+      ...(node.members.some((member) => member.isSupported)
+        ? pickStats(nodeStats, node.id)
+        : NO_STATS),
       bridges: resolveBridges(node.sources),
       deployments: node.members
         .map((deployment) => {
