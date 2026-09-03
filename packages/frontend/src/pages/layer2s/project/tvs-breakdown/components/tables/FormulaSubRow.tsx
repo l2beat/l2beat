@@ -126,7 +126,7 @@ function BalanceOfEscrows({
     { type: 'balanceOfEscrows' }
   >
 }) {
-  const count = formatter.format(formula.escrowAddresses.length)
+  const count = formatter.format(formula.escrowCount)
   if (formula.addressMeta.address === 'native') {
     return <p>Combined native balance across {count} addresses</p>
   }
