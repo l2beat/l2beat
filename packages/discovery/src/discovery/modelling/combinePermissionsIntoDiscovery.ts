@@ -206,7 +206,13 @@ function upgradesCriticalContract(
       ?.filter((p) => p.permission === 'upgrade')
       .map((p) => p.from) ?? []
   return upgradeTargets.some((target) => {
-    const targetEntry = clusterEntries.find((e) => e.address === target)
+    // Skipping stubs for the same reason reachability does: a project carries a
+    // Reference for an address its module owns in full, the stub has no
+    // `category`, and no category reads as critical. Whichever copy came first
+    // would otherwise decide, which is alphabetical order by project name.
+    const targetEntry = clusterEntries.find(
+      (e) => e.address === target && e.type !== 'Reference',
+    )
     if (targetEntry === undefined) return false
     return (
       targetEntry.category === undefined || targetEntry.category.priority > 0
@@ -214,7 +220,10 @@ function upgradesCriticalContract(
   })
 }
 
-// Temporary reversal of via for backwards compatibility
+// Temporary reversal of via for backwards compatibility.
+// Copies before reversing: the array belongs to the caller's PermissionsOutput,
+// and reversing in place would both mutate the model output and corrupt any
+// earlier result that stored the same array.
 function reverseVia(p: ReceivedPermission[]) {
   return p.map((p) => {
     const { via, ...rest } = p
@@ -223,7 +232,7 @@ function reverseVia(p: ReceivedPermission[]) {
     }
     return {
       ...rest,
-      via: via.reverse(),
+      via: [...via].reverse(),
     }
   })
 }
