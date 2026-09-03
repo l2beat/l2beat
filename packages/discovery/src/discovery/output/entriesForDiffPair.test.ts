@@ -41,19 +41,6 @@ describe(entriesForDiffPair.name, () => {
     })
   })
 
-  it('surfaces a changed permission of an external holder', () => {
-    const before = output([contract(TIMELOCK)], {
-      [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
-    })
-    const after = output([contract(TIMELOCK)], {})
-
-    const diff = diffDiscovery(...entriesForDiffPair(before, after))
-
-    expect(diff.length).toEqual(1)
-    expect(diff.at(0)?.address).toEqual(COUNCIL)
-    expect(diff.at(0)?.addressType).toEqual('Reference')
-  })
-
   // The first cross-project permission is the case the whole cluster modelling
   // exists to surface. Reported as a created entry it carries no field diffs,
   // and both the web feed and the ultimate-upgrader detection look for a
@@ -81,7 +68,11 @@ describe(entriesForDiffPair.name, () => {
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
     expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.address).toEqual(COUNCIL)
     expect(diff.at(0)?.type).toEqual(undefined)
+    // Rendered as `external contract`, so the reader can tell it apart from
+    // something this project discovered itself.
+    expect(diff.at(0)?.addressType).toEqual('Reference')
   })
 
   it('says nothing when the external holder is unchanged', () => {
