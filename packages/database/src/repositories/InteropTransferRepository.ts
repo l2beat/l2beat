@@ -124,6 +124,16 @@ export interface InteropTransferTokenAddress {
   address: string
 }
 
+export interface InteropTransferDeployedTokenPairStats {
+  /** Absent when that side of the transfer is not the abstract token. */
+  src?: InteropTransferTokenAddress
+  dst?: InteropTransferTokenAddress
+  transferCount: number
+  transfersWithDurationCount: number
+  totalDurationSum: number
+  volume: number
+}
+
 export interface InteropTransferTokenAddressBatch {
   latestSerialId: string | undefined
   transferCount: number
@@ -966,6 +976,61 @@ export class InteropTransferRepository extends BaseRepository {
         dstValueSum: Number(chain.dstValueSum),
       }
     })
+  }
+
+  /**
+   * Transfers of the abstract token in the range, aggregated per pair of
+   * deployed tokens. A side is kept only when it is the abstract token, so a
+   * swap out of it, or a side not yet assigned, still counts for the other
+   * side. Volume values a transfer like `getInteropTransferValue`.
+   */
+  async getDeployedTokenPairStats(
+    abstractTokenId: string,
+    timeRange: InteropTransferTimeRange,
+  ): Promise<InteropTransferDeployedTokenPairStats[]> {
+    const from = UnixTime.toDate(timeRange.from)
+    const to = UnixTime.toDate(timeRange.to)
+    const result = await sql<{
+      srcChain: string | null
+      srcTokenAddress: string | null
+      dstChain: string | null
+      dstTokenAddress: string | null
+      transferCount: string
+      transfersWithDurationCount: string
+      totalDurationSum: string
+      volume: number
+    }>`
+      SELECT
+        CASE WHEN "srcAbstractTokenId" = ${abstractTokenId} THEN "srcChain" END AS "srcChain",
+        CASE WHEN "srcAbstractTokenId" = ${abstractTokenId} THEN "srcTokenAddress" END AS "srcTokenAddress",
+        CASE WHEN "dstAbstractTokenId" = ${abstractTokenId} THEN "dstChain" END AS "dstChain",
+        CASE WHEN "dstAbstractTokenId" = ${abstractTokenId} THEN "dstTokenAddress" END AS "dstTokenAddress",
+        COUNT(*) AS "transferCount",
+        COUNT("duration") AS "transfersWithDurationCount",
+        COALESCE(SUM("duration"), 0) AS "totalDurationSum",
+        COALESCE(SUM(GREATEST("srcValueUsd", "dstValueUsd")), 0) AS "volume"
+      FROM "InteropTransfer"
+      WHERE "timestamp" > ${from}
+        AND "timestamp" <= ${to}
+        AND (
+          "srcAbstractTokenId" = ${abstractTokenId}
+          OR "dstAbstractTokenId" = ${abstractTokenId}
+        )
+      GROUP BY 1, 2, 3, 4
+    `.execute(this.db)
+
+    return result.rows.map((row) => ({
+      ...(row.srcChain && row.srcTokenAddress
+        ? { src: { chain: row.srcChain, address: row.srcTokenAddress } }
+        : {}),
+      ...(row.dstChain && row.dstTokenAddress
+        ? { dst: { chain: row.dstChain, address: row.dstTokenAddress } }
+        : {}),
+      transferCount: Number(row.transferCount),
+      transfersWithDurationCount: Number(row.transfersWithDurationCount),
+      totalDurationSum: Number(row.totalDurationSum),
+      volume: Number(row.volume),
+    }))
   }
 
   async getExistingItems(
