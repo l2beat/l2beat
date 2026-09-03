@@ -2215,6 +2215,17 @@
       "deploymentTimestamp": 1778003991
     },
     {
+      // Freely transferable Midas RWA token. It can be issued locally through
+      // Midas deposit vaults and moved crosschain through a mint/burn OFT adapter.
+      "symbol": "mGLO",
+      "address": "0xFEd493F38c1aAcb4EA4e6A11F8b9287849EE0096",
+      "coingeckoId": "midas-fasanara-global-open",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1781694120
+    },
+    {
       // Bridged in via LayerZero OFT (same deterministic Ethena address as on
       // base/arbitrum/etc.) -> external, matching every other chain's USDe entry.
       "symbol": "USDe",
@@ -2244,6 +2255,36 @@
       "category": "other",
       // manual override: robinhood public RPC is non-archival. Creation block 88836.
       "deploymentTimestamp": 1781812885
+    },
+    {
+      // Fixed supply with economic burns sent to 0x0000...dEaD. The generated
+      // circulating-supply formula is overridden by a custom onchain TVS formula.
+      "symbol": "PONS",
+      "address": "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+      "coingeckoId": "pons",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "category": "other",
+      "deploymentTimestamp": 1783975341
+    },
+    {
+      // Native RAM is locked in the HyperEVM LayerZero adapter and represented
+      // by a direct OFT on Robinhood Chain.
+      "symbol": "RAM",
+      "address": "0x5173D45A1191eE33cBB7D8c7e65f21B04eD54802",
+      "coingeckoId": "ramses",
+      "source": "external",
+      "supply": "totalSupply",
+      "category": "other",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1786745882
     },
     {
       "symbol": "ETH",
@@ -2817,6 +2858,17 @@
       "category": "stablecoin",
       "source": "canonical",
       "supply": "totalSupply"
+    },
+    {
+      // Arbitrum is the home deployment. Bridged sUSDai supply is tracked
+      // separately by the vault and is not included in ERC20 totalSupply().
+      "symbol": "sUSDai",
+      "coingeckoId": "susdai",
+      "address": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply",
+      "deploymentTimestamp": 1747128540
     },
     {
       "symbol": "CHIP",
@@ -3878,6 +3930,25 @@
   ],
   "optimism": [
     {
+      // Optimism representation of EURC locked on Ethereum and minted through
+      // LayerZero v2 OFT. Track the locally minted supply.
+      "symbol": "EURC",
+      "coingeckoId": "euro-coin",
+      "address": "0xdcb612005417dc906ff72c87df732e5a90d49e11",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1772654040
+    },
+    {
       "symbol": "USDS",
       "coingeckoId": "usds",
       "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
@@ -4339,6 +4410,17 @@
   ],
   "base": [
     {
+      // Freely transferable Midas RWA token. It can be issued locally through
+      // Midas deposit vaults and moved crosschain through a mint/burn OFT adapter.
+      "symbol": "mGLO",
+      "address": "0xfcc9cc1209651ed8867332d6f664cf82743a2584",
+      "coingeckoId": "midas-fasanara-global-open",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1781524689
+    },
+    {
       "symbol": "USDS",
       "coingeckoId": "usds",
       "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
@@ -4353,6 +4435,52 @@
       "category": "stablecoin",
       "source": "canonical",
       "supply": "totalSupply"
+    },
+    {
+      // CCIP mint/burn representation of Ethereum syrupUSDC.
+      "symbol": "syrupUSDC",
+      "coingeckoId": "syrupusdc",
+      "address": "0x660975730059246A68521a3e2FBD4740173100f5",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1753206240
+    },
+    {
+      // Base Solana Bridge representation of native SOL locked on Solana.
+      "symbol": "SOL",
+      "coingeckoId": "solana",
+      "address": "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Base Solana Bridge",
+            "slug": "basesolbridge"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1764174960
+    },
+    {
+      // Base-native B20 launchpad token with a 1B supply cap.
+      "symbol": "Basecat",
+      "coingeckoId": "basecat",
+      "address": "0xB2000000000000000000004c27f6523082f41D01",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1786817029
     },
     {
       "symbol": "BENJI",
@@ -7629,6 +7757,25 @@
   ],
   "ink": [
     {
+      // Paxos-backed USDG represented on Ink through a LayerZero v2 mint/burn
+      // OFT. Track the locally minted supply.
+      "symbol": "USDG",
+      "address": "0xe343167631d89b6ffc58b88d6b7fb0228795491d",
+      "coingeckoId": "global-dollar",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1744826220
+    },
+    {
       "symbol": "kBTC",
       "category": "btc",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
@@ -7641,6 +7788,23 @@
           }
         ]
       }
+    },
+    {
+      // Circle-issued native USDC, moved crosschain through CCTP.
+      "symbol": "USDC",
+      "address": "0x2D270e6886d130D724215A266106e6832161EAEd",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1755799176
     },
     {
       "symbol": "USD₮0",
