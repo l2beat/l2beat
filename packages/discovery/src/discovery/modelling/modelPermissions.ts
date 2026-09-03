@@ -208,8 +208,12 @@ export async function modelPermissionFactsUsingClingo(
 
   const result = facts.map(parseClingoFact)
 
-  // Scoped to this project: a change inside a shared module must not turn
-  // every consumer red, that drift is surfaced rather than blocked.
+  // Scoped to the clingo generated for this project, which keeps most shared
+  // module churn out of it. Not fully insulated though: that clingo is written
+  // against the cluster's address map, so a module that starts or stops
+  // discovering an address this project's values mention does change the hash
+  // and does turn this project red. The fix is `l2b model-permissions`, which
+  // is offline, so the trade is accepted.
   const ownClingo = clingoByProject[project]
   assert(ownClingo !== undefined, `No clingo generated for ${project}.`)
   const permissionsConfigHash = generatePermissionConfigHash(ownClingo)
