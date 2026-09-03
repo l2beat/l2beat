@@ -1,6 +1,6 @@
 {
   "name": "fluent",
-  "timestamp": 1787738150,
+  "timestamp": 1788432124,
   "configHash": "0x069fa22ed56fc217235c43562f957cdd8e0682b5285925d7d6790ee0a901c12f",
   "entries": [
     {
@@ -172,14 +172,14 @@
         "finalizationDelay": 14400,
         "incentiveFee": "10000000000000000",
         "isRollupCorrupted": false,
-        "lastFinalizedBatchIndex": 11187,
+        "lastFinalizedBatchIndex": 11883,
         "MAX_GAS_LEFT": 30000000,
         "MAX_INCENTIVE_FEE": "100000000000000000000",
         "MIN_CHALLENGE_DEPOSIT_AMOUNT": 1000000000000000,
         "MIN_CHALLENGE_RESOLUTION_WINDOW": 3600,
         "MIN_CHALLENGE_WINDOW": 3600,
         "MIN_PRECONFIRMATION_WINDOW": 3600,
-        "nextBatchIndex": 11370,
+        "nextBatchIndex": 12054,
         "nitroVerifiers": [
           "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B",
           "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F"
@@ -265,7 +265,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -512,12 +512,12 @@
         "getExecuteGasLimit": 550000,
         "getFeeTreasury": "eth:0x0000000000000000000000000000000000000000",
         "getNativeSender": "eth:0x0000000000000000000000000000000000000000",
-        "getNonce": 2326,
+        "getNonce": 2348,
         "getOtherBridge": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
-        "getReceivedNonce": 1110,
+        "getReceivedNonce": 1123,
         "getReceiveMessageDeadline": 7200,
         "getRollup": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
-        "getSentMessageCursor": 2326,
+        "getSentMessageCursor": 2348,
         "getSentMessageFee": 0,
         "getSentMessageQueueSize": 0,
         "isCurrentBatchPreconfirmed": false,
@@ -707,7 +707,7 @@
         "ATTESTATION_MAX_AGE": 43200,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "ENCLAVE_ATTESTER_ROLE": "0x8ef080a880cc993d59a173671ed4d7390170750145f20a40ac3d6873cd70a643",
-        "getProgramVKey": "0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915"
+        "getProgramVKey": "0x00022b9b7769bd21b7bc4171ba458ffc80b46cab6f5fbd5629fa2d873df676fc"
       },
       "implementationNames": {
         "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F": "NitroVerifier"
@@ -1636,7 +1636,7 @@
     "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25838626 },
+  "usedBlockNumbers": { "ethereum": 25896250 },
   "permissionsConfigHash": "0xb71b5e625931fab516f5d704a8198949400a3df243fc61b528a750e86e75702f",
   "permissions": {
     "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11": {
