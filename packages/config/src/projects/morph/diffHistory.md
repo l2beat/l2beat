@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc806b4627a943039ad9e1b2c253945907f287501
+Generated with discovered.json: 0x7df8511f00e7316a8338dde9496beab260559a8b
 
-# Diff at Tue, 01 Sep 2026 08:21:21 GMT:
+# Diff at Thu, 03 Sep 2026 14:27:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@aa49c62758c26aa449b48d2b116d7b4ea40373f8 block: 1786719775
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1786719775
 - current timestamp: 1786719775
 
 ## Description
 
-reapply branch discovery config after merging main
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -233,7 +233,7 @@ discovery. Values are for block 1786719775 (main branch discovery), not current.
     +++ description: Contract used to bridge USDC tokens from L1 to L2.
 ```
 
-Generated with discovered.json: 0x003edada5b67e194f29c53fe816585d5ed593637
+Generated with discovered.json: 0x89208007dff3a74fbe9f19d0356757f724234f88
 
 # Diff at Fri, 14 Aug 2026 15:04:21 GMT:
 

@@ -2,6 +2,30 @@
   "formatVersion": 1,
   "entries": [
     {
+      "id": "c5d5795f",
+      "timestamp": 1788265057,
+      "changes": [
+        {
+          "address": "eth:0x5a02474a3083bc969f20f92e7a8bd3824ec607f0"
+        },
+        {
+          "address": "eth:0xc480f68a3dcc3edd82134fab45c14a0fcf1da3cc",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "severity": "HIGH",
+              "removed": [
+                "28"
+              ],
+              "added": [
+                "29"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "ebe8672f",
       "timestamp": 1787311119,
       "changes": [

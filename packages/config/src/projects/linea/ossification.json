@@ -369,6 +369,7 @@
     "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_NATIVE_YIELD_STAKING",
     "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_NATIVE_YIELD_UNSTAKING",
     "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_STATE_DATA_SUBMISSION",
-    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#nonSecurityCouncilCooldownEnd"
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#nonSecurityCouncilCooldownEnd",
+    "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94#isWithdrawalReserveBelowMinimum"
   ]
 }

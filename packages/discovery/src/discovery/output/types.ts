@@ -32,6 +32,7 @@ export interface DiscoveryOutput {
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
+  permissions?: Record<ChainSpecificAddress, PermissionEntry>
 }
 
 export interface DiscoveryCustomType {

@@ -55,55 +55,6 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x624808dc4A34B79B90C3c085942D2100F09A0376",
-          "description": "set and change address mappings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8334f9A70294556101527bfB9bdEdeF7EB382D94",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
-        }
-      ],
       "sinceTimestamp": 1713346967,
       "sinceBlock": 19674370,
       "values": {
@@ -127,13 +78,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1713346931,
       "sinceBlock": 19674367,
@@ -421,21 +365,7 @@
     {
       "address": "eth:0x864A02Ca4a40616f8995709D1B26CDe588709043",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challenger"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".CHALLENGER"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
@@ -512,8 +442,8 @@
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         },
-        "batcherHash": { "severity": "LOW" },
         "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
         "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -525,149 +455,17 @@
     {
       "address": "eth:0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".PROPOSER"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x624808dc4A34B79B90C3c085942D2100F09A0376",
-          "description": "set and change address mappings.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".GUARDIAN"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8334f9A70294556101527bfB9bdEdeF7EB382D94",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
-            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1StandardBridge",
@@ -1088,5 +886,221 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 20914730 },
-  "permissionsConfigHash": "0x81867d67d72160753be3e957381fac2679becd4adb088597fa5854d97f4f7b89"
+  "permissionsConfigHash": "0x81867d67d72160753be3e957381fac2679becd4adb088597fa5854d97f4f7b89",
+  "permissions": {
+    "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x624808dc4A34B79B90C3c085942D2100F09A0376",
+          "description": "set and change address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8334f9A70294556101527bfB9bdEdeF7EB382D94",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x864A02Ca4a40616f8995709D1B26CDe588709043": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".CHALLENGER"
+        }
+      ]
+    },
+    "eth:0xC16EAEDaB78E033B555c9eF3C326c07B49F21907": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".PROPOSER"
+        }
+      ]
+    },
+    "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x624808dc4A34B79B90C3c085942D2100F09A0376",
+          "description": "set and change address mappings.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".GUARDIAN"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8334f9A70294556101527bfB9bdEdeF7EB382D94",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" },
+            { "address": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" }
+          ]
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xDeC273BF31AD79ad00D619c52662f724176A12Fb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
+        }
+      ]
+    }
+  }
 }

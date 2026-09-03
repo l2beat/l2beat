@@ -11,15 +11,7 @@
     {
       "address": "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Paradex Multisig",
@@ -31,19 +23,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1704291371,
@@ -83,14 +62,6 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "deactivate bridging for deposits into the escrow.",
-          "role": ".manager"
-        }
-      ],
       "deployerAddress": "eth:0x40060493a280915e2df7b46f8A9f251156080C39",
       "sinceTimestamp": 1771090835,
       "sinceBlock": 24456587,
@@ -184,15 +155,7 @@
     {
       "address": "eth:0x27aFEd9831209B58Cf24fa241E028dD1e80Fb17D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
@@ -202,40 +165,12 @@
     {
       "address": "eth:0x3e87462D152DFDeD22b6AC5bcde702B20ed70CB6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x40060493a280915e2df7b46f8A9f251156080C39",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
-          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
-          "role": ".tokenAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
-          "description": "manage critical access control roles and the role that can upgrade the implementation..",
-          "role": ".govAdminAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SHARPVerifierCallProxy",
@@ -336,15 +271,7 @@
     {
       "address": "eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0",
@@ -737,52 +664,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
-          "role": ".secAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit.",
-          "role": ".secAgentAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "role": ".govAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
       "sinceTimestamp": 1743136259,
@@ -1283,5 +1164,142 @@
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
   "usedBlockNumbers": { "ethereum": 25544316 },
-  "permissionsConfigHash": "0xc3f56e1fee5e2ceb848142e2a14f60abb6615010aa4b22f289617479d33107b3"
+  "permissionsConfigHash": "0xc3f56e1fee5e2ceb848142e2a14f60abb6615010aa4b22f289617479d33107b3",
+  "permissions": {
+    "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "deactivate bridging for deposits into the escrow.",
+          "role": ".manager"
+        }
+      ]
+    },
+    "eth:0x27aFEd9831209B58Cf24fa241E028dD1e80Fb17D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        }
+      ]
+    },
+    "eth:0x3e87462D152DFDeD22b6AC5bcde702B20ed70CB6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        }
+      ]
+    },
+    "eth:0x40060493a280915e2df7b46f8A9f251156080C39": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
+          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
+          "role": ".tokenAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
+          "description": "manage critical access control roles and the role that can upgrade the implementation..",
+          "role": ".govAdminAC"
+        }
+      ]
+    },
+    "eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
+        }
+      ]
+    }
+  }
 }

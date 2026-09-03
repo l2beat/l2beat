@@ -2,6 +2,60 @@
   "formatVersion": 1,
   "entries": [
     {
+      "id": "a51f9d57",
+      "timestamp": 1788264785,
+      "changes": [
+        {
+          "address": "eth:0x0f95e6968ec1b28c794cf1ad99609431de5179c2",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163\""
+              ],
+              "added": [
+                "\"eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x989e348275b659d36f8751ea1c10d146211650be",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "38"
+              ],
+              "added": [
+                "39"
+              ]
+            },
+            {
+              "key": "values.proposalIds.38",
+              "added": [
+                "\"608479335948875503511285097395089134668700712998\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x9cbee534b5d8a6280e01a14844ee8af350399c7f",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163\""
+              ],
+              "added": [
+                "\"eth:0xFa92ff698D57f7B875570D9F59501812B843CD44\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "ec5264fb",
       "timestamp": 1787832377,
       "changes": [

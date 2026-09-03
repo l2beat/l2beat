@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe87751936de4a590d0d79ecc8194789c72d97c43
+Generated with discovered.json: 0xecc86fb7e2e5594f77fd18105d2f4a79f4502ee6
 
-# Diff at Mon, 31 Aug 2026 15:32:58 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1786359739
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1786359739
 - current timestamp: 1786359739
 
 ## Description
 
-ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -162,10 +162,10 @@ discovery. Values are for block 1786359739 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      fieldMeta.batcherHash:
-+        {"severity":"LOW"}
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
@@ -203,7 +203,7 @@ discovery. Values are for block 1786359739 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x0563f885f57ca188c982df8ceec161d429852f09
+Generated with discovered.json: 0x4324054e02af6b055074065aeb2d33ce727b865a
 
 # Diff at Mon, 10 Aug 2026 11:03:32 GMT:
 

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x025def6f45e61f996d68cf3eba1a446b1204594a
+Generated with discovered.json: 0xd4eba3b5fda58e943faa925ae60528b18c03f904
 
-# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1746547031
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1746547031
 - current timestamp: 1746547031
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -125,14 +125,6 @@ discovery. Values are for block 1746547031 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CustomGateway (eth:0xa1c86E2362dba0525075622af6d5f739B1304D45) [orbitstack/CustomGateway] {
-    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
-      critical:
-+        true
-    }
-```
-
-```diff
     contract SequencerInbox (eth:0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
@@ -162,7 +154,7 @@ discovery. Values are for block 1746547031 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xa559a0c692eaedc878d2dd0a9ab3055c13f6a07c
+Generated with discovered.json: 0x029dc7e03b1912e0b4b764a8c24ff471233b5085
 
 # Diff at Fri, 12 Jun 2026 10:18:57 GMT:
 

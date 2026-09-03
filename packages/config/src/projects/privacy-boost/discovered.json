@@ -18,13 +18,6 @@
       ],
       "proxyType": "immutable",
       "description": "Admin contract of the TokenRegistry proxy.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
       "sinceTimestamp": 1776186485,
       "sinceBlock": 150293854,
@@ -107,104 +100,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "description": "set the operator address of the AuthRegistry.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b",
-          "description": "register and replace the Groth16 verification keys used to validate epoch proofs.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
-          "description": "register new ERC-20 tokens to be accepted by the PrivacyBoost pool.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
-          "description": "manage the list of registered auditors and set the auditLogger address of the AuditGateway.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924",
-          "description": "register and replace the Groth16 verification keys used to validate deposit proofs.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "description": "replace the epoch, deposit and forced withdrawal proof verifiers, set the withdrawal fee (up to 10%), and set the treasury and operator addresses.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67",
-          "description": "register and replace the Groth16 verification keys used to validate forced withdrawal proofs.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "role": "admin",
-          "via": [
-            { "address": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
-          "role": "admin",
-          "via": [
-            { "address": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
-          "role": "admin",
-          "via": [
-            { "address": "oeth:0x96f3E5551E1330f31974597217019812667544c8" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "role": "admin",
-          "via": [
-            { "address": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
       "sinceTimestamp": 1776185181,
@@ -256,21 +151,7 @@
     {
       "address": "oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "description": "submit account key registrations, rotations and revocations with valid owner signatures.",
-          "role": ".allowedRelays"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "description": "submit epochs of private transfers, withdrawals and deposits with validity proofs, and snapshot auth tree roots.",
-          "role": ".allowedRelays"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
@@ -287,20 +168,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "description": "manage the allowlist of relays that can submit key operations to the AuthRegistry on behalf of users.",
-          "role": ".operator"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "description": "manage the relay allowlist and schedule changes of the auth snapshot interval.",
-          "role": ".operator"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
       "sinceTimestamp": 1776185193,
@@ -405,13 +272,6 @@
       ],
       "proxyType": "immutable",
       "description": "Admin contract of the AuditGateway proxy.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
       "sinceTimestamp": 1776188259,
       "sinceBlock": 150294741,
@@ -435,13 +295,6 @@
       ],
       "proxyType": "immutable",
       "description": "Admin contract of the PrivacyBoost proxy.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
       "sinceTimestamp": 1776188243,
       "sinceBlock": 150294733,
@@ -690,15 +543,7 @@
     {
       "address": "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
-          "description": "log audit queries performed by registered auditors on the AuditGateway.",
-          "role": ".auditLogger"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Groth16ForcedVerifier",
@@ -747,13 +592,6 @@
       ],
       "proxyType": "immutable",
       "description": "Admin contract of the AuthRegistry proxy.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
       "sinceTimestamp": 1776186491,
       "sinceBlock": 150293857,
@@ -1286,5 +1124,185 @@
     "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
   },
   "usedBlockNumbers": { "optimism": 155851822 },
-  "permissionsConfigHash": "0xa70b0a3a95dc2b47eba5d9f3ef81b42fd0846297128492b2dc8c4293cadfee7f"
+  "permissionsConfigHash": "0xa70b0a3a95dc2b47eba5d9f3ef81b42fd0846297128492b2dc8c4293cadfee7f",
+  "permissions": {
+    "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "role": "admin"
+        }
+      ]
+    },
+    "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "description": "set the operator address of the AuthRegistry.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b",
+          "description": "register and replace the Groth16 verification keys used to validate epoch proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "description": "register new ERC-20 tokens to be accepted by the PrivacyBoost pool.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "description": "manage the list of registered auditors and set the auditLogger address of the AuditGateway.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924",
+          "description": "register and replace the Groth16 verification keys used to validate deposit proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "description": "replace the epoch, deposit and forced withdrawal proof verifiers, set the withdrawal fee (up to 10%), and set the treasury and operator addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67",
+          "description": "register and replace the Groth16 verification keys used to validate forced withdrawal proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0x96f3E5551E1330f31974597217019812667544c8" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
+          "role": ".owner"
+        }
+      ]
+    },
+    "oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "description": "submit account key registrations, rotations and revocations with valid owner signatures.",
+          "role": ".allowedRelays"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "description": "submit epochs of private transfers, withdrawals and deposits with validity proofs, and snapshot auth tree roots.",
+          "role": ".allowedRelays"
+        }
+      ]
+    },
+    "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "description": "manage the allowlist of relays that can submit key operations to the AuthRegistry on behalf of users.",
+          "role": ".operator"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "description": "manage the relay allowlist and schedule changes of the auth snapshot interval.",
+          "role": ".operator"
+        }
+      ]
+    },
+    "oeth:0x96f3E5551E1330f31974597217019812667544c8": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "role": "admin"
+        }
+      ]
+    },
+    "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "role": "admin"
+        }
+      ]
+    },
+    "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "description": "log audit queries performed by registered auditors on the AuditGateway.",
+          "role": ".auditLogger"
+        }
+      ]
+    },
+    "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

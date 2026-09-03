@@ -20,24 +20,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin",
-          "via": [
-            { "address": "eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xee55ffc2a43d0641fD46EbB4a610E072Bf9d4FBf",
       "sinceTimestamp": 1745862095,
@@ -132,14 +114,6 @@
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
-        }
-      ],
       "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520615,
       "sinceBlock": 20019826,
@@ -173,14 +147,6 @@
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
-        }
-      ],
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108999,
       "sinceBlock": 21809364,
@@ -234,14 +200,6 @@
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b act through it.",
       "critical": true,
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin"
-        }
-      ],
       "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1739513579,
       "sinceBlock": 21842838,
@@ -271,40 +229,12 @@
     {
       "address": "eth:0xAd0a80a085095ECa46De3053C345516f1c722D2a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB76e732643A4956a71Ac1BB0E507126651a2FC66",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ChainTypeManager",
@@ -586,7 +516,6 @@
           "severity": "LOW",
           "description": "Verifier parameters used for proving batches."
         },
-        "validators": { "severity": "HIGH" },
         "getSettlementLayer": {
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
@@ -1104,5 +1033,89 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037398 },
-  "permissionsConfigHash": "0x2b4fb3de972e544c9f2e2e02300b56d4c3fc16f8b6a4682ca34e619eef07ff1e"
+  "permissionsConfigHash": "0x2b4fb3de972e544c9f2e2e02300b56d4c3fc16f8b6a4682ca34e619eef07ff1e",
+  "permissions": {
+    "eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [
+            { "address": "eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
+        }
+      ]
+    },
+    "eth:0xAd0a80a085095ECa46De3053C345516f1c722D2a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTL"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTL"
+        }
+      ]
+    },
+    "eth:0xB76e732643A4956a71Ac1BB0E507126651a2FC66": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTL"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTL"
+        }
+      ]
+    }
+  }
 }

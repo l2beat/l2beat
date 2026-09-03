@@ -16,15 +16,7 @@
     {
       "address": "eth:0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "PolygonDataCommittee",
@@ -93,13 +85,6 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "sinceTimestamp": 1724259347,
       "sinceBlock": 20578325,
@@ -191,15 +176,7 @@
     {
       "address": "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".trustedSequencer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AgglayerManager",
@@ -242,37 +219,7 @@
     {
       "address": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "role": ".admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -460,5 +407,68 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23726379 },
-  "permissionsConfigHash": "0xe788160ebc49df0c4a29c0875ada9c1148ee7112f93028052c2d6865468d9cfd"
+  "permissionsConfigHash": "0xe788160ebc49df0c4a29c0875ada9c1148ee7112f93028052c2d6865468d9cfd",
+  "permissions": {
+    "eth:0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
+        }
+      ]
+    },
+    "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".trustedSequencer"
+        }
+      ]
+    },
+    "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    }
+  }
 }

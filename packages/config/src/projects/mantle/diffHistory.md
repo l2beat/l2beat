@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xa479a371f69aa730deb47da400ab13c4b02b64a8
+Generated with discovered.json: 0x02752643124ad20939724bfdd876ad7175358411
 
-# Diff at Tue, 01 Sep 2026 07:04:15 GMT:
+# Diff at Thu, 03 Sep 2026 14:27:06 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@58d130dd81e18684eafef31edfa3067a670f33c6 block: 1786359758
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1786359758
 - current timestamp: 1786359758
 
 ## Description
 
-add ossification critical flags and severities for mantle and lighter
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -145,7 +145,7 @@ discovery. Values are for block 1786359758 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xc37257f27b6045a303423020d3de7ea0045ea9b2
+Generated with discovered.json: 0x0e2111ba1739b93acf432d4d1314a6540d05875c
 
 # Diff at Mon, 10 Aug 2026 11:03:46 GMT:
 

@@ -246,23 +246,6 @@
         "0x1ca17530ac7bfe9ac80835eb448afe9f50d372192b3c888b18ef837f4fec3e5f"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8",
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
@@ -654,13 +637,6 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0a14B696350546110a0D8acDb86226983af9D2a0",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1777899983,
       "sinceBlock": 25021819,
@@ -1139,5 +1115,35 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25595172 },
-  "permissionsConfigHash": "0x28e548c32351604c6fcc421b5779c1173373afe1b91d778ca361092fe26a4a5c"
+  "permissionsConfigHash": "0x28e548c32351604c6fcc421b5779c1173373afe1b91d778ca361092fe26a4a5c",
+  "permissions": {
+    "eth:0x38A43F4330f24fe920F943409709fc9A6084C939": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0a14B696350546110a0D8acDb86226983af9D2a0",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

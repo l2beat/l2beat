@@ -19,14 +19,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that connects INTMAX deposits to the Predicate AVS that ultimately checks AML requirements. It stores a policy ID to be then referenced by the Predicate AVS.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-          "description": "approves deposits through AML checks.",
-          "role": ".amlPermitter"
-        }
-      ],
       "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750501451,
       "sinceBlock": 22752223,
@@ -60,34 +52,12 @@
     {
       "address": "eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
@@ -175,18 +145,7 @@
     {
       "address": "eth:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -197,13 +156,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "sinceTimestamp": 1735344335,
       "sinceBlock": 21497263,
@@ -227,29 +179,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
-          "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
       "sinceTimestamp": 1762283363,
@@ -325,31 +254,12 @@
     {
       "address": "eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-          "description": "can relay deposits to the main rollup contract on Scroll.",
-          "role": ".relayer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "INTMAX Multisig 3",
@@ -361,13 +271,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1751444639,
@@ -488,24 +391,6 @@
         "0xe58aa83dafa0e6dff193969939930317f9b3522d853cc539225ade1c46cbe271"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-          "description": "approves deposits through AML checks.",
-          "role": ".amlPermitter",
-          "via": [
-            { "address": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
-          "role": ".getPredicateManager"
-        }
-      ],
       "ignoreInWatchMode": ["getDeployedPolicies"],
       "deployerAddress": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "sinceTimestamp": 1735344335,
@@ -627,14 +512,7 @@
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Rollup",
@@ -881,35 +759,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
-          "description": "can update the verifier address.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449",
-          "description": "can update the verifier address and the list of tokens that can be withdrawn automatically, in contrast to those that have to be actively claimed.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1750496732,
@@ -1809,5 +1658,182 @@
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
   "usedBlockNumbers": { "ethereum": 25796469, "scroll": 34702306 },
-  "permissionsConfigHash": "0xf364179f384cc4975d46116b9d70e228523420c5157dc1cf55b672bdb80021ef"
+  "permissionsConfigHash": "0xf364179f384cc4975d46116b9d70e228523420c5157dc1cf55b672bdb80021ef",
+  "permissions": {
+    "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+          "description": "approves deposits through AML checks.",
+          "role": ".amlPermitter"
+        }
+      ]
+    },
+    "eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
+          ]
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
+          ]
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
+          ]
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+          "description": "can relay deposits to the main rollup contract on Scroll.",
+          "role": ".relayer"
+        }
+      ]
+    },
+    "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
+          ]
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+          "description": "approves deposits through AML checks.",
+          "role": ".amlPermitter",
+          "via": [
+            { "address": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
+          "role": ".getPredicateManager"
+        }
+      ]
+    },
+    "scr:0x0000000000000000000000000000000000000000": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
+          "role": "admin"
+        }
+      ]
+    },
+    "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
+          "description": "can update the verifier address.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449",
+          "description": "can update the verifier address and the list of tokens that can be withdrawn automatically, in contrast to those that have to be actively claimed.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

@@ -11,12 +11,19 @@ export interface DiscoveredEntryLite {
   sinceTimestamp?: number
   values?: Record<string, unknown>
   fieldMeta?: Record<string, { severity?: string } | undefined>
-  receivedPermissions?: {
-    permission?: string
-    from?: string
-    via?: { address?: string }[]
-  }[]
 }
+
+/** discovered.json's `permissions` map: who holds what over whom, keyed by
+ *  the holder's address. */
+export type DiscoveredPermissionsLite = Record<
+  string,
+  {
+    receivedPermissions?: {
+      from?: string
+      via?: { address?: string }[]
+    }[]
+  }
+>
 
 const CHAIN_SPECIFIC_ADDRESS_RE = /^[a-z0-9-]+:0x[0-9a-fA-F]{40}$/i
 
@@ -39,6 +46,7 @@ const CHAIN_SPECIFIC_ADDRESS_RE = /^[a-z0-9-]+:0x[0-9a-fA-F]{40}$/i
 export function deriveOssificationPerimeter(
   entries: DiscoveredEntryLite[],
   seedAddresses: string[],
+  permissions: DiscoveredPermissionsLite = {},
 ): Set<string> | null {
   const contractByKey = new Map<string, DiscoveredEntryLite>()
   for (const entry of entries) {
@@ -53,14 +61,13 @@ export function deriveOssificationPerimeter(
     string,
     { holder: string; via: string[] }[]
   >()
-  for (const entry of entries) {
-    if (!entry.address) continue
+  for (const [holder, entry] of Object.entries(permissions)) {
     for (const permission of entry.receivedPermissions ?? []) {
       if (!permission.from) continue
       const target = permission.from.toLowerCase()
       const controllers = controllersByTarget.get(target) ?? []
       controllers.push({
-        holder: entry.address.toLowerCase(),
+        holder: holder.toLowerCase(),
         via: (permission.via ?? [])
           .map((step) => step.address?.toLowerCase())
           .filter((address) => address !== undefined),

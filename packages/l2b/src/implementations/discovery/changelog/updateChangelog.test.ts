@@ -141,6 +141,37 @@ describe(updateChangelog.name, () => {
     expect(read().entries.map((e: { id: string }) => e.id)).toEqual([OLD_ID])
   })
 
+  it('backfills an entry that arrived as markdown from upstream', () => {
+    // a merge brings in someone else's diffHistory entry; only our own
+    // entries are in changelog.json
+    writeFileSync(
+      path.join(folder, 'diffHistory.md'),
+      entry(NEW_DATE, 1755680000, OLD_BLOCK) +
+        '\n' +
+        entry(OLD_DATE, 1755600100, OLD_BLOCK),
+    )
+    writeFileSync(path.join(folder, 'ossification.json'), '{}')
+    writeFileSync(
+      path.join(folder, 'changelog.json'),
+      JSON.stringify({
+        formatVersion: 1,
+        entries: [{ id: OLD_ID, timestamp: 1755600100, changes: [] }],
+      }),
+    )
+    updateChangelog(folder, undefined, () => {})
+    const changelog = read()
+    expect(changelog.entries.map((e: { id: string }) => e.id)).toEqual([
+      NEW_ID,
+      OLD_ID,
+    ])
+    expect(changelog.entries[0].changes).toEqual([
+      {
+        address: 'eth:0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f',
+        fields: [{ key: 'values.x', removed: ['"1"'], added: ['"2"'] }],
+      },
+    ])
+  })
+
   it('migrates the existing markdown on the first run after opting in', () => {
     writeFileSync(
       path.join(folder, 'diffHistory.md'),

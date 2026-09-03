@@ -433,6 +433,24 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-mGLO",
+      "priceId": "midas-fasanara-global-open",
+      "symbol": "mGLO",
+      "name": "Midas Fasanara Global Open",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174031/large/mglobal-Cm4yjVTI.png?1781967852",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFEd493F38c1aAcb4EA4e6A11F8b9287849EE0096",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1784246400
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-MSFT",
       "priceId": "microsoft-robinhood-tokenized-stock",
       "symbol": "MSFT",
@@ -591,6 +609,38 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "robinhood-PONS",
+      "priceId": "pons",
+      "symbol": "PONS",
+      "name": "Pons",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174571/large/jhitvkisdq8fhxvimdkpcw7y3dx5.?1784093932",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "address": "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+            "chain": "robinhood",
+            "decimals": 18,
+            "sinceTimestamp": 1784091600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+            "chain": "robinhood",
+            "escrowAddress": "0x000000000000000000000000000000000000dEaD",
+            "decimals": 18,
+            "sinceTimestamp": 1784091600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "robinhood-QQQ",
       "priceId": "invesco-qqq-robinhood-tokenized-stock",
@@ -607,6 +657,32 @@
       "category": "rwaPublic",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-RAM",
+      "priceId": "ramses",
+      "symbol": "RAM",
+      "name": "Ramses",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70707/large/RAM.png?1763213034",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5173D45A1191eE33cBB7D8c7e65f21B04eD54802",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1786745882
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

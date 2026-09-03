@@ -5,6 +5,7 @@ import type {
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
 import {
+  attachPermissions,
   ConfigReader,
   get$Admins,
   get$Implementations,
@@ -75,6 +76,12 @@ export class ProjectDiscovery {
     const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
       (e) => e.address,
     )
+
+    // Permissions are stored in one map on the project that was modelled, so
+    // join them onto the entries of the whole cluster. Must run before
+    // reachability: it is these permissions that make an actor reachable from
+    // the project's entrypoints.
+    attachPermissions(this.discoveries)
 
     // Removing Reference entries because otherwise we get duplicates
     // and incomplete data.

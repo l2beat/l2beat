@@ -6,15 +6,7 @@
     {
       "address": "base:0x463cB782c8dd0a1887b77336DfF74D60F006F56E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE",
-          "description": "withdraw funds stuck in the RelayApprovalProxyV3 (not user approvals).",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RelayDepository",
@@ -59,15 +51,7 @@
     {
       "address": "base:0x63C1d3E9C646184529C5694630a01C00dF171b56",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
-          "description": "sign arbitrary CallRequests that the RelayDepository executes, which moves any funds escrowed in it.",
-          "role": ".allocator"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RelayReceiver",
@@ -144,28 +128,12 @@
     {
       "address": "base:0xF61A305199fa1135d76FFaB3752D42F55cBd775A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
-          "description": "replace the allocator of the RelayDepository at any time and without delay, taking control of all funds escrowed in it.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xf70da97812CB96acDF810712Aa562db8dfA3dbEF",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934",
-          "description": "receive all user funds deposited through the RelayReceiver, with no onchain obligation to fill the associated orders.",
-          "role": ".solver"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -274,5 +242,47 @@
     "relay/RelayRouterV3": "0x049fbaf102429afdd380204496e7d58fc9629baef7742f72b31a8d94b111a21c"
   },
   "usedBlockNumbers": { "base": 49962920 },
-  "permissionsConfigHash": "0x30f51cc7797a54ec328f2826bd71b34b4bb0e5910109d21f538e9bbf2049c778"
+  "permissionsConfigHash": "0x30f51cc7797a54ec328f2826bd71b34b4bb0e5910109d21f538e9bbf2049c778",
+  "permissions": {
+    "base:0x463cB782c8dd0a1887b77336DfF74D60F006F56E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE",
+          "description": "withdraw funds stuck in the RelayApprovalProxyV3 (not user approvals).",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0x63C1d3E9C646184529C5694630a01C00dF171b56": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
+          "description": "sign arbitrary CallRequests that the RelayDepository executes, which moves any funds escrowed in it.",
+          "role": ".allocator"
+        }
+      ]
+    },
+    "base:0xF61A305199fa1135d76FFaB3752D42F55cBd775A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
+          "description": "replace the allocator of the RelayDepository at any time and without delay, taking control of all funds escrowed in it.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934",
+          "description": "receive all user funds deposited through the RelayReceiver, with no onchain obligation to fill the associated orders.",
+          "role": ".solver"
+        }
+      ]
+    }
+  }
 }

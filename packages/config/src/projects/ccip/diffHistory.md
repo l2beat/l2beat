@@ -1,4 +1,967 @@
-Generated with discovered.json: 0x9d032718683b62dc65ef7b46def182c7f9d427ac
+Generated with discovered.json: 0x049f85e7e8c0636c657cd1b5eec71f5695da2049
+
+# Diff at Tue, 01 Sep 2026 15:45:16 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@4facb275df13e07de60919ee9d4e4272557bfcac block: 1787129183
+- current timestamp: 1788159443
+
+## Description
+
+- Began a route-by-route migration to CCIP 2.0 on Ethereum. A new immutable OnRamp 2.0 was deployed, and the main Router moved Mantle, Ink, Cronos, Abstract, Plume, AB, and Robinhood from their previous ramps to the shared v2 OnRamp. Many other destinations remain on v1.6 or older ramps, so this is coexistence rather than a global replacement.
+- Expanded the v2 inbound and verifier configuration. The v2 OffRamp added ADI, Optimism, Arbitrum, and Polygon PoS source routes and accepted additional source OnRamps on several existing routes; the deprecated Router registered the same OffRamp for those four sources. The Executor and VersionedVerifierResolver added the corresponding destinations, and the CommitteeVerifier added 9-of-16 committees for ADI, Optimism, Arbitrum, and Polygon PoS while adding one signer to Abstract without changing its threshold of 9.
+- Added Neox to the USDC siloed lock/release pool. A new Neox-specific lockbox was deployed, the siloed pool registered it as a supported route, and the USDC routing proxy selected LOCK_RELEASE for Neox.
+- Added discovery coverage and templates for the v2 OnRamp, OffRamp, Executor endpoint and implementation, VersionedVerifierResolver, CommitteeVerifier, permissionless TokenPoolFactory, the registered USDC routing graph, and the registered reUSD BurnWithFromMintTokenPool as a non-USDC example of default verifier policy. The reUSD pool has no AdvancedPoolHooks, and direct inbound and outbound getRequiredCCVs reads for its Ink route both return empty. The Ink v2 ramp configurations therefore apply their default VersionedVerifierResolver, which selects the CommitteeVerifier, and configure no additional mandatory CCVs. The USDC proxy currently selects only its CCTP-v1 and siloed lock/release children; its CCTP-v2 and CCTP-through-CCV children are configured but are not selected for any recorded route. The USDC CCTP resolver retains verifier versions 2.0 and 2.1 for inbound messages and selects 2.1 for all six outbound routes.
+- Permission modeling now follows the source-level caller gates: CapabilitiesRegistry is the only external path into CCIPHome OCR configuration transitions; per-route Routers directly call the v2 OnRamp or select the ramps accepted by the verifiers, reUSD pool, and USDC proxy. AdvancedPoolHooks can require token-specific CCVs; the standard burn/mint pool also invokes preflight and postflight checks, while the CCTP-through-CCV and siloed pools explicitly disable those two hook paths.
+- Exposed the complete per-route verifier fee, verification-gas, payload-size, allowlist, and Router state. Committee routes charge 0 cents and use 75,000 gas with 582-byte results, except Canton at 100,000 gas and 1,000 bytes; both CCTP verifier versions charge 0 cents and use 200,000 gas with 1,024-byte results. Allowed-finality values are decoded: the Committee, CCTP verifiers, and CCTP-through-CCV pool accept full finality or a block depth of at least one; the Executor additionally accepts the safe head; the siloed pool accepts only full finality.
+- The main v2 ramps, Executor, Committee verifier path, USDC routing proxy, CCTP-v1 child, CCTP-through-CCV child, and siloed pool are governed by the ARMTimelock. The USDC CCTP-v2 child, current CCTPVerifier 2.1 implementation, its resolver, and the Neox lockbox are instead owned directly by the fee-aggregator EOA. The TokenPoolFactory is permissionless and has no owner. These controls can reconfigure lane, committee, USDC pool, fee, finality, CCV, and lockbox policies; the architecture text now describes v2.0 and v1.6 coexistence.
+- Updated the latest CCIPHome v1.6 execution ConfigSet records for Ethereum, BSC, Base, Solana, Sonic, Etherlink, Avalanche, Katana, Berachain, TAC, Monad, Stable, and MegaETH. Their LBTC observer configuration removed the Corn source pool and changed the Avalanche and BSC source pools. The Ethereum, BSC, and Base OffRamp execution digests changed consistently. Arc's commit ConfigSet also advanced and replaced one token-feed entry with an 18-decimal token using the same aggregator.
+- Changed RMN curses by removing Wemix and adding TAC, Sui, and Cronos. Consequently, the tracked legacy Cronos CommitStore became unhealthy while the Wemix CommitStore became healthy.
+- Raised the AB, Abstract, Cronos, and Robinhood FeeQuoter limits from 30,000 to 32,000 data bytes and from 3M to 8M gas, changed their per-payload-byte gas from 16 to 20, and reduced their default token fee from 50 cents to zero. Added a Mova destination config and a Plasma-specific token transfer fee override.
+- Removed one signer from ARM_Multisig2, reducing its first leaf group from 18 to 17 members and the total signer union from 43 to 42. Its root remains 2-of-3 and its computed minimum remains four signatures. No tracked proxy implementation was upgraded: the new deployments identified here are the immutable v2 OnRamp and Neox USDC lockbox, while the other newly created discovery entries are pre-existing contracts brought into scope.
+
+## Watched changes
+
+```diff
+    contract BaseOffRamp_v1_6 (base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Base.
+      values.ocrExecution.configInfo.configDigest:
+-        "0x000a636d90b7d925805ffce69c46a2a9d367012cad155e6fafc482e80ce06358"
++        "0x000a1586098c118e958e7f01aab659630899ac1e0217fe21fece4fd83e367ca4"
+    }
+```
+
+```diff
+    contract BscOffRamp_v1_6 (bnb:0xA27056438FfA1f286AB197488808692F0db93F8B) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on BNB Chain.
+      values.ocrExecution.configInfo.configDigest:
+-        "0x000a983bfd237bbc0c1021834595c48e85b65f0aa997c487907cd6e013f948e1"
++        "0x000a769ad9740987a6ff34237bb806219d1348bca8eb6d84b6f5a85a7a0a35d2"
+    }
+```
+
+```diff
+    contract Executor (eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b) [ccip/Executor] {
+    +++ description: Fee-policy implementation used by a CCIP 2.0 executor endpoint. It quotes a flat fee for supported destination chains and refuses to quote messages whose requested finality or verifier list falls outside its configured policy. It does not deliver destination messages itself.
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.2:
++        {"destChainSelector":"adi","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.3:
++        {"destChainSelector":"arbitrum","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.8:
++        {"destChainSelector":"matic","config":{"usdCentsFee":0,"enabled":true}}
++++ description: Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.
+      values.getDestChains.9:
++        {"destChainSelector":"optimism","config":{"usdCentsFee":0,"enabled":true}}
+    }
+```
+
+```diff
+    contract RMN (eth:0x0B047953451A207743fB62541B21199b95190602) [transporter/RMN] {
+    +++ description: RMN 2.1 emergency-stop contract for CCIP. It stores global and route-specific curses: the owner and authorized callers can add curses, while only the owner can remove them and change the authorized-caller set. Its legacy v1.6 compatibility isBlessed() always returns true and its signer config is empty, so this implementation does not independently attest Merkle roots.
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.2:
+-        "wemix"
++        "tac"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.5:
++        "sui"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.6:
++        "cronos"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.2:
+-        "0x0000000000000000475f3a7c1964d249"
++        "0x00000000000000005263f862d62c318d"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.5:
++        "0x0000000000000000f34569c8a112927e"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.6:
++        "0x00000000000000001435840d10d50ab8"
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v1_6 (eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5) [transporter/OfframpV3] {
+    +++ description: OffRamp used to receive messages on its local chain from other chains. It stores the list and threshold of OCR signers that authorize crosschain message commitments and the transmitters that can relay those reports. Currently 16 signers are configured with F=5, so 5+1 signatures are required on every commit report. Committed messages are usually executed by permissioned execution transmitters. After 1h, anyone can execute them.
+      values.ocrExecution.configInfo.configDigest:
+-        "0x000aedf901166e7934347e354beb98084377068ccd7a58c83f493221f017167d"
++        "0x000af66e2f2df6e0052f83cc8924e5245e4d099a9916fd5ea170b9bf0ea9691c"
+    }
+```
+
+```diff
+    contract VersionedVerifierResolver (eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b) [ccip/VersionedVerifierResolver] {
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.2:
++        {"destChainSelector":"adi","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.3:
++        {"destChainSelector":"arbitrum","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.9:
++        {"destChainSelector":"matic","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
++++ description: Verifier implementation selected for outbound messages to each destination chain.
+      values.getAllOutboundImplementations.10:
++        {"destChainSelector":"optimism","verifier":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F"}
+    }
+```
+
+```diff
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [N/A] {
+    +++ description: Deprecated router used by BSC.
+      values.getOffRamps.13:
++        {"sourceChainSelector":"4059281736450291836","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.14:
++        {"sourceChainSelector":"3734403246176062136","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.15:
++        {"sourceChainSelector":"4949039107694359620","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.16:
++        {"sourceChainSelector":"4051577828743386545","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v2_0 (eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3) [ccip/OffRampV2_0] {
+    +++ description: CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.
+      values.sourceChainConfigs.mantle.onRamps.1:
++        "0x00000000000000000000000055e9084d15d1a5f58fa5a7baabed3812b794100e"
+      values.sourceChainConfigs.ink.onRamps.1:
++        "0x00000000000000000000000018bb4ad0f8cc5241334a85fb5d0d48c6a05de84f"
+      values.sourceChainConfigs.plume.onRamps.1:
++        "0x000000000000000000000000402430ca607c52a99aa82ab4c726001d4203c9e7"
+      values.sourceChainConfigs.arc.onRamps.1:
++        "0x0000000000000000000000007690d0f529e32a1be9fa46095221b9ef99d2224d"
+      values.sourceChainConfigs.cronos.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.cronos.onRamps.1:
++        "0x0000000000000000000000002fa2fbafb31e7618aa7b0a7913f34a2960e9a716"
+      values.sourceChainConfigs.ab.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.ab.onRamps.1:
++        "0x00000000000000000000000058b095bb69fc9ed09e20c33ed9692dba2bfa0019"
+      values.sourceChainConfigs.abstract.onRamps.0:
+-        "0x0000000000000000000000000a3d8ed619ecf1e984488710eb2cece4fdbd83ca"
++        "0x0000000000000000000000005b991370e5f7034a790da96741438b159edd7270"
+      values.sourceChainConfigs.robinhood.router:
+-        "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.sourceChainConfigs.robinhood.onRamps.1:
++        "0x000000000000000000000000e86cedddaefa1999aae234c056b51877bffbd73f"
+      values.sourceChainConfigs.adi:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000a4b1d393104a5ef340154c337009156aa0e83bd8"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.optimism:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x000000000000000000000000cbfaabcb95358817d2fe859f1ca223cf83fae199"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.arbitrum:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000007b73923e101950efe098c2eca74c8320b2813f48"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+      values.sourceChainConfigs.matic:
++        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000007b8c563e2b29c2d194bc8d18092684420aa47bbe"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
+    }
+```
+
+```diff
+    contract CCIPHome (eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40) [ccip/CCIPHome] {
+    +++ description: CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config.
+      values.commitConfigs.arc.configDigest:
+-        "0x000aa914af4c9f869c84ef9e1dcc10f477f720dab614f7f7ff3958886798fb47"
++        "0x000a1d5759eb33af6bc279e623442e0eaa509ccde4490cc0eee7a12d98ab8428"
+      values.commitConfigs.arc.version:
+-        322
++        363
+      values.commitConfigs.arc.config.offchainConfig.reportingPluginConfig.tokenInfo.eth:0xcB9A646af26069F052c1B526120facb404C3A131:
+-        {"aggregatorAddress":"eth:0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3","deviationPPB":"1000000000","decimals":6}
+      values.commitConfigs.arc.config.offchainConfig.reportingPluginConfig.tokenInfo.eth:0x8DFa585699CB46ca2a5fA649700f09839B4b8743:
++        {"aggregatorAddress":"eth:0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3","deviationPPB":"1000000000","decimals":18}
+      values.executionConfigs.ethereum.configDigest:
+-        "0x000aedf901166e7934347e354beb98084377068ccd7a58c83f493221f017167d"
++        "0x000af66e2f2df6e0052f83cc8924e5245e4d099a9916fd5ea170b9bf0ea9691c"
+      values.executionConfigs.ethereum.version:
+-        265
++        357
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.ethereum.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.bsc.configDigest:
+-        "0x000a983bfd237bbc0c1021834595c48e85b65f0aa997c487907cd6e013f948e1"
++        "0x000a769ad9740987a6ff34237bb806219d1348bca8eb6d84b6f5a85a7a0a35d2"
+      values.executionConfigs.bsc.version:
+-        266
++        360
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.bsc.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.base.configDigest:
+-        "0x000a636d90b7d925805ffce69c46a2a9d367012cad155e6fafc482e80ce06358"
++        "0x000a1586098c118e958e7f01aab659630899ac1e0217fe21fece4fd83e367ca4"
+      values.executionConfigs.base.version:
+-        268
++        355
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.base.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.solana.configDigest:
+-        "0x000a79add7fe61f4bf532a05faaf2ee635cf26b2c5213444fac274b3d4a5115c"
++        "0x000aa1e6903226598a3e84a04f40c38f9ab9803824465300483f664b02631e9a"
+      values.executionConfigs.solana.version:
+-        340
++        350
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.solana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.sonic.configDigest:
+-        "0x000aed6fdd9a1bec626de5907551b730bffd8b90e9c998f01ffc1f00a2f72225"
++        "0x000a3edbdb69c20851c180d7caeaed3ef7c5db4255b3b8ecddbab8e30116c44b"
+      values.executionConfigs.sonic.version:
+-        270
++        356
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.sonic.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.etherlink.configDigest:
+-        "0x000a9df158bedab3f1ecbdd75db9e0c2ed69dc3bc03400ff7967d2d4641fc627"
++        "0x000a9f6dd3a7fe411e49c1758b1bf08a09d00c3c56378ccdc632fd0cf18e7d95"
+      values.executionConfigs.etherlink.version:
+-        300
++        354
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.etherlink.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.avalanche.configDigest:
+-        "0x000a0716b1f4cd0d7daef91d89aa813ca037ab38fe99582a2fc8f4fdea7b7ae0"
++        "0x000adb8998e9a7d8e9e8d54d54936fdd452eb219ee891ea473fcba4919ea0920"
+      values.executionConfigs.avalanche.version:
+-        343
++        362
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.avalanche.config.offchainConfig.reportingPluginConfig.tokenDataObservers.1.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.katana.configDigest:
+-        "0x000acbb45e72219a24b58910bbe7a30e7626ab8d31703ea7349cf586b8518313"
++        "0x000a751bccbb4599b157d4e5de552c891c0a4dac6c54cc3a938caf0ca0984aaf"
+      values.executionConfigs.katana.version:
+-        283
++        351
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.katana.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.berachain.configDigest:
+-        "0x000afa4a1f97f13dcf47afbae7abf5637c39ca4f02f73d0cc5f133c04b151c88"
++        "0x000a19d7a26571a42b14480b2f874be4ef87c6d9c8db167cb1dadb439ee8550b"
+      values.executionConfigs.berachain.version:
+-        286
++        353
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.berachain.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.tac.configDigest:
+-        "0x000a31f2c15e67ce56f9bf088ef108457d5d066a7e60dfbaa33e8bf1aafaad72"
++        "0x000a476acc68cebe30350398fa0ad23624f6f1a5616a71132b981ba3f752c587"
+      values.executionConfigs.tac.version:
+-        304
++        358
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.tac.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.monad.configDigest:
+-        "0x000af9dab62e61bf31f0dec3b99a6a5ddd5213c3e2c41397c6a140f21745eefa"
++        "0x000aa31dc38d8c9b5f6e456779c37e8b822bcbd6733894899b0e7d50f9616059"
+      values.executionConfigs.monad.version:
+-        342
++        352
+      values.executionConfigs.monad.config.offchainConfig.peerIds.6:
+-        "12D3KooWG2bDmRM5PmpkGqaMRhdJB4FsGSo6MquLa8h9PVqghqj1"
++        "12D3KooWHHhYKS4dUFfJUzQeXXmieBkjynyoEqpV38xdCUQYBsnx"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.monad.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.stable.configDigest:
+-        "0x000a319d917dd68ad295c9d1301a54eb9ef66253fb0112564ea00b281d654389"
++        "0x000aa9aafbcc77f10770e3090d525209f5022c375b91869a55862aed56518954"
+      values.executionConfigs.stable.version:
+-        314
++        361
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.stable.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+      values.executionConfigs.megaeth.configDigest:
+-        "0x000a53a56a58df585d4662eea22d13b24dc33dd4fca66cb8edd25c5cf79f5f54"
++        "0x000a098e2f32f617a0afc330243f0b2a667f05e40bf1865dc570abbe464c1296"
+      values.executionConfigs.megaeth.version:
+-        317
++        359
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.9043146809313071210:
+-        "eth:0x770D1bbdca08e3272233709B27C004F510bfDf86"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.6433500567565415381:
+-        "eth:0xd24658051aa6c8ACf874F686D5dA325a87d2D146"
++        "eth:0x07f983EC8B1bDE40bC76501f34703758484fcd10"
+      values.executionConfigs.megaeth.config.offchainConfig.reportingPluginConfig.tokenDataObservers.0.sourcePoolAddressByChain.11344663589394136015:
+-        "eth:0xf191a1CE04fD54f090B4d97316258b6009C562d7"
++        "eth:0xa383A3001974a3a3bF94bDE6651400844eFE37D1"
+    }
+```
+
+```diff
+    contract CommitteeVerifier (eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F) [ccip/CommitteeVerifier] {
+    +++ description: Committee-based cross-chain verifier used by CCIP 2.0. On the source chain it accepts messages only from the Router-selected OnRamp, applies RMN and optional sender-allowlist checks, and returns its version tag. On the destination chain it applies RMN checks and requires the configured per-source-chain signature quorum over the version and message hash.
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.2:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"adi","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.3:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"arbitrum","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.9:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"matic","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.
+      values.remoteChainConfigs.10:
++        {"remoteChainConfig":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","remoteChainSelector":"optimism","allowlistEnabled":false,"feeUSDCents":0,"gasForVerification":75000,"payloadSizeBytes":582},"allowedSendersList":[]}
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.9:
++        "4059281736450291836"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.10:
++        "3734403246176062136"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.11:
++        "4949039107694359620"
++++ description: Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.
+      values.remoteChainSelectors.12:
++        "4051577828743386545"
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.2:
++        {"remoteChainSelector":"adi","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.3:
++        {"remoteChainSelector":"arbitrum","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.9:
++        {"remoteChainSelector":"matic","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
++++ description: Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.
+      values.routeRouters.10:
++        {"remoteChainSelector":"optimism","router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"}
+      values.signatureConfigs.abstract.signers.11:
++        "eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D"
+      values.signatureConfigs.adi:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.optimism:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x80e009Ff98cF56bb14d322F6D561e64CC0fB62e0","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0x97e88b72E5d2BBe9BCF72DeEfA24376953B40eeD","eth:0xD17326925c24124f3343B9F37d223FcFA2603D2D","eth:0xc9824E38E6407F45C5C0606413D11cf43F6986BD","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.arbitrum:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+      values.signatureConfigs.matic:
++        {"threshold":9,"signers":["eth:0x06F0Af205787aeD73Bf4ec85166d749251590b1E","eth:0x1337cdea9944C95E9fF0Bd827Fdc5c86bBfCE72A","eth:0x1B60c7Ce79210d8cCCfF9E5bd128CDa33Ce0B3a7","eth:0x22F8038f5C359417eedf55AdE1ACc9648Fd8C7Ac","eth:0x2b1b8318e0d70a022A0EA564e11df2C428744D46","eth:0x40774A7501e25B93e19d0022da355f25CED63F1A","eth:0x5Cb8a9b6E94bb8124971BFaDB6C9a3FdDC1fa1Eb","eth:0x5EECfC084CD6Bd051E8491Bd1F0893bE683058DE","eth:0x6722A9C4b8A0492114E21E8abdeE19C0fa66Fe83","eth:0x7525ED84C59ac01F095f25b60cb2c0A1561fF858","eth:0x8A35c83918a4E7A51Eac2b6A606a9ba2142E12Dd","eth:0xF6Dd5a06148804E4f9cA6c74093c47947F8aF655","eth:0xa2B7E6369A7A14C1b1D9d4E2E6039601aB6182d2","eth:0xeF486E0f86B6695e6BB5B497f042D5B2ED617B00","eth:0xf1e017B4bEaFc26dd4A4A45488157b3d312Bd473","eth:0xf4972D42e09B32856CFf21E95031396A62CC55EC"]}
+    }
+```
+
+```diff
+    contract MainRouter (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      values.onRamps.mantle:
+-        "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.ink:
+-        "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.cronos:
+-        "eth:0x03CB4C67D01a78F44289541281E57C33E6b834d9"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.abstract:
+-        "eth:0x266e520E272FCca3cE46A379a06Dc5ba62717b8F"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.plume:
+-        "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.ab:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+      values.onRamps.robinhood:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x8FC54E798eAC51353E160C9113682714F5e9E262) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        true
++        false
+    }
+```
+
+```diff
+    contract FeeQuoter (eth:0x93669Cf8EabE869687544De34B453063fb23Bb69) [transporter/FeeQuoterV2] {
+    +++ description: Fee oracle and price registry for CCIP. Holds the per-destination-chain fee config (size and gas limits, gas overheads, flat per-byte gas rate, flat network fee, LINK fee multiplier percent, chain-family selector), the per-(destChain, token) flat transfer fee overrides, and the USD price tables for tokens and destination gas pushed by authorized callers through updatePrices(). Prices are not staleness-checked: quoting only requires that a price was set at least once. Exposes both the CCIP 2.0 quoting interface (quoteGasForExec, getTokenTransferFee, resolveLegacyArgs) and the legacy 1.6 one (getValidatedFee, processMessageArgs), so both ramp generations can use it.
+      values.destChainConfigs.ab.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.ab.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.ab.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.ab.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.abstract.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.abstract.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.abstract.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.abstract.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.cronos.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.cronos.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.cronos.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.cronos.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.robinhood.maxDataBytes:
+-        30000
++        32000
+      values.destChainConfigs.robinhood.maxPerMsgGasLimit:
+-        3000000
++        8000000
+      values.destChainConfigs.robinhood.destGasPerPayloadByteBase:
+-        16
++        20
+      values.destChainConfigs.robinhood.defaultTokenFeeUSDCents:
+-        50
++        0
+      values.destChainConfigs.mova:
++        {"isEnabled":true,"maxDataBytes":30000,"maxPerMsgGasLimit":3000000,"destGasOverhead":300000,"destGasPerPayloadByteBase":16,"chainFamilySelector":"EVM","defaultTokenFeeUSDCents":50,"defaultTokenDestGasOverhead":90000,"defaultTxGasLimit":200000,"networkFeeUSDCents":50,"linkFeeMultiplierPercent":90}
+      values.tokenTransferFeeConfig.plasma.39:
++        {"token":"eth:0x6DFF69eb720986E98Bb3E8b26cb9E02Ec1a35D12","tokenTransferFeeConfig":{"feeUSDCents":50,"destGasOverhead":140000,"destBytesOverhead":32,"isEnabled":true}}
+    }
+```
+
+```diff
+    contract CommitStore (eth:0xA4755Cd68CA2092447c8c842659a2931f9110320) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract EthereumOnRamp_v2_0 (eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7) [ccip/OnRampV2_0] {
+    +++ description: CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "ccip/OnRampV2_0"
+      sourceHashes:
++        ["0xe34278b4a2c417693660bc9640b25d774f6f178da7124d2be3b3be59c0e08c92"]
+      description:
++        "CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain."
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+      sinceTimestamp:
++        1787219963
+      sinceBlock:
++        25795590
+      values:
++        {"$immutable":true,"destChainConfigs":{"mantle":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x102423a5371944ab99Aad7185052f969904C6D65"},"ink":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x767c2fE8e0a429166967269c91Fe761Ab28718d5"},"canton":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":32,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0xEBa517d200000000000000000000000000000000","offRamp":"0xeecbda69421efdcaa89644e8c2dbbf136babf6f2f7a6059a5df0d990ffebb38e"},"plume":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x102423a5371944ab99Aad7185052f969904C6D65"},"arc":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xe71C0473f07C288D3F96DC0E9893c33417deafc9"},"cronos":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xe4590E340c51303074874ddb80883b31E72f7de7"},"ab":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xd072940492b5cbE546EedDb17481b256E0B6A21a"},"abstract":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":5000000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x27Da8AB83eC4d72fd744748b273F6bf9B5BDB121"},"robinhood":{"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x5060De90b723a7Eb705742Ff1a22a908b1D8b626"},"adi":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xe3657564C57c81E19466c2Dd4397F1b61e98b87B"},"optimism":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0x4Ef20b2071ecc7653d5Ba12e758383d1542cFD90"},"arbitrum":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xD4ad79ed3372460F1e63Feb8fC41C3b757198C6e"},"matic":{"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","addressBytesLength":20,"tokenReceiverAllowed":false,"messageNetworkFeeUSDCents":50,"tokenNetworkFeeUSDCents":50,"baseExecutionGasCost":200000,"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[],"defaultExecutor":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","offRamp":"eth:0xbb1E3552baDC3498638D20D0b6903aFc432c7253"}},"getDynamicConfig":{"feeQuoter":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","reentrancyGuardEntered":false,"feeAggregator":"eth:0x062f05CD6c835677B05a8658A351969476861316"},"owner":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","routeRouters":{"mantle":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","ink":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","canton":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","plume":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","arc":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","cronos":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","ab":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","abstract":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","robinhood":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","adi":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","optimism":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","arbitrum":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","matic":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E"},"staticConfig":{"chainSelector":"ethereum","rmnRemote":"eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81","maxUSDCentsPerMessage":1000000,"tokenAdminRegistry":"eth:0xb22764f98dD05c789929716D677382Df22C05Cb6"},"typeAndVersion":"OnRamp 2.0.0"}
+      fieldMeta:
++        {"staticConfig":{"description":"Immutable source-chain configuration: local chain selector, RMNRemote, maximum fee allowed per message, and TokenAdminRegistry."},"destChainConfigs":{"description":"Current configuration for each destination route, reconstructed from DestChainConfigSet events and keyed by chain name. It defines the authorized local Router, destination address length, flat network fees, base execution gas, default and lane-mandated CCVs, default destination executor, and destination OffRamp. messageNumber is not included because the event records it only at configuration time, not after later messages."},"routeRouters":{"description":"Local Router authorized to call forwardFromRouter for each destination route."}}
+      implementationNames:
++        {"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7":"OnRamp"}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"4426351306075016396":"0g","4829375610284793157":"ab","3577778157919314504":"abstract","4059281736450291836":"adi","14894068710063348487":"apechain","4741433654826277614":"aptos","6433500567565415381":"avalanche","1294465214383781161":"berachain","465944652040885897":"opbnb","7937294810946806131":"bitlayer","3849287863852499584":"bob","4560701533377838164":"botanix","5406759801798337480":"bsquared","241851231317828981":"bitcoin-merlin","2135107236357186872":"bittensor","11344663589394136015":"bsc","2308837218439511688":"canton","1346049177634351622":"celo","1224752112135636129":"core","9043146809313071210":"corn","18240105181246962294":"creditcoin","1456215246176062136":"cronos","8788096068760390840":"cronos-zkevm","6325494908023253251":"edge","8805746078405598895":"andromeda","4949039107694359620":"arbitrum","15971525489660198786":"base","7613811247471741961":"hashkey","3461204551265785888":"ink","4627098889531055414":"linea","1556008542357238666":"mantle","7264351850409363825":"mode","3734403246176062136":"optimism","13204309965629103672":"scroll","16468599424800719238":"taiko","1923510103922296319":"unichain","2049429975587534727":"worldchain","3016212468291539606":"xlayer","17198166215261833993":"zircuit","1562403441176082196":"zksync","13624601974233774587":"etherlink","1462016016387883143":"fraxtal","3229138320728879060":"hedera","1804312132722180201":"hemi","2442541497099098535":"hyperliquid","1523760397290643893":"jovay","9813823125703490621":"kaia","5608378062013572713":"lens","15293031020466096408":"lisk","5009297550715157269":"ethereum","4051577828743386545":"matic","6093540873831549674":"megaeth","13447077090413146373":"metal","11690709103138290329":"mind","17164792800244661392":"mint","8481857512324358265":"monad","18164309074156128038":"morph","4215185756725900654":"mova","12657445206920369324":"henesys","7801139999541420232":"pharos","9335212494177455608":"plasma","17912061998839310979":"plume","6422105447186081193":"astar","2459028469735686113":"katana","6180753054346818345":"robinhood","6370580034781731079":"arc","6916147374840168594":"ronin","11964252391146578476":"rootstock","9027416829622342829":"sei","3993510008929295315":"shibarium","124615329519749607":"solana","12505351618335765396":"soneium","1673871237479749969":"sonic","16978377838628290997":"stable","470401360549526817":"superseed","5936861837188149645":"tac","7281642695469137430":"tempo","16448340667252469081":"ton","5142893604156789321":"wemix","465200170687744372":"xdai","17673274061779414707":"xdc","3555797439612589184":"zora","17529533435026248318":"sui","9762610643973837292":"sui-testnet","6473245816409426016":"memento","9723842205701363942":"everclear","1546563616611573946":"tron","4348158687435793198":"polygonzkevm","4411394078118774322":"blast","5214452172935136222":"treasure","7222032299962346917":"neox"}}]
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 43 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-43 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.23:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.config.summary:
+-        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
+      values.config.summaryGroups:
+-        "Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
+      values.config.allMembers.23:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.config.signerGroups.group1.members.9:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
++++ description: Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule.
+      values.memberCount:
+-        43
++        42
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
+    }
+```
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter] {
+    +++ description: None
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.33:
++        "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.34:
++        "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.35:
++        "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.36:
++        "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049"
+    }
+```
+
+```diff
+    contract SiloedUSDCTokenPool (eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D) [ccip/SiloedUSDCTokenPool] {
+    +++ description: CCIP 2.0 USDC lock/release pool. Each configured remote chain has a separate USDC lockbox, and authorized callers move liquidity into or out of that chain's lockbox. It also supports a staged migration of a lane from lock/release liquidity to canonical Circle CCTP.
++++ description: Distinct USDC custody lockbox selected for each lock/release route.
+      values.getAllLockBoxConfigs.5:
++        {"remoteChainSelector":"neox","lockBox":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D"}
++++ description: Remote chains currently configured on this child pool.
+      values.getSupportedChains.5:
++        "neox"
+    }
+```
+
+```diff
+    contract USDCTokenPoolProxy (eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D) [ccip/USDCTokenPoolProxy] {
+    +++ description: USDC routing pool for CCIP. After validating the Router-selected ramp, it forwards each transfer to the owner-selected CCTP v1, CCTP v2, CCTP-through-CCV, or siloed lock/release child pool.
+      values.lockOrBurnMechanisms.neox:
++        "LOCK_RELEASE"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NeoxUSDCERC20LockBox (eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+## Source code changes
+
+```diff
+.../projects/ccip/.flat/EthereumOnRamp_v2_0.sol    | 7079 ++++++++++++++++++++
+ .../projects/ccip/.flat/NeoxUSDCERC20LockBox.sol   | 1082 +++
+ 2 files changed, 8161 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787129183 (main branch discovery), not current.
+
+```diff
+    contract CapabilitiesRegistry (eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83) [ccip/CapabilitiesRegistry] {
+    +++ description: Keystone CapabilitiesRegistry used by CCIP to manage node operators, nodes, capabilities, and DONs. When a DON includes the registered CCIP capability, updating it forwards the DON membership and configuration to CCIPHome, where the payload can set, revoke, or promote an OCR configuration.
+      description:
+-        "Keystone CapabilitiesRegistry for CCIP: the onchain registry of node operators, nodes, capabilities and DONs. It assigns the donIds and DON membership that CCIPHome's OCR configs reference, so a new DON registration here is what re-points a lane's accepted digest. getNodes and getDONs are ignored because they return large, frequently-rotating arrays; the node operator set, capabilities and DON counter are tracked instead."
++        "Keystone CapabilitiesRegistry used by CCIP to manage node operators, nodes, capabilities, and DONs. When a DON includes the registered CCIP capability, updating it forwards the DON membership and configuration to CCIPHome, where the payload can set, revoke, or promote an OCR configuration."
+      template:
++        "ccip/CapabilitiesRegistry"
+      fieldMeta:
++        {"getNodeOperators":{"description":"Registered node operators and their admins. An admin can update its operator record and add, update, or remove nodes assigned to that operator, subject to DON-membership and capability constraints; the contract owner shares this authority."}}
+    }
+```
+
+```diff
+    contract DeprecatedRouter (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [N/A] {
+    +++ description: Deprecated router used by BSC.
+      name:
+-        "Router"
++        "DeprecatedRouter"
+    }
+```
+
+```diff
+    contract CCIPHome (eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40) [ccip/CCIPHome] {
+    +++ description: CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config.
+      description:
+-        "Home-chain registry for CCIP v1.6 DON configurations. Stores the active and candidate OCR3 configs (commit and execution plugins) per DON and computes the config digest that remote OnRamps/OffRamps must accept on every report. The source of truth for OCR reconfigurations: remote chains receive only the resulting digest, so the operator set, offchainConfig and DON id behind a digest are only legible here. The per-DON OCR config digests (keyed by a stable CapabilitiesRegistry donId) are already mirrored on the lane OnRamps/OffRamps, so this entry additionally tracks the chain-selector-keyed chain configuration that only CCIPHome holds."
++        "CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config."
+      fieldMeta.chainConfigurations.description:
+-        "Per-destination-chain home configuration that gets propagated to the lane contracts, keyed by CCIP chain name: the set of DON node p2pIds authorized to serve the chain (readers), the fChain fault-tolerance threshold, and the decoded chain-family config (gas/fee parameters). Replayed from ChainConfigSet events, latest config per chain wins."
++        "Latest ChainConfigSet event observed for each remote chain selector: the registered reader p2pIds, fChain fault-tolerance threshold, and opaque chain-family config, rendered as UTF-8 when valid. The handler does not replay ChainConfigRemoved, so this is a latest-set history view and can retain a configuration after its selector has been removed."
+      fieldMeta.executionConfigs.description:
+-        "Latest execution-plugin (pluginType=1) OCR config set in CCIPHome per destination chain, keyed by chain name, replayed from ConfigSet events (latest set per chain; a staged candidate appears before it is promoted). Surfaces the inputs the configDigest commits to: the global version counter, plus FRoleDON, offchainConfigVersion, rmnHomeAddress (the home-chain RMN config contract, the same for every chain), the DON oracle identities and the decoded offchainConfig (the libOCR OCR3 protobuf: scheduling/timing params, the transmission schedule, p2p peer ids, and the reportingPluginConfig where per-lane params like the CCTP source pools live). Each node's p2pId/signerKey/transmitterKey stays index-aligned with its offchain public key, peer id and shared-secret encryption; these complete oracle tuples are sorted by p2pId so a pure reordering produces no diff. configDigest is the digest the chain's OffRamp must accept on execution reports."
++        "Latest ConfigSet event observed per remote chain for the Execution plugin (pluginType=1). ConfigSet is emitted when setCandidate stores a candidate; this event-derived view does not replay promotion or revocation events, so the displayed digest may be active, still a candidate, or no longer current, and does not by itself prove what a remote OffRamp accepts. It surfaces the version, FRoleDON, offchainConfigVersion, rmnHomeAddress, DON oracle identities, and decoded libOCR OCR3 offchainConfig. Each node's p2pId/signerKey/transmitterKey stays index-aligned with its offchain public key, peer id, and shared-secret encryption; these complete oracle tuples are sorted by p2pId so a pure reordering produces no diff."
+      fieldMeta.commitConfigs.description:
+-        "Latest commit-plugin (pluginType=0) OCR config set in CCIPHome per destination chain, keyed by chain name. Same shape as executionConfigs but for the commit (signing-committee) plugin."
++        "Latest ConfigSet event observed per remote chain for the Commit plugin (pluginType=0), with the same decoded shape and candidate/promotion/revocation limitations as executionConfigs."
+      fieldMeta.getCapabilityRegistry:
++        {"description":"Immutable CapabilitiesRegistry that is the only external caller allowed to submit DON capability updates."}
+      template:
++        "ccip/CCIPHome"
+    }
+```
+
+```diff
+    contract MainRouter (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.
+      name:
+-        "Router"
++        "MainRouter"
+      fieldMeta.onRamps.description:
+-        "All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. ignoreRelative is set because the v1.6 architecture uses a single per-chain OnRamp serving all destinations, already walked via arbitrumOnRamp."
++        "All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. Relatives are ignored here because a shared per-chain OnRamp can serve many destinations; individual ramp deployments must be tracked separately rather than crawled once per route."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HybridLockReleaseUSDCTokenPool (eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF) [transporter/HybridLockReleaseUSDCTokenPool]
+    +++ description: A token pool for USDC which uses CCTP for supported chains and Lock/Release for all others
+```
+
+```diff
++   Status: CREATED
+    contract Executor (eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b) [ccip/Executor]
+    +++ description: Fee-policy implementation used by a CCIP 2.0 executor endpoint. It quotes a flat fee for supported destination chains and refuses to quote messages whose requested finality or verifier list falls outside its configured policy. It does not deliver destination messages itself.
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitter (eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x0AE4eeAFfDA174F84c84c22f03a28F3AAB02FbDC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPoolFactory (eth:0x17D8a409fE2ceF2d3808bcB61F14aBEFfc28876e) [ccip/TokenPoolFactory]
+    +++ description: Permissionless factory that deterministically deploys CCIP burn/mint or lock/release token pools, configures their remote peers and rate limits, and transfers pool ownership to the caller. When it also deploys the token, it registers the pool in the TokenAdminRegistry and starts transferring token ownership and registry administration to the caller.
+```
+
+```diff
++   Status: CREATED
+    contract CCTPVerifier_v2_1 (eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af) [ccip/CCTPVerifier]
+    +++ description: USDC-specific CCV for CCIP 2.0. On the source chain it burns one USDC transfer through Circle CCTP v2 and binds the CCIP message identifier and verifier version into the attested hook data. On the destination chain it validates the attested CCTP fields against the CCIP message and configured domain before minting through a fixed transmitter proxy.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayMinter (eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205) [tokens/circle/GatewayMinter]
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x2728df4D22253004C017675bd609962cD641D797) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessengerV2 (eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract VersionedVerifierResolver (eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b) [ccip/VersionedVerifierResolver]
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
+```
+
+```diff
++   Status: CREATED
+    contract USDCTokenPoolCCTPV2 (eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574) [ccip/USDCTokenPool]
+    +++ description: USDC pool that burns outgoing USDC through a fixed Circle TokenMessenger and forwards incoming Circle attestations through a fixed message-transmitter proxy. Its caller allowlist lets a routing proxy invoke it, and separate deployments handle Circle CCTP v1 and CCTP v2 messages.
+```
+
+```diff
++   Status: CREATED
+    contract ZeroGUSDCERC20LockBox (eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract EthereumOffRamp_v2_0 (eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3) [ccip/OffRampV2_0]
+    +++ description: CCIP 2.0 OffRamp used to receive messages on its local chain. Anyone can submit a packed message for execution, but the contract checks its source route, RMN curse status, destination and OnRamp addresses, and the verifier quorum required by the lane, receiver, and token pool before releasing or minting a token and calling the receiver.
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CCTPMessageTransmitterProxy_v2_0 (eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExecutorProxy (eth:0x6608d995bBDE874De5292bFD289643c88D176ED3) [ccip/ExecutorProxy]
+    +++ description: Replaceable CCIP 2.0 executor endpoint selected by OnRamps. It forwards fee-quote calls to its configured Executor target and receives executor fees, which anyone can withdraw to the configured fee aggregator.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayWallet (eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) [tokens/circle/GatewayWallet]
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitteeVerifier (eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F) [ccip/CommitteeVerifier]
+    +++ description: Committee-based cross-chain verifier used by CCIP 2.0. On the source chain it accepts messages only from the Router-selected OnRamp, applies RMN and optional sender-allowlist checks, and returns its version tag. On the destination chain it applies RMN checks and requires the configured per-source-chain signature quorum over the version and message hash.
+```
+
+```diff
++   Status: CREATED
+    contract CCTPThroughCCVTokenPool (eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2) [ccip/CCTPThroughCCVTokenPool]
+    +++ description: CCIP 2.0 USDC pool for transfers that use CCTP through a CCV. The CCTP verifier burns and mints the USDC, while this pool validates the configured route, RMN state, finality, rate limits, transfer fees, and authorized caller.
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitterV2 (eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract CCTPMessageTransmitterProxy_v1_6 (eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC) [ccip/CCTPMessageTransmitterProxy]
+    +++ description: Stable destination caller for Circle CCTP messages. Authorized callers can submit a CCTP message and attestation, which this contract forwards to its fixed Circle MessageTransmitter; the owner controls the caller set.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x8eec10616802Ef639CA55c98ac856553fAdEfBaD) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BobUSDCERC20LockBox (eth:0x966A3BE75103C680b6A4248689630c788659d2A5) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) [tokens/circle/USDC]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CCTPVerifier_v2_0 (eth:0xa22606F055146f0eac2FBEd49253E779b781355D) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessenger (eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract USDCCCTPVerifierResolver (eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12) [ccip/VersionedVerifierResolver]
+    +++ description: CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.
+```
+
+```diff
++   Status: CREATED
+    contract HybridLockReleaseUSDCTokenPool (eth:0xc2e3A3C18ccb634622B57fF119a1C8C7f12e8C0c) [transporter/HybridLockReleaseUSDCTokenPool]
+    +++ description: A token pool for USDC which uses CCTP for supported chains and Lock/Release for all others
+```
+
+```diff
++   Status: CREATED
+    contract WemixUSDCERC20LockBox (eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinter (eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
++   Status: CREATED
+    contract Bob Multisig 2 (eth:0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BitlayerUSDCERC20LockBox (eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract PharosUSDCERC20LockBox (eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract JovayUSDCERC20LockBox (eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract ADIUSDCERC20LockBox (eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract RoninUSDCERC20LockBox (eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SiloedUSDCTokenPool (eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D) [ccip/SiloedUSDCTokenPool]
+    +++ description: CCIP 2.0 USDC lock/release pool. Each configured remote chain has a separate USDC lockbox, and authorized callers move liquidity into or out of that chain's lockbox. It also supports a staged migration of a lane from lock/release liquidity to canonical Circle CCTP.
+```
+
+```diff
++   Status: CREATED
+    contract ReUSDTokenPool (eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465) [ccip/BurnWithFromMintTokenPool]
+    +++ description: CCIP 2.0 burn/mint pool for tokens whose issuer supports burning from the pool and minting to recipients. It enforces configured routes, RMN status, finality, rate limits, and fees, and can use AdvancedPoolHooks for additional checks or verifier requirements.
+```
+
+```diff
++   Status: CREATED
+    contract USDCTokenPoolCCTPV1 (eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1) [ccip/USDCTokenPool]
+    +++ description: USDC pool that burns outgoing USDC through a fixed Circle TokenMessenger and forwards incoming Circle attestations through a fixed message-transmitter proxy. Its caller allowlist lets a routing proxy invoke it, and separate deployments handle Circle CCTP v1 and CCTP v2 messages.
+```
+
+```diff
++   Status: CREATED
+    contract USDCTokenPoolProxy (eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D) [ccip/USDCTokenPoolProxy]
+    +++ description: USDC routing pool for CCIP. After validating the Router-selected ramp, it forwards each transfer to the owner-selected CCTP v1, CCTP v2, CCTP-through-CCV, or siloed lock/release child pool.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinterV2 (eth:0xfd78EE919681417d192449715b2594ab58f5D002) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+Generated with discovered.json: 0xe1ee4b68585d0139399add87dbcc9ad94b68e3fd
 
 # Diff at Thu, 20 Aug 2026 13:50:19 GMT:
 

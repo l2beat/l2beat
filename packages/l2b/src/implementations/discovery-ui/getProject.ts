@@ -1,4 +1,5 @@
 import {
+  attachPermissions,
   type ColorContract,
   type ConfigReader,
   type ContractConfig,
@@ -45,6 +46,10 @@ export function getProject(
     discovery,
     config: configReader.readConfig(discovery.name),
   }))
+
+  // Same as ProjectDiscovery: permissions live in one map on the project that
+  // was modelled and are joined onto the cluster's entries here.
+  attachPermissions(discoveries)
 
   const ownedEntries = resolveEntryOwnership(discoveries)
 

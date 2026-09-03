@@ -799,20 +799,23 @@ describe(deriveOssificationPerimeter.name, () => {
     type: 'Contract',
     address: ADDRESS_D,
     name: 'AdminMultisig',
-    receivedPermissions: [
-      { permission: 'upgrade', from: ADDRESS_A, via: [{ address: ADDRESS_E }] },
-    ],
   }
   const timelock: DiscoveredEntryLite = {
     type: 'Contract',
     address: ADDRESS_E,
     name: 'Timelock',
   }
+  const adminUpgradesPool = {
+    [ADDRESS_D]: {
+      receivedPermissions: [{ from: ADDRESS_A, via: [{ address: ADDRESS_E }] }],
+    },
+  }
 
   it('closes over value references and permission holders, excluding periphery', () => {
     const perimeter = deriveOssificationPerimeter(
       [pool, verifier, governance, admin, timelock],
       [ADDRESS_A],
+      adminUpgradesPool,
     )
     expect(perimeter).toEqual(
       new Set(
@@ -843,11 +846,11 @@ describe(deriveOssificationPerimeter.name, () => {
     const eoa: DiscoveredEntryLite = {
       type: 'EOA',
       address: ADDRESS_C,
-      receivedPermissions: [{ permission: 'upgrade', from: ADDRESS_A }],
     }
     const perimeter = deriveOssificationPerimeter(
       [pool, verifier, eoa],
       [ADDRESS_A],
+      { [ADDRESS_C]: { receivedPermissions: [{ from: ADDRESS_A }] } },
     )
     expect(perimeter?.has(ADDRESS_C.toLowerCase())).toEqual(false)
   })

@@ -185,6 +185,62 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(safeHeight).toEqual(to)
     })
 
+    it('drops invalid supply values and saves the rest', async () => {
+      const from = 100
+      const to = 300
+      const adjustedTo = 250
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
+        getCirculatingSupplies: mockFn().returnsOnce([
+          { timestamp: UnixTime(150), value: 120000000 },
+          { timestamp: UnixTime(200), value: Number.NaN },
+        ]),
+      })
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returnsOnce([
+          UnixTime(150),
+          UnixTime(200),
+        ]),
+        shouldTimestampBeSynced: mockFn().returns(true),
+      })
+
+      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+        upsertMany: mockFn().returnsOnce(undefined),
+      })
+
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: [config('config-1', 'ethereum', 18)],
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, to, [
+        config('config-1', 'ethereum', 18),
+      ])
+      const safeHeight = await updateFn()
+
+      const expectedRecords: TvsAmountRecord[] = [
+        {
+          configurationId: 'config-1',
+          timestamp: UnixTime(150),
+          amount: BigInt(120000000 * 10 ** 18),
+        },
+      ]
+
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
+        expectedRecords,
+      )
+      expect(safeHeight).toEqual(adjustedTo)
+    })
+
     it('handles insufficient data errors', async () => {
       const from = 100
       const to = 300

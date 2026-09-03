@@ -13,13 +13,6 @@
       ],
       "proxyType": "immutable",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1775666447,
       "sinceBlock": 24836247,
@@ -68,45 +61,7 @@
     {
       "address": "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.",
-          "role": ".upgraders"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
-          "role": ".executor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "revert unexecuted batches through this contract.",
-          "role": ".reverters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batch precommitments on L1 through this contract.",
-          "role": ".precommitters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batch proofs on L1 through this contract.",
-          "role": ".provers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batches on L1 through this contract (no Validator Multisig approvals required).",
-          "role": ".committers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EraChainAdminProxy",
@@ -127,14 +82,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
-        }
-      ],
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
@@ -961,45 +908,7 @@
     {
       "address": "eth:0xa90c7CDB553332948E2943431436117eCFb1e781",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.",
-          "role": ".upgraders"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
-          "role": ".executor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "revert unexecuted batches through this contract.",
-          "role": ".reverters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batch precommitments on L1 through this contract.",
-          "role": ".precommitters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batch proofs on L1 through this contract.",
-          "role": ".provers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batches on L1 through this contract (no Validator Multisig approvals required).",
-          "role": ".committers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726",
@@ -1085,14 +994,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorVTL"
-        }
-      ],
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1775666495,
       "sinceBlock": 24836251,
@@ -1797,5 +1698,116 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25774511 },
-  "permissionsConfigHash": "0xfaac0bb0706ee85656a4f254262a3a4e5be1e5d130a8f1a302066e02ac8a43b5"
+  "permissionsConfigHash": "0xfaac0bb0706ee85656a4f254262a3a4e5be1e5d130a8f1a302066e02ac8a43b5",
+  "permissions": {
+    "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.",
+          "role": ".upgraders"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "revert unexecuted batches through this contract.",
+          "role": ".reverters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch precommitments on L1 through this contract.",
+          "role": ".precommitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch proofs on L1 through this contract.",
+          "role": ".provers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batches on L1 through this contract (no Validator Multisig approvals required).",
+          "role": ".committers"
+        }
+      ]
+    },
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0xa90c7CDB553332948E2943431436117eCFb1e781": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.",
+          "role": ".upgraders"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "revert unexecuted batches through this contract.",
+          "role": ".reverters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch precommitments on L1 through this contract.",
+          "role": ".precommitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch proofs on L1 through this contract.",
+          "role": ".provers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batches on L1 through this contract (no Validator Multisig approvals required).",
+          "role": ".committers"
+        }
+      ]
+    },
+    "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorVTL"
+        }
+      ]
+    }
+  }
 }

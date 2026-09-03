@@ -86,39 +86,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0xa3627912a8C36100670d57fCb4324Cd81242b2a3",
       "sinceTimestamp": 1758618407,
       "sinceBlock": 23424727,
@@ -192,13 +159,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xa3627912a8C36100670d57fCb4324Cd81242b2a3",
       "sinceTimestamp": 1758618407,
       "sinceBlock": 23424727,
@@ -343,40 +303,12 @@
     {
       "address": "eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".relayer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".relayer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".relayer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".relayer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AutomataDcapAttestationFee",
@@ -466,23 +398,6 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758377243,
       "sinceBlock": 23404766,
@@ -501,13 +416,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xa3627912a8C36100670d57fCb4324Cd81242b2a3",
       "sinceTimestamp": 1758618419,
       "sinceBlock": 23424728,
@@ -859,5 +767,111 @@
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23741202 },
-  "permissionsConfigHash": "0x99138f5142542eb410a1492561394edbbc6be57d6b25748a71d69e2c82e16604"
+  "permissionsConfigHash": "0x99138f5142542eb410a1492561394edbbc6be57d6b25748a71d69e2c82e16604",
+  "permissions": {
+    "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".relayer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".relayer"
+        }
+      ]
+    },
+    "eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".relayer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".relayer"
+        }
+      ]
+    },
+    "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xf2A2Bee383C2e4d75d9aE5953b3A6cFABb661a47": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

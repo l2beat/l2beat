@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x2adadcdcf33b1deb09770d2bbdfaf307a52e03da
+Generated with discovered.json: 0x984901bc4224763e1be0f461f4acfbc8b4d5a2c0
 
-# Diff at Wed, 26 Aug 2026 12:56:56 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1779355836
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1779355836
 - current timestamp: 1779355836
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -24,7 +24,7 @@ discovery. Values are for block 1779355836 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x7a24c631083d8ce9e5fc3276474f24fdebfb77f5
+Generated with discovered.json: 0xd76015712bf3955b271db4b72f0c327b935d7528
 
 # Diff at Thu, 21 May 2026 09:31:55 GMT:
 

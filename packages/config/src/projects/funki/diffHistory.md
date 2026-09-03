@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x69d5da4eabeeeb069f1b1c4882457dc97de26a35
+Generated with discovered.json: 0x675d65293a1f1460343e53e8d9f8459fd7b0a7ed
 
-# Diff at Mon, 31 Aug 2026 15:32:56 GMT:
+# Diff at Thu, 03 Sep 2026 14:26:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1785878806
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1785878806
 - current timestamp: 1785878806
 
 ## Description
 
-ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -203,7 +203,7 @@ discovery. Values are for block 1785878806 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x0a4f091fcb329050e646fa17e58b12d81683f7a1
+Generated with discovered.json: 0xbaaa4ce6c032ea611f9de8e916f0cf47243d74b1
 
 # Diff at Tue, 04 Aug 2026 21:28:10 GMT:
 

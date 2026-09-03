@@ -6,15 +6,7 @@
     {
       "address": "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
-          "role": ".validatorVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ValidatorTimelock",
@@ -28,14 +20,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "role": ".validators"
-        }
-      ],
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
@@ -158,14 +142,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
-          "role": ".getTransactionFilterer"
-        }
-      ],
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1748609843,
       "sinceBlock": 22595693,
@@ -243,13 +219,6 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1748530883,
       "sinceBlock": 22589160,
@@ -568,7 +537,6 @@
           "severity": "LOW",
           "description": "Verifier parameters used for proving batches."
         },
-        "validators": { "severity": "HIGH" },
         "getSettlementLayer": {
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
@@ -607,15 +575,7 @@
     {
       "address": "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
-          "role": ".validatorVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1VerifierPlonk",
@@ -778,14 +738,6 @@
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping and updates emit no events, so the only way to track them is to manually analyze all trxs from the owner.",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
-          "role": ".validatorVTL"
-        }
-      ],
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1769799107,
       "sinceBlock": 24349594,
@@ -845,15 +797,7 @@
     {
       "address": "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
-          "description": "set the conversion factor for gas token deposits.",
-          "role": ".tokenMultiplierSetter"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ChainAdminOwnable",
@@ -866,35 +810,6 @@
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.",
       "critical": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
-          "description": "manage filter lists.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1745941307,
       "sinceBlock": 22375679,
@@ -1519,5 +1434,107 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 24419160, "gateway": 158294 },
-  "permissionsConfigHash": "0x3779501a3abcde6cd064bb001e37109b009060d57f85434ce8a72c31a140da79"
+  "permissionsConfigHash": "0x3779501a3abcde6cd064bb001e37109b009060d57f85434ce8a72c31a140da79",
+  "permissions": {
+    "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
+          "role": ".validatorVTL"
+        }
+      ]
+    },
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x5540DE94485dB078025318428F813C5d88215823": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
+          "role": ".getTransactionFilterer"
+        }
+      ]
+    },
+    "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
+          "role": ".validatorVTL"
+        }
+      ]
+    },
+    "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
+          "role": ".validatorVTL"
+        }
+      ]
+    },
+    "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+          "description": "set the conversion factor for gas token deposits.",
+          "role": ".tokenMultiplierSetter"
+        }
+      ]
+    },
+    "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "description": "manage filter lists.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

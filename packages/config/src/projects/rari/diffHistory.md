@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe69f6466bf892b9f6f4a40975f3835251a2e2a95
+Generated with discovered.json: 0x51d7057ab3ae8cf64032552fe7e4dd344731a4fd
 
-# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1782746888
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1782746888
 - current timestamp: 1782746888
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -121,14 +121,6 @@ discovery. Values are for block 1782746888 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CustomGateway (arb1:0x8bE956aB42274056ef4471BEb211b33e258b7324) [orbitstack/CustomGateway] {
-    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
-      critical:
-+        true
-    }
-```
-
-```diff
     contract Outbox (arb1:0x91591BB66075BCfF94AA128B003134165C3Ab83a) [orbitstack/Outbox] {
     +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
       critical:
@@ -164,7 +156,7 @@ discovery. Values are for block 1782746888 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xf741fff9a7125975f2f050f1258c262dd2ac14cc
+Generated with discovered.json: 0x8070c8e3b838eca15364abfe2894480109a0f9a6
 
 # Diff at Wed, 29 Jul 2026 11:32:30 GMT:
 

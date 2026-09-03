@@ -453,14 +453,6 @@
       ],
       "proxyType": "gnosis safe",
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
-          "description": "Can create new dispute games.",
-          "role": ".gameCreator"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xB961047013F974C5b6B6F8dA4402379525316550",
       "sinceTimestamp": 1636927409,
@@ -733,33 +725,6 @@
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
       "sinceTimestamp": 1710314795,
       "sinceBlock": 19424653,
@@ -938,15 +903,7 @@
     {
       "address": "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
-          "description": "Can create new dispute games.",
-          "role": ".gameCreator"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Metis Security Council Minority",
@@ -958,14 +915,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
-          "description": "Can delete batches from the StateCommitmentChain.",
-          "role": ".1088_MVM_FraudVerifier"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xc27896E7b4172D6B1C21177D91fd64A935EEc4EA",
       "sinceTimestamp": 1756847399,
@@ -999,15 +948,7 @@
     {
       "address": "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".blobBatcher"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MIPS",
@@ -1050,75 +991,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xc27896E7b4172D6B1C21177D91fd64A935EEc4EA",
       "sinceTimestamp": 1754931611,
@@ -1299,21 +1171,7 @@
     {
       "address": "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": "._1088_MVM_Proposer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xF81F0E3490cF754dFB3247e5BF202601aA9C49f4",
@@ -2678,5 +2536,163 @@
     "opstack/Layer2/L2StandardBridge": "0x1d7a39d8907362465f31e3072eaa78f2f2c42ba8a5b83ee617f65daf0facff5b"
   },
   "usedBlockNumbers": { "ethereum": 24183445, "metis": 21929673 },
-  "permissionsConfigHash": "0xafc753cc81faab912b675b49578495b536112e27cc9293eb3a75913d79593abb"
+  "permissionsConfigHash": "0xafc753cc81faab912b675b49578495b536112e27cc9293eb3a75913d79593abb",
+  "permissions": {
+    "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "description": "Can create new dispute games.",
+          "role": ".gameCreator"
+        }
+      ]
+    },
+    "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "description": "Can create new dispute games.",
+          "role": ".gameCreator"
+        }
+      ]
+    },
+    "eth:0xAd07701EE9348d2B9e7De061883C10574c543279": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+          "description": "Can delete batches from the StateCommitmentChain.",
+          "role": ".1088_MVM_FraudVerifier"
+        }
+      ]
+    },
+    "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".blobBatcher"
+        }
+      ]
+    },
+    "eth:0xbf1752DE62d825aF0634F514226F881a449874b6": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": "._1088_MVM_Proposer"
+        }
+      ]
+    }
+  }
 }

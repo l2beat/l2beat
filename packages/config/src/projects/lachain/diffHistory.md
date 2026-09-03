@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x52b1bd41ce914a3fedcb9fc19abbc539ad8035a7
+Generated with discovered.json: 0xf01c08c62e81edf9e51d1de07eea2b2f03250257
 
-# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1761642941
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1761642941
 - current timestamp: 1761642941
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -35,8 +35,6 @@ discovery. Values are for block 1761642941 (main branch discovery), not current.
 ```diff
     contract Diamond (eth:0x742A28e22277945BBAAa34810393bf6e8512576C) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      fieldMeta.validators:
-+        {"severity":"HIGH"}
       fieldMeta.getSettlementLayer:
 +        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
@@ -72,7 +70,7 @@ discovery. Values are for block 1761642941 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x8b5a36349db3e54407781f0c5de13aae8596c1fb
+Generated with discovered.json: 0xe2a04d4b55138814ce73789162bd1368ec31442d
 
 # Diff at Mon, 27 Jul 2026 11:01:25 GMT:
 

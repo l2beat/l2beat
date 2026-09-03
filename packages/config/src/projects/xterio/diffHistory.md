@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x0546dac2c1d1637afd1da378ae28a081eebf15f8
+Generated with discovered.json: 0x0a8310dfa2772efcd6147b0fa571494298e31d99
 
-# Diff at Mon, 31 Aug 2026 15:08:34 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1745000255
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1745000255
 - current timestamp: 1745000255
 
 ## Description
 
-reintroduce MEDIUM severity: pause-type fields and ADD_TA starkgate escrows demoted from HIGH (ossification perimeter/severity review)
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -37,10 +37,10 @@ discovery. Values are for block 1745000255 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      fieldMeta.batcherHash:
-+        {"severity":"LOW"}
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
@@ -94,7 +94,7 @@ discovery. Values are for block 1745000255 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xd487cc68b9e04c4f22380e3d44098f967060ebf2
+Generated with discovered.json: 0xeec263da4897c26949bd9a0ae9fd5d0a05724712
 
 # Diff at Tue, 09 Jun 2026 12:43:41 GMT:
 

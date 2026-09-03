@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x3e3c3d16db6bf9190531676c6c682c8240dcedc1
+Generated with discovered.json: 0xaedf4e4fb37991ac2cbd9e073dee3a1e6ef3d2b4
 
-# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1744201739
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1744201739
 - current timestamp: 1744201739
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -95,14 +95,6 @@ discovery. Values are for block 1744201739 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CustomGateway (eth:0x99790790B030CF116efed1c7577e2262072EfCc9) [orbitstack/CustomGateway] {
-    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
-      critical:
-+        true
-    }
-```
-
-```diff
     contract StrategiesProxyAdmin (eth:0xa5f13fbc57f14Bf322C900Cae0F67b4819364281) [global/ProxyAdmin] {
     +++ description: None
       fieldMeta:
@@ -172,7 +164,7 @@ discovery. Values are for block 1744201739 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x681c3f0d31be7bfff67b202d4e0f7c65caf35747
+Generated with discovered.json: 0x875b2b9cef6c72e1f5c7997b5cf1ed0671f85496
 
 # Diff at Fri, 12 Jun 2026 10:18:46 GMT:
 

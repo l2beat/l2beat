@@ -289,6 +289,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-Basecat",
+      "priceId": "basecat",
+      "symbol": "Basecat",
+      "name": "Basecat",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175780/large/zi54rndmdx59nblfgry3d1pyckch.?1787558766",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "basecat",
+        "decimals": 18,
+        "sinceTimestamp": 1787529600,
+        "address": "0xB2000000000000000000004c27f6523082f41D01",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-BENJI",
       "priceId": "franklin-templeton-benji",
       "symbol": "BENJI",
@@ -1790,6 +1809,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-mGLO",
+      "priceId": "midas-fasanara-global-open",
+      "symbol": "mGLO",
+      "name": "Midas Fasanara Global Open",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174031/large/mglobal-Cm4yjVTI.png?1781967852",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFCc9Cc1209651Ed8867332d6F664CF82743A2584",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1784246400
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-MIGGLES",
       "priceId": "mister-miggles",
       "symbol": "MIGGLES",
@@ -2716,6 +2753,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-SOL",
+      "priceId": "solana",
+      "symbol": "SOL",
+      "name": "Solana",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+        "chain": "base",
+        "decimals": 9,
+        "sinceTimestamp": 1764174960
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Base Solana Bridge",
+            "slug": "basesolbridge"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-SPX-1",
       "priceId": "spx6900",
       "symbol": "SPX",
@@ -2961,6 +3024,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-syrupUSDC",
+      "priceId": "syrupusdc",
+      "symbol": "syrupUSDC",
+      "name": "Syrup USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54658/large/syrupUSDC.png?1761824955",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x660975730059246A68521a3e2FBD4740173100f5",
+        "chain": "base",
+        "decimals": 6,
+        "sinceTimestamp": 1753206240
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

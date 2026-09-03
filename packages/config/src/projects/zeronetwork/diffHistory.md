@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x1f704c98956c9d07d23c55e8dca7b95f5c44e192
+Generated with discovered.json: 0xee32d8330691b67e889f025cee61ba512098e859
 
-# Diff at Mon, 31 Aug 2026 15:32:58 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1786615271
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1786615271
 - current timestamp: 1786615271
 
 ## Description
 
-ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -65,8 +65,6 @@ discovery. Values are for block 1786615271 (main branch discovery), not current.
 ```diff
     contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      fieldMeta.validators:
-+        {"severity":"HIGH"}
       fieldMeta.getSettlementLayer:
 +        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
@@ -74,7 +72,7 @@ discovery. Values are for block 1786615271 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xae1c51696ee4bc410291d12998b16491af067376
+Generated with discovered.json: 0x4f0377fe08195918436749c56a76c0e5d71c906d
 
 # Diff at Thu, 13 Aug 2026 10:02:14 GMT:
 

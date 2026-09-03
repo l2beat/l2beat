@@ -12,6 +12,9 @@
   ],
   "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
   "fields": {
+    "userFundsInYieldProvidersTotal": {
+      "description": "User ETH principal currently deployed into yield providers (staked), excluding accrued yield. Together with the rollup and YieldManager balances it forms the total system balance used for the reserve thresholds."
+    },
     "accessControl": {
       "handler": { "type": "accessControl" }
     },
@@ -42,25 +45,29 @@
       ]
     },
     "isWithdrawalReserveBelowMinimum": {
-      "description": "If true, no more ETH can be staked and users can permissionlessly withdraw staked ETH."
+      // Flips on its own as the reserve moves: an operational condition, not a
+      // governance decision, so it alerts (MEDIUM) without resetting the
+      // ossification clock. Same treatment as pause flags.
+      "severity": "MEDIUM",
+      "description": "True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency."
     },
     "yieldProviderByIndex": { "severity": "HIGH" },
     "yieldProviderCount": {},
     "minimumWithdrawalReserveAmount": {
       "severity": "HIGH",
-      "description": "Absolute value, part of the computation of minimal rollup ETH reserve."
+      "description": "Absolute minimum ETH balance the LineaRollup must hold as withdrawal reserve. The effective minimum is the larger of this and the percentage-based minimum."
     },
     "minimumWithdrawalReservePercentageBps": {
       "severity": "HIGH",
-      "description": "Value relative to TVS, part of the computation of minimal rollup ETH reserve."
+      "description": "Minimum withdrawal reserve in basis points of the total ETH in the native yield system (rollup balance + YieldManager balance + ETH deployed in yield providers). The effective minimum is the larger of this and minimumWithdrawalReserveAmount."
     },
     "targetWithdrawalReserveAmount": {
       "severity": "HIGH",
-      "description": "Absolute value, part of the computation of target rollup ETH reserve."
+      "description": "Absolute target ETH balance for the LineaRollup withdrawal reserve. Unstaking and replenishment (permissionless while in deficit) refill the reserve up to the effective target, the larger of this and the percentage-based target."
     },
     "targetWithdrawalReservePercentageBps": {
       "severity": "HIGH",
-      "description": "Value relative to TVS, part of the computation of target rollup ETH reserve."
+      "description": "Target withdrawal reserve in basis points of the total ETH in the native yield system (rollup balance + YieldManager balance + ETH deployed in yield providers). The effective target is the larger of this and targetWithdrawalReserveAmount; staking is only allowed while the reserve is at or above it."
     }
   }
 }

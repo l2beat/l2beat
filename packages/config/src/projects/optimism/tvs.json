@@ -635,6 +635,32 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-EURC",
+      "priceId": "euro-coin",
+      "symbol": "EURC",
+      "name": "EURC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/EURC.png?1769615705",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xDCB612005417Dc906fF72c87DF732e5a90D49e11",
+        "chain": "optimism",
+        "decimals": 6,
+        "sinceTimestamp": 1772654040
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "optimism-EXA",
       "priceId": "exa",
       "symbol": "EXA",

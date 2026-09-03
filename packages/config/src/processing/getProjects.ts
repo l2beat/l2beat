@@ -155,6 +155,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
         p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
     },
     customDa: p.customDa,
+    privacyInfo: p.privacyInfo,
     tvsInfo: {
       associatedTokens: associatedTokens ?? [],
       warnings: [p.display.tvsWarning].filter((x) => x !== undefined),

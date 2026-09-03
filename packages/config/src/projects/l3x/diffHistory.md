@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6b84ba7d1d8c06243e3e2334f863030facd4919f
+Generated with discovered.json: 0x6d8bdde095e4d4e5eb49401e015e1abd0288f5b0
 
-# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1734957965
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1734957965
 - current timestamp: 1734957965
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -154,7 +154,7 @@ discovery. Values are for block 1734957965 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xfc1d0a99c85e49de2c45661b7f1985f5d137f5ea
+Generated with discovered.json: 0x797b85f9dba98864ffe48459c17e980026377586
 
 # Diff at Fri, 12 Jun 2026 10:18:52 GMT:
 

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xdb60949c7215959c66ea56aa5b2bea380f9e49ac
+Generated with discovered.json: 0x0a51b9f2b7b68da60234745b75e1f5d9ab7f3f2a
 
-# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
+# Diff at Thu, 03 Sep 2026 14:29:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1768984467
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1768984467
 - current timestamp: 1768984467
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -29,10 +29,10 @@ discovery. Values are for block 1768984467 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      fieldMeta.batcherHash:
-+        {"severity":"LOW"}
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
@@ -82,7 +82,7 @@ discovery. Values are for block 1768984467 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x24f090d26346f4f97f5f745529dad4c9099c0e46
+Generated with discovered.json: 0xee7fcd671d6a4fb5eb9752404b0bdfc92b51a0e9
 
 # Diff at Tue, 09 Jun 2026 12:43:37 GMT:
 

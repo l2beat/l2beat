@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x50e1e51e7a963519c0251ed07cfc59fdf6415924
+Generated with discovered.json: 0xcb3793813675b20152a1aaa5749c8affdd631a3b
 
-# Diff at Mon, 31 Aug 2026 16:08:02 GMT:
+# Diff at Thu, 03 Sep 2026 14:26:45 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787840339
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1787840339
 - current timestamp: 1787840339
 
 ## Description
 
-ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -195,12 +195,12 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
 ```diff
     contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
     +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      fieldMeta.l2CoreQuorumPercent.severity:
++        "HIGH"
       receivedPermissions.18:
 +        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
       receivedPermissions.20:
 +        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
-      fieldMeta.l2CoreQuorumPercent.severity:
-+        "HIGH"
       critical:
 +        true
     }
@@ -476,7 +476,7 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     +++ description: Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.
 ```
 
-Generated with discovered.json: 0x760b556403597be4ae735db91028268e1c0bcaa3
+Generated with discovered.json: 0x685225d131150b8c1b2f390e4b4f0c4baf7f62b3
 
 # Diff at Thu, 27 Aug 2026 14:20:06 GMT:
 

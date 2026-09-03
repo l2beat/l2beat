@@ -30,6 +30,7 @@ import {
 import { getProjectOssification } from '../../projects/ossification/getProjectOssification'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
+import type { PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -68,6 +69,7 @@ export interface ProjectPrivacyEntry {
       last7d: number
       last30d: number
     }
+    relayerStat?: PrivacyRelayerStat
   }
   isUnderReview: boolean
   recentUpdatesCount: number
@@ -142,14 +144,14 @@ export async function getPrivacyProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (details.display.detailedDescription) {
+  if (details.detailedDescription) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Protocol description',
         description: undefined,
-        detailedDescription: details.display.detailedDescription,
+        detailedDescription: details.detailedDescription,
       },
     })
   }
@@ -333,6 +335,7 @@ export async function getPrivacyProjectEntry(
     summary: {
       totalValueLockedUsd,
       deposits: details.summary.deposits,
+      relayerStat: details.summary.relayerStat,
     },
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),

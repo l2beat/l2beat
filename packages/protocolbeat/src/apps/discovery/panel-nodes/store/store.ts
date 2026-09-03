@@ -25,6 +25,15 @@ import {
 import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
 import { setNodes } from './actions/setNodes'
+import {
+  clearLegacyNodeStoreVersions,
+  DEFAULT_USER_PREFERENCES,
+  mergeNodeStoreState,
+  migrateNodeStoreState,
+  NODE_STORE_VERSION,
+  type PersistedNodeStoreState,
+  partializeNodeStore,
+} from './persistence'
 import type { State } from './State'
 import {
   captureHistorySnapshot,
@@ -59,17 +68,16 @@ const INITIAL_STATE: State = {
   selection: undefined,
   positionsBeforeMove: {},
   projectId: '',
-  userPreferences: {
-    enableDimming: true,
-    hideLargeArrays: true,
-    highlightOverlapping: true,
-    useExperimentalRenderer: false,
-  },
+  userPreferences: DEFAULT_USER_PREFERENCES,
   loaded: false,
 }
 
+if (typeof localStorage !== 'undefined') {
+  clearLegacyNodeStoreVersions(localStorage)
+}
+
 export const useStore = create<StoreState>()(
-  persist(
+  persist<StoreState, [], [], PersistedNodeStoreState>(
     (set) => ({
       ...INITIAL_STATE,
       loadNodes: wrapHistoryResetAction(set, loadNodes),
@@ -101,15 +109,11 @@ export const useStore = create<StoreState>()(
       onWheel: wrapAction(set, onWheel),
     }),
     {
-      // You can update the key if changes are backwards incompatible
       name: 'store-v6',
-      partialize: (state) => {
-        return {
-          projectId: state.projectId,
-          nodes: state.nodes,
-          userPreferences: state.userPreferences,
-        }
-      },
+      version: NODE_STORE_VERSION,
+      partialize: partializeNodeStore,
+      migrate: migrateNodeStoreState,
+      merge: mergeNodeStoreState,
     },
   ),
 )

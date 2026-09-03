@@ -6,23 +6,7 @@
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenImplementation",
@@ -64,65 +48,17 @@
     {
       "address": "eth:0x107A0086b32d7A0977926A205131d8731D39cbEB",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x114De8460193bdf3A2fCf81f86a09765F4762fD1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenBridge",
@@ -135,20 +71,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Wormhole Token Bridge on Ethereum. It escrows Ethereum-native tokens and mints or burns wrapped assets such as WSOL after Wormhole Core verifies Guardian-signed VAAs. WSOL has no Ethereum-side escrow because it is a wrapped asset on Ethereum.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
-          "description": "mint or burn WSOL after the Token Bridge accepts a valid Wormhole transfer VAA.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
-          "description": "update WSOL metadata after the Token Bridge accepts a valid Wormhole attestation VAA.",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0x96D13cbEFFE7BAE169B9032Fe69Ed56eB07b300F",
       "sinceTimestamp": 1631535967,
       "sinceBlock": 13217349,
@@ -282,149 +204,37 @@
     {
       "address": "eth:0x3F851Ad586A47ceF8d04748f33ab0D71395f06b4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x42579bFFbCF4276E290aB8E4C162bd4052b97970",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x61D9800f9FCb4160FB0C6cf3A0902592bAC2B434",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7899cEAB1DC961Dae9defDB7A4f521269a5448FC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x938f104AEb5581293216ce97d771e0CB721221B1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "WormholeCore",
@@ -437,19 +247,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge by storing the active Guardian set.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
-          "description": "validate incoming transfers and register remote bridge peers.",
-          "role": ".wormhole"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
-          "role": ".wormhole"
-        }
-      ],
       "ignoreInWatchMode": ["guardianSet", "getCurrentGuardianSetIndex"],
       "deployerAddress": "eth:0x5B3899809Ae2c87FdA11280b7c61C06A5F4db1de",
       "sinceTimestamp": 1628093444,
@@ -579,86 +376,22 @@
     {
       "address": "eth:0x9D16870160e703324D057c3361c34C5beFBa2c34",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xaE565927Bb8dB25CD8Bf3e7BB663D70023e4Ea78",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "WSOL",
@@ -781,23 +514,7 @@
     {
       "address": "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e",
@@ -807,65 +524,17 @@
     {
       "address": "eth:0xF3ea0AD4FFB5a178AE4EBc21861651B25BdcbB91",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xfF6CB952589BDE862c25Ef4392132fb9D4A42157",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "role": ".$members",
-          "condition": "if the quorum of 13/19 guardian signers is met."
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1007,5 +676,380 @@
     "wormhole/WormholeCore": "0xe9cd639e09731a38f64813812bd4d5dc25cd9844a52065c894c53cfa445f64da"
   },
   "usedBlockNumbers": { "ethereum": 25487847 },
-  "permissionsConfigHash": "0x78b5e366bbad07a794410a8fe090f251d4a242805d9e1c16ecfcb08011785055"
+  "permissionsConfigHash": "0x78b5e366bbad07a794410a8fe090f251d4a242805d9e1c16ecfcb08011785055",
+  "permissions": {
+    "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x107A0086b32d7A0977926A205131d8731D39cbEB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x114De8460193bdf3A2fCf81f86a09765F4762fD1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x3F851Ad586A47ceF8d04748f33ab0D71395f06b4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+          "description": "mint or burn WSOL after the Token Bridge accepts a valid Wormhole transfer VAA.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+          "description": "update WSOL metadata after the Token Bridge accepts a valid Wormhole attestation VAA.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x42579bFFbCF4276E290aB8E4C162bd4052b97970": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x61D9800f9FCb4160FB0C6cf3A0902592bAC2B434": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x7899cEAB1DC961Dae9defDB7A4f521269a5448FC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x938f104AEb5581293216ce97d771e0CB721221B1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+          "description": "validate incoming transfers and register remote bridge peers.",
+          "role": ".wormhole"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+          "role": ".wormhole"
+        }
+      ]
+    },
+    "eth:0x9D16870160e703324D057c3361c34C5beFBa2c34": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xF3ea0AD4FFB5a178AE4EBc21861651B25BdcbB91": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xaE565927Bb8dB25CD8Bf3e7BB663D70023e4Ea78": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xfF6CB952589BDE862c25Ef4392132fb9D4A42157": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "role": ".$members",
+          "condition": "if the quorum of 13/19 guardian signers is met."
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    }
+  }
 }

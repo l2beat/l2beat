@@ -24,6 +24,7 @@ import {
   canonicalDiffField,
   collectEscrowSeeds,
   type DiscoveredEntryLite,
+  type DiscoveredPermissionsLite,
   type DiscoveryChangelog,
   type DiscoveryChangelogEntry,
   type DiscoveryChangelogField,
@@ -53,15 +54,17 @@ export async function runLint(
   for (const id of ids) {
     const dir = configReader.getProjectPath(id)
     let entries: DiscoveredEntryLite[]
+    let permissions: DiscoveredPermissionsLite
     let tvsJson: unknown
     try {
-      entries = (
-        JSON.parse(
-          readFileSync(path.join(dir, 'discovered.json'), 'utf-8'),
-        ) as {
-          entries: DiscoveredEntryLite[]
-        }
-      ).entries
+      const discovered = JSON.parse(
+        readFileSync(path.join(dir, 'discovered.json'), 'utf-8'),
+      ) as {
+        entries: DiscoveredEntryLite[]
+        permissions?: DiscoveredPermissionsLite
+      }
+      entries = discovered.entries
+      permissions = discovered.permissions ?? {}
     } catch {
       console.log(`\n=== ${id}: no discovered.json`)
       continue
@@ -77,7 +80,7 @@ export async function runLint(
       ...collectEscrowSeeds(tvsJson),
       ...getTrackedTxSeeds(project?.trackedTxsConfig),
     ]
-    const derived = deriveOssificationPerimeter(entries, seeds)
+    const derived = deriveOssificationPerimeter(entries, seeds, permissions)
 
     const contracts = entries.filter(
       (entry) => entry.type === 'Contract' && entry.address,

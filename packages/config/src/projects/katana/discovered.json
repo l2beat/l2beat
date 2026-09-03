@@ -212,13 +212,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -345,60 +338,6 @@
       ],
       "proxyType": "immutable",
       "critical": true,
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
-          "description": "set and change address mappings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb41151Bf2B989d3771caBd5BCb5C435949543322",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
@@ -446,15 +385,7 @@
     {
       "address": "eth:0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -739,13 +670,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1001,49 +925,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747898927,
@@ -1149,13 +1030,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1383,13 +1257,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -1750,13 +1617,6 @@
       ],
       "proxyType": "immutable",
       "critical": true,
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746740171,
       "sinceBlock": 22441511,
@@ -1950,13 +1810,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -2035,23 +1888,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747897679,
@@ -2268,23 +2104,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747906727,
@@ -2583,16 +2402,7 @@
     {
       "address": "eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
-          "description": "sign state transitions (replaces state validation for this aggchain).",
-          "role": ".aggchainSigners",
-          "condition": "optimisticMode is enabled by the optimisticModeManager."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51",
@@ -2624,128 +2434,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
-          "description": "change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation.",
-          "role": ".aggchainManager"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
-          "description": "toggle the 'optimisticMode'.",
-          "role": ".optimisticModeManager"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
-          "description": "set and change address mappings.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb41151Bf2B989d3771caBd5BCb5C435949543322",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747896083,
@@ -2782,13 +2470,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
@@ -2992,23 +2673,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747898375,
@@ -3131,18 +2795,6 @@
       ],
       "proxyType": "immutable",
       "critical": true,
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3256,15 +2908,7 @@
     {
       "address": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-          "description": "update the global exit root (GER) that is used for L2 deposits.",
-          "role": ".globalExitRootUpdater"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeployerWhitelist",
@@ -3686,93 +3330,6 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "EIP1967 proxy",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000002",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000007",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x420000000000000000000000000000000000000F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000010",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000011",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000012",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000013",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000014",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000015",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000016",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000017",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000018",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000019",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x420000000000000000000000000000000000001A",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x420000000000000000000000000000000000001b",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000020",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000021",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3802,14 +3359,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "katana:0x420000000000000000000000000000000000001b",
-          "description": "receive fees.",
-          "role": ".recipient"
-        }
-      ],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3995,88 +3544,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "description": "manage token mappings and deployments.",
-          "role": ".bridgeManager"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "description": "own and upgrade default L2 token contracts deployed by the bridge.",
-          "role": ".getProxiedTokensManager"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "description": "pause the bridge.",
-          "role": ".emergencyBridgePauser"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "description": "unpause the bridge.",
-          "role": ".emergencyBridgeUnpauser"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-          "description": "manage 'claimed' status of global deposit indexes (can freeze bridge transactions), remove global exit roots (used for L2 deposits).",
-          "role": ".globalExitRootRemover"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-          "description": "roll back or insert leaves into the local exit tree (LET) that enables withdrawals from the L2. (can steal)",
-          "role": ".globalExitRootRemover",
-          "condition": "if the bridge is paused"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-          "delay": 43200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-              "delay": 43200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-              "delay": 43200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-          "delay": 43200,
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "katana:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747208518,
@@ -4129,26 +3596,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "katana:0x4200000000000000000000000000000000000011",
-          "description": "receive fees.",
-          "role": ".recipient"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0x4200000000000000000000000000000000000019",
-          "description": "receive fees.",
-          "role": ".recipient"
-        },
-        {
-          "permission": "interact",
-          "from": "katana:0x420000000000000000000000000000000000001A",
-          "description": "receive fees.",
-          "role": ".recipient"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "katana:0xbd8F5d8eB7Bc4aA01b98438F7103200Df4433f8C",
       "sinceTimestamp": 1750868616,
@@ -4273,13 +3720,6 @@
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 12h.",
       "critical": true,
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -4409,192 +3849,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-          "delay": 43200,
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-              "delay": 43200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000002",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000007",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x420000000000000000000000000000000000000F",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000010",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000011",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000012",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000013",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000014",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000015",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000016",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000017",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000018",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000019",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x420000000000000000000000000000000000001A",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x420000000000000000000000000000000000001b",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000020",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0x4200000000000000000000000000000000000021",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-          "role": "admin",
-          "via": [
-            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
-            {
-              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-              "delay": 43200,
-              "condition": "(no delay if in emergency state)"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "katana:0x4200000000000000000000000000000000000018",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
-          "delay": 43200,
-          "role": ".timelockAdminAC",
-          "condition": "(no delay if in emergency state)"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "katana:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747896637,
@@ -7305,5 +6559,799 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25830927, "katana": 40902404 },
-  "permissionsConfigHash": "0x21c08c834ff91ed8177014909a57212dc0bb16e80e7ae99eaf1d00eb2ff36407"
+  "permissionsConfigHash": "0x21c08c834ff91ed8177014909a57212dc0bb16e80e7ae99eaf1d00eb2ff36407",
+  "permissions": {
+    "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
+          "description": "set and change address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb41151Bf2B989d3771caBd5BCb5C435949543322",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
+        }
+      ]
+    },
+    "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "role": ".aggchainSigners",
+          "condition": "optimisticMode is enabled by the optimisticModeManager."
+        }
+      ]
+    },
+    "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation.",
+          "role": ".aggchainManager"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "toggle the 'optimisticMode'.",
+          "role": ".optimisticModeManager"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
+          "description": "set and change address mappings.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb41151Bf2B989d3771caBd5BCb5C435949543322",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30",
+          "role": ".owner"
+        }
+      ]
+    },
+    "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "role": "admin"
+        }
+      ]
+    },
+    "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "update the global exit root (GER) that is used for L2 deposits.",
+          "role": ".globalExitRootUpdater"
+        }
+      ]
+    },
+    "katana:0x4200000000000000000000000000000000000018": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000002",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000007",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000000F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000010",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000012",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000013",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000014",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000015",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000016",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000017",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000018",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000020",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000021",
+          "role": "admin"
+        }
+      ]
+    },
+    "katana:0x4200000000000000000000000000000000000019": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "description": "receive fees.",
+          "role": ".recipient"
+        }
+      ]
+    },
+    "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "manage token mappings and deployments.",
+          "role": ".bridgeManager"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "own and upgrade default L2 token contracts deployed by the bridge.",
+          "role": ".getProxiedTokensManager"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "pause the bridge.",
+          "role": ".emergencyBridgePauser"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "unpause the bridge.",
+          "role": ".emergencyBridgeUnpauser"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "manage 'claimed' status of global deposit indexes (can freeze bridge transactions), remove global exit roots (used for L2 deposits).",
+          "role": ".globalExitRootRemover"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "roll back or insert leaves into the local exit tree (LET) that enables withdrawals from the L2. (can steal)",
+          "role": ".globalExitRootRemover",
+          "condition": "if the bridge is paused"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ]
+    },
+    "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "description": "receive fees.",
+          "role": ".recipient"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "description": "receive fees.",
+          "role": ".recipient"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "description": "receive fees.",
+          "role": ".recipient"
+        }
+      ]
+    },
+    "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "role": ".owner"
+        }
+      ]
+    },
+    "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000002",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000007",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000000F",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000010",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000012",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000013",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000014",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000015",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000016",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000017",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000020",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000021",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "katana:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ]
+    }
+  }
 }

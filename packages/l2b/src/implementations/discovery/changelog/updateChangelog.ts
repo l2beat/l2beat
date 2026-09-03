@@ -40,6 +40,17 @@ export function updateChangelog(
     ? (JSON.parse(readFileSync(changelogPath, 'utf-8')) as DiscoveryChangelog)
     : changelogFromDiffHistory(markdown)
   const byId = new Map(existing.entries.map((entry) => [entry.id, entry]))
+  /** Entries written by someone else's discovery run reach this branch as
+   *  markdown alone (a merge, a rebase, a hand-applied patch). They have no
+   *  record yet, so they are migrated from the markdown on first sight. */
+  let migrated: Map<string, DiscoveryChangelogEntry> | undefined
+  const migratedById = () =>
+    (migrated ??= new Map(
+      changelogFromDiffHistory(markdown).entries.map((entry) => [
+        entry.id,
+        entry,
+      ]),
+    ))
 
   // Entry identity and order come from the markdown headers; the newest entry
   // is the one this run wrote, so its diff is recorded from the source.
@@ -51,7 +62,7 @@ export function updateChangelog(
     const entry =
       index === 0 && newEntry !== undefined
         ? changelogEntryFromDiff(id, newEntry.timestamp, newEntry.diff)
-        : byId.get(id)
+        : (byId.get(id) ?? migratedById().get(id))
     if (entry) entries.push(entry)
   }
 

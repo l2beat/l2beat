@@ -1,95 +1,37 @@
 {
   "name": "shared-circle",
-  "timestamp": 1785844480,
+  "timestamp": 1788265075,
   "configHash": "0x1bec5e176090ed64ad060381de07cb71e5799dc0bff25d7eb8f38ee0b8cfbac8",
   "entries": [
     {
       "address": "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "description": "set the local TokenMessenger, token controller, pauser, rescuer, and transfer ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "description": "transfer any ERC-20 tokens out of the contract.",
-          "role": ".rescuer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x08966c2561ef3AC77Ac479dF4590886B4Bfe869a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x08c71cA483e6C454A35D2eD56073A0297f0A2Ec3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x0A06BE16275B95a7d2567fBdAE118b36C7DA78F9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "blacklist addresses, freezing any interactions with the USDC token for them.",
-          "role": ".blacklister"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MessageTransmitter",
@@ -101,14 +43,6 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-          "description": "deliver accepted CCTP messages to this TokenMessenger.",
-          "role": ".localMessageTransmitter"
-        }
-      ],
       "ignoreInWatchMode": ["nextAvailableNonce"],
       "deployerAddress": "eth:0x6BF89579fF3Fc3f2B57c0231E93eE78d35fbdDAC",
       "sinceTimestamp": 1677628247,
@@ -123,7 +57,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 486997,
+        "nextAvailableNonce": 495207,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -140,136 +74,42 @@
     {
       "address": "eth:0x0F493479be830657ACa110199A70E826506A54d3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-          "description": "allowlist or disallowlist contract signers for Gateway burn intents.",
-          "role": ".contractSignersAllowlister"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x130AA42C371d1dDB3cc41FBBA99273fA9150246c",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x14b1bc91cb99aad649b36341d5abEB50DF775a3e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1971773285A553C2100C97a3A3Ad04519F4e2186",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x19a932fC5A8320939c3575302a8705147a7f27D8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "GatewayMinter",
@@ -282,14 +122,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint or minter of USDC on this chain for the Gateway protocol.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1753120475,
       "sinceBlock": 22969188,
@@ -334,41 +166,17 @@
     {
       "address": "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x2329BAF15f86023e5B0f5592e230D02a51116CD5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "description": "configure remote TokenMessengers, the local minter, V2 fee recipient and denylister, rescuer, and transfer ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenMessengerV2",
@@ -381,14 +189,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "description": "mint and burn USDC through this TokenMinter.",
-          "role": ".localTokenMessenger"
-        }
-      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739234111,
       "sinceBlock": 21819733,
@@ -424,408 +224,122 @@
     {
       "address": "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-          "description": "configure supported tokens, withdrawal delay, burn signers, batch signers, fee recipient, pauser, denylister, contract signer allowlister, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x311ac5F3a327C18E27eA544694e20AbD15CAa85d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters",
-          "via": [
-            { "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "description": "sign mint attestations accepted by GatewayMinter.",
-          "role": ".attestationSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x355fa241a4848dec8dCf453a5cCb16ec9207bcad",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "description": "enable or disable attesters and set the attestation signature threshold.",
-          "role": ".attesterManager"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x383048265851aA10035bb32b2055632eC4FBB6eB",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "description": "pause and unpause message transmission and receiving.",
-          "role": ".pauser"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x38d51f44B586b154159932F3681a30c54A6d25a9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x39A372b4CC3fc91Ba93238c9121CB4F98D057fB5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "description": "configure supported tokens, mint authorities, attestation signers, pauser, denylister, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4024071Fe3FAd805F922a9098630D09A2EC0F82C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x425a4093405dcC888ec7931d57574e0Dfe0726c5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x44036cE4ab4Bf87898f013A35d543F204e91b806",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4914f61d25e5C567143774B76EdbF4D5109a8566",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "pause the USDC token (no transfers, mints, burns).",
-          "role": ".pauser"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "description": "set the attester manager, pauser, rescuer, maximum message body size, and transfer ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4E898CEe7c5809A63de0eF745177A9BB82FeAC69",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "description": "pause and unpause minting and burning through this TokenMinter.",
-          "role": ".pauser"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters",
-          "via": [
-            { "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002" },
-            { "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d" },
-            { "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "description": "sign messages accepted by this MessageTransmitter.",
-          "role": ".getEnabledAttester"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x53D81DF780baed54FdCa7020618aD6e1c4AC1D84",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "description": "transfer any ERC-20 tokens out of the contract.",
-          "role": ".rescuer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5B6122C109B78C6755486966148C1D70a50A47D7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x63015E0Ab081680eC85E9b6E62Df5584BD48cEb7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-          "description": "transfer any ERC-20 tokens out of the contract.",
-          "role": ".rescuer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6b0b72E63764101Fc4d5BD914B107987041578C4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-          "description": "configure remote TokenMessengers, the local minter, V2 fee recipient and denylister, rescuer, and transfer ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6efA3205A385420cF1cfD6B725B48F96117a7Bee",
@@ -835,126 +349,37 @@
     {
       "address": "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "description": "pause and unpause Gateway minting.",
-          "role": ".pauser"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6Fa60A88b42AFb0aEe6488826A58864B192442ad",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "description": "transfer any ERC-20 tokens out of the contract.",
-          "role": ".rescuer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x725b06F73ff761eF5390e39315e2BfbF60d33F96",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters",
-          "via": [
-            { "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002" },
-            { "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d" },
-            { "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "description": "sign messages accepted by this MessageTransmitter.",
-          "role": ".getEnabledAttester"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-          "description": "denylist addresses, preventing them from interacting with the GatewayWallet.",
-          "role": ".denylister"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x740F494cD63f87547FEc1591646720e5cC285846",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "description": "link or unlink remote tokens and configure per-message burn limits.",
-          "role": ".tokenController"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x74F471Af556aBff915804C0f19D642497aFa13B5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x768d96ef334BA5d0914040a5485D3777ecF07d65",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "GatewayWallet",
@@ -967,14 +392,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Exit point or burner of USDC on this chain for the Gateway protocol.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1753120691,
       "sinceBlock": 22969206,
@@ -1049,135 +466,42 @@
     {
       "address": "eth:0x77C923526ec8B93fb8C645cC49a623ADe521377E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x79E0946e1C186E745f1352d7C21AB04700C99F71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7B3d54052DF209679Fce721516Cc1b566ef1c6AB",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7D1565698cddf4C8f90d6b8574729fef565cae0E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "description": "set the local TokenMessenger, token controller, pauser, rescuer, and transfer ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7e575bC81e8a4A57f841512fbE72ed4C9976ae1c",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "description": "denylist addresses, preventing them from interacting with the GatewayMinter.",
-          "role": ".denylister"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7Ee759ea02624E29a39b81726B72eCFF2F09c5B2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x807a96288A1A408dBC13DE2b1d087d10356395d2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x817ae4109dC0f21E437b94c899962690514Ba09f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "description": "pause and unpause minting and burning through this TokenMinter.",
-          "role": ".pauser"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MessageTransmitterV2",
@@ -1190,14 +514,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "description": "deliver accepted CCTP messages to this TokenMessenger.",
-          "role": ".localMessageTransmitter"
-        }
-      ],
       "ignoreInWatchMode": ["nextAvailableNonce"],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739234063,
@@ -1240,197 +556,69 @@
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
+      "address": "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8a9A13A106cB89E15410B2AB4488135155032169",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "description": "link or unlink remote tokens and configure per-message burn limits.",
-          "role": ".tokenController"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8E079873EFb4f3B76a4be111E8a55418bCe6e40d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x919f33bdbF59e92F9c87a5ddd4A9f1aADA3C04b3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x92c3A3136eC730295E41D5E6461Ecac5b6B40684",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x936F08395aB1Afc97C09838A1A6AD1C854C4bBfD",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "description": "transfer any ERC-20 tokens out of the contract.",
-          "role": ".rescuer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-          "description": "pause and unpause deposits, burns, and withdrawals.",
-          "role": ".pauser"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x9d5C50Ae9dC377b1fDE6786bcfE8a70854fAc5E4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "USD Coin Token",
@@ -1511,7 +699,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "49570651011504257",
+        "totalSupply": "50491264090809363",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -1529,63 +717,22 @@
     {
       "address": "eth:0xa1EF798A09CeA66625a1b0B0ed28FB2732743609",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xa820A620F638114F3Eb45df87382383322dDBC49",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xaf8f5B407023a4b0a1861E69Bff4BCa151f15444",
@@ -1595,100 +742,27 @@
     {
       "address": "eth:0xB0C9f95c1F0e686249AE0461e5e7657545379017",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters",
-          "via": [
-            { "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907" },
-            { "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155" },
-            { "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "description": "sign messages accepted by this MessageTransmitter.",
-          "role": ".getEnabledAttester"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB43aA882f497c0Ecb395A5a54f8fa29d12289F65",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "description": "set the attester manager, pauser, rescuer, maximum message body size, and transfer ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters",
-          "via": [
-            { "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-          "description": "sign burn payloads accepted by GatewayWallet.",
-          "role": ".attestationSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB7569E9eB64eaEd5C4166E510b4F6fF54ef42258",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenMessenger",
@@ -1700,14 +774,6 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "description": "mint and burn USDC through this TokenMinter.",
-          "role": ".localTokenMessenger"
-        }
-      ],
       "deployerAddress": "eth:0xB6ab73b6A141Db9E01b9847B0d792b430999bC54",
       "sinceTimestamp": 1677628295,
       "sinceBlock": 16730029,
@@ -1728,74 +794,22 @@
     {
       "address": "eth:0xBED4b046f7d185d730E9930b2bcddc86Eb3cfbc9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "description": "denylist addresses, preventing them from interacting with this TokenMessenger.",
-          "role": ".denylister"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xc16b03F84563C1467017C9F7216F8ad6098dc95a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "description": "enable or disable attesters and set the attestation signature threshold.",
-          "role": ".attesterManager"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC2Bbc3A94408096EDfbfC2f61A8bBb5c9ED10a06",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenMinter",
@@ -1807,14 +821,6 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ],
       "deployerAddress": "eth:0x75d0A45A9834EF77d0ad76e97432008F758Bd212",
       "sinceTimestamp": 1677628319,
       "sinceBlock": 16730031,
@@ -1835,228 +841,62 @@
     {
       "address": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "description": "pause and unpause message transmission and receiving.",
-          "role": ".pauser"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xCE4DddbfbE2c338B679c4F186d5F60B60FAa43Bd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xd285766FB23198087d781FbF22D8Ddbc8b0067a3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD3eFE568763BD4A96e4115B993b3fB89B35A0623",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xdBEbB37e94984A249f8a514bE9e3120E13C18B85",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDe5983C50E3b06D6473d3E7C179b85b30bf32444",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE206be2331d6aAa4495887755BaBE892aecE704A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "description": "transfer any ERC-20 tokens out of the contract.",
-          "role": ".rescuer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE2fEfe09E74b921CbbFF229E7cD40009231501CA",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters",
-          "via": [
-            { "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907" },
-            { "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155" },
-            { "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "description": "sign messages accepted by this MessageTransmitter.",
-          "role": ".getEnabledAttester"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe37eDF8B4f5Dc846AF472CF7aD086A14d4024378",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe9697bcf46ff6125003282d5e1DE22c52033c19d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MasterMinter",
@@ -2067,14 +907,6 @@
         "0x13f502777e65c7c2170951387bce0ffbdd370e36bc81b22c4d6eeb563d875ef6"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter"
-        }
-      ],
       "deployerAddress": "eth:0x95Ba4cF87D6723ad9C0Db21737D862bE80e93911",
       "sinceTimestamp": 1553538530,
       "sinceBlock": 7439432,
@@ -2113,7 +945,11 @@
           "eth:0xC2Bbc3A94408096EDfbfC2f61A8bBb5c9ED10a06",
           "eth:0x7Ee759ea02624E29a39b81726B72eCFF2F09c5B2",
           "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF",
-          "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971"
+          "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971",
+          "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d",
+          "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275",
+          "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E",
+          "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049"
         ],
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
@@ -2131,74 +967,22 @@
     {
       "address": "eth:0xeb10024C7761e78cbbE78773aC6F6E98f3ED8314",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xEc72B99254d5a407b6CaEd24C1e771377e8Eb70b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xF0f3ef1340530A3983E1c510e49319D9Bfa8A74F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c",
@@ -2208,15 +992,7 @@
     {
       "address": "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage all critical roles like pausers, blacklisters, minters, rescuer.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenMinterV2",
@@ -2228,14 +1004,6 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "mint the token in the bounds of a preset minting allowance",
-          "role": ".minters"
-        }
-      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739233991,
       "sinceBlock": 21819723,
@@ -2254,27 +1022,14 @@
       }
     },
     {
+      "address": "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xFE8c6a384fD37BCc4E4f8c837A570e09EDd6bCEa",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "description": "manage minter addresses.",
-          "role": ".masterMinter",
-          "via": [
-            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-          "role": ".controllers"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2948,6 +1703,1569 @@
     "tokens/circle/TokenMinter": "0x8126e2d0f134d23c8f836039f7a31a69fe93eda8e4dbe6db0060fc7f96e06a3f",
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
-  "usedBlockNumbers": { "ethereum": 25681382 },
-  "permissionsConfigHash": "0x25015e8f6f8d154778ec531fce81be6d9cab59a92833f8e60400ab9fff5c86f4"
+  "usedBlockNumbers": { "ethereum": 25882379 },
+  "permissionsConfigHash": "0x883359499a400ce8ec6e77a0e603371272bee54e7600c6594ee70a49a93fc927",
+  "permissions": {
+    "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "set the local TokenMessenger, token controller, pauser, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
+    },
+    "eth:0x08966c2561ef3AC77Ac479dF4590886B4Bfe869a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x08c71cA483e6C454A35D2eD56073A0297f0A2Ec3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x0A06BE16275B95a7d2567fBdAE118b36C7DA78F9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "blacklist addresses, freezing any interactions with the USDC token for them.",
+          "role": ".blacklister"
+        }
+      ]
+    },
+    "eth:0x0F493479be830657ACa110199A70E826506A54d3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+          "description": "deliver accepted CCTP messages to this TokenMessenger.",
+          "role": ".localMessageTransmitter"
+        }
+      ]
+    },
+    "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "allowlist or disallowlist contract signers for Gateway burn intents.",
+          "role": ".contractSignersAllowlister"
+        }
+      ]
+    },
+    "eth:0x130AA42C371d1dDB3cc41FBBA99273fA9150246c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x14b1bc91cb99aad649b36341d5abEB50DF775a3e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x1971773285A553C2100C97a3A3Ad04519F4e2186": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x19a932fC5A8320939c3575302a8705147a7f27D8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x2329BAF15f86023e5B0f5592e230D02a51116CD5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "configure remote TokenMessengers, the local minter, V2 fee recipient and denylister, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "mint and burn USDC through this TokenMinter.",
+          "role": ".localTokenMessenger"
+        }
+      ]
+    },
+    "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "configure supported tokens, withdrawal delay, burn signers, batch signers, fee recipient, pauser, denylister, contract signer allowlister, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x311ac5F3a327C18E27eA544694e20AbD15CAa85d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "sign mint attestations accepted by GatewayMinter.",
+          "role": ".attestationSigners"
+        }
+      ]
+    },
+    "eth:0x355fa241a4848dec8dCf453a5cCb16ec9207bcad": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x358a85e032aA9507a1303683b2B6A1d1cac3c252": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "enable or disable attesters and set the attestation signature threshold.",
+          "role": ".attesterManager"
+        }
+      ]
+    },
+    "eth:0x383048265851aA10035bb32b2055632eC4FBB6eB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "pause and unpause message transmission and receiving.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x38d51f44B586b154159932F3681a30c54A6d25a9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x39A372b4CC3fc91Ba93238c9121CB4F98D057fB5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "configure supported tokens, mint authorities, attestation signers, pauser, denylister, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x4024071Fe3FAd805F922a9098630D09A2EC0F82C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x425a4093405dcC888ec7931d57574e0Dfe0726c5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x44036cE4ab4Bf87898f013A35d543F204e91b806": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x4914f61d25e5C567143774B76EdbF4D5109a8566": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "pause the USDC token (no transfers, mints, burns).",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x4E898CEe7c5809A63de0eF745177A9BB82FeAC69": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "pause and unpause minting and burning through this TokenMinter.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "set the attester manager, pauser, rescuer, maximum message body size, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002" },
+            { "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d" },
+            { "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
+    },
+    "eth:0x53D81DF780baed54FdCa7020618aD6e1c4AC1D84": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
+    },
+    "eth:0x55FE002aefF02F77364de339a1292923A15844B8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x5B6122C109B78C6755486966148C1D70a50A47D7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x63015E0Ab081680eC85E9b6E62Df5584BD48cEb7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
+    },
+    "eth:0x6Fa60A88b42AFb0aEe6488826A58864B192442ad": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
+    },
+    "eth:0x6b0b72E63764101Fc4d5BD914B107987041578C4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+          "description": "configure remote TokenMessengers, the local minter, V2 fee recipient and denylister, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "pause and unpause Gateway minting.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x725b06F73ff761eF5390e39315e2BfbF60d33F96": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002" },
+            { "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d" },
+            { "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
+    },
+    "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "denylist addresses, preventing them from interacting with the GatewayWallet.",
+          "role": ".denylister"
+        }
+      ]
+    },
+    "eth:0x740F494cD63f87547FEc1591646720e5cC285846": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "link or unlink remote tokens and configure per-message burn limits.",
+          "role": ".tokenController"
+        }
+      ]
+    },
+    "eth:0x74F471Af556aBff915804C0f19D642497aFa13B5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x768d96ef334BA5d0914040a5485D3777ecF07d65": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x77C923526ec8B93fb8C645cC49a623ADe521377E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x79E0946e1C186E745f1352d7C21AB04700C99F71": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x7B3d54052DF209679Fce721516Cc1b566ef1c6AB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x7D1565698cddf4C8f90d6b8574729fef565cae0E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "set the local TokenMessenger, token controller, pauser, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x7Ee759ea02624E29a39b81726B72eCFF2F09c5B2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x7e575bC81e8a4A57f841512fbE72ed4C9976ae1c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "denylist addresses, preventing them from interacting with the GatewayMinter.",
+          "role": ".denylister"
+        }
+      ]
+    },
+    "eth:0x807a96288A1A408dBC13DE2b1d087d10356395d2": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x817ae4109dC0f21E437b94c899962690514Ba09f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "pause and unpause minting and burning through this TokenMinter.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "deliver accepted CCTP messages to this TokenMessenger.",
+          "role": ".localMessageTransmitter"
+        }
+      ]
+    },
+    "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x8E079873EFb4f3B76a4be111E8a55418bCe6e40d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x8a9A13A106cB89E15410B2AB4488135155032169": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "link or unlink remote tokens and configure per-message burn limits.",
+          "role": ".tokenController"
+        }
+      ]
+    },
+    "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x919f33bdbF59e92F9c87a5ddd4A9f1aADA3C04b3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x92c3A3136eC730295E41D5E6461Ecac5b6B40684": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x936F08395aB1Afc97C09838A1A6AD1C854C4bBfD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
+    },
+    "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "pause and unpause deposits, burns, and withdrawals.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0x9d5C50Ae9dC377b1fDE6786bcfE8a70854fAc5E4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xB0C9f95c1F0e686249AE0461e5e7657545379017": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xB43aA882f497c0Ecb395A5a54f8fa29d12289F65": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "set the attester manager, pauser, rescuer, maximum message body size, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "sign burn payloads accepted by GatewayWallet.",
+          "role": ".attestationSigners"
+        }
+      ]
+    },
+    "eth:0xB7569E9eB64eaEd5C4166E510b4F6fF54ef42258": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xBED4b046f7d185d730E9930b2bcddc86Eb3cfbc9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "denylist addresses, preventing them from interacting with this TokenMessenger.",
+          "role": ".denylister"
+        }
+      ]
+    },
+    "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "mint and burn USDC through this TokenMinter.",
+          "role": ".localTokenMessenger"
+        }
+      ]
+    },
+    "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xC2Bbc3A94408096EDfbfC2f61A8bBb5c9ED10a06": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xCE4DddbfbE2c338B679c4F186d5F60B60FAa43Bd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xD3eFE568763BD4A96e4115B993b3fB89B35A0623": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xDe5983C50E3b06D6473d3E7C179b85b30bf32444": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xE206be2331d6aAa4495887755BaBE892aecE704A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
+    },
+    "eth:0xE2fEfe09E74b921CbbFF229E7cD40009231501CA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907" },
+            { "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155" },
+            { "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
+    },
+    "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter"
+        }
+      ]
+    },
+    "eth:0xEc72B99254d5a407b6CaEd24C1e771377e8Eb70b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xF0f3ef1340530A3983E1c510e49319D9Bfa8A74F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xFE8c6a384fD37BCc4E4f8c837A570e09EDd6bCEa": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage all critical roles like pausers, blacklisters, minters, rescuer.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xa1EF798A09CeA66625a1b0B0ed28FB2732743609": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xa820A620F638114F3Eb45df87382383322dDBC49": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907" },
+            { "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155" },
+            { "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
+    },
+    "eth:0xc16b03F84563C1467017C9F7216F8ad6098dc95a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "enable or disable attesters and set the attestation signature threshold.",
+          "role": ".attesterManager"
+        }
+      ]
+    },
+    "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "pause and unpause message transmission and receiving.",
+          "role": ".pauser"
+        }
+      ]
+    },
+    "eth:0xd285766FB23198087d781FbF22D8Ddbc8b0067a3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xdBEbB37e94984A249f8a514bE9e3120E13C18B85": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xe37eDF8B4f5Dc846AF472CF7aD086A14d4024378": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xe9697bcf46ff6125003282d5e1DE22c52033c19d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xeb10024C7761e78cbbE78773aC6F6E98f3ED8314": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    "eth:0xfd78EE919681417d192449715b2594ab58f5D002": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
+    },
+    "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    }
+  }
 }

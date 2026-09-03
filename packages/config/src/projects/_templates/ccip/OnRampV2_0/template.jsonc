@@ -1,0 +1,104 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "CCIP 2.0 OnRamp used to send messages from its local chain. It accepts messages from the Router configured for each destination, locks or burns at most one token, selects the required cross-chain verifiers and executor, charges their fees, and emits the packed message that is verified and executed on the destination chain.",
+  "category": "core",
+  "ignoreMethods": ["getAllDestChainConfigs", "getStaticConfig"],
+  "ignoreRelatives": ["owner"],
+  "ignoreInWatchMode": ["getExpectedNextMessageNumber"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the FeeQuoter used to price messages and the fee aggregator that receives accumulated network fees."
+        },
+        {
+          "type": "interact",
+          "description": "add, pause, or reconfigure destination routes, including their Router, network fees, address format, default and mandatory verifiers, default executor, and destination OffRamp."
+        }
+      ]
+    },
+    "staticConfig": {
+      "description": "Immutable source-chain configuration: local chain selector, RMNRemote, maximum fee allowed per message, and TokenAdminRegistry.",
+      "handler": {
+        "type": "call",
+        "method": "getStaticConfig",
+        "args": []
+      },
+      "edit": ["set", "chainSelector", ["format", "CCIPChainName"]]
+    },
+    "destChainConfigs": {
+      // This struct mixes local Router/CCV addresses with executor and OffRamp addresses on destination chains.
+      "description": "Current configuration for each destination route, reconstructed from DestChainConfigSet events and keyed by chain name. It defines the authorized local Router, destination address length, flat network fees, base execution gas, default and lane-mandated CCVs, default destination executor, and destination OffRamp. messageNumber is not included because the event records it only at configuration time, not after later messages.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": "config",
+        "ignoreRelative": true,
+        "set": {
+          "event": "event DestChainConfigSet(uint64 indexed destChainSelector, uint64 messageNumber, (uint64 destChainSelector, address router, uint8 addressBytesLength, bool tokenReceiverAllowed, uint16 messageNetworkFeeUSDCents, uint16 tokenNetworkFeeUSDCents, uint32 baseExecutionGasCost, address[] defaultCCVs, address[] laneMandatedCCVs, address defaultExecutor, bytes offRamp) config)"
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "pipe",
+            [
+              "shape",
+              "destChainSelector",
+              "router",
+              "addressBytesLength",
+              "tokenReceiverAllowed",
+              "messageNetworkFeeUSDCents",
+              "tokenNetworkFeeUSDCents",
+              "baseExecutionGasCost",
+              "defaultCCVs",
+              "laneMandatedCCVs",
+              "defaultExecutor",
+              "offRamp"
+            ],
+            ["delete", "destChainSelector"]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "routeRouters": {
+      "description": "Local Router authorized to call forwardFromRouter for each destination route.",
+      "copy": "destChainConfigs",
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "pipe",
+            [
+              "shape",
+              "destChainSelector",
+              "router",
+              "addressBytesLength",
+              "tokenReceiverAllowed",
+              "messageNetworkFeeUSDCents",
+              "tokenNetworkFeeUSDCents",
+              "baseExecutionGasCost",
+              "defaultCCVs",
+              "laneMandatedCCVs",
+              "defaultExecutor",
+              "offRamp"
+            ],
+            ["get", "router"]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route."
+        }
+      ]
+    }
+  }
+}

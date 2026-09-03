@@ -13,109 +13,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "role": "admin",
-          "via": [
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-            },
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-            },
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-            },
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-            },
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-            },
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-            },
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
-          "role": "admin",
-          "via": [
-            {
-              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
-            },
-            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
-          "role": ".executors"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "arb-nova:0x5EAc725C87744c34DA3F102A2d866E5Ea2f5F41A",
       "sinceTimestamp": 1775633959,
@@ -315,24 +212,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "critical": true,
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -440,43 +319,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -492,15 +334,7 @@
     {
       "address": "arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMath",
@@ -582,15 +416,7 @@
     {
       "address": "arb-nova:0x465E4E786cF1A6c7B2229181279Eb9479989eAA6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb-nova:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -652,15 +478,7 @@
     {
       "address": "arb-nova:0x8273A6b13Ee8F7eF85bc769E27e4e508f53009Cc",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProofEntry",
@@ -923,15 +741,7 @@
     {
       "address": "arb-nova:0xE348008Df09D0af01DB19C520aBD8769A4F75A3f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb-nova:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
@@ -1642,5 +1452,211 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "nova": 85261405 },
-  "permissionsConfigHash": "0xf183374056600666bcdb39d2621f07d991345399b96dea572fd6c309f8e4c013"
+  "permissionsConfigHash": "0xf183374056600666bcdb39d2621f07d991345399b96dea572fd6c309f8e4c013",
+  "permissions": {
+    "arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "role": "admin",
+          "via": [
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "role": ".executors"
+        }
+      ]
+    },
+    "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "role": "admin"
+        }
+      ]
+    },
+    "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
+          "role": "admin"
+        }
+      ]
+    },
+    "arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    "arb-nova:0x465E4E786cF1A6c7B2229181279Eb9479989eAA6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    "arb-nova:0x8273A6b13Ee8F7eF85bc769E27e4e508f53009Cc": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "arb-nova:0xE348008Df09D0af01DB19C520aBD8769A4F75A3f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    }
+  }
 }

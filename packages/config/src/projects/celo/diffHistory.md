@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x39e644f0fd66c5a11808398e8bf5780818139d31
+Generated with discovered.json: 0x529a05099bcc4798fed5ecdc6775dcfadfa4e43c
 
-# Diff at Tue, 01 Sep 2026 11:53:08 GMT:
+# Diff at Thu, 03 Sep 2026 14:26:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1784282840
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1784282840
 - current timestamp: 1784282840
 
 ## Description
 
-ossification onboarding: flag the critical perimeter (ProxyAdmin + SuperchainProxyAdmin, CeloSuperchainConfig with guardian/superchainConfig HIGH, OP-Succinct AccessManager + active game type 42 impl, L1 CELO gas token; OP Mainnet's legacy AddressManager excluded), ASR air gap HIGH, proposer/challenger allowlists MEDIUM (identity churn). Also includes the earlier cohort-wide severity fixes vs main (DGF gameArgs HIGH etc.).
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -21,8 +21,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
     +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
       critical:
 +        true
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","role":".GnosisSafe_modules"}]
     }
 ```
 
@@ -31,30 +29,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
-    }
-```
-
-```diff
-    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
-    +++ description: None
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}]
-    }
-```
-
-```diff
-    EOA  (eth:0x0B7de3F505AD7Fc9b38207CD8E2Adc7a604BFe62) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposers"}]
-    }
-```
-
-```diff
-    EOA  (eth:0x0cd08c7f7A96AA9635f761b49216B9eA74C5cA60) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861","description":"Allowed to commit transactions from the current layer to the host chain.","role":".batcherHash"}]
     }
 ```
 
@@ -81,8 +55,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
     +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
       critical:
 +        true
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748","description":"can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.","role":".livenessGuard"}]
     }
 ```
 
@@ -108,40 +80,10 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
 ```
 
 ```diff
-    EOA Optimism EOA 1 (eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754","condition":"though restricted to the SuperchainConfig's `pause()` function"}]}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754","role":".deputy","condition":"though restricted to the SuperchainConfig's `pause()` function"}]
-    }
-```
-
-```diff
-    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x057898f3C43F129a17517B9056D23851F124b19f","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x25035d2233d099f0BA710ca1e5a3834842870C66","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x3C519816C5BdC0a0199147594F83feD4F5847f13","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]},{"permission":"upgrade","from":"eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x783A434532Ee94667979213af1711505E8bFE374","role":".owner"}]
-    }
-```
-
-```diff
-    EOA  (eth:0x53E8EEAAE0731CCc888513695eC1Bd792ec975Ca) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengers"}]
-    }
-```
-
-```diff
     contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
     +++ description: None
       critical:
 +        true
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F","description":"set and change address mappings.","role":".owner"},{"permission":"upgrade","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":"admin"}]
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -158,24 +100,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
 ```
 
 ```diff
-    EOA  (eth:0x56966549e0953e8d6E17Fcd3278b003d81f58cA8) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengers"}]
-    }
-```
-
-```diff
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]},{"permission":"upgrade","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":"admin","via":[{"address":"eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04","role":".owner"}]
-    }
-```
-
-```diff
     contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
     +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
       critical:
@@ -184,28 +108,10 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
 ```
 
 ```diff
-    EOA  (eth:0x7247204E46B381149d99acF88b318713fE12c32f) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengers"}]
-    }
-```
-
-```diff
     contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
     +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
       critical:
 +        true
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","role":".GnosisSafe_modules"}]
-    }
-```
-
-```diff
-    EOA  (eth:0x77E831A0A6a680335BB54937E085fF625dfE3f6F) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengers"}]
     }
 ```
 
@@ -214,28 +120,8 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753","description":"set and change address mappings.","role":".owner"},{"permission":"upgrade","from":"eth:0x057898f3C43F129a17517B9056D23851F124b19f","role":"admin"},{"permission":"upgrade","from":"eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95","role":"admin"},{"permission":"upgrade","from":"eth:0x25035d2233d099f0BA710ca1e5a3834842870C66","role":"admin"},{"permission":"upgrade","from":"eth:0x3C519816C5BdC0a0199147594F83feD4F5847f13","role":"admin"},{"permission":"upgrade","from":"eth:0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906","role":"admin"},{"permission":"upgrade","from":"eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861","role":"admin"},{"permission":"upgrade","from":"eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d","role":"admin"},{"permission":"upgrade","from":"eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4","role":"admin"},{"permission":"upgrade","from":"eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin"},{"permission":"upgrade","from":"eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC","role":"admin"},{"permission":"upgrade","from":"eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552","role":"admin"},{"permission":"upgrade","from":"eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683","role":"admin"}]
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
-    }
-```
-
-```diff
-    EOA  (eth:0x79D14553D6B3484F5612272B43c219A882415d33) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposers"}]
-    }
-```
-
-```diff
-    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748","description":"takes ownership of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","role":".fallbackOwner","condition":"if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]
     }
 ```
 
@@ -299,14 +185,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) [GnosisSafe] {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"},{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.","role":".owner"}]
-    }
-```
-
-```diff
     contract PermissionedDisputeGame (eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
       fieldMeta.absolutePrestateDecoded.description:
@@ -322,18 +200,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
     +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
       critical:
 +        true
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."},{"address":"eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92"}]}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92","role":".GnosisSafe_modules"}]
-    }
-```
-
-```diff
-    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}]
     }
 ```
 
@@ -347,14 +213,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
 +        {"severity":"HIGH"}
       critical:
 +        true
-    }
-```
-
-```diff
-    EOA  (eth:0xc6E6836CaCB6fF0a843050DB7F64bb2ab864C463) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengers"}]
     }
 ```
 
@@ -375,14 +233,6 @@ discovery. Values are for block 1784282840 (main branch discovery), not current.
 +        false
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
-    }
-```
-
-```diff
-    EOA  (eth:0xe4ce4999b1C4C60C384AC96f370F00796ae9eC78) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengers"}]
     }
 ```
 

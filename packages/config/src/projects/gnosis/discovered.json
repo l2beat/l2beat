@@ -12,61 +12,23 @@
       "name": "Safe EOA 1",
       "address": "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x2245bFAD58a6cD50e9e413084d4091C497281911",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Safe EOA 2",
       "address": "eth:0x258667E543C913264388B33328337257aF208a8f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
@@ -83,114 +45,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-          "description": "change bridge limits, gas and confirmation parameters, and the optional Hashi validation manager for the xDAI bridge.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-          "description": "claim tokens held by the bridge and recover legacy transfers that remain locked in the contract.",
-          "role": ".upgradeabilityOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "description": "change validator and Hashi-based message verification settings, chain identifiers, gas parameters, and reentrancy policy for AMB messages.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "description": "claim tokens accidentally held by the AMB bridge contract.",
-          "role": ".upgradeabilityOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424",
-          "description": "change the token implementation used for newly deployed Omnibridge wrapped tokens.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "description": "change the counterpart mediator, the AMB bridge endpoint, the wrapped token factory, gas settings, token pairs, and per-token bridge limits for Omnibridge transfers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts.",
-          "role": ".upgradeabilityOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
-          "description": "change the DAI and USDS bridge routes and recover ETH or ERC20 tokens locked in the router.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa6439Ca0FCbA1d0F80df0bE6A17220feD9c9038a",
-          "description": "claim ETH or ERC20 tokens that remain stuck in the WETH Omnibridge router.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "change the threshold and manage signers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "change the threshold and manage signers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "role": "admin"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xA84944735B66e957Fe385567dcc85975022Fe68A",
       "sinceTimestamp": 1600956399,
@@ -231,15 +85,7 @@
     {
       "address": "eth:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "XDaiForeignBridge",
@@ -559,15 +405,7 @@
     {
       "address": "eth:0x82b00cA9D162859f645B51967746E55bb6498DfC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
@@ -789,28 +627,12 @@
     {
       "address": "eth:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -820,21 +642,7 @@
     {
       "address": "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
@@ -849,28 +657,12 @@
     {
       "address": "eth:0xC9f0d7e76E7970590e217c57Af5d2B7d07A62c13",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -896,13 +688,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
       "sinceTimestamp": 1745836823,
       "sinceBlock": 22367028,
@@ -989,15 +774,7 @@
     {
       "address": "eth:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AMB Validators",
@@ -1066,14 +843,7 @@
     {
       "address": "gno:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SBCDepositContract",
@@ -1137,15 +907,7 @@
     {
       "address": "gno:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
@@ -1156,15 +918,7 @@
       "name": "Safe EOA 2",
       "address": "gno:0x258667E543C913264388B33328337257aF208a8f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "gno:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
@@ -1174,15 +928,7 @@
     {
       "address": "gno:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "gno:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf",
@@ -1292,13 +1038,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Gnosis-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Ethereum. Hashi can be enabled as an additional verification layer.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
-          "role": ".bridgeContract"
-        }
-      ],
       "deployerAddress": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
       "sinceTimestamp": 1579258310,
       "sinceBlock": 7904954,
@@ -1437,88 +1176,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
-          "description": "pause or unpause beacon chain deposits, execute system withdrawals manually if required, and recover accidentally sent non-stake tokens.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55",
-          "description": "change Omnibridge fee schedules and the list of addresses that receive distributed bridge fees.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
-          "description": "change default, selector-specific, and token-specific gas limits used by HomeOmnibridge cross-chain messages.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
-          "description": "change validator and Hashi-based message verification settings, chain identifiers, gas parameters, and reentrancy policy for AMB messages.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
-          "description": "claim tokens accidentally held by the AMB bridge contract.",
-          "role": ".upgradeabilityOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "change the threshold and manage signers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286",
-          "description": "change which Omnibridge transfers are routed through the oracle-driven lane or forced into the manual lane.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2",
-          "description": "change the token implementation used for newly deployed Omnibridge wrapped tokens.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
-          "description": "change the counterpart mediator, the AMB bridge endpoint, token factory, fee, gas-limit, and forwarding-rules managers, token pairs, and per-token bridge limits for Omnibridge transfers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
-          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts.",
-          "role": ".upgradeabilityOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "gno:0xA84944735B66e957Fe385567dcc85975022Fe68A",
       "sinceTimestamp": 1603125660,
@@ -1643,25 +1300,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
-          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
-          "role": ".owner",
-          "via": [
-            { "address": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d" },
-            { "address": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
-          "role": ".validatorContract"
-        }
-      ],
       "deployerAddress": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
       "sinceTimestamp": 1579258260,
       "sinceBlock": 7904944,
@@ -1724,15 +1362,7 @@
     {
       "address": "gno:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "gno:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -1742,15 +1372,7 @@
     {
       "address": "gno:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "gno:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
@@ -1770,15 +1392,7 @@
     {
       "address": "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "gno:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -1841,15 +1455,7 @@
     {
       "address": "gno:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "HomeOmnibridge TokenFactory",
@@ -1932,14 +1538,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Gnosis-side Omnibridge mediator used for arbitrary token transfers between Gnosis and Ethereum via the AMB bridge.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
-          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["getCurrentDay"],
       "deployerAddress": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
       "sinceTimestamp": 1596501010,
@@ -2935,5 +2533,461 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25595857, "gnosis": 47351159 },
-  "permissionsConfigHash": "0xa5f8ad297b69b49182ded935936466b3b1934fc0ba66ab65540d9640f4bb0254"
+  "permissionsConfigHash": "0xa5f8ad297b69b49182ded935936466b3b1934fc0ba66ab65540d9640f4bb0254",
+  "permissions": {
+    "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x2245bFAD58a6cD50e9e413084d4091C497281911": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x258667E543C913264388B33328337257aF208a8f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "description": "change bridge limits, gas and confirmation parameters, and the optional Hashi validation manager for the xDAI bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "description": "claim tokens held by the bridge and recover legacy transfers that remain locked in the contract.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "description": "change validator and Hashi-based message verification settings, chain identifiers, gas parameters, and reentrancy policy for AMB messages.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "description": "claim tokens accidentally held by the AMB bridge contract.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424",
+          "description": "change the token implementation used for newly deployed Omnibridge wrapped tokens.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "description": "change the counterpart mediator, the AMB bridge endpoint, the wrapped token factory, gas settings, token pairs, and per-token bridge limits for Omnibridge transfers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
+          "description": "change the DAI and USDS bridge routes and recover ETH or ERC20 tokens locked in the router.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa6439Ca0FCbA1d0F80df0bE6A17220feD9c9038a",
+          "description": "claim ETH or ERC20 tokens that remain stuck in the WETH Omnibridge router.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0x82b00cA9D162859f645B51967746E55bb6498DfC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xC9f0d7e76E7970590e217c57Af5d2B7d07A62c13": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0x0000000000000000000000000000000000000000": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+          "role": "admin"
+        }
+      ]
+    },
+    "gno:0x156c0DAAb0cD73c224a424a781866d35f0F8Fade": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0x258667E543C913264388B33328337257aF208a8f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0x4A07b8AE561CC558eDD3f1836365AB8e02C52dE2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "role": ".bridgeContract"
+        }
+      ]
+    },
+    "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
+          "description": "pause or unpause beacon chain deposits, execute system withdrawals manually if required, and recover accidentally sent non-stake tokens.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55",
+          "description": "change Omnibridge fee schedules and the list of addresses that receive distributed bridge fees.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
+          "description": "change default, selector-specific, and token-specific gas limits used by HomeOmnibridge cross-chain messages.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "description": "change validator and Hashi-based message verification settings, chain identifiers, gas parameters, and reentrancy policy for AMB messages.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "description": "claim tokens accidentally held by the AMB bridge contract.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286",
+          "description": "change which Omnibridge transfers are routed through the oracle-driven lane or forced into the manual lane.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2",
+          "description": "change the token implementation used for newly deployed Omnibridge wrapped tokens.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "description": "change the counterpart mediator, the AMB bridge endpoint, token factory, fee, gas-limit, and forwarding-rules managers, token pairs, and per-token bridge limits for Omnibridge transfers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "role": "admin"
+        }
+      ]
+    },
+    "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
+          "role": ".owner",
+          "via": [
+            { "address": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d" },
+            { "address": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "role": ".validatorContract"
+        }
+      ]
+    },
+    "gno:0xAD93BffBC65002cC75AD2d5770d3AAfFdefd8D55": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0xE9fc29AE64c2923FeBb615cB016b77aF9492EBcE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

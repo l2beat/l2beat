@@ -2,6 +2,85 @@
   "formatVersion": 1,
   "entries": [
     {
+      "id": "b97d39d5",
+      "timestamp": 1788435170,
+      "changes": [
+        {
+          "address": "eth:0xeb63cabdd78537b9b72a2afb573f7caa91bd8d94",
+          "fields": [
+            {
+              "key": "values.isWithdrawalReserveBelowMinimum",
+              "severity": "HIGH",
+              "removed": [
+                "false"
+              ],
+              "added": [
+                "true"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "97d70ccc",
+      "timestamp": 1788264976,
+      "changes": [
+        {
+          "address": "eth:0xd19d4b5d358258f05d7b411e21a1460d11b0876f",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x59290394dDC1cF84e671701A929710643c343530\""
+              ],
+              "added": [
+                "\"eth:0x052b73d934E9412045Bf731574463Fd026D74645\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.12",
+              "added": [
+                "[\"2026-09-01T09:07:47.000Z\",\"0x0e551aff381b8c6c4c73eafddb326906ac0d3599295444324cee8b988aaa6a6a\",[\"eth:0x052b73d934E9412045Bf731574463Fd026D74645\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "12"
+              ],
+              "added": [
+                "13"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xeb63cabdd78537b9b72a2afb573f7caa91bd8d94",
+          "fields": [
+            {
+              "key": "values.minimumWithdrawalReservePercentageBps",
+              "removed": [
+                "8500"
+              ],
+              "added": [
+                "3500"
+              ]
+            },
+            {
+              "key": "values.targetWithdrawalReservePercentageBps",
+              "removed": [
+                "9000"
+              ],
+              "added": [
+                "4000"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "05cf3683",
       "timestamp": 1784278215,
       "changes": [

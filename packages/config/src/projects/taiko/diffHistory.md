@@ -1,20 +1,20 @@
-Generated with discovered.json: 0xb5a349c8de9197f971bec00c0828fadc48717498
+Generated with discovered.json: 0xcb35e468643fb718f52d22d43aac5d54e300eb44
 
-# Diff at Mon, 31 Aug 2026 16:10:49 GMT:
+# Diff at Thu, 03 Sep 2026 14:28:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787832377
-- current timestamp: 1787832377
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1788264785
+- current timestamp: 1788264785
 
 ## Description
 
-restore critical flags on returning taiko L2 core contracts (Bridge, ERC20Vault, Anchor)
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787832377 (main branch discovery), not current.
+discovery. Values are for block 1788264785 (main branch discovery), not current.
 
 ```diff
     contract PEMCertChainLib (eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) [taiko/PEMCertChainLib] {
@@ -447,7 +447,50 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
     +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
 ```
 
-Generated with discovered.json: 0x944e4923ff7b113fa2d85afda1928383c9cf8c3a
+Generated with discovered.json: 0x9cd6757a716676d4360e503fd56888733d523dd3
+
+# Diff at Tue, 01 Sep 2026 12:14:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1787832377
+- current timestamp: 1788264785
+
+## Description
+
+SC proposal moving to veto phase.
+
+## Watched changes
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      values.$members.0:
+-        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
++        "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        38
++        39
+      values.proposalIds.38:
++        "608479335948875503511285097395089134668700712998"
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
++        "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44"
+    }
+```
+
+Generated with discovered.json: 0x17f2e268ad4a5e3f532d4cb569d6f97557b6b97a
 
 # Diff at Thu, 27 Aug 2026 12:07:50 GMT:
 

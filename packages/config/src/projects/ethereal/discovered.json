@@ -100,15 +100,7 @@
     {
       "address": "arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverHostIo",
@@ -513,95 +505,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xA4444d9536595d35967206b86067a90aD053e1EF",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
-            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3",
-          "role": ".executors"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "arb1:0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
       "sinceTimestamp": 1701465533,
@@ -637,15 +540,7 @@
     {
       "address": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".getValidators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
@@ -801,43 +696,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xA4444d9536595d35967206b86067a90aD053e1EF",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
@@ -952,24 +810,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "critical": true,
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
@@ -1055,19 +895,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
-          "description": "this primary administrator can modify system parameters, add or remove tokens, sequencers, emergency pausers, delegate depositors, and claimers. They also manage fee schedules and perpetual products, liquidator details, implementation pointers and other essential exchange settings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "ethereal:0x4320A9290720462F0cd5dfB0F0B9bD4D4A74A8D3",
       "sinceTimestamp": 1777577481,
@@ -1110,14 +937,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3",
-          "description": "modify the LayerZero security stack of this OApp, which defines the main trust assumptions for users owning the native token and also potentially affects and is affected by all connected crosschain peers.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "ethereal:0xb93C042c688F1Cf038bab03C4F832F2630Bb7d8F",
       "sinceTimestamp": 1760472215,
@@ -1170,14 +989,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
-          "description": "receive exchange fees.",
-          "role": ".getFeeCollector"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "ethereal:0x0B9E74f490d731690Da1D0C70F7DB9433C9B4658",
       "sinceTimestamp": 1760499457,
@@ -1334,20 +1145,7 @@
     {
       "address": "ethereal:0x98046Bd286715D3B0BC227Dd7a956b83D8978603",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481",
-          "description": "update the trusted offchain signer.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "ethereal:0x980742eDEA6b0df3566C19Ff4945c57E95449a13",
@@ -1367,15 +1165,7 @@
     {
       "address": "ethereal:0x9D4F46b2595F596fC826Db2e5A6c32bCfE8BdDA5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
-          "description": "take over liquidated accounts, then settle funding and PnL on the resulting positions via the PerpEngine.",
-          "role": ".getLiquidator"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "PythLazer",
@@ -1572,15 +1362,7 @@
     {
       "address": "ethereal:0xFD65878abf4cc5D4219bBBa10009885511626cad",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
-          "description": "trusted off-chain operator that bundles user actions and submits them for on-chain execution, only role that can call the core state-transition function processActions in the Exchange contract.",
-          "role": ".registeredSequencers"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2865,5 +2647,247 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "arbitrum": 481341792, "ethereal": 5339100 },
-  "permissionsConfigHash": "0xa5c955cfbfac284107f28693bfc81b861b190754fce879ab83bd45869695307d"
+  "permissionsConfigHash": "0xa5c955cfbfac284107f28693bfc81b861b190754fce879ab83bd45869695307d",
+  "permissions": {
+    "arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA4444d9536595d35967206b86067a90aD053e1EF",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2" },
+            { "address": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3",
+          "role": ".executors"
+        }
+      ]
+    },
+    "arb1:0x80e046764185e776100A4f59079C2B00327f279A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".getValidators"
+        }
+      ]
+    },
+    "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
+          "role": "admin"
+        }
+      ]
+    },
+    "arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA4444d9536595d35967206b86067a90aD053e1EF",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3",
+          "role": "admin"
+        }
+      ]
+    },
+    "ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
+          "description": "this primary administrator can modify system parameters, add or remove tokens, sequencers, emergency pausers, delegate depositors, and claimers. They also manage fee schedules and perpetual products, liquidator details, implementation pointers and other essential exchange settings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
+          "role": "admin"
+        }
+      ]
+    },
+    "ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3",
+          "description": "modify the LayerZero security stack of this OApp, which defines the main trust assumptions for users owning the native token and also potentially affects and is affected by all connected crosschain peers.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "ethereal:0x58a16791037dF85CCbc3A65DE5a8401Fd04C8aC8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
+          "description": "receive exchange fees.",
+          "role": ".getFeeCollector"
+        }
+      ]
+    },
+    "ethereal:0x98046Bd286715D3B0BC227Dd7a956b83D8978603": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481",
+          "description": "update the trusted offchain signer.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481",
+          "role": "admin"
+        }
+      ]
+    },
+    "ethereal:0x9D4F46b2595F596fC826Db2e5A6c32bCfE8BdDA5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
+          "description": "take over liquidated accounts, then settle funding and PnL on the resulting positions via the PerpEngine.",
+          "role": ".getLiquidator"
+        }
+      ]
+    },
+    "ethereal:0xFD65878abf4cc5D4219bBBa10009885511626cad": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
+          "description": "trusted off-chain operator that bundles user actions and submits them for on-chain execution, only role that can call the core state-transition function processActions in the Exchange contract.",
+          "role": ".registeredSequencers"
+        }
+      ]
+    }
+  }
 }

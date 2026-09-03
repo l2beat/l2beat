@@ -191,14 +191,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1724204782,
@@ -412,14 +404,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1724206353,
@@ -772,20 +756,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1724204135,
@@ -1200,5 +1170,43 @@
     "base": 48445037,
     "ethereum": 25501601
   },
-  "permissionsConfigHash": "0x45826a50baf34187b2cdacb4246b8c744f2755c08887cfa64e9612e1f0ea7579"
+  "permissionsConfigHash": "0x45826a50baf34187b2cdacb4246b8c744f2755c08887cfa64e9612e1f0ea7579",
+  "permissions": {
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }
