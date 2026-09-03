@@ -41,11 +41,15 @@ export function entriesForDiffPair(
   return [entriesForDiff(previous, holders), entriesForDiff(current, holders)]
 }
 
+// Deliberately not exported: one side alone cannot know which stand-ins the
+// other needs, and guessing from its own map is what turns a created contract
+// into a field modification. `entriesForDiffPair` is the way in.
+//
 // Permissions are stored outside `entries`, so folding them in is what keeps a
 // permission change visible in a diff at all. Unlike the read path this joins
 // onto a copy: callers diff discoveries that are afterwards written to the
 // database and to disk, where permissions must stay out of the entries.
-export function entriesForDiff(
+function entriesForDiff(
   discovery: DiscoveryOutput | undefined,
   standInFor?: ReadonlySet<string>,
 ): EntryParameters[] {

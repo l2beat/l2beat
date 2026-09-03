@@ -18,9 +18,11 @@ import { getReachableEntries } from '../utils/reachable'
 export function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
-  // Every entry of the cluster, because an upgrade target or the original of
-  // an aliased address can live in a referenced project.
-  clusterEntries: EntryParameters[] = discovery.entries,
+  // Every entry of the cluster. Required rather than defaulted to this
+  // project's own entries: an upgrade target or the original of an aliased
+  // address can live in a referenced project, and reachability computed
+  // against one project alone would prune every external holder in silence.
+  clusterEntries: EntryParameters[],
 ) {
   discovery.permissionsConfigHash = permissionsOutput.permissionsConfigHash
 

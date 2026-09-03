@@ -57,7 +57,7 @@ export async function writePermissionsIntoDiscovery(
   project: string,
   permissionsOutput: PermissionsOutput,
   configReader: ConfigReader,
-  clusterEntries?: EntryParameters[],
+  clusterEntries: EntryParameters[],
 ) {
   const discovery = configReader.readDiscovery(project)
   combinePermissionsIntoDiscovery(discovery, permissionsOutput, clusterEntries)

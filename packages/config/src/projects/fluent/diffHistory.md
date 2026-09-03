@@ -1,5 +1,31 @@
 Generated with discovered.json: 0x1124e3c1c65b6245e472eee71b162ab2051139b7
 
+# Diff at Thu, 03 Sep 2026 10:48:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f7b07492346f74d16743dd75dd367045293d930 block: 1787738150
+- current timestamp: 1787738150
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787738150 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"},{"permission":"interact","from":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0xbf3b8920c47a32329e350323e85d0744aa8ab7d3
+
 # Diff at Thu, 27 Aug 2026 08:52:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)

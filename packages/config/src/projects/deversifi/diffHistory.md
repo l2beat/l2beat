@@ -1,5 +1,31 @@
 Generated with discovered.json: 0xa0c45bc76234e02fd16f886f89c5dfeb74d70b49
 
+# Diff at Thu, 03 Sep 2026 10:48:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f7b07492346f74d16743dd75dd367045293d930 block: 1741185503
+- current timestamp: 1741185503
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1741185503 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.","role":".governanceAdminAC"},{"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.","role":".appRoleAdminAC"},{"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.","role":".appGovernorAC"},{"permission":"upgrade","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","delay":691200,"role":".$admin"}]
+    }
+```
+
+Generated with discovered.json: 0xca8c17b3bb268fd7104ab197b6f3183a6afeef25
+
 # Diff at Fri, 12 Jun 2026 12:07:45 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

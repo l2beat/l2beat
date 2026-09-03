@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x7cf3c64d8d5c6e710046a065d36974b38df052a6
 
-# Diff at Thu, 03 Sep 2026 10:17:13 GMT:
+# Diff at Thu, 03 Sep 2026 10:48:47 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@9f7b07492346f74d16743dd75dd367045293d930 block: 1786539815
@@ -17,7 +17,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1786539815 (main branch discovery), not current.
 
 ```diff
-    reference Chainlink_rETH_ETH (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0) {
+    external contract Chainlink_rETH_ETH (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0) {
     +++ description: None
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".rEthEthOracle"},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the rETH price this PriceFeed reads.","role":".rEthEthOracle"}]
@@ -25,7 +25,7 @@ discovery. Values are for block 1786539815 (main branch discovery), not current.
 ```
 
 ```diff
-    reference Chainlink_ETH_USD (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419) {
+    external contract Chainlink_ETH_USD (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419) {
     +++ description: None
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle"}]
@@ -33,10 +33,654 @@ discovery. Values are for block 1786539815 (main branch discovery), not current.
 ```
 
 ```diff
-    reference Chainlink_stETH_USD (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8) {
+    external contract Chainlink_stETH_USD (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8) {
     +++ description: None
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".stEthUsdOracle"},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the stETH price this PriceFeed reads.","role":".stEthUsdOracle"}]
+    }
+```
+
+```diff
+    external contract (eth:0x05FD2a0Ce04700375e475a12d2708F1632992D32) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x0613A20e394593c2aEB627760e6d6Fb816D77fbB) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x0C46Dc0BA85eAb5A515f819F1a705eD324dA687B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x1128DAC99D33De9Daf99f6F4505c1f1E286A9712) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x15E79C766b9Df3F8b3b60425f3122b2b61fd4212) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x1B586bcad859a265592e7A10856AEd85B344eEb2) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x1d36A4c2ab15CcD29B312991176D85622299cc11) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x1d5804aE896c64ECc88E15379061CE6230F11895) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x207dCc7519600F6459227168abe8e102CB99EB3e) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x2105394CE5f045c4d2F33Fd35cC0472B689998cC) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"}]},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".rEthEthOracle","via":[{"address":"eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"}]},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"}]},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the rETH price this PriceFeed reads.","role":".rEthEthOracle","via":[{"address":"eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"}]},{"permission":"interact","from":"eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf","description":"replace the aggregator behind any base/quote pair in the Feed Registry, controlling all prices it reports to consumers.","role":".owner"},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"}]},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".stEthUsdOracle","via":[{"address":"eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the stETH price this PriceFeed reads.","role":".stEthUsdOracle","via":[{"address":"eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"reconfigure the oracle: replace the signer and transmitter sets and the number of signatures required per update, and set the payees and access controllers.","role":".owner"},{"permission":"act","from":"eth:0x536218f9E9Eb48863970252233c8F271f554C2d0","description":"repoint this feed to a different aggregator, swapping the price source behind it to any contract of their choosing.","role":".owner"},{"permission":"act","from":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419","description":"repoint this feed to a different aggregator, swapping the price source behind it to any contract of their choosing.","role":".owner"},{"permission":"act","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"reconfigure the oracle: replace the signer and transmitter sets and the number of signatures required per update, and set the payees and access controllers.","role":".owner"},{"permission":"act","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"reconfigure the oracle: replace the signer and transmitter sets and the number of signatures required per update, and set the payees and access controllers.","role":".owner"},{"permission":"act","from":"eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8","description":"repoint this feed to a different aggregator, swapping the price source behind it to any contract of their choosing.","role":".owner"}]
+    }
+```
+
+```diff
+    external contract (eth:0x243205E5c413534d0702ea981A35256E6853857F) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x2AE63A74771Fc84Fe25a186E139c2A39FfCa3f7c) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x2DBbD12Bf0f6A23Cf4455cC6BE874b7a246288Ce) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".rEthEthOracle","via":[{"address":"eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the rETH price this PriceFeed reads.","role":".rEthEthOracle","via":[{"address":"eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf","description":"replace the aggregator behind any base/quote pair in the Feed Registry, controlling all prices it reports to consumers.","role":".owner","via":[{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".stEthUsdOracle","via":[{"address":"eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle","via":[{"address":"eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the stETH price this PriceFeed reads.","role":".stEthUsdOracle","via":[{"address":"eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8"},{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA","role":".GnosisSafe_modules"}]
+    }
+```
+
+```diff
+    external contract (eth:0x30B18F1c425123314C82b0236D7a349433755386) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x30d872350Fe74f47C85847D6784B42f9b0816f04) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x37939AaA3E06F59C68c4002E98972b55cE9313fF) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x43dC29Fe432733F239D8485d7DcdAA867B7175b8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x486B19D5eef9aB146593b44F324bd9CCba001f65) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x48b59195A00b4e2870A649945c8B526FFfecfF0C) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x4CB67cfee180B6B73B70c7B3fC162E5FCF6532f1) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x5213f6F0f0bC40B8db5FE9124984B82Ce00d6004) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x522bB49bE4fB6E3ceC18df911C2A66457E6Fc3e2) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x52b6D55A50118914BF8B7DbE0225258F92C89C0B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x58c56D3b37bdD568cE476Ee5ABe1D263F2615970) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x5fdf4ABaF24d8229deFBD28890cb01E0d8108e96) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x65a43936d7e1295CcA6f30F6a0B25fe49cAb32c8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x6755F3DF25f4c1A6c3e768E286eAbc3413499D1B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x679316Feef30712f240C1903F92751b5Ec14548b) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x7714a555e35FC3Af77e272835E0C31b1Afef8813) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x84456A715540D627dbc588b73f33b1246cfCFD7C) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x845E553567C9F2221a238605DB7c044c672455e4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x87B331d3bb9Cf70Dd85c3dc606B684a0bd61c772) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x88E66A3D292D4B7b4913A28333658A9F43772991) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x8DCCa28d562157271b085632610d1Bd878690902) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x8f5E4d8e77F69EDfCabbFdC3a3Ea8550025e206d) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x9630a8FEA21c69De3790Fde207c4465E67966F2C) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x97360A89B5adb7D82Dbde6C66A49de8a48D550E6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x97590710d86ba7D34965229700652Ed4E6B6E6B7) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x9A5B545aA8B6289288E529c4099B0CcA62bcB708) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0x9e51fa73404dfa9A38063E63bB8DAa796095Aa09) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xAE80A59ba821544cB508808942C20C11442d8A9b) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xBa4555a80E47477BBf23B721563D38B10eb65dFa) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xC0C7eB4A39BAa77fD52715BD1dcE2246Df85E489) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xC83ffb4282e3c4deEf834a10b82800E7b484FbC9) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xC8f5aE9ED3930643aD91c0c0d37225916e45b996) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xC917E3BF6c211b326ffD4ed13E7D9a67682095CA) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xD953B28486a4Cd2668dbaFddbC4A3806A1B6Ae45) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xDb0f470c2e87A645b1d7f8900b9a8F5aDe9aF259) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xE62Efa5462961055757C63931a15601545E4d273) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xE808269B80F9AB230d95E088e6D6d9Ca7F59c811) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xEb5D1116c0F687BaAD06758008852679cf4D8cEC) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xF38326579519377178725A741C35999E8051e907) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xFC78E810375eC72e9d3d194f3acAb896C7937611) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xFe31f3EcfDE29Fc4915d80Eb8A9d67bFF14180B3) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xc90E040d0C2C07f166474891a7219da494B6ED62) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xc9e37628E76F02f84091d8e5A8DB1053C6CaC1CB) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xd76f52789321183E08799F34A2AD9c812A95A5B1) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xd8D2297bDf4a84569bCec83C92A81549bE9c51E6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xdfE90b926c7cA7913E94D481c92A0aE2d99a593e) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xe7b837A55df42eCc95bf893C3c31750264932596) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xe9E4D87B0e7f97dd622439c26605b3b038c276C4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.","role":".getTransmitters"}]
+    }
+```
+
+```diff
+    external contract (eth:0xf18939edE35203f5361ff19c2BA65B5aefC985C2) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xf4B2220EFFc3955b627E52389673418324F5d1CA) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xf8F1f7455CC3A0D045ecE1f7DB6f5249C0508236) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xf9079d1f8033069c7480027E4bA1b3b1ec99eDa8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"},{"permission":"interact","from":"eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
+    }
+```
+
+```diff
+    external contract (eth:0xfc81fE4fBf6B4dB2589131d0D22C127f90ebaDC0) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f","description":"sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.","role":".ocrConfig"}]
     }
 ```
 
