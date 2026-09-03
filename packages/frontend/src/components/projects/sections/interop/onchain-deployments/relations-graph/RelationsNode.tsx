@@ -2,7 +2,6 @@ import { formatAddress, formatCurrency } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { ChainIcon } from '~/pages/interop/components/ChainIcon'
 import type { InteropTokenRelationsNode } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
-import type { InteropTokenStats } from '~/server/features/layer2s/interop/utils/aggregatePairStats'
 import { cn } from '~/utils/cn'
 import type { NodeBox } from './layoutRelationsGraph'
 
@@ -74,7 +73,7 @@ export function RelationsNode({
             </span>
           )}
         </span>
-        <Volume stats={node} />
+        <Volume value={node.volume} className="text-secondary" />
       </Line>
       {node.deployments.length > 1 ? (
         <>
@@ -85,14 +84,14 @@ export function RelationsNode({
           <ul className="mt-1 w-full">
             {node.deployments.slice(0, CLUSTER_ROWS_SHOWN).map((deployment) => (
               <li
-                key={`${deployment.chain.name}|${deployment.address}`}
+                key={`${deployment.chain.id}|${deployment.address}`}
                 className="flex h-5 items-center justify-between gap-2 border-divider border-t text-label-value-12"
               >
                 <span className="flex min-w-0 items-center gap-1.5">
                   <ChainIcon iconUrl={deployment.chain.iconUrl} alt="" />
                   <span className="truncate">{deployment.chain.name}</span>
                 </span>
-                <Volume stats={deployment} />
+                <Volume value={deployment.volume} className="text-secondary" />
               </li>
             ))}
           </ul>
@@ -133,10 +132,16 @@ function Line({
   )
 }
 
-function Volume({ stats }: { stats: InteropTokenStats }) {
+export function Volume({
+  value,
+  className,
+}: {
+  value: number | null
+  className?: string
+}) {
   return (
-    <span className="shrink-0 text-secondary tabular-nums">
-      {stats.volume === null ? '—' : formatCurrency(stats.volume, 'usd')}
+    <span className={cn('shrink-0 tabular-nums', className)}>
+      {value === null ? '—' : formatCurrency(value, 'usd')}
     </span>
   )
 }
