@@ -162,11 +162,16 @@ export class UpdateDiffer {
 
         // The whole field appeared or disappeared rather than one of its
         // elements changing, so there is no index to read. That is the shape a
-        // holder takes when it receives its first permission, which for an
-        // address owned by a referenced project is the common case.
+        // holder takes when it receives its first permission, or loses its
+        // last, which for an address owned by a referenced project is the
+        // common case. On a loss the latest entry holds nothing, so the removed
+        // value is the only place the permission is still named.
         const indexString = f.key.split('.')[1]
         if (indexString === undefined) {
-          return permissions.some((p) => p.permission === 'upgrade')
+          return (
+            permissions.some((p) => p.permission === 'upgrade') ||
+            grantedUpgrade(f.before)
+          )
         }
 
         return (
@@ -236,4 +241,24 @@ export class UpdateDiffer {
   getOnDiskDiscovery(name: string): DiscoveryOutput {
     return this.configReader.readDiscovery(name)
   }
+}
+
+// A removed `receivedPermissions` value, as `diffContracts` serialised it.
+// Anything that is not an array of permissions simply is not one.
+function grantedUpgrade(serialized: string | undefined): boolean {
+  if (serialized === undefined) {
+    return false
+  }
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(serialized)
+  } catch {
+    return false
+  }
+  if (!Array.isArray(parsed)) {
+    return false
+  }
+  return parsed.some(
+    (entry) => (entry as { permission?: string }).permission === 'upgrade',
+  )
 }
