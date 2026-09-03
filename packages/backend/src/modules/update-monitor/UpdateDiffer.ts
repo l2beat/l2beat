@@ -112,6 +112,7 @@ export class UpdateDiffer {
 
     return this.getUpdateDiffs(
       diff,
+      previousEntries,
       latestEntries,
       project,
       timestamp,
@@ -128,6 +129,7 @@ export class UpdateDiffer {
 
   getUpdateDiffs(
     diff: DiscoveryDiff[],
+    previousContracts: EntryParameters[],
     latestContracts: EntryParameters[],
     projectId: string,
     timestamp: UnixTime,
@@ -156,10 +158,14 @@ export class UpdateDiffer {
         if (!f.key.startsWith('receivedPermissions')) {
           return false
         }
-        const entry = latestContracts.find(
-          (e) => e.address === discoveryDiff.address,
+        const permissionsOn = (contracts: EntryParameters[]) =>
+          contracts.find((e) => e.address === discoveryDiff.address)
+            ?.receivedPermissions ?? []
+        return involvesUpgrade(
+          f,
+          permissionsOn(previousContracts),
+          permissionsOn(latestContracts),
         )
-        return involvesUpgrade(f, entry?.receivedPermissions ?? [])
       }),
     )
 
@@ -238,20 +244,29 @@ const UPGRADE = 'upgrade'
 // Only the third leaves the latest array safe to index. Adding or removing an
 // element shifts every index after it, so reading `latest[N]` there answers a
 // question about a different permission entirely.
-function involvesUpgrade(f: FieldDiff, latest: ReceivedPermission[]): boolean {
+function involvesUpgrade(
+  f: FieldDiff,
+  previous: ReceivedPermission[],
+  latest: ReceivedPermission[],
+): boolean {
   const segments = f.key.split('.')
 
   if (segments.length <= 2) {
     return holdsUpgrade(f.before) || holdsUpgrade(f.after)
   }
 
-  // The element sits at the same index on both sides. When it is the
-  // permission itself that changed, the latest value tells only half the
-  // story: an upgrade replaced by something else is still an upgrader lost.
   if (segments[2] === 'permission') {
     return parseJson(f.before) === UPGRADE || parseJson(f.after) === UPGRADE
   }
-  return latest[Number.parseInt(segments[1] ?? '')]?.permission === UPGRADE
+
+  // `lcsDiff` unshifts the left-hand index onto a nested change (diff.ts, the
+  // `nested.forEach` line), so N indexes the previous array. Reading `latest[N]`
+  // asks about a different permission whenever an element was added or removed
+  // earlier in the same array - which is the norm here, because
+  // `sortReceivedPermissions` orders by JSON and "interact" sorts before
+  // "upgrade", so any non-upgrade change renumbers every upgrade after it.
+  const index = Number.parseInt(segments[1] ?? '')
+  return (previous[index] ?? latest[index])?.permission === UPGRADE
 }
 
 // The serialised value is either the whole array or a single permission.
