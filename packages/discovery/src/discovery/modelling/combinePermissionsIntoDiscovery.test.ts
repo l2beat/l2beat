@@ -84,6 +84,8 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(COUNCIL, TIMELOCK)]),
+      // The holder is discovered by the referenced project, not by this one.
+      [...discovery.entries, contract(COUNCIL)],
     )
 
     expect(discovery.permissions).toEqual({
@@ -91,6 +93,21 @@ describe(combinePermissionsIntoDiscovery.name, () => {
         receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
       },
     })
+  })
+
+  // A reference points at one deployment inside a shared module, so the rest of
+  // what that module discovered is not this project's to carry.
+  it('drops a holder the project entrypoints cannot reach', () => {
+    const discovery = output([contract(TIMELOCK)])
+    const unrelated = address('0x444')
+
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([upgrade(COUNCIL, unrelated)]),
+      [...discovery.entries, contract(COUNCIL), contract(unrelated)],
+    )
+
+    expect(discovery.permissions).toEqual(undefined)
   })
 
   it('clears a map left over by a previous run', () => {
