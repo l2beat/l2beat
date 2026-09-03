@@ -21,7 +21,7 @@ import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDepl
 import type { InteropTokenRelations } from './getInteropTokenRelations'
 
 export interface InteropTokenRelationsDeployment extends InteropTokenStats {
-  chain: { name: string; iconUrl: string | undefined }
+  chain: { id: string; name: string; iconUrl: string | undefined }
   address: string
   symbol: string
   explorerUrl: string | undefined
@@ -104,6 +104,7 @@ export function getInteropTokenRelationsGraph(
           const chain = chainInfo.get(deployment.chain)
           return {
             chain: {
+              id: deployment.chain,
               name: chain?.name ?? deployment.chain,
               iconUrl: chain?.iconUrl,
             },
