@@ -160,22 +160,20 @@ export class UpdateDiffer {
         )
         const permissions = entry?.receivedPermissions ?? []
 
-        // The whole field appeared or disappeared rather than one of its
-        // elements changing, so there is no index to read. That is the shape a
-        // holder takes when it receives its first permission, or loses its
-        // last, which for an address owned by a referenced project is the
-        // common case. On a loss the latest entry holds nothing, so the removed
-        // value is the only place the permission is still named.
+        // Both sides of the change, not only the latest one. An upgrader that
+        // went away is named only by the value that was removed: when a holder
+        // loses its last permission the latest entry is empty, and when a
+        // permission is replaced the latest entry holds whatever replaced it.
         const indexString = f.key.split('.')[1]
-        if (indexString === undefined) {
-          return (
-            permissions.some((p) => p.permission === 'upgrade') ||
-            grantedUpgrade(f.before)
-          )
-        }
+        const latest =
+          indexString === undefined
+            ? permissions
+            : [permissions[Number.parseInt(indexString)]]
 
         return (
-          permissions[Number.parseInt(indexString)]?.permission === 'upgrade'
+          latest.some((p) => p?.permission === 'upgrade') ||
+          namesUpgrade(f.key, f.before) ||
+          namesUpgrade(f.key, f.after)
         )
       }),
     )
@@ -243,9 +241,11 @@ export class UpdateDiffer {
   }
 }
 
-// A removed `receivedPermissions` value, as `diffContracts` serialised it.
-// Anything that is not an array of permissions simply is not one.
-function grantedUpgrade(serialized: string | undefined): boolean {
+// One side of a `receivedPermissions` field diff, as `diffContracts`
+// serialised it: the whole array when the field appeared or disappeared, and
+// the bare permission name when one element's `.permission` changed. Anything
+// else is not a permission and cannot name an upgrade.
+function namesUpgrade(key: string, serialized: string | undefined): boolean {
   if (serialized === undefined) {
     return false
   }
@@ -254,6 +254,9 @@ function grantedUpgrade(serialized: string | undefined): boolean {
     parsed = JSON.parse(serialized)
   } catch {
     return false
+  }
+  if (key.endsWith('.permission')) {
+    return parsed === 'upgrade'
   }
   if (!Array.isArray(parsed)) {
     return false

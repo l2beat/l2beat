@@ -381,6 +381,104 @@ describe(UpdateDiffer.name, () => {
       expect(result.map((r) => r.type)).toEqual([])
     })
 
+    // The upgrade was replaced in place, so the latest entry names the
+    // replacement and only the previous value says an upgrader went away.
+    it('detects an upgrade change when a permission is replaced', () => {
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: mockFn().returns(mockProject),
+      })
+
+      const updateDiffer = new UpdateDiffer(
+        configReader,
+        mockObject<Database>({}),
+        mockObject<DiscoveryOutputCache>(),
+        Logger.SILENT,
+      )
+      const timestamp = UnixTime.now()
+      const address = ChainSpecificAddress.random()
+      const diff: DiscoveryDiff = {
+        address,
+        addressType: 'Contract',
+        diff: [
+          {
+            key: 'receivedPermissions.0.permission',
+            before: JSON.stringify('upgrade'),
+            after: JSON.stringify('interact'),
+          },
+        ],
+      }
+
+      const latestDiscovery = mockObject<DiscoveryOutput>({
+        entries: [
+          mockObject<EntryParameters>({
+            address,
+            receivedPermissions: [
+              mockObject<ReceivedPermission>({ permission: 'interact' }),
+            ],
+          }),
+        ],
+      })
+
+      const result = updateDiffer.getUpdateDiffs(
+        [diff],
+        latestDiscovery.entries,
+        PROJECT_A,
+        timestamp,
+        123,
+        456,
+      )
+
+      expect(result.map((r) => r.type)).toEqual(['ultimateUpgraderChange'])
+    })
+
+    it('ignores a replacement that never involved an upgrade', () => {
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: mockFn().returns(mockProject),
+      })
+
+      const updateDiffer = new UpdateDiffer(
+        configReader,
+        mockObject<Database>({}),
+        mockObject<DiscoveryOutputCache>(),
+        Logger.SILENT,
+      )
+      const timestamp = UnixTime.now()
+      const address = ChainSpecificAddress.random()
+      const diff: DiscoveryDiff = {
+        address,
+        addressType: 'Contract',
+        diff: [
+          {
+            key: 'receivedPermissions.0.permission',
+            before: JSON.stringify('interact'),
+            after: JSON.stringify('act'),
+          },
+        ],
+      }
+
+      const latestDiscovery = mockObject<DiscoveryOutput>({
+        entries: [
+          mockObject<EntryParameters>({
+            address,
+            receivedPermissions: [
+              mockObject<ReceivedPermission>({ permission: 'act' }),
+            ],
+          }),
+        ],
+      })
+
+      const result = updateDiffer.getUpdateDiffs(
+        [diff],
+        latestDiscovery.entries,
+        PROJECT_A,
+        timestamp,
+        123,
+        456,
+      )
+
+      expect(result.map((r) => r.type)).toEqual([])
+    })
+
     it('detects upgrade changes', () => {
       const configReader = mockObject<ConfigReader>({
         readDiscovery: mockFn().returns(mockProject),
