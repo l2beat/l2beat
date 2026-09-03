@@ -127,6 +127,43 @@ describe(getInteropTokenEntry.name, () => {
     ])
   })
 
+  it('includes the relations graph only when a relation exists', () => {
+    const deployments = [
+      deployment({ chain: 'ethereum', address: '0xe1' }),
+      deployment({ chain: 'arbitrum', address: '0xa1' }),
+    ]
+    const section = (relations: InteropTokenRelations) => {
+      const found = getInteropTokenEntry(
+        'usdc',
+        [],
+        [],
+        [],
+        deployments,
+        relations,
+      ).sections.find((s) => s.type === 'InteropTokenOnchainDeploymentsSection')
+      assert(found?.type === 'InteropTokenOnchainDeploymentsSection')
+      return found.props.relationsGraph
+    }
+
+    expect(section(NO_RELATIONS)).toEqual(undefined)
+    expect(
+      section({
+        routes: [
+          {
+            tokenAChain: 'arbitrum',
+            tokenAAddress: '0xa1',
+            tokenBChain: 'ethereum',
+            tokenBAddress: '0xe1',
+            plugin: 'cctp-v2',
+            bridgeType: 'burnAndMint',
+            lockedToken: null,
+          },
+        ],
+        pairStats: undefined,
+      })?.nodes.map((node) => node.deployments.length),
+    ).toEqual([2])
+  })
+
   it('skips manually added relations when resolving minters', () => {
     const entry = getInteropTokenEntry(
       'ether',

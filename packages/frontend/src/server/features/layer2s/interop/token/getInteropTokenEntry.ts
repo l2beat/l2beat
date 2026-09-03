@@ -21,6 +21,10 @@ import {
 } from './getChainDisplayInfo'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import type { InteropTokenRelations } from './getInteropTokenRelations'
+import {
+  getInteropTokenRelationsGraph,
+  hasTokenRelations,
+} from './getInteropTokenRelationsGraph'
 
 const logger = getLogger().for('getInteropTokenEntry')
 
@@ -66,6 +70,13 @@ export function getInteropTokenEntry(
     const deploymentStats =
       relations.pairStats &&
       aggregatePairStats(relations.pairStats, pairSideKey)
+    const relationsGraph = getInteropTokenRelationsGraph(
+      tokenId,
+      deployments,
+      relations,
+      chainInfoMap,
+      resolveProjects,
+    )
     sections.push({
       type: 'InteropTokenOnchainDeploymentsSection',
       props: {
@@ -87,6 +98,9 @@ export function getInteropTokenEntry(
               (b.volume ?? -1) - (a.volume ?? -1) ||
               a.chain.name.localeCompare(b.chain.name),
           ),
+        relationsGraph: hasTokenRelations(relationsGraph)
+          ? relationsGraph
+          : undefined,
       },
     })
   }

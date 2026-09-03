@@ -48,6 +48,15 @@ const MOCK_INTEROP_TOKEN_RELATIONS: InteropTokenRelations = {
       bridgeType: 'burnAndMint',
       lockedToken: null,
     },
+    {
+      tokenAChain: 'base',
+      tokenAAddress: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+      tokenBChain: 'ethereum',
+      tokenBAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+      plugin: 'opstack',
+      bridgeType: 'lockAndMint',
+      lockedToken: 'B',
+    },
   ],
   pairStats: [
     {

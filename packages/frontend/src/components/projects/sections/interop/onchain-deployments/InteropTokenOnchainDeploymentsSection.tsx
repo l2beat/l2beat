@@ -4,6 +4,7 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   getPaginationItems,
   Pagination,
@@ -15,12 +16,14 @@ import {
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
+import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { ProjectSection } from '../../ProjectSection'
 import type { ProjectSectionProps } from '../../types'
 import {
   type DeploymentRow,
   interopTokenOnchainDeploymentsColumns,
 } from './columns'
+import { TokenRelationsGraphView } from './relations-graph/TokenRelationsGraphView'
 
 const DEPLOYMENTS_PER_PAGE = 8
 
@@ -42,10 +45,13 @@ export interface InteropTokenOnchainDeploymentsRow {
 export interface InteropTokenOnchainDeploymentsSectionProps
   extends ProjectSectionProps {
   deployments: InteropTokenOnchainDeploymentsRow[]
+  /** Absent when no relation between the deployments has been observed. */
+  relationsGraph?: InteropTokenRelationsGraph
 }
 
 export function InteropTokenOnchainDeploymentsSection({
   deployments,
+  relationsGraph,
   ...sectionProps
 }: InteropTokenOnchainDeploymentsSectionProps) {
   const table = useTable<DeploymentRow>({
@@ -77,6 +83,12 @@ export function InteropTokenOnchainDeploymentsSection({
 
   return (
     <ProjectSection {...sectionProps}>
+      {relationsGraph && (
+        <>
+          <TokenRelationsGraphView graph={relationsGraph} />
+          <HorizontalSeparator className="my-4" />
+        </>
+      )}
       <BasicTable table={table} tableWrapperClassName="pb-0" />
       {pageCount > 1 && (
         <div className="mt-4">
