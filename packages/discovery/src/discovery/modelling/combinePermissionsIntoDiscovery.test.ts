@@ -24,6 +24,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(discovery.entries.at(1)?.receivedPermissions).toEqual(undefined)
@@ -40,6 +41,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([{ ...upgrade(COUNCIL, TIMELOCK), isFinal: false }]),
+      [...discovery.entries, contract(COUNCIL)],
     )
 
     expect(discovery.permissions).toEqual({
@@ -57,6 +59,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(Object.keys(discovery.permissions ?? {})).toEqual([PROXY_ADMIN])
@@ -70,6 +73,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     const stored = discovery.permissions?.[PROXY_ADMIN]
@@ -115,9 +119,14 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
-    combinePermissionsIntoDiscovery(discovery, permissions([]))
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([]),
+      discovery.entries,
+    )
 
     expect(discovery.permissions).toEqual(undefined)
   })
@@ -132,6 +141,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(COUNCIL, TIMELOCK), upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(Object.keys(discovery.permissions ?? {})).toEqual([

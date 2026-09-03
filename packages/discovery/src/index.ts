@@ -76,7 +76,6 @@ export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
   diffDiscovery,
-  entriesForDiff,
   entriesForDiffPair,
 } from './discovery/output/diffDiscovery'
 export {

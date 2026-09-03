@@ -4,19 +4,16 @@ import {
   Hash256,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  diffDiscovery,
-  entriesForDiff,
-  entriesForDiffPair,
-} from './diffDiscovery'
+import { diffDiscovery, entriesForDiffPair } from './diffDiscovery'
 import type { DiscoveryOutput, EntryParameters } from './types'
 
 const TIMELOCK = address('0x111')
 const COUNCIL = address('0x222')
 
-describe(entriesForDiff.name, () => {
+describe(entriesForDiffPair.name, () => {
   it('joins a holder that has an entry onto that entry', () => {
-    const entries = entriesForDiff(
+    const [, entries] = entriesForDiffPair(
+      undefined,
       output([contract(TIMELOCK)], {
         [TIMELOCK]: { receivedPermissions: [perm(COUNCIL)] },
       }),
@@ -29,7 +26,8 @@ describe(entriesForDiff.name, () => {
   // Without a stand-in the holder is absent from both sides of every diff, so
   // a change to its permissions reaches neither diffHistory nor Update Monitor.
   it('stands in for a holder the project has no entry for', () => {
-    const entries = entriesForDiff(
+    const [, entries] = entriesForDiffPair(
+      undefined,
       output([contract(TIMELOCK)], {
         [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
       }),
@@ -49,7 +47,7 @@ describe(entriesForDiff.name, () => {
     })
     const after = output([contract(TIMELOCK)], {})
 
-    const diff = diffDiscovery(entriesForDiff(before), entriesForDiff(after))
+    const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
     expect(diff.length).toEqual(1)
     expect(diff.at(0)?.address).toEqual(COUNCIL)
@@ -130,7 +128,8 @@ describe(entriesForDiff.name, () => {
   })
 
   it('never lists an address twice', () => {
-    const entries = entriesForDiff(
+    const [, entries] = entriesForDiffPair(
+      undefined,
       output([contract(TIMELOCK), reference(COUNCIL)], {
         [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
       }),
