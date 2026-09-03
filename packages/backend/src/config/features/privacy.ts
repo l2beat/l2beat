@@ -81,7 +81,12 @@ export async function getPrivacyConfig(
       for (const bucket of token.buckets) {
         if (bucket.anonymitySet !== undefined) {
           anonymitySetConfigs.push(
-            toAnonymitySetConfig(project.projectId, bucket, bucket.deposit),
+            toAnonymitySetConfig(
+              project.projectId,
+              bucket,
+              bucket.deposit,
+              minTimestamp,
+            ),
           )
         }
 
@@ -245,6 +250,7 @@ function toAnonymitySetConfig(
   projectId: string,
   bucket: ProjectPrivacyBucket,
   source: PrivacyAnonymitySetDepositSource,
+  minTimestamp: UnixTime,
 ): PrivacyAnonymitySetIndexerConfig {
   const privacyAddress = getPrivacyBucketAddress(bucket.address)
   const config: PrivacyAnonymitySetIndexerConfigProperties = {
@@ -252,7 +258,7 @@ function toAnonymitySetConfig(
     bucketId: bucket.id,
     chain: privacyAddress.chain,
     address: EthereumAddress(privacyAddress.address),
-    sinceTimestamp: bucket.sinceTimestamp,
+    sinceTimestamp: Math.max(bucket.sinceTimestamp, minTimestamp),
     ...source,
   }
 
