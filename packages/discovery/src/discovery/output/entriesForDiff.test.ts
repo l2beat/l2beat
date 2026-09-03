@@ -99,6 +99,36 @@ describe(entriesForDiff.name, () => {
     expect(diff).toEqual([])
   })
 
+  // Standing in for it would compare a synthetic Reference against the real
+  // entry, so a newly deployed contract would arrive as a Reference-to-contract
+  // field modification and slip past the filter that keeps creations out of the
+  // web feed.
+  it('leaves a newly discovered contract a creation, permission or not', () => {
+    const before = output([contract(TIMELOCK)], {})
+    const after = output([contract(TIMELOCK), contract(COUNCIL)], {
+      [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
+    })
+
+    const diff = diffDiscovery(...entriesForDiffPair(before, after))
+
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.address).toEqual(COUNCIL)
+    expect(diff.at(0)?.type).toEqual('created')
+    expect(diff.at(0)?.addressType).toEqual('Contract')
+  })
+
+  it('leaves a removed contract a deletion, permission or not', () => {
+    const before = output([contract(TIMELOCK), contract(COUNCIL)], {
+      [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
+    })
+    const after = output([contract(TIMELOCK)], {})
+
+    const diff = diffDiscovery(...entriesForDiffPair(before, after))
+
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.type).toEqual('deleted')
+  })
+
   it('never lists an address twice', () => {
     const entries = entriesForDiff(
       output([contract(TIMELOCK), reference(COUNCIL)], {
