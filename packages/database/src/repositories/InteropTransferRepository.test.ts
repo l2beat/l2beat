@@ -1013,6 +1013,160 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getDeploymentStatsByRange.name,
+    () => {
+      it('aggregates both token sides within the requested window', async () => {
+        const srcAddress = EthereumAddress.random()
+        const dstAddress = EthereumAddress.random()
+        const first = transfer(
+          'plugin',
+          'first',
+          'transfer',
+          UnixTime(200),
+          'ethereum',
+          'base',
+        )
+        const second = transfer(
+          'plugin',
+          'second',
+          'transfer',
+          UnixTime(300),
+          'ethereum',
+          'base',
+        )
+        first.srcTokenAddress = second.srcTokenAddress = srcAddress
+        first.dstTokenAddress = second.dstTokenAddress = dstAddress
+        first.srcValueUsd = 100
+        second.srcValueUsd = 50
+        first.dstValueUsd = 90
+        second.dstValueUsd = undefined
+        first.bridgeType = second.bridgeType = 'lockAndMint'
+
+        await repository.insertMany([
+          transfer('plugin', 'outside', 'transfer', UnixTime(100)),
+          first,
+          second,
+        ])
+
+        const result = await repository.getDeploymentStatsByRange(
+          UnixTime(100),
+          UnixTime(300),
+        )
+        const src = result.find((row) => row.chain === 'ethereum')
+        const dst = result.find((row) => row.chain === 'base')
+
+        expect(result).toHaveLength(2)
+        expect(src).toEqual({
+          chain: 'ethereum',
+          address: srcAddress,
+          abstractTokenId: 'ethereum',
+          symbol: 'ETH',
+          plugin: 'plugin',
+          volumeUsd: 150,
+          transferCount: 2,
+          valuedTransferCount: 2,
+        })
+        expect(dst).toEqual({
+          chain: 'base',
+          address: dstAddress,
+          abstractTokenId: 'ethereum',
+          symbol: 'ETH',
+          plugin: 'plugin',
+          volumeUsd: 90,
+          transferCount: 2,
+          valuedTransferCount: 1,
+        })
+      })
+    },
+  )
+
+  describe(
+    InteropTransferRepository.prototype.getSupplyChangeStatsByRange.name,
+    () => {
+      it('sums retained mints and burns for the requested deployments', async () => {
+        const address = EthereumAddress.random()
+        const paddedAddress = Address32.from(address)
+        const mint = transfer(
+          'plugin',
+          'mint',
+          'transfer',
+          UnixTime(200),
+          'ethereum',
+          'base',
+        )
+        mint.dstTokenAddress = paddedAddress
+        mint.dstWasMinted = true
+        mint.dstRawAmount = 10n
+
+        const burn = transfer(
+          'plugin',
+          'burn',
+          'transfer',
+          UnixTime(300),
+          'base',
+          'ethereum',
+        )
+        burn.srcTokenAddress = address
+        burn.srcWasBurned = true
+        burn.srcRawAmount = 4n
+
+        const missingAmount = transfer(
+          'plugin',
+          'missing',
+          'transfer',
+          UnixTime(250),
+          'ethereum',
+          'base',
+        )
+        missingAmount.dstTokenAddress = address
+        missingAmount.dstWasMinted = true
+        missingAmount.dstRawAmount = undefined
+
+        const outside = transfer(
+          'plugin',
+          'outside',
+          'transfer',
+          UnixTime(100),
+          'ethereum',
+          'base',
+        )
+        outside.dstTokenAddress = address
+        outside.dstWasMinted = true
+        outside.dstRawAmount = 100n
+
+        await repository.insertMany([mint, burn, missingAmount, outside])
+
+        const result = await repository.getSupplyChangeStatsByRange(
+          [{ chain: 'base', address }],
+          UnixTime(100),
+          UnixTime(300),
+        )
+
+        expect(result).toEqual([
+          {
+            chain: 'base',
+            address,
+            mintedRaw: '10',
+            burnedRaw: '4',
+            transferCount: 3,
+            missingAmountCount: 1,
+          },
+        ])
+      })
+
+      it('does not query for an empty request list', async () => {
+        const result = await repository.getSupplyChangeStatsByRange(
+          [],
+          UnixTime(100),
+          UnixTime(300),
+        )
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getProjectTransfers.name, () => {
     const snapshotTimestamp = UnixTime(2_000_000)
 

@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/trpc': {
-        target: 'http://localhost:3000',
+        target: process.env.TOKEN_BACKEND_URL ?? 'http://localhost:3000',
         changeOrigin: true,
       },
     },

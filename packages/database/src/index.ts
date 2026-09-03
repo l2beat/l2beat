@@ -80,6 +80,9 @@ export type {
 } from './repositories/InteropRecentPricesRepository'
 export {
   hasAnyInteropTransferFinancialsFilter,
+  type InteropDeploymentStatsRecord,
+  type InteropSupplyChangeRequest,
+  type InteropSupplyChangeStatsRecord,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
   type InteropTransferFinancialsFilter,
