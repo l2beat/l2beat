@@ -24,10 +24,20 @@ export function entriesForDiffPair(
   previous: DiscoveryOutput | undefined,
   current: DiscoveryOutput | undefined,
 ): [EntryParameters[], EntryParameters[]] {
-  const holders = new Set([
-    ...Object.keys(previous?.permissions ?? {}),
-    ...Object.keys(current?.permissions ?? {}),
+  // Only addresses no side ever discovered itself. An address that is a real
+  // entry on either side must keep its own creation or deletion: standing in
+  // for it would turn a newly deployed contract that happens to hold a
+  // permission into a Reference-to-contract field modification.
+  const discovered = new Set([
+    ...(previous?.entries ?? []).map((entry) => entry.address.toString()),
+    ...(current?.entries ?? []).map((entry) => entry.address.toString()),
   ])
+  const holders = new Set(
+    [
+      ...Object.keys(previous?.permissions ?? {}),
+      ...Object.keys(current?.permissions ?? {}),
+    ].filter((address) => !discovered.has(address)),
+  )
   return [entriesForDiff(previous, holders), entriesForDiff(current, holders)]
 }
 
