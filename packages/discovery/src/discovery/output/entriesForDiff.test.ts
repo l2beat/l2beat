@@ -4,7 +4,11 @@ import {
   Hash256,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { diffDiscovery, entriesForDiff } from './diffDiscovery'
+import {
+  diffDiscovery,
+  entriesForDiff,
+  entriesForDiffPair,
+} from './diffDiscovery'
 import type { DiscoveryOutput, EntryParameters } from './types'
 
 const TIMELOCK = address('0x111')
@@ -50,6 +54,49 @@ describe(entriesForDiff.name, () => {
     expect(diff.length).toEqual(1)
     expect(diff.at(0)?.address).toEqual(COUNCIL)
     expect(diff.at(0)?.addressType).toEqual('Reference')
+  })
+
+  // The first cross-project permission is the case the whole cluster modelling
+  // exists to surface. Reported as a created entry it carries no field diffs,
+  // and both the web feed and the ultimate-upgrader detection look for a
+  // `receivedPermissions` field diff, so it would reach neither.
+  it('reports a first external permission as a field change, not a creation', () => {
+    const before = output([contract(TIMELOCK)], {})
+    const after = output([contract(TIMELOCK)], {
+      [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
+    })
+
+    const diff = diffDiscovery(...entriesForDiffPair(before, after))
+
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.address).toEqual(COUNCIL)
+    expect(diff.at(0)?.type).toEqual(undefined)
+    expect(diff.at(0)?.diff?.at(0)?.key).toEqual('receivedPermissions')
+  })
+
+  it('reports a removed external permission the same way', () => {
+    const before = output([contract(TIMELOCK)], {
+      [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
+    })
+    const after = output([contract(TIMELOCK)], {})
+
+    const diff = diffDiscovery(...entriesForDiffPair(before, after))
+
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.type).toEqual(undefined)
+  })
+
+  it('says nothing when the external holder is unchanged', () => {
+    const held = { [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] } }
+
+    const diff = diffDiscovery(
+      ...entriesForDiffPair(
+        output([contract(TIMELOCK)], held),
+        output([contract(TIMELOCK)], held),
+      ),
+    )
+
+    expect(diff).toEqual([])
   })
 
   it('never lists an address twice', () => {

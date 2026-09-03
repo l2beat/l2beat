@@ -244,6 +244,51 @@ describe(UpdateDiffer.name, () => {
       ])
     })
 
+    // A holder receiving its first permission produces a whole-field diff with
+    // no index, which is the shape an address owned by a referenced project
+    // takes the first time a project's permission chain reaches it.
+    it('detects an upgrade change on a first permission', () => {
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: mockFn().returns(mockProject),
+      })
+
+      const updateDiffer = new UpdateDiffer(
+        configReader,
+        mockObject<Database>({}),
+        mockObject<DiscoveryOutputCache>(),
+        Logger.SILENT,
+      )
+      const timestamp = UnixTime.now()
+      const address = ChainSpecificAddress.random()
+      const diff: DiscoveryDiff = {
+        address,
+        addressType: 'Reference',
+        diff: [{ key: 'receivedPermissions' }],
+      }
+
+      const latestDiscovery = mockObject<DiscoveryOutput>({
+        entries: [
+          mockObject<EntryParameters>({
+            address,
+            receivedPermissions: [
+              mockObject<ReceivedPermission>({ permission: 'upgrade' }),
+            ],
+          }),
+        ],
+      })
+
+      const result = updateDiffer.getUpdateDiffs(
+        [diff],
+        latestDiscovery.entries,
+        PROJECT_A,
+        timestamp,
+        123,
+        456,
+      )
+
+      expect(result.map((r) => r.type)).toEqual(['ultimateUpgraderChange'])
+    })
+
     it('detects upgrade changes', () => {
       const configReader = mockObject<ConfigReader>({
         readDiscovery: mockFn().returns(mockProject),

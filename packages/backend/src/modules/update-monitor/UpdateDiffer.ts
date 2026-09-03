@@ -6,7 +6,7 @@ import {
   type DiscoveryOutput,
   diffDiscovery,
   type EntryParameters,
-  entriesForDiff,
+  entriesForDiffPair,
 } from '@l2beat/discovery'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
@@ -102,8 +102,11 @@ export class UpdateDiffer {
     }
 
     // One join, so the diff and the grading below index the same entries.
-    const latestEntries = entriesForDiff(latestDiscovery)
-    const diff = diffDiscovery(entriesForDiff(discovery), latestEntries)
+    const [previousEntries, latestEntries] = entriesForDiffPair(
+      discovery,
+      latestDiscovery,
+    )
+    const diff = diffDiscovery(previousEntries, latestEntries)
 
     return this.getUpdateDiffs(
       diff,
@@ -152,17 +155,23 @@ export class UpdateDiffer {
           return false
         }
 
-        const indexString = f.key.split('.')[1]
-        if (indexString === undefined) {
-          return false
-        }
-        const index = Number.parseInt(indexString)
-
         const entry = latestContracts.find(
           (e) => e.address === discoveryDiff.address,
         )
+        const permissions = entry?.receivedPermissions ?? []
 
-        return entry?.receivedPermissions?.[index]?.permission === 'upgrade'
+        // The whole field appeared or disappeared rather than one of its
+        // elements changing, so there is no index to read. That is the shape a
+        // holder takes when it receives its first permission, which for an
+        // address owned by a referenced project is the common case.
+        const indexString = f.key.split('.')[1]
+        if (indexString === undefined) {
+          return permissions.some((p) => p.permission === 'upgrade')
+        }
+
+        return (
+          permissions[Number.parseInt(indexString)]?.permission === 'upgrade'
+        )
       }),
     )
 
