@@ -276,6 +276,34 @@ describe(InMemoryCache.name, () => {
         expect(real).toEqual('REAL')
       })
 
+      it('should reject a key part that is not a string', async () => {
+        const cache = new InMemoryCache({})
+        // Express hands an array to `?tab[]=a&tab[]=b`, which the declared
+        // type forbids but cannot prevent.
+        const tampered = ['a', 'b'] as unknown as string
+
+        await expect(
+          cache.get({ key: ['layer2s', tampered], ttl: 1000 }, async () => 'x'),
+        ).toBeRejectedWith(TypeError, 'Cache key part is a object')
+      })
+
+      it('should tell an absent key part apart from an empty one', async () => {
+        const cache = new InMemoryCache({})
+        const options = { ttl: 1000 }
+
+        const absent = await cache.get(
+          { ...options, key: ['layer2s', undefined] },
+          async () => 'ABSENT',
+        )
+        const empty = await cache.get(
+          { ...options, key: ['layer2s', ''] },
+          async () => 'EMPTY',
+        )
+
+        expect(absent).toEqual('ABSENT')
+        expect(empty).toEqual('EMPTY')
+      })
+
       it('should not let nullish key parts collapse onto the parent key', async () => {
         const cache = new InMemoryCache({})
         const options = { ttl: 1000 }

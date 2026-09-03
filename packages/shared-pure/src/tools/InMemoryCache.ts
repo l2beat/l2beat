@@ -2,6 +2,9 @@ import { UnixTime } from '../types/UnixTime.js'
 
 const PROMISE_TIMEOUT = 30
 
+// Not a digit, so it can never be read as the length prefix of a string part.
+const ABSENT_KEY_PART = '-'
+
 type Logger = {
   info: (...args: unknown[]) => void
   warn: (...args: unknown[]) => void
@@ -182,12 +185,23 @@ export class InMemoryCache {
   }
 
   // Length-prefixed so that no combination of key parts can produce the same
-  // string as a different combination.
+  // string as a different combination. A length prefix only delimits the part
+  // it precedes if the part really is a string, so a part that is not one is
+  // rejected here instead of being folded into an ambiguous key. Key parts
+  // often come from HTTP request parameters, which TypeScript cannot check.
   private getKey(key: (string | null | undefined)[]) {
     let encoded = ''
     for (const part of key) {
-      const value = part ?? ''
-      encoded += `${value.length}:${value}`
+      if (part === null || part === undefined) {
+        encoded += ABSENT_KEY_PART
+        continue
+      }
+      if (typeof part !== 'string') {
+        throw new TypeError(
+          `Cache key part is a ${typeof part}, expected a string`,
+        )
+      }
+      encoded += `${part.length}:${part}`
     }
     return encoded
   }
