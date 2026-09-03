@@ -49,7 +49,9 @@ describe(addReferencedDiscoveries.name, () => {
     ])
   })
 
-  it('leaves the registry alone when a reference cannot be read', () => {
+  // Modelling the project alone would look like every cross-project permission
+  // had been removed, and that result would be saved and diffed.
+  it('throws rather than modelling the project on its own', () => {
     const discoveries = new DiscoveryRegistry()
     discoveries.set('abstract', output('abstract', [contract(TIMELOCK)]))
     const broken = mockObject<ConfigReader>({
@@ -58,9 +60,9 @@ describe(addReferencedDiscoveries.name, () => {
       },
     })
 
-    addReferencedDiscoveries(discoveries, 'abstract', broken)
-
-    expect(discoveries.getSortedProjects()).toEqual(['abstract'])
+    expect(() =>
+      addReferencedDiscoveries(discoveries, 'abstract', broken),
+    ).toThrow()
   })
 })
 

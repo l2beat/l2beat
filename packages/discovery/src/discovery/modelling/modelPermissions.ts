@@ -80,20 +80,18 @@ export function loadDiscoveriesForModelling(
 // committed discovery of everything it references. The fresh project stays
 // authoritative. Used wherever a project is modelled against a discovery that
 // is newer than what is on disk.
+//
+// Throws when a referenced discovery cannot be read, rather than quietly
+// modelling the project on its own: a one-project model saved as if it spanned
+// the cluster reports every cross-project permission as removed, which is worse
+// than the run failing and being listed as failed.
 export function addReferencedDiscoveries(
   discoveries: DiscoveryRegistry,
   project: string,
   configReader: ConfigReader,
   logger: Logger = Logger.SILENT,
 ): void {
-  let referenced: DiscoveryRegistry
-  try {
-    referenced = loadDiscoveriesForModelling(project, configReader)
-  } catch (error) {
-    // One broken reference must not take down the whole update loop.
-    logger.error(`Could not read referenced discoveries of ${project}`, error)
-    return
-  }
+  const referenced = loadDiscoveriesForModelling(project, configReader)
 
   for (const name of referenced.getSortedProjects()) {
     if (name === project) {
