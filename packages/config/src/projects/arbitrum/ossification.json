@@ -124,21 +124,21 @@
       "reason": "Migrated the L2 UpgradeExecutor authorization roles to the DAO governance path."
     },
     {
-      "timestamp": 1706619874,
+      "timestamp": 1706212139,
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
       "updateId": "556e5ed4",
-      "source": "diffHistory:2024-01-30T13:04:34Z",
+      "source": "tx:0xbe9c04275ec40879bdb63076e5d6dc378ac2291fc532682ba634be58dd7824f8",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 11."
     },
     {
-      "timestamp": 1711093869,
+      "timestamp": 1710423719,
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
       "updateId": "5edc278c",
-      "source": "diffHistory:2024-03-22T07:51:09Z",
+      "source": "tx:0x51b492ac498a88565639cfe3df77be8729d61f1c413d00b66530d4022a13c36a",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 20."
     },
     {
@@ -157,21 +157,21 @@
       "reason": "Changed SecurityCouncilManager role assignments and its authority path."
     },
     {
-      "timestamp": 1724849047,
+      "timestamp": 1724809031,
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
       "updateId": "a1a19b5d",
-      "source": "diffHistory:2024-08-28T12:44:07Z",
+      "source": "tx:0x1462f79e3920cc7c99a886743cb86aa6b05b16d92babc23fe7349e2543bb7b32",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 31."
     },
     {
-      "timestamp": 1727251846,
+      "timestamp": 1727230595,
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
       "updateId": "8bd3d02d",
-      "source": "diffHistory:2024-09-25T08:10:46Z",
+      "source": "tx:0xc73eba5e946d0b435545c99df91f045c1122c393a718652d15f87f9fde23151f",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 32."
     },
     {

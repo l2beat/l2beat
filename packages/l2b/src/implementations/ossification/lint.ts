@@ -16,51 +16,42 @@
  * timestamp is invisible to every other check but silently misdates the clock
  * and the change rate, so it is verified against the chain.
  *
- * Usage: npx tsx scripts/ossification-lint.ts <projectId> [<projectId> ...]
- *          [--no-timestamps]   skip the onchain timestamp audit (offline runs)
  */
-import type {
-  DiscoveryChangelog,
-  DiscoveryChangelogEntry,
-  DiscoveryChangelogField,
+import { ProjectService } from '@l2beat/config'
+import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
+import {
+  appendedUpgradeTimestamp,
+  canonicalDiffField,
+  collectEscrowSeeds,
+  type DiscoveredEntryLite,
+  type DiscoveryChangelog,
+  type DiscoveryChangelogEntry,
+  type DiscoveryChangelogField,
+  deriveOssificationPerimeter,
+  getTrackedTxSeeds,
+  isImplementationChangeField,
+  isRepresentationOnly,
 } from '@l2beat/shared'
 import { formatSeconds } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
-import {
-  appendedUpgradeTimestamp,
-  canonicalDiffField,
-  isImplementationChangeField,
-  isRepresentationOnly,
-} from '~/server/features/projects/ossification/changelogFields'
-import {
-  collectEscrowSeeds,
-  type DiscoveredEntryLite,
-  deriveOssificationPerimeter,
-  getTrackedTxSeeds,
-} from '~/server/features/projects/ossification/getOssificationPerimeter'
-import { ps } from '~/server/projects'
-import {
-  getRpcUrl,
-  getRpcUrlForChain,
-  getTransactionTimestamps,
-} from './ossificationRpc'
+import { getRpcUrl, getRpcUrlForChain, getTransactionTimestamps } from './rpc'
 
-async function main() {
-  const ids = process.argv.slice(2).filter((arg) => !arg.startsWith('--'))
-  const checkTimestamps = !process.argv.includes('--no-timestamps')
-  if (ids.length === 0) {
-    console.error(
-      'usage: ossification-lint.ts <projectId> [...] [--no-timestamps]',
-    )
-    process.exit(1)
-  }
-  const projects = await ps.getProjects({
+const configReader = new ConfigReader(getDiscoveryPaths().discovery)
+
+/** Returns false when an objective error was found (a wrong timestamp
+ *  anchor), as opposed to the advisory worklist rows. */
+export async function runLint(
+  ids: string[],
+  checkTimestamps: boolean,
+): Promise<boolean> {
+  hasHardFailure = false
+  const projects = await new ProjectService().getProjects({
     optional: ['trackedTxsConfig', 'chainConfig'],
   })
 
   for (const id of ids) {
-    const dir = path.join(process.cwd(), '../config/src/projects', id)
+    const dir = configReader.getProjectPath(id)
     let entries: DiscoveredEntryLite[]
     let tvsJson: unknown
     try {
@@ -126,6 +117,7 @@ async function main() {
       console.log('flags and closure agree')
     }
   }
+  return !hasHardFailure
 }
 
 /** Objective errors (as opposed to the advisory worklist rows) that should
@@ -147,12 +139,7 @@ interface AnchoredEvent {
  *  to the project's own chain, where its L2 Safes live. */
 async function auditEventTimestamps(projectId: string, ownChain?: string) {
   const ossification = readJson(
-    path.join(
-      process.cwd(),
-      '../config/src/projects',
-      projectId,
-      'ossification.json',
-    ),
+    path.join(configReader.getProjectPath(projectId), 'ossification.json'),
   )
   const events =
     (ossification?.criticalEvents as
@@ -276,7 +263,7 @@ interface SilencedFieldHistory {
  *  severities silence. Reviewed exceptions live in criticalEvents; everything
  *  else here needs a confirm-or-backfill decision. */
 function auditSeverityHistory(projectId: string) {
-  const root = path.join(process.cwd(), '../config/src/projects')
+  const root = path.dirname(configReader.getProjectPath(projectId))
   const ossification = readJson(path.join(root, projectId, 'ossification.json'))
   const projectIds = [
     projectId,
@@ -533,8 +520,3 @@ function readJson(file: string): Record<string, any> | undefined {
   if (!existsSync(file)) return undefined
   return JSON.parse(readFileSync(file, 'utf-8'))
 }
-
-main().then(() => {
-  // advisory rows are for a human to weigh; a wrong timestamp anchor is not
-  process.exit(hasHardFailure ? 1 : 0)
-})

@@ -7,7 +7,7 @@ import { expect } from 'earl'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import path from 'path'
 
-const PROJECTS_ROOT = path.join(process.cwd(), '../config/src/projects')
+const PROJECTS_ROOT = path.join(__dirname, '../projects')
 
 /**
  * changelog.json is the runtime's only source of watched change history. l2b

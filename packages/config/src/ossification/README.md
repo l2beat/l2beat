@@ -10,9 +10,9 @@ has remained unchanged.
   exploits whose exploited code was younger. Incident research and curve
   construction live in the standalone `ossification-dataset` repository
   (`dist/latest/curve.json`, validated against
-  `schema/release-curve.schema.json`); `ossificationCurve.ts` is its generated
-  runtime projection, stamped with the source dataset commit. Regenerate with
-  `scripts/ossification-incidents-curve.ts`, verify with `--check`.
+  `schema/release-curve.schema.json`); `packages/shared/src/ossification/ossificationCurve.ts`
+  is its generated runtime projection, stamped with the source dataset commit.
+  Regenerate with `l2b ossification curve`, verify with `--check`.
 - **Last change:** age of the project clock. The clock starts at the newest
   deployment or qualifying change in the current perimeter.
 - **Battle-tested exposure (USD·years):** project TVS integrated from the project
@@ -81,50 +81,60 @@ proof verification, nullifiers, anonymity, viewing authority).
 
 | Input | Inclusion rule | Effect |
 | --- | --- | --- |
-| `ossification.json` | Must exist for the project | Opts the project into the metric |
+| `ossification.json` | Must exist for the project; shape enforced by `OssificationJson.ts` | Opts the project into the metric |
 | `discovered.json` contract | `type === "Contract"`, has an address, and `critical === true` | Joins the current security perimeter |
 | `includeProjects` | Listed in the root project's `ossification.json` | Adds that project's current critical contracts and discovery history to the same perimeter |
 | `sinceTimestamp` | Current critical contracts only | Deployment candidate for the contract clock; deployment resets maturity but is not a change-rate event |
 | `$pastUpgrades` | Current critical contracts; the first transaction is initialization unless audited in `firstUpgradeIsChange`; audited later initialization/no-op transactions are listed per contract in `ignoredUpgradeTransactions` | Latest qualifying transaction timestamp can reset the clock; every non-initialization transaction is a change-rate event. Multiple upgrade records from one transaction (for example upgrade, execute, restore) form one code change |
 | `changelog.json` watched change | Address belongs to a current critical contract and the entry changes a field whose CURRENT curated severity is HIGH (`fieldMeta` in discovered.json) | Resets the clock and adds a change-rate event |
 | Implementation change fallback | Address belongs to a current critical contract and that contract has no `$pastUpgrades` | Resets the clock and adds an event regardless of field severity |
-| `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct or dates imprecisely | Adds the specified code/state event. An entry naming both `updateId` and `contract` supersedes that update's mechanical diff events for that contract; `historical: true` events feed the change rate only and never reset the current clock |
+| `criticalEvents` | Reviewed, tx-anchored event that mechanical discovery history cannot reconstruct or dates imprecisely | Adds the specified code/state event. An entry naming both `updateId` and `contract` supersedes that update's mechanical diff events for that contract; `historical: true` events feed the change rate only and never reset the current clock |
 | `unverified` | Any current critical contract | Gates maturity, score, and exposure to zero |
 | `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Closed reviewed ledger fixed at the removal review (onchain upgrade timestamps plus reviewed `criticalEvents`; diff history is never consulted for it); affects only change history/rate, never the current clock or unverified gate |
 | `chainConfig.sinceTimestamp` | Root project only, chain projects only | The project start: mechanical events before it are not charged to this project's change rate, and the rate window begins here |
-| Project `TokenValue` series | Root project only | Supplies battle-tested exposure; it does not affect score or change rate |
+| Project `TokenValue` series | Root project only, frontend | Supplies battle-tested exposure; it does not affect score or change rate |
 
-## Tools and code map
+## Where things live
 
-- `getProjectOssification.ts`: opt-in, current/historical perimeter loading,
-  discovery history, and TVS exposure.
-- `getOssificationFactor.ts`: pure clocks, event extraction, clustering, and score.
-- `getOssificationPerimeter.ts`: lint/research closure only; it never decides runtime
-  membership.
-- `scripts/ossification-lint.ts <projectId...> [--no-timestamps]`: candidate
-  worklist for missing/excess flags, the severity-history audit (silenced
-  annotated-HIGH events), the historical-ledger closure check, and the
-  timestamp audit, which re-derives every tx-anchored `criticalEvents` date
-  from its transaction receipt (RPC; skipped per chain when none is
-  configured). Worklist rows require judgment; a timestamp mismatch is an
-  error and exits non-zero.
-- `scripts/ossification-fetch-events.ts <chain:address> <eventSig>`: onchain log
-  history of a field's mutation event as ready-to-review `criticalEvents`
-  entries, for pre-coverage backfills.
-- `scripts/ossification-backfill.ts <projectId> [--json]`: removed-contract evidence
-  from full git history.
-- `l2b migrate-changelog <projectId...>`: one-time build of `changelog.json`
-  from a project's existing diffHistory.md when it opts in (also done
-  automatically by the first discovery run after `ossification.json` appears).
-  From then on every discovery run records its entry straight from the
-  computed diff; `changelogIntegrity.test.ts` pins entry identity between the
-  two files in CI.
-- `scripts/ossification-incidents-curve.ts [--check]`: project the checked-out
-  sibling dataset's canonical curve release into the runtime age knots.
-- `scripts/ossification-smoke.ts [projectId...] --perimeter`: score and perimeter
-  inspection.
-- UI: `/ossification` and the Ossification details inside project Updates sections
-  (direct-linked by `#ossification`), fed by `getOssificationEntries.ts`.
+- `packages/shared/src/ossification/`: the pure engine. `getOssificationInfo`
+  turns perimeter contracts, changelog entries and reviewed events into a
+  time-independent `ProjectOssificationInfo`; `measureOssification` turns that
+  into ages, score and change rate for a given moment. `changelogFields.ts`
+  holds the single set of rules that classify a recorded field diff (used by
+  the engine and the lint alike); `getOssificationPerimeter.ts` is the
+  lint/research closure and never decides runtime membership.
+- `packages/config/src/ossification/` (this folder): the build step.
+  `loadOssificationInfo` reads `ossification.json` (validated by
+  `OssificationJson.ts`), `discovered.json` and `changelog.json`, and
+  `getProjects` stores the result as `ossificationInfo` on every opted-in
+  project. `ossificationJson.test.ts` pins every curated reference (contract
+  attribution, historical ledger, includeProjects) and
+  `changelogIntegrity.test.ts` pins `changelog.json` to the diffHistory entries
+  and every `criticalEvents.updateId` to a changelog entry.
+- `packages/l2b`: `changelog.json` is written by every discovery run straight
+  from the computed diff (`implementations/discovery/changelog/`), and the
+  research tooling is under `l2b ossification`:
+  - `lint <projectId...> [--no-timestamps]`: candidate worklist for
+    missing/excess flags, the severity-history audit (silenced recorded-HIGH
+    events), the historical-ledger closure check, and the timestamp audit,
+    which re-derives every tx-anchored `criticalEvents` date from its receipt
+    (RPC; skipped per chain when none is configured). Worklist rows require
+    judgment; a timestamp mismatch is an error and exits non-zero.
+  - `fetch-events <chain:address> <eventSig>`: onchain log history of a
+    field's mutation event as ready-to-review `criticalEvents` entries.
+  - `backfill <projectId>`: removed-contract evidence from full git history.
+  - `curve [--check]`: project the checked-out sibling dataset's canonical
+    curve release into the runtime age knots.
+  - `smoke [projectId...] [--perimeter]`: score and perimeter inspection from
+    the built config (rebuild `packages/config` first).
+  - `l2b migrate-changelog <projectId...>`: one-time build of `changelog.json`
+    from a project's existing diffHistory.md when it opts in (also done
+    automatically by the first discovery run after `ossification.json` appears).
+- `packages/frontend/src/server/features/projects/ossification/`: reads
+  `ossificationInfo` from the project service, measures it against now, and
+  adds the TVS exposure and the table timeline. UI: `/ossification` and the
+  Ossification details inside project Updates sections (direct-linked by
+  `#ossification`).
 
 ## Merging main
 
@@ -137,13 +147,13 @@ derived files, then re-derive with this branch's configs (l2b rewrites
    (`git config merge.takeTheirs.driver 'cp %B %A'`) and scope it in
    `.git/info/attributes` to `packages/config/src/projects/**/discovered.json`,
    `**/diffHistory.md` and `**/changelog.json`.
-2. Record the baseline (`ossification-smoke.ts` output), then `git merge main`.
+2. Record the baseline (`l2b ossification smoke` output), then `git merge main`.
 3. Rebuild tooling (`pnpm build:dependencies` in `packages/l2b` — stale schemas
    fail silently), then `l2b refresh-discovery -m "reapply branch discovery
    config after merging main"`: it detects every project whose committed
    discovery no longer matches its config/template hashes and reruns exactly
    those.
-4. Diff the smoke output against the baseline and run the lint audits; an
-   unexplained clock or event-count change means a branch-only watched entry
-   was dropped by the merge — recover it as an onchain-anchored
-   `criticalEvents` entry, never by hand-editing diff history.
+4. Rebuild `packages/config`, diff the smoke output against the baseline and
+   run the lint audits; an unexplained clock or event-count change means a
+   branch-only watched entry was dropped by the merge — recover it as an
+   onchain-anchored `criticalEvents` entry, never by hand-editing diff history.

@@ -1,5 +1,5 @@
-import type { TrackedTxConfigEntryWithoutId } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { TrackedTxConfigEntryWithoutId } from '../tools/TrackedTxsConfig'
 
 /** Minimal shape of a discovered.json entry needed for perimeter derivation */
 export interface DiscoveredEntryLite {

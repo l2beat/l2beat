@@ -3,7 +3,7 @@
  * field diff into "code changed", "state changed", or "nothing changed", shared
  * by the runtime and the research lint so the two can never disagree.
  */
-import type { DiscoveryChangelogField } from '@l2beat/shared'
+import type { DiscoveryChangelogField } from '../tools/DiscoveryChangelog'
 
 /** The severity-carrying unit of a changelog field path: the first segment,
  *  matching the key used in discovered.json `fieldMeta`. Legacy

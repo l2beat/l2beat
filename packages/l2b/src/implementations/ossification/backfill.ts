@@ -8,18 +8,21 @@
  * are outside this scanner and must be identified during perimeter review.
  *
  * Mechanical evidence only; criticality is classified by researchers/agents.
- * Usage: npx tsx scripts/ossification-backfill.ts <projectId> [...] [--json]
  */
 
-import type { DiscoveryChangelog } from '@l2beat/shared'
+import { getDiscoveryPaths } from '@l2beat/discovery'
+import {
+  type DiscoveryChangelog,
+  isImplementationChangeField,
+  parseUpgradeTimestamps,
+} from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { execFileSync } from 'child_process'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
-import { isImplementationChangeField } from '~/server/features/projects/ossification/changelogFields'
-import { parseUpgradeTimestamps } from '~/server/features/projects/ossification/parseUpgradeTimestamps'
 
-const REPO_ROOT = path.join(process.cwd(), '../..')
+// packages/config/src/projects -> repo root
+const REPO_ROOT = path.resolve(getDiscoveryPaths().discovery, '../../../..')
 interface HistoricalContract {
   address: string
   name: string
@@ -232,14 +235,7 @@ function countDiffEvents(
   return counts
 }
 
-function main() {
-  const args = process.argv.slice(2)
-  const json = args.includes('--json')
-  const ids = args.filter((a) => !a.startsWith('--'))
-  if (ids.length === 0) {
-    console.error('usage: ossification-backfill.ts <projectId> [...] [--json]')
-    process.exit(1)
-  }
+export function runBackfill(ids: string[], json: boolean) {
   for (const id of ids) {
     const removed = scanProject(id)
     if (json) {
@@ -261,5 +257,3 @@ function main() {
     }
   }
 }
-
-main()

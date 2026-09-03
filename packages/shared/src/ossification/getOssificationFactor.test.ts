@@ -1,9 +1,9 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import type {
   DiscoveryChangelogContract,
   DiscoveryChangelogEntry,
-} from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+} from '../tools/DiscoveryChangelog'
 import {
   exploitAgePercentile,
   getOssificationFactor,

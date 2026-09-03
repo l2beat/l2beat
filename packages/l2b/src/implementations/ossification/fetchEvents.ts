@@ -8,23 +8,12 @@
  * with exact transaction timestamps. The reviewer fills in the reason and
  * drops confirmed entries into the project's ossification.json.
  *
- * Usage:
- *   npx tsx scripts/ossification-fetch-events.ts <chain:address> <eventSigOrTopic0> \
- *     [--from <block>] [--to <block>] [--type state|code] [--historical] \
- *     [--reason "<security consequence>"]
- *
- * Examples:
- *   npx tsx scripts/ossification-fetch-events.ts \
- *     eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949 'ProgramHashChanged(address,uint256,uint256)'
- *   npx tsx scripts/ossification-fetch-events.ts \
- *     eth:0x... 0x8b0e... --from 15000000 --type state
- *
  * RPC endpoints come from packages/config/.env as <LONGCHAINNAME>_RPC_URL.
  * The event signature is hashed with `cast keccak` (foundry required) unless
  * a 32-byte topic0 is passed directly.
  */
 import { execFileSync } from 'child_process'
-import { getRpcUrl, rpc } from './ossificationRpc'
+import { getRpcUrl, rpc } from './rpc'
 
 interface Log {
   transactionHash: string
@@ -33,23 +22,21 @@ interface Log {
   topics: string[]
 }
 
-async function main() {
-  const args = process.argv.slice(2)
-  const positional = args.filter((arg) => !arg.startsWith('--'))
-  const option = (name: string) => {
-    const index = args.indexOf(`--${name}`)
-    return index >= 0 ? args[index + 1] : undefined
-  }
-  const flag = (name: string) => args.includes(`--${name}`)
+export interface FetchEventsOptions {
+  target: string
+  event: string
+  from?: number
+  to?: number
+  type: string
+  historical: boolean
+  reason?: string
+}
 
-  const [target, event] = positional
-  if (!target || !event || !target.includes(':')) {
-    console.error(
-      'usage: ossification-fetch-events.ts <chain:address> <eventSigOrTopic0> [--from N] [--to N] [--type state|code] [--historical] [--reason "..."]',
-    )
-    process.exit(1)
+export async function runFetchEvents(options: FetchEventsOptions) {
+  const { target, event } = options
+  if (!target.includes(':')) {
+    throw new Error('target must be <chain:address>')
   }
-
   const [shortChain, address] = target.split(':') as [string, string]
   const rpcUrl = getRpcUrl(shortChain)
   if (!rpcUrl) {
@@ -62,8 +49,8 @@ async function main() {
     : execFileSync('cast', ['keccak', event], { encoding: 'utf8' }).trim()
 
   const latest = Number(await rpc(rpcUrl, 'eth_blockNumber', []))
-  const fromBlock = Number(option('from') ?? 0)
-  const toBlock = Number(option('to') ?? latest)
+  const fromBlock = options.from ?? 0
+  const toBlock = options.to ?? latest
 
   console.error(
     `fetching ${event} (${topic0}) on ${target}, blocks ${fromBlock}..${toBlock}`,
@@ -94,11 +81,11 @@ async function main() {
   const entries = [...byTransaction.values()]
     .map((log) => ({
       timestamp: timestamps.get(log.blockNumber) ?? 0,
-      type: option('type') ?? 'state',
+      type: options.type,
       contract: target,
       source: `tx:${log.transactionHash}`,
-      reason: option('reason') ?? `TODO: security consequence of ${event}`,
-      ...(flag('historical') ? { historical: true } : {}),
+      reason: options.reason ?? `TODO: security consequence of ${event}`,
+      ...(options.historical ? { historical: true } : {}),
     }))
     .sort((a, b) => a.timestamp - b.timestamp)
 
@@ -131,8 +118,3 @@ async function getLogsChunked(
     ]
   }
 }
-
-main().catch((error) => {
-  console.error(error)
-  process.exit(1)
-})

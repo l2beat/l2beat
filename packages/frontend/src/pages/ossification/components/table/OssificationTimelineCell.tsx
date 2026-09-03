@@ -44,17 +44,15 @@ export function OssificationTimelineCell({ timeline, projectName }: Props) {
   const scaleTime = (timestamp: number) =>
     clamp(((timestamp - from) / (to - from)) * WIDTH, 0, WIDTH)
 
-  // Without a clock there is no unchanged period to highlight — the whole
-  // window stays de-emphasized.
-  const clockX = clockStart === null ? WIDTH : scaleTime(clockStart)
-  const startsBeforeWindow = clockStart !== null && clockStart < from
+  const clockX = scaleTime(clockStart)
+  const startsBeforeWindow = clockStart < from
   const shape = getShape(tvs)
   // Events after the clock start belong to contracts that have since left the
   // perimeter; drawing them inside the highlight would contradict what the
   // highlight claims. The full history is on the project page.
   const ticks = unique(
     resets
-      .filter((reset) => clockStart === null || reset <= clockStart)
+      .filter((reset) => reset <= clockStart)
       .map((reset) => crisp(scaleTime(reset))),
   )
 
@@ -109,7 +107,7 @@ export function OssificationTimelineCell({ timeline, projectName }: Props) {
       {/* Runs through the tick lane too, so it reads as the reset that started
           the clock — and stays visible when the unchanged tail is only a few
           pixels wide. */}
-      {clockStart !== null && !startsBeforeWindow && (
+      {!startsBeforeWindow && (
         <line
           x1={crisp(clockX)}
           y1={PLOT_TOP - 1}
@@ -200,9 +198,6 @@ function getShape(tvs: (number | null)[] | null) {
 
 function getUnchangedSentence(timeline: OssificationTimeline): string {
   const { to, clockStart, from } = timeline
-  if (clockStart === null) {
-    return 'The age of the critical code perimeter is unknown.'
-  }
   const age = formatSeconds(to - clockStart)
   const since = formatTimestamp(clockStart, { mode: 'date' })
   return clockStart < from

@@ -95,48 +95,6 @@
       "note": "Resolved trusted addresses for Bridge/SignalService/Vaults (remapping acts as an upgrade); compromise points the bridge at a malicious SignalService to forge withdrawal messages and drain escrows."
     },
     {
-      "address": "taiko:0x1670000000000000000000000000000000000001",
-      "name": "Bridge",
-      "critical": true,
-      "upgradeTimestamps": [
-        1716802235, 1716959027, 1717148375, 1717486847, 1717750463, 1719503519,
-        1719806771, 1730452979
-      ],
-      "lastSeenAt": 1781611732,
-      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
-      "note": "L2-side message bridge in the deposit/withdrawal validation path; compromise mints forged L2->L1 messages that release L1 escrow funds."
-    },
-    {
-      "address": "taiko:0x1670000000000000000000000000000000000002",
-      "name": "ERC20Vault",
-      "critical": true,
-      "upgradeTimestamps": [1716802307, 1717750463, 1718023859, 1730452979],
-      "lastSeenAt": 1781611732,
-      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
-      "note": "L2-side token vault paired with the L1 ERC20Vault escrow; compromise emits fraudulent burn/withdraw messages that unlock the L1 escrow's tokens."
-    },
-    {
-      "address": "taiko:0x1670000000000000000000000000000000000005",
-      "name": "SignalService",
-      "critical": true,
-      "upgradeTimestamps": [1747624787, 1775138543, 1777563432],
-      "lastSeenAt": 1781611732,
-      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
-      "note": "L2-side signal/state-root registry used to validate cross-chain messages; compromise attests fake signals/state roots enabling forged withdrawals in both directions."
-    },
-    {
-      "address": "taiko:0x1670000000000000000000000000000000010001",
-      "name": "Anchor",
-      "critical": true,
-      "upgradeTimestamps": [
-        1730452979, 1747624787, 1754914103, 1755179444, 1770777907, 1775138543,
-        1777563432
-      ],
-      "lastSeenAt": 1781611732,
-      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
-      "note": "L2 anchor system contract syncing L1 state roots into the L2 (withdrawal-validation input); compromise injects a fake L1 state root, allowing forged deposit messages to mint/withdraw on L2."
-    },
-    {
       "address": "eth:0x05d88855361808fa1d7fc28084ef3fca191c4e03",
       "name": "ForcedInclusionStore",
       "critical": true,

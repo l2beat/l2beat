@@ -1,4 +1,5 @@
 import type {
+  ProjectOssificationInfo,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -214,6 +215,9 @@ export interface BaseProject {
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
   discoveryInfo?: ProjectDiscoveryInfo
+  /** Time-independent history of the critical perimeter, for projects that
+   *  opted into the ossification factor with an ossification.json. */
+  ossificationInfo?: ProjectOssificationInfo
 
   // tags
   archivedAt?: UnixTime

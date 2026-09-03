@@ -1,3 +1,4 @@
+import type { OssificationChangeType } from '@l2beat/shared'
 import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
@@ -14,7 +15,6 @@ import {
   PaginationPrevious,
 } from '~/components/Pagination'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { OssificationChangeType } from '~/server/features/projects/ossification/getOssificationFactor'
 import type { ProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import type { DiscoveryUpdate } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { cn } from '~/utils/cn'

@@ -1,10 +1,9 @@
-import type {
-  DiscoveryChangelog,
-  DiscoveryChangelogEntry,
+import {
+  measureOssification,
+  type OssificationFactor,
+  type ProjectOssificationInfo,
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { existsSync, readFileSync, statSync } from 'fs'
-import path from 'path'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -12,19 +11,6 @@ import {
   type BattleTestedExposurePoint,
   calculateBattleTestedExposure,
 } from './calculateBattleTestedExposure'
-import {
-  getOssificationFactor,
-  type OssificationContractInput,
-  type OssificationCriticalEvent,
-  type OssificationFactor,
-} from './getOssificationFactor'
-import type { DiscoveredEntryLite } from './getOssificationPerimeter'
-import {
-  deduplicateUpgradeTimestamps,
-  parseUpgradeTimestamps,
-} from './parseUpgradeTimestamps'
-
-const PROJECT_ID_RE = /^[a-z0-9-]+$/i
 
 /** The mini timeline covers a trailing year. Long enough to hold a full
  *  governance cycle, short enough that a single event stays distinguishable at
@@ -32,8 +18,6 @@ const PROJECT_ID_RE = /^[a-z0-9-]+$/i
 const TIMELINE_WINDOW_SECONDS = 365 * 24 * 60 * 60
 /** Weekly resolution — roughly one sample per 2.5 pixels of the rendered cell. */
 const TIMELINE_SAMPLES = 52
-
-const fileCache = new Map<string, { mtimeMs: number; parsed: unknown }>()
 
 export interface ProjectOssification extends OssificationFactor {
   /** Project TVS integrated over the current unchanged period, in USD·years. */
@@ -48,7 +32,7 @@ export interface OssificationTimeline {
   from: number
   to: number
   /** Start of the unchanged period. May predate `from`. */
-  clockStart: number | null
+  clockStart: number
   /** Clustered perimeter resets inside the window, ascending. */
   resets: number[]
   /** TVS sampled at `TIMELINE_SAMPLES` points spaced evenly from `from` to
@@ -58,138 +42,28 @@ export interface OssificationTimeline {
   tvs: (number | null)[] | null
 }
 
-/** Committed judgment file — the opt-in marker for the ossification factor.
- *  `includeProjects`: discovery projects whose critical contracts and change
- *  history count as part of this project's perimeter (tightly integrated
- *  shared modules, e.g. zksync2 <- shared-zk-stack). Their events are
- *  clustered together with the project's own.
- *  `historicalContracts`: contracts that once were critical but have left the
- *  current perimeter, classified by the research team. The backfill script
- *  finds contracts removed from discovery; inactive contracts still present
- *  in discovery can also appear here. Only `critical: true` entries with
- *  mechanical or reviewed events are stored and consumed. */
-interface OssificationJson {
-  includeProjects?: string[]
-  /** Contracts whose first recognized upgrade event changed an implementation
-   *  that was already initialized. */
-  firstUpgradeIsChange?: string[]
-  /** Audited initialization/no-op upgrade transactions, keyed by contract. */
-  ignoredUpgradeTransactions?: Record<string, string[]>
-  /** Reviewed events missing from mechanical discovery history. */
-  criticalEvents?: OssificationCriticalEvent[]
-  /** "<chain:address>#<field>" acknowledgments: a reviewer confirmed the
-   *  field's HIGH-severity removal, so its silenced history needs no
-   *  backfill. Consumed by the lint audit only, never by the runtime. */
-  reviewedSeverityDowngrades?: string[]
-  historicalContracts?: {
-    address?: string
-    name?: string
-    critical?: boolean | null
-    upgradeTimestamps?: number[]
-  }[]
-}
-
 /**
- * The ossification factor is computed only for projects that opted in by
- * committing an ossification.json, and only over contracts the research
- * team flagged `critical` in discovery (template default, config.jsonc
- * override). There is no derived fallback — unclassified projects have
- * no ossification factor.
+ * The perimeter history is computed when the config package is built (see
+ * packages/config/src/ossification); this adds what depends on now and on the
+ * database: ages, score, change rate, and the TVS exposure.
  */
 export async function getProjectOssification(
   projectId: string,
 ): Promise<ProjectOssification | undefined> {
-  if (!PROJECT_ID_RE.test(projectId)) {
-    return undefined
-  }
-  const ossificationJson = readProjectJson(projectId, 'ossification.json') as
-    | OssificationJson
-    | undefined
-  if (ossificationJson === undefined) {
-    return undefined
-  }
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    select: ['ossificationInfo'],
+  })
+  if (!project) return undefined
+  return await measureProjectOssification(projectId, project.ossificationInfo)
+}
 
-  const projectIds = [
-    ...new Set([
-      projectId,
-      ...(ossificationJson.includeProjects ?? []).filter((id) =>
-        PROJECT_ID_RE.test(id),
-      ),
-    ]),
-  ]
-  const critical: (DiscoveredEntryLite & { address: string })[] = []
-  // changelog.json holds the watched changes of every diffHistory.md entry,
-  // recorded by l2b from the discovery diff itself for opted-in projects and
-  // pinned to the markdown's entry identity by changelogIntegrity.test.ts.
-  const changelog: DiscoveryChangelogEntry[] = []
-  for (const id of projectIds) {
-    const discovered = readProjectJson(id, 'discovered.json') as
-      | { entries?: DiscoveredEntryLite[] }
-      | undefined
-    critical.push(
-      ...(discovered?.entries ?? []).filter(
-        (entry): entry is DiscoveredEntryLite & { address: string } =>
-          entry.type === 'Contract' &&
-          entry.address !== undefined &&
-          entry.critical === true,
-      ),
-    )
-    const projectChangelog = readProjectJson(id, 'changelog.json') as
-      | DiscoveryChangelog
-      | undefined
-    changelog.push(...(projectChangelog?.entries ?? []))
-  }
-  if (critical.length === 0) {
-    return undefined
-  }
-
-  const historical = (ossificationJson.historicalContracts ?? []).flatMap(
-    (contract) => {
-      if (contract.critical !== true || !contract.address) return []
-      return [
-        {
-          address: contract.address,
-          name: contract.name ?? contract.address,
-          upgradeTimestamps: deduplicateUpgradeTimestamps(
-            contract.upgradeTimestamps ?? [],
-          ),
-        },
-      ]
-    },
-  )
-
-  const firstUpgradeIsChange = new Set(
-    (ossificationJson.firstUpgradeIsChange ?? []).map((address) =>
-      address.toLowerCase(),
-    ),
-  )
-  const ignoredUpgradeTransactions = new Map(
-    Object.entries(ossificationJson.ignoredUpgradeTransactions ?? {}).map(
-      ([address, transactions]) => [
-        address.toLowerCase(),
-        new Set(transactions.map((transaction) => transaction.toLowerCase())),
-      ],
-    ),
-  )
+export async function measureProjectOssification(
+  projectId: string,
+  info: ProjectOssificationInfo,
+): Promise<ProjectOssification> {
   const now = UnixTime.now()
-  const factor = getOssificationFactor(
-    critical.map((entry) =>
-      toOssificationContractInput(
-        entry,
-        firstUpgradeIsChange,
-        ignoredUpgradeTransactions,
-      ),
-    ),
-    changelog,
-    now,
-    historical,
-    ossificationJson.criticalEvents ?? [],
-    await getProjectStart(projectId),
-  )
-  if (factor === undefined) {
-    return undefined
-  }
-
+  const factor = measureOssification(info, now)
   const from = now - TIMELINE_WINDOW_SECONDS
   const series = await getTvsSeries(
     projectId,
@@ -210,57 +84,19 @@ export async function getProjectOssification(
   }
 }
 
-/** When the project's own chain started, from the chain config every chain
- *  project already carries. A perimeter can contain contracts older than the
- *  project itself — an OP-stack chain adopting the shared SuperchainConfig, say
- *  — and their history before this point is someone else's, so it is not
- *  charged to this project's change rate. Undefined for projects without a
- *  chain of their own (DeFi, privacy), whose perimeter is their own from the
- *  start. */
-async function getProjectStart(projectId: string): Promise<number | undefined> {
-  const project = await ps.getProject({
-    id: ProjectId(projectId),
-    optional: ['chainConfig'],
-  })
-  return project?.chainConfig?.sinceTimestamp
-}
-
-function toOssificationContractInput(
-  entry: DiscoveredEntryLite & { address: string },
-  firstUpgradeIsChange: Set<string>,
-  ignoredUpgradeTransactions: Map<string, Set<string>>,
-): OssificationContractInput {
-  return {
-    address: entry.address,
-    name: entry.name ?? entry.address,
-    isVerified: entry.unverified !== true,
-    sinceTimestamp: entry.sinceTimestamp,
-    upgradeTimestamps: parseUpgradeTimestamps(
-      entry.values?.$pastUpgrades,
-      ignoredUpgradeTransactions.get(entry.address.toLowerCase()),
-    ),
-    firstUpgradeIsInitialization: !firstUpgradeIsChange.has(
-      entry.address.toLowerCase(),
-    ),
-    highSeverityFields: Object.entries(entry.fieldMeta ?? {}).flatMap(
-      ([field, meta]) => (meta?.severity === 'HIGH' ? [field] : []),
-    ),
-  }
-}
-
 /** One query serves both consumers: the exposure integral reaches back to the
  *  clock start, the timeline only needs the trailing window. Whichever is
  *  older sets the range. */
 async function getTvsSeries(
   projectId: string,
-  clockStart: number | null,
+  clockStart: number,
   from: number,
   to: number,
 ): Promise<BattleTestedExposurePoint[] | null> {
   if (env.MOCK) return null
 
   const repository = getDb().tvsTokenValue
-  const anchor = Math.min(from, clockStart ?? from)
+  const anchor = Math.min(from, clockStart)
   // A sample at or before the anchor lets both consumers start from a known
   // value instead of the first in-range one.
   const precedingTimestamp =
@@ -294,10 +130,9 @@ function getExposure(
   factor: OssificationFactor,
   now: number,
 ): number | null {
-  const clockStart = factor.projectClockStart
-  if (series === null || clockStart === null) return null
+  if (series === null) return null
   if (factor.maturity === 0) return 0
-  return calculateBattleTestedExposure(series, clockStart, now)
+  return calculateBattleTestedExposure(series, factor.projectClockStart, now)
 }
 
 /** Point-in-time samples on a fixed grid: the last known value at each grid
@@ -322,26 +157,4 @@ function sampleSeries(
     values.push(current)
   }
   return values.some((value) => value !== null) ? values : null
-}
-
-function readProjectJson(projectId: string, file: string): unknown | undefined {
-  const filePath = path.join(
-    process.cwd(),
-    '../config/src/projects',
-    projectId,
-    file,
-  )
-  if (!existsSync(filePath)) {
-    return undefined
-  }
-
-  const mtimeMs = statSync(filePath).mtimeMs
-  const cached = fileCache.get(filePath)
-  if (cached && cached.mtimeMs === mtimeMs) {
-    return cached.parsed
-  }
-
-  const parsed: unknown = JSON.parse(readFileSync(filePath, 'utf-8'))
-  fileCache.set(filePath, { mtimeMs, parsed })
-  return parsed
 }

@@ -22,6 +22,7 @@ import type {
   ProjectScalingRiskView,
   ScalingProject,
 } from '../internalTypes'
+import { loadOssificationInfo } from '../ossification/loadOssificationInfo'
 import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
@@ -59,6 +60,15 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
+    .map(withOssificationInfo)
+}
+
+function withOssificationInfo(project: BaseProject): BaseProject {
+  const ossificationInfo = loadOssificationInfo(
+    project.id,
+    project.chainConfig?.sinceTimestamp,
+  )
+  return ossificationInfo ? { ...project, ossificationInfo } : project
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {

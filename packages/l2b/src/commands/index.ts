@@ -36,6 +36,7 @@ import { MigrateChangelog } from './MigrateChangelog'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
+import { Ossification } from './Ossification'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { RegenerateShapeHashes } from './RegenerateShapeHashes'
@@ -90,6 +91,7 @@ export function getSubcommands() {
     MigrateChangelog,
     Minters,
     ModelPermissions,
+    Ossification,
     OPConfigs,
     RefreshDiscovery,
     RegenerateShapeHashes,

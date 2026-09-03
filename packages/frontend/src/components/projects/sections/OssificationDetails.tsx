@@ -1,8 +1,8 @@
+import type { OssificationContractBreakdown } from '@l2beat/shared'
 import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/Badge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import type { OssificationContractBreakdown } from '~/server/features/projects/ossification/getOssificationFactor'
 import type { ProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 
 export interface OssificationDetailsProps {
@@ -44,11 +44,7 @@ export function OssificationDetails({
             )}
           </ChartStatsItem>
           <ChartStatsItem label="Last change" className="max-md:h-7">
-            {ossification.projectAgeSeconds !== null ? (
-              `${formatSeconds(ossification.projectAgeSeconds)} ago`
-            ) : (
-              <NotApplicableBadge />
-            )}
+            {`${formatSeconds(ossification.projectAgeSeconds)} ago`}
           </ChartStatsItem>
           <ChartStatsItem
             label="Critical changes / year"

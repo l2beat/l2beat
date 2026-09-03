@@ -4,6 +4,7 @@
  * RPC endpoints come from packages/config/.env as <LONGCHAINNAME>_RPC_URL,
  * the same convention the discovery engine uses.
  */
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import path from 'path'
@@ -25,8 +26,9 @@ export function getRpcUrlForChain(longName: string): string | undefined {
   const envName = `${longName.toUpperCase().replace(/-/g, '')}_RPC_URL`
   let fromFile: string | undefined
   try {
+    // packages/config/src/projects -> packages/config/.env
     const envFile = readFileSync(
-      path.join(process.cwd(), '../config/.env'),
+      path.resolve(getDiscoveryPaths().discovery, '../../.env'),
       'utf8',
     )
     fromFile = new RegExp(`^${envName}=(.+)$`, 'm').exec(envFile)?.[1]

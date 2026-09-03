@@ -63,7 +63,7 @@ export const ossificationColumns = [
     header: 'Ossification %\nLast reset',
     cell: (ctx) => {
       const clockStart = ctx.row.original.timeline.clockStart
-      const sinceLine = clockStart !== null && (
+      const sinceLine = (
         <TwoRowCell.Second className="mt-0.5">
           {formatTimestamp(clockStart, { mode: 'date' })}
         </TwoRowCell.Second>

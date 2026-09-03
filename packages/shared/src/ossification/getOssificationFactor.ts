@@ -1,8 +1,8 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type {
   DiscoveryChangelogEntry,
   DiscoveryChangelogField,
-} from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+} from '../tools/DiscoveryChangelog'
 import {
   appendedUpgradeTimestamp,
   canonicalDiffField,
@@ -10,6 +10,7 @@ import {
   isRepresentationOnly,
 } from './changelogFields'
 import { OSSIFICATION_CURVE_AGE_KNOTS } from './ossificationCurve'
+
 /** Critical changes within this window count as a single event, so the
  *  rate measures project decisions (one fork, one governance execution),
  *  not how many fields we annotated. */
@@ -54,16 +55,20 @@ export interface OssificationContractInput {
   highSeverityFields?: string[]
 }
 
-export interface OssificationContractBreakdown {
+export interface OssificationContractHistory {
   name: string
   address: string
   isVerified: boolean
   /** Start of the battle-tested clock: last critical change, or deployment
    *  if the contract never changed. Null when neither is known. */
   clockStart: number | null
-  ageSeconds: number | null
   codeChangeCount: number
   stateChangeCount: number
+}
+
+export interface OssificationContractBreakdown
+  extends OssificationContractHistory {
+  ageSeconds: number | null
 }
 
 export type OssificationChangeType = 'code' | 'state'
@@ -92,34 +97,6 @@ export interface OssificationCriticalEvent {
   historical?: boolean
 }
 
-export interface OssificationFactor {
-  /** 0-100: the share of recorded code-bug exploits (published, versioned
-   *  incident dataset — see ossificationCurve.ts) whose exploited code was
-   *  younger than this perimeter's age. 0 while any critical contract is
-   *  unverified. */
-  score: number
-  /** score as a 0..1 fraction; 0 gates exposure when unverified */
-  maturity: number
-  /** The project clock starts at the most recent deployment or critical
-   *  change anywhere in the critical perimeter. */
-  projectClockStart: number | null
-  projectAgeSeconds: number | null
-  /** Timestamp of the last observed critical change, null if none ever */
-  lastCriticalChange: number | null
-  lastCriticalChangeAgeSeconds: number | null
-  /** 24h-clustered critical change events per year, trailing window */
-  criticalChangesPerYear: number
-  clusteredEventCount: number
-  windowSeconds: number
-  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
-   *  changes plus deployments of critical contracts. Deployments never count
-   *  toward the change rate, but they do move the clock, so a timeline that
-   *  omitted them would contradict `projectClockStart`. */
-  perimeterResets: number[]
-  contracts: OssificationContractBreakdown[]
-  criticalUpdates: OssificationCriticalUpdate[]
-}
-
 /** A contract that once belonged to the critical perimeter but no longer does.
  * A closed, reviewed ledger: onchain upgrade timestamps here plus reviewed
  * `criticalEvents` (historical: true) are its complete change history — diff
@@ -129,6 +106,56 @@ export interface OssificationHistoricalContract {
   address: string
   name: string
   upgradeTimestamps: number[]
+}
+
+/**
+ * Everything the ossification factor needs that does not depend on the
+ * current time. Computed once from discovery state and the reviewed
+ * ossification.json when the config package is built, stored on the project,
+ * and turned into ages, score and rate at request time by
+ * `measureOssification`.
+ */
+export interface ProjectOssificationInfo {
+  /** Youngest clock first. */
+  contracts: OssificationContractHistory[]
+  /** The project clock starts at the most recent deployment or critical
+   *  change anywhere in the critical perimeter. */
+  projectClockStart: number
+  /** Timestamp of the last observed critical change, null if none ever */
+  lastCriticalChange: number | null
+  /** 24h-clustered critical change events attributable to this project,
+   *  ascending. The change rate counts those inside its trailing window. */
+  changeClusters: number[]
+  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
+   *  changes plus deployments of critical contracts. Deployments never count
+   *  toward the change rate, but they do move the clock, so a timeline that
+   *  omitted them would contradict `projectClockStart`. */
+  perimeterResets: number[]
+  /** Earliest moment the change rate can be observed from: the oldest known
+   *  history, not earlier than the project's own start. */
+  observationStart: number | null
+  criticalUpdates: OssificationCriticalUpdate[]
+}
+
+export interface OssificationFactor {
+  /** 0-100: the share of recorded code-bug exploits (published, versioned
+   *  incident dataset — see ossificationCurve.ts) whose exploited code was
+   *  younger than this perimeter's age. 0 while any critical contract is
+   *  unverified. */
+  score: number
+  /** score as a 0..1 fraction; 0 gates exposure when unverified */
+  maturity: number
+  projectClockStart: number
+  projectAgeSeconds: number
+  lastCriticalChange: number | null
+  lastCriticalChangeAgeSeconds: number | null
+  /** 24h-clustered critical change events per year, trailing window */
+  criticalChangesPerYear: number
+  clusteredEventCount: number
+  windowSeconds: number
+  perimeterResets: number[]
+  contracts: OssificationContractBreakdown[]
+  criticalUpdates: OssificationCriticalUpdate[]
 }
 
 interface ContractRecord {
@@ -144,6 +171,7 @@ interface ContractRecord {
   highFields: Set<string>
 }
 
+/** History and measurement in one step; the tests and the smoke tool use it. */
 export function getOssificationFactor(
   entries: OssificationContractInput[],
   changelog: DiscoveryChangelogEntry[],
@@ -152,6 +180,78 @@ export function getOssificationFactor(
   criticalEvents: OssificationCriticalEvent[] = [],
   projectStart: number | undefined = undefined,
 ): OssificationFactor | undefined {
+  const info = getOssificationInfo(
+    entries,
+    changelog,
+    historical,
+    criticalEvents,
+    projectStart,
+  )
+  return info && measureOssification(info, now)
+}
+
+/** The time-dependent view of a stored history: ages, score, change rate. */
+export function measureOssification(
+  info: ProjectOssificationInfo,
+  now: number = UnixTime.now(),
+): OssificationFactor {
+  const projectAgeSeconds = Math.max(0, now - info.projectClockStart)
+  const hasUnverifiedContract = info.contracts.some(
+    (contract) => !contract.isVerified,
+  )
+  const maturity = hasUnverifiedContract
+    ? 0
+    : exploitAgePercentile(projectAgeSeconds)
+
+  // The denominator must match the numerator: dropping pre-history events
+  // without moving the window start would understate the rate instead of
+  // scoping it.
+  const windowFrom = Math.max(
+    now - RATE_WINDOW_SECONDS,
+    info.observationStart ?? now - RATE_WINDOW_SECONDS,
+  )
+  const windowSeconds = Math.max(now - windowFrom, MIN_RATE_WINDOW_SECONDS)
+  const clusteredEventCount = info.changeClusters.filter(
+    (cluster) => cluster >= windowFrom,
+  ).length
+
+  return {
+    score: toDisplayScore(maturity),
+    maturity,
+    projectClockStart: info.projectClockStart,
+    projectAgeSeconds,
+    lastCriticalChange: info.lastCriticalChange,
+    lastCriticalChangeAgeSeconds:
+      info.lastCriticalChange !== null
+        ? Math.max(0, now - info.lastCriticalChange)
+        : null,
+    criticalChangesPerYear:
+      clusteredEventCount / (windowSeconds / SECONDS_PER_YEAR),
+    clusteredEventCount,
+    windowSeconds,
+    perimeterResets: info.perimeterResets,
+    contracts: info.contracts.map((contract) => ({
+      ...contract,
+      ageSeconds:
+        contract.clockStart !== null
+          ? Math.max(0, now - contract.clockStart)
+          : null,
+    })),
+    criticalUpdates: info.criticalUpdates,
+  }
+}
+
+/** Extracts the time-independent history of a critical perimeter. Undefined
+ *  when the perimeter is empty or the age of any critical contract is unknown:
+ *  every critical contract is part of the project-wide perimeter, so if one
+ *  clock is unknown, the age of the complete perimeter is too. */
+export function getOssificationInfo(
+  entries: OssificationContractInput[],
+  changelog: DiscoveryChangelogEntry[],
+  historical: OssificationHistoricalContract[] = [],
+  criticalEvents: OssificationCriticalEvent[] = [],
+  projectStart: number | undefined = undefined,
+): ProjectOssificationInfo | undefined {
   if (entries.length === 0) {
     return undefined
   }
@@ -213,7 +313,7 @@ export function getOssificationFactor(
   )
   mergeCriticalUpdates(criticalUpdates, reviewedEvents.counted)
 
-  const breakdowns: OssificationContractBreakdown[] = []
+  const contracts: OssificationContractHistory[] = []
   /** Reviewed events are attributed by hand, mechanical ones only from the
    *  project's own history onward. */
   const changeEvents: number[] = [
@@ -236,34 +336,25 @@ export function getOssificationFactor(
     )
   }
   for (const record of records.values()) {
-    breakdowns.push(getContractBreakdown(record, now, isAttributable))
+    contracts.push(getContractHistory(record, isAttributable))
     collect(record)
   }
   for (const record of historicalRecords) {
     collect(record)
   }
 
-  const contractClockStart = getProjectClockStart(breakdowns)
+  const contractClockStart = getProjectClockStart(contracts)
   if (contractClockStart === null) return undefined
   const projectClockStart = Math.max(
     contractClockStart,
     reviewedEvents.standaloneCurrent.at(-1) ?? Number.NEGATIVE_INFINITY,
   )
 
-  const projectAgeSeconds = Math.max(0, now - projectClockStart)
-  const hasUnverifiedContract = breakdowns.some(
-    (breakdown) => !breakdown.isVerified,
-  )
-  const maturity = hasUnverifiedContract
-    ? 0
-    : exploitAgePercentile(projectAgeSeconds)
-
   // youngest clock first
-  breakdowns.sort((a, b) => (b.clockStart ?? 0) - (a.clockStart ?? 0))
+  contracts.sort((a, b) => (b.clockStart ?? 0) - (a.clockStart ?? 0))
 
   changeEvents.sort((a, b) => a - b)
   allChangeEvents.sort((a, b) => a - b)
-  const clusters = clusterEvents(changeEvents)
   const deployments = [...records.values(), ...historicalRecords].flatMap(
     (record) => record.entry.sinceTimestamp ?? [],
   )
@@ -275,39 +366,17 @@ export function getOssificationFactor(
     [...records.values(), ...historicalRecords],
     reviewedEvents.counted,
   )
-  // The denominator must match the numerator: dropping pre-history events
-  // without moving the window start would understate the rate instead of
-  // scoping it.
-  const scopedObservationStart =
-    observationStart === null
-      ? null
-      : Math.max(observationStart, projectStart ?? observationStart)
-  const windowFrom = Math.max(
-    now - RATE_WINDOW_SECONDS,
-    scopedObservationStart ?? now - RATE_WINDOW_SECONDS,
-  )
-  const windowSeconds = Math.max(now - windowFrom, MIN_RATE_WINDOW_SECONDS)
-  const clusteredEventCount = clusters.filter(
-    (cluster) => cluster >= windowFrom,
-  ).length
 
-  const lastCriticalChange = allChangeEvents.at(-1) ?? null
   return {
-    score: toDisplayScore(maturity),
-    maturity,
+    contracts,
     projectClockStart,
-    projectAgeSeconds,
-    lastCriticalChange,
-    lastCriticalChangeAgeSeconds:
-      lastCriticalChange !== null
-        ? Math.max(0, now - lastCriticalChange)
-        : null,
-    criticalChangesPerYear:
-      clusteredEventCount / (windowSeconds / SECONDS_PER_YEAR),
-    clusteredEventCount,
-    windowSeconds,
+    lastCriticalChange: allChangeEvents.at(-1) ?? null,
+    changeClusters: clusterEvents(changeEvents),
     perimeterResets,
-    contracts: breakdowns,
+    observationStart:
+      observationStart === null
+        ? null
+        : Math.max(observationStart, projectStart ?? observationStart),
     criticalUpdates,
   }
 }
@@ -532,11 +601,10 @@ function getUpdateEventTimestamp(
   return onchain ?? updateTimestamp
 }
 
-function getContractBreakdown(
+function getContractHistory(
   record: ContractRecord,
-  now: number,
   isAttributable: (timestamp: number) => boolean,
-): OssificationContractBreakdown {
+): OssificationContractHistory {
   const { entry, diffEvents } = record
   // The clock is the contract's physical age and keeps its whole history; the
   // counts feed the project's change rate and are scoped the same way it is.
@@ -545,7 +613,6 @@ function getContractBreakdown(
     entry.upgradeTimestamps.at(-1) ?? Number.NEGATIVE_INFINITY,
     diffEvents.at(-1)?.timestamp ?? Number.NEGATIVE_INFINITY,
   )
-  const clockStart = Number.isFinite(lastReset) ? lastReset : null
   const counted = diffEvents.filter(
     (event) => event.reviewed || isAttributable(event.timestamp),
   )
@@ -554,8 +621,7 @@ function getContractBreakdown(
     name: entry.name,
     address: entry.address,
     isVerified: entry.isVerified,
-    clockStart,
-    ageSeconds: clockStart !== null ? Math.max(0, now - clockStart) : null,
+    clockStart: Number.isFinite(lastReset) ? lastReset : null,
     codeChangeCount:
       getCodeChangeTimestamps(entry).filter(isAttributable).length +
       counted.filter((event) => event.type === 'code').length,
@@ -647,16 +713,16 @@ export function toDisplayScore(maturity: number): number {
 }
 
 function getProjectClockStart(
-  breakdowns: OssificationContractBreakdown[],
+  contracts: OssificationContractHistory[],
 ): number | null {
   let projectClockStart: number | null = null
-  for (const breakdown of breakdowns) {
+  for (const contract of contracts) {
     // Every critical contract is part of the project-wide perimeter. If any
     // individual clock is unknown, the age of the complete perimeter is too.
-    if (breakdown.clockStart === null) return null
+    if (contract.clockStart === null) return null
     projectClockStart = Math.max(
       projectClockStart ?? Number.NEGATIVE_INFINITY,
-      breakdown.clockStart,
+      contract.clockStart,
     )
   }
   return projectClockStart
