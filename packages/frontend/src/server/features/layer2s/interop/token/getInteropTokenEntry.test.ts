@@ -1,8 +1,14 @@
 import type { InteropPlugin, Project } from '@l2beat/config'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Address32, assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getInteropTokenEntry } from './getInteropTokenEntry'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
+import type { InteropTokenRelations } from './getInteropTokenRelations'
+
+const NO_RELATIONS: InteropTokenRelations = {
+  routes: [],
+  pairStats: undefined,
+}
 
 describe(getInteropTokenEntry.name, () => {
   it('maps minting plugins to deduplicated project summaries', () => {
@@ -41,6 +47,7 @@ describe(getInteropTokenEntry.name, () => {
           ],
         }),
       ],
+      NO_RELATIONS,
     )
 
     const section = entry.sections.find(
@@ -63,6 +70,60 @@ describe(getInteropTokenEntry.name, () => {
         iconUrl: '/icons/zeta.png',
         href: '/interop/protocols/zeta',
       },
+    ])
+  })
+
+  it('takes deployment stats from the pair stats and sorts by volume', () => {
+    const ethereum = deployment({ chain: 'ethereum', address: '0xe1' })
+    const base = deployment({ chain: 'base', address: '0xb1' })
+    const unsupported = deployment({
+      chain: 'solana',
+      address: 'So11111111111111111111111111111111111111112',
+      isSupported: false,
+    })
+    const entry = getInteropTokenEntry(
+      'circle-usdc',
+      [],
+      [],
+      [],
+      [unsupported, ethereum, base],
+      {
+        routes: [],
+        pairStats: [
+          {
+            src: { chain: 'ethereum', address: Address32.from('0xe1') },
+            dst: { chain: 'base', address: Address32.from('0xb1') },
+            transferCount: 2,
+            transfersWithDurationCount: 1,
+            totalDurationSum: 30,
+            volume: 100,
+          },
+          {
+            src: { chain: 'base', address: Address32.from('0xb1') },
+            transferCount: 1,
+            transfersWithDurationCount: 1,
+            totalDurationSum: 10,
+            volume: 50,
+          },
+        ],
+      },
+    )
+
+    const section = entry.sections.find(
+      (section) => section.type === 'InteropTokenOnchainDeploymentsSection',
+    )
+    assert(section?.type === 'InteropTokenOnchainDeploymentsSection')
+    expect(
+      section.props.deployments.map((row) => [
+        row.chain.name,
+        row.volume,
+        row.transferCount,
+        row.avgDuration,
+      ]),
+    ).toEqual([
+      ['base', 150, 3, 20],
+      ['ethereum', 100, 2, 30],
+      ['solana', null, null, null],
     ])
   })
 
@@ -94,6 +155,7 @@ describe(getInteropTokenEntry.name, () => {
           ],
         }),
       ],
+      NO_RELATIONS,
     )
 
     const section = entry.sections.find(
@@ -123,9 +185,6 @@ function deployment(
     symbol: 'USDC',
     mintingPlugins: [],
     isSupported: true,
-    volume: 100,
-    transferCount: 2,
-    avgDuration: 10,
     ...override,
   }
 }
