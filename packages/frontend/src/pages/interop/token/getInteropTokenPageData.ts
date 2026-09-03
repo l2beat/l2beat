@@ -5,6 +5,7 @@ import { getInteropTokenData } from '~/server/features/layer2s/interop/getIntero
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import { getInteropTokenOnchainDeployments } from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
+import { getInteropTokenRelations } from '~/server/features/layer2s/interop/token/getInteropTokenRelations'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -108,20 +109,32 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const [tokenData, deployments, projectsWithChains, interopProjects] =
-    await Promise.all([
-      getInteropTokenData({
-        tokenId: token.id,
-        ...apiSelection,
-      }),
-      getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
-      ps.getProjects({
-        select: ['chainConfig'],
-      }),
-      ps.getProjects({
-        select: ['interopConfig'],
-      }),
-    ])
+  const deploymentsPromise = getInteropTokenOnchainDeployments(
+    token.id,
+    activeInteropChainIds,
+  )
+  const [
+    tokenData,
+    deployments,
+    relations,
+    projectsWithChains,
+    interopProjects,
+  ] = await Promise.all([
+    getInteropTokenData({
+      tokenId: token.id,
+      ...apiSelection,
+    }),
+    deploymentsPromise,
+    deploymentsPromise.then((deployments) =>
+      getInteropTokenRelations(token.id, deployments),
+    ),
+    ps.getProjects({
+      select: ['chainConfig'],
+    }),
+    ps.getProjects({
+      select: ['interopConfig'],
+    }),
+  ])
 
   const tokenEntry = getInteropTokenEntry(
     token.id,
@@ -129,6 +142,7 @@ async function getCachedData({
     projectsWithChains,
     interopProjects,
     deployments,
+    relations,
   )
 
   return {

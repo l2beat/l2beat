@@ -1,12 +1,26 @@
 import type { Project } from '@l2beat/config'
-import { MANUAL_RELATION_PLUGIN, unique } from '@l2beat/shared-pure'
+import { MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
 import type { InteropTokenOnchainDeploymentsRow } from '~/components/projects/sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { getLogger } from '~/server/utils/logger'
-import { manifest } from '~/utils/Manifest'
+import {
+  aggregatePairStats,
+  deploymentPairKey,
+  type InteropTokenStats,
+  NO_STATS,
+  pairSideKey,
+  pickStats,
+} from '../utils/aggregatePairStats'
 import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
+import { toInteropProjectIconListItems } from '../utils/toInteropProjectIconListItem'
+import {
+  type ChainDisplayInfoMap,
+  getChainDisplayInfo,
+  getExplorerAddressUrl,
+} from './getChainDisplayInfo'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
+import type { InteropTokenRelations } from './getInteropTokenRelations'
 
 const logger = getLogger().for('getInteropTokenEntry')
 
@@ -21,6 +35,7 @@ export function getInteropTokenEntry(
   projectsWithChains: Project<'chainConfig'>[],
   interopProjects: Project<'interopConfig'>[],
   deployments: InteropTokenOnchainDeployment[],
+  relations: InteropTokenRelations,
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
     {
@@ -42,21 +57,36 @@ export function getInteropTokenEntry(
   ]
 
   if (deployments.length > 0) {
-    const chainInfoMap = deploymentsToChainInfo(
-      deployments,
+    const chainInfoMap = getChainDisplayInfo(
+      deployments.map((deployment) => deployment.chain),
       interopChains,
       projectsWithChains,
     )
     const resolveProjects = createInteropProjectResolver(interopProjects)
+    const deploymentStats =
+      relations.pairStats &&
+      aggregatePairStats(relations.pairStats, pairSideKey)
     sections.push({
       type: 'InteropTokenOnchainDeploymentsSection',
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
-        deployments: deployments.map((deployment) => {
-          const minters = resolveMinters(deployment, tokenId, resolveProjects)
-          return toDeploymentRow(deployment, chainInfoMap, minters)
-        }),
+        deployments: deployments
+          .map((deployment) =>
+            toDeploymentRow(
+              deployment,
+              chainInfoMap,
+              resolveMinters(deployment, tokenId, resolveProjects),
+              deployment.isSupported
+                ? pickStats(deploymentStats, deploymentPairKey(deployment))
+                : NO_STATS,
+            ),
+          )
+          .sort(
+            (a, b) =>
+              (b.volume ?? -1) - (a.volume ?? -1) ||
+              a.chain.name.localeCompare(b.chain.name),
+          ),
       },
     })
   }
@@ -112,20 +142,14 @@ function resolveMinters(
     },
   )
 
-  return unique(projects, (project) => project.id)
-    .map((project) => ({
-      id: project.id,
-      name: project.interopConfig.name ?? project.name,
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      href: `/interop/protocols/${project.slug}`,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name))
+  return toInteropProjectIconListItems(projects)
 }
 
 function toDeploymentRow(
   deployment: InteropTokenOnchainDeployment,
-  chainInfoMap: ChainInfoMap,
+  chainInfoMap: ChainDisplayInfoMap,
   minters: InteropTokenOnchainDeploymentsRow['minters'],
+  stats: InteropTokenStats,
 ): InteropTokenOnchainDeploymentsRow {
   const chain = chainInfoMap.get(deployment.chain)
   return {
@@ -134,50 +158,10 @@ function toDeploymentRow(
       iconUrl: chain?.iconUrl,
     },
     address: deployment.address,
-    explorerUrl:
-      chain && deployment.address.startsWith('0x')
-        ? `${chain.explorerUrl}/address/${deployment.address}`
-        : undefined,
+    explorerUrl: getExplorerAddressUrl(chain, deployment.address),
     symbol: deployment.symbol,
     minters,
     isSupported: deployment.isSupported,
-    volume: deployment.volume,
-    transferCount: deployment.transferCount,
-    avgDuration: deployment.avgDuration,
+    ...stats,
   }
-}
-
-type ChainInfoMap = ReturnType<typeof deploymentsToChainInfo>
-function deploymentsToChainInfo(
-  deployments: InteropTokenOnchainDeployment[],
-  interopChains: InteropChainWithIcon[],
-  projectsWithChain: Project<'chainConfig'>[],
-) {
-  const map = new Map<
-    string,
-    { name: string; iconUrl?: string; explorerUrl?: string }
-  >()
-  for (const deployment of deployments) {
-    const chain = interopChains.find((c) => c.id === deployment.chain)
-    if (chain) {
-      map.set(deployment.chain, {
-        name: chain.name,
-        iconUrl: chain.iconUrl,
-        explorerUrl: chain.explorerUrl,
-      })
-      continue
-    }
-
-    const l2Project = projectsWithChain.find(
-      (c) => c.chainConfig.name === deployment.chain,
-    )
-    if (l2Project) {
-      map.set(deployment.chain, {
-        name: l2Project.name,
-        iconUrl: manifest.getUrl(`/icons/${l2Project.slug}.png`),
-        explorerUrl: l2Project.chainConfig.explorerUrl,
-      })
-    }
-  }
-  return map
 }
