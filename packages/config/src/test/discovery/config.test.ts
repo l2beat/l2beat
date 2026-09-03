@@ -397,9 +397,10 @@ describe('discovery config.jsonc', () => {
         configReader,
         templateService,
       )
-      // The hash covers the clingo generated for this project only. Facts a
-      // referenced project contributes are not in it, so a change inside a
-      // shared module never turns a consumer red.
+      // The hash covers the clingo generated for this project only, so most
+      // shared module churn does not reach it. A module that starts or stops
+      // discovering an address this project's values mention still does,
+      // because that clingo is written against the cluster's address map.
       const ownClingo = clingoByProject[c.name]
       assert(ownClingo !== undefined, `No clingo generated for ${c.name}.`)
       const hash = generatePermissionConfigHash(ownClingo)

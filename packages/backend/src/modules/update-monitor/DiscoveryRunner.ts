@@ -4,6 +4,7 @@ import {
   addReferencedDiscoveries,
   ConfigReader,
   type ConfigRegistry,
+  clusterEntries,
   combinePermissionsIntoDiscovery,
   type DiscoveryEngine,
   type DiscoveryOutput,
@@ -78,6 +79,7 @@ export class DiscoveryRunner {
     combinePermissionsIntoDiscovery(
       projectDiscovery.discoveryOutput,
       permissionsOutput,
+      clusterEntries(discoveries),
     )
 
     assert(projectDiscovery.analysis)
