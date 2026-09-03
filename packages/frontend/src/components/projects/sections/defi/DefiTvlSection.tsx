@@ -1,62 +1,71 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
+import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
-export interface TvsValueSectionProps extends ProjectSectionProps {
+export interface DefiTvlSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
-  rangeControls: 'tvs' | 'privacy'
+  dataSource: {
+    name: string
+    url?: string
+    scope?: string
+  }
 }
 
-export function TvsValueSection({
+export function DefiTvlSection({
   defaultRange,
   project,
-  rangeControls,
+  dataSource,
   ...projectSectionProps
-}: TvsValueSectionProps) {
+}: DefiTvlSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const { data, isLoading } = useQuery(
-    trpc.tvs.chartByProjects.queryOptions({
-      projectIds: [project.id],
-      range,
-    }),
+    trpc.defi.tvlChart.queryOptions({ projectId: project.id, range }),
   )
 
   const chartData = useMemo(
-    () =>
-      data?.chart.map(([timestamp, valuesByProject]) => ({
-        timestamp,
-        value: valuesByProject[project.id] ?? null,
-      })),
-    [data, project.id],
+    () => data?.chart.map(([timestamp, value]) => ({ timestamp, value })),
+    [data],
   )
-
   const timeRange = useMemo(
     () => getChartTimeRangeFromData(chartData),
     [chartData],
   )
-
-  const RangeControls =
-    rangeControls === 'tvs'
-      ? TvsChartRangeControls
-      : PrivacyFlowsChartRangeControls
+  const sourceDetails = [
+    dataSource.scope,
+    data?.sourceTimestamp
+      ? `Latest source update: ${formatTimestamp(data.sourceTimestamp, {
+          mode: 'datetime',
+        })}`
+      : undefined,
+  ]
+    .filter((value) => value !== undefined)
+    .join(' · ')
 
   return (
     <ProjectSection {...projectSectionProps}>
+      <div className="mb-3">
+        <ChartDataSourceInfo
+          dataSource={dataSource.name}
+          href={dataSource.url}
+          scope={sourceDetails || undefined}
+        />
+      </div>
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange timeRange={timeRange} />
-        <RangeControls range={range} setRange={setRange} />
+        <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <TvsValueChart
         data={chartData}

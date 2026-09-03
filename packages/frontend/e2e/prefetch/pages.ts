@@ -74,7 +74,8 @@ export const STATIC_PAGES: PageToVerify[] = [
     'privacy.flowsChart',
     'tvs.chartByProjects',
   ]),
-  page('/defi/projects/liquityv2', ['tvs.chartByProjects']),
+  page('/defi/projects/liquityv2', ['defi.tvlChart']),
+  page('/defi/projects/uniswapv3', ['defi.tvlChart']),
 ]
 
 export const DYNAMIC_PAGES: DynamicPageToVerify[] = [
