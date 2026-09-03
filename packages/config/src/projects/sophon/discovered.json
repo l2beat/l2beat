@@ -1370,26 +1370,6 @@
   "usedBlockNumbers": { "ethereum": 25789580 },
   "permissionsConfigHash": "0x2136257b3ce6f67e31adf8d177e1bc042d9545c6821082ad7fc7f9c45038be24",
   "permissions": {
-    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ]
-    },
-    "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ]
-    },
     "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41": {
       "receivedPermissions": [
         {
@@ -2147,60 +2127,6 @@
         {
           "permission": "act",
           "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "role": ".Executor"
-        }
-      ]
-    },
-    "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC"
-        }
-      ]
-    },
-    "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "via": [
-            {
-              "address": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "delay": 259200,
           "role": ".Executor"
         }
       ]

@@ -16093,26 +16093,6 @@
         }
       ]
     },
-    "eth:0x2AE63A74771Fc84Fe25a186E139c2A39FfCa3f7c": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
-    "eth:0x2DBbD12Bf0f6A23Cf4455cC6BE874b7a246288Ce": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        }
-      ]
-    },
     "eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6": {
       "receivedPermissions": [
         {
@@ -16356,22 +16336,6 @@
         {
           "permission": "interact",
           "from": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        }
-      ]
-    },
-    "eth:0x30d872350Fe74f47C85847D6784B42f9b0816f04": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
           "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
           "role": ".getTransmitters"
         }
@@ -17210,32 +17174,6 @@
         }
       ]
     },
-    "eth:0x486B19D5eef9aB146593b44F324bd9CCba001f65": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
-    "eth:0x48b59195A00b4e2870A649945c8B526FFfecfF0C": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
     "eth:0x49769C3443c74f144991cA560ba5F635581B8176": {
       "receivedPermissions": [
         {
@@ -17297,32 +17235,6 @@
         {
           "permission": "interact",
           "from": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
-    "eth:0x522bB49bE4fB6E3ceC18df911C2A66457E6Fc3e2": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        }
-      ]
-    },
-    "eth:0x52b6D55A50118914BF8B7DbE0225258F92C89C0B": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
           "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
           "role": ".ocrConfig"
         },
@@ -18140,22 +18052,6 @@
         }
       ]
     },
-    "eth:0x87B331d3bb9Cf70Dd85c3dc606B684a0bd61c772": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        }
-      ]
-    },
     "eth:0x88E66A3D292D4B7b4913A28333658A9F43772991": {
       "receivedPermissions": [
         {
@@ -18284,22 +18180,6 @@
         }
       ]
     },
-    "eth:0x8f5E4d8e77F69EDfCabbFdC3a3Ea8550025e206d": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
     "eth:0x9630a8FEA21c69De3790Fde207c4465E67966F2C": {
       "receivedPermissions": [
         {
@@ -18420,22 +18300,6 @@
         }
       ]
     },
-    "eth:0xAE80A59ba821544cB508808942C20C11442d8A9b": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        }
-      ]
-    },
     "eth:0xB314D4A76C457c93150d308787939063F4Cc67E0": {
       "receivedPermissions": [
         {
@@ -18469,16 +18333,6 @@
           "from": "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5",
           "description": "vote to schedule a governance proposal or resume a sealable contract through the Dual Governance tiebreaker.",
           "role": ".getMembers"
-        }
-      ]
-    },
-    "eth:0xBa4555a80E47477BBf23B721563D38B10eb65dFa": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
         }
       ]
     },
@@ -19974,38 +19828,6 @@
         }
       ]
     },
-    "eth:0xE62Efa5462961055757C63931a15601545E4d273": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
-        }
-      ]
-    },
-    "eth:0xE808269B80F9AB230d95E088e6D6d9Ca7F59c811": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
     "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1": {
       "receivedPermissions": [
         {
@@ -20835,16 +20657,6 @@
         }
       ]
     },
-    "eth:0xdfE90b926c7cA7913E94D481c92A0aE2d99a593e": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
     "eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E": {
       "receivedPermissions": [
         {
@@ -20880,16 +20692,6 @@
           "from": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
           "description": "submit report hashes and participate in reaching oracle consensus.",
           "role": ".members"
-        }
-      ]
-    },
-    "eth:0xe7b837A55df42eCc95bf893C3c31750264932596": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
-          "description": "relay signed price reports to this aggregator. Any single one of these forwarders can submit, but only a report already carrying a quorum of the signers' signatures is accepted.",
-          "role": ".getTransmitters"
         }
       ]
     },
@@ -21034,16 +20836,6 @@
         {
           "permission": "interact",
           "from": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
-          "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
-          "role": ".ocrConfig"
-        }
-      ]
-    },
-    "eth:0xfc81fE4fBf6B4dB2589131d0D22C127f90ebaDC0": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
           "description": "sign price reports. A quorum of f+1 of these signing keys must sign each update, so their signatures, not the submitter, authorize the reported price.",
           "role": ".ocrConfig"
         }

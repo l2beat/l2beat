@@ -1132,26 +1132,6 @@
   "usedBlockNumbers": { "ethereum": 25724168 },
   "permissionsConfigHash": "0xb3509bdf5e78cd4cabb473ecabc0dca45aada1ed172c1118d517428cd1323bd1",
   "permissions": {
-    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ]
-    },
-    "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ]
-    },
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
       "directlyReceivedPermissions": [
         {
