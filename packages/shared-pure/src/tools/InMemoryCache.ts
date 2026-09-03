@@ -21,7 +21,6 @@ interface CacheEntry {
 interface Config {
   logger?: Logger
   enabled?: boolean
-  initialCache?: Map<string, CacheEntry>
   promiseTimeout?: number
 }
 
@@ -33,7 +32,7 @@ interface Options {
 }
 
 export class InMemoryCache {
-  private cache: Map<string, CacheEntry>
+  private cache = new Map<string, CacheEntry>()
   private enabled
   private promiseTimeout
   private logger
@@ -46,7 +45,6 @@ export class InMemoryCache {
   constructor(config: Config) {
     this.logger = config.logger
     this.enabled = config?.enabled ?? true
-    this.cache = config?.initialCache ?? new Map<string, CacheEntry>()
     this.promiseTimeout = config?.promiseTimeout ?? PROMISE_TIMEOUT
   }
 
