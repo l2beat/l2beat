@@ -33,6 +33,20 @@ export function entriesForDiff(
     entries: discovery.entries.map((entry) => ({ ...entry })),
   }
   attachPermissions([copy])
+
+  // A holder owned by a referenced project has no entry here, so without a
+  // stand-in it is absent from both sides of the diff and a change to its
+  // permissions reaches neither diffHistory nor Update Monitor. `Reference`
+  // is what marks it as belonging to another project when it is rendered.
+  const known = new Set(copy.entries.map((entry) => entry.address))
+  for (const [rawAddress, forHolder] of Object.entries(discovery.permissions)) {
+    const address = rawAddress as ChainSpecificAddress
+    if (known.has(address)) {
+      continue
+    }
+    copy.entries.push({ type: 'Reference', address, ...forHolder })
+  }
+
   return copy.entries
 }
 
