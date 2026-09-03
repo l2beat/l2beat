@@ -62,10 +62,12 @@ export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePe
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
 export {
+  addReferencedDiscoveries,
+  clusterEntries,
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
-  getDependenciesToDiscoverForProject,
+  loadDiscoveriesForModelling,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'
 export { attachPermissions } from './discovery/output/attachPermissions'
@@ -74,7 +76,7 @@ export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
   diffDiscovery,
-  entriesForDiff,
+  entriesForDiffPair,
 } from './discovery/output/diffDiscovery'
 export {
   contractDiffToMarkdown,

@@ -11047,7 +11047,7 @@
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xd6abe3c01cd750925365115c44550fef728ff685bfa5f1c7971181b2e375a918"
   },
   "usedBlockNumbers": { "ethereum": 25674047 },
-  "permissionsConfigHash": "0x8537b691fa6f869162e2df71fe8b88c8a0e8668684852275d37d73b9c1d4d1f8",
+  "permissionsConfigHash": "0xedbb05e5ad7dcdb7f8a130d8e366de52ebbb6c9f3785ea1da95bd467a3299966",
   "permissions": {
     "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
       "receivedPermissions": [

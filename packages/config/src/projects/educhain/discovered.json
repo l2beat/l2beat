@@ -1674,7 +1674,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 498266547 },
-  "permissionsConfigHash": "0xd0d8de8e45c4219508d996c68e518487764d3377c75c64602d8e650d4a2fea5b",
+  "permissionsConfigHash": "0xdd79aef7f7f2c31b295fda4dac59b1ada54774d1c4d4a2641221143159c36de9",
   "permissions": {
     "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": {
       "receivedPermissions": [

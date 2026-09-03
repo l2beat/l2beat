@@ -1955,7 +1955,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 478620683 },
-  "permissionsConfigHash": "0x234b5c2a07e193274b5292b7dc88be77821b2376510c91b09583180d6ed2ece4",
+  "permissionsConfigHash": "0x9676b72efef10c4fd62a2c82e7267d3207f3c51ca25d13021f95fc9d0bcbd468",
   "permissions": {
     "arb1:0x003e70B041abb993006C03E56c8515622a02928C": {
       "directlyReceivedPermissions": [
@@ -2028,6 +2028,16 @@
           "permission": "upgrade",
           "from": "arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
           "role": "admin"
+        }
+      ]
+    },
+    "arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
         }
       ]
     },
@@ -2264,6 +2274,41 @@
           "permission": "act",
           "from": "arb1:0x139C5A235632EDdad741ff380112B3161d31a21C",
           "role": ".executors"
+        }
+      ]
+    },
+    "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "role": "admin"
+        }
+      ]
+    },
+    "arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
+        }
+      ]
+    },
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
         }
       ]
     },

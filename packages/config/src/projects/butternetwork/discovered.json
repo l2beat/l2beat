@@ -744,7 +744,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "base": 49781409 },
-  "permissionsConfigHash": "0xa504b4d5d6aa34229e70df987237ac1f644b4af890d46bd83e7384abed74cb16",
+  "permissionsConfigHash": "0xf1318469eb4d105b41a7a065bcc296e680a4060ab4071b1df2ff26d3142fb57d",
   "permissions": {
     "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545": {
       "receivedPermissions": [

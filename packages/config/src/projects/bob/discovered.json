@@ -3616,7 +3616,7 @@
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25486625 },
-  "permissionsConfigHash": "0xfbb2faf2a3d593ed08e363e7239b7fd8199f6165cd59e3c36b679ff6e460d749",
+  "permissionsConfigHash": "0xdee5ad3b627d2fdf1f30258bf98bcc39ee6e27eaca63a58f9db5e10a7903fd8f",
   "permissions": {
     "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11": {
       "receivedPermissions": [

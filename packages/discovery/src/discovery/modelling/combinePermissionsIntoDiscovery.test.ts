@@ -24,6 +24,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(discovery.entries.at(1)?.receivedPermissions).toEqual(undefined)
@@ -40,6 +41,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([{ ...upgrade(COUNCIL, TIMELOCK), isFinal: false }]),
+      [...discovery.entries, contract(COUNCIL)],
     )
 
     expect(discovery.permissions).toEqual({
@@ -57,6 +59,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(Object.keys(discovery.permissions ?? {})).toEqual([PROXY_ADMIN])
@@ -70,10 +73,45 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     const stored = discovery.permissions?.[PROXY_ADMIN]
     expect(Object.keys(stored ?? {})).toEqual(['receivedPermissions'])
+  })
+
+  // The consumer's crawl stops at the entrypoint, so an actor inside a shared
+  // module holds a permission here without having an entry of its own.
+  it('stores a receiver that has no entry in the project', () => {
+    const discovery = output([contract(TIMELOCK), reference(PROXY_ADMIN)])
+
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([upgrade(COUNCIL, TIMELOCK)]),
+      // The holder is discovered by the referenced project, not by this one.
+      [...discovery.entries, contract(COUNCIL)],
+    )
+
+    expect(discovery.permissions).toEqual({
+      [COUNCIL]: {
+        receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
+      },
+    })
+  })
+
+  // A reference points at one deployment inside a shared module, so the rest of
+  // what that module discovered is not this project's to carry.
+  it('drops a holder the project entrypoints cannot reach', () => {
+    const discovery = output([contract(TIMELOCK)])
+    const unrelated = address('0x444')
+
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([upgrade(COUNCIL, unrelated)]),
+      [...discovery.entries, contract(COUNCIL), contract(unrelated)],
+    )
+
+    expect(discovery.permissions).toEqual(undefined)
   })
 
   it('clears a map left over by a previous run', () => {
@@ -81,9 +119,14 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
-    combinePermissionsIntoDiscovery(discovery, permissions([]))
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([]),
+      discovery.entries,
+    )
 
     expect(discovery.permissions).toEqual(undefined)
   })
@@ -98,6 +141,7 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     combinePermissionsIntoDiscovery(
       discovery,
       permissions([upgrade(COUNCIL, TIMELOCK), upgrade(PROXY_ADMIN, TIMELOCK)]),
+      discovery.entries,
     )
 
     expect(Object.keys(discovery.permissions ?? {})).toEqual([
@@ -138,4 +182,8 @@ function output(entries: EntryParameters[]): DiscoveryOutput {
 
 function contract(address: ChainSpecificAddress): EntryParameters {
   return { type: 'Contract', address }
+}
+
+function reference(address: ChainSpecificAddress): EntryParameters {
+  return { type: 'Reference', address, targetProject: 'shared-zk-stack' }
 }

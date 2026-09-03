@@ -19855,7 +19855,7 @@
     "uma/OptimisticOracleV2": "0xdb25a0cd206ef5646439b0ddbabcb9a6834c1c3c0f395b01803b7e38944859dc"
   },
   "usedBlockNumbers": { "polygonpos": 91186243 },
-  "permissionsConfigHash": "0x4c0b2f91971d2ab975155aeac4b43a3dd38991b714a6a13af00a539951e10a9b",
+  "permissionsConfigHash": "0x841fe232d9ef412b7b1994606c638553dd369face1e94c030ccff840c6f48436",
   "permissions": {
     "matic:0x0000000000000000000000000000000000000000": {
       "receivedPermissions": [

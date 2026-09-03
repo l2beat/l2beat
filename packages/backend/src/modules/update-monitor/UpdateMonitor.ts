@@ -6,7 +6,7 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
-  entriesForDiff,
+  entriesForDiffPair,
   generateStructureHash,
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
@@ -143,10 +143,7 @@ export class UpdateMonitor {
 
       const committed = this.configReader.readDiscovery(projectConfig.name)
 
-      const diff = diffDiscovery(
-        entriesForDiff(committed),
-        entriesForDiff(discovery),
-      )
+      const diff = diffDiscovery(...entriesForDiffPair(committed, discovery))
       const severityCounts = countSeverities(diff)
 
       if (diff.length > 0) {
@@ -228,8 +225,7 @@ export class UpdateMonitor {
       const sanitizedDiscovery = sanitizeDiscoveryOutput(discovery)
 
       const diff = diffDiscovery(
-        entriesForDiff(prevSanitizedDiscovery),
-        entriesForDiff(sanitizedDiscovery),
+        ...entriesForDiffPair(prevSanitizedDiscovery, sanitizedDiscovery),
         unverifiedEntries,
       )
 

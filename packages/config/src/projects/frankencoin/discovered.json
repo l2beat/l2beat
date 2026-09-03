@@ -1546,7 +1546,7 @@
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
   "usedBlockNumbers": { "ethereum": 25802292 },
-  "permissionsConfigHash": "0x287a592ce2d877584b6dbe5b2570b7683633c56f2c0c752bcf5189efec896b3d",
+  "permissionsConfigHash": "0x39954d7d6ed7f330f8b637c202553e3a4eef73238e1a15dbfbf2f5627d609d07",
   "permissions": {
     "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
       "receivedPermissions": [

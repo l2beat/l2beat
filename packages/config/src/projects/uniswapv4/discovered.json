@@ -983,7 +983,7 @@
     "uniswapv4/V4FeePolicy": "0xebe90526446ca427a224bf116b8d21f9fde112f11d851b5b1392a07d35616e52"
   },
   "usedBlockNumbers": { "ethereum": 25846806 },
-  "permissionsConfigHash": "0x9c38e08f77e60c8f78d74199e979a6d434778613e70223ded1d964c943e11f3f",
+  "permissionsConfigHash": "0xbde2d6cc6a3d1fd76965c5f304fd136320857f8194d4415e8b2879f6affc1f60",
   "permissions": {
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
       "directlyReceivedPermissions": [

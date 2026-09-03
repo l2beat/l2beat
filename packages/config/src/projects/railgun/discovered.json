@@ -1658,7 +1658,7 @@
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
   "usedBlockNumbers": { "ethereum": 25882378 },
-  "permissionsConfigHash": "0x56bb3ba002f719a35f1d9124f1e67edd6294599dc20dd69d0fcfcf0a7efc6a21",
+  "permissionsConfigHash": "0x01e1a57cdadae5c8b20adc9f51ff7da113b6bdbfa57733598109e9a19a92f1d0",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
       "directlyReceivedPermissions": [

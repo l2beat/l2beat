@@ -14,17 +14,51 @@ export interface DiscoveryDiff {
   type?: 'created' | 'deleted'
 }
 
+// Diffed as a pair rather than a side at a time: a holder that gains its first
+// permission has neither an entry nor a map row on the previous side, so
+// standing in only on the current side would report the whole address as
+// created. A creation carries no field diffs, and both Update Monitor's web
+// feed and its ultimate-upgrader detection key off a `receivedPermissions`
+// field diff, so the change would reach neither.
+export function entriesForDiffPair(
+  previous: DiscoveryOutput | undefined,
+  current: DiscoveryOutput | undefined,
+): [EntryParameters[], EntryParameters[]] {
+  // Only addresses no side ever discovered itself. An address that is a real
+  // entry on either side must keep its own creation or deletion: standing in
+  // for it would turn a newly deployed contract that happens to hold a
+  // permission into a Reference-to-contract field modification.
+  const discovered = new Set([
+    ...(previous?.entries ?? []).map((entry) => entry.address.toString()),
+    ...(current?.entries ?? []).map((entry) => entry.address.toString()),
+  ])
+  const holders = new Set(
+    [
+      ...Object.keys(previous?.permissions ?? {}),
+      ...Object.keys(current?.permissions ?? {}),
+    ].filter((address) => !discovered.has(address)),
+  )
+  return [entriesForDiff(previous, holders), entriesForDiff(current, holders)]
+}
+
+// Deliberately not exported: one side alone cannot know which stand-ins the
+// other needs, and guessing from its own map is what turns a created contract
+// into a field modification. `entriesForDiffPair` is the way in.
+//
 // Permissions are stored outside `entries`, so folding them in is what keeps a
 // permission change visible in a diff at all. Unlike the read path this joins
 // onto a copy: callers diff discoveries that are afterwards written to the
 // database and to disk, where permissions must stay out of the entries.
-export function entriesForDiff(
+function entriesForDiff(
   discovery: DiscoveryOutput | undefined,
+  standInFor?: ReadonlySet<string>,
 ): EntryParameters[] {
   if (discovery === undefined) {
     return []
   }
-  if (discovery.permissions === undefined) {
+  const permissions = discovery.permissions
+  const holders = standInFor ?? new Set(Object.keys(permissions ?? {}))
+  if (permissions === undefined && holders.size === 0) {
     return discovery.entries
   }
 
@@ -33,6 +67,25 @@ export function entriesForDiff(
     entries: discovery.entries.map((entry) => ({ ...entry })),
   }
   attachPermissions([copy])
+
+  // A holder owned by a referenced project has no entry here, so without a
+  // stand-in it is absent from the diff and a change to its permissions reaches
+  // neither diffHistory nor Update Monitor. `Reference` is what marks it as
+  // belonging to another project when it is rendered. Sorted, so the diff does
+  // not reorder between runs.
+  const known = new Set(copy.entries.map((entry) => entry.address))
+  for (const rawAddress of [...holders].sort()) {
+    const address = rawAddress as ChainSpecificAddress
+    if (known.has(address)) {
+      continue
+    }
+    copy.entries.push({
+      type: 'Reference',
+      address,
+      ...(permissions?.[address] ?? {}),
+    })
+  }
+
   return copy.entries
 }
 

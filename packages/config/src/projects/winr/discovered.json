@@ -1685,7 +1685,7 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 423633475 },
-  "permissionsConfigHash": "0x970e521b166db50b4a17c70bfa25e4eb3972c34cd3073ba62a93a312f4108498",
+  "permissionsConfigHash": "0x66d99805ef6f08c9d0fcb3ee0d714ba0a5e580215f5aba8fcaa83021c54f2646",
   "permissions": {
     "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6": {
       "receivedPermissions": [
@@ -1742,6 +1742,16 @@
           "from": "arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
+        }
+      ]
+    },
+    "arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
         }
       ]
     },
@@ -1894,6 +1904,21 @@
           "from": "arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
+        }
+      ]
+    },
+    "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "role": "admin"
         }
       ]
     },
@@ -2093,6 +2118,16 @@
         }
       ]
     },
+    "arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
+        }
+      ]
+    },
     "arb1:0xB180d28c01D3248C3fa88d67154a5070e5039135": {
       "receivedPermissions": [
         {
@@ -2110,6 +2145,16 @@
           "from": "arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
+        }
+      ]
+    },
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
         }
       ]
     },

@@ -9233,7 +9233,7 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "arbitrum": 498943718, "ethereum": 25847112 },
-  "permissionsConfigHash": "0x18d2a0909c03520c3b12e4041b96f3174aa0a1c801a3224c685cb41b701da5df",
+  "permissionsConfigHash": "0x884ebf13d8de5634e93307fd8faace78e323771270da4445ee8ac543f0f27502",
   "permissions": {
     "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {
       "directlyReceivedPermissions": [

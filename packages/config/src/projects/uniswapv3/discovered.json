@@ -1027,7 +1027,7 @@
     "uniswapv3/V3OpenFeeAdapter": "0x663a4d61a27c76fffa2178a403a1d500998b8922f9ad258ad0b509adecd838c3"
   },
   "usedBlockNumbers": { "ethereum": 25770096 },
-  "permissionsConfigHash": "0xa221a7891d7ef42ba2d32756bf84e8da45e8e9226a73845a6cefc8bece66ff9e",
+  "permissionsConfigHash": "0x4d4790adca0e0f42cc18f45d357d0aa0ee988e4811e4014390383b3ec0473b8e",
   "permissions": {
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
       "directlyReceivedPermissions": [

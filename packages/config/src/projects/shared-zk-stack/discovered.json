@@ -3961,7 +3961,7 @@
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
   "usedBlockNumbers": { "ethereum": 25838625, "zksync2": 71726600 },
-  "permissionsConfigHash": "0x04c8279c2e1c3fe96135c79b47cf1d490d4cfd9dd9cd1271c2c143a8371f942c",
+  "permissionsConfigHash": "0x6ee60dbd4f7f66c5224fc5db26f8036b39affbc57f8aaa13e18df08a0fffd5cb",
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
       "directlyReceivedPermissions": [

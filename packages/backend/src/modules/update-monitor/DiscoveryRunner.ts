@@ -1,14 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
+  addReferencedDiscoveries,
   ConfigReader,
   type ConfigRegistry,
+  clusterEntries,
   combinePermissionsIntoDiscovery,
   type DiscoveryEngine,
   type DiscoveryOutput,
   DiscoveryRegistry,
   flattenDiscoveredSources,
-  getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   modelPermissions,
   remapDiscoverySourceNames,
@@ -54,27 +55,17 @@ export class DiscoveryRunner {
 
     const discoveryPaths = getDiscoveryPaths()
     configReader ??= new ConfigReader(discoveryPaths.discovery)
-    const rawConfig = configReader.readRawConfig(projectName)
-
-    let toDiscover: string[] = []
-    if (rawConfig.modelCrossChainPermissions) {
-      logger.info('Discovering dependencies for cross-chain modelling')
-      toDiscover = getDependenciesToDiscoverForProject(
-        projectName,
-        configReader,
-      )
-      logger.info('Dependent project:', toDiscover)
-    } else {
-      logger.info('Discovering only current project - no cross-chain modelling')
-      toDiscover.push(projectName)
-    }
 
     const discoveries = await this.discoverMany(
-      toDiscover,
+      [projectName],
       discoveryTimestamp,
       configReader,
       logger,
     )
+    // Projects reached through an entrypoint are deliberately not
+    // rediscovered: modelling runs against their committed discovery, and
+    // keeping the two sides in sync is handled through Update Monitor.
+    addReferencedDiscoveries(discoveries, projectName, configReader, logger)
 
     const permissionsOutput = await modelPermissions(
       projectName,
@@ -88,6 +79,7 @@ export class DiscoveryRunner {
     combinePermissionsIntoDiscovery(
       projectDiscovery.discoveryOutput,
       permissionsOutput,
+      clusterEntries(discoveries),
     )
 
     assert(projectDiscovery.analysis)
