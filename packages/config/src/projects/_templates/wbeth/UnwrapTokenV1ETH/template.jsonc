@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UnwrapTokenV1ETH",
+  "category": "core",
+  "description": "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of {{ lockTime }} has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. {{ nextIndex }} claims have been recorded so far. The operator can also send any surplus ETH back to the ethBackAddress.",
+  "ignoreMethods": ["getWithdrawRequests", "getUserWithdrawRequests"],
+  "ignoreInWatchMode": [
+    "nextIndex",
+    "startAllocatedEthIndex",
+    "availableAllocateAmount",
+    "needEthAmount",
+    "getNeedRechargeEthAmount"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the operator, rechargeAddress, ethBackAddress, pauser and blacklister at any time, with no delay."
+        }
+      ]
+    },
+    "operatorAddress": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "allocate ETH to pending claims (a claim is not payable until allocated, which otherwise happens only when the queue is pre-funded), set the claim lock time to any value of at least 2 days, and move surplus ETH to the ethBackAddress even while paused."
+        }
+      ]
+    },
+    "pauser": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the contract. While paused, no claim can be paid out and no new claims or top-ups are accepted."
+        }
+      ]
+    },
+    "blacklister": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "blacklist any address, blocking it from claiming its redeemed ETH."
+        }
+      ]
+    },
+    "rechargeAddress": {
+      "description": "Address allowed to top the contract up with ETH for pending claims."
+    },
+    "ethBackAddress": {
+      "description": "Address that receives surplus ETH when the operator calls moveToBackAddress()."
+    },
+    "lockTime": {
+      "description": "Time between a redemption request and the earliest claim. Set by the operator, floor of 2 days.",
+      "edit": ["format", "FormatSeconds"]
+    },
+    "lockTimeSeconds": {
+      "handler": {
+        "type": "call",
+        "method": "function lockTime() view returns (uint256)",
+        "args": []
+      },
+      "description": "Raw copy of lockTime, in seconds, for the project page to spell out."
+    },
+    "MIN_LOCK_TIME": {
+      "description": "Floor on lockTime, in seconds."
+    }
+  }
+}
