@@ -6,8 +6,9 @@ import type {
 import {
   getActiveBacking,
   getRelationsPaths,
-  getSameChainAlternatives,
+  getSameChainComparisons,
   getUnconnectedIds,
+  groupBackedPaths,
 } from './graphSelectors'
 
 // E backs A and B; A backs C; X and Y are a cluster; L is alone.
@@ -58,24 +59,37 @@ describe(getRelationsPaths.name, () => {
   })
 })
 
-describe(getSameChainAlternatives.name, () => {
-  it('groups other deployments on the same chain, busiest first', () => {
-    const [arbitrum] = getSameChainAlternatives(
+describe(getSameChainComparisons.name, () => {
+  it('ranks every deployment on the chain and places the selected one', () => {
+    const [arbitrum] = getSameChainComparisons(
       graph,
       graph.nodes[3] as InteropTokenRelationsNode,
     )
-    expect(arbitrum?.others.map((item) => item.node.id)).toEqual(['A'])
+    expect(
+      arbitrum?.ranked.map((item) => [item.node.id, item.selected]),
+    ).toEqual([
+      ['A', false],
+      ['C', true],
+    ])
+    expect(arbitrum?.rank).toEqual(2)
 
-    const cluster = getSameChainAlternatives(
+    const cluster = getSameChainComparisons(
       graph,
       graph.nodes[4] as InteropTokenRelationsNode,
     )
-    expect(
-      cluster.map((group) => [
-        group.chain.name,
-        group.others.map((o) => o.node.id),
-      ]),
-    ).toEqual([['base', ['B']]])
+    expect(cluster.map((c) => [c.chain.id, c.rank])).toEqual([['base', 2]])
+  })
+})
+
+describe(groupBackedPaths.name, () => {
+  it('lists each directly backed node once and keeps longer paths apart', () => {
+    const { direct, nested } = groupBackedPaths(
+      getRelationsPaths(graph, 'E', 'backed'),
+    )
+    expect(direct.map((d) => d.node.id)).toEqual(['A', 'B'])
+    expect(nested.map((p) => p.nodes.map((n) => n.id))).toEqual([
+      ['E', 'A', 'C'],
+    ])
   })
 })
 

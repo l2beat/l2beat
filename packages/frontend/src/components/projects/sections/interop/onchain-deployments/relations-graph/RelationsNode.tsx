@@ -3,9 +3,12 @@ import type { ReactNode } from 'react'
 import { ChainIcon } from '~/pages/interop/components/ChainIcon'
 import type { InteropTokenRelationsNode } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
+import { isCluster } from './graphSelectors'
 import type { NodeBox } from './layoutRelationsGraph'
 
-const CLUSTER_ROWS_SHOWN = 4
+// Every member is listed; the cap only guards the canvas against a runaway cluster.
+const CLUSTER_MEMBERS_CAP = 16
+const CLUSTER_MEMBERS_SHOWN = CLUSTER_MEMBERS_CAP - 1
 
 // Heights are the sum of fixed-height lines below plus padding and borders,
 // so the layout can position nodes before they render.
@@ -22,10 +25,22 @@ export function getNodeSize(node: InteropTokenRelationsNode): {
   const count = node.deployments.length
   const frame = 2 * PADDING_Y + BORDER_Y + HEADER_HEIGHT
   if (count <= 1) return { width: 184, height: frame + 4 + 16 }
-  const rows = Math.min(count, CLUSTER_ROWS_SHOWN)
+  const shown = getShownMembers(node).length
+  const columns = getClusterColumns(count)
+  const rows = Math.ceil(shown / columns)
   const list = 8 + 1 + rows * CLUSTER_ROW_HEIGHT
-  const footer = count > rows ? CLUSTER_FOOTER_HEIGHT : 0
-  return { width: 268, height: frame + list + footer }
+  const footer = count > shown ? CLUSTER_FOOTER_HEIGHT : 0
+  return { width: columns === 1 ? 268 : 420, height: frame + list + footer }
+}
+
+function getClusterColumns(count: number): number {
+  return count <= 3 ? 1 : 2
+}
+
+function getShownMembers(node: InteropTokenRelationsNode) {
+  return node.deployments.length > CLUSTER_MEMBERS_CAP
+    ? node.deployments.slice(0, CLUSTER_MEMBERS_SHOWN)
+    : node.deployments
 }
 
 interface Props {
@@ -51,8 +66,8 @@ export function RelationsNode({
 }: Props) {
   const first = node.deployments[0]
   if (!first) return null
-  const isCluster = node.deployments.length > 1
-  const hiddenCount = node.deployments.length - CLUSTER_ROWS_SHOWN
+  const shown = getShownMembers(node)
+  const hiddenCount = node.deployments.length - shown.length
 
   return (
     <button
@@ -86,17 +101,22 @@ export function RelationsNode({
           className="font-semibold text-label-value-13 text-primary"
         />
       </div>
-      {isCluster ? (
+      {isCluster(node) ? (
         <>
           <Meta>
             <span className="shrink-0">Burn & mint via</span>
             <Bridges bridges={node.bridges} />
           </Meta>
-          <ul className="mt-2 w-full divide-y divide-divider border-divider border-t">
-            {node.deployments.slice(0, CLUSTER_ROWS_SHOWN).map((deployment) => (
+          <ul
+            className="mt-2 grid w-full gap-x-4 border-divider border-t"
+            style={{
+              gridTemplateColumns: `repeat(${getClusterColumns(node.deployments.length)}, minmax(0, 1fr))`,
+            }}
+          >
+            {shown.map((deployment) => (
               <li
                 key={`${deployment.chain.id}|${deployment.address}`}
-                className="flex h-6 items-center justify-between gap-3 text-label-value-13"
+                className="flex h-6 items-center justify-between gap-3 border-divider border-b text-label-value-13"
               >
                 <span className="flex min-w-0 items-center gap-2 font-semibold text-primary">
                   <ChainIcon iconUrl={deployment.chain.iconUrl} alt="" />
