@@ -1,6 +1,6 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import type { RouterOutputs } from '@l2beat/token-backend'
-import { useQueries, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import {
   ArrowDownIcon,
   ArrowUpDownIcon,
@@ -189,23 +189,14 @@ export function TokenTvsCoveragePage() {
     return () => window.clearTimeout(timeout)
   }, [supplyRequests])
 
-  const supplyRequestBatches = useMemo(
-    () => chunks(debouncedSupplyRequests, PAGE_SIZE),
-    [debouncedSupplyRequests],
+  const supplyQuery = useQuery(
+    trpc.tvsCoverage.getSupplyEstimates.queryOptions(debouncedSupplyRequests, {
+      staleTime: 2 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    }),
   )
-  const supplyQueries = useQueries({
-    queries: supplyRequestBatches.map((requests) =>
-      trpc.tvsCoverage.getSupplyEstimates.queryOptions(requests, {
-        staleTime: 2 * 60 * 1000,
-        refetchOnWindowFocus: false,
-      }),
-    ),
-  })
-  const supplyEstimates = useMemo(
-    () => supplyQueries.flatMap((query) => query.data ?? []),
-    [supplyQueries],
-  )
-  const isFetchingSupplies = supplyQueries.some((query) => query.isFetching)
+  const supplyEstimates = supplyQuery.data ?? []
+  const isFetchingSupplies = supplyQuery.isFetching
   const isLoadingSupplies =
     isFetchingSupplies ||
     debouncedSupplyRequests.length !== supplyRequests.length
@@ -241,33 +232,26 @@ export function TokenTvsCoveragePage() {
     return () => window.clearTimeout(timeout)
   }, [supplyChangeRequests])
 
-  const supplyChangeRequestBatches = useMemo(
-    () => chunks(debouncedSupplyChangeRequests, PAGE_SIZE),
-    [debouncedSupplyChangeRequests],
-  )
-  const supplyChangeQueries = useQueries({
-    queries: supplyChangeRequestBatches.map((requests) =>
-      trpc.tvsCoverage.getSupplyChangeEvidence.queryOptions(requests, {
+  const supplyChangeQuery = useQuery(
+    trpc.tvsCoverage.getSupplyChangeEvidence.queryOptions(
+      debouncedSupplyChangeRequests,
+      {
         staleTime: 10 * 60 * 1000,
         refetchOnWindowFocus: false,
-      }),
+      },
     ),
-  })
+  )
   const supplyChangeByDeployment = useMemo(
     () =>
       new Map(
-        supplyChangeQueries
-          .flatMap((query) => query.data ?? [])
-          .map((evidence) => [
-            deploymentKey(evidence.chain, evidence.address),
-            evidence,
-          ]),
+        (supplyChangeQuery.data ?? []).map((evidence) => [
+          deploymentKey(evidence.chain, evidence.address),
+          evidence,
+        ]),
       ),
-    [supplyChangeQueries],
+    [supplyChangeQuery.data],
   )
-  const isFetchingSupplyChanges = supplyChangeQueries.some(
-    (query) => query.isFetching,
-  )
+  const isFetchingSupplyChanges = supplyChangeQuery.isFetching
   const sortedRows = useMemo(
     () =>
       sortRows(rankedRows, sort, supplyByDeployment, chainsById, pluginsById),
@@ -413,8 +397,8 @@ export function TokenTvsCoveragePage() {
               }
               onClick={() => {
                 void refetchCoverage()
-                for (const query of supplyQueries) void query.refetch()
-                for (const query of supplyChangeQueries) void query.refetch()
+                void supplyQuery.refetch()
+                void supplyChangeQuery.refetch()
               }}
             >
               <RotateCwIcon
@@ -1131,12 +1115,6 @@ function sortValue(
     case 'plugins':
       return row.plugins.map((id) => plugins.get(id)?.name ?? id).join(', ')
   }
-}
-
-function chunks<T>(values: T[], size: number): T[][] {
-  return Array.from({ length: Math.ceil(values.length / size) }, (_, index) =>
-    values.slice(index * size, (index + 1) * size),
-  )
 }
 
 function formatInteropRole(role: CoverageRow['role']) {

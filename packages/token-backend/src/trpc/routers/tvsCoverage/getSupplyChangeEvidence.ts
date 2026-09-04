@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { createPublicClient, erc20Abi, formatUnits, http } from 'viem'
 import { normalizeTokenAddress } from './model'
 
-export const SUPPLY_CHANGE_EVIDENCE_LIMIT = 25
+export const SUPPLY_CHANGE_EVIDENCE_LIMIT = 100
 
 export interface SupplyChangeEvidenceRequest {
   chain: string
@@ -42,6 +42,7 @@ export async function getSupplyChangeEvidence(
   requests: SupplyChangeEvidenceRequest[],
   dependencies: SupplyChangeEvidenceDependencies = {},
 ): Promise<SupplyChangeEvidence[]> {
+  evictExpiredCacheEntries(supplyCache, Date.now())
   const uniqueRequests = Array.from(
     new Map(
       requests.slice(0, SUPPLY_CHANGE_EVIDENCE_LIMIT).map((request) => {
@@ -194,6 +195,15 @@ interface CachedSupply {
 const supplyCache = new Map<string, CachedSupply>()
 const inFlightSupplies = new Map<string, Promise<bigint | undefined>>()
 
+export function evictExpiredCacheEntries<T extends { expiresAt: number }>(
+  cache: Map<string, T>,
+  now: number,
+) {
+  for (const [key, value] of cache) {
+    if (value.expiresAt <= now) cache.delete(key)
+  }
+}
+
 async function readCachedTotalSupplyAt(request: {
   chain: string
   address: `0x${string}`
@@ -202,7 +212,9 @@ async function readCachedTotalSupplyAt(request: {
 }): Promise<bigint | undefined> {
   const key = `${requestKey(request)}:${request.blockNumber}`
   const cached = supplyCache.get(key)
-  if (cached && cached.expiresAt > Date.now()) return cached.value
+  const now = Date.now()
+  if (cached && cached.expiresAt > now) return cached.value
+  if (cached) supplyCache.delete(key)
 
   const inFlight = inFlightSupplies.get(key)
   if (inFlight) return await inFlight

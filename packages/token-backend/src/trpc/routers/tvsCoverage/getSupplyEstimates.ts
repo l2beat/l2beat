@@ -11,7 +11,7 @@ import {
 import type { CoinMarketData } from '../../../chains/clients/coingecko/types'
 import { normalizeTokenAddress } from './model'
 
-export const SUPPLY_ESTIMATE_LIMIT = 25
+export const SUPPLY_ESTIMATE_LIMIT = 100
 
 export interface SupplyEstimateRequest {
   chain: string

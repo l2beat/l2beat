@@ -7,9 +7,25 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import {
+  evictExpiredCacheEntries,
   getSupplyChangeEvidence,
   supplyChangeWindow,
 } from './getSupplyChangeEvidence'
+
+describe(evictExpiredCacheEntries.name, () => {
+  it('deletes expired entries and keeps live entries', () => {
+    const cache = new Map([
+      ['expired', { expiresAt: 100, value: 1 }],
+      ['live', { expiresAt: 101, value: 2 }],
+    ])
+
+    evictExpiredCacheEntries(cache, 100)
+
+    expect(Array.from(cache.entries())).toEqual([
+      ['live', { expiresAt: 101, value: 2 }],
+    ])
+  })
+})
 
 describe(getSupplyChangeEvidence.name, () => {
   it('reconciles retained bridge flows with supply change', async () => {
