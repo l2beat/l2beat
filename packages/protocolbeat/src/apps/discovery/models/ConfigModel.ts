@@ -77,7 +77,7 @@ export class ConfigModel {
   setFieldSeverity(
     id: string,
     fieldName: string,
-    severity: 'HIGH' | 'LOW' | undefined,
+    severity: 'HIGH' | 'MEDIUM' | 'LOW' | undefined,
   ) {
     return this.patchOverride(id, (override) =>
       override.setFieldSeverity(fieldName, severity),
