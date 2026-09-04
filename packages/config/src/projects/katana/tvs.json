@@ -169,6 +169,25 @@
     },
     {
       "mode": "auto",
+      "id": "katana-KAT",
+      "priceId": "katana-network-token",
+      "symbol": "KAT",
+      "name": "Katana Network Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70225/large/katana-social-icon.png?1761121098",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "katana-network-token",
+        "decimals": 18,
+        "sinceTimestamp": 1773792000,
+        "address": "0x7F1f4b4b29f5058fA32CC7a97141b8D7e5ABDC2d",
+        "chain": "katana"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "katana-LBTC-1",
       "priceId": "lombard-staked-btc",
       "symbol": "LBTC",
