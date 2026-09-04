@@ -13,7 +13,7 @@ export interface Camera {
   k: number
 }
 
-export interface Point {
+interface Point {
   x: number
   y: number
 }
@@ -31,11 +31,7 @@ const READABLE_SCALE = 0.55
 const WHEEL_ZOOM_STEP = 1.15
 
 /** Fits the width and anchors the top: a tall graph is panned, not shrunk into a smudge. */
-export function fitCamera(
-  content: Size,
-  viewport: Size,
-  focusX?: number,
-): Camera {
+function fitCamera(content: Size, viewport: Size, focusX?: number): Camera {
   if (content.width <= 0 || content.height <= 0) return { x: 0, y: 0, k: 1 }
   const innerWidth = viewport.width - FIT_PADDING * 2
   const innerHeight = viewport.height - FIT_PADDING * 2
@@ -59,11 +55,7 @@ export function fitCamera(
 }
 
 /** Scales around `point` so the world point under it stays put. */
-export function zoomCamera(
-  camera: Camera,
-  factor: number,
-  point: Point,
-): Camera {
+function zoomCamera(camera: Camera, factor: number, point: Point): Camera {
   const k = clamp(camera.k * factor, MIN_SCALE, MAX_SCALE)
   const ratio = k / camera.k
   return {
