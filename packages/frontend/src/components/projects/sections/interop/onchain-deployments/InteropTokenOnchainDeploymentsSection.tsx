@@ -13,10 +13,12 @@ import {
   PaginationItem,
   PaginationLink,
 } from '~/components/Pagination'
-import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import type {
+  InteropTokenRelationsDeployment,
+  InteropTokenRelationsGraph,
+} from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { ProjectSection } from '../../ProjectSection'
 import type { ProjectSectionProps } from '../../types'
 import {
@@ -27,24 +29,9 @@ import { TokenRelationsGraphView } from './relations-graph/TokenRelationsGraphVi
 
 const DEPLOYMENTS_PER_PAGE = 8
 
-export interface InteropTokenOnchainDeploymentsRow {
-  chain: {
-    name: string
-    iconUrl: string | undefined
-  }
-  address: string
-  explorerUrl: string | undefined
-  symbol: string
-  minters: ProjectIconListItem[]
-  isSupported: boolean
-  volume: number | null
-  transferCount: number | null
-  avgDuration: number | null
-}
-
 export interface InteropTokenOnchainDeploymentsSectionProps
   extends ProjectSectionProps {
-  deployments: InteropTokenOnchainDeploymentsRow[]
+  deployments: InteropTokenRelationsDeployment[]
   /** Absent when no relation between the deployments has been observed. */
   relationsGraph?: InteropTokenRelationsGraph
 }

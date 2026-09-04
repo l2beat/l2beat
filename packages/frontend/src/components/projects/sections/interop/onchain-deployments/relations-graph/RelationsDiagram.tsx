@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useMemo, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
@@ -10,13 +10,11 @@ import {
   RelationsEdgePath,
 } from './RelationsEdges'
 import { getNodeSize, RelationsNode } from './RelationsNode'
-import { type Camera, useRelationsCamera } from './relationsCamera'
+import { useRelationsCamera } from './relationsCamera'
 import { edgeKey, routeRelationsEdges } from './routeRelationsEdges'
+import { useDragToPan } from './useDragToPan'
 
-/** Pointer travel below this still counts as a click. */
-const CLICK_SLOP = 4
 const ZOOM_STEP = 1.25
-const WHEEL_ZOOM_STEP = 1.15
 const DOT_GRID_STEP = 24
 
 interface Props {
@@ -69,7 +67,9 @@ export function RelationsDiagram({
     layout,
     viewport,
     focusX,
+    containerRef,
   )
+  const pan = useDragToPan(camera, setCamera)
 
   const [hoveredId, setHoveredId] = useState<string>()
   const activeId = hoveredId ?? selectedNodeId
@@ -83,72 +83,6 @@ export function RelationsDiagram({
       graph.edges.map((edge) => edge.from).filter((id) => !backed.has(id)),
     )
   }, [graph.edges])
-
-  // Pointer capture is taken only once a drag is recognised, so plain clicks
-  // still reach the node buttons (and keyboard activation keeps working).
-  const gesture = useRef<
-    { x: number; y: number; camera: Camera; moved: boolean } | undefined
-  >(undefined)
-  const suppressClick = useRef(false)
-  const onPointerDown = (event: React.PointerEvent) => {
-    if (event.pointerType === 'mouse' && event.button !== 0) return
-    gesture.current = {
-      x: event.clientX,
-      y: event.clientY,
-      camera,
-      moved: false,
-    }
-  }
-  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const current = gesture.current
-    if (!current) return
-    const dx = event.clientX - current.x
-    const dy = event.clientY - current.y
-    if (!current.moved) {
-      if (Math.abs(dx) <= CLICK_SLOP && Math.abs(dy) <= CLICK_SLOP) return
-      current.moved = true
-      event.currentTarget.setPointerCapture(event.pointerId)
-    }
-    setCamera({
-      ...current.camera,
-      x: current.camera.x + dx,
-      y: current.camera.y + dy,
-    })
-  }
-  const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
-    const current = gesture.current
-    gesture.current = undefined
-    if (!current?.moved) return
-    suppressClick.current = true
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId)
-    }
-  }
-  const onBackgroundClick = () => {
-    if (suppressClick.current) {
-      suppressClick.current = false
-      return
-    }
-    onSelectNode(undefined)
-  }
-
-  // Native listener: React's wheel handler is passive, so it cannot stop the
-  // browser from zooming the page on ctrl+wheel. A bare wheel keeps scrolling.
-  useEffect(() => {
-    const element = containerRef.current
-    if (!element) return
-    const onWheel = (event: WheelEvent) => {
-      if (!event.ctrlKey && !event.metaKey) return
-      event.preventDefault()
-      const rect = element.getBoundingClientRect()
-      zoomBy(event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP, {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-      })
-    }
-    element.addEventListener('wheel', onWheel, { passive: false })
-    return () => element.removeEventListener('wheel', onWheel)
-  }, [zoomBy])
 
   const transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.k})`
   const dotGrid = {
@@ -166,11 +100,10 @@ export function RelationsDiagram({
         className,
       )}
       style={dotGrid}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
-      onClick={onBackgroundClick}
+      {...pan.handlers}
+      onClick={() => {
+        if (!pan.consumeSuppressedClick()) onSelectNode(undefined)
+      }}
     >
       <svg className="absolute inset-0 size-full" aria-hidden>
         <RelationsEdgeMarkers />
