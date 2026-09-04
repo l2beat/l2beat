@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Protects StakingVault deposits by proving validator withdrawal credentials and requiring an initial predeposit before the remaining validator deposit is sent.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreRelatives": ["BEACON_ROOTS"],
   "fields": {
     "accessControl": {

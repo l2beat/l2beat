@@ -3,6 +3,7 @@
   "displayName": "Core Accounting",
   "description": "Calculates and applies a complete Lido oracle report: it reconciles validator balances, smooths the rebase, collects vault balances, finalizes withdrawals, burns shares, distributes module rewards, and updates stETH accounting.",
   "category": "core",
+  "canActIndependently": false,
   "fields": {
     "accountingOracle": {
       "handler": {

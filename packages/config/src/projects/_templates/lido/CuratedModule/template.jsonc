@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The permissioned Curated Staking Module. It manages approved node operators and validator keys, accepts deposits and top-ups from the StakingRouter, and processes validator lifecycle reports and penalties.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": [
     "exitDeadlineThreshold",
     "getDepositsAllocation",

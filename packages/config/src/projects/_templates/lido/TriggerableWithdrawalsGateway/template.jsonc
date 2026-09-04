@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The permissioned entrypoint for full EIP-7002 validator withdrawals. It charges the current request fee, applies a replenishing global exit limit, forwards requests to WithdrawalVault, and notifies StakingRouter.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreInWatchMode": ["getExitRequestLimitFullInfo"],
   "fields": {
     "exitRequestLimitConfiguration": {

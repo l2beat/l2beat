@@ -963,8 +963,9 @@ export interface TrustedSetup {
 export type ProjectDefiCategory =
   | 'DEX'
   | 'Oracle'
-  | 'Prediction market'
   | 'Stablecoin'
+  | 'Liquid Staking'
+  | 'Prediction market'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */

@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.",
   "category": "core",
+  "canActIndependently": false,
   "fields": {
     "accessControl": {
       "handler": { "type": "accessControl", "includeEmptyRoles": true }
