@@ -22,7 +22,7 @@ import type { InteropTokenStats } from '~/server/features/layer2s/interop/utils/
 import { cn } from '~/utils/cn'
 import { describeNode, isCluster } from './graphSelectors'
 
-export function Section({
+export function PanelSection({
   title,
   hint,
   children,
