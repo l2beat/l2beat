@@ -48,7 +48,7 @@ export function createServerPageRouter(
   })
 
   // Cloudflare edge-caches HTML only when the origin sends Cache-Control.
-  // Routes that must not be cached (e.g. "/") override it later in the chain.
+  // Routes that must not be cached override it later in the chain.
   router.use('/', PageCacheMiddleware())
 
   if (!env.CLIENT_SIDE_HOME_PAGE) {
