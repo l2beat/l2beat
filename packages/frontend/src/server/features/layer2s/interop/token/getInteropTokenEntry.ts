@@ -59,13 +59,7 @@ export function getInteropTokenEntry(
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
-        deployments: relationsGraph.nodes
-          .flatMap((node) => node.deployments)
-          .sort(
-            (a, b) =>
-              (b.volume ?? -1) - (a.volume ?? -1) ||
-              a.chain.name.localeCompare(b.chain.name),
-          ),
+        deployments: relationsGraph.nodes.flatMap((node) => node.deployments),
         relationsGraph: hasTokenRelations(relationsGraph)
           ? relationsGraph
           : undefined,
