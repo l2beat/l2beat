@@ -15,6 +15,7 @@ import { BlobsRepository } from './repositories/BlobsRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
+import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
@@ -101,6 +102,10 @@ export function createDatabase(
 
     // #region Ecosystems
     ecosystemToken: new EcosystemTokenRepository(db),
+    // #endregion
+
+    // #region DeFi
+    defiTvl: new DefiTvlRepository(db),
     // #endregion
 
     // #region UIF
