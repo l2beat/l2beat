@@ -83,20 +83,28 @@ export function useRelationsCamera(
       ),
     [contentWidth, contentHeight, viewportWidth, viewportHeight, focusX],
   )
-  const [camera, setCamera] = useState<Camera>()
+  // A manual camera belongs to the content it was set on; a new layout
+  // (e.g. after toggling hidden nodes) falls back to the fit.
+  const [manual, setManual] = useState<{ camera: Camera; content: Size }>()
+  const camera = manual?.content === content ? manual.camera : fitted
 
+  const setCamera = useCallback(
+    (next: Camera) => setManual({ camera: next, content }),
+    [content],
+  )
   const zoomBy = useCallback(
     (factor: number, point?: Point) =>
-      setCamera((previous) =>
-        zoomCamera(
-          previous ?? fitted,
+      setManual((previous) => ({
+        content,
+        camera: zoomCamera(
+          previous?.content === content ? previous.camera : fitted,
           factor,
           point ?? { x: viewportWidth / 2, y: viewportHeight / 2 },
         ),
-      ),
-    [fitted, viewportWidth, viewportHeight],
+      })),
+    [content, fitted, viewportWidth, viewportHeight],
   )
-  const reset = useCallback(() => setCamera(undefined), [])
+  const reset = useCallback(() => setManual(undefined), [])
 
   // Native listener: React's wheel handler is passive, so it cannot stop the
   // browser from zooming the page on ctrl+wheel. A bare wheel keeps scrolling.
@@ -116,7 +124,7 @@ export function useRelationsCamera(
     return () => element.removeEventListener('wheel', onWheel)
   }, [containerRef, zoomBy])
 
-  return { camera: camera ?? fitted, setCamera, zoomBy, reset }
+  return { camera, setCamera, zoomBy, reset }
 }
 
 function clamp(value: number, min: number, max: number): number {

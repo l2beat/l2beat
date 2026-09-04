@@ -30,8 +30,7 @@ export function TokenRelationsGraphView({
   const isMobile = breakpoint === 'xs' || breakpoint === 'sm'
 
   const unconnectedIds = useMemo(() => getUnconnectedIds(graph), [graph])
-  const canHide =
-    unconnectedIds.size > 0 && unconnectedIds.size < graph.nodes.length
+  const canHide = unconnectedIds.size > 0
   const visibleGraph = useMemo(
     () =>
       hideUnconnected && canHide
@@ -90,7 +89,10 @@ export function TokenRelationsGraphView({
       </div>
 
       {!isExpanded &&
-        diagram('h-[380px] md:h-[520px]', () => setIsExpanded(true))}
+        diagram(
+          'h-[380px] md:h-[520px]',
+          isMobile ? undefined : () => setIsExpanded(true),
+        )}
 
       {isMobile && (
         <Drawer
