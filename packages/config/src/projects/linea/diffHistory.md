@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xaaad10d7e10c67e3151147395d16f0bd6c402124
+
+# Diff at Fri, 04 Sep 2026 14:04:49 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1788435170
+- current timestamp: 1788530615
+
+## Description
+
+ETH withdrawal reserve was topped-up, so withdrawal reserve is above minimum again.
+
+Also, verifier 0 was upgraded. It is not yet reproduced from the sources.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFull (eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.0:
+-        "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc"
++        "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency.
++++ severity: HIGH
+      values.isWithdrawalReserveBelowMinimum:
+-        true
++        false
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0xAFF26999780901ee8B48f0a1271a177ff46fD53F.sol} | 50 +++++++++++-----------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
+```
+
 Generated with discovered.json: 0xe985fda43c2b47e91bd53b6d34cc1250616aa483
 
 # Diff at Thu, 03 Sep 2026 11:50:51 GMT:
