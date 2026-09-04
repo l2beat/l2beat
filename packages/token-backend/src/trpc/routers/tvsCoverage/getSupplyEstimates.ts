@@ -65,7 +65,7 @@ export async function getSupplyEstimates(
       requests.slice(0, SUPPLY_ESTIMATE_LIMIT).map((request) => {
         const normalized = {
           chain: request.chain,
-          address: normalizeTokenAddress(request.address),
+          address: normalizeTokenAddress(request.chain, request.address),
         }
         return [requestKey(normalized), normalized]
       }),
@@ -92,7 +92,7 @@ export async function getSupplyEstimates(
   const priceRequests = evmRequests.flatMap((request, requestId) => {
     const token = tokensByKey.get(requestKey(request))
     const coingeckoId = token?.abstractToken?.coingeckoId
-    return coingeckoId
+    return coingeckoId && token?.abstractToken?.isPriceUnreliable === false
       ? [{ requestId, coingeckoId, timestamp: UnixTime.now() }]
       : []
   })
@@ -138,7 +138,9 @@ export async function getSupplyEstimates(
   for (const [index, request] of evmRequests.entries()) {
     const token = tokensByKey.get(requestKey(request))
     const totalSupply = supplies[index]
-    const priceUsd = prices.get(index)
+    const priceUsd = token?.abstractToken?.isPriceUnreliable
+      ? undefined
+      : prices.get(index)
     const coinMarket = token?.abstractToken?.coingeckoId
       ? coinMarketsById.get(token.abstractToken.coingeckoId)
       : undefined
@@ -261,6 +263,7 @@ const erc4626ProbeAbi = parseAbi([
 ])
 
 async function readVaultAsset(request: {
+  chain: string
   address: `0x${string}`
   rpcUrl: string
 }): Promise<VaultAsset | undefined> {
@@ -304,7 +307,7 @@ async function readVaultAsset(request: {
     }
 
     return {
-      address: normalizeTokenAddress(asset),
+      address: normalizeTokenAddress(request.chain, asset),
       symbol: symbol || undefined,
     }
   } catch {
@@ -333,5 +336,5 @@ async function mapConcurrent<T, R>(
 }
 
 function requestKey(request: SupplyEstimateRequest): string {
-  return `${request.chain}:${normalizeTokenAddress(request.address)}`
+  return `${request.chain}:${normalizeTokenAddress(request.chain, request.address)}`
 }

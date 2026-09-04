@@ -42,7 +42,8 @@ export async function getTvsCoverageData(
   tokenDb: TokenDatabase,
   hours: number,
 ): Promise<TvsCoverageData> {
-  const to = UnixTime.now()
+  const generatedAt = UnixTime.now()
+  const to = generatedAt
   const from = UnixTime(to - hours * UnixTime.HOUR)
   const [
     deploymentStats,
@@ -79,16 +80,17 @@ export async function getTvsCoverageData(
       ),
       projectInputs,
       deployedTokens,
+      generatedAt,
     ),
     tokenRelations,
   )
 
   return {
-    generatedAt: UnixTime.now(),
+    generatedAt,
     window: { hours, from, to },
     chains: buildChains(rows, projectInputs),
     plugins: buildPlugins(rows, interopProjects),
-    tvsDeployments: collectProjectTvsDeployments(projectInputs),
+    tvsDeployments: collectProjectTvsDeployments(projectInputs, generatedAt),
     rows,
   }
 }

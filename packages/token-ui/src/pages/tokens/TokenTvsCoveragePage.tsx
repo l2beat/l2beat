@@ -70,9 +70,11 @@ interface SortState {
 }
 
 const PAGE_SIZE = 25
+const MAX_SORTABLE_ROWS = 100
 const MAX_VISIBLE_PLUGINS = 4
 const SUPPLY_REQUEST_DEBOUNCE_MS = 300
 const COINGECKO_CIRCULATING_WARNING_RATIO = 1.1
+const CASE_SENSITIVE_TOKEN_ADDRESS_CHAINS = new Set(['solana', 'tron'])
 
 export function TokenTvsCoveragePage() {
   const trpc = useTRPC()
@@ -134,7 +136,7 @@ export function TokenTvsCoveragePage() {
       ),
     [data],
   )
-  const rows = useMemo(() => {
+  const filteredRows = useMemo(() => {
     const needle = search.trim().toLowerCase()
     const threshold = Number(minimumVolume) || 0
 
@@ -164,17 +166,17 @@ export function TokenTvsCoveragePage() {
     })
   }, [chain, chainsById, coverage, data, minimumVolume, search])
 
-  const candidateRows = useMemo(
-    () => rows.slice(0, visibleRows),
-    [rows, visibleRows],
+  const rankedRows = useMemo(
+    () => filteredRows.slice(0, MAX_SORTABLE_ROWS),
+    [filteredRows],
   )
   const supplyRequests = useMemo(
     () =>
-      candidateRows.map((row) => ({
+      rankedRows.map((row) => ({
         chain: row.chain,
         address: row.address,
       })),
-    [candidateRows],
+    [rankedRows],
   )
   const [debouncedSupplyRequests, setDebouncedSupplyRequests] =
     useState(supplyRequests)
@@ -219,15 +221,14 @@ export function TokenTvsCoveragePage() {
   )
   const supplyChangeRequests = useMemo(
     () =>
-      candidateRows
-        .filter(
-          (row) =>
-            row.role === 'minted' ||
-            row.role === 'burnAndMint' ||
-            row.role === 'both',
+      rankedRows
+        .filter((row) =>
+          row.pluginRoles.some(({ roles }) =>
+            roles.some((role) => role === 'minted' || role === 'burnAndMint'),
+          ),
         )
         .map((row) => ({ chain: row.chain, address: row.address })),
-    [candidateRows],
+    [rankedRows],
   )
   const [debouncedSupplyChangeRequests, setDebouncedSupplyChangeRequests] =
     useState(supplyChangeRequests)
@@ -267,16 +268,14 @@ export function TokenTvsCoveragePage() {
   const isFetchingSupplyChanges = supplyChangeQueries.some(
     (query) => query.isFetching,
   )
-  const shownRows = useMemo(
+  const sortedRows = useMemo(
     () =>
-      sortRows(
-        candidateRows,
-        sort,
-        supplyByDeployment,
-        chainsById,
-        pluginsById,
-      ),
-    [candidateRows, chainsById, pluginsById, sort, supplyByDeployment],
+      sortRows(rankedRows, sort, supplyByDeployment, chainsById, pluginsById),
+    [chainsById, pluginsById, rankedRows, sort, supplyByDeployment],
+  )
+  const shownRows = useMemo(
+    () => sortedRows.slice(0, visibleRows),
+    [sortedRows, visibleRows],
   )
   const sortBy = (key: SortKey) => {
     setSort((current) => ({
@@ -289,13 +288,21 @@ export function TokenTvsCoveragePage() {
           : defaultSortDirection(key),
     }))
   }
-  const volume = rows.reduce((sum, row) => sum + row.volumeUsd, 0)
-  const hasMoreRows = candidateRows.length < rows.length
-  const nextBatchSize = Math.min(PAGE_SIZE, rows.length - candidateRows.length)
+  const volume = filteredRows.reduce((sum, row) => sum + row.volumeUsd, 0)
+  const hasMoreRows = shownRows.length < rankedRows.length
+  const nextBatchSize = Math.min(
+    PAGE_SIZE,
+    rankedRows.length - shownRows.length,
+  )
   const summary = data
-    ? `${rows.length.toLocaleString()} rows · ${formatCurrency(volume, 'usd')}${
-        hasMoreRows ? ` · ${candidateRows.length.toLocaleString()} shown` : ''
-      }`
+    ? `${filteredRows.length.toLocaleString()} rows · ${formatCurrency(
+        volume,
+        'usd',
+      )}${
+        filteredRows.length > rankedRows.length
+          ? ` · top ${rankedRows.length.toLocaleString()} by volume`
+          : ''
+      }${hasMoreRows ? ` · ${shownRows.length.toLocaleString()} shown` : ''}`
     : undefined
 
   return (
@@ -680,7 +687,7 @@ export function TokenTvsCoveragePage() {
                         disabled={isLoadingSupplies}
                         onClick={() =>
                           setVisibleRows((current) =>
-                            Math.min(current + PAGE_SIZE, rows.length),
+                            Math.min(current + PAGE_SIZE, rankedRows.length),
                           )
                         }
                       >
@@ -757,7 +764,10 @@ function shortAddress(address: string) {
 }
 
 function deploymentKey(chain: string, address: string) {
-  return `${chain}:${address.toLowerCase()}`
+  const normalized = CASE_SENSITIVE_TOKEN_ADDRESS_CHAINS.has(chain)
+    ? address
+    : address.toLowerCase()
+  return `${chain}:${normalized}`
 }
 
 function projectTvsDeploymentKey(

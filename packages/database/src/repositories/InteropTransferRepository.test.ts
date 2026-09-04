@@ -1155,6 +1155,89 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         ])
       })
 
+      it('filters mint and burn legs by their own timestamps', async () => {
+        const address = EthereumAddress.random()
+        const mintInside = transfer(
+          'plugin',
+          'mint-inside',
+          'transfer',
+          UnixTime(200),
+          'ethereum',
+          'base',
+        )
+        mintInside.srcTime = UnixTime(90)
+        mintInside.dstTime = UnixTime(200)
+        mintInside.dstTokenAddress = address
+        mintInside.dstWasMinted = true
+        mintInside.dstRawAmount = 10n
+
+        const burnInside = transfer(
+          'plugin',
+          'burn-inside',
+          'transfer',
+          UnixTime(400),
+          'base',
+          'ethereum',
+        )
+        burnInside.srcTime = UnixTime(200)
+        burnInside.dstTime = UnixTime(400)
+        burnInside.srcTokenAddress = address
+        burnInside.srcWasBurned = true
+        burnInside.srcRawAmount = 4n
+
+        const burnOutside = transfer(
+          'plugin',
+          'burn-outside',
+          'transfer',
+          UnixTime(200),
+          'base',
+          'ethereum',
+        )
+        burnOutside.srcTime = UnixTime(90)
+        burnOutside.dstTime = UnixTime(200)
+        burnOutside.srcTokenAddress = address
+        burnOutside.srcWasBurned = true
+        burnOutside.srcRawAmount = 100n
+
+        const mintOutside = transfer(
+          'plugin',
+          'mint-outside',
+          'transfer',
+          UnixTime(400),
+          'ethereum',
+          'base',
+        )
+        mintOutside.srcTime = UnixTime(200)
+        mintOutside.dstTime = UnixTime(400)
+        mintOutside.dstTokenAddress = address
+        mintOutside.dstWasMinted = true
+        mintOutside.dstRawAmount = 100n
+
+        await repository.insertMany([
+          mintInside,
+          burnInside,
+          burnOutside,
+          mintOutside,
+        ])
+
+        const result = await repository.getSupplyChangeStatsByRange(
+          [{ chain: 'base', address }],
+          UnixTime(100),
+          UnixTime(300),
+        )
+
+        expect(result).toEqual([
+          {
+            chain: 'base',
+            address,
+            mintedRaw: '10',
+            burnedRaw: '4',
+            transferCount: 2,
+            missingAmountCount: 0,
+          },
+        ])
+      })
+
       it('does not query for an empty request list', async () => {
         const result = await repository.getSupplyChangeStatsByRange(
           [],

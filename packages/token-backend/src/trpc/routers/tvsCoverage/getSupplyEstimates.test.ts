@@ -95,6 +95,61 @@ describe(getSupplyEstimates.name, () => {
     expect(reads).toEqual([pricedAddress, unpricedAddress])
   })
 
+  it('does not calculate value from a price marked as unreliable', async () => {
+    const tokenAddress = address(1)
+    const getClosestPricesAtOrBefore = mockFn().resolvesTo(new Map([[0, 2]]))
+    const deployedToken = mockObject<TokenDatabase['deployedToken']>({
+      getByChainAndAddress: mockFn().resolvesTo([
+        token('chain-a', tokenAddress, 18, 'unreliable', true),
+      ]),
+    })
+    const chain = mockObject<TokenDatabase['chain']>({
+      getAll: mockFn().resolvesTo([
+        {
+          name: 'chain-a',
+          chainId: 1,
+          explorerUrl: null,
+          aliases: null,
+          apis: [{ type: 'rpc', url: 'https://rpc.example' }],
+        },
+      ]),
+    })
+
+    const result = await getSupplyEstimates(
+      mockObject<Database>({
+        interopRecentPrices: mockObject<Database['interopRecentPrices']>({
+          getClosestPricesAtOrBefore,
+        }),
+      }),
+      mockObject<TokenDatabase>({ deployedToken, chain }),
+      [{ chain: 'chain-a', address: tokenAddress }],
+      {
+        readTotalSupply: async () => 100n * 10n ** 18n,
+        readVaultAsset: async () => undefined,
+        getCoinsMarketData: async () => [
+          {
+            id: 'unreliable',
+            circulating_supply: 50,
+            last_updated: '2026-09-03T07:57:20.000Z',
+          },
+        ],
+      },
+    )
+
+    expect(result).toEqual([
+      {
+        chain: 'chain-a',
+        address: tokenAddress,
+        totalSupply: '100',
+        potentialTvsUsd: undefined,
+        coingeckoCirculatingSupply: 50,
+        coingeckoUpdatedAt: '2026-09-03T07:57:20.000Z',
+        vaultAsset: undefined,
+      },
+    ])
+    expect(getClosestPricesAtOrBefore.calls[0]?.args[0]).toEqual([])
+  })
+
   it('caps work before querying repositories', async () => {
     const getByChainAndAddress = mockFn().resolvesTo([])
     const deployedToken = mockObject<TokenDatabase['deployedToken']>({
@@ -132,6 +187,7 @@ function token(
   tokenAddress: string,
   decimals: number,
   coingeckoId: string | null,
+  isPriceUnreliable = false,
 ): {
   deployedToken: DeployedTokenRecord
   abstractToken: AbstractTokenRecord
@@ -159,7 +215,7 @@ function token(
       additionalCoingeckoEntries: null,
       comment: null,
       reviewed: true,
-      isPriceUnreliable: false,
+      isPriceUnreliable,
     },
   }
 }

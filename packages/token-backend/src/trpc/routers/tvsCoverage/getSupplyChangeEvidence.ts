@@ -47,7 +47,7 @@ export async function getSupplyChangeEvidence(
       requests.slice(0, SUPPLY_CHANGE_EVIDENCE_LIMIT).map((request) => {
         const normalized = {
           chain: request.chain,
-          address: normalizeTokenAddress(request.address),
+          address: normalizeTokenAddress(request.chain, request.address),
         }
         return [requestKey(normalized), normalized]
       }),
@@ -266,5 +266,5 @@ async function mapConcurrent<T, R>(
 }
 
 function requestKey(request: SupplyChangeEvidenceRequest): string {
-  return `${request.chain}:${normalizeTokenAddress(request.address)}`
+  return `${request.chain}:${normalizeTokenAddress(request.chain, request.address)}`
 }

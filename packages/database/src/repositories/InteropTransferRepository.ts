@@ -625,8 +625,8 @@ export class InteropTransferRepository extends BaseRepository {
         JOIN "InteropTransfer" AS transfer
           ON transfer."dstChain" = target.chain
           AND right(lower(transfer."dstTokenAddress"), 40) = right(lower(target.address), 40)
-        WHERE transfer.timestamp > ${UnixTime.toDate(fromExclusive)}
-          AND transfer.timestamp <= ${UnixTime.toDate(toInclusive)}
+        WHERE coalesce(transfer."dstTime", transfer.timestamp) > ${UnixTime.toDate(fromExclusive)}
+          AND coalesce(transfer."dstTime", transfer.timestamp) <= ${UnixTime.toDate(toInclusive)}
           AND transfer."dstWasMinted" IS TRUE
 
         UNION ALL
@@ -640,8 +640,8 @@ export class InteropTransferRepository extends BaseRepository {
         JOIN "InteropTransfer" AS transfer
           ON transfer."srcChain" = target.chain
           AND right(lower(transfer."srcTokenAddress"), 40) = right(lower(target.address), 40)
-        WHERE transfer.timestamp > ${UnixTime.toDate(fromExclusive)}
-          AND transfer.timestamp <= ${UnixTime.toDate(toInclusive)}
+        WHERE coalesce(transfer."srcTime", transfer.timestamp) > ${UnixTime.toDate(fromExclusive)}
+          AND coalesce(transfer."srcTime", transfer.timestamp) <= ${UnixTime.toDate(toInclusive)}
           AND transfer."srcWasBurned" IS TRUE
       )
       SELECT

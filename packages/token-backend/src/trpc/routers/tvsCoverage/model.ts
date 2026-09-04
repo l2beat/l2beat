@@ -77,11 +77,15 @@ interface TvsProjectIndex {
   tokens: IndexedTvsToken[]
 }
 
-export function normalizeTokenAddress(address: string): string {
+const NON_EVM_TOKEN_ADDRESS_CHAINS = new Set(['solana', 'starknet', 'tron'])
+
+export function normalizeTokenAddress(chain: string, address: string): string {
   const normalized = address.toLowerCase()
-  if (normalized === 'native' || !normalized.startsWith('0x')) {
-    return normalized
+  if (normalized === 'native') return normalized
+  if (NON_EVM_TOKEN_ADDRESS_CHAINS.has(chain)) {
+    return normalized.startsWith('0x') ? normalized : address
   }
+  if (!normalized.startsWith('0x')) return address
 
   try {
     return Address32.cropToEthereumAddress(
@@ -94,36 +98,78 @@ export function normalizeTokenAddress(address: string): string {
 
 export function collectAmountDeployments(
   formula: Formula,
+  timestamp?: number,
 ): { chain: string; address: string }[] {
+  const result = collectFormulaDeployments(formula, timestamp)
+  return result.active ? result.deployments : []
+}
+
+function collectFormulaDeployments(
+  formula: Formula,
+  timestamp: number | undefined,
+): {
+  active: boolean
+  deployments: { chain: string; address: string }[]
+} {
   switch (formula.type) {
-    case 'calculation':
-      return uniqueDeployments(
-        formula.arguments.flatMap((argument) =>
-          collectAmountDeployments(argument),
-        ),
-      )
+    case 'calculation': {
+      const activeArguments = formula.arguments
+        .map((argument) => collectFormulaDeployments(argument, timestamp))
+        .filter((argument) => argument.active)
+      const active =
+        formula.operator === 'diff'
+          ? activeArguments.length >= 2
+          : activeArguments.length >= 1
+
+      return {
+        active,
+        deployments: active
+          ? uniqueDeployments(
+              activeArguments.flatMap((argument) => argument.deployments),
+            )
+          : [],
+      }
+    }
     case 'value':
-      return collectAmountDeployments(formula.amount)
+      return collectFormulaDeployments(formula.amount, timestamp)
     case 'balanceOfEscrow':
     case 'starknetBalanceOf':
     case 'totalSupply':
     case 'starknetTotalSupply':
     case 'circulatingSupply':
-      return [{ chain: formula.chain, address: formula.address }]
+      return {
+        active: isFormulaActive(formula, timestamp),
+        deployments: [{ chain: formula.chain, address: formula.address }],
+      }
     case 'const':
-      return []
+      return {
+        active: isFormulaActive(formula, timestamp),
+        deployments: [],
+      }
   }
+}
+
+function isFormulaActive(
+  formula: Extract<Formula, { sinceTimestamp: number }>,
+  timestamp: number | undefined,
+) {
+  if (timestamp === undefined) return true
+  return (
+    formula.sinceTimestamp < timestamp &&
+    (formula.untilTimestamp === undefined || formula.untilTimestamp > timestamp)
+  )
 }
 
 export function collectProjectTvsDeployments(
   projects: TvsProjectInput[],
+  timestamp?: number,
 ): ProjectTvsDeployment[] {
   const deployments = projects.flatMap((project) =>
     (project.tokens ?? []).flatMap((token) =>
-      collectAmountDeployments(token.amount).map((deployment) => ({
+      collectAmountDeployments(token.amount, timestamp).map((deployment) => ({
         projectChain: project.chain,
         tokenChain: deployment.chain,
-        address: normalizeTokenAddress(deployment.address),
+        address: normalizeTokenAddress(deployment.chain, deployment.address),
       })),
     ),
   )
@@ -146,7 +192,7 @@ export function aggregateInteropDeploymentStats(
   const mutable = new Map<string, MutableInteropDeployment>()
 
   for (const stat of stats) {
-    const address = normalizeTokenAddress(stat.address)
+    const address = normalizeTokenAddress(stat.chain, stat.address)
     const key = deploymentKey(stat.chain, address)
     const current = mutable.get(key) ?? {
       chain: stat.chain,
@@ -178,8 +224,13 @@ export function buildCoverage(
   deployments: InteropDeployment[],
   projects: TvsProjectInput[],
   deployedTokens: DeployedTokenRecord[],
+  timestamp?: number,
 ): CoverageRow[] {
-  const projectIndices = buildTvsProjectIndices(projects, deployedTokens)
+  const projectIndices = buildTvsProjectIndices(
+    projects,
+    deployedTokens,
+    timestamp,
+  )
 
   return deployments.flatMap((deployment) => {
     const projectIndex = projectIndices.get(deployment.chain)
@@ -338,6 +389,7 @@ function finalizeInteropDeployments(
 function buildTvsProjectIndices(
   projects: TvsProjectInput[],
   deployedTokens: DeployedTokenRecord[],
+  timestamp: number | undefined,
 ) {
   const deployedByKey = new Map(
     deployedTokens.map((token) => [
@@ -350,7 +402,7 @@ function buildTvsProjectIndices(
   for (const project of projects) {
     const tokens = (project.tokens ?? []).map((token) => {
       const exactDeploymentKeys = new Set(
-        collectAmountDeployments(token.amount).map((deployment) =>
+        collectAmountDeployments(token.amount, timestamp).map((deployment) =>
           deploymentKey(deployment.chain, deployment.address),
         ),
       )
@@ -390,7 +442,7 @@ function isIncluded(
 }
 
 function deploymentKey(chain: string, address: string): string {
-  return `${chain}:${normalizeTokenAddress(address)}`
+  return `${chain}:${normalizeTokenAddress(chain, address)}`
 }
 
 function uniqueDeployments(

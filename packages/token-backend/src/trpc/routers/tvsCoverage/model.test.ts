@@ -23,10 +23,24 @@ describe(normalizeTokenAddress.name, () => {
   it('crops Address32-padded EVM addresses and keeps native', () => {
     expect(
       normalizeTokenAddress(
+        'base',
         '0x000000000000000000000000A0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       ),
     ).toEqual('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48')
-    expect(normalizeTokenAddress('NATIVE')).toEqual('native')
+    expect(normalizeTokenAddress('base', 'NATIVE')).toEqual('native')
+  })
+
+  it('preserves full-width non-EVM token addresses', () => {
+    const starknetAddress =
+      '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+    const solanaAddress = 'AbCdEfGhijkLmnoPqrstUvwxyz123456789'
+
+    expect(normalizeTokenAddress('starknet', starknetAddress)).toEqual(
+      starknetAddress,
+    )
+    expect(normalizeTokenAddress('solana', solanaAddress)).toEqual(
+      solanaAddress,
+    )
   })
 })
 
@@ -74,6 +88,48 @@ describe(collectAmountDeployments.name, () => {
       },
       { chain: 'base', address: 'native' },
     ])
+  })
+
+  it('keeps only active formulas and requires both sides of a diff', () => {
+    const active = {
+      type: 'totalSupply' as const,
+      chain: 'base',
+      address: EthereumAddress('0x1111111111111111111111111111111111111111'),
+      decimals: 18,
+      sinceTimestamp: UnixTime(100),
+      untilTimestamp: UnixTime(300),
+    }
+    const expired = {
+      ...active,
+      address: EthereumAddress('0x2222222222222222222222222222222222222222'),
+      untilTimestamp: UnixTime(200),
+    }
+    const future = {
+      ...active,
+      address: EthereumAddress('0x3333333333333333333333333333333333333333'),
+      sinceTimestamp: UnixTime(200),
+    }
+
+    expect(
+      collectAmountDeployments(
+        {
+          type: 'calculation',
+          operator: 'sum',
+          arguments: [active, expired, future],
+        },
+        UnixTime(200),
+      ),
+    ).toEqual([{ chain: 'base', address: active.address }])
+    expect(
+      collectAmountDeployments(
+        {
+          type: 'calculation',
+          operator: 'diff',
+          arguments: [active, expired],
+        },
+        UnixTime(200),
+      ),
+    ).toEqual([])
   })
 })
 
@@ -165,6 +221,20 @@ describe(aggregateInteropDeploymentStats.name, () => {
     expect(result[0]?.unvaluedTransferCount).toEqual(2)
     expect(result[0]?.plugins).toEqual(['one', 'two'])
   })
+
+  it('does not merge full-width Starknet addresses with the same suffix', () => {
+    const suffix = 'a'.repeat(40)
+    const first = `0x${'1'.repeat(24)}${suffix}`
+    const second = `0x${'2'.repeat(24)}${suffix}`
+    const stats = [
+      deploymentStats({ chain: 'starknet', address: first }),
+      deploymentStats({ chain: 'starknet', address: second }),
+    ]
+
+    const result = aggregateInteropDeploymentStats(stats, [], [])
+
+    expect(result.map((row) => row.address)).toEqualUnsorted([first, second])
+  })
 })
 
 describe(buildCoverage.name, () => {
@@ -236,6 +306,36 @@ describe(buildCoverage.name, () => {
       'chain-unknown': false,
     })
     expect(result.some((row) => row.chain === 'chain-no-config')).toEqual(false)
+  })
+
+  it('does not count inactive TVS formulas as coverage', () => {
+    const tokenAddress = EthereumAddress(
+      '0x1111111111111111111111111111111111111111',
+    )
+    const projects = [
+      project('base', [
+        token('expired-TKN', {
+          type: 'totalSupply',
+          chain: 'base',
+          address: tokenAddress,
+          decimals: 18,
+          sinceTimestamp: UnixTime(1),
+          untilTimestamp: UnixTime(100),
+        }),
+      ]),
+    ]
+    const deployedTokens = [deployed('base', tokenAddress, 'TOKEN1', 'TKN')]
+    const deployments = [interopDeployment('base', tokenAddress, 'TOKEN1')]
+
+    const result = buildCoverage(
+      deployments,
+      projects,
+      deployedTokens,
+      UnixTime(200),
+    )
+
+    expect(result[0]?.included).toEqual(false)
+    expect(collectProjectTvsDeployments(projects, UnixTime(200))).toEqual([])
   })
 })
 
