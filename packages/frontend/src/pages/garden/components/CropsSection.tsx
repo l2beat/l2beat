@@ -81,14 +81,14 @@ function CropCard({
           </ul>
         </div>
         <div>
-          <h4 className="font-semibold text-secondary text-subtitle-12 uppercase tracking-wider">
+          <h4 className="font-semibold text-subtitle-12 uppercase tracking-wider">
             What pulls it down
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
             {criteria.pullsDown.map((pullDown) => (
               <li
                 key={pullDown}
-                className="flex items-start gap-2.5 text-paragraph-14 text-secondary md:text-paragraph-15"
+                className="flex items-start gap-2.5 text-paragraph-14 md:text-paragraph-15"
               >
                 <span
                   aria-hidden
