@@ -15,7 +15,7 @@ const CLUSTER_MEMBERS_SHOWN = CLUSTER_MEMBERS_CAP - 1
 const PADDING_Y = 10
 const BORDER_Y = 2
 const HEADER_HEIGHT = 20 + 4 + 16
-const CLUSTER_ROW_HEIGHT = 24
+const CLUSTER_ROW_HEIGHT = 26
 const CLUSTER_FOOTER_HEIGHT = 20
 
 export function getNodeSize(node: InteropTokenRelationsNode): {
@@ -28,7 +28,7 @@ export function getNodeSize(node: InteropTokenRelationsNode): {
   const shown = getShownMembers(node).length
   const columns = getClusterColumns(count)
   const rows = Math.ceil(shown / columns)
-  const list = 8 + 1 + rows * CLUSTER_ROW_HEIGHT
+  const list = 12 + rows * CLUSTER_ROW_HEIGHT
   const footer = count > shown ? CLUSTER_FOOTER_HEIGHT : 0
   return { width: columns === 1 ? 268 : 420, height: frame + list + footer }
 }
@@ -68,6 +68,7 @@ export function RelationsNode({
   if (!first) return null
   const shown = getShownMembers(node)
   const hiddenCount = node.deployments.length - shown.length
+  const columns = getClusterColumns(node.deployments.length)
 
   return (
     <button
@@ -76,7 +77,6 @@ export function RelationsNode({
       style={{ left: box.x, top: box.y, width: box.width, height: box.height }}
       className={cn(
         'absolute flex flex-col overflow-hidden rounded-xl border bg-surface-primary px-3 py-2.5 text-left',
-        'transition-colors hover:bg-surface-primary-hover',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50',
         isSelected ? 'border-brand ring-1 ring-brand' : 'border-divider',
         isUnconnected && 'border-dashed',
@@ -108,15 +108,18 @@ export function RelationsNode({
             <Bridges bridges={node.bridges} />
           </Meta>
           <ul
-            className="mt-2 grid w-full gap-x-4 border-divider border-t"
+            className="mt-3 grid w-full gap-x-4"
             style={{
-              gridTemplateColumns: `repeat(${getClusterColumns(node.deployments.length)}, minmax(0, 1fr))`,
+              gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
             }}
           >
-            {shown.map((deployment) => (
+            {shown.map((deployment, index) => (
               <li
                 key={`${deployment.chain.id}|${deployment.address}`}
-                className="flex h-6 items-center justify-between gap-3 border-divider border-b text-label-value-13"
+                className={cn(
+                  'flex h-[26px] items-center justify-between gap-3 text-label-value-13',
+                  index >= columns && 'border-divider border-t',
+                )}
               >
                 <span className="flex min-w-0 items-center gap-2 font-semibold text-primary">
                   <ChainIcon iconUrl={deployment.chain.iconUrl} alt="" />
@@ -200,7 +203,7 @@ function Bridges({
           />
         ))}
       </span>
-      <span className="truncate text-primary">
+      <span className="truncate font-semibold text-primary">
         {bridges.map((bridge) => bridge.name).join(', ')}
       </span>
     </span>
