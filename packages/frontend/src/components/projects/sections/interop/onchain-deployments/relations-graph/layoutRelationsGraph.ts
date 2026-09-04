@@ -27,7 +27,7 @@ export interface RelationsLayout {
   unconnectedDividerY: number | undefined
 }
 
-export const SIDE_LANE_WIDTH = 72
+const SIDE_LANE_WIDTH = 72
 const MIN_WORLD_WIDTH = 920
 const MAX_WORLD_WIDTH = 1760
 const NODE_GAP = 24

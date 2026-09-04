@@ -13,10 +13,7 @@ export type {
   ActivityRecord,
   ActivityTotals,
 } from './repositories/ActivityRepository'
-export type {
-  AggregatedInteropDeployedTokenRecord,
-  AggregatedInteropDeployedTokenStats,
-} from './repositories/AggregatedInteropDeployedTokenRepository'
+export type { AggregatedInteropDeployedTokenRecord } from './repositories/AggregatedInteropDeployedTokenRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {

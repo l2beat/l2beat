@@ -295,25 +295,40 @@ export class TokenRelationRepository extends BaseRepository {
   ): Promise<TokenRelationRoute[]> {
     if (tokens.length === 0) return []
 
-    // The set binds as two array parameters, so it is not batched — a "both
-    // endpoints" condition could not be split across batches anyway.
-    const endpoints = this.db
-      .selectFrom(
-        sql<{ chain: string; address: string }>`unnest(
-          ${tokens.map((token) => token.chain)}::varchar[],
-          ${tokens.map((token) => token.address.toLowerCase())}::varchar[]
-        )`.as<'endpoint'>(sql`endpoint(chain, address)`),
-      )
-      .select(['endpoint.chain', 'endpoint.address'])
-      .$asTuple('chain', 'address')
+    // The set binds once as two array parameters, so it is not batched — a
+    // "both endpoints" condition could not be split across batches anyway.
     const rows = await this.db
+      .with('endpoints', (db) =>
+        db
+          .selectFrom(
+            sql<{ chain: string; address: string }>`unnest(
+              ${tokens.map((token) => token.chain)}::varchar[],
+              ${tokens.map((token) => token.address.toLowerCase())}::varchar[]
+            )`.as<'endpoint'>(sql`endpoint(chain, address)`),
+          )
+          .select(['endpoint.chain', 'endpoint.address']),
+      )
       .selectFrom('TokenRelation')
       .select(ROUTE_COLUMNS)
       .where((eb) =>
-        eb(eb.refTuple('tokenAChain', 'tokenAAddress'), 'in', endpoints),
+        eb(
+          eb.refTuple('tokenAChain', 'tokenAAddress'),
+          'in',
+          eb
+            .selectFrom('endpoints')
+            .select(['chain', 'address'])
+            .$asTuple('chain', 'address'),
+        ),
       )
       .where((eb) =>
-        eb(eb.refTuple('tokenBChain', 'tokenBAddress'), 'in', endpoints),
+        eb(
+          eb.refTuple('tokenBChain', 'tokenBAddress'),
+          'in',
+          eb
+            .selectFrom('endpoints')
+            .select(['chain', 'address'])
+            .$asTuple('chain', 'address'),
+        ),
       )
       .execute()
 

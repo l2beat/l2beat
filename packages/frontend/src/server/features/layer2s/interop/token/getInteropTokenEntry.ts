@@ -10,8 +10,6 @@ import {
   hasTokenRelations,
 } from './getInteropTokenRelationsGraph'
 
-const logger = getLogger().for('getInteropTokenEntry')
-
 export interface InteropTokenEntry {
   sections: ProjectDetailsSection[]
   deploymentsCount: number

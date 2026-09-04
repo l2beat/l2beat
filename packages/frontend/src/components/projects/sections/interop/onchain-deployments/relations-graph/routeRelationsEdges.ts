@@ -1,3 +1,4 @@
+import { edgeKey } from './graphSelectors'
 import type {
   LayoutEdge,
   NodeBox,
@@ -15,10 +16,6 @@ const BUS_OFFSET = 44
 const LANE_MARGIN = 22
 const LANE_STEP = 6
 const DEPARTURE = 28
-
-export function edgeKey(edge: LayoutEdge): string {
-  return `${edge.from}->${edge.to}`
-}
 
 /**
  * Orthogonal paths from a backer's bottom to a bus above its target. Edges

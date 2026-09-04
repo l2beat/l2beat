@@ -72,11 +72,10 @@ export function RelationsNode({
   return (
     <button
       type="button"
-      data-node-id={node.id}
       style={{ left: box.x, top: box.y, width: box.width, height: box.height }}
       className={cn(
         'absolute flex flex-col overflow-hidden rounded-xl border bg-surface-primary px-3 py-2.5 text-left',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50',
+        'focus-visible:outline-2 focus-visible:outline-brand/50',
         isSelected ? 'border-brand ring-1 ring-brand' : 'border-divider',
         isUnconnected && 'border-dashed',
         isSource && 'outline outline-4 outline-brand/20 outline-offset-2',
