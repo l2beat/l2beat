@@ -192,7 +192,7 @@ export function getSameChainComparisons(
 }
 
 export interface BackedGroups {
-  /** Every directly backed node with the bridges minting it, busiest first. */
+  /** Every directly backed node with the bridges minting it, in path order. */
   direct: { node: InteropTokenRelationsNode; bridges: ProjectIconListItem[] }[]
   /** Paths reaching further than one hop. */
   nested: RelationsPath[]
