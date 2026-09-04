@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x8053983b8cf9e56d647ef862455ccff19103767b
+
+# Diff at Fri, 04 Sep 2026 13:57:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1785756243
+- current timestamp: 1788530147
+
+## Description
+
+Added custom implementation operators for the current callproxy implementation. It does not introduce any trust assumptions because this callproxy is used by default anyway.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradeable call router through which Starknet and other applications access SHARP fact registries. It uses `call`, not `delegatecall`, so facts and immutable verifier configuration remain at each target registry. The explicit `isValid` entry point always queries the default target. Other calls handled by the fallback, principally proof submissions, can be routed per caller to a still-active registry in the default target's reference chain. The default target can be replaced by eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 after 8d.
++++ description: Latest nonzero caller-to-registry fallback routes reconstructed from events. These are `call` targets, not delegatecall implementations. The stored route is usable only while the target is in the default registry's unexpired reference chain; otherwise the caller's fallback call reverts. This affects proof submissions but not the proxy's explicit `isValid`, which always queries the default target.
++++ severity: HIGH
+      values.customFactRegistryRoutes.10:
++        {"operator":"eth:0x159eb6910E36AB09dF3798f174b9DB00f327B06c","customReference":"eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6"}
+    }
+```
+
 Generated with discovered.json: 0x3e08cff5c1fccc7644ded152dc6e784d5cbede2d
 
 # Diff at Mon, 03 Aug 2026 11:25:19 GMT:
