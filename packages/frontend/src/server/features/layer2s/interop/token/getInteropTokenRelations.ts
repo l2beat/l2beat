@@ -2,7 +2,11 @@ import type {
   InteropTransferDeployedTokenPairStats,
   TokenRelationRoute,
 } from '@l2beat/database'
-import { Address32, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  INTEROP_TRANSFER_RETENTION,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTokenDb } from '~/server/tokenDb'
@@ -29,15 +33,13 @@ export async function getInteropTokenRelations(
   return { routes, pairStats }
 }
 
-// Mirrors the backend cleaner. Aggregates live twice as long, so an aggregates
-// timestamp override can point at a day whose raw transfers are already gone.
-const RAW_TRANSFER_RETENTION = 7 * UnixTime.DAY
-
 async function getPairStats(tokenId: string) {
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) return undefined
   const from = snapshotTimestamp - UnixTime.DAY
-  if (from < UnixTime.now() - RAW_TRANSFER_RETENTION) return undefined
+  // Aggregates outlive raw transfers, so an aggregates timestamp override can
+  // point at a day the cleaner has already emptied.
+  if (from < UnixTime.now() - INTEROP_TRANSFER_RETENTION) return undefined
   return getDb().interopTransfer.getDeployedTokenPairStats(tokenId, {
     from,
     to: snapshotTimestamp,
