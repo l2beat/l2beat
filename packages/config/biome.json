@@ -15,7 +15,8 @@
       "!**/src/projects/**/.code@*",
       "!**/src/projects/**/.flat",
       "!**/src/projects/**/.flat@*",
-      "!**/discovered.json"
+      "!**/discovered.json",
+      "!**/src/projects/*/changelog.json"
     ]
   },
   "linter": {

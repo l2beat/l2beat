@@ -611,6 +611,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098471,
       "sinceBlock": 22139908,
@@ -629,6 +630,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098519,
       "sinceBlock": 22139912,
@@ -875,6 +877,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "critical": true,
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753824383,
       "sinceBlock": 23027465,
@@ -971,6 +974,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
@@ -1014,6 +1018,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "critical": true,
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753824383,
       "sinceBlock": 23027465,
@@ -1067,6 +1072,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098567,
       "sinceBlock": 22139916,
@@ -1160,6 +1166,7 @@
         "$immutable": true,
         "owner": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x817BE2d0f28b594D7023dAdf2b3Aa54327180c66": "ProxyAdmin"
       }
@@ -1180,6 +1187,7 @@
         "$immutable": true,
         "owner": "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": "ProxyAdmin"
       }
@@ -1196,6 +1204,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
@@ -1457,6 +1466,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098663,
       "sinceBlock": 22139924,
@@ -1552,6 +1562,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "critical": true,
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
@@ -1820,6 +1831,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
@@ -1863,6 +1875,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
@@ -1902,6 +1915,7 @@
           "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
         ]
       },
+      "fieldMeta": { "executors": { "severity": "LOW" } },
       "implementationNames": {
         "eth:0xFA4d1D308f4B4f6E6F836Db2B77Db549606A460c": "",
         "eth:0x4231Dd9e6717aB9a9ABC5618d8a4Fcf1a432F698": "UpgradeExecutor"

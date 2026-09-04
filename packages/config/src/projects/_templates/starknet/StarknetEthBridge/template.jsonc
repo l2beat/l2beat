@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to {{withdrawLimitPct}}% of the locked funds per 24 hours.", // The withdrawal limit is {{withdrawalLimitStatus}}.
   "category": "bridge-canonical",
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
@@ -51,7 +52,6 @@
     },
     "depositStatus": {
       "description": "Token status managed by the Manager. Only affects deposits.",
-      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getStatus(address token) view returns (uint8)",

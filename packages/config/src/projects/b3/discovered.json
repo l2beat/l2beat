@@ -26,6 +26,7 @@
         "isUpgrading": false,
         "owner": "base:0x184d44C2DfB6d17C60B9Ca329b7B8630aea325Ce"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x102e24084a003feEbe57B536a3B4E29eD6AC855A": "ProxyAdmin"
       }
@@ -99,6 +100,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
@@ -135,6 +137,7 @@
         "systemConfig": "base:0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad",
         "version": "2.4.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x39d484F0FC1b3bfAed7D54934FF5C8e5d47A6867": "ResolvedDelegateProxy",
         "base:0xce1E945A3426f0521eB9D1Ccc63D6d204bC49D40": "L1CrossDomainMessenger"
@@ -152,6 +155,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
@@ -236,6 +240,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -315,6 +320,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
@@ -333,6 +339,7 @@
         "systemConfig": "base:0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad",
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38": "L1ChugSplashProxy",
         "base:0x4bFC8d6bE2843626A1186bd6eEfAD1297650470a": "L1StandardBridge"
@@ -436,6 +443,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
@@ -503,10 +511,13 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -537,6 +548,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
@@ -544,6 +556,7 @@
         "$immutable": true,
         "owner": "base:0x102e24084a003feEbe57B536a3B4E29eD6AC855A"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0xd79005b0f06b2C518893d2Ba31f94429e555b6b1": "AddressManager"
       },
@@ -560,6 +573,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "critical": true,
       "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
@@ -580,6 +594,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "base:0xe736142a3e957660cBae61AC4bD61e5b65635140": "Proxy",
         "base:0xAd41C2437Cb1327149e4e635caCE7c74d408be98": "SuperchainConfig"
@@ -1000,14 +1015,14 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
+    "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6"
   },
   "usedBlockNumbers": { "base": 47978546 },
   "permissionsConfigHash": "0xc351e227f7d95ab1fc84bad9a2d4aadf8900899665bdc8a9dde2d11abd08d57d",

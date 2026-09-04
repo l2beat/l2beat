@@ -11,10 +11,10 @@
     "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
     "eth:0x989E348275b659d36f8751ea1c10D146211650BE", // OptimisticTokenVotingPlugin
     // "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9", // TaikoLabs Prover, ignored post shasta
-    "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f"
-    // "taiko:0x1670000000000000000000000000000000000001", // TODO: uncomment L2 contracts after the hack is resolved and rpc is back
-    // "taiko:0x1670000000000000000000000000000000010001",
-    // "taiko:0x1670000000000000000000000000000000000002"
+    "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
+    "taiko:0x1670000000000000000000000000000000000001",
+    "taiko:0x1670000000000000000000000000000000010001",
+    "taiko:0x1670000000000000000000000000000000000002"
   ],
   "names": {},
   "overrides": {
@@ -60,6 +60,8 @@
       "ignoreMethods": ["proxiableUUID"]
     },
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
+      // RiscZeroVerifierRouter: dispatches RISC0 seals to registered verifiers (shared risc0 template, flagged per-project)
+      "critical": true,
       "fields": {
         "verifier": {
           "handler": {
@@ -76,6 +78,42 @@
     },
     "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E": {
       "category": "spam"
+    },
+    // --- ossification criticality overrides (shared or untemplated contracts) ---
+    "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": {
+      // active TaikoDAOController: owner/admin of the inbox, bridge, vaults, signal service and verifier gateways
+      // (template-level flag would also hit the deprecated controller 0xfC3C..., which holds no permissions)
+      "critical": true
+    },
+    "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
+      // TimelockController (global template): manages RiscZeroVerifierRouter roles and can add/remove verifiers
+      "critical": true
+    },
+    // active RISC0 verifier fleet registered in the RiscZeroVerifierRouter (shared risc0/taiko groth16 templates, flagged per-project);
+    // permanently estopped entries (0x44c2..., 0x68dC..., 0xDa8f...) and their wrapped verifiers are deliberately not flagged
+    "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": {
+      // active RiscZeroVerifierEmergencyStop (selector 0x73c457ba)
+      "critical": true
+    },
+    "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": {
+      // RiscZeroGroth16Verifier v3.0.0 behind the active estop 0x9F99...
+      "critical": true
+    },
+    "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
+      // active RiscZeroVerifierEmergencyStop (selector 0xbb001d44)
+      "critical": true
+    },
+    "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": {
+      // RiscZeroGroth16Verifier v2.2.0 behind the active estop 0x1efD...
+      "critical": true
+    },
+    "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
+      // active RiscZeroVerifierEmergencyStop (selector 0x242f9d5b)
+      "critical": true
+    },
+    "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
+      // RiscZeroSetVerifier behind the active estop 0x844D...
+      "critical": true
     }
   }
 }

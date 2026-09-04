@@ -26,6 +26,9 @@ export const searchBarCategories = {
   defi: {
     name: 'DeFi',
   },
+  ossification: {
+    name: 'Ossification',
+  },
   tokens: {
     name: 'Tokens',
     pinToBottom: true,

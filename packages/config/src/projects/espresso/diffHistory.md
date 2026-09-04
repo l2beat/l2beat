@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xddecc3da884fb6bf27a89b70f060a3340d54ee78
+
+# Diff at Thu, 03 Sep 2026 14:26:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1785249458
+- current timestamp: 1785249458
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785249458 (main branch discovery), not current.
+
+```diff
+    contract OpsTimelock (eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 2d.
+      fieldMeta:
++        {"getMinDelay":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x299444c7b9fca59f61d16a2c27ac370050f3dd45
 
 # Diff at Tue, 28 Jul 2026 14:38:41 GMT:

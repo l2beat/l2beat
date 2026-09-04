@@ -21,6 +21,7 @@ import {
 import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import {
   countRecentDiscoveryUpdates,
   getDiscoveryUpdates,
@@ -192,6 +193,7 @@ export async function getL2ProjectEntry(
     allProjectsWithContracts,
     allProjects,
     interopProjects,
+    ossification,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -222,6 +224,7 @@ export async function getL2ProjectEntry(
     ps.getProjects({
       select: ['interopConfig'],
     }),
+    getProjectOssification(project.id),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -704,13 +707,14 @@ export async function getL2ProjectEntry(
     })
   }
 
-  if (discoveryUpdates.length > 0) {
+  if (ossification || discoveryUpdates.length > 0) {
     sections.push({
       type: 'UpdatesSection',
       props: {
         id: 'updates',
         title: 'Updates',
         updates: discoveryUpdates,
+        ossification,
       },
     })
   }

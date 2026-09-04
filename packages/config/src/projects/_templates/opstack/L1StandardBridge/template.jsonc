@@ -1,10 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1StandardBridge",
+  "critical": true,
   "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
   "fields": {
     "$admin": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "upgrade",

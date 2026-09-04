@@ -1,4 +1,5 @@
 import type {
+  ProjectOssificationInfo,
   RetryHandlerVariant,
   TrackedTxConfigEntryWithoutId,
 } from '@l2beat/shared'
@@ -214,6 +215,9 @@ export interface BaseProject {
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
   discoveryInfo?: ProjectDiscoveryInfo
+  /** Time-independent history of the critical perimeter, for projects that
+   *  opted into the ossification factor with an ossification.json. */
+  ossificationInfo?: ProjectOssificationInfo
 
   // tags
   archivedAt?: UnixTime
@@ -969,6 +973,8 @@ export type ProjectDefiCategory =
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
+  /** Time users have to exit before a governance-controlled critical change. */
+  exitWindow?: ExitWindowRisk
 }
 
 export type ProjectExternalDependency =

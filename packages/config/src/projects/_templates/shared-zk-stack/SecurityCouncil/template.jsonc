@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Custom Multisig implementation that has a general threshold of {{EIP1271_THRESHOLD}} but also specific thresholds for upgrade approvals ({{APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD}}) or soft freezes ({{softFreezeThreshold}}).",
   "ignoreMethods": ["members"],
   "fields": {
@@ -10,6 +11,7 @@
       }
     },
     "$threshold": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "EIP1271_THRESHOLD",
@@ -17,11 +19,9 @@
       }
     },
     "softFreezeNonce": {
-      "severity": "HIGH",
       "description": "Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"
     },
     "hardFreezeNonce": {
-      "severity": "HIGH",
       "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
     }
   },

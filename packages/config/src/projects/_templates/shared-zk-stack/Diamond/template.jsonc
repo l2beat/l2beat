@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions{{isPermanentRollupString}}",
   "category": "core",
   "types": {
@@ -35,6 +36,10 @@
   ],
   "ignoreRelatives": ["getBaseToken", "getSettlementLayer"],
   "fields": {
+    "getSettlementLayer": {
+      "severity": "HIGH",
+      "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
+    },
     "getAdmin": {
       "severity": "HIGH",
       "permissions": [

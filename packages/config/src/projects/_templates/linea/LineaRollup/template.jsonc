@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LineaRollup",
+  "critical": true,
   "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",
@@ -78,7 +79,7 @@
     // 8  COMPLETE_TOKEN_BRIDGING
     // }
     "isPaused_GENERAL": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -86,7 +87,7 @@
       }
     },
     "isPaused_L1_L2": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -94,7 +95,7 @@
       }
     },
     "isPaused_L2_L1": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -102,7 +103,7 @@
       }
     },
     "isPaused_BLOB_SUBMISSION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -110,7 +111,7 @@
       }
     },
     "isPaused_CALLDATA_SUBMISSION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -118,7 +119,7 @@
       }
     },
     "isPaused_FINALIZATION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -126,7 +127,7 @@
       }
     },
     "isPaused_INITIATE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -134,7 +135,7 @@
       }
     },
     "isPaused_COMPLETE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",

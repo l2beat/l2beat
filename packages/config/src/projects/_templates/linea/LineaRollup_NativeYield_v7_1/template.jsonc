@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LineaRollup",
+  "critical": true,
   "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.",
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",
@@ -135,7 +136,7 @@
     // 13 STATE_DATA_SUBMISSION
     // }
     "isPaused_GENERAL": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -143,7 +144,7 @@
       }
     },
     "isPaused_L1_L2": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -151,7 +152,7 @@
       }
     },
     "isPaused_L2_L1": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -175,7 +176,7 @@
     //     }
     //   },
     "isPaused_FINALIZATION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -183,7 +184,7 @@
       }
     },
     "isPaused_INITIATE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -191,7 +192,7 @@
       }
     },
     "isPaused_COMPLETE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -199,7 +200,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_STAKING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -207,7 +208,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_UNSTAKING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -215,7 +216,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -223,7 +224,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_REPORTING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -231,7 +232,7 @@
       }
     },
     "isPaused_STATE_DATA_SUBMISSION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -264,7 +265,7 @@
       "description": "Smart contract that attests existence of blob commitments (shnarfs)."
     },
     "nonSecurityCouncilCooldownEnd": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "Timestamp until which non security council entities can't pause the rollup."
     }
   }

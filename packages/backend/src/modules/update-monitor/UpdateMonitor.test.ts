@@ -194,7 +194,9 @@ describe(UpdateMonitor.name, () => {
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
         {
-          ['project-a']: { severityCounts: { low: 0, high: 0, unknown: 2 } },
+          ['project-a']: {
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+          },
         },
         timestamp,
         [],
@@ -511,8 +513,12 @@ describe(UpdateMonitor.name, () => {
       const result = updateMonitor.generateDailyReminder()
 
       expect(result).toEqual({
-        [PROJECT_A]: { severityCounts: { low: 0, high: 0, unknown: 1 } },
-        [PROJECT_B]: { severityCounts: { low: 0, high: 0, unknown: 2 } },
+        [PROJECT_A]: {
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 1 },
+        },
+        [PROJECT_B]: {
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+        },
       })
     })
 
@@ -566,7 +572,9 @@ describe(UpdateMonitor.name, () => {
 
       expect(Object.entries(result).length).toEqual(1)
       expect(result).toEqual({
-        [PROJECT_A]: { severityCounts: { low: 0, high: 0, unknown: 3 } },
+        [PROJECT_A]: {
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
+        },
       })
     })
 

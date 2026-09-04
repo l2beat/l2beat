@@ -1035,6 +1035,7 @@
         "$immutable": true,
         "owner": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": "ProxyAdmin"
       }
@@ -2085,6 +2086,7 @@
         "$immutable": true,
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": "ProxyAdmin"
       }

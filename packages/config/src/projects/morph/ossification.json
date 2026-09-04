@@ -1,0 +1,123 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1729486715,
+      "type": "state",
+      "contract": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+      "source": "tx:0x54aa127b9f7b7f7bec9aeacb587ee3e71a25340b905261a08926ad09070fa8a0",
+      "reason": "Lowered the gas cap for enqueued L1 to L2 transactions from 100M to 30M, tightening the forced-inclusion path (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729518383,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "source": "tx:0x68ccefa5c1a93b8c363a18cfa799e6cdf0b210beb3585cb1cb0d5a2f2d7cdc6f",
+      "reason": "Raised the batch finalization period from 15 minutes to 2 days, changing how long a proposed state root can be challenged before withdrawals settle (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729568783,
+      "type": "state",
+      "contract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+      "source": "tx:0xda8ed1404f246a50ccebe835c8430403447f9dec0bcff90568d4da9d9ef504af",
+      "reason": "Lowered the deposit required to challenge a state root from 1 ETH to 1 wei (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729764539,
+      "type": "state",
+      "contract": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "source": "tx:0xf7c5eeddf8f74d3dbf0870a1b968a6cd30855070bd6af40ac7b1f356c27bb1d4",
+      "reason": "Handed control of the live canonical messenger from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729764971,
+      "type": "state",
+      "contract": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+      "source": "tx:0xf7baa902274bef145f9544c971a577d40ec7165d64db9fbe955a957bd4fdc4af",
+      "reason": "Handed control of the live L1 message queue from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729764983,
+      "type": "state",
+      "contract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+      "source": "tx:0x43af54686d38e8ccc217ae9b2c341aa8485a41a5ae911171b1ba63d163fd9d05",
+      "reason": "Handed control of the live staking contract, which admits sequencers and proposers, from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765019,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "source": "tx:0xd8145714d15b100dae28a6dbbd0759a74e43ba7591220a113fb826fa0e2a2932",
+      "reason": "Handed control of the live rollup contract from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765031,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "source": "tx:0xd35c0d464ece4347193e4e6204bf15f7227886ceeafb8592789ad192c01ee797",
+      "reason": "Handed control of the live gateway router, which maps tokens to escrows, from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765043,
+      "type": "state",
+      "contract": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+      "source": "tx:0x8d5913d48f7b209bab369e09355439837b4b718f8c7f305741b7e7a89896fe23",
+      "reason": "Handed control of the live ETH gateway from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765055,
+      "type": "state",
+      "contract": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+      "source": "tx:0x8d5bee8827c6e490524a7b685333c0562440c484a853e37d7d85da9834d34afd",
+      "reason": "Handed control of the live standard ERC20 escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765067,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "source": "tx:0x9c03d68dd90561c09c0c80fddb9db56ce67942c4f0a257baeee2b7e936d3e248",
+      "reason": "Handed control of the live custom ERC20 escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765139,
+      "type": "state",
+      "contract": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+      "source": "tx:0xd2b7e9ea76123204053dda100ca2c5aab6487e8b9ea1c1f1f38723cf46ab9aa6",
+      "reason": "Handed control of the live enforced transaction gateway from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730280155,
+      "type": "state",
+      "contract": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "source": "tx:0xc6026a4d11bd220301f25a55e233642f7eb563bc2dbc1555631b212c9ede45da",
+      "reason": "Handed the ProxyAdmin that can upgrade every core contract from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730455703,
+      "type": "state",
+      "contract": "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535",
+      "source": "tx:0x10fc169df1b2a25a23601bb026ef4110e3874455ea723b8daefcc5ccb849b76c",
+      "reason": "Handed control of the first USDC escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1731911627,
+      "type": "state",
+      "contract": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+      "source": "tx:0x303e035638bb0d8f676d28b587ca2ffa2ad5e2c4ac27ca61286462ffde716dff",
+      "reason": "Handed control of the active USDC escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1785410867,
+      "type": "state",
+      "contract": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+      "source": "tx:0x7144c29f4f226ff875abf2e54fb966fb834ece5c21e3973211b83269acc86332",
+      "reason": "Moved control of the active USDC escrow from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6); the escrow was outside discovery until this review."
+    },
+    {
+      "timestamp": 1786502579,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "source": "tx:0x95bb3f471f468778dacc292b4f177008e2dc7c4df501f94a78ce4a56bcb225cb",
+      "reason": "Moved control of the custom ERC20 escrow from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6); the escrow was outside discovery until this review."
+    }
+  ]
+}

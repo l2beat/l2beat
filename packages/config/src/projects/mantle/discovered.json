@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "timestamp": 1786359758,
-  "configHash": "0x9200def3dd13832befe54cbb65db547b51289f0d47d9effb731847a64e779436",
+  "configHash": "0xd0d4ace7a310fd3ce91db5ba245330c8dff1829176ada20360982c06709e0e68",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -17,6 +17,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241639,
       "sinceBlock": 17519057,
@@ -24,6 +25,7 @@
         "$immutable": true,
         "owner": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "ProxyAdmin"
       }
@@ -93,6 +95,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -123,6 +126,7 @@
         "aggregationVkey": "0x0063d017f049d215e2cda7f7826d7c1a8176a678203d6f74a731fc331cc16377",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 43200,
         "finalizationPeriodSeconds": 43200,
         "initializerVersion": 3,
@@ -146,6 +150,35 @@
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "version": "2.0.1"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "challenger": { "severity": "HIGH" },
+        "aggregationVkey": {
+          "severity": "HIGH",
+          "description": "Verification key of the SP1 aggregation program: defines which validity proofs are accepted to finalize proposed state roots."
+        },
+        "rangeVkeyCommitment": {
+          "severity": "HIGH",
+          "description": "Commitment to the verification key of the SP1 range program that proves the block-range state transitions aggregated into a proposal."
+        },
+        "rollupConfigHash": {
+          "severity": "HIGH",
+          "description": "Hash of the rollup configuration that is a public input to every validity proof."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "The SP1 verifier (gateway) contract that validity proofs are routed to."
+        },
+        "optimisticMode": {
+          "severity": "HIGH",
+          "description": "If enabled, approved proposers can submit state roots without validity proofs (trusted optimistic fallback); the ZK validity requirement only applies while this is false."
+        },
+        "finalizationPeriodSeconds": {
+          "severity": "HIGH",
+          "description": "Delay until a proposed state root can be used to finalize withdrawals."
+        },
+        "deletedOutputs": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481": "Proxy",
         "eth:0x4059509fFb703B048D1e9Ce3118F90E759076f50": "OPSuccinctL2OutputOracle"
@@ -168,6 +201,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241795,
@@ -195,6 +229,13 @@
         "symbol": "MNT",
         "totalSupply": "6219316794889999291248757829"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "mintCapNumerator": {
+          "severity": "HIGH",
+          "description": "MNT inflation policy: yearly mint cap as a fraction of total supply (numerator over 10000, hard-capped at 200 = 2%)."
+        }
+      },
       "implementationNames": {
         "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "TransparentUpgradeableProxy",
         "eth:0xCd368c1d80120b0Dd92447c87eB570154f8e685c": "L1MantleToken"
@@ -216,6 +257,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710440051,
@@ -272,10 +314,13 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
+        "opStackDA": { "severity": "MEDIUM" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -367,6 +412,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d.",
+      "critical": true,
       "deployerAddress": "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8",
       "sinceTimestamp": 1739349323,
       "sinceBlock": 21829257,
@@ -407,6 +453,10 @@
         "Proposer": ["eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": "TimelockController"
       }
@@ -427,6 +477,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687953527,
@@ -471,6 +522,7 @@
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": "Lib_ResolvedDelegateProxy",
         "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308": "L1CrossDomainMessenger"
@@ -487,6 +539,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687951883,
       "sinceBlock": 17577535,
@@ -494,6 +547,7 @@
         "$immutable": true,
         "owner": "eth:0xca35F8338054739D138884685e08b39EE2217794"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": "Lib_AddressManager"
       },
@@ -515,6 +569,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687954103,
       "sinceBlock": 17577718,
@@ -530,6 +585,7 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1ChugSplashProxy",
         "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": "L1StandardBridge"
@@ -577,6 +633,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439967,
@@ -605,6 +662,7 @@
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": "Proxy",
         "eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7": "OptimismPortal"
@@ -625,6 +683,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439895,
       "sinceBlock": 19434932,
@@ -634,6 +693,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin"
       }
@@ -1120,17 +1180,17 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0xa79616124fab7c30287f805f0a8e9e56f748448020c9eebcebe266d1172d19e8"
+    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x635ffd4ff49d5f00b52dd0feef6a3029aa6a56fcb69e2f0c9471f29101d40875"
   },
   "usedBlockNumbers": { "ethereum": 25724168 },
-  "permissionsConfigHash": "0x7255e28c2afd52342381f52f20e249096d097003fbc29c414c71dce372be1f51",
+  "permissionsConfigHash": "0xcc626f8abc05a35c04f8126177cebc09724400afeca616473a916a204fa2235e",
   "permissions": {
     "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
       "directlyReceivedPermissions": [
@@ -1143,6 +1203,12 @@
     },
     "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+          "description": "can delete proposed state roots, enable/disable the optimistic (proof-less) mode and change the finalization period.",
+          "role": ".challenger"
+        },
         {
           "permission": "interact",
           "from": "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
@@ -1166,7 +1232,13 @@
         {
           "permission": "interact",
           "from": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
-          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode.",
+          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode, update the SP1 verification keys, the verifier address, the rollup config hash, the submission interval and manage the approved proposer set.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+          "description": "can mint new MNT (up to 2% of supply per year as set by mintCapNumerator) and transfer token ownership.",
           "role": ".owner"
         },
         {

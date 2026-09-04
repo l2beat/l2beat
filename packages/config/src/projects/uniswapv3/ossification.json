@@ -1,0 +1,46 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1623463819,
+      "type": "state",
+      "contract": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "source": "tx:0x0231116321d9f8ea39226747fd529367413d4b9ca1eb6ab7dcf1c7abd392daf1",
+      "reason": "Nominated Governor Alpha to take control of the timelock governing UNI minting and factory fee powers."
+    },
+    {
+      "timestamp": 1623463958,
+      "type": "state",
+      "contract": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "source": "tx:0x08150f5f05b1765468b66df8f64faad120876f7d59a3125403ace0f1ada2d7c4",
+      "reason": "Governor Alpha accepted control of the timelock governing UNI minting and factory fee powers."
+    },
+    {
+      "timestamp": 1630165176,
+      "type": "state",
+      "contract": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "source": "tx:0x8787f2dd5663bfe76c5e2fdbeb4da441e8e477eb35a7497b4f52a1ceac0a6e3e",
+      "reason": "Migrated control of the timelock from Governor Alpha to Governor Bravo."
+    },
+    {
+      "timestamp": 1706556011,
+      "type": "state",
+      "contract": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "source": "tx:0x62d12a3dbd80bf7d6e5ade63d12997c99c964be6647b8a5f232b9e6ab4e8d5bd",
+      "reason": "Changed the delegated UNI threshold required to submit a governance proposal."
+    },
+    {
+      "timestamp": 1766867591,
+      "type": "state",
+      "contract": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+      "source": "tx:0x091f0083242a777d55821c1189e568d6d033d9da501b75087dc736fa143d2c1e",
+      "reason": "Transferred the factory's protocol-fee authority from the timelock to the first fee adapter."
+    },
+    {
+      "timestamp": 1772781599,
+      "type": "state",
+      "contract": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+      "source": "tx:0xd6c4c93eaaac3b6cf144853655f91b326c5e3019b022baeec08eaf74c8af9833",
+      "reason": "Transferred the factory's protocol-fee authority to the current open fee adapter."
+    }
+  ]
+}

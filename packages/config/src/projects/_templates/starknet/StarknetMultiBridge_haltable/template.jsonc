@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to {{withdrawLimitPct}}% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
   "category": "bridge-external",
   "ignoreRelatives": [

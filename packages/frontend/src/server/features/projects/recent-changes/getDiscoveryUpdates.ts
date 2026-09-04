@@ -1,8 +1,9 @@
 import {
+  createDiffHistoryEntryIdFactory,
   type DiffHistoryEntry,
   DiffHistoryParser,
   type DiffHistorySectionKind,
-  hashJson,
+  getDiffHistoryEntryTimestamp,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync, statSync } from 'fs'
@@ -84,8 +85,15 @@ export function parseDiscoveryUpdates(
 ): DiscoveryUpdate[] {
   const updates: DiscoveryUpdate[] = []
 
+  // Stable identity shared with changelog.json entries: derived from the
+  // mechanically fixed date and chain point (plus a per-file ordinal for the
+  // rare collisions), so a later description edit never orphans references
+  // (criticalEvents updateId, deep links). Every entry gets an id before any
+  // filtering so ordinals agree with buildDiscoveryChangelog.
+  const idFor = createDiffHistoryEntryIdFactory()
   for (const entry of diffHistoryParser.parse(content)) {
-    const update = toPublicDiscoveryUpdate(entry)
+    const id = idFor(entry.date, entry.current)
+    const update = toPublicDiscoveryUpdate(entry, id)
     if (update === null) continue
 
     updates.push(update)
@@ -119,6 +127,7 @@ function getDiffHistoryPath(projectId: string): string {
 
 function toPublicDiscoveryUpdate(
   entry: DiffHistoryEntry,
+  id: string,
 ): DiscoveryUpdate | null {
   const sections: DiscoveryUpdateSection[] = entry.sections.flatMap(
     (section) => {
@@ -150,7 +159,7 @@ function toPublicDiscoveryUpdate(
   const bodies = sections.map((section) => section.body)
 
   return {
-    id: getUpdateId(entry),
+    id,
     date: entry.date,
     timestamp: getTimestamp(entry),
     description: entry.description,
@@ -172,24 +181,6 @@ function getPublicConfigRelatedChanges(body: string): string {
     .join('\n\n')
 }
 
-function getUpdateId(entry: DiffHistoryEntry): string {
-  const fingerprint = hashJson([
-    entry.date,
-    entry.discoveryHash,
-    entry.current?.kind ?? null,
-    entry.current?.value ?? null,
-    entry.description,
-    entry.sections.flatMap((section) => [section.kind, section.body]),
-  ])
-
-  return fingerprint.slice(2, 10)
-}
-
 function getTimestamp(entry: DiffHistoryEntry): number | null {
-  if (entry.current?.kind === 'timestamp') {
-    return entry.current.value
-  }
-
-  const timestamp = Date.parse(entry.date)
-  return Number.isFinite(timestamp) ? Math.floor(timestamp / 1000) : null
+  return getDiffHistoryEntryTimestamp(entry.date, entry.current)
 }

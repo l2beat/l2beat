@@ -1,15 +1,39 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.",
+  // Routes deposits to escrows; remapping a token to a malicious gateway diverts user funds.
+  "critical": true,
+  // The token -> gateway map is watched, but neither the tokens nor the
+  // dust-holding non-TVS gateways registered in it are part of the system.
+  "ignoreRelatives": ["erc20Gateways"],
   "fields": {
     "gateways": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "newEthGateway",
         "add": { "event": "SetETHGateway" }
       }
     },
+    "erc20Gateways": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "newGateway",
+        "groupBy": "token",
+        "set": {
+          "event": "SetERC20Gateway"
+        }
+      }
+    },
+    "ethGateway": {
+      "severity": "HIGH"
+    },
+    "defaultERC20Gateway": {
+      "severity": "HIGH"
+    },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

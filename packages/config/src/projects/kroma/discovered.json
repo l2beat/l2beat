@@ -190,6 +190,7 @@
         ],
         "version": "1.0.0"
       },
+      "fieldMeta": { "getMinDelay": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Proxy",
         "eth:0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3": "TimeLock"
@@ -341,6 +342,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0xcc56801a72463d39903A4a4632E600289178F6bC",
       "sinceTimestamp": 1693880543,
@@ -389,7 +391,10 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "Proxy",
@@ -494,6 +499,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0xcc56801a72463d39903A4a4632E600289178F6bC",
       "sinceTimestamp": 1693880591,
@@ -523,6 +529,7 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.0.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746": "Proxy",
         "eth:0x675924D68200F2C967Ba12349d5d510676C7214c": "L1CrossDomainMessenger"
@@ -595,6 +602,7 @@
         "$immutable": true,
         "owner": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd": "ProxyAdmin"
       }
@@ -764,6 +772,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0xcc56801a72463d39903A4a4632E600289178F6bC",
       "sinceTimestamp": 1693880603,
       "sinceBlock": 18067273,
@@ -782,6 +791,7 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000009",
         "version": "1.0.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x827962404D7104202C5aaa6b929115C8211d9596": "Proxy",
         "eth:0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4": "L1StandardBridge"

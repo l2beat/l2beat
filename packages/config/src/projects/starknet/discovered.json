@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1786612387,
-  "configHash": "0x2e6508c3065ac604a4b2341439c30bdf79511651bea082bff8ba2a97432fbcc5",
+  "configHash": "0xdab222658b3090e9c987ee68bd78d7e80d7c376c2c99e678bbc6f40f6cba2127",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -94,6 +94,7 @@
           "eth:0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
         ]
       },
+      "fieldMeta": { "wards": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C": "L1Escrow"
       }
@@ -344,6 +345,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "critical": false,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137600,
       "sinceBlock": 15090980,
@@ -464,11 +466,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -478,18 +480,18 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "tokenHaltSignalled": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was signalled for these tokens."
         },
         "tokenHaltCompleted": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was completed for these tokens."
         }
       },
@@ -577,6 +579,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689267,
       "sinceBlock": 17968760,
@@ -654,25 +657,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -821,6 +823,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "critical": false,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1757941367,
       "sinceBlock": 23368649,
@@ -893,11 +896,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -907,7 +910,7 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -953,6 +956,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DAIBridge"
       },
@@ -969,6 +973,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "critical": false,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1750859519,
       "sinceBlock": 22781865,
@@ -1063,11 +1068,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -1077,18 +1082,18 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "tokenHaltSignalled": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was signalled for these tokens."
         },
         "tokenHaltCompleted": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was completed for these tokens."
         }
       },
@@ -1114,6 +1119,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1647857148,
       "sinceBlock": 14429055,
@@ -1237,7 +1243,6 @@
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
@@ -1290,6 +1295,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137615,
       "sinceBlock": 15090981,
@@ -1393,25 +1399,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -1452,6 +1457,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0xCd7F67F78E76b2797678dAde0246466459b5D259",
       "sinceTimestamp": 1685452751,
       "sinceBlock": 17371995,
@@ -1538,25 +1544,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -1597,6 +1602,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
+      "critical": true,
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -1731,6 +1737,7 @@
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "HIGH",
           "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
@@ -1760,7 +1767,6 @@
           "type": "CODE_CHANGE"
         },
         "feeCollector": {
-          "severity": "HIGH",
           "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
           "type": "RISK_PARAMETER"
         },
@@ -1839,6 +1845,7 @@
       ],
       "proxyType": "immutable",
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
+      "critical": true,
       "deployerAddress": "eth:0x555134E9d31ECe4CEa6F83674A887cDb150dA47A",
       "sinceTimestamp": 1739989031,
       "sinceBlock": 21882151,
@@ -1865,6 +1872,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xa126705c0d6B5dd65279253Ea2C8B19A04b96e60",
       "sinceTimestamp": 1704905879,
       "sinceBlock": 18977888,
@@ -1993,7 +2001,6 @@
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
@@ -2046,6 +2053,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1685880791,
       "sinceBlock": 17407168,
@@ -2127,25 +2135,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2228,6 +2235,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689279,
       "sinceBlock": 17968761,
@@ -2305,25 +2313,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2364,6 +2371,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689255,
       "sinceBlock": 17968759,
@@ -2441,25 +2449,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2500,6 +2507,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1688046071,
       "sinceBlock": 17585317,
@@ -2576,25 +2584,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2635,6 +2642,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "critical": false,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707322643,
       "sinceBlock": 19177451,
@@ -2746,11 +2754,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -2760,7 +2768,7 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2784,6 +2792,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137639,
       "sinceBlock": 15090984,
@@ -2887,25 +2896,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -3000,6 +3008,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "critical": false,
       "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1698061847,
       "sinceBlock": 18412782,
@@ -3077,25 +3086,24 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
-          "severity": "HIGH",
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -4466,7 +4474,7 @@
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0xfadaad9feb97c113d19f43abb4e24ed692a26a6efc6094ada095836e6793f431",
+    "starknet/Starknet": "0xf01cf432d074a3417a43b6dad120f3d2b6382edac6c12e28608c3ff6f608ade5",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",

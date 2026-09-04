@@ -47,11 +47,28 @@
     "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
       "description": "Stores DAI deposited from the attached L1DAITokenBridge."
     },
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated.
+    "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
+    // SuperchainProxyAdmin: can upgrade every core superchain contract (portal, bridges, DGF, SystemConfig, SuperchainConfig).
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
     // OPContractsManagerV2: Karst upgrade tooling. Ignored so discovery doesn't
     // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
       "ignoreDiscovery": true
     },
+    // Optimism Security Council: co-owner (2-of-2) of the SuperchainProxyAdminOwner and sole owner (1/1) of the Guardian Multisig. The Safe shell is not part of the ossification perimeter.
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
       "references": [
         {
@@ -84,7 +101,7 @@
       }
     },
     "eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f": {
-      "description": "Custom escrow for SNX bridged via canonical messaging.",
+      "description": "Synthetix-governed custom escrow for SNX bridged via canonical messaging. Its additional trust assumptions put it outside the ossification perimeter.",
       "ignoreRelatives": ["owner"]
     },
     "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": {
@@ -109,6 +126,7 @@
     "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
       "fields": {
         "Proxy__OVM_L1CrossDomainMessenger": {
+          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getAddress",
@@ -116,6 +134,7 @@
           }
         },
         "Proxy__OVM_L1StandardBridge": {
+          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "getAddress",
@@ -129,6 +148,7 @@
     },
     "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": {
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
+      // holds the approval to pull DAI from the L1DAIEscrow. Maker/Sky-governed external escrow, outside the ossification perimeter.
       "ignoreRelatives": [
         "l1Token",
         "l2DAITokenBridge",
@@ -165,7 +185,7 @@
       "fields": {
         "paused": {
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
-          "severity": "HIGH"
+          "severity": "MEDIUM"
         }
       }
     },
@@ -180,6 +200,7 @@
     "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": {
       "fields": {
         "batcherHash": {
+          "severity": "LOW",
           "handler": {
             "type": "call",
             "method": "function batcherHash() view returns (address)",
@@ -251,13 +272,20 @@
         }
       }
     },
+    // SaferSafes (L2 instance, untemplated): Safe module installed on the SafeL2 that controls the OP minting policy.
+    "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      "critical": true
+    },
     "oeth:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     },
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": {
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      // sole minter of OP, which is counted (natively minted) in the TVS.
+      "critical": true,
       "fields": {
         "owner": {
+          "severity": "HIGH",
           "permissions": [
             {
               "type": "interact",
@@ -269,8 +297,15 @@
     },
     "oeth:0x4200000000000000000000000000000000000042": {
       "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
+      // OP is counted (natively minted) in the TVS; a code change can mint or move user balances.
+      "critical": true,
       "ignoreMethods": ["getPastTotalSupply"],
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "owner": {
+          "severity": "HIGH"
+        }
+      }
     }
   }
 }

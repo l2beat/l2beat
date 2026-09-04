@@ -56,8 +56,8 @@ const zeroFeeSentinel = discovery.getContractValue<number>(
 const decodeAdapterStoredFee = (stored: number): number =>
   stored === zeroFeeSentinel ? 0 : stored
 
-const timelockDelayDays =
-  discovery.getContractValue<number>('Timelock', 'delay') / 86400
+const timelockDelay = discovery.getContractValue<number>('Timelock', 'delay')
+const timelockDelayDays = timelockDelay / 86400
 
 export const uniswapv3: BaseProject = {
   id: ProjectId('uniswapv3'),
@@ -155,6 +155,12 @@ export const uniswapv3: BaseProject = {
   },
   defiInfo: {
     category: 'DEX',
+    exitWindow: {
+      value: formatSeconds(timelockDelay),
+      sentiment: 'bad',
+      orderHint: timelockDelay,
+      description: `Governance-controlled changes to protocol fees and fee tiers wait ${formatSeconds(timelockDelay)} before execution. Users can withdraw their positions during that period; pool code itself is immutable.`,
+    },
   },
   // Declared empty on purpose: v3 has no oracle, no bridge, no external
   // contract its operation depends on. The section renders an explicit

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
+  "critical": true,
   "fields": {
     "initialProposer": {
       "handler": {
@@ -29,12 +30,54 @@
       }
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
-          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode."
+          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode, update the SP1 verification keys, the verifier address, the rollup config hash, the submission interval and manage the approved proposer set."
         }
       ]
+    },
+    "challenger": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can delete proposed state roots, enable/disable the optimistic (proof-less) mode and change the finalization period."
+        }
+      ]
+    },
+    "aggregationVkey": {
+      "severity": "HIGH",
+      "description": "Verification key of the SP1 aggregation program: defines which validity proofs are accepted to finalize proposed state roots."
+    },
+    "rangeVkeyCommitment": {
+      "severity": "HIGH",
+      "description": "Commitment to the verification key of the SP1 range program that proves the block-range state transitions aggregated into a proposal."
+    },
+    "rollupConfigHash": {
+      "severity": "HIGH",
+      "description": "Hash of the rollup configuration that is a public input to every validity proof."
+    },
+    "verifier": {
+      "severity": "HIGH",
+      "description": "The SP1 verifier (gateway) contract that validity proofs are routed to."
+    },
+    "optimisticMode": {
+      "severity": "HIGH",
+      "description": "If enabled, approved proposers can submit state roots without validity proofs (trusted optimistic fallback); the ZK validity requirement only applies while this is false."
+    },
+    "finalizationPeriodSeconds": {
+      "severity": "HIGH",
+      "description": "Delay until a proposed state root can be used to finalize withdrawals."
+    },
+    "deletedOutputs": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["prevNextOutputIndex", "newNextOutputIndex"],
+        "add": { "event": "OutputsDeleted" }
+      }
     }
   },
   "ignoreMethods": [

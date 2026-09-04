@@ -14,6 +14,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -94,6 +95,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead", "getSequencerPubkeyInfos"],
       "deployerAddress": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
       "sinceTimestamp": 1735877315,
@@ -186,10 +188,13 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -216,6 +221,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "deployerAddress": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
       "sinceTimestamp": 1735877303,
@@ -344,6 +350,7 @@
         "isUpgrading": false,
         "owner": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d": "ProxyAdmin"
       }
@@ -358,6 +365,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
       "sinceTimestamp": 1735877171,
       "sinceBlock": 21541456,
@@ -365,6 +373,7 @@
         "$immutable": true,
         "owner": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd": "AddressManager"
       },
@@ -381,6 +390,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
       "sinceTimestamp": 1735877339,
@@ -417,6 +427,7 @@
         "systemConfig": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.4.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6": "ResolvedDelegateProxy",
         "eth:0x6846B4E0b9992E154fE7d315667B1e385445C503": "L1CrossDomainMessenger"
@@ -439,6 +450,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "critical": true,
       "deployerAddress": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
       "sinceTimestamp": 1735877231,
       "sinceBlock": 21541461,
@@ -464,6 +476,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4": "Proxy",
         "eth:0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be": "SuperchainConfig"
@@ -522,6 +535,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.",
+      "critical": true,
       "deployerAddress": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
       "sinceTimestamp": 1735877327,
       "sinceBlock": 21541469,
@@ -950,13 +964,13 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
     "opstack/L2OutputOracle_soon": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal_soon": "0x501665d0286b3d5ec36d23208700c4c03246a24a07ae843b04971530af9ec17b",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
+    "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6"
   },
   "usedBlockNumbers": { "ethereum": 25797241 },
   "permissionsConfigHash": "0x195eb0c24e90e72787a7fc8565d396411fe9eedead8ec0b9dfd1bd2a5073138e",

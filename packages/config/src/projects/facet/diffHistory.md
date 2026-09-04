@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xb3cb3a9069f00cc585c068c46dd48b4da7411f64
+
+# Diff at Thu, 03 Sep 2026 14:29:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1780407005
+- current timestamp: 1780407005
+
+## Description
+
+reapply branch discovery config after merging main
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780407005 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayDeprecated (eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) [opstack/L1StandardBridge_facet] {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xaa518d084a14820e1626b2b401095a70b372bc46
 
 # Diff at Tue, 09 Jun 2026 12:43:33 GMT:

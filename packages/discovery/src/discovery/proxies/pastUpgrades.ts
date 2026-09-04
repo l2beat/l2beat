@@ -13,10 +13,12 @@ export type DateAddresses = [string, Hash256, ChainSpecificAddress[]]
 export async function getPastUpgradesSingleEvent(
   provider: IProvider,
   address: ChainSpecificAddress,
-  eventABI: string,
+  eventABI: string | string[],
   eventFiltering?: (log: LogDescription) => boolean,
 ): Promise<DateAddresses[]> {
-  const abi = new utils.Interface([eventABI])
+  const abi = new utils.Interface(
+    Array.isArray(eventABI) ? eventABI : [eventABI],
+  )
   const topics = Object.values(abi.events).map((e) => abi.getEventTopic(e.name))
   let logs = await provider.getLogs(address, [topics])
   if (eventFiltering !== undefined) {

@@ -43,5 +43,14 @@
     "hash": "0xe2d2a2fc00e5a10c2c6eff5938d211e0cb3833bc8b3bb897edf79fe77ad26c71",
     "address": "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
     "blockNumber": 23974643
+  },
+  "PlonkVerifierFull": {
+    "hash": "0x1c3b2296b3229366f50d0ee4edcad6b5478d58fe1090fe88b75b663d5d335c85",
+    "address": [
+      "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77",
+      "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 25876154
   }
 }

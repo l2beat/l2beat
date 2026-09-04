@@ -1,3 +1,4 @@
+import type { OssificationChangeType } from '@l2beat/shared'
 import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
@@ -14,14 +15,17 @@ import {
   PaginationPrevious,
 } from '~/components/Pagination'
 import { ChevronIcon } from '~/icons/Chevron'
+import type { ProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import type { DiscoveryUpdate } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import { OssificationDetails } from './OssificationDetails'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
   updates: DiscoveryUpdate[]
+  ossification?: ProjectOssification
   selectedUpdateId?: string
 }
 
@@ -35,6 +39,7 @@ const PAGE_SIZE = 5
 
 export function UpdatesSection({
   updates,
+  ossification,
   selectedUpdateId,
   ...sectionProps
 }: UpdatesSectionProps) {
@@ -47,29 +52,41 @@ export function UpdatesSection({
       : Math.floor(selectedUpdateIndex / PAGE_SIZE)
   })
 
-  if (updates.length === 0) {
+  if (updates.length === 0 && !ossification) {
     return null
   }
 
   const pageCount = Math.ceil(updates.length / PAGE_SIZE)
   const entries = updates.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
+  const criticalUpdates = new Map(
+    ossification?.criticalUpdates.map((update) => [update.id, update.type]),
+  )
 
   return (
     <ProjectSection {...sectionProps}>
-      <div className="flex flex-col gap-3">
-        {entries.map((update) => (
-          <UpdateCard
-            key={update.id}
-            update={update}
-            isSelected={update.id === selectedUpdateId}
-          />
-        ))}
-        {pageCount > 1 && (
-          <UpdatesPagination
-            page={page}
-            pageCount={pageCount}
-            onPageChange={setPage}
-          />
+      <div className="flex flex-col gap-8">
+        {ossification && <OssificationDetails ossification={ossification} />}
+        {updates.length > 0 && (
+          <div className="flex flex-col gap-3">
+            {ossification && (
+              <h3 className="text-heading-20">Discovery updates</h3>
+            )}
+            {entries.map((update) => (
+              <UpdateCard
+                key={update.id}
+                update={update}
+                isSelected={update.id === selectedUpdateId}
+                criticalChangeType={criticalUpdates.get(update.id)}
+              />
+            ))}
+            {pageCount > 1 && (
+              <UpdatesPagination
+                page={page}
+                pageCount={pageCount}
+                onPageChange={setPage}
+              />
+            )}
+          </div>
         )}
       </div>
     </ProjectSection>
@@ -137,10 +154,12 @@ export function UpdateCard({
   update,
   isSelected,
   copyLinkPath,
+  criticalChangeType,
 }: {
   update: DiscoveryUpdate
   isSelected: boolean
   copyLinkPath?: string
+  criticalChangeType?: OssificationChangeType
 }) {
   return (
     <details
@@ -174,7 +193,16 @@ export function UpdateCard({
                 iconClassName="size-3.5"
               />
             </div>
-            {update.isHighSeverity && (
+            {criticalChangeType ? (
+              <Badge
+                type="blue"
+                size="extraSmall"
+                padding="small"
+                className="shrink-0 uppercase"
+              >
+                Critical {criticalChangeType} change
+              </Badge>
+            ) : update.isHighSeverity ? (
               <Badge
                 type="error"
                 size="extraSmall"
@@ -183,7 +211,7 @@ export function UpdateCard({
               >
                 High severity
               </Badge>
-            )}
+            ) : null}
           </div>
           <div className="flex shrink-0 items-center gap-2">
             <div className="flex items-baseline gap-1">

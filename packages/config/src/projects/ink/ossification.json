@@ -1,0 +1,79 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1736803367,
+      "type": "state",
+      "contract": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
+      "source": "tx:0x71234ec9d3df32360383a0091277b0facbeb21456f1a29accb110fa43a6b5441",
+      "reason": "Registered new fault (game type 0) and permissioned (game type 1) dispute game implementations that verify proposed state roots."
+    },
+    {
+      "timestamp": 1742243783,
+      "type": "state",
+      "contract": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
+      "source": "tx:0xd80b96282ad4d71aeb29b25e0ceee2bdf0840b258fccffedc951ce0553b6800b",
+      "reason": "Registered new fault (game type 0) and permissioned (game type 1) dispute game implementations that verify proposed state roots."
+    },
+    {
+      "timestamp": 1745511383,
+      "type": "state",
+      "contract": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
+      "source": "tx:0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
+      "reason": "Registered new fault (game type 0) and permissioned (game type 1) dispute game implementations that verify proposed state roots."
+    },
+    {
+      "timestamp": 1746628403,
+      "type": "state",
+      "contract": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
+      "source": "tx:0xc4a7089a92c96b83475a7c20e40b4c888a277a90208d649c81df243ecdceb587",
+      "reason": "Registered new fault (game type 0) and permissioned (game type 1) dispute game implementations that verify proposed state roots."
+    },
+    {
+      "timestamp": 1746626291,
+      "type": "state",
+      "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
+      "reason": "Enabled a module that delegated Ink pause authority through the Operations Safe."
+    },
+    {
+      "timestamp": 1753378247,
+      "type": "state",
+      "source": "tx:0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that can pause Ink."
+    },
+    {
+      "timestamp": 1753380539,
+      "type": "state",
+      "source": "tx:0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "reason": "Disabled the former Ink pause deputy on the Guardian Safe."
+    },
+    {
+      "timestamp": 1753380743,
+      "type": "state",
+      "source": "tx:0xd770166ff63183dae868ca11852268115035d2f74574b55b8e1ecd552da80378",
+      "reason": "Removed the former pause deputy from the Operations Safe authority path."
+    },
+    {
+      "timestamp": 1769108699,
+      "type": "state",
+      "source": "tx:0xf1ae77bea001acd7f3355ce971fd992601f467ce0a2305a38b1a82da459b502c",
+      "reason": "Enabled the SaferSafes execution module on the Operations Safe while it governed Ink."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "source": "tx:0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe while it governed Ink."
+    },
+    {
+      "timestamp": 1785766655,
+      "type": "state",
+      "contract": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
+      "source": "tx:0x6065d3a2decf0b16953bc586a209c01b4336dc2ff59bcb050eaf436659ad61fe",
+      "reason": "Registered a new permissioned dispute game (game type 1) implementation that verifies proposed state roots."
+    }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD#gameImpls",
+    "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364#paused"
+  ]
+}

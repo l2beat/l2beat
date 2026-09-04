@@ -1,0 +1,4813 @@
+{
+  "formatVersion": 1,
+  "entries": [
+    {
+      "id": "bc8d7ec1",
+      "timestamp": 1782469580,
+      "changes": [
+        {
+          "address": "eth:0x0de180164dc571522457101f5c47b2eab36d0a82",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.9.verifier",
+              "removed": [
+                "\"eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82\""
+              ],
+              "added": [
+                "\"eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x808297224e86b1a6055b5f790a2ce07ed611f955",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x96cbcc4333e172927fda8b631c716d43e2fba01c",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "8682bc9b",
+      "timestamp": 1781613178,
+      "changes": [
+        {
+          "address": "eth:0x11cd09a0c5b1dc674615783b0772a9bfd53e3a8f",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x40bd67b02ebf1cfb4ada7f60cabac94d6aafc6ee",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x498c0c17e26eeec63375a4a20ba8a91aa357cbcd",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x69c2ed64171bf5737c2b78bdf722e68a032b2825",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE.members.0",
+              "removed": [
+                "\"eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.scMinorityNoDelay.0",
+              "removed": [
+                "\"eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x8edc4eadee120d4c51923c515e7c3241c815c2bc",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x9479abfebefeea3c846163012a472b44f305b3d7",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0xc3ea7c657884bb380b66d79c36adcb5658b01896",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0xcca54b0916cee2186b47e9709bedcb7041a8f761"
+        },
+        {
+          "address": "scr:0x11cd09a0c5b1dc674615783b0772a9bfd53e3a8f",
+          "status": "deleted"
+        },
+        {
+          "address": "scr:0x13d24a7ff6f5ec5ff0e9c40fc3b8c9c01c65437b",
+          "fields": [
+            {
+              "key": "values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE.members.0",
+              "removed": [
+                "\"scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0x40bd67b02ebf1cfb4ada7f60cabac94d6aafc6ee",
+          "status": "deleted"
+        },
+        {
+          "address": "scr:0x69c2ed64171bf5737c2b78bdf722e68a032b2825",
+          "status": "deleted"
+        },
+        {
+          "address": "scr:0x8edc4eadee120d4c51923c515e7c3241c815c2bc",
+          "status": "deleted"
+        },
+        {
+          "address": "scr:0x9479abfebefeea3c846163012a472b44f305b3d7",
+          "status": "deleted"
+        },
+        {
+          "address": "scr:0xc3ea7c657884bb380b66d79c36adcb5658b01896",
+          "status": "deleted"
+        }
+      ]
+    },
+    {
+      "id": "4a623d8f",
+      "timestamp": 1780654305,
+      "changes": [
+        {
+          "address": "eth:0x0cd4c0f24a0a9f3e2fe80ed385d8ad5a2ffeca44",
+          "fields": [
+            {
+              "key": "values.accessControl.TIMELOCK_ADMIN_ROLE.members.1",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.PROPOSER_ROLE.members.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.EXECUTOR_ROLE.members.1",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.CANCELLER_ROLE.members.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Canceller.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Executor.1",
+              "severity": "HIGH",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Proposer.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.timelockAdminAC.1",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x11cd09a0c5b1dc674615783b0772a9bfd53e3a8f",
+          "fields": [
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3\""
+              ]
+            },
+            {
+              "key": "values.$members.6",
+              "removed": [
+                "\"eth:0x9106372987a14400F283bc1AfC122A57130c18a3\""
+              ]
+            },
+            {
+              "key": "values.$members.7",
+              "removed": [
+                "\"eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC\""
+              ]
+            },
+            {
+              "key": "values.$members.9",
+              "removed": [
+                "\"eth:0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD\""
+              ]
+            },
+            {
+              "key": "values.$members.11",
+              "removed": [
+                "\"eth:0x32E8B0B9783d65170fd37f79079d5707107cCc62\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 12 (17%)\""
+              ],
+              "added": [
+                "\"2 of 6 (33%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x1a37bf1ccbf570c92fe2239fefaaaf861c2924dd",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x3f9041350b661c74c6cbe440c8bd6bc4c168a9fd",
+          "fields": [
+            {
+              "key": "values.accessControl.TIMELOCK_ADMIN_ROLE.members.1",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.PROPOSER_ROLE.members.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.EXECUTOR_ROLE.members.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ]
+            },
+            {
+              "key": "values.accessControl.EXECUTOR_ROLE.members.1",
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.CANCELLER_ROLE.members.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Canceller.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Executor.0",
+              "severity": "HIGH",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ]
+            },
+            {
+              "key": "values.Executor.1",
+              "severity": "HIGH",
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Proposer.0",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.timelockAdminAC.1",
+              "removed": [
+                "\"eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x498c0c17e26eeec63375a4a20ba8a91aa357cbcd"
+        },
+        {
+          "address": "scr:0x1a37bf1ccbf570c92fe2239fefaaaf861c2924dd",
+          "status": "deleted"
+        },
+        {
+          "address": "scr:0x1f807e2e8ab2e61230a0a9c271f90242831278b4",
+          "fields": [
+            {
+              "key": "values.accessControl.TIMELOCK_ADMIN_ROLE.members.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.PROPOSER_ROLE.members.0",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.EXECUTOR_ROLE.members.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.CANCELLER_ROLE.members.0",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Canceller.0",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Executor.1",
+              "severity": "HIGH",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Proposer.0",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.timelockAdminAC.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0x2f3f2054776bd3c2fc30d750734a8f539bb214f0",
+          "fields": [
+            {
+              "key": "values.admin",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0x79d83d1518e2eaa64cdc0631df01b06e2762cc14",
+          "fields": [
+            {
+              "key": "values.accessControl.TIMELOCK_ADMIN_ROLE.members.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.PROPOSER_ROLE.members.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.EXECUTOR_ROLE.members.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ]
+            },
+            {
+              "key": "values.accessControl.EXECUTOR_ROLE.members.2",
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.accessControl.CANCELLER_ROLE.members.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Canceller.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Executor.1",
+              "severity": "HIGH",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ]
+            },
+            {
+              "key": "values.Executor.2",
+              "severity": "HIGH",
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.Proposer.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            },
+            {
+              "key": "values.timelockAdminAC.1",
+              "removed": [
+                "\"scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD\""
+              ],
+              "added": [
+                "\"scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xcca54b0916cee2186b47e9709bedcb7041a8f761",
+          "status": "created"
+        },
+        {
+          "address": "scr:0xcca54b0916cee2186b47e9709bedcb7041a8f761",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "82e0b905",
+      "timestamp": 1779399741,
+      "changes": [
+        {
+          "address": "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ],
+              "added": [
+                "\"eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ]
+            },
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 5 (60%)\""
+              ],
+              "added": [
+                "\"2 of 4 (50%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ],
+              "added": [
+                "\"scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ]
+            },
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 5 (60%)\""
+              ],
+              "added": [
+                "\"2 of 4 (50%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "43ead15a",
+      "timestamp": 1779198962,
+      "changes": [
+        {
+          "address": "eth:0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ],
+              "added": [
+                "\"eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x716f84f747e2b75abb917ff0bcb0a71c41aa8831"
+        },
+        {
+          "address": "eth:0xee9bb388d320f4305af6a4a1a70c862d3f4d0d5b"
+        },
+        {
+          "address": "scr:0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ],
+              "added": [
+                "\"scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0x716f84f747e2b75abb917ff0bcb0a71c41aa8831"
+        },
+        {
+          "address": "scr:0xee9bb388d320f4305af6a4a1a70c862d3f4d0d5b"
+        }
+      ]
+    },
+    {
+      "id": "3d076cfd",
+      "timestamp": 1771857557,
+      "changes": [
+        {
+          "address": "eth:0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.9.verifier",
+              "removed": [
+                "\"eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181\""
+              ],
+              "added": [
+                "\"eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4f438522956c8826b9e29b4c775b2d8a6a803181",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x0de180164dc571522457101f5c47b2eab36d0a82",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "5986410f",
+      "timestamp": 1770736063,
+      "changes": [
+        {
+          "address": "eth:0xeb803eb3f501998126bf37bb823646ed3d59d072"
+        },
+        {
+          "address": "eth:0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"eth:0xfc31892C5500AbE00974280b28907BaA9190E384\""
+              ],
+              "added": [
+                "\"eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xf8b1378579659d8f7ee5f3c929c2f3e332e41fd6",
+          "fields": [
+            {
+              "key": "values.gateways.eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+              "added": [
+                "\"eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"scr:0xfc31892C5500AbE00974280b28907BaA9190E384\""
+              ],
+              "added": [
+                "\"scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x02398771fd1db790ef2b656ca3bcb3075f27a72c",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x1abaea1f7c830bd89acc67ec4af516284b1bc33c",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xbc4b3d9a89f187dbaa0d2e60985ea1fffa5247d2",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "8ee7e5d6",
+      "timestamp": 1766408981,
+      "changes": [
+        {
+          "address": "eth:0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5\""
+              ],
+              "added": [
+                "\"eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x8fa3b4570b4c96f8036c13b64971ba65867eeb48",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"eth:0xfc31892C5500AbE00974280b28907BaA9190E384\""
+              ],
+              "added": [
+                "\"eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5\""
+              ],
+              "added": [
+                "\"eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"eth:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f\""
+              ],
+              "added": [
+                "\"eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5\""
+              ],
+              "added": [
+                "\"scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5\""
+              ],
+              "added": [
+                "\"scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"scr:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f\""
+              ],
+              "added": [
+                "\"scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "316f6807",
+      "timestamp": 1765815217,
+      "changes": [
+        {
+          "address": "eth:0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.8",
+              "added": [
+                "{\"startBatchIndex\":0,\"verifier\":\"eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5\"}"
+              ]
+            },
+            {
+              "key": "values.latestVerifier.9",
+              "added": [
+                "{\"startBatchIndex\":0,\"verifier\":\"eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181\"}"
+              ]
+            },
+            {
+              "key": "values.legacyVerifiersLength.7",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.legacyVerifiersLength.8",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.verifierVersions.8",
+              "added": [
+                "9"
+              ]
+            },
+            {
+              "key": "values.verifierVersions.9",
+              "added": [
+                "10"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4af7f3abd780fbd319c4356a219100a45f85ddb5",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x4f438522956c8826b9e29b4c775b2d8a6a803181",
+          "status": "created"
+        },
+        {
+          "address": "eth:0x749fc77a1a131632a8b88e8703e489557660c75e",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "dd400141",
+      "timestamp": 1765195735,
+      "changes": [
+        {
+          "address": "scr:0x2f3f2054776bd3c2fc30d750734a8f539bb214f0",
+          "fields": [
+            {
+              "key": "values.votingDelay",
+              "removed": [
+                "172800"
+              ],
+              "added": [
+                "129600"
+              ]
+            },
+            {
+              "key": "values.votingPeriod",
+              "removed": [
+                "403200"
+              ],
+              "added": [
+                "302400"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9e7198de",
+      "timestamp": 1760089209,
+      "changes": [
+        {
+          "address": "scr:0x2b2a8546df3b23535fffd75b4e312f3c5c7b4351",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"scr:0xd5A0f3DfCe7128B7119462F7aC912616bB05b593\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"scr:0x226A1669cd60A43e53030fD0A482Ea566d3Dba8B\""
+              ],
+              "added": [
+                "\"scr:0x558581b0345D986bA5bD6f04Efd27e2a5B991320\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 3 (67%)\""
+              ],
+              "added": [
+                "\"2 of 2 (100%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acedcc5e",
+      "timestamp": 1756895025,
+      "changes": [
+        {
+          "address": "eth:0x9479abfebefeea3c846163012a472b44f305b3d7",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424\""
+              ],
+              "added": [
+                "\"eth:0xDF1aa0495C815A1b9156796a741885a4834EC012\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "scr:0x9479abfebefeea3c846163012a472b44f305b3d7",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"scr:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424\""
+              ],
+              "added": [
+                "\"scr:0xDF1aa0495C815A1b9156796a741885a4834EC012\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8d34a425",
+      "timestamp": 1756804385,
+      "changes": [
+        {
+          "address": "scr:0x2f3f2054776bd3c2fc30d750734a8f539bb214f0",
+          "fields": [
+            {
+              "key": "values.votingDelay",
+              "removed": [
+                "3600"
+              ],
+              "added": [
+                "172800"
+              ]
+            },
+            {
+              "key": "values.votingPeriod",
+              "removed": [
+                "432000"
+              ],
+              "added": [
+                "403200"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "479747ff",
+      "timestamp": 1756130522,
+      "changes": [
+        {
+          "address": "0x5300000000000000000000000000000000000004",
+          "fields": [
+            {
+              "key": "values.totalSupply",
+              "removed": [
+                "\"4497294538621618165812\""
+              ],
+              "added": [
+                "\"4170911196463469688720\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xf610a9dfb7c89644979b4a0f27063e9e7d7cda32",
+          "fields": [
+            {
+              "key": "values.totalSupply",
+              "removed": [
+                "\"978415033324282926152\""
+              ],
+              "added": [
+                "\"983802096521707616986\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a0ae31ea",
+      "timestamp": 1755523806,
+      "changes": [
+        {
+          "address": "0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.7",
+              "added": [
+                "{\"startBatchIndex\":0,\"verifier\":\"eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485\"}"
+              ]
+            },
+            {
+              "key": "values.legacyVerifiersLength.7",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.verifierVersions.7",
+              "added": [
+                "8"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x56971da63a3c0205184fef096e9ddfc7a8c2d18a",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xEfA158006b072793a49E622B26761cD0eC38591d\""
+              ],
+              "added": [
+                "\"eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0x39C36c9026ac18104839A50c61a4507ea5052ECa\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x6260af48e8948617b8fa17f4e5cea2d21d21554b",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xd1841c5756428812233eEA78afC17cb2D3e392bb\""
+              ],
+              "added": [
+                "\"eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0x79F1bF1906B63b56E08c3ada4c51De11F145a27A\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x6774bcbd5cecef1336b5300fb5186a12ddd8b367",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b\""
+              ],
+              "added": [
+                "\"eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0x79b6eAbfFAa958FDF2Aa2Bf632878bD323DCbF69\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "4"
+              ],
+              "added": [
+                "5"
+              ]
+            },
+            {
+              "key": "values.maxReplayTimes",
+              "removed": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x7ac440cae8eb6328de4fa621163a792c1ea9d4fe",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49\""
+              ],
+              "added": [
+                "\"eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0xE25EfFEFd08c4a57556d47eF96471Cb567A86c24\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x7f2b8c31f88b6006c382775eea88297ec1e3e905",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x546E0bF31FB6e7babD493452e4e6999191367B42\""
+              ],
+              "added": [
+                "\"eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x8432728a257646449245558b8b7dbe51a16c7a4d",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x6A124779fDf107c3F6BcB992731dCAaD09f2276A\""
+              ],
+              "added": [
+                "\"eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0xf15a4b6D1fE2Ca6eE38BC3fb957f43F58b515eeE\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f\""
+              ],
+              "added": [
+                "\"eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.7",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "7"
+              ],
+              "added": [
+                "8"
+              ]
+            },
+            {
+              "key": "values.maxNumTxInChunk",
+              "removed": [
+                "100"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xb2b10a289a229415a124efdef310c10cb004b6ff",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c\""
+              ],
+              "added": [
+                "\"eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0x40c3C3dEa3B7D6d117E6713377144fD8EE6D6c97\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xb94f7f6abcb811c5ac709de14e37590fccd975b6",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x244BF7aEf29F03916569470a51fA0794B62F8cd7\""
+              ],
+              "added": [
+                "\"eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0xcA46358D5F01E4F865885514DAe6275087Ffe38E\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xd8a791fe2be73eb6e6cf1eb0cb3f36adc9b3f8f9",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c\""
+              ],
+              "added": [
+                "\"eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-08-18T02:46:23.000Z\",\"0x0b3de25cab280b3e304b63e11cde6b04ef75023d89bb08d0cb6d743e055daa7c\",[\"eth:0xfF8238be22cC583b3d69A76da9d84Da7788c0ee9\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa8d4702aa5c09af5dd1323e1842a43789021f485",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "b50d5105",
+      "timestamp": 1755014055,
+      "changes": [
+        {
+          "address": "0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4",
+          "fields": [
+            {
+              "key": "values.rescuer",
+              "removed": [
+                "\"scr:0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6ed7fbd2",
+      "timestamp": 1754910994,
+      "changes": [
+        {
+          "address": "0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.6.verifier",
+              "removed": [
+                "\"eth:0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba\""
+              ],
+              "added": [
+                "\"eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA\""
+              ]
+            },
+            {
+              "key": "values.latestVerifier.6.startBatchIndex",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "364588"
+              ]
+            },
+            {
+              "key": "values.legacyVerifiersLength.6",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "1"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x7f1a3e1299f44baefe20cb2bcd62a75ca00c20d6",
+          "status": "deleted"
+        },
+        {
+          "address": "0xbb08c87a2e871fcf3d86c4f7ed03dec8b66297ba",
+          "status": "deleted"
+        },
+        {
+          "address": "0x39854df30b3482ef546f68b8981fae5a2c426ea4",
+          "status": "created"
+        },
+        {
+          "address": "0xc084a6de8b0f2742396572d6f110ec87ca9329ba",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "9807e3db",
+      "timestamp": 1754403402,
+      "changes": [
+        {
+          "address": "0x13d24a7ff6f5ec5ff0e9c40fc3b8c9c01c65437b",
+          "fields": [
+            {
+              "key": "values.accessControl.roles.PAUSE_CONTROLLER_ROLE",
+              "added": [
+                "{\"adminRole\":\"DEFAULT_ADMIN_ROLE\",\"members\":[\"scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE",
+              "added": [
+                "{\"adminRole\":\"DEFAULT_ADMIN_ROLE\",\"members\":[\"scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0",
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0",
+              "removed": [
+                "\"emergency-nodelay\""
+              ],
+              "added": [
+                "\"PAUSE_CONTROLLER_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334",
+              "added": [
+                "[\"ops-fast\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d",
+              "added": [
+                "[\"ops-fast\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.scr:0x331A873a2a85219863d80d248F9e2978fE88D0Ea",
+              "added": [
+                "{\"updateBaseFeeOverhead(uint256)\":[\"ops-fast\"],\"updateBaseFeeScalar(uint256)\":[\"ops-fast\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd",
+              "added": [
+                "{\"pause(address)\":[\"emergency-nodelay\"],\"updatePauseCooldownPeriod(uint256)\":[\"SECURITY_COUNCIL_NO_DELAY_ROLE\"],\"resetPauseCooldownPeriod(address)\":[\"SECURITY_COUNCIL_NO_DELAY_ROLE\"],\"unpause(address)\":[\"emergency-nodelay\",\"SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE\"]}"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x2f3f2054776bd3c2fc30d750734a8f539bb214f0",
+          "fields": [
+            {
+              "key": "values.votingDelay",
+              "removed": [
+                "86400"
+              ],
+              "added": [
+                "3600"
+              ]
+            },
+            {
+              "key": "values.votingPeriod",
+              "removed": [
+                "201600"
+              ],
+              "added": [
+                "432000"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa76acf000c890b0dd7aeef57627d9899f955d026"
+        },
+        {
+          "address": "0x40bd67b02ebf1cfb4ada7f60cabac94d6aafc6ee",
+          "status": "created"
+        },
+        {
+          "address": "0xaf9a61aa21ab4a2fdbc88e81363d2e3d359749dd",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "6b8e853c",
+      "timestamp": 1754403402,
+      "changes": [
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.roles.PAUSE_CONTROLLER_ROLE",
+              "added": [
+                "{\"adminRole\":\"DEFAULT_ADMIN_ROLE\",\"members\":[\"eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE",
+              "added": [
+                "{\"adminRole\":\"DEFAULT_ADMIN_ROLE\",\"members\":[\"eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0",
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0",
+              "removed": [
+                "\"emergency-nodelay\""
+              ],
+              "added": [
+                "\"PAUSE_CONTROLLER_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.updateMaxNumTxInChunk(uint256)",
+              "removed": [
+                "[\"ops-fast\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0",
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0",
+              "removed": [
+                "\"emergency-nodelay\""
+              ],
+              "added": [
+                "\"PAUSE_CONTROLLER_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateFeeVault(address).0",
+              "removed": [
+                "\"ops-fast\""
+              ],
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateMaxReplayTimes(uint256)",
+              "removed": [
+                "[\"ops-fast\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D.updateMessageQueueParameters((uint32,uint112,uint112)).0",
+              "removed": [
+                "\"ops-fast\""
+              ],
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D.updateEnforcedBatchParameters((uint24,uint24)).0",
+              "removed": [
+                "\"ops-fast\""
+              ],
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d.setPause(bool).0",
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d.setPause(bool).0",
+              "removed": [
+                "\"emergency-nodelay\""
+              ],
+              "added": [
+                "\"PAUSE_CONTROLLER_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b",
+              "added": [
+                "{\"pause(address)\":[\"emergency-nodelay\"],\"updatePauseCooldownPeriod(uint256)\":[\"SECURITY_COUNCIL_NO_DELAY_ROLE\"],\"resetPauseCooldownPeriod(address)\":[\"SECURITY_COUNCIL_NO_DELAY_ROLE\"],\"unpause(address)\":[\"emergency-nodelay\",\"SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE\"]}"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xeb803eb3f501998126bf37bb823646ed3d59d072"
+        },
+        {
+          "address": "0x40bd67b02ebf1cfb4ada7f60cabac94d6aafc6ee",
+          "status": "created"
+        },
+        {
+          "address": "0xb8f7ea9998530833cbb7e0ef4f0d945957229d8b",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "b135acb2",
+      "timestamp": 1753093944,
+      "changes": [
+        {
+          "address": "0x8432728a257646449245558b8b7dbe51a16c7a4d",
+          "fields": [
+            {
+              "key": "values.messageQueueParameters.baseFeeOverhead",
+              "removed": [
+                "4790000"
+              ],
+              "added": [
+                "120000"
+              ]
+            },
+            {
+              "key": "values.messageQueueParameters.baseFeeScalar",
+              "removed": [
+                "388000000000000"
+              ],
+              "added": [
+                "9700000000000"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "55a8ff3e",
+      "timestamp": 1751876577,
+      "changes": [
+        {
+          "address": "0x2b2a8546df3b23535fffd75b4e312f3c5c7b4351",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"0x108493124adf60F401E051e6A05043d8967bff6f\""
+              ],
+              "added": [
+                "\"0x226A1669cd60A43e53030fD0A482Ea566d3Dba8B\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "19d658d4",
+      "timestamp": 1750248225,
+      "changes": [
+        {
+          "address": "0x8432728a257646449245558b8b7dbe51a16c7a4d",
+          "fields": [
+            {
+              "key": "values.messageQueueParameters.baseFeeOverhead",
+              "removed": [
+                "15680000"
+              ],
+              "added": [
+                "4790000"
+              ]
+            },
+            {
+              "key": "values.messageQueueParameters.baseFeeScalar",
+              "removed": [
+                "34000000000000"
+              ],
+              "added": [
+                "388000000000000"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0xFCf6364F5157901f533DD3615A5d8c375F13c072\""
+              ],
+              "added": [
+                "\"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8b2023fd",
+      "timestamp": 1750248221,
+      "changes": [
+        {
+          "address": "0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0xFCf6364F5157901f533DD3615A5d8c375F13c072\""
+              ],
+              "added": [
+                "\"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5133e1b1",
+      "timestamp": 1748272832,
+      "changes": [
+        {
+          "address": "0x33996cc9eee2dc20b10b8e57d313d0facc7a0828",
+          "status": "deleted"
+        },
+        {
+          "address": "0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.6.verifier",
+              "removed": [
+                "\"0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828\""
+              ],
+              "added": [
+                "\"0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x9f66505cb1626d06b50ef2597f41de6686e8f79a",
+          "status": "deleted"
+        },
+        {
+          "address": "0x7f1a3e1299f44baefe20cb2bcd62a75ca00c20d6",
+          "status": "created"
+        },
+        {
+          "address": "0xbb08c87a2e871fcf3d86c4f7ed03dec8b66297ba",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "fdec27fc",
+      "timestamp": 1746698205,
+      "changes": [
+        {
+          "address": "0x11cd09a0c5b1dc674615783b0772a9bfd53e3a8f",
+          "fields": [
+            {
+              "key": "values.$members.8",
+              "removed": [
+                "\"0x4970e361f6168a301D1036348d625A8930B1AaB7\""
+              ],
+              "added": [
+                "\"0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d\""
+              ]
+            },
+            {
+              "key": "values.$members.7",
+              "removed": [
+                "\"0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d\""
+              ],
+              "added": [
+                "\"0x32E8B0B9783d65170fd37f79079d5707107cCc62\""
+              ]
+            },
+            {
+              "key": "values.$members.6",
+              "removed": [
+                "\"0x32E8B0B9783d65170fd37f79079d5707107cCc62\""
+              ],
+              "added": [
+                "\"0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d\""
+              ]
+            },
+            {
+              "key": "values.$members.5",
+              "removed": [
+                "\"0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d\""
+              ],
+              "added": [
+                "\"0xb01474b50382fAe1A847E3A916ECDf07Ba57BcC7\""
+              ]
+            },
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0xb01474b50382fAe1A847E3A916ECDf07Ba57BcC7\""
+              ],
+              "added": [
+                "\"0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC\""
+              ],
+              "added": [
+                "\"0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf\""
+              ],
+              "added": [
+                "\"0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3\""
+              ],
+              "added": [
+                "\"0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD\""
+              ]
+            },
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD\""
+              ],
+              "added": [
+                "\"0xA0895eF86B766aFd455Fdb129A830A1C6CE054A1\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c6b60b13",
+      "timestamp": 1746698204,
+      "changes": [
+        {
+          "address": "0x11cd09a0c5b1dc674615783b0772a9bfd53e3a8f",
+          "fields": [
+            {
+              "key": "values.$members.8",
+              "removed": [
+                "\"0x4970e361f6168a301D1036348d625A8930B1AaB7\""
+              ],
+              "added": [
+                "\"0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d\""
+              ]
+            },
+            {
+              "key": "values.$members.7",
+              "removed": [
+                "\"0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d\""
+              ],
+              "added": [
+                "\"0x32E8B0B9783d65170fd37f79079d5707107cCc62\""
+              ]
+            },
+            {
+              "key": "values.$members.6",
+              "removed": [
+                "\"0x32E8B0B9783d65170fd37f79079d5707107cCc62\""
+              ],
+              "added": [
+                "\"0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d\""
+              ]
+            },
+            {
+              "key": "values.$members.5",
+              "removed": [
+                "\"0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d\""
+              ],
+              "added": [
+                "\"0xb01474b50382fAe1A847E3A916ECDf07Ba57BcC7\""
+              ]
+            },
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0xb01474b50382fAe1A847E3A916ECDf07Ba57BcC7\""
+              ],
+              "added": [
+                "\"0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC\""
+              ],
+              "added": [
+                "\"0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf\""
+              ],
+              "added": [
+                "\"0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3\""
+              ],
+              "added": [
+                "\"0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD\""
+              ]
+            },
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD\""
+              ],
+              "added": [
+                "\"0xA0895eF86B766aFd455Fdb129A830A1C6CE054A1\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2193d319",
+      "timestamp": 1745836777,
+      "changes": [
+        {
+          "address": "0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4",
+          "fields": [
+            {
+              "key": "values.totalSupply",
+              "removed": [
+                "18073085046087"
+              ],
+              "added": [
+                "19147318188126"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"0xE2e6345baAD18f779167443Dc4886495507b3249\""
+              ],
+              "added": [
+                "\"0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59\""
+              ],
+              "added": [
+                "\"0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f\""
+              ]
+            },
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "4"
+              ],
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 5 (80%)\""
+              ],
+              "added": [
+                "\"3 of 5 (60%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "583fc831",
+      "timestamp": 1745836741,
+      "changes": [
+        {
+          "address": "0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",
+          "status": "deleted"
+        },
+        {
+          "address": "0x259204ddd2ba29bd9b1b9a5c9b093f73d7eacf37",
+          "status": "deleted"
+        },
+        {
+          "address": "0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.6",
+              "added": [
+                "{\"startBatchIndex\":0,\"verifier\":\"0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828\"}"
+              ]
+            },
+            {
+              "key": "values.legacyVerifiersLength.6",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.verifierVersions.6",
+              "added": [
+                "7"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x6774bcbd5cecef1336b5300fb5186a12ddd8b367",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6\""
+              ],
+              "added": [
+                "\"0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2025-04-25T07:06:59.000Z\",\"0x783703d4e94de48edb75261149a540cbf7abb7ef077865c11080e622a508ab86\",[\"0x84791281EF5cb8Af5dCd4c122f7A42FeD38Fef5b\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2023-10-08T16:25:23.000Z\",\"0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e\",[\"0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1.2.0",
+              "removed": [
+                "\"0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845\""
+              ],
+              "added": [
+                "\"0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1.1",
+              "removed": [
+                "\"2023-10-08T16:25:23.000Z\""
+              ],
+              "added": [
+                "\"2024-02-22T08:20:23.000Z\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1.0",
+              "removed": [
+                "\"0xcad9f31340db6aca3a5da0d704ee33a9b6c43a5b1be4406cc0ed33edbdd7c92e\""
+              ],
+              "added": [
+                "\"0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.0.2",
+              "removed": [
+                "[\"0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6\"]"
+              ],
+              "added": [
+                "\"0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.0.1",
+              "removed": [
+                "\"2024-02-22T08:20:23.000Z\""
+              ],
+              "added": [
+                "\"2025-04-22T06:01:35.000Z\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.0.0",
+              "removed": [
+                "\"0xe378370b6bbc3d7f7278df88aa0e233b8f0fea3d77bef04593919b29d0094826\""
+              ],
+              "added": [
+                "[\"0xc6326109E33465d6d61e4Cb7AFCe7B1bE7cfF868\"]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "4"
+              ]
+            },
+            {
+              "key": "values.counterpart",
+              "removed": [
+                "\"0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC\""
+              ],
+              "added": [
+                "\"scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC\""
+              ]
+            },
+            {
+              "key": "values.messageQueue",
+              "removed": [
+                "\"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B\""
+              ]
+            },
+            {
+              "key": "values.prevReplayIndex",
+              "removed": [
+                "[0,0,0,0,0]"
+              ]
+            },
+            {
+              "key": "values.xDomainMessageSender",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000001\""
+              ],
+              "added": [
+                "\"scr:0x0000000000000000000000000000000000000001\""
+              ]
+            },
+            {
+              "key": "values.enforcedTxGateway",
+              "added": [
+                "\"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d\""
+              ]
+            },
+            {
+              "key": "values.messageQueueV1",
+              "added": [
+                "\"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B\""
+              ]
+            },
+            {
+              "key": "values.messageQueueV2",
+              "added": [
+                "\"0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x72cacbcfde2d1e19122f8a36a4d6676cd39d7a5d",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"0x642af405bF64660665B37977449C9C536B806318\""
+              ],
+              "added": [
+                "\"0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1",
+              "added": [
+                "[\"2025-04-22T06:01:35.000Z\",\"0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21\",[\"0x7e87c75BBe7991bbCEBd2C7a56f4cFC923BDDBcc\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.messageQueue",
+              "removed": [
+                "\"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B\""
+              ],
+              "added": [
+                "\"0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a\""
+              ]
+            },
+            {
+              "key": "values.paused",
+              "severity": "HIGH",
+              "removed": [
+                "true"
+              ],
+              "added": [
+                "false"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x781e90f1c8fc4611c9b7497c3b47f99ef6969cbc",
+          "status": "deleted"
+        },
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes)",
+              "removed": [
+                "[\"emergency-nodelay\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.finalizeEuclidInitialBatch(bytes32)",
+              "removed": [
+                "[\"SECURITY_COUNCIL_NO_DELAY_ROLE\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes)",
+              "added": [
+                "[\"emergency-nodelay\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.disableEnforcedBatchMode()",
+              "added": [
+                "[\"SECURITY_COUNCIL_NO_DELAY_ROLE\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x8432728A257646449245558B8b7Dbe51A16c7a4D",
+              "added": [
+                "{\"updateMessageQueueParameters((uint32,uint112,uint112))\":[\"ops-fast\"],\"updateEnforcedBatchParameters((uint24,uint24))\":[\"ops-fast\"],\"updateSigner(address)\":[\"emergency-nodelay\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+              "added": [
+                "{\"setPause(bool)\":[\"emergency-nodelay\"]}"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x987e300fdfb06093859358522a79098848c33852",
+          "status": "deleted"
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"0x8f339292d2b3909574B2bEB051a613a987dB538f\""
+              ],
+              "added": [
+                "\"0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.6",
+              "added": [
+                "[\"2025-04-15T14:47:23.000Z\",\"0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0\",[\"0x8f339292d2b3909574B2bEB051a613a987dB538f\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.5.2",
+              "removed": [
+                "\"2025-04-15T14:47:23.000Z\""
+              ],
+              "added": [
+                "\"0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.5.1",
+              "removed": [
+                "\"0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0\""
+              ],
+              "added": [
+                "[\"0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f\"]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.5.0",
+              "removed": [
+                "[\"0x8f339292d2b3909574B2bEB051a613a987dB538f\"]"
+              ],
+              "added": [
+                "\"2024-08-20T23:36:35.000Z\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4.2",
+              "removed": [
+                "\"0x3928e0223337a112ea68c84db95441185a3e1da809638be13c0135761aa19ee7\""
+              ],
+              "added": [
+                "\"0x2c09704f5717cd65e31ea854b8c6a5229b841fcabc5bcbbbb1117f13b9f60d21\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4.1.0",
+              "removed": [
+                "\"0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f\""
+              ],
+              "added": [
+                "\"0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4.0",
+              "removed": [
+                "\"2024-08-20T23:36:35.000Z\""
+              ],
+              "added": [
+                "\"2025-04-22T06:01:35.000Z\""
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "6"
+              ],
+              "added": [
+                "7"
+              ]
+            },
+            {
+              "key": "values.committedBatches",
+              "removed": [
+                "[\"0x5aaeb6101a47fc16866e80d77ffe090b6a7b3cf7d988be981646ab6aedfa2c42\",\"0xaa8181f04f8e305328a6117fa6bc13fa2093a3c4c990c5281df95a1cb85ca18f\",\"0x30d13ec2a06074f2048d64d85b62e1b4fb8f461d43bbd26099ef86d903c97399\",\"0xe4bf15441d44aec723eff1ba7e80f9f5c6dbc46312471d0b23e297310870012f\",\"0xcb24a337233a0d9a335e71a33637a8e42d71422c08ca6338572eb1e25e0f989a\"]"
+              ]
+            },
+            {
+              "key": "values.finalizedStateRoots",
+              "removed": [
+                "[\"0x08d535cc60f40af5dd3b31e0998d7567c2d568b224bed2ba26070aeb078d1339\",\"0x2b3219c3d89d50b5aa4e56743c4e22501d34b885e468365ba3b1cc818297db74\",\"0x2494e7866ed0b6e8cf87024c0036e53cf3d4a7cbe22f11d80f8fff36392463a0\",\"0x18a3423e924e332986d81b32fbec1f1d21b1f7a8a706267fdf87ed18bc6dfff6\",\"0x2d0336979e3bcd0ef4c4cde61d5ab5b14ee57b5f533152c459dc0e63bb1a7e1f\"]"
+              ]
+            },
+            {
+              "key": "values.isBatchFinalized",
+              "removed": [
+                "[true,true,true,true,true]"
+              ]
+            },
+            {
+              "key": "values.messageQueue",
+              "removed": [
+                "\"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B\""
+              ]
+            },
+            {
+              "key": "values.withdrawRoots",
+              "removed": [
+                "[\"0x0000000000000000000000000000000000000000000000000000000000000000\",\"0x0000000000000000000000000000000000000000000000000000000000000000\",\"0x0000000000000000000000000000000000000000000000000000000000000000\",\"0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0\",\"0x42b111e4bf3652280b54a2f4a5195aeab5db8f647e93d1725566be3f2f9aedc0\"]"
+              ]
+            },
+            {
+              "key": "values.isEnforcedModeEnabled",
+              "added": [
+                "false"
+              ]
+            },
+            {
+              "key": "values.messageQueueV1",
+              "added": [
+                "\"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B\""
+              ]
+            },
+            {
+              "key": "values.messageQueueV2",
+              "added": [
+                "\"0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a\""
+              ]
+            },
+            {
+              "key": "values.provers",
+              "added": [
+                "[\"0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c\",\"0x74b286304576625557629C47E9E8702383D9eF92\"]"
+              ]
+            },
+            {
+              "key": "values.revertedBatches",
+              "added": [
+                "[275119,275120,275121,275122,275123,275124,275125,275126,275127,275128,275129,275130,275131,275132,275133,275134,275135,275136,275137,275138,275139,275140,275141,275142,275143,275144,275145,275146,275147,275148,275149,275150,275151,275152,275153,275154,275155,275156,275157,275158,275159,275160,275161,275162,275163,275164,275165,275166,275167,275168,275169,275170,275171,275172,275173,346818,346817,346816,346815]"
+              ]
+            },
+            {
+              "key": "values.sequencers",
+              "added": [
+                "[\"0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B\",\"0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858\"]"
+              ]
+            },
+            {
+              "key": "values.systemConfig",
+              "added": [
+                "\"0x8432728A257646449245558B8b7Dbe51A16c7a4D\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xeb803eb3f501998126bf37bb823646ed3d59d072"
+        },
+        {
+          "address": "0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"0xE2e6345baAD18f779167443Dc4886495507b3249\""
+              ],
+              "added": [
+                "\"0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0\""
+              ],
+              "added": [
+                "\"0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f\""
+              ]
+            },
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "4"
+              ],
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 5 (80%)\""
+              ],
+              "added": [
+                "\"3 of 5 (60%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x33996cc9eee2dc20b10b8e57d313d0facc7a0828",
+          "status": "created"
+        },
+        {
+          "address": "0x56971da63a3c0205184fef096e9ddfc7a8c2d18a",
+          "status": "created"
+        },
+        {
+          "address": "0x8432728a257646449245558b8b7dbe51a16c7a4d",
+          "status": "created"
+        },
+        {
+          "address": "0x9f66505cb1626d06b50ef2597f41de6686e8f79a",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "b3e3118f",
+      "timestamp": 1744999610,
+      "changes": [
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.initialEuclidBatchIndex",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "357915"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3595ea64",
+      "timestamp": 1744809902,
+      "changes": [
+        {
+          "address": "0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.5",
+              "added": [
+                "{\"startBatchIndex\":0,\"verifier\":\"0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247\"}"
+              ]
+            },
+            {
+              "key": "values.latestVerifier.4.verifier",
+              "removed": [
+                "\"0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247\""
+              ],
+              "added": [
+                "\"0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB\""
+              ]
+            },
+            {
+              "key": "values.latestVerifier.3.verifier",
+              "removed": [
+                "\"0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB\""
+              ],
+              "added": [
+                "\"0x585DfaD7bF4099E011D185E266907A8ab60DAD2D\""
+              ]
+            },
+            {
+              "key": "values.latestVerifier.2.verifier",
+              "removed": [
+                "\"0x585DfaD7bF4099E011D185E266907A8ab60DAD2D\""
+              ],
+              "added": [
+                "\"0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3\""
+              ]
+            },
+            {
+              "key": "values.legacyVerifiersLength.5",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.verifierVersions.5",
+              "added": [
+                "6"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.finalizeEuclidInitialBatch(bytes32)",
+              "added": [
+                "[\"SECURITY_COUNCIL_NO_DELAY_ROLE\"]"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f\""
+              ],
+              "added": [
+                "\"0x8f339292d2b3909574B2bEB051a613a987dB538f\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.5",
+              "added": [
+                "[\"2025-04-15T14:47:23.000Z\",\"0xa1faad1ccd2c390641b46d50d93c26b7369137f021e528acfec78385494b2fb0\",[\"0x8f339292d2b3909574B2bEB051a613a987dB538f\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "5"
+              ],
+              "added": [
+                "6"
+              ]
+            },
+            {
+              "key": "values.initialEuclidBatchIndex",
+              "added": [
+                "0"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x0112315fa1c81c35ac9a477e161b52ae4d1466b3",
+          "status": "created"
+        },
+        {
+          "address": "0xd1638c0c7bd6bf49d655d855d353ac8b4f949582",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "a25b8759",
+      "timestamp": 1742900778,
+      "changes": [
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.1",
+              "removed": [
+                "\"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.0",
+              "removed": [
+                "\"0x0e58939204eEDa84F796FBc86840A50af10eC4F4\""
+              ],
+              "added": [
+                "\"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aeda33d1",
+      "timestamp": 1741769449,
+      "changes": [
+        {
+          "address": "0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ],
+              "added": [
+                "\"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x568993632c34604098e35a184c52ad390c70f754",
+          "status": "deleted"
+        },
+        {
+          "address": "0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ],
+              "added": [
+                "\"0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x26ecec198adc0be598311bae8edfd4eea47a56c5",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "82215b08",
+      "timestamp": 1737546278,
+      "changes": [
+        {
+          "address": "0x1a658b88fd0a3c82fa1a0609fcdbd32e7dd4ab9c",
+          "status": "deleted"
+        },
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.1",
+              "removed": [
+                "\"0x0e58939204eEDa84F796FBc86840A50af10eC4F4\""
+              ],
+              "added": [
+                "\"0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.0",
+              "removed": [
+                "\"0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C\""
+              ],
+              "added": [
+                "\"0x0e58939204eEDa84F796FBc86840A50af10eC4F4\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.SECURITY_COUNCIL_NO_DELAY_ROLE.members.0",
+              "removed": [
+                "\"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe\""
+              ],
+              "added": [
+                "\"0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.SCROLL_MULTISIG_NO_DELAY_ROLE.members.0",
+              "removed": [
+                "\"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.EMERGENCY_MULTISIG_NO_DELAY_ROLE.members.0",
+              "removed": [
+                "\"0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.TIMELOCK_1DAY_DELAY_TOLE.members.0",
+              "removed": [
+                "\"0x0e58939204eEDa84F796FBc86840A50af10eC4F4\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.TIMELOCK_7DAY_DELAY_ROLE.members.0",
+              "removed": [
+                "\"0xDC1d1189Da69Ae2016E4976A43De20972D349B1b\""
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.emergency-nodelay",
+              "added": [
+                "{\"adminRole\":\"DEFAULT_ADMIN_ROLE\",\"members\":[\"0x826714adD4dDA2b8750794A467C892c0Cd49216b\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.roles.ops-fast",
+              "added": [
+                "{\"adminRole\":\"DEFAULT_ADMIN_ROLE\",\"members\":[\"0x0e58939204eEDa84F796FBc86840A50af10eC4F4\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.0x10d44583",
+              "removed": [
+                "[\"SCROLL_MULTISIG_NO_DELAY_ROLE\",\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeSequencer(address).1",
+              "removed": [
+                "\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeSequencer(address).0",
+              "removed": [
+                "\"SCROLL_MULTISIG_NO_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeProver(address).1",
+              "removed": [
+                "\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeProver(address).0",
+              "removed": [
+                "\"SCROLL_MULTISIG_NO_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).1",
+              "removed": [
+                "\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0",
+              "removed": [
+                "\"SCROLL_MULTISIG_NO_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.addSequencer(address).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.addProver(address).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.updateMaxNumTxInChunk(uint256).0",
+              "removed": [
+                "\"TIMELOCK_7DAY_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes).1",
+              "removed": [
+                "\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes).0",
+              "removed": [
+                "\"SCROLL_MULTISIG_NO_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B.updateGasOracle(address)",
+              "removed": [
+                "[\"TIMELOCK_1DAY_DELAY_TOLE\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B.updateMaxGasLimit(uint256).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).1",
+              "removed": [
+                "\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0",
+              "removed": [
+                "\"SCROLL_MULTISIG_NO_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateMaxReplayTimes(uint256).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateFeeVault(address)",
+              "added": [
+                "[\"ops-fast\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x987e300fDfb06093859358522a79098848C33852",
+              "removed": [
+                "{\"setIntrinsicParams(uint64,uint64,uint64,uint64)\":[\"SCROLL_MULTISIG_NO_DELAY_ROLE\",\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37.updateWhitelistStatus(address[],bool).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0",
+              "removed": [
+                "{\"updateVerifier(uint64,address)\":[\"SECURITY_COUNCIL_NO_DELAY_ROLE\",\"TIMELOCK_7DAY_DELAY_ROLE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6.setERC20Gateway(address[],address[]).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xb2b10a289A229415a124EFDeF310C10cb004B6ff.updateTokenMapping(address,address).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B.updateTokenMapping(address,address).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6.updateTokenMapping(address,address).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B.updateCircleCaller(address).0",
+              "removed": [
+                "\"TIMELOCK_7DAY_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B.pauseDeposit(bool).0",
+              "removed": [
+                "\"TIMELOCK_7DAY_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B.pauseWithdraw(bool).0",
+              "removed": [
+                "\"TIMELOCK_7DAY_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"emergency-nodelay\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+              "removed": [
+                "{\"setPause(bool)\":[\"SCROLL_MULTISIG_NO_DELAY_ROLE\",\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x1Ea29d57dAC237152d878758bAe4BeB2668998f6",
+              "removed": [
+                "{\"updateVerifier(uint256,uint64,address)\":[\"TIMELOCK_7DAY_DELAY_ROLE\",\"SECURITY_COUNCIL_NO_DELAY_ROLE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B",
+              "removed": [
+                "{\"updateVerifier(uint256,uint64,address)\":[\"TIMELOCK_7DAY_DELAY_ROLE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4.setBatchConfig(address,(uint96,uint96,uint16,uint24,uint24)).0",
+              "removed": [
+                "\"TIMELOCK_1DAY_DELAY_TOLE\""
+              ],
+              "added": [
+                "\"ops-fast\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4.grantRole(bytes32,address)",
+              "added": [
+                "[\"ops-fast\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4.revokeRole(bytes32,address)",
+              "added": [
+                "[\"ops-fast\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F.updateVerifier(uint256,uint64,address).0",
+              "removed": [
+                "\"TIMELOCK_7DAY_DELAY_ROLE\""
+              ],
+              "added": [
+                "\"SECURITY_COUNCIL_NO_DELAY_ROLE\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xdc1d1189da69ae2016e4976a43de20972d349b1b",
+          "status": "deleted"
+        },
+        {
+          "address": "0x0cd4c0f24a0a9f3e2fe80ed385d8ad5a2ffeca44",
+          "status": "created"
+        },
+        {
+          "address": "0x11cd09a0c5b1dc674615783b0772a9bfd53e3a8f",
+          "status": "created"
+        },
+        {
+          "address": "0x1a37bf1ccbf570c92fe2239fefaaaf861c2924dd",
+          "status": "created"
+        },
+        {
+          "address": "0x3f9041350b661c74c6cbe440c8bd6bc4c168a9fd",
+          "status": "created"
+        },
+        {
+          "address": "0x69c2ed64171bf5737c2b78bdf722e68a032b2825",
+          "status": "created"
+        },
+        {
+          "address": "0x826714add4dda2b8750794a467c892c0cd49216b",
+          "status": "created"
+        },
+        {
+          "address": "0x8edc4eadee120d4c51923c515e7c3241c815c2bc",
+          "status": "created"
+        },
+        {
+          "address": "0x9479abfebefeea3c846163012a472b44f305b3d7",
+          "status": "created"
+        },
+        {
+          "address": "0xc3ea7c657884bb380b66d79c36adcb5658b01896",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "16c9ba7b",
+      "timestamp": 1736334865,
+      "changes": [
+        {
+          "address": "0x259204ddd2ba29bd9b1b9a5c9b093f73d7eacf37",
+          "fields": [
+            {
+              "key": "values.whitelisted.1",
+              "removed": [
+                "\"0x3a2855ea96b2eb965568eA5d738B8DE185C717f4\""
+              ]
+            },
+            {
+              "key": "values.whitelisted.0",
+              "removed": [
+                "\"0x21b8a9F5a4640c3FC13E19C48e776173e1210995\""
+              ],
+              "added": [
+                "\"0x3a2855ea96b2eb965568eA5d738B8DE185C717f4\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8a4690b3",
+      "timestamp": 1735905517,
+      "changes": [
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.provers.3",
+              "removed": [
+                "\"0x74b286304576625557629C47E9E8702383D9eF92\""
+              ]
+            },
+            {
+              "key": "values.provers.2",
+              "removed": [
+                "\"0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c\""
+              ]
+            },
+            {
+              "key": "values.provers.1",
+              "removed": [
+                "\"0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06\""
+              ],
+              "added": [
+                "\"0x74b286304576625557629C47E9E8702383D9eF92\""
+              ]
+            },
+            {
+              "key": "values.provers.0",
+              "removed": [
+                "\"0x356483dC32B004f32Ea0Ce58F7F88879886e9074\""
+              ],
+              "added": [
+                "\"0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c\""
+              ]
+            },
+            {
+              "key": "values.sequencers.3",
+              "removed": [
+                "\"0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858\""
+              ]
+            },
+            {
+              "key": "values.sequencers.2",
+              "removed": [
+                "\"0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B\""
+              ]
+            },
+            {
+              "key": "values.sequencers.1",
+              "removed": [
+                "\"0x2ce8B4A516ebBc8B425764a867B742F76C2244c7\""
+              ],
+              "added": [
+                "\"0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858\""
+              ]
+            },
+            {
+              "key": "values.sequencers.0",
+              "removed": [
+                "\"0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f\""
+              ],
+              "added": [
+                "\"0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4d037d17",
+      "timestamp": 1734960280,
+      "changes": [
+        {
+          "address": "0x259204ddd2ba29bd9b1b9a5c9b093f73d7eacf37",
+          "fields": [
+            {
+              "key": "values.whitelisted.1",
+              "added": [
+                "\"0x3a2855ea96b2eb965568eA5d738B8DE185C717f4\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.provers.3",
+              "added": [
+                "\"0x74b286304576625557629C47E9E8702383D9eF92\""
+              ]
+            },
+            {
+              "key": "values.provers.2",
+              "added": [
+                "\"0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c\""
+              ]
+            },
+            {
+              "key": "values.sequencers.3",
+              "added": [
+                "\"0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858\""
+              ]
+            },
+            {
+              "key": "values.sequencers.2",
+              "added": [
+                "\"0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ca5148f6",
+      "timestamp": 1732531872,
+      "changes": [
+        {
+          "address": "0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632\""
+              ],
+              "added": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"1 of 5 (20%)\""
+              ],
+              "added": [
+                "\"1 of 4 (25%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632\""
+              ],
+              "added": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 5 (40%)\""
+              ],
+              "added": [
+                "\"2 of 4 (50%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cb4f0a1b",
+      "timestamp": 1731566302,
+      "changes": [
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.revertedBatches.58",
+              "added": [
+                "{\"batchIndex\":346815}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.57",
+              "added": [
+                "{\"batchIndex\":346816}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.56",
+              "added": [
+                "{\"batchIndex\":346817}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.55",
+              "added": [
+                "{\"batchIndex\":346818}"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2d3133ef",
+      "timestamp": 1727503198,
+      "changes": [
+        {
+          "address": "0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0xdA66Df3920091eF4B54782B9463587c314DAdD41\""
+              ],
+              "added": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0xdA66Df3920091eF4B54782B9463587c314DAdD41\""
+              ],
+              "added": [
+                "\"0x568993632c34604098e35a184C52aD390c70f754\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2c4bfa10",
+      "timestamp": 1726040860,
+      "changes": [
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.1",
+              "added": [
+                "\"0x0e58939204eEDa84F796FBc86840A50af10eC4F4\""
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes)",
+              "added": [
+                "[\"SCROLL_MULTISIG_NO_DELAY_ROLE\",\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\"]"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "64f1e977",
+      "timestamp": 1725376159,
+      "changes": [
+        {
+          "address": "0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "fields": [
+            {
+              "key": "values.latestVerifier.4",
+              "added": [
+                "{\"startBatchIndex\":0,\"verifier\":\"0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3\"}"
+              ]
+            },
+            {
+              "key": "values.legacyVerifiersLength.4",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe\""
+              ],
+              "added": [
+                "\"0x798576400F7D662961BA15C6b3F3d813447a26a6\""
+              ]
+            },
+            {
+              "key": "values.verifierVersions.4",
+              "added": [
+                "4"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x8c1b52757b5c571adcb5572e992679d4d48e30f7",
+          "status": "created"
+        },
+        {
+          "address": "0xcaecee2e815e7f758c2477f900afa14bddce54b3",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "ca551251",
+      "timestamp": 1724412314,
+      "changes": [
+        {
+          "address": "0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"0xeBaed7A81c298B24EE6d59c22698A951dc448E01\""
+              ],
+              "added": [
+                "\"0x137CC585F607EDeBBc3CA6360AffCFeab507B374\""
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,uint256)",
+              "removed": [
+                "[\"SCROLL_MULTISIG_NO_DELAY_ROLE\",\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.0x10d44583",
+              "added": [
+                "[\"SCROLL_MULTISIG_NO_DELAY_ROLE\",\"EMERGENCY_MULTISIG_NO_DELAY_ROLE\"]"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+              "added": [
+                "{\"updateVerifier(uint256,uint64,address)\":[\"TIMELOCK_7DAY_DELAY_ROLE\"]}"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"0x4F250B05262240C787a1eE222687C6eC395C628A\""
+              ],
+              "added": [
+                "\"0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f\""
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "4"
+              ],
+              "added": [
+                "5"
+              ]
+            },
+            {
+              "key": "values.verifier",
+              "removed": [
+                "\"0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B\""
+              ],
+              "added": [
+                "\"0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xf94afbd9370e25dd6ca557d5d67634aefda2416b",
+          "status": "deleted"
+        },
+        {
+          "address": "0x2d6e16d8e8a0c3bc7750e774b108ec39ab0c18fb",
+          "status": "created"
+        },
+        {
+          "address": "0x4cea3e866e7c57fd75cb0ca3e9f5f1151d4ead3f",
+          "status": "created"
+        },
+        {
+          "address": "0x8759e83b6570a0ba46c3ce7eb359f354f816c9a9",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "fddd2c38",
+      "timestamp": 1721740606,
+      "changes": [
+        {
+          "address": "0xc0896ab1a8cae8c2c1d27d011eb955cca955580d",
+          "fields": [
+            {
+              "key": "values.$multisigThreshold",
+              "removed": [
+                "\"3 of 7 (43%)\""
+              ],
+              "added": [
+                "\"3 of 8 (38%)\""
+              ]
+            },
+            {
+              "key": "values.getOwners.7",
+              "added": [
+                "\"0x206846dE1F372A9a603e672ba97A5238cC89aeAA\""
+              ]
+            },
+            {
+              "key": "values.getOwners.6",
+              "removed": [
+                "\"0x206846dE1F372A9a603e672ba97A5238cC89aeAA\""
+              ],
+              "added": [
+                "\"0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D\""
+              ]
+            },
+            {
+              "key": "values.getOwners.5",
+              "removed": [
+                "\"0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D\""
+              ],
+              "added": [
+                "\"0x8F97Bf67182122D2f1745216a81724143db97E43\""
+              ]
+            },
+            {
+              "key": "values.getOwners.4",
+              "removed": [
+                "\"0x8F97Bf67182122D2f1745216a81724143db97E43\""
+              ],
+              "added": [
+                "\"0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94\""
+              ]
+            },
+            {
+              "key": "values.getOwners.3",
+              "removed": [
+                "\"0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94\""
+              ],
+              "added": [
+                "\"0xD6475ce37d964d4816715FdafFEeAAf2958948bE\""
+              ]
+            },
+            {
+              "key": "values.getOwners.2",
+              "removed": [
+                "\"0xD6475ce37d964d4816715FdafFEeAAf2958948bE\""
+              ],
+              "added": [
+                "\"0xf09c25681090C5F9408c6D3CD24baa8721870dc5\""
+              ]
+            },
+            {
+              "key": "values.getOwners.1",
+              "removed": [
+                "\"0xf09c25681090C5F9408c6D3CD24baa8721870dc5\""
+              ],
+              "added": [
+                "\"0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA\""
+              ]
+            },
+            {
+              "key": "values.getOwners.0",
+              "removed": [
+                "\"0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA\""
+              ],
+              "added": [
+                "\"0x11B0BE5e19E38F6f6E07e11f103C4F4e8A5d0f6a\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ea046136",
+      "timestamp": 1721036351,
+      "changes": [
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.targets.0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B",
+              "added": [
+                "{\"updateVerifier(uint256,uint64,address)\":[\"TIMELOCK_7DAY_DELAY_ROLE\"]}"
+              ]
+            },
+            {
+              "key": "values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4",
+              "added": [
+                "{\"setBatchConfig(address,(uint96,uint96,uint16,uint24,uint24))\":[\"TIMELOCK_1DAY_DELAY_TOLE\"]}"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dc1d8275",
+      "timestamp": 1720418858,
+      "changes": [
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "values.revertedBatches.54",
+              "added": [
+                "{\"batchIndex\":275173}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.53",
+              "added": [
+                "{\"batchIndex\":275172}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.52",
+              "added": [
+                "{\"batchIndex\":275171}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.51",
+              "added": [
+                "{\"batchIndex\":275170}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.50",
+              "added": [
+                "{\"batchIndex\":275169}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.49",
+              "added": [
+                "{\"batchIndex\":275168}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.48",
+              "added": [
+                "{\"batchIndex\":275167}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.47",
+              "added": [
+                "{\"batchIndex\":275166}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.46",
+              "added": [
+                "{\"batchIndex\":275165}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.45",
+              "added": [
+                "{\"batchIndex\":275164}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.44",
+              "added": [
+                "{\"batchIndex\":275163}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.43",
+              "added": [
+                "{\"batchIndex\":275162}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.42",
+              "added": [
+                "{\"batchIndex\":275161}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.41",
+              "added": [
+                "{\"batchIndex\":275160}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.40",
+              "added": [
+                "{\"batchIndex\":275159}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.39",
+              "added": [
+                "{\"batchIndex\":275158}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.38",
+              "added": [
+                "{\"batchIndex\":275157}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.37",
+              "added": [
+                "{\"batchIndex\":275156}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.36",
+              "added": [
+                "{\"batchIndex\":275155}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.35",
+              "added": [
+                "{\"batchIndex\":275154}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.34",
+              "added": [
+                "{\"batchIndex\":275153}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.33",
+              "added": [
+                "{\"batchIndex\":275152}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.32",
+              "added": [
+                "{\"batchIndex\":275151}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.31",
+              "added": [
+                "{\"batchIndex\":275150}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.30",
+              "added": [
+                "{\"batchIndex\":275149}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.29",
+              "added": [
+                "{\"batchIndex\":275148}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.28",
+              "added": [
+                "{\"batchIndex\":275147}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.27",
+              "added": [
+                "{\"batchIndex\":275146}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.26",
+              "added": [
+                "{\"batchIndex\":275145}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.25",
+              "added": [
+                "{\"batchIndex\":275144}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.24",
+              "added": [
+                "{\"batchIndex\":275143}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.23",
+              "added": [
+                "{\"batchIndex\":275142}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.22",
+              "added": [
+                "{\"batchIndex\":275141}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.21",
+              "added": [
+                "{\"batchIndex\":275140}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.20",
+              "added": [
+                "{\"batchIndex\":275139}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.19",
+              "added": [
+                "{\"batchIndex\":275138}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.18",
+              "added": [
+                "{\"batchIndex\":275137}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.17",
+              "added": [
+                "{\"batchIndex\":275136}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.16",
+              "added": [
+                "{\"batchIndex\":275135}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.15",
+              "added": [
+                "{\"batchIndex\":275134}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.14",
+              "added": [
+                "{\"batchIndex\":275133}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.13",
+              "added": [
+                "{\"batchIndex\":275132}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.12",
+              "added": [
+                "{\"batchIndex\":275131}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.11",
+              "added": [
+                "{\"batchIndex\":275130}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.10",
+              "added": [
+                "{\"batchIndex\":275129}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.9",
+              "added": [
+                "{\"batchIndex\":275128}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.8",
+              "added": [
+                "{\"batchIndex\":275127}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.7",
+              "added": [
+                "{\"batchIndex\":275126}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.6",
+              "added": [
+                "{\"batchIndex\":275125}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.5",
+              "added": [
+                "{\"batchIndex\":275124}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.4",
+              "added": [
+                "{\"batchIndex\":275123}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.3",
+              "added": [
+                "{\"batchIndex\":275122}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.2",
+              "added": [
+                "{\"batchIndex\":275121}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.1",
+              "added": [
+                "{\"batchIndex\":275120}"
+              ]
+            },
+            {
+              "key": "values.revertedBatches.0",
+              "added": [
+                "{\"batchIndex\":275119}"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c0a1b849",
+      "timestamp": 1720077835,
+      "changes": [
+        {
+          "address": "0x1ea29d57dac237152d878758bae4beb2668998f6",
+          "status": "deleted"
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8\""
+              ],
+              "added": [
+                "\"0x4F250B05262240C787a1eE222687C6eC395C628A\""
+              ]
+            },
+            {
+              "key": "values.verifier",
+              "removed": [
+                "\"0x1Ea29d57dAC237152d878758bAe4BeB2668998f6\""
+              ],
+              "added": [
+                "\"0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x03a72b00d036c479105ff98a1953b15d9c510110",
+          "status": "created"
+        },
+        {
+          "address": "0x63fb51c55d9605a75f8872c80de260a00facfaa2",
+          "status": "created"
+        },
+        {
+          "address": "0xf94afbd9370e25dd6ca557d5d67634aefda2416b",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "5e37408c",
+      "timestamp": 1716968574,
+      "changes": [
+        {
+          "address": "0x1ea29d57dac237152d878758bae4beb2668998f6",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe\""
+              ],
+              "added": [
+                "\"0x798576400F7D662961BA15C6b3F3d813447a26a6\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5cabc0a4",
+      "timestamp": 1714384913,
+      "changes": [
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "fields": [
+            {
+              "key": "values.accessControl.targets.0x1Ea29d57dAC237152d878758bAe4BeB2668998f6",
+              "added": [
+                "{\"updateVerifier(uint256,uint64,address)\":[\"TIMELOCK_7DAY_DELAY_ROLE\",\"SECURITY_COUNCIL_NO_DELAY_ROLE\"]}"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xFA148514d03420b7b1a13eC74da06D2Ca875539C\""
+              ],
+              "added": [
+                "\"0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8\""
+              ]
+            },
+            {
+              "key": "values.verifier",
+              "removed": [
+                "\"0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0\""
+              ],
+              "added": [
+                "\"0x1Ea29d57dAC237152d878758bAe4BeB2668998f6\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa2ab526e5c5491f10fc05a55f064bf9f7cef32a0",
+          "status": "deleted"
+        },
+        {
+          "address": "0x1ea29d57dac237152d878758bae4beb2668998f6",
+          "status": "created"
+        },
+        {
+          "address": "0x2293cd12e8564e8219d314b075867c2f66ac6941",
+          "status": "created"
+        },
+        {
+          "address": "0x4b289e4a5331bafbc6ccb2f10c39b8edcecdb247",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "54877ab0",
+      "timestamp": 1708689890,
+      "changes": [
+        {
+          "address": "0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xBC9D741501A20F962756C95BF906b4abffadcf8F\""
+              ],
+              "added": [
+                "\"0xeBaed7A81c298B24EE6d59c22698A951dc448E01\""
+              ]
+            },
+            {
+              "key": "values.enforcedTxGateway",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d\""
+              ]
+            },
+            {
+              "key": "values.l2BaseFee",
+              "added": [
+                "483000000"
+              ]
+            },
+            {
+              "key": "values.whitelistChecker",
+              "added": [
+                "\"0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x6260af48e8948617b8fa17f4e5cea2d21d21554b",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe\""
+              ],
+              "added": [
+                "\"0xd1841c5756428812233eEA78afC17cb2D3e392bb\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x6774bcbd5cecef1336b5300fb5186a12ddd8b367",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845\""
+              ],
+              "added": [
+                "\"0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x7ac440cae8eb6328de4fa621163a792c1ea9d4fe",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xd3c42158682D55E082EaBe08a29F7515A97cA307\""
+              ],
+              "added": [
+                "\"0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x7f2b8c31f88b6006c382775eea88297ec1e3e905",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d\""
+              ],
+              "added": [
+                "\"0x546E0bF31FB6e7babD493452e4e6999191367B42\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0x2E07f0FBA71709bb5e1f045b02152E45B451D75f\""
+              ],
+              "added": [
+                "\"0xFA148514d03420b7b1a13eC74da06D2Ca875539C\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xb2b10a289a229415a124efdef310c10cb004b6ff",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb\""
+              ],
+              "added": [
+                "\"0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xb94f7f6abcb811c5ac709de14e37590fccd975b6",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0xCb4638620E4C6DeCef26374e71b0dd4871863593\""
+              ],
+              "added": [
+                "\"0x244BF7aEf29F03916569470a51fA0794B62F8cd7\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xd8a791fe2be73eb6e6cf1eb0cb3f36adc9b3f8f9",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0x9218732389D80f9b8723C3f32a38865B7a63564A\""
+              ],
+              "added": [
+                "\"0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xf1af3b23de0a5ca3cab7261cb0061c0d779a5c7b",
+          "fields": [
+            {
+              "key": "upgradeability.implementation",
+              "removed": [
+                "\"0x6667123b5017AAB9945F73345848B82D7A953AA8\""
+              ],
+              "added": [
+                "\"0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bd349b35",
+      "timestamp": 1703145156,
+      "changes": [
+        {
+          "address": "0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.getOwners.4",
+              "removed": [
+                "\"0xd3FfEE6e6312e4303A88BD2fFaFdcA8B09310236\""
+              ],
+              "added": [
+                "\"0xdA66Df3920091eF4B54782B9463587c314DAdD41\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "39217bfa",
+      "timestamp": 1702900726,
+      "changes": [
+        {
+          "address": "0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.getOwners.4",
+              "removed": [
+                "\"0xd3FfEE6e6312e4303A88BD2fFaFdcA8B09310236\""
+              ],
+              "added": [
+                "\"0xdA66Df3920091eF4B54782B9463587c314DAdD41\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a535c9ec",
+      "timestamp": 1699458087,
+      "changes": [
+        {
+          "address": "0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "fields": [
+            {
+              "key": "values.getOwners.2",
+              "removed": [
+                "\"0xEbbeeAA424AE904508465a41c927Be594C43Dc68\""
+              ],
+              "added": [
+                "\"0x0c5cc5155b346453154059aD9d2Ff695dB92f774\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c99e4e10",
+      "timestamp": 1699342417,
+      "changes": [
+        {
+          "address": "0x8fa3b4570b4c96f8036c13b64971ba65867eeb48",
+          "fields": [
+            {
+              "key": "values.getOwners[3]",
+              "added": [
+                "\"0xfc31892C5500AbE00974280b28907BaA9190E384\""
+              ]
+            },
+            {
+              "key": "values.getOwners.2",
+              "removed": [
+                "\"0xfc31892C5500AbE00974280b28907BaA9190E384\""
+              ],
+              "added": [
+                "\"0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0\""
+              ]
+            },
+            {
+              "key": "values.getOwners.1",
+              "removed": [
+                "\"0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0\""
+              ],
+              "added": [
+                "\"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402\""
+              ]
+            },
+            {
+              "key": "values.getOwners.0",
+              "removed": [
+                "\"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402\""
+              ],
+              "added": [
+                "\"0x0c5cc5155b346453154059aD9d2Ff695dB92f774\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9da1c382",
+      "timestamp": 1698998141,
+      "changes": [
+        {
+          "address": "0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.getOwners.4",
+              "removed": [
+                "\"0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59\""
+              ],
+              "added": [
+                "\"0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0\""
+              ]
+            },
+            {
+              "key": "values.getOwners.0",
+              "removed": [
+                "\"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ],
+              "added": [
+                "\"0xFCf6364F5157901f533DD3615A5d8c375F13c072\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "72aec5b0",
+      "timestamp": 1698737426,
+      "changes": [
+        {
+          "address": "0x8fa3b4570b4c96f8036c13b64971ba65867eeb48",
+          "fields": [
+            {
+              "key": "values.getOwners.1",
+              "removed": [
+                "\"0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59\""
+              ],
+              "added": [
+                "\"0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3e857a39",
+      "timestamp": 1698659946,
+      "changes": [
+        {
+          "address": "0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "fields": [
+            {
+              "key": "values.getOwners.2",
+              "removed": [
+                "\"0xEbbeeAA424AE904508465a41c927Be594C43Dc68\""
+              ],
+              "added": [
+                "\"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402\""
+              ]
+            },
+            {
+              "key": "values.getOwners.1",
+              "removed": [
+                "\"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402\""
+              ],
+              "added": [
+                "\"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ]
+            },
+            {
+              "key": "values.getOwners.0",
+              "removed": [
+                "\"0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B\""
+              ],
+              "added": [
+                "\"0x0c5cc5155b346453154059aD9d2Ff695dB92f774\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "fields": [
+            {
+              "key": "values.getOwners.1",
+              "removed": [
+                "\"0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402\""
+              ],
+              "added": [
+                "\"0xE2e6345baAD18f779167443Dc4886495507b3249\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "80e5496f",
+      "timestamp": 1697703759,
+      "changes": [
+        {
+          "address": "0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",
+          "status": "created"
+        },
+        {
+          "address": "0x0e58939204eeda84f796fbc86840a50af10ec4f4",
+          "status": "created"
+        },
+        {
+          "address": "0x1a658b88fd0a3c82fa1a0609fcdbd32e7dd4ab9c",
+          "status": "created"
+        },
+        {
+          "address": "0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+          "status": "created"
+        },
+        {
+          "address": "0x259204ddd2ba29bd9b1b9a5c9b093f73d7eacf37",
+          "status": "created"
+        },
+        {
+          "address": "0x4b8aa8a96078689384dab49691e9ba51f9d2f9e1",
+          "status": "created"
+        },
+        {
+          "address": "0x585dfad7bf4099e011d185e266907a8ab60dad2d",
+          "status": "created"
+        },
+        {
+          "address": "0x62597cc19703af10b58fef87b0d5d29efe263bcc",
+          "status": "created"
+        },
+        {
+          "address": "0x6260af48e8948617b8fa17f4e5cea2d21d21554b",
+          "status": "created"
+        },
+        {
+          "address": "0x64ccbe37c9a82d85a1f2e74649b7a42923067988",
+          "status": "created"
+        },
+        {
+          "address": "0x66e5312edeeaef6e80759a0f789e7914fb401484",
+          "status": "created"
+        },
+        {
+          "address": "0x6774bcbd5cecef1336b5300fb5186a12ddd8b367",
+          "status": "created"
+        },
+        {
+          "address": "0x6ea73e05adc79974b931123675ea8f78ffdacdf0",
+          "status": "created"
+        },
+        {
+          "address": "0x7003e7b7186f0e6601203b99f7b8decbfa391cf9",
+          "status": "created"
+        },
+        {
+          "address": "0x72cacbcfde2d1e19122f8a36a4d6676cd39d7a5d",
+          "status": "created"
+        },
+        {
+          "address": "0x781e90f1c8fc4611c9b7497c3b47f99ef6969cbc",
+          "status": "created"
+        },
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "status": "created"
+        },
+        {
+          "address": "0x7ac440cae8eb6328de4fa621163a792c1ea9d4fe",
+          "status": "created"
+        },
+        {
+          "address": "0x7bc08e1c04fb41d75f1410363f0c5746eae80582",
+          "status": "created"
+        },
+        {
+          "address": "0x7f2b8c31f88b6006c382775eea88297ec1e3e905",
+          "status": "created"
+        },
+        {
+          "address": "0x8fa3b4570b4c96f8036c13b64971ba65867eeb48",
+          "status": "created"
+        },
+        {
+          "address": "0x987e300fdfb06093859358522a79098848c33852",
+          "status": "created"
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "status": "created"
+        },
+        {
+          "address": "0xa2ab526e5c5491f10fc05a55f064bf9f7cef32a0",
+          "status": "created"
+        },
+        {
+          "address": "0xb2b10a289a229415a124efdef310c10cb004b6ff",
+          "status": "created"
+        },
+        {
+          "address": "0xb94f7f6abcb811c5ac709de14e37590fccd975b6",
+          "status": "created"
+        },
+        {
+          "address": "0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+          "status": "created"
+        },
+        {
+          "address": "0xc7d86908ccf644db7c69437d5852cedbc1ad3f69",
+          "status": "created"
+        },
+        {
+          "address": "0xd8a791fe2be73eb6e6cf1eb0cb3f36adc9b3f8f9",
+          "status": "created"
+        },
+        {
+          "address": "0xdc1d1189da69ae2016e4976a43de20972d349b1b",
+          "status": "created"
+        },
+        {
+          "address": "0xe2b4795039517653c5ae8c2a9bfdd783b48f447a",
+          "status": "created"
+        },
+        {
+          "address": "0xeb803eb3f501998126bf37bb823646ed3d59d072",
+          "status": "created"
+        },
+        {
+          "address": "0xefc9d1096fb65c832207e5e7f13c2d1102244dbe",
+          "status": "created"
+        },
+        {
+          "address": "0xf1af3b23de0a5ca3cab7261cb0061c0d779a5c7b",
+          "status": "created"
+        },
+        {
+          "address": "0xf8b1378579659d8f7ee5f3c929c2f3e332e41fd6",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "6c75468f",
+      "timestamp": 1697113349,
+      "changes": [
+        {
+          "address": "0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",
+          "status": "created"
+        },
+        {
+          "address": "0x259204ddd2ba29bd9b1b9a5c9b093f73d7eacf37",
+          "status": "created"
+        },
+        {
+          "address": "0x4b8aa8a96078689384dab49691e9ba51f9d2f9e1",
+          "status": "created"
+        },
+        {
+          "address": "0x585dfad7bf4099e011d185e266907a8ab60dad2d",
+          "status": "created"
+        },
+        {
+          "address": "0x66e5312edeeaef6e80759a0f789e7914fb401484",
+          "status": "created"
+        },
+        {
+          "address": "0x6774bcbd5cecef1336b5300fb5186a12ddd8b367",
+          "status": "created"
+        },
+        {
+          "address": "0x6ea73e05adc79974b931123675ea8f78ffdacdf0",
+          "status": "created"
+        },
+        {
+          "address": "0x781e90f1c8fc4611c9b7497c3b47f99ef6969cbc",
+          "status": "created"
+        },
+        {
+          "address": "0x798576400f7d662961ba15c6b3f3d813447a26a6",
+          "status": "created"
+        },
+        {
+          "address": "0x7f2b8c31f88b6006c382775eea88297ec1e3e905",
+          "status": "created"
+        },
+        {
+          "address": "0x8fa3b4570b4c96f8036c13b64971ba65867eeb48",
+          "status": "created"
+        },
+        {
+          "address": "0x987e300fdfb06093859358522a79098848c33852",
+          "status": "created"
+        },
+        {
+          "address": "0xa13baf47339d63b743e7da8741db5456dac1e556",
+          "status": "created"
+        },
+        {
+          "address": "0xa2ab526e5c5491f10fc05a55f064bf9f7cef32a0",
+          "status": "created"
+        },
+        {
+          "address": "0xc7d86908ccf644db7c69437d5852cedbc1ad3f69",
+          "status": "created"
+        },
+        {
+          "address": "0xd8a791fe2be73eb6e6cf1eb0cb3f36adc9b3f8f9",
+          "status": "created"
+        },
+        {
+          "address": "0xe2b4795039517653c5ae8c2a9bfdd783b48f447a",
+          "status": "created"
+        },
+        {
+          "address": "0xeb803eb3f501998126bf37bb823646ed3d59d072",
+          "status": "created"
+        },
+        {
+          "address": "0xf8b1378579659d8f7ee5f3c929c2f3e332e41fd6",
+          "status": "created"
+        }
+      ]
+    }
+  ]
+}

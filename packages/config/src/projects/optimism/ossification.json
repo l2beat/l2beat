@@ -1,0 +1,240 @@
+{
+  "firstUpgradeIsChange": [
+    "oeth:0x4200000000000000000000000000000000000007",
+    "oeth:0x4200000000000000000000000000000000000010",
+    "oeth:0x4200000000000000000000000000000000000016",
+    "oeth:0x4200000000000000000000000000000000000018"
+  ],
+  "criticalEvents": [
+    {
+      "timestamp": 1636658804,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "source": "tx:0xafb7c2d5dcbe88dc33db9fb3d9e4e807dce1ff6d231889d5913cb3857804ef1d",
+      "reason": "Temporarily transferred control of the legacy address mappings away from the Operations Safe."
+    },
+    {
+      "timestamp": 1636658954,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "source": "tx:0xbabb37235bd38ae5a29717590eedfd9b02f84a12b890b2126feac68f223d7448",
+      "reason": "Restored control of the legacy address mappings to the Operations Safe."
+    },
+    {
+      "timestamp": 1636675748,
+      "type": "state",
+      "contract": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+      "source": "tx:0xed2e696715675f37e1a5c17c6db8c67d3e41a2829bb79859afb4fdb07d29a588",
+      "reason": "Transferred control of the canonical L1 messenger to the Operations Safe."
+    },
+    {
+      "timestamp": 1638952529,
+      "type": "state",
+      "source": "tx:0xa3e2c15f03bc2e852bbb7211a00e82fa588b8b60bcfea0f7554a1bf6fe230a5c",
+      "reason": "Changed the Operations Safe threshold while it controlled critical protocol contracts."
+    },
+    {
+      "timestamp": 1651069229,
+      "type": "state",
+      "source": "tx:0x05c1ef259ffe343d8ce54a61e353d1cda2d38134ddf84cde0548f0cb3d6a9a9e",
+      "reason": "Changed the Operations Safe threshold while it controlled critical protocol contracts."
+    },
+    {
+      "timestamp": 1665503636,
+      "type": "state",
+      "contract": "oeth:0x4200000000000000000000000000000000000042",
+      "source": "tx:0x9c74926c5a7a7ccfb36b87f2f983ca754a0cb4c96fdee4b3d498d1dc5b81c45f",
+      "reason": "Transferred OP minting authority to the MintManager."
+    },
+    {
+      "timestamp": 1686067127,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "source": "tx:0x76bceccd7d44656f5a129a600a6120091570b897c1d45c18cd7134cfe67c2537",
+      "reason": "Moved control of the legacy address mappings into the Bedrock deployment path."
+    },
+    {
+      "timestamp": 1686075851,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "source": "tx:0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",
+      "reason": "Transferred control of the legacy address mappings to the Bedrock ProxyAdmin."
+    },
+    {
+      "timestamp": 1696542003,
+      "type": "state",
+      "source": "tx:0xa0c510a0e82cbd8612634beb71509c0423a0c91cd3f3065535631055318ec888",
+      "reason": "Changed the MintManagerOwner Safe threshold governing OP minting policy."
+    },
+    {
+      "timestamp": 1707514547,
+      "type": "state",
+      "contract": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "updateId": "db0d2b31",
+      "source": "tx:0xd2a7e63eb76199234e4876c1c99dcdf73f0ed04eb8b8767e94809cc2de2629ca",
+      "reason": "Transferred the core ProxyAdmin to the new Foundation and Security Council authority path."
+    },
+    {
+      "timestamp": 1718042751,
+      "type": "state",
+      "contract": "oeth:0x4200000000000000000000000000000000000018",
+      "updateId": "aeff10bd",
+      "source": "tx:0x93b7a9956faec114c3bac7fd72479ebdc23f8aace38220f8914cbf6af971bf6e",
+      "reason": "Transferred the L2 predeploy ProxyAdmin to the aliased Superchain authority path."
+    },
+    {
+      "timestamp": 1719529907,
+      "type": "state",
+      "contract": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+      "updateId": "50024322",
+      "source": "tx:0xa324ca8056ff79064771df050d70df9d44deab56290916339d94fd11ea5ee3c0",
+      "reason": "Transferred control of SystemConfig to the Foundation Upgrade Safe."
+    },
+    {
+      "timestamp": 1720551167,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0x7abecacd8b1a54db8f0835a5c82edfab96ff922a41d2faa914c339e3e9319b43",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1726016099,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0x3bd2d811d0298313e6fb75f0e69fb54280c9b4f2e60f8f04472aaa166c285641",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots (Granite)."
+    },
+    {
+      "timestamp": 1726070915,
+      "type": "state",
+      "updateId": "41492ef8",
+      "source": "tx:0x592e73fdf57e7cc2c51cfaafa891fe91164d125b7943aa26a15285276de27509",
+      "reason": "Replaced the Guardian Safe module that delegated protocol pause authority."
+    },
+    {
+      "timestamp": 1736352527,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0x22ab07b0bb1bc8504256835d555307ff522b78651dca33c9cd5b05591ca5b4f7",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots (Holocene)."
+    },
+    {
+      "timestamp": 1745511383,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1746626291,
+      "type": "state",
+      "updateId": "fee2cf7f",
+      "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
+      "reason": "Enabled a module that delegated protocol pause authority through the Operations Safe."
+    },
+    {
+      "timestamp": 1746628403,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0xc4a7089a92c96b83475a7c20e40b4c888a277a90208d649c81df243ecdceb587",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1753378247,
+      "type": "state",
+      "updateId": "793e7ea6",
+      "source": "tx:0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe."
+    },
+    {
+      "timestamp": 1753380539,
+      "type": "state",
+      "updateId": "793e7ea6",
+      "source": "tx:0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "reason": "Disabled the former deputy module on the Guardian Safe."
+    },
+    {
+      "timestamp": 1753380743,
+      "type": "state",
+      "updateId": "793e7ea6",
+      "source": "tx:0xd770166ff63183dae868ca11852268115035d2f74574b55b8e1ecd552da80378",
+      "reason": "Removed the former deputy module from the Operations Safe authority path."
+    },
+    {
+      "timestamp": 1769108699,
+      "type": "state",
+      "updateId": "5871bec8",
+      "source": "tx:0xf1ae77bea001acd7f3355ce971fd992601f467ce0a2305a38b1a82da459b502c",
+      "reason": "Enabled the SaferSafes execution module on the Operations Safe."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "updateId": "5871bec8",
+      "source": "tx:0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe."
+    },
+    {
+      "timestamp": 1775575311,
+      "type": "state",
+      "updateId": "4bd2123b",
+      "source": "tx:0xcab1687f5c496d1f2447a4dd9205cd5c9965c74444a8f9be9d5d5345ce6ed647",
+      "reason": "Replaced the direct OP minting threshold with the SafeL2 authority path."
+    }
+  ],
+  "historicalContracts": [
+    {
+      "address": "eth:0x21429af66058bc3e4ae4a8f2ec4531aac433ecbc",
+      "name": "DelayedWETH_PermissionedGames",
+      "critical": true,
+      "upgradeTimestamps": [1733920163, 1743612623],
+      "diffEventCount": 0,
+      "lastSeenAt": 1753427192,
+      "lastSeenCommit": "295d114e709e8645bf1ccf4060f325de53a829ab",
+      "note": "Held the bonded ETH backing permissioned dispute games; compromise or malicious upgrade redistributes bonds and breaks the incentive layer of the proof system securing withdrawals (opstack/DelayedWETH template is critical today)."
+    },
+    {
+      "address": "eth:0x323dfc63c9b83cb83f40325aab74b245937cbdf0",
+      "name": "DelayedWETH_PermissionlessGames",
+      "critical": true,
+      "upgradeTimestamps": [1733920211, 1743612623],
+      "diffEventCount": 0,
+      "lastSeenAt": 1753427192,
+      "lastSeenCommit": "295d114e709e8645bf1ccf4060f325de53a829ab",
+      "note": "Held the bonded ETH backing permissionless fault dispute games; compromise or malicious upgrade redistributes bonds and breaks the incentive layer of the proof system securing withdrawals (opstack/DelayedWETH template is critical today)."
+    },
+    {
+      "address": "eth:0x18dac71c228d1c32c99489b7323d441e1175e443",
+      "name": "AnchorStateRegistry",
+      "critical": true,
+      "upgradeTimestamps": [1715887055, 1726016099, 1726016099],
+      "diffEventCount": 0,
+      "lastSeenAt": 1743080391,
+      "lastSeenCommit": "7ad8feb1158dbdc5b36e5c575f1e31f1edefa523",
+      "note": "Stored the confirmed anchor state root seeding every new dispute game; a poisoned anchor lets invalid withdrawal claims resolve as valid in OptimismPortal2 (opstack/AnchorStateRegistry template is critical today)."
+    },
+    {
+      "address": "oeth:0x5a7749f83b81b301cab5f48eb8516b986daef23d",
+      "name": "OldQuixoticNFTBridge",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "diffEventCount": 3,
+      "lastSeenAt": 1725963861,
+      "lastSeenCommit": "d6e0802469d4e44aed845995f39b1ee5717d9f7d",
+      "note": "Deprecated third-party NFT bridge on OP Mainnet; NFTs are not counted in project TVS, so its compromise cannot cause loss/freezing of project funds (consistent with current classification)."
+    },
+    {
+      "address": "eth:0xdfe97868233d1aa22e815a266982f2cf17685a27",
+      "name": "L2OutputOracle",
+      "critical": true,
+      "upgradeTimestamps": [1686075851, 1708983851, 1712868599],
+      "lastSeenAt": 1717598829,
+      "lastSeenCommit": "69b4ffe7dba0b56aaa50bbb787cec30d93db8977",
+      "note": "Pre-fault-proof state root oracle: a fraudulent output root accepted here (via PROPOSER compromise or malicious upgrade) enables theft of all escrowed funds through OptimismPortal withdrawals after the 7d finalization window (opstack/L2OutputOracle template is critical today)."
+    }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9#gameImpls",
+    "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290#paused"
+  ]
+}

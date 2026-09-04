@@ -8,5 +8,18 @@
     "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": "PolygonAdminMultisig",
     "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": "PolygonCreateRollupMultisig",
     "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "PolygonSecurityCouncil"
+  },
+  "overrides": {
+    // SharedProxyAdmin: can upgrade the AgglayerManager, AgglayerBridge and AgglayerGER (owned by the Timelock).
+    "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "critical": true
+    },
+    // SP1 verifiers reachable through the active AgglayerGateway pessimistic-proof routes.
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
+      "critical": true
+    },
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": {
+      "critical": true
+    }
   }
 }

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Manages the list of validators and the network governor.",
+  "critical": true,
   "ignoreRelatives": ["usdc"],
   "fields": {
     "networkGovernor": {

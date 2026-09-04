@@ -1,0 +1,40 @@
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
+import { useTable } from '~/hooks/useTable'
+import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import { ossificationColumns } from './columns'
+
+interface Props {
+  entries: OssificationSummaryEntry[]
+}
+
+export function OssificationTable({ entries }: Props) {
+  const { sorting, setSorting } = useTableSorting()
+  const table = useTable({
+    data: entries,
+    columns: ossificationColumns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    initialState: {
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
+    },
+  })
+
+  return (
+    <PrimaryCard className="mt-4">
+      <div className="mb-3 flex justify-end">
+        <ColumnsControls columns={table.getAllColumns()} />
+      </div>
+      <BasicTable table={table} />
+    </PrimaryCard>
+  )
+}

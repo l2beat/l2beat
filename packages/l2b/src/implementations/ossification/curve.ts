@@ -1,0 +1,184 @@
+/**
+ * Projects the ossification dataset release into the compact runtime input
+ * used by the score (`OSSIFICATION_CURVE_AGE_KNOTS` in @l2beat/shared): one
+ * knot per curve incident, its `codeAgeSeconds`.
+ *
+ * The only accepted input is the sibling checkout
+ * ../ossification-dataset/dist/latest (incidents.json plus manifest.json),
+ * shaped by its schema/release-incidents.schema.json. There is intentionally
+ * no fallback for older release formats.
+ */
+import { getDiscoveryPaths } from '@l2beat/discovery'
+import { execFileSync } from 'child_process'
+import { readFileSync, writeFileSync } from 'fs'
+import path from 'path'
+
+export function runCurve(check: boolean) {
+  // packages/config/src/projects -> repo root -> sibling dataset checkout
+  const repoRoot = path.resolve(getDiscoveryPaths().discovery, '../../../..')
+  const datasetRoot = path.resolve(repoRoot, '../ossification-dataset')
+  const outputPath = path.join(
+    repoRoot,
+    'packages/shared/src/ossification/ossificationCurve.ts',
+  )
+
+  const ageKnots = readCanonicalAgeKnots(datasetRoot)
+  const head = execFileSync('git', ['-C', datasetRoot, 'rev-parse', 'HEAD'], {
+    encoding: 'utf8',
+  }).trim()
+  // An uncommitted release must never masquerade as its parent commit —
+  // scores change only at deliberate dataset releases.
+  const dirty =
+    execFileSync(
+      'git',
+      ['-C', datasetRoot, 'status', '--porcelain', '--', 'dist', 'schema'],
+      { encoding: 'utf8' },
+    ).trim().length > 0
+  const revision = dirty ? `${head}-dirty` : head
+  const output = renderOutput(ageKnots, revision)
+
+  if (check) {
+    if (readFileSync(outputPath, 'utf8') !== output) {
+      throw new Error(
+        `${outputPath} does not match the checked-out ossification dataset release`,
+      )
+    }
+    console.log(
+      `curve is current: ossification-dataset@${revision}, n=${ageKnots.length}`,
+    )
+    return
+  }
+
+  writeFileSync(outputPath, output)
+  console.log(
+    `wrote ${outputPath}\nossification-dataset@${revision}, n=${ageKnots.length}`,
+  )
+}
+
+/** The release's curve rows, checked against the release schema's shape
+ *  (constants and required keys) and the manifest's counts, so a changed
+ *  format fails here instead of silently producing a different curve. */
+function readCanonicalAgeKnots(datasetRoot: string): number[] {
+  const release = readObject(
+    path.join(datasetRoot, 'dist/latest/incidents.json'),
+  )
+  const schema = readObject(
+    path.join(datasetRoot, 'schema/release-incidents.schema.json'),
+  )
+  const manifest = readObject(
+    path.join(datasetRoot, 'dist/latest/manifest.json'),
+  )
+
+  if (schema.additionalProperties !== false) {
+    throw new Error(
+      'Release schema must reject additional top-level properties',
+    )
+  }
+  const properties = asObject(schema.properties, 'schema.properties')
+  for (const property of asStringArray(schema.required, 'schema.required')) {
+    if (!(property in release)) {
+      throw new Error(`Release is missing required property ${property}`)
+    }
+  }
+  for (const property of Object.keys(release)) {
+    if (!(property in properties)) {
+      throw new Error(`Release has unknown property ${property}`)
+    }
+  }
+  assertSchemaConstant(release, properties, '$schema')
+  assertSchemaConstant(release, properties, 'formatVersion')
+
+  const incidents = asArray(release.incidents, 'release.incidents')
+  const ageKnots = incidents.map((incident, i) => {
+    const row = asObject(incident, `release.incidents[${i}]`)
+    const loss = asObject(row.loss, `release.incidents[${i}].loss`)
+    const usd = asObject(loss.usd, `release.incidents[${i}].loss.usd`)
+    if (!(typeof usd.amount === 'number' && usd.amount >= 1000)) {
+      throw new Error(`release.incidents[${i}] lacks a concrete USD loss`)
+    }
+    const age = asInteger(
+      row.codeAgeSeconds,
+      `release.incidents[${i}].codeAgeSeconds`,
+    )
+    if (age < 0) {
+      throw new Error(`release.incidents[${i}].codeAgeSeconds is negative`)
+    }
+    return age
+  })
+  for (let i = 1; i < ageKnots.length; i++) {
+    if ((ageKnots[i] ?? 0) < (ageKnots[i - 1] ?? 0)) {
+      throw new Error('release.incidents must be sorted by codeAgeSeconds')
+    }
+  }
+
+  const counts = asObject(manifest.counts, 'manifest.counts')
+  if (
+    asInteger(counts.curveIncidents, 'manifest.counts.curveIncidents') !==
+    ageKnots.length
+  ) {
+    throw new Error('manifest.counts.curveIncidents does not match the release')
+  }
+  return ageKnots
+}
+
+function assertSchemaConstant(
+  release: Record<string, unknown>,
+  properties: Record<string, unknown>,
+  property: '$schema' | 'formatVersion',
+) {
+  const propertySchema = asObject(
+    properties[property],
+    `schema.properties.${property}`,
+  )
+  if (release[property] !== propertySchema.const) {
+    throw new Error(`Release has unsupported ${property}`)
+  }
+}
+
+function renderOutput(ageKnots: number[], revision: string): string {
+  return `/**
+ * GENERATED by \`l2b ossification curve\` — do not edit by hand.
+ *
+ * Source: ossification-dataset@${revision}
+ * Canonical input: dist/latest/incidents.json, validated against
+ * schema/release-incidents.schema.json by the dataset repository. One knot per
+ * curve incident (its codeAgeSeconds); the remaining release fields are not
+ * runtime inputs to the score.
+ */
+// biome-ignore format: preserve the canonical ageKnots serialization
+export const OSSIFICATION_CURVE_AGE_KNOTS = ${JSON.stringify(ageKnots)} as const
+`
+}
+
+function readObject(file: string): Record<string, unknown> {
+  return asObject(JSON.parse(readFileSync(file, 'utf8')), file)
+}
+
+function asObject(value: unknown, label: string): Record<string, unknown> {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`${label} must be an object`)
+  }
+  return value as Record<string, unknown>
+}
+
+function asArray(value: unknown, label: string): unknown[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`${label} must be an array`)
+  }
+  return value
+}
+
+function asStringArray(value: unknown, label: string): string[] {
+  const array = asArray(value, label)
+  if (!array.every((item) => typeof item === 'string')) {
+    throw new Error(`${label} must contain only strings`)
+  }
+  return array as string[]
+}
+
+function asInteger(value: unknown, label: string): number {
+  if (!Number.isSafeInteger(value)) {
+    throw new Error(`${label} must be a safe integer`)
+  }
+  return value as number
+}

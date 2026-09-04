@@ -63,7 +63,7 @@ export function useTemplateModel({ templateId, files }: Props) {
 
   const setFieldSeverity = (
     fieldName: string,
-    severity: 'HIGH' | 'LOW' | undefined,
+    severity: 'HIGH' | 'MEDIUM' | 'LOW' | undefined,
   ) => {
     const newModel = templateModel.setFieldSeverity(fieldName, severity)
     setTemplateModel(newModel)

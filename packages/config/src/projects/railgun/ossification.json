@@ -1,0 +1,56 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1628326800,
+      "type": "state",
+      "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+      "source": "tx:0x7e08a28e93a692b375983b181962eea1d57324a8ebcc665b67cb422bed7eaf63",
+      "reason": "Granted three temporary callers control over critical Railgun proxies through ProxyAdmin."
+    },
+    {
+      "timestamp": 1652034772,
+      "type": "state",
+      "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+      "source": "tx:0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361",
+      "reason": "Revoked the temporary callers' control over critical Railgun proxies."
+    },
+    {
+      "timestamp": 1665068219,
+      "type": "state",
+      "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+      "source": "tx:0xa96ecb2b47d0bf1426bfe83a513e10cba141f6cbf05e28ce1355edac968cb96c",
+      "reason": "Transferred control of the Delegator to token-weighted governance."
+    },
+    {
+      "timestamp": 1678360187,
+      "type": "state",
+      "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+      "source": "tx:0xe001ac69697083957933db13ff27c56769ce8826d4ab676b3965d7a44b9f0668",
+      "reason": "Authorized the first VKeySetter to update the smart wallet's SNARK verification keys."
+    },
+    {
+      "timestamp": 1678360667,
+      "type": "state",
+      "contract": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+      "source": "tx:0xc994d7492531cd28b46919a27e335040590bc88b4349751edc82cac146291882",
+      "reason": "Completed a batch rollout of new smart wallet SNARK verification keys."
+    },
+    {
+      "timestamp": 1753717703,
+      "type": "state",
+      "contract": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+      "source": "tx:0xfc6cda4a6e9b8e2d055a50212551e6daa8ec180ad7aced11d00ae71e1d0eab6e",
+      "reason": "Authorized the replacement VKeySetter to update the smart wallet's SNARK verification keys."
+    },
+    {
+      "timestamp": 1753719707,
+      "type": "state",
+      "contract": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+      "source": "tx:0x256b66eb07d1bc6f1e87375917077f4c607952f13b12f577021a14f9f1a22eca",
+      "reason": "Completed a batch rollout of new smart wallet SNARK verification keys."
+    }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC#proposalCount"
+  ]
+}

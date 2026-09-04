@@ -732,6 +732,7 @@
         "$immutable": true,
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": "ProxyAdmin"
       }
@@ -1306,6 +1307,7 @@
       ],
       "proxyType": "immutable",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "metis-andromeda:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1637270379,
@@ -1315,6 +1317,7 @@
         "l1CrossDomainMessenger": "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
         "messageNonce": 108123
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger"
       }
@@ -1390,6 +1393,7 @@
       ],
       "proxyType": "immutable",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
+      "critical": true,
       "deployerAddress": "metis-andromeda:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1637270379,
       "sinceBlock": 0,
@@ -1398,6 +1402,7 @@
         "l1TokenBridge": "metis-andromeda:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
         "messenger": "metis-andromeda:0x4200000000000000000000000000000000000007"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000010": "L2StandardBridge"
       }
@@ -2527,8 +2532,8 @@
     "metis/MVM_ProposerRegistry": "0xe1ffd265bd8338b3febfd389d682d407e4109970d138c349e86e6c131b918a57",
     "metis/MVM_StateCommitmentChain": "0x8496d4b5edbf854305227b9e0e5b8c845600e4bad4d3bd9aa391933a57a5e82e",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
-    "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060"
+    "opstack/Layer2/L2CrossDomainMessenger": "0xea5dababc2d3c671bcdd37f0482105863487a55138d7c65cabe1044b4f4a7377",
+    "opstack/Layer2/L2StandardBridge": "0x1d7a39d8907362465f31e3072eaa78f2f2c42ba8a5b83ee617f65daf0facff5b"
   },
   "usedBlockNumbers": { "ethereum": 24183445, "metis": 21929673 },
   "permissionsConfigHash": "0xafc753cc81faab912b675b49578495b536112e27cc9293eb3a75913d79593abb",

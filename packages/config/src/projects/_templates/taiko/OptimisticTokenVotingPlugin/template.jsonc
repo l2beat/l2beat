@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "An optimistic governance module. Standard proposals pass and can be executed unless {{minVetoPercent}}% of votable TAIKO veto them within {{governanceSettings_timelockPeriod_fmt}}. Emergency proposals can be executed without delay.",
   "ignoreMethods": [
@@ -33,6 +34,7 @@
       "edit": ["format", "Undecimal4"]
     },
     "governanceSettings": {
+      "severity": "HIGH",
       "description": "Governance parameters controlling veto threshold, minimum voting duration, post-vote timelock, L2 inactivity timeout, L2 veto aggregation grace period, and whether L2 voting power is ignored."
     },
     "governanceSettings_timelockPeriod_fmt": {

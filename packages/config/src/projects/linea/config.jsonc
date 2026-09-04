@@ -15,7 +15,57 @@
   },
   "overrides": {
     "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD": {
+      // Actor shell: proposer, executor and canceller on the L2Timelock.
       "canActIndependently": true
+    },
+    // active PLONK verifiers referenced by LineaRollup.verifiers: a code change lets forged proofs finalize arbitrary state and drain the bridge
+    "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": {
+      "critical": true
+    },
+    "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc": {
+      "critical": true
+    },
+    // 90-day module on the secondary proposer Safe; its delay and authority
+    // path directly constrain L1 upgrades.
+    "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": {
+      "critical": true,
+      "fields": {
+        "owner": { "severity": "HIGH" },
+        "target": { "severity": "HIGH" },
+        "guard": { "severity": "HIGH" },
+        "txCooldown": { "severity": "HIGH" },
+        "txExpiration": { "severity": "HIGH" },
+        "ZodiacModule_modules": { "severity": "HIGH" }
+      }
+    },
+    // Immutable public forwarding mechanism used for the six-month liveness
+    // recovery path in LineaRollup.
+    "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": {
+      "critical": true
+    },
+    // Timelock (0s min delay) owning the L1 ProxyAdmin that upgrades LineaRollup, TokenBridge and YieldManager
+    "eth:0xd6B95c960779c72B8C6752119849318E5d550574": {
+      "critical": true
+    },
+    // ProxyAdmin for LineaRollup, TokenBridge and YieldManager
+    "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": {
+      "critical": true
+    },
+    // beacon controlling the BridgedToken implementation of canonical bridged tokens on L1
+    "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": {
+      "critical": true
+    },
+    // ProxyAdmin for the L2 TokenBridge and L2MessageService
+    "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E": {
+      "critical": true
+    },
+    // L2 Timelock (0s min delay) owning the L2 ProxyAdmin
+    "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": {
+      "critical": true
+    },
+    // beacon controlling the BridgedToken implementation of all canonical bridged tokens on Linea
+    "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": {
+      "critical": true
     }
   }
 }

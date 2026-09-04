@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Timelock",
+  "critical": true,
   "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after {{ delayFormatted }} and remains executable for a {{ gracePeriodFormatted }} grace period. The delay can be changed only through the timelock itself and must remain between {{ minimumDelayFormatted }} and {{ maximumDelayFormatted }}. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
   "fields": {
     "delayFormatted": {
@@ -43,6 +44,10 @@
           "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself)."
         }
       ],
+      "severity": "HIGH"
+    },
+    "pendingAdmin": {
+      "description": "Address nominated to become timelock admin. It can accept the role without another action by the current admin.",
       "severity": "HIGH"
     },
     "delay": {

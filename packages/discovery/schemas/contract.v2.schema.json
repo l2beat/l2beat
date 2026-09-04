@@ -55,7 +55,7 @@
             }
           },
           "description": { "type": "string" },
-          "severity": { "enum": ["HIGH", "LOW"] },
+          "severity": { "enum": ["HIGH", "MEDIUM", "LOW"] },
           "type": {
             "anyOf": [
               {
@@ -698,7 +698,7 @@
             }
           },
           "description": { "type": "string" },
-          "severity": { "enum": ["HIGH", "LOW"] }
+          "severity": { "enum": ["HIGH", "MEDIUM", "LOW"] }
         }
       }
     },
@@ -716,6 +716,7 @@
       }
     },
     "category": { "type": "string" },
+    "critical": { "type": "boolean" },
     "description": { "type": "string" },
     "references": {
       "type": "array",

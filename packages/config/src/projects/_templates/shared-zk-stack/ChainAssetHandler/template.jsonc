@@ -1,20 +1,21 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         { "type": "interact", "description": "pause, resume chain migrations." }
       ]
     },
-    "migrationPaused": { "severity": "HIGH" },
+    "migrationPaused": { "severity": "MEDIUM" },
     "paused": {
       "severity": "LOW",
       "description": "this 'paused' is unrelated to migrations and only used for initialization."
     },
     "migrations": {
-      "description": "zk chain migrations that were started",
-      "severity": "HIGH",
+      "description": "zk chain migrations that were started. Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer).",
       "handler": { "type": "event", "add": { "event": "MigrationStarted" } }
     }
   }

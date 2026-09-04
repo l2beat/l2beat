@@ -1,0 +1,3712 @@
+{
+  "formatVersion": 1,
+  "entries": [
+    {
+      "id": "d922a712",
+      "timestamp": 1787645431,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x00d68eb096f4c731512562f7a06e6bba104dbcb959261edd3eb3ec542c200c89\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x1f089f9d1cd3f727775788003d3e496037d3625e2e9de6e5005f1e9707ba3b8f\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0xe3fbe1170998c9f380d29247864dd07f2f17367a23ae5e0fa409ebd371d97d6f\""
+              ],
+              "added": [
+                "\"0x0f30c0b6846b034a146a47c5185fb9a4321df3569376773238ef30c831019190\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 10 (40%)\""
+              ],
+              "added": [
+                "\"4 of 11 (36%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a3fbcb18",
+      "timestamp": 1784814637,
+      "changes": [
+        {
+          "address": "eth:0x9d851f8b8751c5fbc09b9e74e6e68e9950949052",
+          "fields": [
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B\""
+              ],
+              "added": [
+                "\"eth:0xFB2a738AE435610354b132c4a4ee647558f663eb\""
+              ]
+            },
+            {
+              "key": "values.$members.6",
+              "removed": [
+                "\"eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 8 (25%)\""
+              ],
+              "added": [
+                "\"2 of 7 (29%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7f0f13c0",
+      "timestamp": 1784623318,
+      "changes": [
+        {
+          "address": "eth:0xfa58659f64a393a6e1a548abc70ad2cfe1e8f9cb",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x9f02595fBFD199C4cBC02878fc9B2b2E07b0840C\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "added": [
+                "\"eth:0x1319279d6d54dB0883F7bAF822191c7184Db0c3d\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "added": [
+                "\"eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "added": [
+                "\"eth:0x573D7a729cfcF20B81D70732d625Ae31549B8b91\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 6 (33%)\""
+              ],
+              "added": [
+                "\"2 of 10 (20%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c93bf0f0",
+      "timestamp": 1784270104,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x0034587dfb1de8163284d39f3043f5fadfa92f9e03fb3e0315eb469c550fde40\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x1b04822373ca65680026b5610c1edf424798421b032ef9117b2c264661de246f\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0x3cb66b8472d88440173415d4d4a316b9df81ac208e63e02829f823fccbe3f547\""
+              ],
+              "added": [
+                "\"0xe3fbe1170998c9f380d29247864dd07f2f17367a23ae5e0fa409ebd371d97d6f\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x827e86072b06674a077f592a531dce4590adecdb",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0xfc615395336aADe67fd853a0157001a215Ea1279\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 6 (33%)\""
+              ],
+              "added": [
+                "\"2 of 7 (29%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "67d3f4d9",
+      "timestamp": 1783509417,
+      "changes": [
+        {
+          "address": "eth:0x67c912ff560951526bffdff66dfbd4df8ae23756",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 7 (29%)\""
+              ],
+              "added": [
+                "\"2 of 6 (33%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xfa58659f64a393a6e1a548abc70ad2cfe1e8f9cb",
+          "fields": [
+            {
+              "key": "values.$members.5",
+              "removed": [
+                "\"eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 7 (29%)\""
+              ],
+              "added": [
+                "\"2 of 6 (33%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "870b374c",
+      "timestamp": 1782219118,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x0095c1f31a6e1003e1e3083ca45bf69b95c9a1468708df1029c9cf4bceb8a852\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x3813362d038935ad6cb1e2566278975f08be38a92bfe7137505ef0c14a9d1972\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde\""
+              ],
+              "added": [
+                "\"0x3cb66b8472d88440173415d4d4a316b9df81ac208e63e02829f823fccbe3f547\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "31762479",
+      "timestamp": 1781600787,
+      "changes": [
+        {
+          "address": "katana:0x7990513f4d64d57524a0b2519759f53b0cb1aebd",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"katana:0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 5 (60%)\""
+              ],
+              "added": [
+                "\"3 of 6 (50%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f40af055",
+      "timestamp": 1781102006,
+      "changes": [
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007\""
+              ]
+            },
+            {
+              "key": "values.$members.8",
+              "removed": [
+                "\"eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 12 (33%)\""
+              ],
+              "added": [
+                "\"4 of 10 (40%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "25184f45",
+      "timestamp": 1780404229,
+      "changes": [
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853\""
+              ]
+            },
+            {
+              "key": "values.$members.8",
+              "removed": [
+                "\"eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x9d851f8b8751c5fbc09b9e74e6e68e9950949052",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "added": [
+                "\"eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "added": [
+                "\"eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 5 (40%)\""
+              ],
+              "added": [
+                "\"2 of 8 (25%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e7d986f3",
+      "timestamp": 1780060245,
+      "changes": [
+        {
+          "address": "katana:0x2a3dd3eb832af982ec71669e178424b10dca2ede",
+          "fields": [
+            {
+              "key": "values.claimedGlobalIndexHashChain",
+              "removed": [
+                "\"0x5fede20963bde12c20e3076c4426550f570914a8a035c1381bc98f8bed306a46\""
+              ],
+              "added": [
+                "\"0xdef05ec6820a531b383dc3f9dbbc1aac9846e2eab7a821929b5a07cc51659e4c\""
+              ]
+            },
+            {
+              "key": "values.getRoot",
+              "removed": [
+                "\"0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2\""
+              ],
+              "added": [
+                "\"0x5ed5cfaf86b2b848194a0a9ebfa969a88ddee6b8f6f007a0ef658482f2665402\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "katana:0xa40d5f56745a118d0906a34e69aec8c0db1cb8fa",
+          "fields": [
+            {
+              "key": "values.insertedGERHashChain",
+              "removed": [
+                "\"0xaae24c57922b6453c1812383dba7b31cf9788b57cfc281e208b4e2911e5feee7\""
+              ],
+              "added": [
+                "\"0x59bc3b88b56a09b106e04e1ffe3fd6dc754bf81029ef9cfe2723275b8f5b347c\""
+              ]
+            },
+            {
+              "key": "values.lastRollupExitRoot",
+              "removed": [
+                "\"0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2\""
+              ],
+              "added": [
+                "\"0x5ed5cfaf86b2b848194a0a9ebfa969a88ddee6b8f6f007a0ef658482f2665402\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4a509311",
+      "timestamp": 1779956198,
+      "changes": [
+        {
+          "address": "eth:0x16388463d60ffe0661cf7f1f31a7d658ac790ff7",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "added": [
+                "\"eth:0x5250077c42627cBd112988f32D482acC9ff40bDB\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "added": [
+                "\"eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "added": [
+                "\"eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F\""
+              ]
+            },
+            {
+              "key": "values.$members.4",
+              "added": [
+                "\"eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665\""
+              ]
+            },
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C\""
+              ]
+            },
+            {
+              "key": "values.$members.5",
+              "removed": [
+                "\"eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03\""
+              ]
+            },
+            {
+              "key": "values.$members.6",
+              "removed": [
+                "\"eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x250d30c523104bf0a06825e7eade4dc46edfe40e",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4\""
+              ],
+              "added": [
+                "\"eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.8",
+              "added": [
+                "[\"2026-05-22T16:31:35.000Z\",\"0x46d8e0a3a5383c133292ef51e4d7eef96fddc443b892d38e62c39b1186055691\",[\"eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "8"
+              ],
+              "added": [
+                "9"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"5.1.1\""
+              ],
+              "added": [
+                "\"agg3.15.0\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "katana:0x2a3dd3eb832af982ec71669e178424b10dca2ede",
+          "fields": [
+            {
+              "key": "values.claimedGlobalIndexHashChain",
+              "removed": [
+                "\"0xfcb94fe6eae1dd3db9426645c49bdd5a55f574591df36333e3822c2e28a6aa5d\""
+              ],
+              "added": [
+                "\"0x5fede20963bde12c20e3076c4426550f570914a8a035c1381bc98f8bed306a46\""
+              ]
+            },
+            {
+              "key": "values.getRoot",
+              "removed": [
+                "\"0x77b2c19aaa8daa89496903e91a84dfdf09cbc2821671eb351e953ed0c646be5b\""
+              ],
+              "added": [
+                "\"0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "katana:0xa40d5f56745a118d0906a34e69aec8c0db1cb8fa",
+          "fields": [
+            {
+              "key": "values.insertedGERHashChain",
+              "removed": [
+                "\"0x64bc5ca77fa29cfc3cd117f2314df1d7c1c5f3d01f31f2c58bd277f3e75b1016\""
+              ],
+              "added": [
+                "\"0xaae24c57922b6453c1812383dba7b31cf9788b57cfc281e208b4e2911e5feee7\""
+              ]
+            },
+            {
+              "key": "values.lastRollupExitRoot",
+              "removed": [
+                "\"0x77b2c19aaa8daa89496903e91a84dfdf09cbc2821671eb351e953ed0c646be5b\""
+              ],
+              "added": [
+                "\"0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dbd2c228",
+      "timestamp": 1778675724,
+      "changes": [
+        {
+          "address": "eth:0xfa58659f64a393a6e1a548abc70ad2cfe1e8f9cb",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1\""
+              ],
+              "added": [
+                "\"eth:0xFAc88BB6229F47A31A78F0Ba91E5a541Cb1866a3\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "af60feb7",
+      "timestamp": 1777451715,
+      "changes": [
+        {
+          "address": "eth:0x227d9ea843910edd305c42e7bb9ce6d9f369238c"
+        },
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 13 (31%)\""
+              ],
+              "added": [
+                "\"4 of 12 (33%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "08710e37",
+      "timestamp": 1777024331,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x0065e407807b2b3610cc9ff6637ea16e815552bc34b48c206529d3cfcd9d1152\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x5c7c05114bc5dd360fdb52ec2b4977a45f7e22806bc949a72759ea1172202229\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00\""
+              ],
+              "added": [
+                "\"0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "388d9a35",
+      "timestamp": 1776863221,
+      "changes": [
+        {
+          "address": "eth:0x827e86072b06674a077f592a531dce4590adecdb",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 5 (40%)\""
+              ],
+              "added": [
+                "\"2 of 6 (33%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.minBaseFee",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "1000000"
+              ]
+            },
+            {
+              "key": "values.operatorFeeConstant",
+              "removed": [
+                "1351351351351"
+              ],
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.operatorFeeScalar",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "100000"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 4 (75%)\""
+              ],
+              "added": [
+                "\"3 of 5 (60%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7769cde1",
+      "timestamp": 1775809429,
+      "changes": [
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0x1B054e6c9F424879d8ad829EE254F88B4D3ac304\""
+              ],
+              "added": [
+                "\"eth:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184\""
+              ]
+            },
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"eth:0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 6 (50%)\""
+              ],
+              "added": [
+                "\"3 of 4 (75%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "50934e46",
+      "timestamp": 1775561575,
+      "changes": [
+        {
+          "address": "eth:0x67c912ff560951526bffdff66dfbd4df8ae23756",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1\""
+              ],
+              "added": [
+                "\"eth:0xf2dc90d4645579f261cA36E81181986dB576BbEe\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5acfd848",
+      "timestamp": 1773665394,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0xf7803dc0ac1322b6bff3d4f9a48ffd57102e4076d8e40333dd72084f0cf9cc68\""
+              ],
+              "added": [
+                "\"0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x1B054e6c9F424879d8ad829EE254F88B4D3ac304\""
+              ]
+            },
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0x2483A0d6a3Bd89D5C17aA80B3f8f6102ac053361\""
+              ],
+              "added": [
+                "\"eth:0xA697656ac37ee1f59A8a5318F61601B4C208960D\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 5 (60%)\""
+              ],
+              "added": [
+                "\"3 of 6 (50%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d3280720",
+      "timestamp": 1772786542,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x0077f45ec2258cc98fa879d13a2773190bffb9cafb9f428ce3c5718dc768f03e\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x0e5158b64c46007c04e5972727a2a26832337fbe765162294b0ce1ed0db36f9d\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0xfda6f1430e8363d3850cb5ff3f026f6ce01ad0fad017cb06a1dcbeb72c00304d\""
+              ],
+              "added": [
+                "\"0xf7803dc0ac1322b6bff3d4f9a48ffd57102e4076d8e40333dd72084f0cf9cc68\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a0780ac7",
+      "timestamp": 1772612116,
+      "changes": [
+        {
+          "address": "eth:0x15a32fcea89617ff450f094cde102cca46598b7f",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013\""
+              ],
+              "added": [
+                "\"eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x7f1d12fB2911EB095278085f721e644C1f675696\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "5"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.4.0\""
+              ],
+              "added": [
+                "\"2.9.0\""
+              ]
+            },
+            {
+              "key": "values.initVersion",
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.proxyAdmin",
+              "added": [
+                "\"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832\""
+              ]
+            },
+            {
+              "key": "values.proxyAdminOwner",
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            },
+            {
+              "key": "values.systemConfig",
+              "added": [
+                "\"eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x19dbd16f0a8e706d817b7e3b7bcf72917ebb8832"
+        },
+        {
+          "address": "eth:0x1aaa08d577cbc3da3b955dc1b7a281d7b8fe3372",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x2008a6ba8caf85aafae7880664dfe681d533ac2e",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B\""
+              ],
+              "added": [
+                "\"eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "5"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.6.0\""
+              ],
+              "added": [
+                "\"2.11.0\""
+              ]
+            },
+            {
+              "key": "values.initVersion",
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.proxyAdmin",
+              "added": [
+                "\"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832\""
+              ]
+            },
+            {
+              "key": "values.proxyAdminOwner",
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            },
+            {
+              "key": "values.systemConfig",
+              "added": [
+                "\"eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x250d30c523104bf0a06825e7eade4dc46edfe40e",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc\""
+              ],
+              "added": [
+                "\"eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.5",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.6",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.7",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "5"
+              ],
+              "added": [
+                "8"
+              ]
+            },
+            {
+              "key": "values.respectedGameTypeUpdatedAt",
+              "removed": [
+                "1746742811"
+              ],
+              "added": [
+                "1772552963"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"3.14.0\""
+              ],
+              "added": [
+                "\"5.1.1\""
+              ]
+            },
+            {
+              "key": "values.anchorStateRegistry",
+              "added": [
+                "\"eth:0xaA8a62563CFe4E36118ED479B5486F503b438376\""
+              ]
+            },
+            {
+              "key": "values.ethLockbox",
+              "added": [
+                "\"eth:0x0000000000000000000000000000000000000000\""
+              ]
+            },
+            {
+              "key": "values.initVersion",
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.proxyAdmin",
+              "added": [
+                "\"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832\""
+              ]
+            },
+            {
+              "key": "values.proxyAdminOwner",
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x2f439b95fa789c5d3a5c99cc70eb3ee83d08a811",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7\""
+              ],
+              "added": [
+                "\"eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0xCe28685EB204186b557133766eCA00334EB441E4\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.5",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "4"
+              ],
+              "added": [
+                "6"
+              ]
+            },
+            {
+              "key": "values.GUARDIAN_SLOT",
+              "removed": [
+                "\"0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68\""
+              ]
+            },
+            {
+              "key": "values.PAUSED_SLOT",
+              "removed": [
+                "\"0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6\""
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"1.2.0\""
+              ],
+              "added": [
+                "\"2.4.0\""
+              ]
+            },
+            {
+              "key": "values.initVersion",
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.pauseExpiry",
+              "added": [
+                "7884000"
+              ]
+            },
+            {
+              "key": "values.proxyAdmin",
+              "added": [
+                "\"eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52\""
+              ]
+            },
+            {
+              "key": "values.proxyAdminOwner",
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x667b7da73da7b2a75286378ff45637eeae9b4793",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x74034597d29613cc8c0bdc8780e1d292a553bd32",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x98906c3f90a06b5484dd67bf32938815d2993dbc",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A\""
+              ],
+              "added": [
+                "\"eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A\""
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.3.0\""
+              ],
+              "added": [
+                "\"2.8.0\""
+              ]
+            },
+            {
+              "key": "values.initVersion",
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.proxyAdmin",
+              "added": [
+                "\"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832\""
+              ]
+            },
+            {
+              "key": "values.proxyAdminOwner",
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            },
+            {
+              "key": "values.systemConfig",
+              "added": [
+                "\"eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xa84c37cd0b9ba1b43276c11976dbe9d1344c7f4e",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x5493f4677A186f64805fe7317D6993ba4863988F\""
+              ],
+              "added": [
+                "\"eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"1.10.1\""
+              ],
+              "added": [
+                "\"1.10.2\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647\""
+              ],
+              "added": [
+                "\"eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.5",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "4"
+              ],
+              "added": [
+                "6"
+              ]
+            },
+            {
+              "key": "values.DISPUTE_GAME_FACTORY_SLOT",
+              "removed": [
+                "\"0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906\""
+              ]
+            },
+            {
+              "key": "values.getAddresses.disputeGameFactory",
+              "removed": [
+                "\"eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe\""
+              ]
+            },
+            {
+              "key": "values.maximumGasLimit",
+              "removed": [
+                "200000000"
+              ],
+              "added": [
+                "500000000"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.5.0\""
+              ],
+              "added": [
+                "\"3.11.0\""
+              ]
+            },
+            {
+              "key": "values.daFootprintGasScalar",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.guardian",
+              "added": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            },
+            {
+              "key": "values.initVersion",
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.l2ChainId",
+              "added": [
+                "747474"
+              ]
+            },
+            {
+              "key": "values.minBaseFee",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.paused",
+              "added": [
+                "false"
+              ]
+            },
+            {
+              "key": "values.proxyAdmin",
+              "added": [
+                "\"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832\""
+              ]
+            },
+            {
+              "key": "values.proxyAdminOwner",
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            },
+            {
+              "key": "values.superchainConfig",
+              "added": [
+                "\"eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc"
+        },
+        {
+          "address": "eth:0xe06278351d120288edfcb963f934113ca3c21afe",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0\""
+              ],
+              "added": [
+                "\"eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2026-03-03T15:49:23.000Z\",\"0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961\",[\"eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "4"
+              ]
+            },
+            {
+              "key": "values.gameImpls.1",
+              "severity": "HIGH",
+              "removed": [
+                "\"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793\""
+              ],
+              "added": [
+                "\"eth:0xA7A26BbA1191a064637d7B0b23896589F4e4d22D\""
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"1.0.1\""
+              ],
+              "added": [
+                "\"1.3.0\""
+              ]
+            },
+            {
+              "key": "values.initVersion",
+              "added": [
+                "1"
+              ]
+            },
+            {
+              "key": "values.proxyAdmin",
+              "added": [
+                "\"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832\""
+              ]
+            },
+            {
+              "key": "values.proxyAdminOwner",
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xf027f4a985560fb13324e943edf55ad6f1d15dc1",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x6463dee3828677f6270d83d45408044fc5edb908",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xa7a26bba1191a064637d7b0b23896589f4e4d22d",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xaa8a62563cfe4e36118ed479b5486f503b438376",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xb41151bf2b989d3771cabd5bcb5c435949543322",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "8237ac0a",
+      "timestamp": 1772458371,
+      "changes": [
+        {
+          "address": "eth:0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a",
+          "fields": [
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2\""
+              ],
+              "added": [
+                "\"eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0xAb76AE6926371B82Af3652cCBABefBBA56270adC\""
+              ],
+              "added": [
+                "\"eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B\""
+              ]
+            },
+            {
+              "key": "values.$members.3",
+              "removed": [
+                "\"eth:0xAb3506507449bF1880f3337825efd19ac89E235E\""
+              ],
+              "added": [
+                "\"eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC\""
+              ]
+            },
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9\""
+              ],
+              "added": [
+                "\"eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5\""
+              ]
+            },
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 5 (60%)\""
+              ],
+              "added": [
+                "\"2 of 5 (40%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xab3506507449bf1880f3337825efd19ac89e235e",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.eip1559Denominator",
+              "removed": [
+                "250"
+              ],
+              "added": [
+                "50"
+              ]
+            },
+            {
+              "key": "values.eip1559Elasticity",
+              "removed": [
+                "60"
+              ],
+              "added": [
+                "6"
+              ]
+            },
+            {
+              "key": "values.gasLimit",
+              "severity": "LOW",
+              "removed": [
+                "60000000"
+              ],
+              "added": [
+                "120000000"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xcab31b6a7b4d2ecd562a09e2bfa46535a18862f9",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0xead77b01ea770839f7f576cd1516ff6a298d9db2",
+          "status": "deleted"
+        },
+        {
+          "address": "eth:0x3038b4dbf022e80169b2a068290d4a3a8b87d3b5",
+          "status": "created"
+        },
+        {
+          "address": "eth:0xd9478f759a13bfa1d9dab3cdf5ff0c099d5efcfc",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "b182e3dc",
+      "timestamp": 1771490328,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.optimisticModeManager",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            },
+            {
+              "key": "values.pendingOptimisticModeManager",
+              "removed": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ],
+              "added": [
+                "\"eth:0x0000000000000000000000000000000000000000\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a"
+        },
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc"
+        }
+      ]
+    },
+    {
+      "id": "5c066b30",
+      "timestamp": 1771250113,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.aggchainManager",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            },
+            {
+              "key": "values.pendingOptimisticModeManager",
+              "removed": [
+                "\"eth:0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a"
+        },
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc"
+        }
+      ]
+    },
+    {
+      "id": "092d0a96",
+      "timestamp": 1770814418,
+      "changes": [
+        {
+          "address": "eth:0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a"
+        },
+        {
+          "address": "eth:0x74034597d29613cc8c0bdc8780e1d292a553bd32",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc"
+        },
+        {
+          "address": "eth:0xe06278351d120288edfcb963f934113ca3c21afe",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2760d96c",
+      "timestamp": 1770035635,
+      "changes": [
+        {
+          "address": "eth:0x19dbd16f0a8e706d817b7e3b7bcf72917ebb8832",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a"
+        },
+        {
+          "address": "eth:0x6d0ff67fb427422aff35eea8596949b374b09a52",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc"
+        }
+      ]
+    },
+    {
+      "id": "7217acf2",
+      "timestamp": 1769516922,
+      "changes": [
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 12 (33%)\""
+              ],
+              "added": [
+                "\"4 of 13 (31%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ff6e8897",
+      "timestamp": 1768998796,
+      "changes": [
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 11 (36%)\""
+              ],
+              "added": [
+                "\"4 of 12 (33%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5ff094a2",
+      "timestamp": 1768816385,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.admin",
+              "removed": [
+                "\"eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 10 (40%)\""
+              ],
+              "added": [
+                "\"4 of 11 (36%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xfa58659f64a393a6e1a548abc70ad2cfe1e8f9cb",
+          "fields": [
+            {
+              "key": "values.$members.6",
+              "removed": [
+                "\"eth:0xfd5E854b73a239c9052d89C53D1313f5AfB860ac\""
+              ],
+              "added": [
+                "\"eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4\""
+              ]
+            },
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 7 (43%)\""
+              ],
+              "added": [
+                "\"2 of 7 (29%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "83b025ef",
+      "timestamp": 1768370407,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.pendingAdmin",
+              "removed": [
+                "\"eth:0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e17f828d",
+      "timestamp": 1765783036,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x64c8517c14f10577381d8961139a4420420e90e528d02be96e2b0961671db248\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x7179e8c558e26751a56fc2fe9ce0a84ce248cfc98cb5b7a5178655b0c5c42ea5\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0x4a6e8c6abb9ec46b76062d422b6d87bb4b7e0304b4b06d554037828ce3006650\""
+              ],
+              "added": [
+                "\"0xfda6f1430e8363d3850cb5ff3f026f6ce01ad0fad017cb06a1dcbeb72c00304d\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0x54c401eD03D086fE13221E5422165f3b024265d9\""
+              ],
+              "added": [
+                "\"eth:0xAb76AE6926371B82Af3652cCBABefBBA56270adC\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "83414157",
+      "timestamp": 1764933676,
+      "changes": [
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x2103c69696CB2D3779f5445393808239034E911c\""
+              ]
+            },
+            {
+              "key": "values.$members.0",
+              "removed": [
+                "\"eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4\""
+              ],
+              "added": [
+                "\"eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007\""
+              ]
+            },
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c1c0c241",
+      "timestamp": 1764164180,
+      "changes": [
+        {
+          "address": "eth:0x16388463d60ffe0661cf7f1f31a7d658ac790ff7",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x80a3887BA60F76acAb48EE4aEAd0a71A0774A8B2\""
+              ]
+            },
+            {
+              "key": "values.$members.6",
+              "removed": [
+                "\"eth:0x254f44F45ac892730e511f143DEd3Cd920b075aF\""
+              ],
+              "added": [
+                "\"eth:0x0Dca0FDC170baA4CA9c1dCd37Ffe01f97bCfD504\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 7 (43%)\""
+              ],
+              "added": [
+                "\"3 of 8 (38%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "64df4461",
+      "timestamp": 1764059644,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.selectedOpSuccinctConfig.aggregationVkey",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rangeVkeyCommitment",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig.rollupConfigHash",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x7179e8c558e26751a56fc2fe9ce0a84ce248cfc98cb5b7a5178655b0c5c42ea5\""
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "removed": [
+                "\"0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e\""
+              ],
+              "added": [
+                "\"0x4a6e8c6abb9ec46b76062d422b6d87bb4b7e0304b4b06d554037828ce3006650\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "edc85324",
+      "timestamp": 1763378838,
+      "changes": [
+        {
+          "address": "eth:0xfa58659f64a393a6e1a548abc70ad2cfe1e8f9cb",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0xF045025C845E786E343Df30cC6f67ec6BB822b34\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 6 (50%)\""
+              ],
+              "added": [
+                "\"3 of 7 (43%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "819eb143",
+      "timestamp": 1762264436,
+      "changes": [
+        {
+          "address": "eth:0x827e86072b06674a077f592a531dce4590adecdb",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 4 (50%)\""
+              ],
+              "added": [
+                "\"2 of 5 (40%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f0f02b3e",
+      "timestamp": 1761895573,
+      "changes": [
+        {
+          "address": "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682\""
+              ],
+              "added": [
+                "\"eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2025-10-29T14:11:11.000Z\",\"0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939\",[\"eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "4"
+              ]
+            },
+            {
+              "key": "values.pendingVKeyManager",
+              "removed": [
+                "\"eth:0x0000000000000000000000000000000000000000\""
+              ]
+            },
+            {
+              "key": "values.useDefaultGateway",
+              "removed": [
+                "true"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"v2.0.0\""
+              ],
+              "added": [
+                "\"v3.0.0\""
+              ]
+            },
+            {
+              "key": "values.vKeyManager",
+              "removed": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            },
+            {
+              "key": "values._legacypendingVKeyManager",
+              "added": [
+                "\"eth:0x0000000000000000000000000000000000000000\""
+              ]
+            },
+            {
+              "key": "values._legacyvKeyManager",
+              "added": [
+                "\"eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            },
+            {
+              "key": "values.AGGCHAIN_FEP_VERSION",
+              "added": [
+                "\"v3.0.0\""
+              ]
+            },
+            {
+              "key": "values.aggchainMetadataManager",
+              "added": [
+                "\"eth:0x0000000000000000000000000000000000000000\""
+              ]
+            },
+            {
+              "key": "values.aggchainMultisigHash",
+              "severity": "HIGH",
+              "added": [
+                "\"0xa57d26181a2caeea2b3fd5057d852d665445bd502aac8281622f922335bcc7d7\""
+              ]
+            },
+            {
+              "key": "values.aggchainSigners",
+              "added": [
+                "[\"eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439\"]"
+              ]
+            },
+            {
+              "key": "values.GENESIS_CONFIG_NAME",
+              "added": [
+                "\"0xae8304f40f7123e0c87b97f8a600e94ff3a3a25be588fc66b8a3717c8959ce77\""
+              ]
+            },
+            {
+              "key": "values.getAggchainMultisigHash",
+              "added": [
+                "\"0xa57d26181a2caeea2b3fd5057d852d665445bd502aac8281622f922335bcc7d7\""
+              ]
+            },
+            {
+              "key": "values.getAggchainSignerInfos",
+              "added": [
+                "[{\"addr\":\"eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439\",\"url\":\"https://rpc.katanarpc.com\"}]"
+              ]
+            },
+            {
+              "key": "values.getAggchainSigners",
+              "added": [
+                "[\"eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439\"]"
+              ]
+            },
+            {
+              "key": "values.getAggchainSignersCount",
+              "added": [
+                "1"
+              ]
+            },
+            {
+              "key": "values.getThreshold",
+              "added": [
+                "1"
+              ]
+            },
+            {
+              "key": "values.MAX_AGGCHAIN_SIGNERS",
+              "added": [
+                "255"
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfig",
+              "added": [
+                "{\"aggregationVkey\":\"0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00\",\"rangeVkeyCommitment\":\"0x416d710344b6b6fa2a0b1a1445f3d6ba4fdd5ab43f0e863b1c522db20f28ad9b\",\"rollupConfigHash\":\"0x6cd1b72f40b6ddf464897d8d1b084241f38ae5fda17175ff45afb3307b2523e9\"}"
+              ]
+            },
+            {
+              "key": "values.selectedOpSuccinctConfigName",
+              "severity": "HIGH",
+              "added": [
+                "\"0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e\""
+              ]
+            },
+            {
+              "key": "values.threshold",
+              "added": [
+                "1"
+              ]
+            },
+            {
+              "key": "values.useDefaultSigners",
+              "severity": "HIGH",
+              "added": [
+                "false"
+              ]
+            },
+            {
+              "key": "values.useDefaultVkeys",
+              "severity": "HIGH",
+              "added": [
+                "true"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a"
+        },
+        {
+          "address": "eth:0xc1e65a0cebf95f56cd8729f7e37cb33ed94d6439"
+        }
+      ]
+    },
+    {
+      "id": "da765ddf",
+      "timestamp": 1759480843,
+      "changes": [
+        {
+          "address": "eth:0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0x50930d652266EF4127FA3A1906B7Cb9951076628\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 11 (36%)\""
+              ],
+              "added": [
+                "\"4 of 10 (40%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bf919acb",
+      "timestamp": 1756453226,
+      "changes": [
+        {
+          "address": "0x67c912ff560951526bffdff66dfbd4df8ae23756",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b\""
+              ],
+              "added": [
+                "\"eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xfa58659f64a393a6e1a548abc70ad2cfe1e8f9cb",
+          "fields": [
+            {
+              "key": "values.$members.1",
+              "removed": [
+                "\"eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b\""
+              ],
+              "added": [
+                "\"eth:0x6624307a4f672ec5C289fBA196952902BB518dc0\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3bbda47f",
+      "timestamp": 1756214657,
+      "changes": [
+        {
+          "address": "0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.2",
+              "removed": [
+                "\"eth:0x860e06Fe384D1A3340111e7D142E02642178c053\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 12 (33%)\""
+              ],
+              "added": [
+                "\"4 of 11 (36%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c12d6309",
+      "timestamp": 1755686907,
+      "changes": [
+        {
+          "address": "0x100d3ca4f97776a40a7d93db4abf0fea34230666",
+          "fields": [
+            {
+              "key": "values.rangeVkeyCommitment",
+              "severity": "HIGH",
+              "removed": [
+                "\"0x2ebb1e0d5380158f22adf3750cc6056100a133d274fd7c5b457148ff29dfe173\""
+              ],
+              "added": [
+                "\"0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "31d79549",
+      "timestamp": 1755156807,
+      "changes": [
+        {
+          "address": "0x261a25ec6c396389b75b6b22bd4a8227070e3b50",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"1 of 3 (33%)\""
+              ],
+              "added": [
+                "\"1 of 4 (25%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x3e86a8bcaf0a96dd16ec8160532da13b2c0f6e21",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "0802cea0",
+      "timestamp": 1755009465,
+      "changes": [
+        {
+          "address": "0x4a4962275df8c60a80d3a25faec5aa7de116a746",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"4 of 11 (36%)\""
+              ],
+              "added": [
+                "\"4 of 12 (33%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d298481e",
+      "timestamp": 1754909593,
+      "changes": [
+        {
+          "address": "0x2c24b57e2ccd1f273045af6a5f632504c432374f"
+        },
+        {
+          "address": "0x2dc70fb75b88d2eb4715bc06e1595e6d97c34dff"
+        },
+        {
+          "address": "0x3dd459de96f9c28e3a343b831cbdc2b93c8c4855"
+        },
+        {
+          "address": "0x53e82abbb12638f09d9e624578ccb666217a765e"
+        },
+        {
+          "address": "0x6d4f9f9f8f0155509ecd6ac6c544ff27999845cc"
+        },
+        {
+          "address": "0x261a25ec6c396389b75b6b22bd4a8227070e3b50",
+          "status": "created"
+        },
+        {
+          "address": "0xfa58659f64a393a6e1a548abc70ad2cfe1e8f9cb",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "e39f12d9",
+      "timestamp": 1754054572,
+      "changes": [
+        {
+          "address": "0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.operatorFeeConstant",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "1351351351351"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xd0673f989bc3ba9314d0aaf28bfc84e99b7898cc",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x2483A0d6a3Bd89D5C17aA80B3f8f6102ac053361\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "added": [
+                "\"eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8\""
+              ]
+            },
+            {
+              "key": "values.$members.2",
+              "added": [
+                "\"eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184\""
+              ]
+            },
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"1 of 2 (50%)\""
+              ],
+              "added": [
+                "\"3 of 5 (60%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "627293ca",
+      "timestamp": 1753357112,
+      "changes": [
+        {
+          "address": "0x15a32fcea89617ff450f094cde102cca46598b7f",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d\""
+              ],
+              "added": [
+                "\"eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x276d3730f219f7ec22274f7263180b8452B46d47\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.1.0\""
+              ],
+              "added": [
+                "\"2.4.0\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x19dbd16f0a8e706d817b7e3b7bcf72917ebb8832"
+        },
+        {
+          "address": "0x2008a6ba8caf85aafae7880664dfe681d533ac2e",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65\""
+              ],
+              "added": [
+                "\"eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.3.0\""
+              ],
+              "added": [
+                "\"2.6.0\""
+              ]
+            },
+            {
+              "key": "values.ENCODING_OVERHEAD",
+              "added": [
+                "260"
+              ]
+            },
+            {
+              "key": "values.FLOOR_CALLDATA_OVERHEAD",
+              "added": [
+                "40"
+              ]
+            },
+            {
+              "key": "values.TX_BASE_GAS",
+              "added": [
+                "21000"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x250d30c523104bf0a06825e7eade4dc46edfe40e",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb\""
+              ],
+              "added": [
+                "\"eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.4",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "5"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"3.11.0-beta.6\""
+              ],
+              "added": [
+                "\"3.14.0\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x2d4b822f8b74ade7fcd5f740967f4dfcd2fef5e4",
+          "status": "deleted"
+        },
+        {
+          "address": "0x2f439b95fa789c5d3a5c99cc70eb3ee83d08a811",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A\""
+              ],
+              "added": [
+                "\"eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "4"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"1.1.1-beta.1\""
+              ],
+              "added": [
+                "\"1.2.0\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a"
+        },
+        {
+          "address": "0x5fe03a12c1236f9c22cb6479778ddaa4bce6299c",
+          "status": "deleted"
+        },
+        {
+          "address": "0x74034597d29613cc8c0bdc8780e1d292a553bd32",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087\""
+              ],
+              "added": [
+                "\"eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.delay",
+              "removed": [
+                "604800"
+              ],
+              "added": [
+                "302400"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"1.1.0\""
+              ],
+              "added": [
+                "\"1.3.0\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x79ecd8d8040496014bcd3ba16adf3914b23f8fd5",
+          "status": "deleted"
+        },
+        {
+          "address": "0x98906c3f90a06b5484dd67bf32938815d2993dbc",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF\""
+              ],
+              "added": [
+                "\"eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A\""
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.1.0\""
+              ],
+              "added": [
+                "\"2.3.0\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x9c065e11870b891d214bc2da7ef1f9ddfa1be277",
+          "status": "deleted"
+        },
+        {
+          "address": "0xa84c37cd0b9ba1b43276c11976dbe9d1344c7f4e",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846\""
+              ],
+              "added": [
+                "\"eth:0x5493f4677A186f64805fe7317D6993ba4863988F\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x5493f4677A186f64805fe7317D6993ba4863988F\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"1.9.0\""
+              ],
+              "added": [
+                "\"1.10.1\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375\""
+              ],
+              "added": [
+                "\"eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.3",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "4"
+              ]
+            },
+            {
+              "key": "values.gasPayingToken",
+              "removed": [
+                "{\"addr_\":\"eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE\",\"decimals_\":18}"
+              ]
+            },
+            {
+              "key": "values.gasPayingTokenName",
+              "removed": [
+                "\"Ether\""
+              ]
+            },
+            {
+              "key": "values.gasPayingTokenSymbol",
+              "removed": [
+                "\"ETH\""
+              ]
+            },
+            {
+              "key": "values.isCustomGasToken",
+              "removed": [
+                "false"
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"2.3.0\""
+              ],
+              "added": [
+                "\"2.5.0\""
+              ]
+            },
+            {
+              "key": "values.getAddresses",
+              "added": [
+                "{\"l1CrossDomainMessenger\":\"eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E\",\"l1ERC721Bridge\":\"eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F\",\"l1StandardBridge\":\"eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC\",\"disputeGameFactory\":\"eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe\",\"optimismPortal\":\"eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E\",\"optimismMintableERC20Factory\":\"eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E\"}"
+              ]
+            },
+            {
+              "key": "values.operatorFeeConstant",
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.operatorFeeScalar",
+              "added": [
+                "0"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xe06278351d120288edfcb963f934113ca3c21afe",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B\""
+              ],
+              "added": [
+                "\"eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0\""
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.1",
+              "added": [
+                "[\"2025-07-23T17:04:59.000Z\",\"0xc60a3166aa296b584f143a129ac53f156ee9946373ff5fb97b3785cc5fc092a2\",[\"eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.gameImpls.1",
+              "removed": [
+                "\"eth:0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4\""
+              ],
+              "added": [
+                "\"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793\""
+              ]
+            },
+            {
+              "key": "values.version",
+              "removed": [
+                "\"1.0.0\""
+              ],
+              "added": [
+                "\"1.0.1\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x1aaa08d577cbc3da3b955dc1b7a281d7b8fe3372",
+          "status": "created"
+        },
+        {
+          "address": "0x1fb8cdfc6831fc866ed9c51af8817da5c287add3",
+          "status": "created"
+        },
+        {
+          "address": "0x667b7da73da7b2a75286378ff45637eeae9b4793",
+          "status": "created"
+        },
+        {
+          "address": "0xf027f4a985560fb13324e943edf55ad6f1d15dc1",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "f8d1fbbf",
+      "timestamp": 1753092539,
+      "changes": [
+        {
+          "address": "0x67c912ff560951526bffdff66dfbd4df8ae23756",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "added": [
+                "\"eth:0x09f5F2592791208219A1F51e3855Be9419fF6bE4\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 5 (40%)\""
+              ],
+              "added": [
+                "\"2 of 7 (29%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b3e7b2fc",
+      "timestamp": 1752236934,
+      "changes": [
+        {
+          "address": "0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a",
+          "fields": [
+            {
+              "key": "values.$members.4",
+              "removed": [
+                "\"0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37\""
+              ],
+              "added": [
+                "\"0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x67c912ff560951526bffdff66dfbd4df8ae23756",
+          "fields": [
+            {
+              "key": "values.$members.0",
+              "added": [
+                "\"0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b\""
+              ]
+            },
+            {
+              "key": "values.$members.1",
+              "added": [
+                "\"0x54DFA4B635E7eB98515fEBA81d360A3871739277\""
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"2 of 3 (67%)\""
+              ],
+              "added": [
+                "\"2 of 5 (40%)\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9620535b",
+      "timestamp": 1751536466,
+      "changes": [
+        {
+          "address": "0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.eip1559Denominator",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "250"
+              ]
+            },
+            {
+              "key": "values.eip1559Elasticity",
+              "removed": [
+                "0"
+              ],
+              "added": [
+                "60"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0682952c",
+      "timestamp": 1751386271,
+      "changes": [
+        {
+          "address": "0x48c03b6ffd0008460f8657db1037c7e09deedfcb",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ],
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ],
+              "added": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x793d85f585145c050487c7afbf0e9b97143ff1cb",
+          "status": "deleted"
+        },
+        {
+          "address": "0x7b5a0182e400b241b317e781a4e9dedfc1429822",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ],
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ],
+              "added": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x92c82f5f771f6a44cfa09357dd0575b81bf5f728",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ],
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ],
+              "added": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xcc6a16be713f6a714f68b0e1f4914fd3db15fbef",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ],
+              "added": [
+                "0"
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ],
+              "added": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x67c912ff560951526bffdff66dfbd4df8ae23756",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "41b0c8bb",
+      "timestamp": 1751281452,
+      "changes": [
+        {
+          "address": "0x19dbd16f0a8e706d817b7e3b7bcf72917ebb8832",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746\""
+              ],
+              "added": [
+                "\"0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x250d30c523104bf0a06825e7eade4dc46edfe40e",
+          "fields": [
+            {
+              "key": "values.guardian",
+              "removed": [
+                "\"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746\""
+              ],
+              "added": [
+                "\"0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x2c24b57e2ccd1f273045af6a5f632504c432374f",
+          "fields": [
+            {
+              "key": "values.accessControl.YIELD_COLLECTOR_ROLE.members.1",
+              "added": [
+                "\"0xcB1e45481461aeF38E6B0a34F1444E9C5D647645\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x2dc70fb75b88d2eb4715bc06e1595e6d97c34dff",
+          "fields": [
+            {
+              "key": "values.accessControl.YIELD_COLLECTOR_ROLE.members.1",
+              "added": [
+                "\"0xcB1e45481461aeF38E6B0a34F1444E9C5D647645\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x2f439b95fa789c5d3a5c99cc70eb3ee83d08a811",
+          "fields": [
+            {
+              "key": "values.$pastUpgrades.1",
+              "added": [
+                "[\"2025-06-30T10:33:47.000Z\",\"0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558\",[\"0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC\"]]"
+              ]
+            },
+            {
+              "key": "values.$pastUpgrades.2",
+              "added": [
+                "[\"2025-06-30T10:33:47.000Z\",\"0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558\",[\"0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A\"]]"
+              ]
+            },
+            {
+              "key": "values.$upgradeCount",
+              "removed": [
+                "1"
+              ],
+              "added": [
+                "3"
+              ]
+            },
+            {
+              "key": "values.guardian",
+              "removed": [
+                "\"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746\""
+              ],
+              "added": [
+                "\"0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x3dd459de96f9c28e3a343b831cbdc2b93c8c4855",
+          "fields": [
+            {
+              "key": "values.accessControl.YIELD_COLLECTOR_ROLE.members.1",
+              "added": [
+                "\"0xcB1e45481461aeF38E6B0a34F1444E9C5D647645\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x4a4962275df8c60a80d3a25faec5aa7de116a746"
+        },
+        {
+          "address": "0x53e82abbb12638f09d9e624578ccb666217a765e",
+          "fields": [
+            {
+              "key": "values.accessControl.YIELD_COLLECTOR_ROLE.members.1",
+              "added": [
+                "\"0xcB1e45481461aeF38E6B0a34F1444E9C5D647645\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x6d0ff67fb427422aff35eea8596949b374b09a52",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746\""
+              ],
+              "added": [
+                "\"0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x6d4f9f9f8f0155509ecd6ac6c544ff27999845cc",
+          "fields": [
+            {
+              "key": "values.accessControl.YIELD_COLLECTOR_ROLE.members.1",
+              "added": [
+                "\"0xcB1e45481461aeF38E6B0a34F1444E9C5D647645\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x74034597d29613cc8c0bdc8780e1d292a553bd32",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746\""
+              ],
+              "added": [
+                "\"0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x9d851f8b8751c5fbc09b9e74e6e68e9950949052",
+          "fields": [
+            {
+              "key": "values.$threshold",
+              "removed": [
+                "3"
+              ],
+              "added": [
+                "2"
+              ]
+            },
+            {
+              "key": "values.multisigThreshold",
+              "removed": [
+                "\"3 of 5 (60%)\""
+              ],
+              "added": [
+                "\"2 of 5 (40%)\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746\""
+              ],
+              "added": [
+                "\"0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xe06278351d120288edfcb963f934113ca3c21afe",
+          "fields": [
+            {
+              "key": "values.owner",
+              "removed": [
+                "\"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746\""
+              ],
+              "added": [
+                "\"0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x4e981bae8e3cd06ca911fffe5504b2653ac1c38a",
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "id": "19a3fae3",
+      "timestamp": 1750838228,
+      "changes": [
+        {
+          "address": "0x48c03b6ffd0008460f8657db1037c7e09deedfcb",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "250000000000000"
+              ],
+              "added": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x7b5a0182e400b241b317e781a4e9dedfc1429822",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "300000000000000"
+              ],
+              "added": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x92c82f5f771f6a44cfa09357dd0575b81bf5f728",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "250000000000"
+              ],
+              "added": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0xcc6a16be713f6a714f68b0e1f4914fd3db15fbef",
+          "fields": [
+            {
+              "key": "values.deposit_limit",
+              "removed": [
+                "\"140000000000000000000000\""
+              ],
+              "added": [
+                "\"115792089237316195423570985008687907853269984665640564039457584007913129639935\""
+              ]
+            },
+            {
+              "key": "values.deposit_limit_module",
+              "removed": [
+                "\"0x0000000000000000000000000000000000000000\""
+              ],
+              "added": [
+                "\"0x793D85F585145c050487c7AfBF0e9B97143fF1CB\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "0x793d85f585145c050487c7afbf0e9b97143ff1cb",
+          "status": "created"
+        }
+      ]
+    }
+  ]
+}

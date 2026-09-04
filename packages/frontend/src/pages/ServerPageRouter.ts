@@ -20,6 +20,7 @@ import { createInteropRouter } from './interop/InteropRouter'
 import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
+import { createOssificationRouter } from './ossification/OssificationRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -57,6 +58,7 @@ export function createServerPageRouter(
   const routers = [
     ...(env.CLIENT_SIDE_HOME_PAGE ? [createHomeRouter] : []),
     createL2Router,
+    createOssificationRouter,
     createInteropRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,

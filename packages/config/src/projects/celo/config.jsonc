@@ -20,6 +20,78 @@
     "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },
+    // ProxyAdmin (L1): can upgrade every core Celo contract (portal, bridges, DGF, SystemConfig, CeloSuperchainConfig).
+    "eth:0x783A434532Ee94667979213af1711505E8bFE374": {
+      "critical": true
+    },
+    // L1 CELO token: Celo is a custom-gas-token chain, so this ERC20 is what the
+    // portal escrows against native CELO on L2. It is an EIP-1967 proxy behind the
+    // same ProxyAdmin as the core contracts; an implementation change can alter
+    // the custody/accounting of the escrowed gas token (mantle L1MantleToken precedent).
+    "eth:0x057898f3C43F129a17517B9056D23851F124b19f": {
+      "critical": true
+    },
+    // SuperchainProxyAdmin: can upgrade the shared SuperchainConfig whose guardian can pause the whole Superchain including Celo.
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
+    // OP Mainnet's legacy AddressManager, discovered as a relative of the shared
+    // SuperchainProxyAdmin. It resolves implementations for OP Mainnet's own
+    // ResolvedDelegateProxies only; the SuperchainConfig that Celo shares is a plain
+    // EIP-1967 proxy (proxyType 0), and Celo's own messenger resolves through Celo's
+    // AddressManager (eth:0x55093104...). Outside the Celo perimeter.
+    "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
+      "critical": false
+    },
+    // CeloSuperchainConfig: the local superchain config all Celo core contracts read
+    // their pause state from. Its guardian (Celo cLabs Multisig, acting alone) can
+    // pause Celo withdrawals; it also forwards the shared SuperchainConfig's
+    // Superchain-wide pause.
+    "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66": {
+      "critical": true,
+      "fields": {
+        "guardian": {
+          "severity": "HIGH",
+          "description": "Address that can pause Celo withdrawals on its own, without any other party consenting."
+        },
+        "superchainConfig": {
+          "severity": "HIGH",
+          "description": "The shared Superchain-wide SuperchainConfig whose pause state is forwarded to Celo. Changing this pointer changes who can pause Celo from outside."
+        },
+        "paused": { "severity": "MEDIUM" },
+        "celoPaused": { "severity": "MEDIUM" }
+      }
+    },
+    // OP Succinct AccessManager: gates who can propose and challenge OPSuccinct
+    // dispute games. The owner can rewrite both allowlists with no delay.
+    "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816": {
+      "critical": true,
+      "fields": {
+        // Identity churn inside an unchanged role: proposer/challenger rotations
+        // do not change the trust model (the owner controls the lists either way),
+        // so they surface as MEDIUM instead of resetting the ossification clock.
+        "challengers": { "severity": "MEDIUM" },
+        "proposers": { "severity": "MEDIUM" }
+      }
+    },
+    // Active OPSuccinctFaultDisputeGame implementation (game type 42, the respected
+    // game type): verifies proposed state roots via SP1 proofs. Vkey rotations are
+    // performed by deploying a new game and registering it on the DisputeGameFactory.
+    "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF": {
+      "critical": true
+    },
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated.
+    "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
     "eth:0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755": {
       "fields": {
         "proposer": {

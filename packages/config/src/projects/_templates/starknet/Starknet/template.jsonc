@@ -1,9 +1,16 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Starknet",
+  "critical": true,
   "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
   "category": "core",
   "fields": {
+    "messageCancellationDelay": {
+      // governance can change this live (setMessageCancellationDelay is
+      // notFinalized onlyGovernance and the contract is not finalized); it
+      // gates the L1->L2 deposit-cancellation escape hatch.
+      "severity": "HIGH"
+    },
     "$admin": {
       "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks.",
       "severity": "HIGH",
@@ -79,7 +86,6 @@
     },
     "feeCollector": {
       "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
-      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "programHash": {

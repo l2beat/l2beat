@@ -26,6 +26,7 @@
         "isUpgrading": false,
         "owner": "eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1075B29e5F7a911128C77F3989702E150C988904": "ProxyAdmin"
       }
@@ -73,6 +74,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "critical": true,
       "deployerAddress": "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541",
       "sinceTimestamp": 1709859935,
       "sinceBlock": 19387056,
@@ -93,6 +95,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.0.0"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A": "Proxy",
         "eth:0x314774a6Cfc3838E5a5a1DE3723EEa995aAD4e8f": "SuperchainConfig"
@@ -209,6 +212,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541",
       "sinceTimestamp": 1709859935,
       "sinceBlock": 19387056,
@@ -216,6 +220,7 @@
         "$immutable": true,
         "owner": "eth:0x1075B29e5F7a911128C77F3989702E150C988904"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x75D340E5BF2eAbC39A04AF4229Ce7875B4A73B03": "AddressManager"
       },
@@ -237,6 +242,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541",
       "sinceTimestamp": 1709859947,
@@ -284,7 +290,9 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "batcherHash": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09": "Proxy",
@@ -303,6 +311,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541",
       "sinceTimestamp": 1709859947,
@@ -337,6 +346,7 @@
         "superchainConfig": "eth:0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A",
         "version": "2.1.1"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C": "ResolvedDelegateProxy",
         "eth:0x4795EaC1a2581F2Db6419203D063711C5a90aD50": "L1CrossDomainMessenger"
@@ -492,6 +502,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",

@@ -32,6 +32,62 @@
     "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d": "Base Governance Multisig - L2 Alias"
   },
   "overrides": {
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated.
+    "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
+    // Active RISC Zero verification path for TEE prover registration.
+    // Permanently paused verifier routes are intentionally not flagged.
+    "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
+      "critical": true
+    },
+    "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": {
+      "critical": true
+    },
+    "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
+      "critical": true
+    },
+    "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
+      "critical": true
+    },
+    "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": {
+      "critical": true
+    },
+    "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": {
+      "critical": true
+    },
+    "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
+      "critical": true
+    },
+    // SP1 verification path used by ZkVerifier
+    "eth:0xdc32E228636273285Befa5F001dBB5142517C106": {
+      "critical": true
+    },
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": {
+      "critical": true
+    },
+    // ProxyAdmin (L1): can upgrade every core Base contract (portal, bridges, DGF, SystemConfig, SuperchainConfig, TEEProverRegistry).
+    "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E": {
+      "critical": true
+    },
+    // ProxyAdmin (L2): can upgrade all L2 predeploys incl. L2StandardBridge, L2CrossDomainMessenger and L2ToL1MessagePasser.
+    "base:0x4200000000000000000000000000000000000018": {
+      "critical": true
+    },
+    // RISC Zero governance timelock: owner of the RiscZeroVerifierRouter used to validate TEE signer registrations (add/remove verifiers).
+    "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
+      "critical": true
+    },
+    // Safes are actor shells outside the contract perimeter. Their authority
+    // mechanism changes are reviewed as project-level critical events.
     "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": {
       "references": [
         {
@@ -57,6 +113,8 @@
     },
     "eth:0x0000F90827F1C53a10cb7A02335B175320002935": {
       "description": "EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.",
+      // consumed by the AggregateVerifier (EIP2935_CONTRACT) to validate the L1 head of proofs.
+      "critical": true,
       "manualSourcePaths": {
         "eth:0x0000F90827F1C53a10cb7A02335B175320002935": "https://eips.ethereum.org/EIPS/eip-2935"
       }

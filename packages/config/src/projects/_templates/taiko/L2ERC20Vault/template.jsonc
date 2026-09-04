@@ -1,5 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // L2-side token vault paired with the L1 ERC20Vault escrow; compromise
+  // emits fraudulent burn/withdraw messages that unlock the L1 escrow.
+  "critical": true,
   "description": "Escrow for L2-native tokens sent to L1 via the canonical bridge.",
   "ignoreMethods": ["proxiableUUID"]
 }

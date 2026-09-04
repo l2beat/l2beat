@@ -1,7 +1,7 @@
 {
   "name": "lighter",
   "timestamp": 1788432281,
-  "configHash": "0x36b0856e7e96a22b55750bb85e9fb086c12d7ed3d08041b93b337ad509c38243",
+  "configHash": "0x7f2a433194d2b7c7a81d75682016ba586152ff85cf64fe5a1702868bbf1be261",
   "entries": [
     {
       "address": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
@@ -58,6 +58,7 @@
       ],
       "proxyType": "zkLighter proxy",
       "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
+      "critical": true,
       "ignoreInWatchMode": [
         "committedBatchesCount",
         "committedPriorityRequestCount",
@@ -385,7 +386,25 @@
       "fieldMeta": {
         "verifier": { "severity": "HIGH" },
         "desertVerifier": { "severity": "HIGH" },
-        "desertMode": { "severity": "HIGH" }
+        "governance": { "severity": "HIGH" },
+        "stateRootUpgradeVerifier": {
+          "severity": "HIGH",
+          "description": "If set to a non-zero address, a governor can replace the current state root with any new one accompanied by a proof this verifier accepts (the pointer self-clears after one use)."
+        },
+        "treasury": {
+          "severity": "MEDIUM",
+          "description": "L1 address bound to the treasury account (accountIndex 0) that collects trading fees on L2."
+        },
+        "insuranceFundOperator": {
+          "severity": "MEDIUM",
+          "description": "L1 address bound to the insurance fund account that backstops trading losses on L2."
+        },
+        "desertMode": {
+          "severity": "HIGH",
+          "description": "One-way escape-hatch state: once activated (after an expired, uncensorable priority request), normal operation halts permanently and users exit via desert-mode proofs."
+        },
+        "assetConfigUSDC": { "severity": "MEDIUM" },
+        "assetConfigETH": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": "Proxy",
@@ -461,6 +480,8 @@
         "0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"
       ],
       "proxyType": "immutable",
+      "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1784379467,
       "sinceBlock": 25559735,
@@ -527,7 +548,8 @@
         "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.",
+      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -551,8 +573,13 @@
       },
       "fieldMeta": {
         "getMaster": { "severity": "HIGH" },
+        "managedContracts": {
+          "severity": "HIGH",
+          "description": "The proxies whose implementations this gatekeeper can upgrade."
+        },
         "approvedUpgradeNoticePeriodFmt": {
-          "description": "upgrade delay, can be skipped by the 'securityCouncil' role."
+          "severity": "HIGH",
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
         }
       },
       "implementationNames": {
@@ -649,6 +676,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -698,6 +726,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
+      "critical": true,
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -1205,9 +1234,9 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
-    "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
+    "lighter/UpgradeGatekeeper": "0x0d40d8748ad8dee86f12c11a425636bf49fee0c78880ade5f92b547afc073760",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "lighter/ZkLighterWithSpot": "0xf2193f542c5b2dc29610085ddafb70c168d82e65ee4e03f27faf3e9eaa11ece2"
+    "lighter/ZkLighterWithSpot": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
   "usedBlockNumbers": { "ethereum": 25896263 },
   "permissionsConfigHash": "0x70cd8169dab4019aa0d9fa1fadd61b0a842fd1dfd45497a304a1403dfa80186d",

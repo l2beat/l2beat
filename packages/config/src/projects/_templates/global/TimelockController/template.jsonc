@@ -15,6 +15,9 @@
         }
       ]
     },
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
     "getMinDelayFormatted": {
       "handler": {
         "type": "call",
@@ -24,6 +27,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }

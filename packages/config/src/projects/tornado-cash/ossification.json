@@ -1,0 +1,158 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1589351616,
+      "type": "state",
+      "contract": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+      "source": "tx:0x400665eda591630c87c3e332712fc02276fe6f26c233097a6b2d327cc6a6d81c",
+      "reason": "Replaced the withdrawal verifier used by the 100 DAI pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589351645,
+      "type": "state",
+      "contract": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+      "source": "tx:0xf475773aff56b526f7c4fb944e8c11748c6936fec4c2ddd6c9ec49cc862f7d93",
+      "reason": "Replaced the withdrawal verifier used by the 1000 DAI pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589351677,
+      "type": "state",
+      "contract": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+      "source": "tx:0x3404ef72d28f5bd10c689d40da9d2a62afbaa0304c3ecc5bb195244f96a115bb",
+      "reason": "Replaced the withdrawal verifier used by the 5K cDAI pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589351859,
+      "type": "state",
+      "contract": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+      "source": "tx:0x42e890753fd3daf379e07b6e769567f7e6a59b979a5d3cba1ff275e33127eef1",
+      "reason": "Replaced the withdrawal verifier used by the 100 USDC pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589351961,
+      "type": "state",
+      "contract": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+      "source": "tx:0x9e13f37fde1311cdfce9cfb5990d0e469f7e7e66ce4684bb5373eb37e73c185e",
+      "reason": "Replaced the withdrawal verifier used by the 1000 USDC pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589352010,
+      "type": "state",
+      "contract": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+      "source": "tx:0x578fb44b21e6a129d923105e6babc0f739df30db4198d4b83d0ac76e5dbe288b",
+      "reason": "Replaced the withdrawal verifier used by the 100 USDT pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589352020,
+      "type": "state",
+      "contract": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+      "source": "tx:0x93fb90a82c1d3585fcb04a14186761a027118990b3fdaf46070b322173a0579f",
+      "reason": "Replaced the withdrawal verifier used by the 1000 USDT pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589352426,
+      "type": "state",
+      "contract": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+      "source": "tx:0x85fac3f923ee656e7acd72d60de96304f519ee17885c44edfd9ea5add353240e",
+      "reason": "Replaced the withdrawal verifier used by the 1 ETH pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589352466,
+      "type": "state",
+      "contract": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+      "source": "tx:0x49add8aba626ee99fd8f738f7ab019db2e9c1867559df1f3b4d862d2dbdf7ede",
+      "reason": "Replaced the withdrawal verifier used by the 10 ETH pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589352501,
+      "type": "state",
+      "contract": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+      "source": "tx:0x8f6b6c0eeb0d539f4e33aedb018e39d6fbdc5c24de42f7a1b70bd6ba5a7b95a0",
+      "reason": "Replaced the withdrawal verifier used by the 100 ETH pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589352515,
+      "type": "state",
+      "contract": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+      "source": "tx:0xf533f7b79aa8716c267ea951ef19968e0cf80289ec7c15bbe45a09d402020b55",
+      "reason": "Replaced the withdrawal verifier used by the 0.1 ETH pool after the final trusted setup."
+    },
+    {
+      "timestamp": 1589827905,
+      "type": "state",
+      "contract": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+      "source": "tx:0xf7ad2b57749045f2c4180a3d5a7acf45fdbab8a69fa85a0095ecd85f1629dea3",
+      "reason": "Permanently renounced verifier-upgrade authority over the 5K cDAI pool."
+    },
+    {
+      "timestamp": 1589827926,
+      "type": "state",
+      "contract": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+      "source": "tx:0xc0b533870f96c8760070d378247e60e1833b2aed7956f32d298330a5c0536abf",
+      "reason": "Permanently renounced verifier-upgrade authority over the 100 USDC pool."
+    },
+    {
+      "timestamp": 1589827970,
+      "type": "state",
+      "contract": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+      "source": "tx:0x25bc5bb758b507285ca5c0e951ecfbb9bf51db051e92c5e01137f660aaaf36ec",
+      "reason": "Permanently renounced verifier-upgrade authority over the 1000 USDC pool."
+    },
+    {
+      "timestamp": 1589827991,
+      "type": "state",
+      "contract": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+      "source": "tx:0xb2b43d53f1f04ed70b13bfc26b2f4b31e92cd155d1864aa0bb4a50fb514d363d",
+      "reason": "Permanently renounced verifier-upgrade authority over the 100 USDT pool."
+    },
+    {
+      "timestamp": 1589828002,
+      "type": "state",
+      "contract": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+      "source": "tx:0x2557368aac174d36c076e212535f2da4f3dd1e20fe1857ddf22c38bd6f5cae20",
+      "reason": "Permanently renounced verifier-upgrade authority over the 1000 USDT pool."
+    },
+    {
+      "timestamp": 1589828030,
+      "type": "state",
+      "contract": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+      "source": "tx:0x4f7173af5ccb5317e7e56ca466dfa228aafa39fd4ee3c5ee150f29bfe45779e9",
+      "reason": "Permanently renounced verifier-upgrade authority over the 1 ETH pool."
+    },
+    {
+      "timestamp": 1589828075,
+      "type": "state",
+      "contract": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+      "source": "tx:0xa7d53eee30e410c80575e9043f3dc2bea531ef4a429f6e4c431560f2516a86ad",
+      "reason": "Permanently renounced verifier-upgrade authority over the 10 ETH pool."
+    },
+    {
+      "timestamp": 1589828114,
+      "type": "state",
+      "contract": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+      "source": "tx:0xa5adf0aa5aecac6dbe3d6a31ea91589bb7c54b10050afec839dad0957ebceb6f",
+      "reason": "Permanently renounced verifier-upgrade authority over the 100 ETH pool."
+    },
+    {
+      "timestamp": 1589828161,
+      "type": "state",
+      "contract": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+      "source": "tx:0x9bd7d73bce1c3a420093c7f82e150874136968df1ca418faf23aead4c5e3a8f4",
+      "reason": "Permanently renounced verifier-upgrade and migration authority over the 0.1 ETH pool."
+    },
+    {
+      "timestamp": 1589828187,
+      "type": "state",
+      "contract": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+      "source": "tx:0x749065194786887489d026d94cde4f0be34670319e895f68f564aa52c6248c4e",
+      "reason": "Permanently renounced verifier-upgrade authority over the 100 DAI pool."
+    },
+    {
+      "timestamp": 1589828193,
+      "type": "state",
+      "contract": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+      "source": "tx:0xa4b448b1c4a0f417a5104b78e001bbf01e6a7327062a11e50d2b801142c1db85",
+      "reason": "Permanently renounced verifier-upgrade authority over the 1000 DAI pool."
+    }
+  ]
+}

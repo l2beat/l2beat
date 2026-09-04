@@ -754,6 +754,7 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7": "ProxyAdmin"
       }
@@ -1724,6 +1725,7 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x9393573a9EF85c9A37d91E32702a340084A48b6E": "ProxyAdmin"
       }
@@ -2476,6 +2478,7 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xB3985D7fF844FA0F5E0aaC5feb5DD8BE15e88580": "ProxyAdmin"
       }
@@ -3330,6 +3333,7 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b": "ProxyAdmin"
       }

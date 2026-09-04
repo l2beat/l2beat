@@ -1,3 +1,338 @@
+Generated with discovered.json: 0xfa538f19b9850c3a663691633df5829ab6f5b2d6
+
+# Diff at Thu, 03 Sep 2026 14:27:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1787307944
+- current timestamp: 1787307944
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787307944 (main branch discovery), not current.
+
+```diff
+    contract Pool_50K_cDAI (eth:0x03893a7c7463AE47D46bc7f091665f1893656003) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 50K cDAI deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      fieldMeta.comp.severity:
++        "LOW"
+      fieldMeta.governance.description:
+-        "Recipient of claimed COMP rewards from this pool."
++        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
+      fieldMeta.governance.severity:
++        "LOW"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_10K_DAI (eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10K DAI deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1000_USDT (eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDT deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_0.1_ETH (eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc) [tornado-cash/TornadoCash_Eth_01] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.
++++ description: Whether verifier-upgrade and migration authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade and migration authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_USDT (eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDT deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_0.1_WBTC (eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 WBTC deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_5K_cDAI (eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5K cDAI deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100K_DAI (eth:0x23773E65ed146A459791799d01336DB287f25334) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100K DAI deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_500K_cDAI (eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 500K cDAI deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      fieldMeta.comp.severity:
++        "LOW"
+      fieldMeta.governance.description:
+-        "Recipient of claimed COMP rewards from this pool."
++        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
+      fieldMeta.governance.severity:
++        "LOW"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1000_USDC (eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDC deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1_ETH (eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 ETH deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1_WBTC (eth:0x610B717796ad172B316836AC95a2ffad065CeaB4) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 WBTC deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MiMCHasher (eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe) [N/A] {
+    +++ description: MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_10_ETH (eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 ETH deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_ETH (eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 ETH deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_10_WBTC (eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 WBTC deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Verifier (eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A) [tornado-cash/Verifier] {
+    +++ description: Groth16 verifier contract used by Tornado Cash pool withdrawal proofs.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_5M_cDAI (eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5M cDAI deposits.
+      fieldMeta.verifier.severity:
+-        "HIGH"
+      fieldMeta.verifier.description:
+-        "zkSNARK verifier used to authorize withdrawals from the pool."
++        "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
+      fieldMeta.comp.severity:
++        "LOW"
+      fieldMeta.governance.description:
+-        "Recipient of claimed COMP rewards from this pool."
++        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
+      fieldMeta.governance.severity:
++        "LOW"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_DAI (eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 DAI deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_USDC (eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDC deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1000_DAI (eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 DAI deposits.
++++ description: Whether verifier-upgrade authority has been permanently renounced.
++++ severity: HIGH
+      values.operatorRenounced:
++        true
+      fieldMeta.operator.severity:
+-        "HIGH"
+      fieldMeta.operatorRenounced:
++        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xf280c6f9cf14b77ac7d496dfa3bf0536bd9a0558
 
 # Diff at Fri, 21 Aug 2026 10:26:51 GMT:

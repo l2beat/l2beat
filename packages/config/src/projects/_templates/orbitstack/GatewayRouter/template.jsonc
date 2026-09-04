@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "GatewayRouter",
+  "critical": true,
   "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
   "category": "bridge-external"
 }

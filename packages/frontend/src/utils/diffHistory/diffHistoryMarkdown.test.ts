@@ -1,5 +1,8 @@
 import { expect } from 'earl'
-import { countDiffChanges } from './diffHistoryMarkdown'
+import {
+  countDiffChanges,
+  isImplementationChangeDiffBody,
+} from './diffHistoryMarkdown'
 
 function diffBody(...lines: string[]): string {
   return ['```diff', ...lines, '```'].join('\n')
@@ -53,5 +56,87 @@ describe(countDiffChanges.name, () => {
         ),
       ),
     ).toEqual(1)
+  })
+})
+
+describe(isImplementationChangeDiffBody.name, () => {
+  it('detects a $implementation field change', () => {
+    expect(
+      isImplementationChangeDiffBody(
+        diffBody(
+          '      values.$implementation:',
+          '-        "eth:0xaaa"',
+          '+        "eth:0xbbb"',
+        ),
+      ),
+    ).toEqual(true)
+  })
+
+  it('detects a legacy upgradeability.implementation change', () => {
+    expect(
+      isImplementationChangeDiffBody(
+        diffBody(
+          '      upgradeability.implementation:',
+          '-        "0xaaa"',
+          '+        "0xbbb"',
+        ),
+      ),
+    ).toEqual(true)
+  })
+
+  it('detects a freshly appended $pastUpgrades entry', () => {
+    expect(
+      isImplementationChangeDiffBody(
+        diffBody(
+          '      values.$pastUpgrades.10:',
+          '+        ["2026-04-21T03:26:47.000Z","0x123",["eth:0x111"]]',
+        ),
+      ),
+    ).toEqual(true)
+  })
+
+  it('ignores "implementation" inside decoded values of another field', () => {
+    // e.g. a timelock's scheduledTransactionsDecoded queueing an upgrade of a
+    // different contract: queued, not executed — not a code change here.
+    expect(
+      isImplementationChangeDiffBody(
+        diffBody(
+          '      values.scheduledTransactionsDecoded.35:',
+          '+        {"function":"upgrade","inputs":{"proxy":"eth:0xccc","implementation":"eth:0xddd"}}',
+        ),
+      ),
+    ).toEqual(false)
+  })
+
+  it('ignores a representation-only $implementation rewrite', () => {
+    expect(
+      isImplementationChangeDiffBody(
+        diffBody(
+          '      values.$implementation:',
+          '-        "0xAAA0000000000000000000000000000000000001"',
+          '+        "eth:0xAAA0000000000000000000000000000000000001"',
+        ),
+      ),
+    ).toEqual(false)
+  })
+
+  it('ignores $pastUpgrades format migrations and whole-array additions', () => {
+    expect(
+      isImplementationChangeDiffBody(
+        diffBody(
+          '      values.$pastUpgrades.0.2.0:',
+          '-        "0x111"',
+          '+        "eth:0x111"',
+        ),
+      ),
+    ).toEqual(false)
+    expect(
+      isImplementationChangeDiffBody(
+        diffBody(
+          '      values.$pastUpgrades:',
+          '+        [["2020-01-01T00:00:00.000Z","0x1",["eth:0x111"]]]',
+        ),
+      ),
+    ).toEqual(false)
   })
 })

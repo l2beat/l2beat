@@ -15,6 +15,7 @@
       ]
     },
     "upgradeActivationDelayFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getUpgradeActivationDelay",
@@ -89,7 +90,6 @@
     },
     "customFactRegistryRoutes": {
       "description": "Latest nonzero caller-to-registry fallback routes reconstructed from events. These are `call` targets, not delegatecall implementations. The stored route is usable only while the target is in the default registry's unexpired reference chain; otherwise the caller's fallback call reverts. This affects proof submissions but not the proxy's explicit `isValid`, which always queries the default target.",
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["operator", "customReference"],

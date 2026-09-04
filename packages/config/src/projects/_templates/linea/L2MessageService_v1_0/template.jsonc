@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "ignoreMethods": ["l1RollingHashes"],
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",
@@ -19,13 +20,20 @@
         }
       ]
     },
+    "minimumFeeInWei": {
+      // fee parameter (L1->L2 anti-DoS fee; exits do not pay it): surfaces on
+      // the monitor without resetting the ossification clock.
+      "severity": "MEDIUM"
+    },
     "sender": {
       "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
     },
     "limitInWei": {
+      "severity": "HIGH",
       "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
     },
     "periodInSeconds": {
+      "severity": "HIGH",
       "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
     },
     // enum PauseType {
@@ -45,7 +53,7 @@
     // 13 STATE_DATA_SUBMISSION
     // }
     "isPaused_GENERAL": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -53,7 +61,7 @@
       }
     },
     "isPaused_L1_L2": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -61,7 +69,7 @@
       }
     },
     "isPaused_L2_L1": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -85,7 +93,7 @@
     //     }
     //   },
     "isPaused_FINALIZATION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -93,7 +101,7 @@
       }
     },
     "isPaused_INITIATE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -101,7 +109,7 @@
       }
     },
     "isPaused_COMPLETE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -109,7 +117,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_STAKING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -117,7 +125,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_UNSTAKING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -125,7 +133,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -133,7 +141,7 @@
       }
     },
     "isPaused_NATIVE_YIELD_REPORTING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -141,7 +149,7 @@
       }
     },
     "isPaused_STATE_DATA_SUBMISSION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -149,7 +157,7 @@
       }
     },
     "nonSecurityCouncilCooldownEnd": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "description": "Timestamp until which non security council entities can't pause the rollup."
     }
   }

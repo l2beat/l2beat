@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SignerList (Security Council)",
+  "critical": true,
   "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.",
   "ignoreMethods": ["addresslistLengthAtBlock", "getEncryptionAgents"],
   "ignoreRelatives": ["settings"],

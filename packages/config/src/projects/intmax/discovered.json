@@ -164,6 +164,7 @@
         "owner": "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601": "ProxyAdmin"
       }

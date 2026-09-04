@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
   "category": "shared",
   "ignoreMethods": [
@@ -11,12 +12,16 @@
   "ignoreRelatives": ["legacyBridge"],
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
           "description": "pause, unpause and set critical escrow address references."
         }
       ]
-    }
+    },
+    "paused": { "severity": "MEDIUM" },
+    "l1AssetRouter": { "severity": "HIGH" },
+    "legacyBridge": { "severity": "HIGH" }
   }
 }

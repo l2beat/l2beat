@@ -1,3 +1,255 @@
+Generated with discovered.json: 0xeca46f369efb5a3953f9d31e5e5389a2573b619f
+
+# Diff at Thu, 03 Sep 2026 14:28:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1788265057
+- current timestamp: 1788265057
+
+## Description
+
+reapply branch discovery config after merging main
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788265057 (main branch discovery), not current.
+
+```diff
+    contract GovernorRewardsSweeper (eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B) [railgun/Sweeper] {
+    +++ description: Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.
+      values.$pastUpgrades.0:
++        ["2022-11-22T20:14:11.000Z","0x8a7ec325dbefb9e150064f9b94f680f3a96fef73b2f1160c40aa195a88a98ad6",["eth:0x7d1C12008d180718938F535eE0dec7ac3473c179"]]
+      values.$pastUpgrades.1:
++        ["2023-02-07T06:14:47.000Z","0x128597009072e4bbc08293c81904d4cf5bb22b9cad1f87bf99a7edaa2878deaf",["eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a"]]
+      values.$upgradeCount:
+-        0
++        2
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8) [railgun/ProxyAdmin] {
+    +++ description: Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
+-        "HIGH"
+      fieldMeta.state.severity:
+-        "HIGH"
+      fieldMeta.state.description:
+-        "Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier."
++        "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+      fieldMeta.state.type:
+-        "RISK_PARAMETER"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
+-        "HIGH"
+      fieldMeta.state.severity:
+-        "HIGH"
+      fieldMeta.state.description:
+-        "Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier."
++        "Current workflow phase: SETTING, WAITING, or COMMITTING. This is transient process state; completed verifier-key changes are tracked on the smart wallet."
+      fieldMeta.state.type:
+-        "RISK_PARAMETER"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GovernorRewards (eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f) [railgun/GovernorRewards] {
+    +++ description: Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.
+      values.$pastUpgrades.0:
++        ["2023-01-20T05:37:35.000Z","0x2a5967e08e872f7bd998842cbd9224ee81a39ddd16f7f40452fc3ba47c01c783",["eth:0xF035cEBa76C0C1f2c15457775745B1F5DC42CA2c"]]
+      values.$pastUpgrades.1:
++        ["2023-01-20T05:40:47.000Z","0x14b883f710dbcdc1be58c03cedc447a7af82c843bfb2259c194eea7aef19d972",["eth:0x3db1c53366Fff57001fF6a9DaaCdA1FCFBaB56A9"]]
+      values.$pastUpgrades.2:
++        ["2023-01-20T05:59:59.000Z","0x948534918749a94532adcbc0b5fbf6248e2cdb1ac905c688fc30b8eef649260b",["eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b"]]
+      values.$pastUpgrades.3:
++        ["2026-07-18T18:15:47.000Z","0x01b125307242dcb57f77aa1c925ac1b0af56dc29616631336bb15f25fdca1778",["eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB"]]
+      values.$upgradeCount:
+-        0
++        4
+    }
+```
+
+```diff
+    contract LegacySweeper (eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686) [railgun/SweeperLegacy] {
+    +++ description: Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver.
+      values.$pastUpgrades.0:
++        ["2022-09-10T00:32:00.000Z","0x1413ff21c2423fcb8cf10812ada82f33fe76a34f18368277ce5f1cd51e5750a5",["eth:0x27d30E803A0EC079DAA3A2e6c3590Cca9f63C9D8"]]
+      values.$pastUpgrades.1:
++        ["2022-12-02T04:09:35.000Z","0xa61b7db4ff3ca6d8a4b44f396b019ee3bea1f9a8616ef8a35d0511bf03c2b7e1",["eth:0x9b1310BdCC19D172D0092240e33209a9156c8EE2"]]
+      values.$upgradeCount:
+-        0
++        2
+    }
+```
+
+```diff
+    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) [railgun/Delegator] {
+    +++ description: Permission router proxy owned by Railgun governance.
++++ description: Internal permission map restricted to critical Railgun targets and wildcard permissions.
+      values.$criticalDelegatedPermissionsRaw:
++        {"eth:0x0219B4C1ADcEC8f4206b528832F66aB76766873D":[],"eth:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86":[],"eth:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a":[],"eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46":[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}],"eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598":[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}]}
++++ description: Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.
++++ severity: HIGH
+      values.criticalDelegatedPermissions:
++        [["eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}]],["eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",[{"contractAddress":"eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9","selector":"0x2ec0f359"}]]]
+      fieldMeta.$delegatedPermissionsRaw.severity:
+-        "HIGH"
+      fieldMeta.delegatedPermissions.severity:
+-        "HIGH"
+      fieldMeta.delegatedCallers.severity:
+-        "HIGH"
+      fieldMeta.verificationKeyDelegates.severity:
+-        "HIGH"
+      fieldMeta.$criticalDelegatedPermissionsRaw:
++        {"description":"Internal permission map restricted to critical Railgun targets and wildcard permissions.","type":"PERMISSION"}
+      fieldMeta.criticalDelegatedPermissions:
++        {"severity":"HIGH","description":"Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.","type":"PERMISSION"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
+      fieldMeta.proposalCount.severity:
+-        "HIGH"
+      fieldMeta.proposalCount.description:
++        "Number of governance proposals published. Proposals are updates, but do not change the system until executed."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Treasury (eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40) [railgun/Treasury] {
+    +++ description: Collects Railgun fees. Managed through access control roles.
+      values.$pastUpgrades.0:
++        ["2022-07-14T05:21:05.000Z","0x271cb0bfab8dfeeda44381b22e6f93adc955002d387a96c0f8cd5719fb6a9504",["eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract Staking (eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20) [railgun/Staking] {
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      values.$pastUpgrades.0:
++        ["2022-05-08T18:32:52.000Z","0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361",["eth:0xBCFA4De73afb071C9FF18a20A22F818e657C541a"]]
+      values.$pastUpgrades.1:
++        ["2022-11-29T16:10:23.000Z","0xab0625746a64ed88fd040a39bdbe9ed930328d9b09245b36cd1d9a64444dad95",["eth:0x321617E18bE9EC7CFE5ab8856DE2aAbAA478E13B"]]
+      values.$pastUpgrades.2:
++        ["2023-03-09T11:09:47.000Z","0xe001ac69697083957933db13ff27c56769ce8826d4ab676b3965d7a44b9f0668",["eth:0xc0BEF2D373A1EfaDE8B952f33c1370E486f209Cc"]]
+      values.$pastUpgrades.3:
++        ["2025-07-28T15:48:23.000Z","0xfc6cda4a6e9b8e2d055a50212551e6daa8ec180ad7aced11d00ae71e1d0eab6e",["eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b"]]
+      values.$pastUpgrades.4:
++        ["2026-08-14T13:50:35.000Z","0x7ac142845ccd9f156d992099a7ca8d6cb52655f4153cc49c48c38c8966a6b3ad",["eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C"]]
+      values.$upgradeCount:
+-        0
++        5
++++ description: Number of token blocklist additions, including additions later reverted.
++++ severity: MEDIUM
+      values.blocklistAdditionCount:
++        0
++++ description: Number of token blocklist removals, including removals later reverted.
++++ severity: MEDIUM
+      values.blocklistRemovalCount:
++        0
++++ description: Number of fee schedule changes, including changes later reverted.
++++ severity: HIGH
+      values.feeChangeCount:
++        1
++++ description: Number of logic ownership transfers, including changes later reverted.
++++ severity: HIGH
+      values.logicOwnershipChangeCount:
++        2
++++ description: Whether the smart wallet proxy currently blocks all calls to its implementation.
++++ severity: MEDIUM
+      values.paused:
++        0
++++ description: Number of proxy ownership transfers, including changes later reverted.
++++ severity: HIGH
+      values.proxyOwnershipChangeCount:
++        0
++++ description: Number of times the proxy has been paused.
++++ severity: MEDIUM
+      values.proxyPauseCount:
++        0
++++ description: Number of times the proxy has been unpaused.
++++ severity: MEDIUM
+      values.proxyUnpauseCount:
++        1
++++ description: Number of SNARK verification key changes, including keys later replaced or restored.
++++ severity: HIGH
+      values.verificationKeyChangeCount:
++        150
+      fieldMeta.treasury.severity:
+-        "HIGH"
+      fieldMeta.treasury.description:
+-        "Treasury contract that receives shield and unshield fees."
++        "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
+      fieldMeta.tokenBlocklist.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.paused:
++        {"severity":"MEDIUM","description":"Whether the smart wallet proxy currently blocks all calls to its implementation."}
+      fieldMeta.proxyOwnershipChangeCount:
++        {"severity":"HIGH","description":"Number of proxy ownership transfers, including changes later reverted."}
+      fieldMeta.proxyPauseCount:
++        {"severity":"MEDIUM","description":"Number of times the proxy has been paused."}
+      fieldMeta.proxyUnpauseCount:
++        {"severity":"MEDIUM","description":"Number of times the proxy has been unpaused."}
+      fieldMeta.logicOwnershipChangeCount:
++        {"severity":"HIGH","description":"Number of logic ownership transfers, including changes later reverted."}
+      fieldMeta.feeChangeCount:
++        {"severity":"HIGH","description":"Number of fee schedule changes, including changes later reverted."}
+      fieldMeta.blocklistAdditionCount:
++        {"severity":"MEDIUM","description":"Number of token blocklist additions, including additions later reverted."}
+      fieldMeta.blocklistRemovalCount:
++        {"severity":"MEDIUM","description":"Number of token blocklist removals, including removals later reverted."}
+      fieldMeta.verificationKeyChangeCount:
++        {"severity":"HIGH","description":"Number of SNARK verification key changes, including keys later replaced or restored."}
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xa8a97c0fd6ca0a394fbaf4c99930093f8c35160a
 
 # Diff at Tue, 01 Sep 2026 12:18:47 GMT:

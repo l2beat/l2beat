@@ -1,10 +1,12 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.",
   "ignoreInWatchMode": ["nextInstanceId"],
   "ignoreMethods": ["getPastTotalSupply", "instances", "proxiableUUID"],
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

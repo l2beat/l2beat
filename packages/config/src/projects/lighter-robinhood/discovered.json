@@ -35,7 +35,8 @@
         "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.",
+      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.",
+      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
@@ -60,7 +61,12 @@
       "fieldMeta": {
         "getMaster": { "severity": "HIGH" },
         "approvedUpgradeNoticePeriodFmt": {
-          "description": "upgrade delay, can be skipped by the 'securityCouncil' role."
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored).",
+          "severity": "HIGH"
+        },
+        "managedContracts": {
+          "severity": "HIGH",
+          "description": "The proxies whose implementations this gatekeeper can upgrade."
         }
       },
       "implementationNames": {
@@ -264,6 +270,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
+      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
@@ -291,6 +298,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
+      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,

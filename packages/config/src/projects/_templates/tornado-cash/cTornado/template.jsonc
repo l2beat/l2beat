@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "cTornado",
+  "critical": true,
   "category": "core",
   "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
   "fields": {
@@ -10,17 +11,18 @@
     },
     "token": { "description": "cToken accepted by this mixer instance." },
     "verifier": {
-      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
-      "severity": "HIGH"
+      "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
     },
     "hasher": {
       "description": "Merkle-tree hasher used for commitments and root updates."
     },
     "comp": {
-      "description": "COMP token accrued by the cToken position and claimable to governance."
+      "description": "COMP token accrued by the cToken position and claimable to governance.",
+      "severity": "LOW"
     },
     "governance": {
-      "description": "Recipient of claimed COMP rewards from this pool."
+      "description": "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool.",
+      "severity": "LOW"
     }
   },
   "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]

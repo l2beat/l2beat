@@ -1,0 +1,240 @@
+{
+  "firstUpgradeIsChange": [
+    "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+    "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+    "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+    "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+    "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+    "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+    "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
+    "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+    "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db"
+  ],
+  "criticalEvents": [
+    {
+      "timestamp": 1625161764,
+      "type": "state",
+      "contract": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+      "source": "tx:0x14dfea275cee9c497684fa5451122b70baf429b6d6e4e31550ae03fa579789b7",
+      "reason": "Transferred control of the canonical gateway ProxyAdmin."
+    },
+    {
+      "timestamp": 1630187882,
+      "type": "code",
+      "contract": "eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b",
+      "source": "tx:0x775a83af63dfa90e534bee4cd7b7dd8901c4dcbba8cc5444a8cd3da62ca02a5a",
+      "reason": "Changed the beacon implementation used by legacy withdrawal OutboxEntry contracts."
+    },
+    {
+      "timestamp": 1630345689,
+      "type": "code",
+      "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+      "source": "tx:0x2c061d80893dab385252afce5771664706d8bbc7a050e063f6d9b5708867a649",
+      "reason": "Changed the implementation used by canonical L2 ERC20 beacon proxies."
+    },
+    {
+      "timestamp": 1630440192,
+      "type": "state",
+      "contract": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+      "source": "tx:0x9d9cce4650eeb1c697fbf5bbf505731952251027a2b65ccc53190869ed1f0cd9",
+      "reason": "Transferred control of the L2 canonical gateway ProxyAdmin."
+    },
+    {
+      "timestamp": 1630441179,
+      "type": "state",
+      "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+      "source": "tx:0x59f3cf16761d257e93283509eca192203c2aba913bed1286670f5a45c42884f4",
+      "reason": "Transferred control of the canonical L2 ERC20 beacon."
+    },
+    {
+      "timestamp": 1631675264,
+      "type": "state",
+      "contract": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+      "source": "tx:0x9716fbeced4d93573daf0fc0025d1354bf07ab0f9b8e8a0bcf83ef1d425de5c6",
+      "reason": "Transferred control of the canonical gateway ProxyAdmin."
+    },
+    {
+      "timestamp": 1634923280,
+      "type": "code",
+      "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+      "source": "tx:0xa9a86bba4c9c42c6ab96e8038bf2c0d50edc2e88fb90ec836443df75d391ea56",
+      "reason": "Changed the implementation used by canonical L2 ERC20 beacon proxies."
+    },
+    {
+      "timestamp": 1646670130,
+      "type": "state",
+      "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+      "source": "tx:0xac5764d1fa468eeea00a287173aa1d696dcaa7941771b57e126bc337a03fd662",
+      "reason": "Transferred control of the canonical L2 ERC20 beacon."
+    },
+    {
+      "timestamp": 1646671628,
+      "type": "state",
+      "contract": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+      "source": "tx:0xefe80801f13381b5ebc9c5f3aade5bb91ac3ac9ebb4ee2906c094145343619a0",
+      "reason": "Transferred control of the L2 canonical gateway ProxyAdmin."
+    },
+    {
+      "timestamp": 1661490543,
+      "type": "state",
+      "contract": "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
+      "source": "tx:0xa6fc31fdb9a171535386ba7fa91a35547002dbdc927631a60b134cebd3de7d49",
+      "reason": "Transferred control of the core-system ProxyAdmin."
+    },
+    {
+      "timestamp": 1679004155,
+      "type": "state",
+      "contract": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+      "source": "tx:0xb7bb5fd0f458ccf69b0d55371f5570426d9006e1caf238b0e1929c97d506042e",
+      "reason": "Transferred the canonical gateway ProxyAdmin to the UpgradeExecutor."
+    },
+    {
+      "timestamp": 1679004215,
+      "type": "state",
+      "contract": "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
+      "source": "tx:0xb6d3293707b4e60207dd5d79f615dc165154002b825f766d49e6cea3ed3af2e0",
+      "reason": "Transferred the core-system ProxyAdmin to the UpgradeExecutor."
+    },
+    {
+      "timestamp": 1679004671,
+      "type": "state",
+      "contract": "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+      "source": "tx:0xa9ad62284dfb9c611279b73bbcdffdc4e6514d0facfc23c5ca021602f2a24320",
+      "reason": "Transferred the L2 canonical gateway ProxyAdmin to the L2 UpgradeExecutor."
+    },
+    {
+      "timestamp": 1679004671,
+      "type": "state",
+      "contract": "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+      "source": "tx:0xa9ad62284dfb9c611279b73bbcdffdc4e6514d0facfc23c5ca021602f2a24320",
+      "reason": "Transferred the canonical L2 ERC20 beacon to the L2 UpgradeExecutor."
+    },
+    {
+      "timestamp": 1694993963,
+      "type": "state",
+      "contract": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+      "source": "tx:0x7165ad22cc2bbca36019963ba1adff21c1d48444a3cfecf980f752aaa9594d94",
+      "reason": "Migrated the L1 UpgradeExecutor authorization roles to the DAO governance path."
+    },
+    {
+      "timestamp": 1694994573,
+      "type": "state",
+      "contract": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+      "source": "tx:0xc8736e5b178590a3a2f3292b84795a17a4ef423710a9b1360608ca3c51e451b6",
+      "reason": "Migrated the L2 UpgradeExecutor authorization roles to the DAO governance path."
+    },
+    {
+      "timestamp": 1706212139,
+      "type": "state",
+      "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
+      "historical": true,
+      "updateId": "556e5ed4",
+      "source": "tx:0xbe9c04275ec40879bdb63076e5d6dc378ac2291fc532682ba634be58dd7824f8",
+      "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 11."
+    },
+    {
+      "timestamp": 1710423719,
+      "type": "state",
+      "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
+      "historical": true,
+      "updateId": "5edc278c",
+      "source": "tx:0x51b492ac498a88565639cfe3df77be8729d61f1c413d00b66530d4022a13c36a",
+      "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 20."
+    },
+    {
+      "timestamp": 1719023040,
+      "type": "state",
+      "updateId": "642dbd35",
+      "source": "tx:0x90afa16b3c0c8009e6854fce49e52bc6ecfb0508f5c6ba96202abe9c79916872",
+      "reason": "Changed the Security Council proposal Safe threshold; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1720582885,
+      "type": "state",
+      "contract": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+      "updateId": "7ec2eb8d",
+      "source": "tx:0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3",
+      "reason": "Changed SecurityCouncilManager role assignments and its authority path."
+    },
+    {
+      "timestamp": 1724809031,
+      "type": "state",
+      "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
+      "historical": true,
+      "updateId": "a1a19b5d",
+      "source": "tx:0x1462f79e3920cc7c99a886743cb86aa6b05b16d92babc23fe7349e2543bb7b32",
+      "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 31."
+    },
+    {
+      "timestamp": 1727230595,
+      "type": "state",
+      "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
+      "historical": true,
+      "updateId": "8bd3d02d",
+      "source": "tx:0xc73eba5e946d0b435545c99df91f045c1122c393a718652d15f87f9fde23151f",
+      "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 32."
+    },
+    {
+      "timestamp": 1729843702,
+      "type": "state",
+      "contract": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+      "updateId": "3b2790a0",
+      "source": "tx:0x196d67adfc0e64b2a583870512fb268aa457fbdbe79c2a6bdc7fdb26b9c4d3d1",
+      "reason": "Changed the L2 governance timelock delay."
+    },
+    {
+      "timestamp": 1750200983,
+      "type": "state",
+      "contract": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
+      "updateId": "4baf4688",
+      "source": "tx:0x2cbcaa7c2127a2ff1d489d47d094893d61ef7cfcbc66417a5cbbd1d6168594ee",
+      "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 40."
+    },
+    {
+      "timestamp": 1753193843,
+      "type": "state",
+      "contract": "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+      "updateId": "ca7c961e",
+      "source": "tx:0xcd74670cb1dfcb3d9025ee5fae025f1493e952c909b50d2697af854a44b37a23",
+      "reason": "Changed the CoreGovernor quorum numerator."
+    },
+    {
+      "timestamp": 1767622835,
+      "type": "state",
+      "contract": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
+      "updateId": "58ac24d1",
+      "source": "tx:0x8b04671ba978323abca56c6859b983b4e0ad2a77216c5ac30742e3b24abb7a2c",
+      "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 51."
+    },
+    {
+      "timestamp": 1787092955,
+      "type": "state",
+      "contract": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
+      "updateId": "b0f8c079",
+      "source": "tx:0x62261500c825179f3b81a80b27dcf926ce153e36c7797eb24e3827ef78e7aca9",
+      "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 61."
+    }
+  ],
+  "historicalContracts": [
+    {
+      "address": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
+      "name": "RollupProxy",
+      "critical": true,
+      "upgradeTimestamps": [1661457944, 1663124880, 1667926079],
+      "diffEventCount": 0,
+      "lastSeenAt": 1739175260,
+      "lastSeenCommit": "00d99d20e8140719d03608d46cd437b8ffb6966b",
+      "note": "Pre-BoLD rollup core: confirmed state commitments (nodes) and managed the validator set; a compromised or maliciously upgraded RollupProxy confirms an invalid node, letting the Outbox release all escrowed Bridge funds (successor RollupProxy is critical today)."
+    },
+    {
+      "address": "eth:0xe5896783a2f463446e1f624e64aa6836be4c6f58",
+      "name": "ChallengeManager",
+      "critical": true,
+      "upgradeTimestamps": [1661457944, 1710423719, 1724809031],
+      "diffEventCount": 0,
+      "lastSeenAt": 1739175260,
+      "lastSeenCommit": "00d99d20e8140719d03608d46cd437b8ffb6966b",
+      "note": "Pre-BoLD fraud proof adjudicator: resolved interactive challenges via the one-step provers; compromise or a malicious OSP upgrade makes invalid assertions win challenges and be confirmed, enabling theft of escrowed funds (successor EdgeChallengeManager is critical today)."
+    }
+  ]
+}

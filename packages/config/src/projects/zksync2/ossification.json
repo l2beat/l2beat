@@ -1,0 +1,43 @@
+{
+  "includeProjects": ["shared-zk-stack"],
+  "criticalEvents": [
+    {
+      "timestamp": 1741764383,
+      "type": "state",
+      "source": "tx:0x0a7e6ae7bdb680aef0261b21078159725b4cdb88146cf75a82838c0884c80e65",
+      "reason": "Raised the Matter Labs Safe threshold from 4-of-7 to 5-of-8; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1782830483,
+      "type": "state",
+      "source": "tx:0x7242d8cba18a9e6487e807d6f7833b96ac1c3a35519d242077c6c2483e84ea5d",
+      "reason": "Reduced the Matter Labs Safe threshold from 5-of-8 to 4-of-7; the Safe shell itself is outside the contract perimeter."
+    }
+  ],
+  "historicalContracts": [
+    {
+      "address": "gateway:0x912b84eeeebeca74d307b9a2b09c68332aa5426c",
+      "name": "ChainTypeManager",
+      "critical": true,
+      "upgradeTimestamps": [1747351626, 1750343223, 1760520413],
+      "lastSeenAt": 1769437668,
+      "lastSeenCommit": "27ba038f9f7ba9445c022a06ce91f646a6ce80b6",
+      "note": "ChainTypeManager on the Gateway settlement layer defining upgrade data and the proof system for Era's gateway DiamondProxy while Era settled via Gateway (Era L1 Diamond had a non-zero getSettlementLayer): compromise pushes a malicious upgrade/verifier onto Era's gateway instance, forging Era state whose message roots relay to L1 and release the L1 escrows."
+    },
+    {
+      "address": "gateway:0xce7cbd23193d029410b40e0fd8a79a5121f9250c",
+      "name": "DiamondProxy",
+      "critical": true,
+      "upgradeTimestamps": [1753710939, 1754092633, 1761147485, 1769184984],
+      "lastSeenAt": 1769437668,
+      "lastSeenCommit": "27ba038f9f7ba9445c022a06ce91f646a6ce80b6",
+      "note": "Era's own DiamondProxy (getChainId 324) on the Gateway settlement layer where Era batches were committed, proven and executed while it settled via Gateway: a malicious facet cut or verifier swap forges Era batches with fake L2->L1 withdrawal logs that relay to Ethereum and drain Era's L1 escrows."
+    }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213#migrationPaused",
+    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213#migrations",
+    "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3#emergencyUpgradesExecuted",
+    "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d#multisigMembers"
+  ]
+}

@@ -32,9 +32,11 @@ import { InitTemplate } from './InitTemplate'
 import { Inspect } from './Inspect'
 import { Leaks } from './Leaks'
 import { MatchFlat } from './MatchFlat'
+import { MigrateChangelog } from './MigrateChangelog'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
+import { Ossification } from './Ossification'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { RegenerateShapeHashes } from './RegenerateShapeHashes'
@@ -86,8 +88,10 @@ export function getSubcommands() {
     Inspect,
     Leaks,
     MatchFlat,
+    MigrateChangelog,
     Minters,
     ModelPermissions,
+    Ossification,
     OPConfigs,
     RefreshDiscovery,
     RegenerateShapeHashes,

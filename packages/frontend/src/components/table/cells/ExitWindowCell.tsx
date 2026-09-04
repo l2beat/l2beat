@@ -6,8 +6,8 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTooltipContent'
 import { SentimentText } from '~/components/SentimentText'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
+import { TwoRowCell } from './TwoRowCell'
 
 interface Props {
   value: ExitWindowRisk

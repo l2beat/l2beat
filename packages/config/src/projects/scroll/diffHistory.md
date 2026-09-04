@@ -1,3 +1,527 @@
+Generated with discovered.json: 0x6fcd4050c274f79443421272b88cf09f8da938ce
+
+# Diff at Thu, 03 Sep 2026 14:27:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1787147569
+- current timestamp: 1787147569
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787147569 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TimelockFast (eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PlonkVerifierPostEuclid-2 (eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostFeynman (eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) [scroll/MultipleVersionRollupVerifier] {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      fieldMeta.latestVerifier.severity:
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1MessageQueueV2 (eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a) [scroll/L1MessageQueue] {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) [scroll/L1ScrollMessenger] {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) [scroll/EnforcedTxGateway] {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PlonkVerifierGalileo (eth:0x749fC77A1a131632a8b88e8703E489557660C75e) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ScrollOwner (eth:0x798576400F7D662961BA15C6b3F3d813447a26a6) [scroll/ScrollOwner] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      critical:
++        true
+      fieldMeta:
++        {"accessControl":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1WETHGateway (eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) [scroll/L1WETHGateway] {
+    +++ description: Contract used to bridge WETH from L1 to L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1ETHGateway (eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) [scroll/L1ETHGateway] {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostFeynman (eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TimelockEmergency (eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D) [scroll/SystemConfig] {
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"enforcedBatchParameters":{"severity":"HIGH"},"messageQueueParameters":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract pufETHEscrow (eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      category.name:
+-        "Canonical Bridges"
++        "External Bridges"
+      category.priority:
+-        2
++        1
+      critical:
++        false
+    }
+```
+
+```diff
+    contract ScrollChain (eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556) [scroll/ScrollChain] {
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostFeynman (eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PauseController (eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b) [scroll/PauseController] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"pauseCooldownPeriod":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostEuclid-2 (eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) [scroll/L1StandardERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1USDCGateway (eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) [scroll/L1USDCGateway] {
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) [scroll/L1GatewayRouter] {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      critical:
++        true
+      fieldMeta:
++        {"gateways":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Scroll USDC (scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) [N/A] {
+    +++ description: Contract of the USDC token on Scroll.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) [scroll/ScrollOwnerL2] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      critical:
++        true
+      fieldMeta:
++        {"accessControl":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TimelockFast (scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) [N/A] {
+    +++ description: Used to propose and manage onchain governance proposals.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2USDCGateway (scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79) [N/A] {
+    +++ description: Counterpart to the L1GatewayRouter contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2MessageQueue (scr:0x5300000000000000000000000000000000000000) [N/A] {
+    +++ description: Used to append messages to the L2MessageQueue from the L2ScrollMessenger.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2CustomERC20Gateway (scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988) [N/A] {
+    +++ description: Counterpart to the L1CustomERC20Gateway contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ScrollStandardERC20Factory (scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484) [N/A] {
+    +++ description: Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2ETHGateway (scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) [N/A] {
+    +++ description: Contract of the L2ScrollMessenger contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2WETHGateway (scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2ScrollMessenger (scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) [N/A] {
+    +++ description: ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TimelockEmergency (scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2PauseController (scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd) [scroll/PauseController] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"pauseCooldownPeriod":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract MasterMinter (scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE) [tokens/circle/MasterMinter] {
+    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ScrollStandardERC20 (scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69) [N/A] {
+    +++ description: Contract of the ERC20 standard token used by the ERC20 factory.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SCRToken (scr:0xd29687c813D741E2F938F4aC377128810E217b1b) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) [N/A] {
+    +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProposalTypesConfigurator (scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E) [N/A] {
+    +++ description: None
++++ severity: HIGH
+      values.proposalTypes:
++        {"0":{"quorum":16,"approvalThreshold":5100,"name":"Treasury transfers"},"1":{"quorum":16,"approvalThreshold":7600,"name":"Governor changes"},"2":{"quorum":16,"approvalThreshold":7600,"name":"Propose protocol upgrades"},"3":{"quorum":16,"approvalThreshold":7600,"name":"Change token implementation"},"4":{"quorum":16,"approvalThreshold":7600,"name":"Token emission & inflation"},"5":{"quorum":16,"approvalThreshold":5100,"name":"Gov Docs & Committees"},"6":{"quorum":16,"approvalThreshold":7600,"name":"Constitutional/Rights Amendments"},"7":{"quorum":16,"approvalThreshold":5100,"name":"Treasury transfers - Approval Voting"},"8":{"quorum":16,"approvalThreshold":7600,"name":"Governor changes - Approval Voting"},"9":{"quorum":16,"approvalThreshold":7600,"name":"Propose protocol upgrades - Approval Voting"},"10":{"quorum":16,"approvalThreshold":7600,"name":"Change token implementation - Approval Voting"},"11":{"quorum":16,"approvalThreshold":7600,"name":"Token emission & inflation - Approval Voting"},"12":{"quorum":16,"approvalThreshold":5100,"name":"Gov Docs & Committees - Approval Voting"},"13":{"quorum":16,"approvalThreshold":7600,"name":"Constitutional/Rights Amendments - Approval Voting"}}
+      category.name:
+-        "Spam"
++        "Governance"
+      category.priority:
+-        -1
++        3
+      critical:
++        true
+      fieldMeta:
++        {"proposalTypes":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x9642ecd03273045a64f90164593d7747074db6e7
 
 # Diff at Wed, 19 Aug 2026 12:34:33 GMT:

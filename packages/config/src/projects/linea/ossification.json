@@ -1,0 +1,375 @@
+{
+  "ignoredUpgradeTransactions": {
+    "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": [
+      "0x8ee4253600d68665e8d52a522d8ba7136639187b87f8079b881de9e6d1f20d2a"
+    ]
+  },
+  "criticalEvents": [
+    {
+      "timestamp": 1690185683,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "source": "tx:0x86f92ceaafba1ca052474433638289f6a9666e0598fa34e329b84a9a3fba6ea1",
+      "reason": "Changed the L2-to-L1 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1690185787,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "source": "tx:0xffab40563fce1e91031f2c3d8a60aec278af45dbddcb42011bbd35bbc0ca518f",
+      "reason": "Changed the L1-to-L2 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1690562783,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "source": "tx:0x3209bbee4c0977e9fd9e0e1b1468e573920a865c0adbd281fdbca79cb8df57a4",
+      "reason": "Changed the L2-to-L1 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1690562957,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "source": "tx:0xfaac0e6f414dd7312ff4849c136f04b09114785a6c4b60a3e82ccf7c3433040b",
+      "reason": "Changed the L1-to-L2 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1690564149,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "source": "tx:0xd8f6548ffcf3ea730ff58df0b96fae70da66b685d5521be44feae88bfdc80692",
+      "reason": "Changed the L1-to-L2 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1690564163,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "source": "tx:0x59591ea600f83b7231f5502973243720fcc340c91e2d4058d259ad18610e18db",
+      "reason": "Changed the L2-to-L1 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1693599947,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "source": "tx:0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d",
+      "reason": "Changed the L2-to-L1 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1693600112,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "source": "tx:0xdcd89930e7456d8d80313aa109e5ab95d2455354e39e56d1ae0432f2579339d0",
+      "reason": "Changed the L1-to-L2 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1700506391,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "3376a51f",
+      "source": "tx:0x774d067d06c87040c568530fc6711c5a72aca43332bd60663df6698a12abe11a",
+      "reason": "Changed the L2-to-L1 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1700506439,
+      "type": "state",
+      "updateId": "3376a51f",
+      "source": "tx:0xdf8b2068ce2adaf21d0067addb68c028ae22fb6470e17d615959bf85ba2dd3e7",
+      "reason": "Enabled a Roles module in the L1 governance authority path."
+    },
+    {
+      "timestamp": 1700507247,
+      "type": "state",
+      "updateId": "3376a51f",
+      "source": "tx:0x5d8de6378f26c715441f7de47cdf6224498029736581a690ad5f81a011b51693",
+      "reason": "Enabled a Roles module in the L2 governance authority path."
+    },
+    {
+      "timestamp": 1700507439,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "updateId": "3376a51f",
+      "source": "tx:0x6e2e3fbff90f7919cc7a078bedccf9382089c6459c2ff20b51d242266d138a63",
+      "reason": "Changed the L1-to-L2 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1708467875,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "75facd10",
+      "source": "tx:0xa9c564fe8b8a8bbe96ca023b135ab99cc239d51468fadd87e841c72d93bd0782",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1711463651,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "0546d3e6",
+      "source": "tx:0x6674b50f4e2e9d129769ddefc6395d1ef7d920d9821c57fe270954ce196581c8",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1711463777,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "updateId": "0546d3e6",
+      "source": "tx:0x31654ec754640fd8f16914178e7784652df5826128d8f423151577b0b6801125",
+      "reason": "Changed the minimum fee for L1-to-L2 messages."
+    },
+    {
+      "timestamp": 1721289491,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "0f15f1fd",
+      "source": "tx:0x01e3ec44580ea2e3f23be292cec8e518cba7b5b982121c7ae0ebf14eab4c979d",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1721724311,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "b0a6b80c",
+      "source": "tx:0x0150debafa9f48c8a47121c14e4d9aa07284cf8e1127734b8630223bd5b3c116",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1738349746,
+      "type": "code",
+      "source": "tx:0x5b9f24865fc90ae4c6e47208b434d232c6ff499bfcc67e708197dcf9b3331071",
+      "reason": "Changed the implementation of an active L2 timelock proposer Safe."
+    },
+    {
+      "timestamp": 1738353237,
+      "type": "state",
+      "source": "tx:0x1579b46cc81a82a2e423b8e83a24c6235a4fdf5ebc8f4935af718612f4ada1c1",
+      "reason": "Changed the threshold of an active L2 timelock proposer Safe."
+    },
+    {
+      "timestamp": 1745842943,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "f6ae248d",
+      "source": "tx:0xccd148193e53e1a588f2be88f72331d6aae8002d56d0173b14fb2c4f15ff32ae",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1748942951,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "6b70b41a",
+      "source": "tx:0x4e8b33eee6600b8cea3597a828c4462529d8ff7fe17c66be4cc986fc75d72aec",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1748942951,
+      "type": "state",
+      "updateId": "6b70b41a",
+      "source": "tx:0x4e8b33eee6600b8cea3597a828c4462529d8ff7fe17c66be4cc986fc75d72aec",
+      "reason": "Added an independent secondary proposer to the L1 timelock."
+    },
+    {
+      "timestamp": 1748943073,
+      "type": "state",
+      "updateId": "6b70b41a",
+      "source": "tx:0x3ebef84842e47c8bbb4e98784489b60f6d65fd8091b4368295662f5550e2dbbc",
+      "reason": "Added an independent secondary proposer to the L2 timelock."
+    },
+    {
+      "timestamp": 1749460535,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "6b70b41a",
+      "source": "tx:0x62cf29c238d8f07313a1db48b1d582149b412e66c9c76b290277b09ca655782c",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1753454807,
+      "type": "state",
+      "updateId": "f27ee479",
+      "source": "tx:0xab24ee6c109b8a0ffb2c63318c09b506f9d011020284b9df4187b37e8da463c6",
+      "reason": "Enabled a 90-day Delay module in the L1 upgrade authority path."
+    },
+    {
+      "timestamp": 1756078979,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "94da819f",
+      "source": "tx:0x36d74d86d98138526dfc70651d97f3824ac7eeb2f17c18b1460ea4f5ca845b34",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1758247055,
+      "type": "state",
+      "updateId": "2e900654",
+      "source": "tx:0x166470998b8e14141b0e0621739f702307c3a8b29d9d0007b9c77beda6ddd131",
+      "reason": "Changed the threshold of the L1 governance Safe from four to five."
+    },
+    {
+      "timestamp": 1758303821,
+      "type": "state",
+      "updateId": "2e900654",
+      "source": "tx:0xe08aa51a0d51f28182dc5db719d3f95673e904fdf922198ec98ac1343b2dfaec",
+      "reason": "Changed the threshold of the L2 governance Safe from four to five."
+    },
+    {
+      "timestamp": 1758532607,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "b62380e0",
+      "source": "tx:0xf40eee2e37a3e163e4aeb8d037536e822db4e1ec55faceddad8a480a8c434217",
+      "reason": "Changed the L2-to-L1 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1758532817,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "updateId": "b62380e0",
+      "source": "tx:0x7eec6a5e37602b56f5e79c2044cfea34672f0a018269008956d8a39cf968cf9a",
+      "reason": "Changed the L1-to-L2 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1761067259,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "2b932220",
+      "source": "tx:0x6e2c56b00b5ddc6f08e7ff57c07dab7e272a0e2bd2b9a3fe459986278d560871",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1761578543,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "2b932220",
+      "source": "tx:0x4143022c85f31ce6b24dc0cff2dba7b23a1bc83e0228a91859ca18231c97b24b",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1763371871,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "8f408813",
+      "source": "tx:0x4ee8dca74c33526800660e5c783e89b33f4b1e46bf107514c1d8ca0f4303f61d",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1764802439,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "5d2181e9",
+      "source": "tx:0xf995e98d75d16511762b5b68f3d45347e183c91aac4fabdbbb9df22880987450",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1774211675,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "cfe482dd",
+      "source": "tx:0xbd16d1dc93b1682212eb3e35ac169cf36ef9d608d88c05db8a771ba3ac6eaaeb",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1774393919,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "440c8e93",
+      "source": "tx:0x6f8686053f3f73c30b334b488d2a6d042a4163f4c0c845ccfecec1ed48a300b7",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1775081291,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "4f07d08b",
+      "source": "tx:0x2a389e62c171920253720fc7a290f54def79d246cfbfde2404cc5f5e4b042ff6",
+      "reason": "Replaced one or more active proof-verifier routes."
+    },
+    {
+      "timestamp": 1776778631,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "a3b27464",
+      "source": "tx:0x9779ad2d0ae6309d18442efd5213b589e8e0b00a0c8d4915e4283a191d0afabb",
+      "reason": "Changed active proof-verifier routing and the L2-to-L1 withdrawal limit."
+    },
+    {
+      "timestamp": 1776778631,
+      "type": "state",
+      "contract": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+      "updateId": "a3b27464",
+      "source": "tx:0x9779ad2d0ae6309d18442efd5213b589e8e0b00a0c8d4915e4283a191d0afabb",
+      "reason": "Changed the native-yield withdrawal reserve parameters."
+    },
+    {
+      "timestamp": 1777540107,
+      "type": "state",
+      "contract": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+      "updateId": "45d15938",
+      "source": "tx:0x68c138de6149dd8bf6c0c75dbae59b57426a30ac613c608ef78859630c8998ab",
+      "reason": "Changed the L1-to-L2 ETH withdrawal rate limit."
+    },
+    {
+      "timestamp": 1777540141,
+      "type": "code",
+      "updateId": "45d15938",
+      "source": "tx:0xe043810d65194d1827c52c85eb2d83af176248835a0569bdaf2d8fad071a0efc",
+      "reason": "Changed the implementation of the active L2 governance Safe."
+    },
+    {
+      "timestamp": 1777542527,
+      "type": "state",
+      "contract": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+      "updateId": "45d15938",
+      "source": "tx:0xf1a4e27d477638694c478dd43b116a8aa61c80e92f3b37133261fa1b287b7912",
+      "reason": "Changed the native-yield withdrawal reserve parameters."
+    },
+    {
+      "timestamp": 1777542575,
+      "type": "code",
+      "updateId": "45d15938",
+      "source": "tx:0xe74d106d3f1e0c9e733f422035efbe84f7cabe90a0a6c1df0f4de63b9bacecc3",
+      "reason": "Changed the implementation of the active L1 governance Safe."
+    },
+    {
+      "timestamp": 1784199952,
+      "type": "state",
+      "updateId": "05cf3683",
+      "source": "tx:0xf5f875b8e6d229e777344d11e20e4d23443e91ced315501cfd7a83950f663609",
+      "reason": "Removed the Roles module from the L2 governance authority path."
+    },
+    {
+      "timestamp": 1784201579,
+      "type": "state",
+      "contract": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+      "updateId": "05cf3683",
+      "source": "tx:0x4bcfe7ea1724555288f7cf4d7a0de608182483a41d670e3027b89c3e989240c9",
+      "reason": "Changed the native-yield withdrawal reserve parameters."
+    }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319#isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319#isPaused_NATIVE_YIELD_REPORTING",
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319#isPaused_NATIVE_YIELD_STAKING",
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319#isPaused_NATIVE_YIELD_UNSTAKING",
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319#isPaused_STATE_DATA_SUBMISSION",
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319#nonSecurityCouncilCooldownEnd",
+    "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94#yieldProviderCount",
+    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9#isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
+    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9#isPaused_NATIVE_YIELD_REPORTING",
+    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9#isPaused_NATIVE_YIELD_STAKING",
+    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9#isPaused_NATIVE_YIELD_UNSTAKING",
+    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9#isPaused_STATE_DATA_SUBMISSION",
+    "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9#nonSecurityCouncilCooldownEnd",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_COMPLETE_TOKEN_BRIDGING",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_FINALIZATION",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_GENERAL",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_INITIATE_TOKEN_BRIDGING",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_L1_L2",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_L2_L1",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_NATIVE_YIELD_REPORTING",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_NATIVE_YIELD_STAKING",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_NATIVE_YIELD_UNSTAKING",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#isPaused_STATE_DATA_SUBMISSION",
+    "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec#nonSecurityCouncilCooldownEnd",
+    "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94#isWithdrawalReserveBelowMinimum"
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1741870439,
+      "type": "state",
+      "source": "tx:0x0ca390e0ff6ff0ac7ba8ac53ce10b6f696c6628eebcde0b375b38231543feaf6",
+      "reason": "Changed the Bob Multisig threshold while it controlled the ProxyAdmins and protocol upgrades."
+    },
+    {
+      "timestamp": 1742468147,
+      "type": "state",
+      "source": "tx:0x43a85e6e4e6e14adfb36563dc8dbf22fba559830c6b9749e283b4be4a13b06af",
+      "reason": "Changed the Bob Multisig threshold while it controlled the ProxyAdmins and protocol upgrades."
+    },
+    {
+      "timestamp": 1754340995,
+      "type": "state",
+      "contract": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
+      "historical": true,
+      "source": "tx:0xe15ae9b49419444e77b91f48b703d0dc717a4d87e96c5fe75d7680eb087bf4ad",
+      "reason": "Permanently paused a verifier route that was then in the active RISC Zero router."
+    },
+    {
+      "timestamp": 1777981427,
+      "type": "state",
+      "updateId": "6e0a0f51",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "source": "tx:0x76c5e9afe3c87b5e68571332912f03dd9abdcbefdee28480f4e3ec5f9658cd26",
+      "reason": "Registered the Kailua v1.2.0 KailuaTreasury as the type 1337 dispute game implementation."
+    },
+    {
+      "timestamp": 1777988075,
+      "type": "state",
+      "updateId": "6e0a0f51",
+      "contract": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
+      "source": "tx:0x72c70ac28058fe74f77417eaa0edcd32bd59ef22f6aae0fba16205f9e9047586",
+      "reason": "Registered the Kailua v1.2.0 KailuaGame (new KailuaVerifier reference, vanguard advantage and new FPVM image) as the type 1337 dispute game implementation."
+    },
+    {
+      "timestamp": 1778580971,
+      "type": "state",
+      "updateId": "6e0a0f51",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "source": "tx:0x0982556fcc8f7bd02c808eaca208937d04c1259020581d698129074674156355",
+      "reason": "Granted the RISC Zero verifier governance timelock roles to the new RISC Zero governance Safe."
+    },
+    {
+      "timestamp": 1779395783,
+      "type": "state",
+      "updateId": "6e0a0f51",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "source": "tx:0x47727aec55e03cce2663a7a5cdfeb2dc02fc34bd2a5ec27e7850300c4d23fdec",
+      "reason": "Revoked the former owner's roles on the RISC Zero verifier governance timelock."
+    },
+    {
+      "timestamp": 1779312767,
+      "type": "state",
+      "updateId": "6e0a0f51",
+      "contract": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+      "source": "tx:0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
+      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
+    },
+    {
+      "timestamp": 1779312767,
+      "type": "state",
+      "updateId": "6e0a0f51",
+      "contract": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
+      "source": "tx:0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
+      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
+    },
+    {
+      "timestamp": 1779312767,
+      "type": "state",
+      "updateId": "6e0a0f51",
+      "contract": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
+      "source": "tx:0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
+      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
+    }
+  ],
+  "historicalContracts": [
+    {
+      "address": "eth:0xda8f3de6fbbdb261ac771b813a578a7abda6b2b1",
+      "name": "RiscZeroVerifierEmergencyStop",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 0,
+      "note": "Former RISC Zero verifier route; permanently paused and no longer able to verify proofs."
+    }
+  ]
+}

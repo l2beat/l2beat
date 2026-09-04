@@ -4,6 +4,35 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-    "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
-  ]
+    "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+    // canonical TVS escrows not reachable from the messenger/router discovery walk
+    "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+    "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+    "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535"
+  ],
+  "names": {
+    "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1": "L1CustomERC20Gateway",
+    "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289": "L1USDCGateway",
+    "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535": "L1USDCGatewayLegacy"
+  },
+  "overrides": {
+    // ProxyAdmin of all core Morph proxies (Rollup, messenger, queue, staking, gateways); owned by the TimelockController.
+    "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": {
+      "critical": true
+    },
+    // ProxyAdmin of the TimelockController proxy itself; owned by Morph Multisig 1.
+    "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": {
+      "critical": true
+    },
+    // Upgrade timelock (currently 0s min delay) between Morph Multisig 1 and the core ProxyAdmin.
+    "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": {
+      "critical": true
+    },
+    // Active zk verifier (SP1) routed to by the MultipleVersionRollupVerifier for all
+    // non-finalized batches. The superseded route (eth:0x9774CE99...) only covers
+    // long-finalized batches and is intentionally not flagged.
+    "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": {
+      "critical": true
+    }
+  }
 }

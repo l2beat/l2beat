@@ -29,6 +29,7 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { relative } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../common/getPlainLogger'
+import { updateChangelog } from './changelog/updateChangelog'
 import { updateDiffHistoryHash } from './hashing'
 import {
   rediscoverStructureOnBlock,
@@ -141,7 +142,8 @@ export async function updateDiffHistoryForChain(
   }
 
   const anyDiffs = diff.length > 0 || configRelatedDiff.length > 0
-  if (!diffHistoryExists || anyDiffs) {
+  const writesNewEntry = !diffHistoryExists || anyDiffs
+  if (writesNewEntry) {
     const newHistoryEntry = generateDiffHistoryMarkdown(
       discoveryFromMainBranch?.timestamp,
       curDiscovery.timestamp,
@@ -169,6 +171,14 @@ export async function updateDiffHistoryForChain(
   if (diffHistoryExistsAfterRevert) {
     updateDiffHistoryHash(configReader, diffHistoryPath, projectName)
   }
+
+  // The entry this run wrote is recorded from the diff itself; an initial
+  // discovery lists every contract as created and is not a change.
+  const newEntry =
+    writesNewEntry && discoveryFromMainBranch !== undefined
+      ? { timestamp: curDiscovery.timestamp, diff }
+      : undefined
+  updateChangelog(discoveryFolder, newEntry, (message) => logger.info(message))
 }
 
 function removeIgnoredFields(diffs: DiscoveryDiff[]) {

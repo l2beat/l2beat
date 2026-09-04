@@ -27,6 +27,7 @@ import {
   EMPTY_TVS_BREAKDOWN,
   get7dTvsBreakdown,
 } from '../../layer2s/tvs/get7dTvsBreakdown'
+import { getProjectOssification } from '../../projects/ossification/getProjectOssification'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
@@ -85,7 +86,7 @@ export async function getPrivacyProjectEntry(
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [contractUtils, allProjects, tvs, totalValueLockedUsd] =
+  const [contractUtils, allProjects, tvs, totalValueLockedUsd, ossification] =
     await Promise.all([
       getContractUtils(),
       ps.getProjects({
@@ -100,6 +101,7 @@ export async function getPrivacyProjectEntry(
       }),
       get7dTvsBreakdown({ type: 'all' }),
       getTotalValueLockedUsd(details, helpers, defaultChartRange),
+      getProjectOssification(details.id),
     ])
 
   const permissionsSection = getPermissionsSection(
@@ -270,13 +272,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (discoveryUpdates.length > 0) {
+  if (discoveryUpdates.length > 0 || ossification) {
     sections.push({
       type: 'UpdatesSection',
       props: {
         id: 'updates',
         title: 'Updates',
         updates: discoveryUpdates,
+        ossification,
       },
     })
   }
