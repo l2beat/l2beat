@@ -1,4 +1,5 @@
 import express from 'express'
+import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '../../utils/Manifest'
 import { getEthereumConnectData } from './ethereum-connect/getEthereumConnectData'
@@ -13,13 +14,13 @@ export function createGovernanceRouter(
   router.get('/governance', async (req, res) => {
     const data = await getGovernanceData(manifest, req.originalUrl)
     const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
+    sendPage(res, html)
   })
 
   router.get('/governance/ethereum-connect', async (req, res) => {
     const data = getEthereumConnectData(manifest, req.originalUrl)
     const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
+    sendPage(res, html)
   })
 
   return router

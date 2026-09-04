@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { getCollectionEntry } from '~/content/getCollection'
+import { sendPage } from '~/server/utils/sendPage'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -25,7 +26,7 @@ export function createPublicationsRouter(
       return
     }
     const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
+    sendPage(res, html)
   })
 
   router.get(
@@ -75,7 +76,7 @@ export function createPublicationsRouter(
         return
       }
       const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
+      sendPage(res, html)
     },
   )
 

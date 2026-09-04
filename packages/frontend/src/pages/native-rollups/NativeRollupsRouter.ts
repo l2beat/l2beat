@@ -1,4 +1,5 @@
 import express from 'express'
+import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '../../utils/Manifest'
 import { getNativeRollupsData } from './getNativeRollupsData'
@@ -12,7 +13,7 @@ export function createNativeRollupsRouter(
   router.get('/native-rollups', async (req, res) => {
     const data = await getNativeRollupsData(manifest, req.originalUrl)
     const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
+    sendPage(res, html)
   })
 
   return router

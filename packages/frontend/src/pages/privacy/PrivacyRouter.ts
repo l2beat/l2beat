@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -28,7 +29,7 @@ export function createPrivacyRouter(
       () => getPrivacySummaryData(manifest, req.originalUrl, cache),
     )
     const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
+    sendPage(res, html)
   })
 
   router.get(
@@ -52,7 +53,7 @@ export function createPrivacyRouter(
       }
 
       const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
+      sendPage(res, html)
     },
   )
 
