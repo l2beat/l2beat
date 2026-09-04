@@ -1,3 +1,119 @@
+Generated with discovered.json: 0x99a7723ef78a0e6a113c6a1cbde205b208f4bfb0
+
+# Diff at Fri, 04 Sep 2026 10:21:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@baf0b699cdc10b266955eb55accdcb1b49c30e40 block: 1788265057
+- current timestamp: 1788265057
+
+## Description
+
+Dedicated Railgun Proxy detector
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788265057 (main branch discovery), not current.
+
+```diff
+    contract GovernorRewardsSweeper (eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B) [railgun/Sweeper] {
+    +++ description: Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-11-22T20:14:11.000Z","0x8a7ec325dbefb9e150064f9b94f680f3a96fef73b2f1160c40aa195a88a98ad6",["eth:0x7d1C12008d180718938F535eE0dec7ac3473c179"]]
+      values.$pastUpgrades.1:
++        ["2023-02-07T06:14:47.000Z","0x128597009072e4bbc08293c81904d4cf5bb22b9cad1f87bf99a7edaa2878deaf",["eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.$paused:
++        false
+    }
+```
+
+```diff
+    contract GovernorRewards (eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f) [railgun/GovernorRewards] {
+    +++ description: Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2023-01-20T05:37:35.000Z","0x2a5967e08e872f7bd998842cbd9224ee81a39ddd16f7f40452fc3ba47c01c783",["eth:0xF035cEBa76C0C1f2c15457775745B1F5DC42CA2c"]]
+      values.$pastUpgrades.1:
++        ["2023-01-20T05:40:47.000Z","0x14b883f710dbcdc1be58c03cedc447a7af82c843bfb2259c194eea7aef19d972",["eth:0x3db1c53366Fff57001fF6a9DaaCdA1FCFBaB56A9"]]
+      values.$pastUpgrades.2:
++        ["2023-01-20T05:59:59.000Z","0x948534918749a94532adcbc0b5fbf6248e2cdb1ac905c688fc30b8eef649260b",["eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b"]]
+      values.$pastUpgrades.3:
++        ["2026-07-18T18:15:47.000Z","0x01b125307242dcb57f77aa1c925ac1b0af56dc29616631336bb15f25fdca1778",["eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB"]]
+      values.$upgradeCount:
+-        0
++        4
+      values.$paused:
++        false
+    }
+```
+
+```diff
+    contract LegacySweeper (eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686) [railgun/SweeperLegacy] {
+    +++ description: Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-09-10T00:32:00.000Z","0x1413ff21c2423fcb8cf10812ada82f33fe76a34f18368277ce5f1cd51e5750a5",["eth:0x27d30E803A0EC079DAA3A2e6c3590Cca9f63C9D8"]]
+      values.$pastUpgrades.1:
++        ["2022-12-02T04:09:35.000Z","0xa61b7db4ff3ca6d8a4b44f396b019ee3bea1f9a8616ef8a35d0511bf03c2b7e1",["eth:0x9b1310BdCC19D172D0092240e33209a9156c8EE2"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.$paused:
++        true
+    }
+```
+
+```diff
+    contract Treasury (eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40) [railgun/Treasury] {
+    +++ description: Collects Railgun fees. Managed through access control roles.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-07-14T05:21:05.000Z","0x271cb0bfab8dfeeda44381b22e6f93adc955002d387a96c0f8cd5719fb6a9504",["eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.$paused:
++        false
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-05-08T18:32:52.000Z","0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361",["eth:0xBCFA4De73afb071C9FF18a20A22F818e657C541a"]]
+      values.$pastUpgrades.1:
++        ["2022-11-29T16:10:23.000Z","0xab0625746a64ed88fd040a39bdbe9ed930328d9b09245b36cd1d9a64444dad95",["eth:0x321617E18bE9EC7CFE5ab8856DE2aAbAA478E13B"]]
+      values.$pastUpgrades.2:
++        ["2023-03-09T11:09:47.000Z","0xe001ac69697083957933db13ff27c56769ce8826d4ab676b3965d7a44b9f0668",["eth:0xc0BEF2D373A1EfaDE8B952f33c1370E486f209Cc"]]
+      values.$pastUpgrades.3:
++        ["2025-07-28T15:48:23.000Z","0xfc6cda4a6e9b8e2d055a50212551e6daa8ec180ad7aced11d00ae71e1d0eab6e",["eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b"]]
+      values.$pastUpgrades.4:
++        ["2026-08-14T13:50:35.000Z","0x7ac142845ccd9f156d992099a7ca8d6cb52655f4153cc49c48c38c8966a6b3ad",["eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C"]]
+      values.$upgradeCount:
+-        0
++        5
+      values.$paused:
++        false
+    }
+```
+
 Generated with discovered.json: 0xa8a97c0fd6ca0a394fbaf4c99930093f8c35160a
 
 # Diff at Tue, 01 Sep 2026 12:18:47 GMT:

@@ -689,6 +689,24 @@
     },
     {
       "mode": "auto",
+      "id": "gnosis-EURe",
+      "priceId": "monerium-eur-money-2",
+      "symbol": "EURe",
+      "name": "Monerium EURe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54303/large/eure.jpg?1739167959",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x420CA0f9B9b604cE0fd9C18EF134C705e5Fa3430",
+        "chain": "gnosis",
+        "decimals": 18,
+        "sinceTimestamp": 1739750400
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "gnosis-EURS",
       "priceId": "stasis-eurs",
       "symbol": "EURS",

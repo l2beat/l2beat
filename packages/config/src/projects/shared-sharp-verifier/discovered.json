@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1785756243,
+  "timestamp": 1788530147,
   "configHash": "0x86d37596916da4093fef81ab35f8711fac47c35333ec773f9d3d3b0132bdba63",
   "entries": [
     {
@@ -1844,7 +1844,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 24,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3786,6 +3786,10 @@
           {
             "operator": "eth:0xA410aEA6d7ad518165c214a42730A19fB3828170",
             "customReference": "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406"
+          },
+          {
+            "operator": "eth:0x159eb6910E36AB09dF3798f174b9DB00f327B06c",
+            "customReference": "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6"
           }
         ],
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
@@ -11046,7 +11050,7 @@
     "shared-sharp-verifier/SHARPVerifier": "0xbb0dfd8f13e81dfc49e293cbb37baaa66b2d014583c195e1c0934d68a92ae178",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xd6abe3c01cd750925365115c44550fef728ff685bfa5f1c7971181b2e375a918"
   },
-  "usedBlockNumbers": { "ethereum": 25674047 },
+  "usedBlockNumbers": { "ethereum": 25904391 },
   "permissionsConfigHash": "0x8537b691fa6f869162e2df71fe8b88c8a0e8668684852275d37d73b9c1d4d1f8",
   "permissions": {
     "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {

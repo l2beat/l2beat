@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x8ae71d97989eacdcadd9bb3db39786fd7d9ddc63
+
+# Diff at Fri, 04 Sep 2026 13:56:11 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1787738139
+- current timestamp: 1788530106
+
+## Description
+
+Added new member to zk foundation ms.
+
+## Watched changes
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x2696e6B444Be2f1C99A8C84f16397cAEa0d546Dc"
++        "eth:0x64FEca7976955a512aB9159f91E7dD1D55425293"
+    }
+```
+
 Generated with discovered.json: 0x18c189bcb88d6c0c951b0b975ec2935fe307b34f
 
 # Diff at Wed, 26 Aug 2026 09:56:44 GMT:

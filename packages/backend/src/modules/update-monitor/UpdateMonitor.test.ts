@@ -202,6 +202,62 @@ describe(UpdateMonitor.name, () => {
       )
     })
 
+    it('does not process archived projects', async () => {
+      const processedProjects: string[] = []
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        run: mockFn(async (config: ConfigRegistry) => {
+          processedProjects.push(config.name)
+          return {
+            discovery: DISCOVERY_RESULT,
+            flatSources: {},
+          }
+        }),
+      })
+      const archivedConfig = new ConfigRegistry({
+        name: PROJECT_B,
+        initialAddresses: [],
+        archived: true,
+      })
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: () => ({
+          ...mockProject,
+          entries: COMMITTED,
+        }),
+        readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
+        readConfig: mockFn((name: string) =>
+          name === PROJECT_B ? archivedConfig : mockConfig(name),
+        ),
+      })
+      const timestamp = 0
+
+      const updateMonitor = new UpdateMonitor(
+        discoveryRunner,
+        updateNotifier,
+        updateDiffer,
+        configReader,
+        mockObject<Database>({
+          updateMonitor: mockObject<Database['updateMonitor']>({
+            findLatest: async () => undefined,
+            upsert: async () => undefined,
+          }),
+          flatSources: flatSourcesRepository,
+          updateDiff: mockObject<Database['updateDiff']>({
+            deleteAll: async () => 0,
+          }),
+        }),
+        mockObject<Clock>(),
+        discoveryOutputCache,
+        Logger.SILENT,
+        false,
+        instantWorkerPool,
+      )
+
+      await updateMonitor.update(timestamp)
+
+      expect(processedProjects).toEqual([PROJECT_A, PROJECT_A])
+      expect(updateDiffer.run).toHaveBeenCalledWith([PROJECT_A], timestamp)
+    })
+
     // Diffs are written as one snapshot, so they run once every discovery lands.
     it('discovers every project before diffing any of them', async () => {
       const calls: string[] = []

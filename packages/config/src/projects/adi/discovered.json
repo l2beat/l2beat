@@ -1,6 +1,6 @@
 {
   "name": "adi",
-  "timestamp": 1780586199,
+  "timestamp": 1788432287,
   "configHash": "0xb7c0037bb81c1363b02ae6e551d609a25259612d1e55482208f60fcc234e49b7",
   "entries": [
     {
@@ -250,7 +250,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 172,
+        "getFirstUnprocessedPriorityTx": 442,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -258,8 +258,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x66a5502a475980bae088e9780fd2c2c1ca7c45a66fb9dee6b875b70646517741",
+        "getPriorityQueueSize": 2,
+        "getPriorityTreeRoot": "0x77b06b2450e46f7ebb02c46abd2cacee046411b2e6e6de2c331ce5204deb89eb",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -267,13 +267,13 @@
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 2411,
-        "getTotalBatchesExecuted": 2411,
-        "getTotalBatchesVerified": 2411,
-        "getTotalBlocksCommitted": 2411,
-        "getTotalBlocksExecuted": 2411,
-        "getTotalBlocksVerified": 2411,
-        "getTotalPriorityTxs": 172,
+        "getTotalBatchesCommitted": 13101,
+        "getTotalBatchesExecuted": 13101,
+        "getTotalBatchesVerified": 13101,
+        "getTotalBlocksCommitted": 13101,
+        "getTotalBlocksExecuted": 13101,
+        "getTotalBlocksVerified": 13101,
+        "getTotalPriorityTxs": 444,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE",
         "getVerifierParams": {
@@ -567,6 +567,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x48D3eb3A4F0C25f2C37F23B5aeb63ea3F88B265F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RollupDAManager",
       "address": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
       "type": "Contract",
@@ -604,11 +609,6 @@
         "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA": "RollupDAManager"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5CcF89Ba204457129E6250B2570d77DbA790366a",
@@ -850,13 +850,13 @@
       "sinceBlock": 23874720,
       "values": {
         "$immutable": true,
-        "executedCount": 10,
-        "minDelay": 0,
+        "executedCount": 12,
+        "minDelay": 259200,
         "owner": "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 10,
-        "securityCouncil": "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
+        "scheduledTransparentCount": 12,
+        "securityCouncil": "eth:0x95f0c748f60624ddAd536d979993fA23FD86021a"
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
@@ -928,7 +928,47 @@
       }
     },
     {
+      "name": "Safe",
+      "address": "eth:0x95f0c748f60624ddAd536d979993fA23FD86021a",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x48D3eb3A4F0C25f2C37F23B5aeb63ea3F88B265F",
+      "sinceTimestamp": 1787918987,
+      "sinceBlock": 25853648,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x48D3eb3A4F0C25f2C37F23B5aeb63ea3F88B265F",
+          "eth:0x2e48bd8536b3756D95B44312dBD5BE0e56c29Dc9",
+          "eth:0xA1B9199081E5B849b998b1148a1d4921adb2A1b1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfa5283645fb52367f11c834b71ac01e094dd4855edffc74219f007983e0a29d0",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x95f0c748f60624ddAd536d979993fA23FD86021a": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
       "address": "eth:0x97B09eE71e99CeE29C28f92dc1dfD05F695d0Bc8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA1B9199081E5B849b998b1148a1d4921adb2A1b1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1001,7 +1041,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "fieldMeta": {
@@ -2117,6 +2157,9 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x95f0c748f60624ddAd536d979993fA23FD86021a": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xaCD4a320f8a45abE71756B85DF519201d041EA5f": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2566,8 +2609,8 @@
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25244858 },
-  "permissionsConfigHash": "0x6a75c8a6f72e221214a9651b98537830d8ba7402f56c22f9448d83bc6202d2c6",
+  "usedBlockNumbers": { "ethereum": 25896264 },
+  "permissionsConfigHash": "0xe0eb07f4e36b0efdebe402a39419811b0d70de379d7a02e339d5d340e2502568",
   "permissions": {
     "eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8": {
       "directlyReceivedPermissions": [

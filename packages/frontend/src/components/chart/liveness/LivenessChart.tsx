@@ -107,7 +107,6 @@ export function LivenessChart({
           isAnimationActive={false}
           stroke="var(--secondary)"
           legendType="none"
-          strokeWidth={2}
           strokeOpacity={0.15}
           fill="none"
           connectNulls
@@ -117,7 +116,6 @@ export function LivenessChart({
           legendType="none"
           isAnimationActive={false}
           stroke="var(--secondary)"
-          strokeWidth={2}
           strokeOpacity={0.15}
           strokeDasharray="5 5"
           dot={false}
@@ -156,14 +154,12 @@ export function LivenessChart({
           dataKey="range"
           isAnimationActive={false}
           stroke="url(#strokeRange)"
-          strokeWidth={2}
           fill="var(--chart-pink-fill-gradient)"
           fillOpacity={0.4}
         />
         <Area
           dataKey="avg"
           isAnimationActive={false}
-          strokeWidth={2}
           stroke="var(--chart-pink)"
           fill="none"
           strokeDasharray="5 5"

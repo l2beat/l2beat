@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x626768e1a8f7dbf647caf02d17acf3d2a4e752c6
+
+# Diff at Fri, 04 Sep 2026 13:46:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1787310844
+- current timestamp: 1788529510
+
+## Description
+
+Governance proposal executed: https://tools.l2beat.com/decoder-new/?hash=0x91b14e9960db6c886e6b0294122f0c5b08398b371f83c83072cab0a00c3c153a&data=AwA. It uses metamask delegation manager to execute a ERC-20 approval + L2 bridgehub transaction that matches the standard grvt gov transaction (e.g. https://tools.l2beat.com/decoder-new/?hash=0x12872dd4becaa4cfd45173bad5b49b2d7d005450ce47e57d05e6346ca4039227&data=AwA).
+
+Decoding was done by chatgpt, our tooling does not support this `_executionCallDatas` format.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        50
++        51
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        50
++        51
+    }
+```
+
+```diff
+    EOA  (eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xc536bcea32ae75ea8d0d6ee42dabc47d10f68ad66ef093bdae797c707b550513","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
 Generated with discovered.json: 0x865b392552eb7e213f84f0395a788bcf79577031
 
 # Diff at Fri, 21 Aug 2026 11:15:07 GMT:

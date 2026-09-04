@@ -1,3 +1,78 @@
+Generated with discovered.json: 0xa956427b52660df36321181fe6ba2a9ef682bfa8
+
+# Diff at Tue, 01 Sep 2026 22:19:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@39e5482279a0233e702dd6fb1c953e1bdc7a78eb block: 1786359815
+- current timestamp: 1788301081
+
+## Description
+
+Stopped tracking the tokenized stocks and their AccessControlsRegistry: they are apps on top of the chain, not chain infrastructure. Removes `0xd060…9EEC` and `0xe10b…1b00` from initialAddresses, which also clears the EOA upgrade warning. RollupProxy `arbOsFromWmRoot` now resolves to ArbOS v61; SafeL2 `0x3A0C…7a1C` became verified.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6091
++        6092
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786359815 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x23A19d23e89166adedbDcB432518AB01e4272D94) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
++        "ArbOS v61 wasmModuleRoot"
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+```diff
+    EOA  (robinhood:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC","role":"admin"}
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
+      implementationNames.robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C:
+-        ""
++        "SafeProxy"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract NVIDIA • Robinhood Token (robinhood:0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC) [robinhood/rwa]
+    +++ description: ERC-20-compatible Robinhood Stock Token logic. Transfers, approvals and permits are permissionless for addresses that are not blocked in the shared AccessControlsRegistry; there is no onchain KYC or allowlist. The registry's roles can mint, burn arbitrary holders' balances, confiscate balances even while paused or blocked, pause this token or all tokens, change metadata and the UI multiplier, and upgrade the shared beacon implementation.
+```
+
+```diff
+-   Status: DELETED
+    contract AccessControlsRegistry (robinhood:0xe10b6f6B275de231345c20D14Ab812db62151b00) [robinhood/accessControlsRegistry]
+    +++ description: Shared access-control registry and upgrade beacon for Robinhood Stock Tokens. Its roles apply across every token implementation that points to this registry: they control upgrades, global and per-token pauses, the shared blocklist, issuance, arbitrary holder burns, metadata and UI multipliers.
+```
+
 Generated with discovered.json: 0xe509c19a192b26275791c21d5b53c064572f8ce0
 
 # Diff at Mon, 10 Aug 2026 11:04:49 GMT:

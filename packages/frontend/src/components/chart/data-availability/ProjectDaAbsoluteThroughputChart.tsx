@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type {
@@ -122,7 +122,6 @@ export function ProjectDaAbsoluteThroughputChart({
           fill={`url(#${project.id}-fill)`}
           fillOpacity={1}
           stroke={projectChartMeta.project?.color}
-          strokeWidth={2}
           isAnimationActive={false}
           dot={false}
           hide={!dataKeys.includes('project')}
@@ -132,7 +131,6 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           fillOpacity={0}
           stroke={projectChartMeta.projectTarget?.color}
-          strokeWidth={2}
           strokeDasharray={
             projectChartMeta.projectTarget?.indicatorType.strokeDasharray
           }
@@ -145,7 +143,6 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           fillOpacity={0}
           stroke={projectChartMeta.projectMax?.color}
-          strokeWidth={2}
           strokeDasharray={
             projectChartMeta.projectMax?.indicatorType.strokeDasharray
           }
@@ -164,7 +161,7 @@ export function ProjectDaAbsoluteThroughputChart({
           filterNull={false}
           content={
             <ProjectDaThroughputCustomTooltip
-              unit={unit}
+              denominator={denominator}
               resolution={resolution}
               dataGap={dataGap}
             />
@@ -187,11 +184,11 @@ export function ProjectDaAbsoluteThroughputChart({
 export function ProjectDaThroughputCustomTooltip({
   payload,
   label,
-  unit,
+  denominator,
   resolution,
   dataGap,
 }: CustomChartTooltipProps & {
-  unit: string
+  denominator: number
   resolution: ChartResolution
   dataGap?: [number, number]
 }) {
@@ -237,7 +234,7 @@ export function ProjectDaThroughputCustomTooltip({
                 </span>
               ) : (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {(entry.value ?? 0).toFixed(2)} {unit}
+                  {formatBytes((entry.value ?? 0) * denominator)}
                 </span>
               )}
             </div>

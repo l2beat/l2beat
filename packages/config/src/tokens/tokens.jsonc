@@ -2177,6 +2177,29 @@
       "symbol": "pzETH",
       "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
       "coingeckoId": "renzo-restaked-lst"
+    },
+    // Canonically bridged to Base. Base's escrow holds ~679M of the 700M total
+    // supply while only ~253M circulates, so Base marks it preminted and the
+    // amount resolves to min(circulatingSupply, balanceOfEscrow).
+    {
+      "symbol": "ICNT",
+      "address": "0xe5e0b73380181273abCfD88695F52C4D0C825661",
+      "coingeckoId": "impossible-cloud-network-token"
+    },
+    {
+      // Canonically bridged to Base (and dust amounts to Polygon PoS/Arbitrum).
+      "symbol": "ADS",
+      "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+      "coingeckoId": "adshares"
+    },
+    {
+      // Canonically bridged to Polygon PoS through the PoS bridge.
+      // manual override: deployed 2018-01-16, before MIN_TIMESTAMP_FOR_TVL, so the
+      // deployment-block search asserts. Creation tx in block 4920532.
+      "symbol": "CXO",
+      "address": "0xb6EE9668771a79be7967ee29a63D4184F8097143",
+      "coingeckoId": "cargox",
+      "deploymentTimestamp": 1516145113
     }
   ],
   "rise": [
@@ -2201,18 +2224,39 @@
   ],
   "robinhood": [
     {
-      // Natively minted on Robinhood Chain (no L1 escrow, no LayerZero/OFT, not
-      // bridged); off-chain-backed by Paxos reserves. Robinhood is a founding
-      // Global Dollar Network member. Per-chain amount via on-chain totalSupply.
+      // No L1 escrow, off-chain-backed by Paxos reserves; Robinhood is a founding
+      // Global Dollar Network member. Its supplyControl module does grant
+      // mint/burn rights to the LayerZero OFT at
+      // 0x0d54755f5106BfdB43f7a35f5D49a23F940628d1 (endpoint 0x6F475642...,
+      // token USDG), so the bridge can mint this supply -> external.
       "symbol": "USDG",
       "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
       "coingeckoId": "global-dollar",
-      "source": "native",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
       "supply": "totalSupply",
       "category": "stablecoin",
       // manual override: robinhood public RPC is non-archival, so the
       // deployment-block binary search fails. Creation tx at block 57.
       "deploymentTimestamp": 1778003991
+    },
+    {
+      // Freely transferable Midas RWA token. It can be issued locally through
+      // Midas deposit vaults and moved crosschain through a mint/burn OFT adapter.
+      "symbol": "mGLO",
+      "address": "0xFEd493F38c1aAcb4EA4e6A11F8b9287849EE0096",
+      "coingeckoId": "midas-fasanara-global-open",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1781694120
     },
     {
       // Bridged in via LayerZero OFT (same deterministic Ethena address as on
@@ -2244,6 +2288,36 @@
       "category": "other",
       // manual override: robinhood public RPC is non-archival. Creation block 88836.
       "deploymentTimestamp": 1781812885
+    },
+    {
+      // Fixed supply with economic burns sent to 0x0000...dEaD. The generated
+      // circulating-supply formula is overridden by a custom onchain TVS formula.
+      "symbol": "PONS",
+      "address": "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+      "coingeckoId": "pons",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "category": "other",
+      "deploymentTimestamp": 1783975341
+    },
+    {
+      // Native RAM is locked in the HyperEVM LayerZero adapter and represented
+      // by a direct OFT on Robinhood Chain.
+      "symbol": "RAM",
+      "address": "0x5173D45A1191eE33cBB7D8c7e65f21B04eD54802",
+      "coingeckoId": "ramses",
+      "source": "external",
+      "supply": "totalSupply",
+      "category": "other",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1786745882
     },
     {
       "symbol": "ETH",
@@ -2557,6 +2631,87 @@
       "supply": "totalSupply",
       "category": "rwaPublic",
       "deploymentTimestamp": 1781105106
+    },
+    {
+      // Maple's syrupUSDG; the Robinhood contract holds no USDG locally (backing sits on Ethereum).
+      "symbol": "syrupUSDG",
+      "address": "0x40858070814a57fdf33a613ae84fe0a8b4a874f7",
+      "coingeckoId": "syrup-usdg",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "Index",
+      "address": "0x56910d4409f3a0c78c64dd8d0545ff0705389870",
+      "coingeckoId": "the-index",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "CHUMP",
+      "address": "0x0e0d2c89a5a019fe1cf762e5e33187631dacc21b",
+      "coingeckoId": "chump-coin",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "STONKBROKER",
+      "address": "0xe934e36a439c94017b64a3fece66af12099abf50",
+      "coingeckoId": "stonkbroker",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PIPEDOG",
+      "address": "0x5cb6f181081301b44905f3ae15419112ecabd8a6",
+      "coingeckoId": "pipedog",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "TENDIES",
+      "address": "0x45242320dbb855eea8fd36804c6487e10e97fcf9",
+      "coingeckoId": "tendies-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "HMM",
+      "address": "0x7fe995a80075df3dc8ae11a9b82c7fe4202cd87f",
+      "coingeckoId": "thinking-cat",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "HOOKR",
+      "address": "0x18e674231a58c239dc7daedcffe15ec3a24cff5c",
+      "coingeckoId": "hookr-fun",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PROLOGUE",
+      "address": "0xb9972ca7188e511174947e3936a5315ac7073277",
+      "coingeckoId": "prologue",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "galxegravity": [
@@ -2817,6 +2972,17 @@
       "category": "stablecoin",
       "source": "canonical",
       "supply": "totalSupply"
+    },
+    {
+      // Arbitrum is the home deployment. Bridged sUSDai supply is tracked
+      // separately by the vault and is not included in ERC20 totalSupply().
+      "symbol": "sUSDai",
+      "coingeckoId": "susdai",
+      "address": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply",
+      "deploymentTimestamp": 1747128540
     },
     {
       "symbol": "CHIP",
@@ -3866,6 +4032,16 @@
           }
         ]
       }
+    },
+    {
+      // Arbitrum is USDai's home chain. sUSDai is deliberately NOT listed: it is an ERC-4626 vault
+      // holding USDai that is already inside this totalSupply.
+      "symbol": "USDai",
+      "address": "0x0a1a1a107e45b7ced86833863f482bc5f4ed82ef",
+      "coingeckoId": "usdai",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ],
   "nova": [
@@ -3877,6 +4053,25 @@
     }
   ],
   "optimism": [
+    {
+      // Optimism representation of EURC locked on Ethereum and minted through
+      // LayerZero v2 OFT. Track the locally minted supply.
+      "symbol": "EURC",
+      "coingeckoId": "euro-coin",
+      "address": "0xdcb612005417dc906ff72c87df732e5a90d49e11",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1772654040
+    },
     {
       "symbol": "USDS",
       "coingeckoId": "usds",
@@ -4335,9 +4530,44 @@
           }
         ]
       }
+    },
+    {
+      "symbol": "WCT",
+      "address": "0xef4461891dfb3ac8572ccf7c794664a8dd927945",
+      "coingeckoId": "connect-token-wct",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ETHFI",
+      "address": "0xe0080d2f853ecddbd81a643dc10da075df26fd3f",
+      "coingeckoId": "ether-fi",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     }
   ],
   "base": [
+    {
+      // Freely transferable Midas RWA token. It can be issued locally through
+      // Midas deposit vaults and moved crosschain through a mint/burn OFT adapter.
+      "symbol": "mGLO",
+      "address": "0xfcc9cc1209651ed8867332d6f664cf82743a2584",
+      "coingeckoId": "midas-fasanara-global-open",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic",
+      "deploymentTimestamp": 1781524689
+    },
     {
       "symbol": "USDS",
       "coingeckoId": "usds",
@@ -4353,6 +4583,52 @@
       "category": "stablecoin",
       "source": "canonical",
       "supply": "totalSupply"
+    },
+    {
+      // CCIP mint/burn representation of Ethereum syrupUSDC.
+      "symbol": "syrupUSDC",
+      "coingeckoId": "syrupusdc",
+      "address": "0x660975730059246A68521a3e2FBD4740173100f5",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1753206240
+    },
+    {
+      // Base Solana Bridge representation of native SOL locked on Solana.
+      "symbol": "SOL",
+      "coingeckoId": "solana",
+      "address": "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Base Solana Bridge",
+            "slug": "basesolbridge"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1764174960
+    },
+    {
+      // Base-native B20 launchpad token with a 1B supply cap.
+      "symbol": "Basecat",
+      "coingeckoId": "basecat",
+      "address": "0xB2000000000000000000004c27f6523082f41D01",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1786817029
     },
     {
       "symbol": "BENJI",
@@ -5038,6 +5314,184 @@
           }
         ]
       }
+    },
+    {
+      "symbol": "TIBBIR",
+      "address": "0xa4a2e2ca3fbfe21aed83471d28b6f65a233c6e00",
+      "coingeckoId": "ribbita-by-virtuals",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Coinbase-issued wrapper backed 1:1 by XRP held off chain, same pattern as cbBTC.
+      "symbol": "cbXRP",
+      "address": "0xcb585250f852c6c6bf90434ab21a00f02833a4af",
+      "coingeckoId": "coinbase-wrapped-xrp",
+      "category": "other",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "O",
+      "address": "0x182fa643e5f29d5eca75e7b9cf9336a3fe4620b2",
+      "coingeckoId": "o1-exchange",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "DIEM",
+      "address": "0xf4d97f2da56e8c3098f3a8d538db630a2606a024",
+      "coingeckoId": "diem",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "uniBTC",
+      "address": "0x93919784c523f39cacaa98ee0a9d96c3f32b593e",
+      "coingeckoId": "universal-btc",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BNKR",
+      "address": "0x22af33fe49fd1fa80c7149773dde5890d3c76f3b",
+      "coingeckoId": "bankercoin-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "HOME",
+      "address": "0x4bfaa776991e85e5f8b1255461cbbd216cfc714f",
+      "coingeckoId": "home",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "Fren Pet",
+      "address": "0xff0c532fdb8cd566ae169c1cb157ff2bdc83e105",
+      "coingeckoId": "frenpet",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "DRV",
+      "address": "0x9d0e8f5b25384c7310cb8c6ae32c8fbeb645d083",
+      "coingeckoId": "derive",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "JitoSOL",
+      "address": "0x97be14dd8f994a5364573bc035d85309e7cb34de",
+      "coingeckoId": "jito-staked-sol",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Base Solana Bridge",
+            "slug": "basesolbridge"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "OPG",
+      "address": "0xfbc2051ae2265686a469421b2c5a2d5462fbf5eb",
+      "coingeckoId": "opengradient",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "AUKI",
+      "address": "0xf9569cfb8fd265e91aa478d86ae8c78b8af55df4",
+      "coingeckoId": "auki-labs",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "TIG",
+      "address": "0x0c03ce270b4826ec62e7dd007f0b716068639f7b",
+      "coingeckoId": "the-innovation-game",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Base is CARV's home chain and it is OFT'd out burn-and-mint, so on-chain supply is the Base float.
+      "symbol": "CARV",
+      "address": "0xc08cd26474722ce93f4d0c34d16201461c10aa8c",
+      "coingeckoId": "carv",
+      "category": "other",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "FLOCK",
+      "address": "0x5ab3d4c385b400f3abb49e80de2faf6a88a7b691",
+      "coingeckoId": "flock-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "DRB",
+      "address": "0x3ec2156d4c0a9cbdab4a016633b7bcf6a8d68ea2",
+      "coingeckoId": "debtreliefbot",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "POD",
+      "address": "0xed664536023d8e4b1640c394777d34abaff1df8f",
+      "coingeckoId": "dolphin-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "SAPIEN",
+      "address": "0xc729777d0470f30612b1564fd96e8dd26f5814e3",
+      "coingeckoId": "sapien-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "MIRA",
+      "address": "0x7aafd31a321d3627b30a8e2171264b56852187fe",
+      "coingeckoId": "mira-3",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "cyber": [
@@ -5418,6 +5872,19 @@
       "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      // Paxos USDG, natively issued on Mantle. Unlike ink/robinhood, its
+      // supplyControl module lists only two Paxos EOAs as supply controllers -
+      // no LayerZero OFT can mint here - so this is native issuance, not a
+      // bridged balance. Mantle's L1 escrow holds 0 USDG and USDG is not an
+      // ethereum-section token, so nothing counts this supply a second time.
+      "symbol": "USDG",
+      "address": "0x063C1d1ef6e9099Ce3E8e9AD5C6173d12C49C086",
+      "coingeckoId": "global-dollar",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ],
   "linea": [
@@ -7629,6 +8096,25 @@
   ],
   "ink": [
     {
+      // Paxos-backed USDG represented on Ink through a LayerZero v2 mint/burn
+      // OFT. Track the locally minted supply.
+      "symbol": "USDG",
+      "address": "0xe343167631d89b6ffc58b88d6b7fb0228795491d",
+      "coingeckoId": "global-dollar",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1744826220
+    },
+    {
       "symbol": "kBTC",
       "category": "btc",
       "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
@@ -7643,6 +8129,23 @@
       }
     },
     {
+      // Circle-issued native USDC, moved crosschain through CCTP.
+      "symbol": "USDC",
+      "address": "0x2D270e6886d130D724215A266106e6832161EAEd",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "deploymentTimestamp": 1755799176
+    },
+    {
       "symbol": "USD₮0",
       "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
       "coingeckoId": "usdt0",
@@ -7654,6 +8157,22 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "GHO",
+      "address": "0xfc421ad3c883bf9e7c4f42de845c4e4405799e73",
+      "coingeckoId": "gho",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
@@ -8925,6 +9444,15 @@
       "source": "native",
       "supply": "totalSupply", // minted like an RWA (backed by RWA)
       "coingeckoId": "agora-dollar"
+    },
+    {
+      // Katana's own token; the OFT adapter locks on Katana so bridged-out KAT stays in this supply.
+      "symbol": "KAT",
+      "address": "0x7f1f4b4b29f5058fa32cc7a97141b8d7e5abdc2d",
+      "coingeckoId": "katana-network-token",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "ternoa": [
@@ -9008,13 +9536,17 @@
     // Bridged USDC.e. Its on-chain symbol is still "USDC" (unlike Arbitrum's,
     // it was never renamed), and the generator asserts the two match, so it is
     // registered under that symbol and distinguished by address.
+    // "zero" supply: this entry exists only so escrows on Polygon PoS (currently
+    // Polymarket's) can resolve the token by symbol. Polygon PoS itself already
+    // counts this token through the L1 escrow balance of its canonical USDC
+    // entry, so giving it a totalSupply formula would count the same ~$1B twice.
     {
       "symbol": "USDC",
       "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
       "coingeckoId": "usd-coin",
       "category": "stablecoin",
       "source": "external",
-      "supply": "totalSupply",
+      "supply": "zero",
       "bridgedUsing": {
         "bridges": [
           {
@@ -9079,6 +9611,23 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "symbol": "GEOD",
+      "address": "0xac0f66379a6d7801d7726d5a943356a172549adb",
+      "coingeckoId": "geodnet",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Issued natively on Polygon PoS by JPYC Inc, like the other native stablecoins here.
+      "symbol": "JPYC",
+      "address": "0xe7c3d8c9a439fede00d2600032d5db0be71c3c29",
+      "coingeckoId": "jpycoin",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ],
   "ethereal": [
@@ -9137,6 +9686,36 @@
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      // MegaETH's own token, minted on MegaETH (full 10B supply on chain, ~11% circulating).
+      "symbol": "MEGA",
+      "address": "0x28b7e77f82b25b95953825f1e3ea0e36c1c29861",
+      "coingeckoId": "megaeth",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      // manual override: the megaeth RPC prunes state, so the deployment-block
+      // binary search fails. Creation tx in block 1592579.
+      "deploymentTimestamp": 1764389590
+    },
+    {
+      "symbol": "wiTRY",
+      "address": "0x15b271d9012b5820fc42b1c495b4c1e206547de5",
+      "coingeckoId": "wrapped-itry",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      // manual override: the megaeth RPC prunes state. Creation tx in block 13999380.
+      "deploymentTimestamp": 1776796391,
       "bridgedUsing": {
         "bridges": [
           {
@@ -9325,6 +9904,18 @@
           }
         ]
       }
+    }
+  ],
+  "gnosis": [
+    {
+      // Monerium mints EURe natively on Gnosis Chain. The legacy 0xcB444e... contract is a shim over
+      // the same ledger (identical totalSupply/balances) and is intentionally not listed.
+      "symbol": "EURe",
+      "address": "0x420ca0f9b9b604ce0fd9c18ef134c705e5fa3430",
+      "coingeckoId": "monerium-eur-money-2",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ]
 }

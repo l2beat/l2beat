@@ -76,13 +76,11 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     (v) => v.daLayer,
   )
   // Grouped all scaling only projects values
+  const l2OnlyProjectValues = projectValues.filter(
+    (v) => !sovereignProjectsNamesMap.has(v.projectId as ProjectId),
+  )
   const groupedL2OnlyValues = groupBy(
-    sumByResolutionAndProject(
-      projectValues.filter(
-        (v) => !sovereignProjectsNamesMap.has(v.projectId as ProjectId),
-      ),
-      'day',
-    ),
+    sumByResolutionAndProject(l2OnlyProjectValues, 'day'),
     (v) => v.daLayer,
   )
   const onlyL2DaLayerValues = Object.fromEntries(
@@ -101,14 +99,16 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
 
   const getData = (
     values: Record<string, Omit<DataAvailabilityRecord, 'configurationId'>[]>,
+    syncValues: DataAvailabilityRecord[],
     largestPostersMap: Record<string, LargestPoster | undefined>,
   ) => {
     return Object.fromEntries(
       daLayers
         .map((daLayer) => {
-          const lastDaLayerTimestamp = daLayerValues.findLast(
-            (v) => v.daLayer === daLayer.id,
-          )?.timestamp
+          const syncedUntil = getLatestTimestampByDaLayer(
+            syncValues,
+            daLayer.id,
+          )
           const lastRecord = values[daLayer.id]?.at(-1)
           const previousRecord = values[daLayer.id]?.at(-2)
 
@@ -138,7 +138,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
           return [
             daLayer.id,
             {
-              syncedUntil: lastDaLayerTimestamp,
+              syncedUntil,
               pastDayData: lastRecord
                 ? getPastDayData(
                     lastRecord,
@@ -159,9 +159,25 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   }
 
   return {
-    data: getData(groupedDaLayerValues, largestPostersAll),
-    l2OnlyData: getData(onlyL2DaLayerValues, largestPostersL2Only),
+    data: getData(groupedDaLayerValues, daLayerValues, largestPostersAll),
+    l2OnlyData: getData(
+      onlyL2DaLayerValues,
+      l2OnlyProjectValues,
+      largestPostersL2Only,
+    ),
   }
+}
+
+export function getLatestTimestampByDaLayer(
+  records: DataAvailabilityRecord[],
+  daLayer: string,
+) {
+  return records.reduce<UnixTime | undefined>((latest, record) => {
+    if (record.daLayer !== daLayer) return latest
+    return latest === undefined || record.timestamp > latest
+      ? record.timestamp
+      : latest
+  }, undefined)
 }
 
 function getPastDayData(

@@ -42,6 +42,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-ADS",
+      "priceId": "adshares",
+      "symbol": "ADS",
+      "name": "Adshares",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/868/large/rnO9DyJ.png?1696502001",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 11,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-AERO",
       "priceId": "aerodrome-finance",
       "symbol": "AERO",
@@ -213,6 +232,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-AUKI",
+      "priceId": "auki-labs",
+      "symbol": "AUKI",
+      "name": "Auki Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39811/large/COINGECKO-200-x-200_%281%29.png?1724166209",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "auki-labs",
+        "decimals": 18,
+        "sinceTimestamp": 1724803200,
+        "address": "0xF9569cFb8FD265e91aa478d86ae8c78b8AF55Df4",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-AWE",
       "priceId": "stp-network",
       "symbol": "AWE",
@@ -285,6 +323,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-Basecat",
+      "priceId": "basecat",
+      "symbol": "Basecat",
+      "name": "Basecat",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175780/large/zi54rndmdx59nblfgry3d1pyckch.?1787558766",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "basecat",
+        "decimals": 18,
+        "sinceTimestamp": 1787529600,
+        "address": "0xB2000000000000000000004c27f6523082f41D01",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -364,6 +421,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-BNKR",
+      "priceId": "bankercoin-2",
+      "symbol": "BNKR",
+      "name": "BankrCoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52626/large/bankr-static.png?1736405365",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "bankercoin-2",
+        "decimals": 18,
+        "sinceTimestamp": 1733788800,
+        "address": "0x22aF33FE49fD1Fa80c7149773dDe5890D3c76F3b",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-BRETT",
       "priceId": "based-brett",
       "symbol": "BRETT",
@@ -428,6 +504,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-CARV",
+      "priceId": "carv",
+      "symbol": "CARV",
+      "name": "CARV",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37689/large/CARV_%281%29.png?1728418485",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc08Cd26474722cE93F4D0c34D16201461c10AA8C",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1728518400
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-cbBTC-1",
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
@@ -480,6 +574,24 @@
       },
       "category": "ether",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-cbXRP",
+      "priceId": "coinbase-wrapped-xrp",
+      "symbol": "cbXRP",
+      "name": "Coinbase Wrapped XRP",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66267/large/Coinbase_Wrapped_XPR_%28cbXRP%29.png?1749023398",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xcb585250f852C6c6bf90434AB21A00f02833a4af",
+        "chain": "base",
+        "decimals": 6,
+        "sinceTimestamp": 1749081600
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -830,6 +942,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-DIEM",
+      "priceId": "diem",
+      "symbol": "DIEM",
+      "name": "Diem",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68436/large/DIEM_SeaMid_-_200px.png?1755734213",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "diem",
+        "decimals": 18,
+        "sinceTimestamp": 1755648000,
+        "address": "0xF4d97F2da56e8c3098f3a8D538DB630A2606a024",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-DODO",
       "priceId": "dodo",
       "symbol": "DODO",
@@ -903,6 +1034,51 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-DRB",
+      "priceId": "debtreliefbot",
+      "symbol": "DRB",
+      "name": "DebtReliefBot",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54784/large/1000143570.jpg?1759054009",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "debtreliefbot",
+        "decimals": 18,
+        "sinceTimestamp": 1741564800,
+        "address": "0x3ec2156D4c0A9CBdAB4a016633b7BcF6a8d68Ea2",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-DRV",
+      "priceId": "derive",
+      "symbol": "DRV",
+      "name": "Derive",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52889/large/Token_Logo.png?1734601695",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9d0E8f5b25384C7310CB8C6aE32C8fbeb645d083",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1736899200
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1187,6 +1363,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-FLOCK",
+      "priceId": "flock-2",
+      "symbol": "FLOCK",
+      "name": "FLock.io",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53178/large/FLock_Token_Logo.png?1735561398",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "flock-2",
+        "decimals": 18,
+        "sinceTimestamp": 1736121600,
+        "address": "0x5aB3D4c385B400F3aBB49e80DE2fAF6a88A7B691",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-FLT",
       "priceId": "fluence-2",
       "symbol": "FLT",
@@ -1280,6 +1475,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-Fren Pet",
+      "priceId": "frenpet",
+      "symbol": "Fren Pet",
+      "name": "Fren Pet",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33022/large/token.png?1700274697",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "frenpet",
+        "decimals": 18,
+        "sinceTimestamp": 1700265600,
+        "address": "0xFF0C532FDB8Cd566Ae169C1CB157ff2Bdc83E105",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -1491,6 +1705,58 @@
     },
     {
       "mode": "auto",
+      "id": "base-HOME",
+      "priceId": "home",
+      "symbol": "HOME",
+      "name": "Home",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54873/large/defi-app.png?1742235743",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "home",
+        "decimals": 18,
+        "sinceTimestamp": 1749513600,
+        "address": "0x4BfAa776991E85e5f8b1255461cbbd216cFc714f",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-ICNT",
+      "priceId": "impossible-cloud-network-token",
+      "symbol": "ICNT",
+      "name": "Impossible Cloud Network Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55484/large/ICNT_token_%281%29_%281%29.png?1751614146",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "impossible-cloud-network-token",
+            "decimals": 18,
+            "sinceTimestamp": 1751500800,
+            "address": "0xe5e0b73380181273abCfD88695F52C4D0C825661",
+            "chain": "ethereum"
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xe5e0b73380181273abCfD88695F52C4D0C825661",
+            "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1751500800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-imgnAI",
       "priceId": "imgnai",
       "symbol": "imgnAI",
@@ -1508,6 +1774,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-JitoSOL",
+      "priceId": "jito-staked-sol",
+      "symbol": "JitoSOL",
+      "name": "Jito Staked SOL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28046/large/JitoSOL_Token_Logo_Green.png?1779807693",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x97bE14Dd8f994A5364573BC035D85309E7CB34de",
+        "chain": "base",
+        "decimals": 9,
+        "sinceTimestamp": 1771355165
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Base Solana Bridge",
+            "slug": "basesolbridge"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1790,6 +2082,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-mGLO",
+      "priceId": "midas-fasanara-global-open",
+      "symbol": "mGLO",
+      "name": "Midas Fasanara Global Open",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174031/large/mglobal-Cm4yjVTI.png?1781967852",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFCc9Cc1209651Ed8867332d6F664CF82743A2584",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1784246400
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-MIGGLES",
       "priceId": "mister-miggles",
       "symbol": "MIGGLES",
@@ -1801,6 +2111,25 @@
         "decimals": 18,
         "sinceTimestamp": 1721260800,
         "address": "0xB1a03EdA10342529bBF8EB700a06C60441fEf25d",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-MIRA",
+      "priceId": "mira-3",
+      "symbol": "MIRA",
+      "name": "Mira",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69491/large/mira_logo_200x200.png?1758751854",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "mira-3",
+        "decimals": 18,
+        "sinceTimestamp": 1758844800,
+        "address": "0x7AaFD31a321d3627b30A8e2171264B56852187fe",
         "chain": "base"
       },
       "category": "other",
@@ -1911,6 +2240,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-O",
+      "priceId": "o1-exchange",
+      "symbol": "O",
+      "name": "o1.exchange",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102173974/large/o1.png?1781654491",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "o1-exchange",
+        "decimals": 18,
+        "sinceTimestamp": 1781654400,
+        "address": "0x182FA643E5f29d5EcA75e7b9CF9336A3fe4620b2",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-OGN",
       "priceId": "origin-protocol",
       "symbol": "OGN",
@@ -1983,6 +2331,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-OPG",
+      "priceId": "opengradient",
+      "symbol": "OPG",
+      "name": "OpenGradient",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102172863/large/coingecko_logo.png?1776349115",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "opengradient",
+        "decimals": 18,
+        "sinceTimestamp": 1776729600,
+        "address": "0xFbC2051AE2265686a469421b2C5A2D5462FbF5eB",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -2169,6 +2536,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-POD",
+      "priceId": "dolphin-2",
+      "symbol": "POD",
+      "name": "Dolphin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70187/large/1_to_1_Dolphin_imresizer.jpg?1760947185",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "dolphin-2",
+        "decimals": 18,
+        "sinceTimestamp": 1771827591,
+        "address": "0xeD664536023d8E4b1640C394777D34aBAFF1dF8F",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -2475,6 +2861,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-SAPIEN",
+      "priceId": "sapien-2",
+      "symbol": "SAPIEN",
+      "name": "Sapien",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68423/large/logo.png?1755710030",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "sapien-2",
+        "decimals": 18,
+        "sinceTimestamp": 1755648000,
+        "address": "0xC729777d0470F30612B1564Fd96E8Dd26f5814E3",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-scrvUSD",
       "priceId": "savings-crvusd",
       "symbol": "scrvUSD",
@@ -2713,6 +3118,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-SOL",
+      "priceId": "solana",
+      "symbol": "SOL",
+      "name": "Solana",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82",
+        "chain": "base",
+        "decimals": 9,
+        "sinceTimestamp": 1764174960
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Base Solana Bridge",
+            "slug": "basesolbridge"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2964,6 +3395,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-syrupUSDC",
+      "priceId": "syrupusdc",
+      "symbol": "syrupUSDC",
+      "name": "Syrup USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54658/large/syrupUSDC.png?1761824955",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x660975730059246A68521a3e2FBD4740173100f5",
+        "chain": "base",
+        "decimals": 6,
+        "sinceTimestamp": 1753206240
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-T",
       "priceId": "threshold-network-token",
       "symbol": "T",
@@ -3036,6 +3493,44 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-TIBBIR",
+      "priceId": "ribbita-by-virtuals",
+      "symbol": "TIBBIR",
+      "name": "Ribbita by Virtuals",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54970/large/Untitled_design.png?1742941268",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "ribbita-by-virtuals",
+        "decimals": 18,
+        "sinceTimestamp": 1742860800,
+        "address": "0xA4A2E2ca3fBfE21aed83471D28b6f65A233C6e00",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-TIG",
+      "priceId": "the-innovation-game",
+      "symbol": "TIG",
+      "name": "The Innovation Game",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50669/large/tiglogo-clean_200x200.png?1739955821",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "the-innovation-game",
+        "decimals": 18,
+        "sinceTimestamp": 1728604800,
+        "address": "0x0C03Ce270B4826Ec62e7DD007f0B716068639F7B",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -3171,6 +3666,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-uniBTC",
+      "priceId": "universal-btc",
+      "symbol": "uniBTC",
+      "name": "uniBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39599/large/uniBTC_200px.png?1723064455",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x93919784C523f39CACaa98Ee0a9d96c3F32b593e",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1749799761
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
