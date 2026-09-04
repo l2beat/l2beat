@@ -1,6 +1,5 @@
 import { MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
-import { getLogger } from '~/server/utils/logger'
 import type { InteropProjectResolver } from '../utils/createInteropProjectResolver'
 import {
   createStatsLookup,
@@ -18,8 +17,6 @@ import {
 } from './getChainDisplayInfo'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import type { InteropTokenRelations } from './getInteropTokenRelations'
-
-const logger = getLogger().for('getInteropTokenRelationsGraph')
 
 export interface InteropTokenRelationsDeployment extends InteropTokenStats {
   chain: { id: string; name: string; iconUrl: string | undefined }
@@ -153,26 +150,13 @@ function resolveMinters(
       }
       // Sides are arbitrary — the matcher is symmetric. A relation records
       // only the minted endpoint's abstract token, hence no dstAbstractTokenId.
-      const matched = resolveProjects({
+      return resolveProjects({
         plugin,
         bridgeType,
         srcChain: deployment.chain,
         dstChain: relatedChain,
         srcAbstractTokenId: abstractTokenId,
       })
-
-      if (matched.length === 0) {
-        logger.warn('Could not resolve minting plugin to an interop project', {
-          plugin,
-          bridgeType,
-          chain: deployment.chain,
-          relatedChain,
-          address: deployment.address,
-          abstractTokenId,
-        })
-      }
-
-      return matched
     },
   )
 

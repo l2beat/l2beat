@@ -20,5 +20,5 @@ export function deploymentTransferKey(
   deployment: Endpoint,
 ): string | undefined {
   const address = Address32.fromOrUndefined(deployment.address)
-  return address ? `${deployment.chain}|${address}` : undefined
+  return address && transferTokenKey({ chain: deployment.chain, address })
 }
