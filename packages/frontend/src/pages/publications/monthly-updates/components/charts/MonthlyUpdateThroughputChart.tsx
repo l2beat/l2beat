@@ -98,7 +98,6 @@ export function MonthlyUpdateThroughputChart({
             fill={`url(#${fillId})`}
             fillOpacity={1}
             stroke={chartMeta.projects?.color}
-            strokeWidth={2}
             isAnimationActive={false}
             dot={false}
           />

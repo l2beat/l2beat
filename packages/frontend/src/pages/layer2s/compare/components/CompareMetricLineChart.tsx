@@ -130,7 +130,6 @@ export function CompareMetricLineChart({
                   : 1
               }
               className="[&_.recharts-line-curve]:transition-[stroke-opacity] [&_.recharts-line-curve]:duration-200 motion-reduce:[&_.recharts-line-curve]:transition-none"
-              strokeWidth={2}
               dot={false}
               isAnimationActive={false}
             />
