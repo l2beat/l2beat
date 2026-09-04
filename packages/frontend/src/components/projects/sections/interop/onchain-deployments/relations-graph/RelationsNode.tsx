@@ -7,14 +7,25 @@ import type { NodeBox } from './layoutRelationsGraph'
 
 const CLUSTER_ROWS_SHOWN = 4
 
+// Heights are the sum of fixed-height lines below plus padding and borders,
+// so the layout can position nodes before they render.
+const PADDING_Y = 10
+const BORDER_Y = 2
+const HEADER_HEIGHT = 20 + 4 + 16
+const CLUSTER_ROW_HEIGHT = 24
+const CLUSTER_FOOTER_HEIGHT = 20
+
 export function getNodeSize(node: InteropTokenRelationsNode): {
   width: number
   height: number
 } {
   const count = node.deployments.length
-  if (count <= 1) return { width: 168, height: 64 }
+  const frame = 2 * PADDING_Y + BORDER_Y + HEADER_HEIGHT
+  if (count <= 1) return { width: 184, height: frame + 4 + 16 }
   const rows = Math.min(count, CLUSTER_ROWS_SHOWN)
-  return { width: 260, height: 52 + rows * 20 + (count > rows ? 16 : 0) }
+  const list = 8 + 1 + rows * CLUSTER_ROW_HEIGHT
+  const footer = count > rows ? CLUSTER_FOOTER_HEIGHT : 0
+  return { width: 268, height: frame + list + footer }
 }
 
 interface Props {
@@ -40,6 +51,7 @@ export function RelationsNode({
 }: Props) {
   const first = node.deployments[0]
   if (!first) return null
+  const isCluster = node.deployments.length > 1
   const hiddenCount = node.deployments.length - CLUSTER_ROWS_SHOWN
 
   return (
@@ -48,7 +60,8 @@ export function RelationsNode({
       data-node-id={node.id}
       style={{ left: box.x, top: box.y, width: box.width, height: box.height }}
       className={cn(
-        'absolute flex flex-col rounded-lg border bg-surface-primary p-2 text-left',
+        'absolute flex flex-col overflow-hidden rounded-xl border bg-surface-primary px-3 py-2.5 text-left',
+        'transition-colors hover:bg-surface-primary-hover',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50',
         isSelected ? 'border-brand ring-1 ring-brand' : 'border-divider',
         isUnconnected && 'border-dashed',
@@ -64,30 +77,28 @@ export function RelationsNode({
       onFocus={() => onHover(node.id)}
       onBlur={() => onHover(undefined)}
     >
-      <Line className="justify-between gap-2">
-        <span className="truncate font-bold text-label-value-13 text-primary">
+      <div className="flex h-5 w-full items-baseline justify-between gap-3">
+        <span className="truncate font-bold text-label-value-15 text-primary">
           {first.symbol}
-          {node.deployments.length > 1 && (
-            <span className="ml-1 font-normal text-secondary">
-              · {node.deployments.length} deployments
-            </span>
-          )}
         </span>
-        <Volume value={node.volume} className="text-secondary" />
-      </Line>
-      {node.deployments.length > 1 ? (
+        <Volume
+          value={node.volume}
+          className="font-semibold text-label-value-13 text-primary"
+        />
+      </div>
+      {isCluster ? (
         <>
-          <Line className="gap-1 text-secondary">
+          <Meta>
             <span className="shrink-0">Burn & mint via</span>
             <Bridges bridges={node.bridges} />
-          </Line>
-          <ul className="mt-1 w-full">
+          </Meta>
+          <ul className="mt-2 w-full divide-y divide-divider border-divider border-t">
             {node.deployments.slice(0, CLUSTER_ROWS_SHOWN).map((deployment) => (
               <li
                 key={`${deployment.chain.id}|${deployment.address}`}
-                className="flex h-5 items-center justify-between gap-2 border-divider border-t text-label-value-12"
+                className="flex h-6 items-center justify-between gap-3 text-label-value-13"
               >
-                <span className="flex min-w-0 items-center gap-1.5">
+                <span className="flex min-w-0 items-center gap-2 font-semibold text-primary">
                   <ChainIcon iconUrl={deployment.chain.iconUrl} alt="" />
                   <span className="truncate">{deployment.chain.name}</span>
                 </span>
@@ -96,24 +107,28 @@ export function RelationsNode({
             ))}
           </ul>
           {hiddenCount > 0 && (
-            <Line className="text-secondary">+{hiddenCount} more</Line>
+            <div className="flex h-5 w-full items-end text-label-value-12 text-secondary leading-none">
+              +{hiddenCount} more deployments
+            </div>
           )}
         </>
       ) : (
         <>
-          <Line className="gap-1 text-secondary">
+          <Meta>
             <span>On</span>
             <ChainIcon iconUrl={first.chain.iconUrl} alt="" />
-            <span className="truncate">{first.chain.name}</span>
-          </Line>
-          <Line className="text-secondary">{shortAddress(first.address)}</Line>
+            <span className="truncate font-semibold text-primary">
+              {first.chain.name}
+            </span>
+          </Meta>
+          <Meta className="font-mono">{shortAddress(first.address)}</Meta>
         </>
       )}
     </button>
   )
 }
 
-function Line({
+function Meta({
   className,
   children,
 }: {
@@ -123,7 +138,7 @@ function Line({
   return (
     <div
       className={cn(
-        'flex h-4 w-full items-center text-label-value-12 leading-none',
+        'mt-1 flex h-4 w-full items-center gap-1.5 text-label-value-12 text-secondary leading-none',
         className,
       )}
     >
@@ -154,18 +169,18 @@ function Bridges({
   if (bridges.length === 0)
     return <span className="truncate">not identified</span>
   return (
-    <span className="flex min-w-0 items-center gap-1">
+    <span className="flex min-w-0 items-center gap-1.5">
       <span className="-space-x-1 flex shrink-0">
         {bridges.slice(0, 3).map((bridge) => (
           <img
             key={bridge.id}
             src={bridge.iconUrl}
             alt=""
-            className="size-3.5 rounded-full bg-surface-primary"
+            className="size-4 rounded-full bg-surface-primary"
           />
         ))}
       </span>
-      <span className="truncate font-medium text-primary">
+      <span className="truncate text-primary">
         {bridges.map((bridge) => bridge.name).join(', ')}
       </span>
     </span>
