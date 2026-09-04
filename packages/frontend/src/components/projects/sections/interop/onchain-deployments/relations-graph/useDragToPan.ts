@@ -20,6 +20,8 @@ export function useDragToPan(
 
   const onPointerDown = (event: PointerEvent) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return
+    // Touch pans end without a click, so the flag must not wait for one.
+    suppressClick.current = false
     gesture.current = {
       x: event.clientX,
       y: event.clientY,

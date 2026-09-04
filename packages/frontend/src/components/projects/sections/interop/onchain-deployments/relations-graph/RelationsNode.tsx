@@ -6,7 +6,7 @@ import { isCluster } from './graphSelectors'
 import type { NodeBox } from './layoutRelationsGraph'
 import { shortAddress, Volume } from './RelationsPrimitives'
 
-// Every member is listed; the cap only guards the canvas against a runaway cluster.
+// Members are listed up to a cap that guards the canvas against a runaway cluster.
 const CLUSTER_MEMBERS_CAP = 16
 
 // The layout needs sizes before anything renders, so the same numbers drive

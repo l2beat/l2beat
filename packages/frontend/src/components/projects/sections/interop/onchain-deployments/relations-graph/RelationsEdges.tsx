@@ -84,7 +84,9 @@ export function RelationsEdgeBadge({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
+        <button
+          type="button"
+          onClick={(event) => event.stopPropagation()}
           style={{ left: at.midX, top: at.midY }}
           className={cn(
             '-translate-x-1/2 -translate-y-1/2 absolute flex h-5 w-max min-w-5 items-center gap-0.5 rounded-full border border-divider bg-surface-primary px-0.5',
@@ -104,7 +106,7 @@ export function RelationsEdgeBadge({
           {extra > 0 && (
             <span className="font-bold text-2xs text-secondary">+{extra}</span>
           )}
-        </div>
+        </button>
       </TooltipTrigger>
       <TooltipContent>
         Minted by {edge.bridges.map((bridge) => bridge.name).join(', ')}
