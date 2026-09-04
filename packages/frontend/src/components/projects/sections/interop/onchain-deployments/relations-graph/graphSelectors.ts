@@ -178,17 +178,15 @@ export function getSameChainComparisons(
       const index = ranked.findIndex(
         (item) => item.selected && item.deployment.address === own.address,
       )
-      return [
-        {
-          chain: own.chain,
-          ranked,
-          rank: own.volume === null ? undefined : index + 1,
-          volume: own.volume ?? -1,
-        },
-      ]
+      const comparison: SameChainComparison = {
+        chain: own.chain,
+        ranked,
+        rank: own.volume === null ? undefined : index + 1,
+      }
+      return [[own.volume ?? -1, comparison] as const]
     })
-    .toSorted((a, b) => b.volume - a.volume)
-    .map(({ volume: _, ...comparison }) => comparison)
+    .toSorted(([a], [b]) => b - a)
+    .map(([, comparison]) => comparison)
 }
 
 export interface BackedGroups {
