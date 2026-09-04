@@ -1,4 +1,4 @@
-import type { Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 
 /**
  * The Cloudflare cache rule for l2beat.com caches HTML only when the origin
@@ -19,11 +19,24 @@ const PAGE_CACHE_CONTROL =
   'public, max-age=0, s-maxage=60, stale-while-revalidate=300, stale-if-error=3600'
 
 /**
- * Sends a rendered SSR page and marks it as edge-cacheable. Pages that must
- * not be edge-cached (e.g. "/") send the html themselves with their own
- * Cache-Control.
+ * Sets the page cache header on GET and HEAD. Routes that must not be
+ * edge-cached (e.g. "/") override Cache-Control later in the chain. Pair with
+ * ClearPageCacheMiddleware after the page routes so requests that fall through
+ * (e.g. /api/*) leave without the header.
  */
-export function sendPage(res: Response, html: string) {
-  res.set('Cache-Control', PAGE_CACHE_CONTROL)
-  res.status(200).send(html)
+export function PageCacheMiddleware() {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (req.method === 'GET' || req.method === 'HEAD') {
+      res.set('Cache-Control', PAGE_CACHE_CONTROL)
+    }
+    next()
+  }
+}
+
+/** Removes the page cache header from requests no page route handled. */
+export function ClearPageCacheMiddleware() {
+  return (_: Request, res: Response, next: NextFunction) => {
+    res.removeHeader('Cache-Control')
+    next()
+  }
 }

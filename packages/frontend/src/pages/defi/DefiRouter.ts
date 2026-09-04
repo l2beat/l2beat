@@ -2,7 +2,6 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { env } from '~/env'
-import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -34,7 +33,7 @@ export function createDefiRouter(
       () => getDefiSummaryData(manifest, req.originalUrl, cache),
     )
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get(
@@ -58,7 +57,7 @@ export function createDefiRouter(
       }
 
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 

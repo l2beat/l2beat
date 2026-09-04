@@ -1,7 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -34,7 +33,7 @@ export function createEcosystemsRouter(
         return
       }
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 

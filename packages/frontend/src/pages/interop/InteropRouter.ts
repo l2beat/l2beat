@@ -2,7 +2,6 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { ps } from '~/server/projects'
-import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -49,7 +48,7 @@ export function createInteropRouter(
     async (req, res) => {
       const data = await getInteropSummaryData(req, manifest, cache)
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
@@ -61,7 +60,7 @@ export function createInteropRouter(
     async (req, res) => {
       const data = await getInteropNonMintingData(req, manifest, cache)
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
@@ -73,7 +72,7 @@ export function createInteropRouter(
     async (req, res) => {
       const data = await getInteropLockAndMintData(req, manifest, cache)
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
@@ -85,20 +84,20 @@ export function createInteropRouter(
     async (req, res) => {
       const data = await getInteropBurnAndMintData(req, manifest, cache)
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
   router.get('/interop/token-frameworks', async (req, res) => {
     const data = await getInteropTokenFrameworksData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/interop/intent-bridges', async (req, res) => {
     const data = await getInteropIntentBridgesData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get(
@@ -126,7 +125,7 @@ export function createInteropRouter(
         return
       }
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
@@ -165,7 +164,7 @@ export function createInteropRouter(
         return
       }
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 

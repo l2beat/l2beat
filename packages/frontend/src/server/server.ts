@@ -92,11 +92,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
-  app.use('/', createApiRouter())
-
-  app.get('/health', (_, res) => {
-    res.status(200).send('OK')
-  })
 
   if (options.dev) {
     app.use(
@@ -106,6 +101,12 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   } else {
     app.use('/', createServerPageRouter(manifest, renderToHtml))
   }
+
+  app.use('/', createApiRouter())
+
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
 
   if (!options.dev) {
     app.use(ErrorHandler(baseLogger))

@@ -1,7 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -33,7 +32,7 @@ export function createDataAvailabilityRouter(
       () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/data-availability/risk', async (req, res) => {
@@ -46,7 +45,7 @@ export function createDataAvailabilityRouter(
       () => getDataAvailabilityRiskData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/data-availability/throughput', async (req, res) => {
@@ -59,7 +58,7 @@ export function createDataAvailabilityRouter(
       () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/data-availability/liveness', async (req, res) => {
@@ -72,7 +71,7 @@ export function createDataAvailabilityRouter(
       () => getDataAvailabilityLivenessData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/data-availability/archived', async (req, res) => {
@@ -85,7 +84,7 @@ export function createDataAvailabilityRouter(
       () => getDataAvailabilityArchivedData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get(
@@ -113,7 +112,7 @@ export function createDataAvailabilityRouter(
         return
       }
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 

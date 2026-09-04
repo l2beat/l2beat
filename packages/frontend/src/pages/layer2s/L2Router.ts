@@ -2,7 +2,6 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { env } from '~/env'
-import { sendPage } from '~/server/utils/sendPage'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -34,37 +33,37 @@ export function createL2Router(
   router.get('/layer2s/summary', async (req, res) => {
     const data = await getL2SummaryData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/layer2s/activity', async (req, res) => {
     const data = await getL2ActivityData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/layer2s/risk', async (req, res) => {
     const data = await getL2RiskData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/layer2s/risk/state-validation', async (req, res) => {
     const data = await getL2RiskStateValidationData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/layer2s/risk/data-availability', async (req, res) => {
     const data = await getL2RiskDataAvailabilityData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/layer2s/risk/sequencing', async (req, res) => {
     const data = await getL2RiskSequencingData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get(
@@ -79,20 +78,20 @@ export function createL2Router(
     async (req, res) => {
       const data = await getL2TvsData(req, manifest, cache)
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
   router.get('/layer2s/tvs/breakdown', async (req, res) => {
     const data = await getL2TvsBreakdownData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get('/layer2s/liveness', async (req, res) => {
     const data = await getL2LivenessData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   if (env.CLIENT_SIDE_COMPARE_PROJECTS) {
@@ -101,7 +100,7 @@ export function createL2Router(
     router.get('/layer2s/compare', async (req, res) => {
       const data = await getL2CompareData(req, manifest, cache)
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     })
   }
 
@@ -115,14 +114,14 @@ export function createL2Router(
     async (req, res) => {
       const data = await getL2CostsData(req, manifest, cache)
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
   router.get('/layer2s/archived', async (req, res) => {
     const data = await getL2ArchivedData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
-    sendPage(res, html)
+    res.status(200).send(html)
   })
 
   router.get(
@@ -138,7 +137,7 @@ export function createL2Router(
         return
       }
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
@@ -166,7 +165,7 @@ export function createL2Router(
         return
       }
       const html = await render(data, req.originalUrl)
-      sendPage(res, html)
+      res.status(200).send(html)
     },
   )
 
