@@ -5,7 +5,10 @@ import type {
   InteropTokenRelationsGraph,
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
-import { edgeKey } from './routeRelationsEdges'
+
+export function edgeKey(edge: { from: string; to: string }): string {
+  return `${edge.from}->${edge.to}`
+}
 
 export function isCluster(node: InteropTokenRelationsNode): boolean {
   return node.deployments.length > 1

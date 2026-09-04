@@ -52,6 +52,9 @@ export function useDragToPan(
       event.currentTarget.releasePointerCapture(event.pointerId)
     }
   }
+  const onPointerCancel = () => {
+    gesture.current = undefined
+  }
   /** True exactly once, for the click that ended a drag. */
   const consumeSuppressedClick = () => {
     const suppressed = suppressClick.current
@@ -64,7 +67,7 @@ export function useDragToPan(
       onPointerDown,
       onPointerMove,
       onPointerUp,
-      onPointerCancel: onPointerUp,
+      onPointerCancel,
     },
     consumeSuppressedClick,
   }
