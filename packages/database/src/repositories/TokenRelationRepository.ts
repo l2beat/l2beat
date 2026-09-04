@@ -152,6 +152,30 @@ function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
   }
 }
 
+const ROUTE_COLUMNS = [
+  'tokenAChain',
+  'tokenAAddress',
+  'tokenBChain',
+  'tokenBAddress',
+  'plugin',
+  'bridgeType',
+  'lockedToken',
+] as const
+
+function toRoute(
+  row: Pick<Selectable<TokenRelation>, (typeof ROUTE_COLUMNS)[number]>,
+): TokenRelationRoute {
+  return {
+    tokenAChain: row.tokenAChain,
+    tokenAAddress: row.tokenAAddress,
+    tokenBChain: row.tokenBChain,
+    tokenBAddress: row.tokenBAddress,
+    plugin: row.plugin,
+    bridgeType: row.bridgeType as InteropBridgeType,
+    lockedToken: row.lockedToken as TokenRelationLockedToken,
+  }
+}
+
 // Keeps each query's composite-key tuple list small enough to avoid
 // overflowing both the Kysely query compiler and the Postgres parser stack.
 const BATCH_SIZE = 1000
@@ -258,22 +282,48 @@ export class TokenRelationRepository extends BaseRepository {
   async getAllRoutes(): Promise<TokenRelationRoute[]> {
     const rows = await this.db
       .selectFrom('TokenRelation')
-      .select([
-        'tokenAChain',
-        'tokenAAddress',
-        'tokenBChain',
-        'tokenBAddress',
-        'plugin',
-        'bridgeType',
-        'lockedToken',
-      ])
+      .select(ROUTE_COLUMNS)
       .execute()
 
-    return rows.map((row) => ({
-      ...row,
-      bridgeType: row.bridgeType as InteropBridgeType,
-      lockedToken: row.lockedToken as TokenRelationLockedToken,
+    return rows.map(toRoute)
+  }
+
+  /** Relations with both endpoints in the set, without the transfer evidence. */
+  async getRoutesBetween(
+    tokens: DeployedTokenPrimaryKey[],
+  ): Promise<TokenRelationRoute[]> {
+    if (tokens.length === 0) return []
+
+    // A token has a few dozen deployments at most, so no batching is needed —
+    // and a "both endpoints" condition could not be split across batches anyway.
+    const endpoints = tokens.map((token) => ({
+      chain: token.chain,
+      address: token.address.toLowerCase(),
     }))
+    const rows = await this.db
+      .selectFrom('TokenRelation')
+      .select(ROUTE_COLUMNS)
+      .where((eb) =>
+        eb(
+          eb.refTuple('tokenAChain', 'tokenAAddress'),
+          'in',
+          endpoints.map((endpoint) =>
+            eb.tuple(endpoint.chain, endpoint.address),
+          ),
+        ),
+      )
+      .where((eb) =>
+        eb(
+          eb.refTuple('tokenBChain', 'tokenBAddress'),
+          'in',
+          endpoints.map((endpoint) =>
+            eb.tuple(endpoint.chain, endpoint.address),
+          ),
+        ),
+      )
+      .execute()
+
+    return rows.map(toRoute)
   }
 
   /**

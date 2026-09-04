@@ -1555,6 +1555,152 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(
+    InteropTransferRepository.prototype.getDeployedTokenPairStats.name,
+    () => {
+      const usdc = 'circle-usdc'
+      const ethereumUsdc = {
+        chain: 'ethereum',
+        address: Address32.from('0xa1'),
+      }
+      const arbitrumUsdc = {
+        chain: 'arbitrum',
+        address: Address32.from('0xa2'),
+      }
+      const ethereumWeth = {
+        chain: 'ethereum',
+        address: Address32.from('0xb1'),
+      }
+      const range = { from: UnixTime(0), to: UnixTime(1000) }
+
+      function usdcTransfer(
+        transferId: string,
+        src: { chain: string; address: Address32 },
+        dst: { chain: string; address: Address32 },
+        overrides: Partial<InteropTransferRecord> = {},
+      ): InteropTransferRecord {
+        return financialTransfer(transferId, {
+          srcChain: src.chain,
+          srcTokenAddress: src.address,
+          srcAbstractTokenId: usdc,
+          dstChain: dst.chain,
+          dstTokenAddress: dst.address,
+          dstAbstractTokenId: usdc,
+          duration: 10,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+          ...overrides,
+        })
+      }
+
+      it('aggregates per pair, valuing a transfer like getInteropTransferValue', async () => {
+        await repository.insertMany([
+          usdcTransfer('both', ethereumUsdc, arbitrumUsdc, {
+            srcValueUsd: 70,
+            dstValueUsd: 100,
+          }),
+          usdcTransfer('srcOnly', ethereumUsdc, arbitrumUsdc, {
+            srcValueUsd: 30,
+            dstValueUsd: undefined,
+            duration: undefined,
+          }),
+          usdcTransfer('dstOnly', ethereumUsdc, arbitrumUsdc, {
+            srcValueUsd: undefined,
+            dstValueUsd: 5,
+          }),
+          usdcTransfer('neither', ethereumUsdc, arbitrumUsdc, {
+            srcValueUsd: undefined,
+            dstValueUsd: undefined,
+          }),
+          usdcTransfer('back', arbitrumUsdc, ethereumUsdc, {
+            duration: 30,
+            srcValueUsd: 50,
+            dstValueUsd: 40,
+          }),
+        ])
+
+        expect(
+          await repository.getDeployedTokenPairStats(usdc, range),
+        ).toEqualUnsorted([
+          {
+            src: ethereumUsdc,
+            dst: arbitrumUsdc,
+            transferCount: 4,
+            transfersWithDurationCount: 3,
+            totalDurationSum: 30,
+            volume: 135,
+          },
+          {
+            src: arbitrumUsdc,
+            dst: ethereumUsdc,
+            transferCount: 1,
+            transfersWithDurationCount: 1,
+            totalDurationSum: 30,
+            volume: 50,
+          },
+        ])
+      })
+
+      it('keeps only the sides that are the abstract token', async () => {
+        await repository.insertMany([
+          usdcTransfer('swapOut', ethereumUsdc, ethereumWeth, {
+            dstAbstractTokenId: 'weth',
+          }),
+          usdcTransfer('unassignedSide', ethereumWeth, arbitrumUsdc, {
+            srcAbstractTokenId: undefined,
+          }),
+          usdcTransfer('otherToken', ethereumWeth, ethereumWeth, {
+            srcAbstractTokenId: 'weth',
+            dstAbstractTokenId: 'weth',
+          }),
+        ])
+
+        expect(
+          await repository.getDeployedTokenPairStats(usdc, range),
+        ).toEqualUnsorted([
+          {
+            src: ethereumUsdc,
+            transferCount: 1,
+            transfersWithDurationCount: 1,
+            totalDurationSum: 10,
+            volume: 100,
+          },
+          {
+            dst: arbitrumUsdc,
+            transferCount: 1,
+            transfersWithDurationCount: 1,
+            totalDurationSum: 10,
+            volume: 100,
+          },
+        ])
+      })
+
+      it('applies the exclusive-inclusive time range', async () => {
+        await repository.insertMany([
+          usdcTransfer('atFrom', ethereumUsdc, arbitrumUsdc, {
+            timestamp: UnixTime(100),
+          }),
+          usdcTransfer('inside', ethereumUsdc, arbitrumUsdc, {
+            timestamp: UnixTime(150),
+          }),
+          usdcTransfer('atTo', ethereumUsdc, arbitrumUsdc, {
+            timestamp: UnixTime(200),
+          }),
+          usdcTransfer('after', ethereumUsdc, arbitrumUsdc, {
+            timestamp: UnixTime(201),
+          }),
+        ])
+
+        const [stats] = await repository.getDeployedTokenPairStats(usdc, {
+          from: UnixTime(100),
+          to: UnixTime(200),
+        })
+
+        expect(stats?.transferCount).toEqual(2)
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getExistingItems.name, () => {
     it('returns rows that match the requested src/dst pairs', async () => {
       const t1 = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))

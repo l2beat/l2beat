@@ -10,16 +10,18 @@ import { ProjectIconList } from '~/components/ProjectIconList'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
-import type { InteropTokenOnchainDeploymentsRow } from './InteropTokenOnchainDeploymentsSection'
+import type { InteropTokenDeploymentView } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 
 const UNSUPPORTED_CHAIN_TOOLTIP =
   "The information is not available as this deployment is on a chain we don't fully support."
 const NO_TRANSFER_TIME_TOOLTIP =
   'There is no transfer time data for this deployment from the past 24 hours.'
+const NO_DATA_TOOLTIP =
+  'There is no transfer data for this deployment from the past 24 hours.'
 const NO_MINTERS_TOOLTIP =
   'No known bridge has been observed minting this deployment. It is likely the locked or natively issued side.'
 
-export type DeploymentRow = InteropTokenOnchainDeploymentsRow & BasicTableRow
+export type DeploymentRow = InteropTokenDeploymentView & BasicTableRow
 const columnHelper = createColumnHelper<DeploymentRow>()
 export const interopTokenOnchainDeploymentsColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -114,7 +116,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     header: 'Last 24h\nVolume',
     cell: (ctx) => {
       if (ctx.row.original.volume === null)
-        return <InteropNoDataBadge tooltip={UNSUPPORTED_CHAIN_TOOLTIP} />
+        return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
       return (
         <span className="font-medium text-label-value-15">
           {formatCurrency(ctx.row.original.volume, 'usd')}
@@ -131,7 +133,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     header: 'Last 24h\ntransfer count',
     cell: (ctx) => {
       if (ctx.row.original.transferCount === null)
-        return <InteropNoDataBadge tooltip={UNSUPPORTED_CHAIN_TOOLTIP} />
+        return <InteropNoDataBadge tooltip={noDataTooltip(ctx.row.original)} />
       return (
         <span className="font-medium text-label-value-15">
           {ctx.row.original.transferCount}
@@ -171,3 +173,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
   }),
 ]
+
+function noDataTooltip(row: DeploymentRow): string {
+  return row.isSupported ? NO_DATA_TOOLTIP : UNSUPPORTED_CHAIN_TOOLTIP
+}
