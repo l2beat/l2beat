@@ -41,9 +41,13 @@ export function createMatchingProjectsResolver<TTarget>(
  * Unlike `createTransferBridgeResolver`, several matches are legitimate:
  * more than one bridge can mint the same deployment.
  */
+export type InteropProjectResolver = (
+  observation: InteropPluginObservation,
+) => Project<'interopConfig'>[]
+
 export function createInteropProjectResolver(
   projects: Project<'interopConfig'>[],
-): (observation: InteropPluginObservation) => Project<'interopConfig'>[] {
+): InteropProjectResolver {
   const classifier = new InteropTransferClassifier()
   return createMatchingProjectsResolver(projects, (plugins) =>
     classifier.createPluginMatcher(plugins),

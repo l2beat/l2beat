@@ -1,14 +1,13 @@
-import { formatAddress, formatCurrency } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { ChainIcon } from '~/pages/interop/components/ChainIcon'
 import type { InteropTokenRelationsNode } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
 import { isCluster } from './graphSelectors'
 import type { NodeBox } from './layoutRelationsGraph'
+import { shortAddress, Volume } from './RelationsPrimitives'
 
 // Every member is listed; the cap only guards the canvas against a runaway cluster.
 const CLUSTER_MEMBERS_CAP = 16
-const CLUSTER_MEMBERS_SHOWN = CLUSTER_MEMBERS_CAP - 1
 
 // Heights are the sum of fixed-height lines below plus padding and borders,
 // so the layout can position nodes before they render.
@@ -39,7 +38,7 @@ function getClusterColumns(count: number): number {
 
 function getShownMembers(node: InteropTokenRelationsNode) {
   return node.deployments.length > CLUSTER_MEMBERS_CAP
-    ? node.deployments.slice(0, CLUSTER_MEMBERS_SHOWN)
+    ? node.deployments.slice(0, CLUSTER_MEMBERS_CAP - 1)
     : node.deployments
 }
 
@@ -170,20 +169,6 @@ function Meta({
   )
 }
 
-export function Volume({
-  value,
-  className,
-}: {
-  value: number | null
-  className?: string
-}) {
-  return (
-    <span className={cn('shrink-0 tabular-nums', className)}>
-      {value === null ? '—' : formatCurrency(value, 'usd')}
-    </span>
-  )
-}
-
 function Bridges({
   bridges,
 }: {
@@ -208,8 +193,4 @@ function Bridges({
       </span>
     </span>
   )
-}
-
-export function shortAddress(address: string): string {
-  return address.startsWith('0x') ? formatAddress(address) : address
 }

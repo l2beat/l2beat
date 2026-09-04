@@ -1,4 +1,10 @@
-import { useCallback, useMemo, useState } from 'react'
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 /** world * k + (x, y) = screen */
 export interface Camera {
@@ -22,6 +28,7 @@ const MAX_SCALE = 4
 const FIT_PADDING = 32
 /** Below this the node text stops being readable. */
 const READABLE_SCALE = 0.55
+const WHEEL_ZOOM_STEP = 1.15
 
 /** Fits the width and anchors the top: a tall graph is panned, not shrunk into a smudge. */
 export function fitCamera(
@@ -66,10 +73,12 @@ export function zoomCamera(
   }
 }
 
+/** Fits on mount and on resize; ctrl/meta + wheel over `containerRef` zooms. */
 export function useRelationsCamera(
   content: Size,
   viewport: Size,
   focusX: number | undefined,
+  containerRef: RefObject<HTMLElement | null>,
 ) {
   const { width: contentWidth, height: contentHeight } = content
   const { width: viewportWidth, height: viewportHeight } = viewport
@@ -96,6 +105,24 @@ export function useRelationsCamera(
     [fitted, viewportWidth, viewportHeight],
   )
   const reset = useCallback(() => setCamera(undefined), [])
+
+  // Native listener: React's wheel handler is passive, so it cannot stop the
+  // browser from zooming the page on ctrl+wheel. A bare wheel keeps scrolling.
+  useEffect(() => {
+    const element = containerRef.current
+    if (!element) return
+    const onWheel = (event: WheelEvent) => {
+      if (!event.ctrlKey && !event.metaKey) return
+      event.preventDefault()
+      const rect = element.getBoundingClientRect()
+      zoomBy(event.deltaY < 0 ? WHEEL_ZOOM_STEP : 1 / WHEEL_ZOOM_STEP, {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      })
+    }
+    element.addEventListener('wheel', onWheel, { passive: false })
+    return () => element.removeEventListener('wheel', onWheel)
+  }, [containerRef, zoomBy])
 
   return { camera: camera ?? fitted, setCamera, zoomBy, reset }
 }

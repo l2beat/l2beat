@@ -4,8 +4,8 @@ import { manifest } from '~/utils/Manifest'
 
 export interface ChainDisplayInfo {
   name: string
-  iconUrl?: string
-  explorerUrl?: string
+  iconUrl: string | undefined
+  explorerUrl: string | undefined
 }
 
 export type ChainDisplayInfoMap = Map<string, ChainDisplayInfo>

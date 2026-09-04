@@ -1,6 +1,7 @@
 import type { MintingPluginRecord } from '@l2beat/database'
 import { env } from '~/env'
 import { getTokenDb } from '~/server/tokenDb'
+import { deploymentKey } from '../utils/deploymentKey'
 
 export interface InteropTokenOnchainDeployment {
   chain: string
@@ -38,7 +39,7 @@ export async function getInteropTokenOnchainDeployments(
     InteropTokenOnchainDeployment['mintingPlugins']
   >()
   for (const record of mintingPlugins) {
-    const key = deploymentKey(record.chain, record.address)
+    const key = deploymentKey(record)
     const plugins = mintingPluginsMap.get(key) ?? []
     plugins.push({
       plugin: record.plugin,
@@ -53,14 +54,9 @@ export async function getInteropTokenOnchainDeployments(
     chain: token.chain,
     address: token.address,
     symbol: token.symbol,
-    mintingPlugins:
-      mintingPluginsMap.get(deploymentKey(token.chain, token.address)) ?? [],
+    mintingPlugins: mintingPluginsMap.get(deploymentKey(token)) ?? [],
     isSupported: supportedChains.has(token.chain),
   }))
-}
-
-function deploymentKey(chain: string, address: string): string {
-  return `${chain}|${address.toLowerCase()}`
 }
 
 const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [

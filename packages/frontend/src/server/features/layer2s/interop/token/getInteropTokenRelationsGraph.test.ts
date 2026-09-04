@@ -80,7 +80,14 @@ describe(getInteropTokenRelationsGraph.name, () => {
       [ethereum, arbitrum, base],
       { routes: [cluster, backing], pairStats: undefined },
       new Map([
-        ['base', { name: 'Base', explorerUrl: 'https://basescan.org' }],
+        [
+          'base',
+          {
+            name: 'Base',
+            iconUrl: undefined,
+            explorerUrl: 'https://basescan.org',
+          },
+        ],
       ]),
       resolveProjects,
     )
@@ -108,24 +115,61 @@ describe(getInteropTokenRelationsGraph.name, () => {
       address: '0xb1',
       symbol: 'USDC',
       explorerUrl: 'https://basescan.org/address/0xb1',
+      minters: [],
+      isSupported: true,
       volume: null,
       transferCount: null,
       avgDuration: null,
     })
+  })
+  it('resolves minters from minting plugins, deduplicated and sorted', () => {
+    const graph = getInteropTokenRelationsGraph(
+      usdc,
+      [
+        deployment('base', '0xb1', [
+          {
+            plugin: 'ccip',
+            bridgeType: 'burnAndMint',
+            relatedChain: 'ethereum',
+          },
+          {
+            plugin: 'cctp-v2',
+            bridgeType: 'burnAndMint',
+            relatedChain: 'ethereum',
+          },
+          {
+            plugin: 'manual',
+            bridgeType: 'lockAndMint',
+            relatedChain: 'ethereum',
+          },
+        ]),
+      ],
+      { routes: [], pairStats: undefined },
+      new Map(),
+      createInteropProjectResolver([
+        project('zeta', 'Zeta bridge', [
+          { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
+        ]),
+        project('alpha', 'Alpha bridge', [
+          { plugin: 'ccip', bridgeType: 'burnAndMint' },
+          { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
+        ]),
+      ]),
+    )
+
+    expect(graph.nodes[0]?.deployments[0]?.minters.map((m) => m.name)).toEqual([
+      'Alpha bridge',
+      'Zeta bridge',
+    ])
   })
 })
 
 function deployment(
   chain: string,
   address: string,
+  mintingPlugins: InteropTokenOnchainDeployment['mintingPlugins'] = [],
 ): InteropTokenOnchainDeployment {
-  return {
-    chain,
-    address,
-    symbol: 'USDC',
-    mintingPlugins: [],
-    isSupported: true,
-  }
+  return { chain, address, symbol: 'USDC', mintingPlugins, isSupported: true }
 }
 
 function pair(
