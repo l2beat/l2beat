@@ -8,6 +8,7 @@ import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import type { TechnologyRisk } from './RiskList'
 import { RiskList } from './RiskList'
+import { CentralizedSequencingSpecSheet } from './sequencing/CentralizedSequencingSpecSheet'
 import { ProjectInclusionDelayChart } from './sequencing/ProjectInclusionDelayChart'
 import { SequencerSetSpecSheet } from './sequencing/SequencerSetSpecSheet'
 import type { ProjectSectionProps } from './types'
@@ -60,6 +61,9 @@ export function SequencingSection({
       </Markdown>
       {sequencingSpec?.type === 'sequencer-set' && (
         <SequencerSetSpecSheet spec={sequencingSpec} />
+      )}
+      {sequencingSpec?.type === 'centralized' && (
+        <CentralizedSequencingSpecSheet spec={sequencingSpec} />
       )}
       {inclusionDelay && (
         <>
