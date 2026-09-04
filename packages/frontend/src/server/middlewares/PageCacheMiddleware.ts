@@ -6,9 +6,6 @@ import type { NextFunction, Request, Response } from 'express'
  */
 export const DEFAULT_EDGE_SECONDS = 60
 
-/** Edge TTL for pages whose content only changes with a deploy. */
-export const STATIC_PAGE_EDGE_SECONDS = 3600
-
 const STALE_WHILE_REVALIDATE_SECONDS = 300
 const STALE_IF_ERROR_SECONDS = 3600
 
