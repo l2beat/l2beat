@@ -1,7 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -92,7 +91,6 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
     props: {
       ...appLayoutProps,
       projectEntry,
-      garden: getProjectGardenCrops(project.crops),
       queryState: helpers.dehydrate(),
     },
   }

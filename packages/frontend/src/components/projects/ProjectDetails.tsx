@@ -5,6 +5,7 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { GardenCropsSection } from './sections/GardenCropsSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropFlowsSection } from './sections/interop/InteropFlowsSection'
@@ -316,6 +317,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'Group':
             return (
               <GroupSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'GardenCropsSection':
+            return (
+              <GardenCropsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

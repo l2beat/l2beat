@@ -8,6 +8,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -157,6 +158,20 @@ export async function getPrivacyProjectEntry(
     contractsSection || permissionsSection ? discoUi.href : undefined
 
   const sections: ProjectDetailsSection[] = []
+
+  // First, where the review used to sit as a callout under the summary: the
+  // CROPS verdict is a reading of the whole protocol, not one of its parts.
+  const gardenCrops = getProjectGardenCrops(details.crops)
+  if (gardenCrops) {
+    sections.push({
+      type: 'GardenCropsSection',
+      props: {
+        id: 'crops',
+        title: 'CROPS',
+        ...gardenCrops,
+      },
+    })
+  }
 
   if (details.display.detailedDescription) {
     sections.push({

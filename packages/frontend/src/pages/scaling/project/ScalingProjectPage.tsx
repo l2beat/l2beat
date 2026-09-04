@@ -5,7 +5,6 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
-import { GardenCropsNotice } from '~/components/projects/GardenCropsNotice'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -19,20 +18,17 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ProjectScalingSummary } from './components/ScalingProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
-  garden?: ProjectGardenCrops
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function ScalingProjectPage({
   projectEntry,
-  garden,
   queryState,
   selectedUpdateId,
   ...props
@@ -109,7 +105,6 @@ export function ScalingProjectPage({
                 </div>
                 <div className="row-start-2">
                   <ProjectScalingSummary project={projectEntry} />
-                  {garden && <GardenCropsNotice {...garden} />}
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&

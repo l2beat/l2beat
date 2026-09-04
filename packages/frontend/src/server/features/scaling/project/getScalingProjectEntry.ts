@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import { getProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import {
   countRecentDiscoveryUpdates,
   getDiscoveryUpdates,
@@ -171,6 +172,7 @@ export async function getScalingProjectEntry(
     | 'ecosystemColors'
     | 'discoveryInfo'
     | 'daTrackingConfig'
+    | 'crops'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
@@ -391,6 +393,20 @@ export async function getScalingProjectEntry(
       : undefined
 
   const projectWithIcon = withProjectIcon(project)
+
+  // First, where the review used to sit as a callout under the summary: the
+  // CROPS verdict is a reading of the whole protocol, not one of its parts.
+  const gardenCrops = getProjectGardenCrops(project.crops)
+  if (gardenCrops) {
+    sections.push({
+      type: 'GardenCropsSection',
+      props: {
+        id: 'crops',
+        title: 'CROPS',
+        ...gardenCrops,
+      },
+    })
+  }
 
   if (scalingTvsSection && tvsProjectStats) {
     sections.push({

@@ -4,7 +4,6 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { GardenCropsNotice } from '~/components/projects/GardenCropsNotice'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -19,23 +18,16 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
-  garden?: ProjectGardenCrops
   queryState: DehydratedState
 }
 
-export function PrivacyProjectPage({
-  entry,
-  garden,
-  queryState,
-  ...props
-}: Props) {
+export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -139,8 +131,6 @@ export function PrivacyProjectPage({
                         </div>
                       </div>
                     </PrimaryCard>
-
-                    {garden && <GardenCropsNotice {...garden} />}
 
                     <ProjectDetails items={entry.sections} />
                   </HighlightableLinkContextProvider>
