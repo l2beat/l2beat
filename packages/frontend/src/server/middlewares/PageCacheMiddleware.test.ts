@@ -3,32 +3,28 @@ import { expect } from 'earl'
 import express from 'express'
 import {
   ClearPageCacheMiddleware,
-  DEFAULT_EDGE_SECONDS,
   PageCacheMiddleware,
-  pageCacheControl,
-  setPageCacheHeaders,
 } from './PageCacheMiddleware'
 
+const PAGE_CACHE_CONTROL =
+  'public, max-age=0, s-maxage=60, stale-while-revalidate=300, stale-if-error=3600'
+
 describe(PageCacheMiddleware.name, () => {
-  it('sets the default page cache headers on GET', async () => {
+  it('sets the page cache header on GET', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/page`)
-      expect(response.headers.get('cache-control')).toEqual(
-        pageCacheControl(DEFAULT_EDGE_SECONDS),
-      )
+      expect(response.headers.get('cache-control')).toEqual(PAGE_CACHE_CONTROL)
     })
   })
 
-  it('sets the default page cache headers on HEAD', async () => {
+  it('sets the page cache header on HEAD', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/page`, { method: 'HEAD' })
-      expect(response.headers.get('cache-control')).toEqual(
-        pageCacheControl(DEFAULT_EDGE_SECONDS),
-      )
+      expect(response.headers.get('cache-control')).toEqual(PAGE_CACHE_CONTROL)
     })
   })
 
-  it('does not set cache headers on other methods', async () => {
+  it('does not set the header on other methods', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/page`, { method: 'POST' })
       expect(response.headers.get('cache-control')).toEqual(null)
@@ -48,23 +44,6 @@ describe(PageCacheMiddleware.name, () => {
       expect(response.headers.get('cache-control')).toEqual(null)
     })
   })
-
-  it('lets a route opt into a longer edge ttl', async () => {
-    await withServer(async (baseUrl) => {
-      const response = await fetch(`${baseUrl}/long`)
-      expect(response.headers.get('cache-control')).toEqual(
-        pageCacheControl(3600),
-      )
-    })
-  })
-})
-
-describe(pageCacheControl.name, () => {
-  it('keeps browsers revalidating and lets the edge serve stale copies', () => {
-    expect(pageCacheControl(60)).toEqual(
-      'public, max-age=0, s-maxage=60, stale-while-revalidate=300, stale-if-error=3600',
-    )
-  })
 })
 
 async function withServer(test: (baseUrl: string) => Promise<void>) {
@@ -75,10 +54,6 @@ async function withServer(test: (baseUrl: string) => Promise<void>) {
   })
   app.get('/no-cache', (_, res) => {
     res.set('Cache-Control', 'no-cache')
-    res.status(200).send('ok')
-  })
-  app.get('/long', (_, res) => {
-    setPageCacheHeaders(res, { edgeSeconds: 3600 })
     res.status(200).send('ok')
   })
   app.use(ClearPageCacheMiddleware())
