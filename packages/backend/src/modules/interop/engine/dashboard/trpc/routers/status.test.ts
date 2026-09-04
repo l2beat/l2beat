@@ -1,5 +1,6 @@
 import type { Database } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
+import { INDEXER_NAMES } from '../../../../../../tools/uif/indexerIdentity'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createStatusRouter } from './status'
 
@@ -36,6 +37,35 @@ describe(createStatusRouter.name, () => {
         blocksAggregation: true,
       },
     ])
+  })
+
+  it('returns the persisted Relay checkpoint', async () => {
+    const findByIndexerId = mockFn().resolvesTo({
+      indexerId: INDEXER_NAMES.INTEROP_RELAY,
+      safeHeight: 1_700_000_000,
+    })
+    const caller = createCaller(undefined, {
+      indexerState: mockObject<Database['indexerState']>({ findByIndexerId }),
+    })
+
+    const result = await caller.relay()
+
+    expect(findByIndexerId).toHaveBeenOnlyCalledWith(
+      INDEXER_NAMES.INTEROP_RELAY,
+    )
+    expect(result).toEqual({ syncedTo: 1_700_000_000 })
+  })
+
+  it('returns no Relay checkpoint before the indexer initializes', async () => {
+    const caller = createCaller(undefined, {
+      indexerState: mockObject<Database['indexerState']>({
+        findByIndexerId: mockFn().resolvesTo(undefined),
+      }),
+    })
+
+    const result = await caller.relay()
+
+    expect(result).toEqual({ syncedTo: undefined })
   })
 
   it('applies wildcard resync values to unspecified chains', async () => {
