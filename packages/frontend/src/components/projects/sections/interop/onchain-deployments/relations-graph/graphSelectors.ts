@@ -1,6 +1,6 @@
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type {
-  InteropTokenRelationsDeployment,
+  InteropTokenDeploymentView,
   InteropTokenRelationsEdge,
   InteropTokenRelationsGraph,
   InteropTokenRelationsNode,
@@ -12,6 +12,11 @@ export function edgeKey(edge: { from: string; to: string }): string {
 
 export function isCluster(node: InteropTokenRelationsNode): boolean {
   return node.deployments.length > 1
+}
+
+/** Something to draw: an edge, or a cluster of deployments. */
+export function hasTokenRelations(graph: InteropTokenRelationsGraph): boolean {
+  return graph.edges.length > 0 || graph.nodes.some(isCluster)
 }
 
 export function describeNode(node: InteropTokenRelationsNode): string {
@@ -144,11 +149,11 @@ export function getRelationsPaths(
 }
 
 export interface SameChainComparison {
-  chain: InteropTokenRelationsDeployment['chain']
+  chain: InteropTokenDeploymentView['chain']
   /** Every deployment of the token on the chain, busiest first. */
   ranked: {
     node: InteropTokenRelationsNode
-    deployment: InteropTokenRelationsDeployment
+    deployment: InteropTokenDeploymentView
     selected: boolean
   }[]
   /** 1-based position of the node's deployment; undefined without volume data. */

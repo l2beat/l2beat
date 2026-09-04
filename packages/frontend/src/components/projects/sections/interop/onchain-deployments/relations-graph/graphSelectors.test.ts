@@ -9,6 +9,7 @@ import {
   getSameChainComparisons,
   getUnconnectedIds,
   groupBackedPaths,
+  hasTokenRelations,
 } from './graphSelectors'
 
 // E backs A and B; A backs C; X and Y are a cluster; L is alone.
@@ -30,6 +31,18 @@ const graph: InteropTokenRelationsGraph = {
     { from: 'A', to: 'C', bridges: [] },
   ],
 }
+
+describe(hasTokenRelations.name, () => {
+  it('needs an edge or a cluster', () => {
+    expect(hasTokenRelations(graph)).toEqual(true)
+    expect(
+      hasTokenRelations({ nodes: graph.nodes.slice(0, 2), edges: [] }),
+    ).toEqual(false)
+    expect(
+      hasTokenRelations({ nodes: graph.nodes.slice(4, 5), edges: [] }),
+    ).toEqual(true)
+  })
+})
 
 describe(getUnconnectedIds.name, () => {
   it('excludes clusters and anything on an edge', () => {

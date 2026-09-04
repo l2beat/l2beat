@@ -2,10 +2,13 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
+import { getChainDisplayInfo } from '~/server/features/layer2s/interop/token/getChainDisplayInfo'
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import { getInteropTokenOnchainDeployments } from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
 import { getInteropTokenRelations } from '~/server/features/layer2s/interop/token/getInteropTokenRelations'
+import { getInteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import { createInteropProjectResolver } from '~/server/features/layer2s/interop/utils/createInteropProjectResolver'
 import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -109,14 +112,9 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const deploymentsPromise = getInteropTokenOnchainDeployments(
-    token.id,
-    activeInteropChainIds,
-  )
   const [
     tokenData,
-    deployments,
-    relations,
+    { deployments, relations },
     projectsWithChains,
     interopProjects,
   ] = await Promise.all([
@@ -124,10 +122,7 @@ async function getCachedData({
       tokenId: token.id,
       ...apiSelection,
     }),
-    deploymentsPromise,
-    deploymentsPromise.then((deployments) =>
-      getInteropTokenRelations(token.id, deployments),
-    ),
+    getDeploymentsAndRelations(token.id, activeInteropChainIds),
     ps.getProjects({
       select: ['chainConfig'],
     }),
@@ -136,13 +131,24 @@ async function getCachedData({
     }),
   ])
 
+  const relationsGraph =
+    deployments.length > 0
+      ? getInteropTokenRelationsGraph(
+          token.id,
+          deployments,
+          relations,
+          getChainDisplayInfo(
+            deployments.map((deployment) => deployment.chain),
+            interopChainsWithIcons,
+            projectsWithChains,
+          ),
+          createInteropProjectResolver(interopProjects),
+        )
+      : undefined
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
-    projectsWithChains,
-    interopProjects,
-    deployments,
-    relations,
+    relationsGraph,
   )
 
   return {
@@ -154,4 +160,10 @@ async function getCachedData({
     tokenData,
     apiSelection,
   }
+}
+
+async function getDeploymentsAndRelations(tokenId: string, chainIds: string[]) {
+  const deployments = await getInteropTokenOnchainDeployments(tokenId, chainIds)
+  const relations = await getInteropTokenRelations(tokenId, deployments)
+  return { deployments, relations }
 }
