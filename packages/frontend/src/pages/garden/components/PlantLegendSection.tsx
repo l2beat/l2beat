@@ -35,14 +35,14 @@ const PLANTS: {
     status: 'notReviewed',
     title: 'Not reviewed',
     description:
-      'A dashed ring with no plant. Either the property is out of scope for this protocol, or we have not reviewed it yet.',
+      'We have not reviewed the property yet.',
   },
   {
     sentiment: 'neutral',
     status: 'fullyTransparent',
     title: 'Fully transparent',
     description:
-      'A whole plant, outlined rather than filled, that you see straight through. The protocol makes no claim to the property and hides nothing about it - an answer, not a gap.',
+      'Applies to Privacy only: The protocol makes no claim to the property and is fully transparent.',
   },
 ]
 
