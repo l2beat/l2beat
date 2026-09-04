@@ -15,7 +15,8 @@
         "chain": "base",
         "escrowAddress": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "decimals": 18,
-        "sinceTimestamp": 1710087441
+        "sinceTimestamp": 1710087441,
+        "untilTimestamp": 1788332400
       },
       "valueForSummary": {
         "type": "value",
@@ -23,7 +24,8 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1710087441
+          "sinceTimestamp": 1710087441,
+          "untilTimestamp": 1788332400
         },
         "priceId": "degen-base"
       },
@@ -43,7 +45,8 @@
         "address": "0xF1815bd50389c46847f0Bda824eC8da914045D14",
         "chain": "degen",
         "decimals": 6,
-        "sinceTimestamp": 1732321763
+        "sinceTimestamp": 1732321763,
+        "untilTimestamp": 1788332400
       },
       "category": "stablecoin",
       "source": "external",
@@ -69,7 +72,8 @@
         "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
         "chain": "degen",
         "decimals": 18,
-        "sinceTimestamp": 1732657069
+        "sinceTimestamp": 1732657069,
+        "untilTimestamp": 1788332400
       },
       "category": "ether",
       "source": "external",
