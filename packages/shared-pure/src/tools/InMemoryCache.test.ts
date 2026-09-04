@@ -537,6 +537,50 @@ describe(InMemoryCache.name, () => {
         expect(await thirdRequest).toEqual('new')
       })
 
+      it('should store a superseded result when the newer fallback failed', async () => {
+        const cache = new InMemoryCache({ promiseTimeout: 30 })
+        const cacheOptions = { key: ['key'], ttl: 1000 }
+        const first = deferred<string>()
+
+        const firstRequest = cache.get(cacheOptions, () => first.promise)
+        fakeNow += 31
+        const secondRequest = cache
+          .get(cacheOptions, () => Promise.reject(new Error('failed')))
+          .catch(() => 'failed')
+        expect(await secondRequest).toEqual('failed')
+
+        fakeNow += 5
+        first.resolve('old')
+        expect(await firstRequest).toEqual('old')
+
+        expect(cache._get(['key'])).toEqual({
+          result: 'old',
+          timestamp: fakeNow,
+          maxLifetime: 1000,
+        })
+      })
+
+      it('should not let a superseded fallback overwrite a newer result', async () => {
+        const cache = new InMemoryCache({ promiseTimeout: 30 })
+        const cacheOptions = { key: ['key'], ttl: 1000 }
+        const first = deferred<string>()
+
+        const firstRequest = cache.get(cacheOptions, () => first.promise)
+        fakeNow += 31
+        expect(await cache.get(cacheOptions, async () => 'new')).toEqual('new')
+        const storedAt = fakeNow
+
+        fakeNow += 5
+        first.resolve('old')
+        expect(await firstRequest).toEqual('old')
+
+        expect(cache._get(['key'])).toEqual({
+          result: 'new',
+          timestamp: storedAt,
+          maxLifetime: 1000,
+        })
+      })
+
       it('should not let a superseded revalidation clear a newer in-flight one', async () => {
         const cache = new InMemoryCache({ promiseTimeout: 30 })
         cache._set(['key'], { result: 'stale', timestamp: fakeNow - 2 })

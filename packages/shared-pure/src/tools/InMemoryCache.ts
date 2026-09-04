@@ -98,13 +98,11 @@ export class InMemoryCache {
       const fallbackResult = await promise
       const duration = Date.now() - start
 
-      if (this.inFlight.get(key)?.promise === promise) {
-        const stored = this.store(key, fallbackResult, options)
-        this.logger?.info(stored ? 'Cache set' : 'Cache not stored', {
-          key,
-          duration,
-        })
-      }
+      const stored = this.store(key, fallbackResult, options, now)
+      this.logger?.info(stored ? 'Cache set' : 'Cache not stored', {
+        key,
+        duration,
+      })
 
       return fallbackResult
     } finally {
@@ -127,14 +125,12 @@ export class InMemoryCache {
       return
     }
 
+    const startedAt = UnixTime.now()
     const promise = fallback()
-    this.inFlight.set(key, { promise, timestamp: UnixTime.now() })
+    this.inFlight.set(key, { promise, timestamp: startedAt })
 
     try {
-      const result = await promise
-      if (this.inFlight.get(key)?.promise === promise) {
-        this.store(key, result, options)
-      }
+      this.store(key, await promise, options, startedAt)
     } catch (error) {
       // If revalidation fails, we keep the stale data
       this.logger?.warn('Cache revalidation failed', {
@@ -148,11 +144,25 @@ export class InMemoryCache {
     }
   }
 
-  private store(key: string, result: unknown, options: Options): boolean {
+  private store(
+    key: string,
+    result: unknown,
+    options: Options,
+    startedAt: number,
+  ): boolean {
     if (result === undefined || result === null) {
       if (options.cacheNullish !== true) {
         return false
       }
+    }
+
+    // A fallback that outlived promiseTimeout may settle after a newer one
+    // for the same key. Its data is older, so it must not replace what the
+    // newer fallback stored. It is still worth keeping when nothing newer
+    // made it into the cache, e.g. because the newer fallback failed.
+    const existing = this.cache.get(key)
+    if (existing && existing.timestamp >= startedAt) {
+      return false
     }
 
     this.cache.set(key, {
