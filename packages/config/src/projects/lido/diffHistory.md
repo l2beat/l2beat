@@ -1,14 +1,28 @@
-Generated with discovered.json: 0x396d362187f02f854aca7e91cb84d098b7606233
+Generated with discovered.json: 0x8d1b329c7306e488b781e9f4b136b4ac7f571fb1
 
-# Diff at Wed, 02 Sep 2026 12:05:52 GMT:
+# Diff at Fri, 04 Sep 2026 15:07:58 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@39e5482279a0233e702dd6fb1c953e1bdc7a78eb block: 1787647851
-- current timestamp: 1788350676
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@28702f068bf7b25ad61fbb2f841b9fb3792b78cc block: 1787647851
+- current timestamp: 1788534406
 
 ## Description
 
-Curate permission modeling: flow act permissions through Dual Governance, its timelock and executor, and the ResealManager; mark protocol machinery, the CircuitBreaker, Finance and the VaultsAdapter as not acting independently; stop following Chainlink feeds from the OracleRouter
+Name Lido committee multisigs and the tiebreaker subcommittees after the Lido multisig registry; show the CircuitBreaker, Finance, DepositSecurityModule and TokenManager permission aggregators as actors in their own right; scope the Agent TRANSFER_ROLE description to ETH and ERC-20
+
+## Watched changes
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [lido/stETH] {
+    +++ description: The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.
+      values.getFeeDistribution.treasuryFeeBasisPoints:
+-        3793
++        3783
+      values.getFeeDistribution.operatorsFeeBasisPoints:
+-        6206
++        6216
+    }
+```
 
 ## Config/verification related changes
 
@@ -33,6 +47,15 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 -        [{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"spend vault ETH on EIP-7251 validator consolidation requests.","role":".CONSOLIDATION_GATEWAY"}]
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"spend vault ETH on EIP-7251 validator consolidation requests.","role":".CONSOLIDATION_GATEWAY"}]
+    }
+```
+
+```diff
+    contract StVaultsCommittee (eth:0x18A1065c81b0Cc356F1b1C843ddd5E14e4AefffF) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "StVaultsCommittee"
     }
 ```
 
@@ -67,8 +90,11 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Safe (eth:0x2570e0b22AD904501dfB0d49575991ACB801dD91) [GnosisSafe] {
+    contract CuratedModuleCommittee (eth:0x2570e0b22AD904501dfB0d49575991ACB801dD91) [GnosisSafe] {
     +++ description: None
+      name:
+-        "Safe"
++        "CuratedModuleCommittee"
       receivedPermissions.2.description:
 -        "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
 +        "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
@@ -457,6 +483,15 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 ```
 
 ```diff
+    contract TiebreakerBuildersSubcommittee (eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      name:
+-        "TiebreakerSubCommittee"
++        "TiebreakerBuildersSubcommittee"
+    }
+```
+
+```diff
 -   Status: DELETED
     reference FeedRegistry (eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf)
     +++ description: None
@@ -483,16 +518,6 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CircuitBreaker (eth:0x6019CB557978296BA3C08a7B73225C0975DFB2F7) [lido/CircuitBreaker] {
-    +++ description: Emergency pause coordinator. The admin assigns one heartbeat-gated pauser to each registered protocol contract; a live pauser can trigger one time-bounded pause before its assignment is consumed.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"pause validator-exit report processing for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"pause validator consolidation requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"pause VaultHub operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"pause validator top-ups for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"pause new withdrawal requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"pause processing of validator proofs.","role":".pausers"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"pause triggerable withdrawals for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"pause predeposit proving and validator-deposit operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"pause processing of validator proofs.","role":".pausers"}]
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"pause validator-exit report processing for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"pause validator consolidation requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"pause VaultHub operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"pause validator top-ups for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"pause new withdrawal requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"pause processing of validator proofs.","role":".pausers"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"pause triggerable withdrawals for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"pause predeposit proving and validator-deposit operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"pause processing of validator proofs.","role":".pausers"}]
-    }
-```
-
-```diff
     contract CuratedGate (eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F) [lido/CuratedGate] {
     +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
       receivedPermissions:
@@ -509,6 +534,15 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 -        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
+    }
+```
+
+```diff
+    contract EmergencyBrakesEthereum (eth:0x73b047fe6337183A454c5217241D780a932777bD) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Lido Multisig 1"
++        "EmergencyBrakesEthereum"
     }
 ```
 
@@ -559,11 +593,23 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C) [GnosisSafe] {
+    contract CircuitBreakerCommittee (eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C) [GnosisSafe] {
     +++ description: None
+      name:
+-        "GnosisSafe"
++        "CircuitBreakerCommittee"
       receivedPermissions.0.description:
 -        "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
 +        "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
+    }
+```
+
+```diff
+    contract DualGovernanceEmergencyActivationCommittee (eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "DualGovernanceEmergencyActivationCommittee"
     }
 ```
 
@@ -574,6 +620,15 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 -        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract P2P (eth:0x8ed4dfd3A610CCF1FB45e797bf5D8e0f93084F22) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "P2P"
     }
 ```
 
@@ -650,10 +705,9 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 ```diff
     contract Finance (eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86) [lido/Finance] {
     +++ description: Lido DAO's Aragon Finance application. ACL roles create and execute one-time or recurring treasury payments and change their budgets, recipients, amounts and accounting period.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","description":"transfer ETH, ERC-20, ERC-721, ERC-1155 and EtherToken assets held by the Agent.","role":".assetTransferers"}]
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","description":"transfer ETH, ERC-20, ERC-721, ERC-1155 and EtherToken assets held by the Agent.","role":".assetTransferers"}]
+      receivedPermissions.0.description:
+-        "transfer ETH, ERC-20, ERC-721, ERC-1155 and EtherToken assets held by the Agent."
++        "transfer ETH and ERC-20 tokens held by the Agent."
     }
 ```
 
@@ -664,6 +718,15 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 -        [{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report that validator exits have been requested and update the module's exit state.","role":".validatorExitingStatusReporters"}]
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report that validator exits have been requested and update the module's exit state.","role":".validatorExitingStatusReporters"}]
+    }
+```
+
+```diff
+    contract TiebreakerEthereumEcosystemSubcommittee (eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      name:
+-        "TiebreakerSubCommittee"
++        "TiebreakerEthereumEcosystemSubcommittee"
     }
 ```
 
@@ -688,11 +751,23 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f) [GnosisSafe] {
+    contract CommunityStakingModuleCommittee (eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f) [GnosisSafe] {
     +++ description: None
+      name:
+-        "GnosisSafe"
++        "CommunityStakingModuleCommittee"
       receivedPermissions.1.description:
 -        "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
 +        "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
+    }
+```
+
+```diff
+    contract DualGovernanceEmergencyExecutionCommittee (eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "DualGovernanceEmergencyExecutionCommittee"
     }
 ```
 
@@ -733,6 +808,15 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 -        [{"permission":"interact","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","description":"record validator exit-delay and triggerable-withdrawal fees and query whether an exit-delay penalty applies.","role":".MODULE"}]
       directlyReceivedPermissions:
 +        [{"permission":"interact","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","description":"record validator exit-delay and triggerable-withdrawal fees and query whether an exit-delay penalty applies.","role":".MODULE"}]
+    }
+```
+
+```diff
+    contract TiebreakerNodeOperatorsSubcommittee (eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      name:
+-        "TiebreakerSubCommittee"
++        "TiebreakerNodeOperatorsSubcommittee"
     }
 ```
 
@@ -799,22 +883,11 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
 ```
 
 ```diff
-    contract DepositSecurityModule (eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be) [lido/DepositSecurityModule] {
-    +++ description: Guardian-based circuit breaker for legacy staking-module deposits. Guardians can collectively pause deposits if a malicious or stale deposit is observed, while the owner configures guardians and resumes deposits.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"decrease the vetted-signing-key limit of a node operator.","role":".stakingModuleUnvetters"}]
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"decrease the vetted-signing-key limit of a node operator.","role":".stakingModuleUnvetters"}]
-    }
-```
-
-```diff
-    contract TokenManager (eth:0xf73a1260d222f447210581DDf212D915c09a3249) [lido/TokenManager] {
-    +++ description: Aragon TokenManager for LDO. Its ACL roles can issue supply, mint or burn LDO, assign vested balances, and revoke vesting.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","description":"create executable Lido DAO votes.","role":".voteCreators"}]
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","description":"create executable Lido DAO votes.","role":".voteCreators"}]
+    contract GatewayFM (eth:0xf8Bfa395744Cb25fa4368Ffe2344Dc35546092d9) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "GatewayFM"
     }
 ```
 
@@ -847,6 +920,15 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
       directlyReceivedPermissions.18.description:
 -        "create one-time or recurring DAO payments."
 +        "create one-time or recurring DAO payments out of the Agent's assets, within the limits set on the role's ACL parameters."
+    }
+```
+
+```diff
+    contract ResealCommittee (eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "ResealCommittee"
     }
 ```
 
