@@ -14,21 +14,21 @@ const PLANTS: {
     status: 'reviewed',
     title: 'In bloom',
     description:
-      'The crop clears the bar. Caveats may still be listed - none of them undermine the property.',
+      'The crop clears the bar. Additional considerations may still be listed, but they do not undermine the property.',
   },
   {
     sentiment: 'warning',
     status: 'reviewed',
     title: 'A bud',
     description:
-      'The property mostly holds, but something real is missing: a gatekeeper, a short delay, a dependency the user cannot route around.',
+      'The property mostly holds, but something is missing: check the tooltips and detailed pages for details.',
   },
   {
     sentiment: 'bad',
     status: 'reviewed',
     title: 'Wilting',
     description:
-      'The property does not hold in practice. The plant says which assumption breaks it.',
+      'The property does not hold in practice.',
   },
   {
     sentiment: 'neutral',
