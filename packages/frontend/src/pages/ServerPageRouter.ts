@@ -1,5 +1,6 @@
 import express from 'express'
 import { env } from '~/env'
+import { PageCacheMiddleware } from '~/server/middlewares/PageCacheMiddleware'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
@@ -42,6 +43,10 @@ export function createServerPageRouter(
     res.setHeaders(headers)
     next()
   })
+
+  // Cloudflare edge-caches HTML only when the origin sends Cache-Control.
+  // Routes that must not be cached (e.g. "/") override it later in the chain.
+  router.use('/', PageCacheMiddleware())
 
   if (!env.CLIENT_SIDE_HOME_PAGE) {
     // Temporary redirect so browsers drop the previously cached 301 before

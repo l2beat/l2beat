@@ -9,6 +9,13 @@ on:
         required: true
       COOLIFY_UUID:
         required: true
+      # When both are set, the Cloudflare cache for the zone is purged once
+      # the Coolify deployment has finished (i.e. the new container passed
+      # its health check), so users never see a stale edge-cached build.
+      CLOUDFLARE_PURGE_TOKEN:
+        required: false
+      CLOUDFLARE_ZONE_ID:
+        required: false
 
 permissions:
   contents: read
@@ -17,16 +24,19 @@ jobs:
   deploy:
     name: Deploy to Coolify
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     env:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
       COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
+      CLOUDFLARE_PURGE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+      CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
 
       - name: Deploy to Coolify
+        id: deploy
         run: |
           response="$(
             curl --fail-with-body --silent --show-error \
@@ -39,4 +49,53 @@ jobs:
           )"
 
           echo "$response" | jq -e '.deployments | length > 0' >/dev/null
+          echo "$response"
+          echo "deployment_uuid=$(echo "$response" | jq -r '.deployments[0].deployment_uuid')" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for deployment to finish
+        if: ${{ env.CLOUDFLARE_PURGE_TOKEN != '' && env.CLOUDFLARE_ZONE_ID != '' }}
+        env:
+          DEPLOYMENT_UUID: ${{ steps.deploy.outputs.deployment_uuid }}
+        run: |
+          # Purging before the new container is healthy would refill the edge
+          # from the old container, so wait for Coolify to report completion.
+          for _ in $(seq 1 120); do
+            status="$(
+              curl --fail-with-body --silent --show-error \
+                --retry 3 \
+                --retry-delay 5 \
+                --retry-all-errors \
+                --header "Authorization: Bearer $COOLIFY_API_KEY" \
+                --header "Accept: application/json" \
+                "$COOLIFY_SERVER/api/v1/deployments/$DEPLOYMENT_UUID" \
+              | jq -r '.status'
+            )"
+            echo "Deployment $DEPLOYMENT_UUID status: $status"
+            case "$status" in
+              finished) exit 0 ;;
+              queued|in_progress) sleep 10 ;;
+              *) echo "Deployment ended with status: $status"; exit 1 ;;
+            esac
+          done
+          echo "Timed out waiting for deployment $DEPLOYMENT_UUID"
+          exit 1
+
+      - name: Purge Cloudflare cache
+        if: ${{ env.CLOUDFLARE_PURGE_TOKEN != '' && env.CLOUDFLARE_ZONE_ID != '' }}
+        run: |
+          # Assets under /static/assets/ are content-hashed and immutable, so a
+          # full-zone purge is safe.
+          response="$(
+            curl --fail-with-body --silent --show-error \
+              --retry 3 \
+              --retry-delay 5 \
+              --retry-all-errors \
+              --request POST \
+              --header "Authorization: Bearer $CLOUDFLARE_PURGE_TOKEN" \
+              --header "Content-Type: application/json" \
+              --data '{"purge_everything":true}' \
+              "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache"
+          )"
+
+          echo "$response" | jq -e '.success == true' >/dev/null
           echo "$response"
