@@ -351,7 +351,6 @@ export const ethscriptions: ScalingProject = {
     },
     security: {
       sentiment: 'good',
-      status: 'partiallyReviewed',
       points: [
         'State is validated on L1 with SP1 validity proofs and the Rollup contract is immutable, putting it at Stage 2.',
         'An application-specific chain with no general-purpose contract deployment, which keeps the surface small.',

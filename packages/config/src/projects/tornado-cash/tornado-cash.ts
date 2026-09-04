@@ -250,7 +250,6 @@ export const tornadoCash: BaseProject = {
     },
     security: {
       sentiment: 'good',
-      status: 'partiallyReviewed',
       points: ['Simple, well-ossified design.'],
       missing: [
         'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',

@@ -840,7 +840,6 @@ export const aztecnetwork: ScalingProject = {
     },
     security: {
       sentiment: 'bad',
-      status: 'partiallyReviewed',
       points: ['All state is validated with validity proofs on Ethereum.'],
       missing: [
         'The current proof system has known critical vulnerabilities',

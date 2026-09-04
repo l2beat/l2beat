@@ -172,7 +172,6 @@ export const umbra: BaseProject = {
     },
     security: {
       sentiment: 'good',
-      status: 'partiallyReviewed',
       points: [
         'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
         'Umbra Cash main contract is well-ossified: it has been live for a long time without security incidents.',
