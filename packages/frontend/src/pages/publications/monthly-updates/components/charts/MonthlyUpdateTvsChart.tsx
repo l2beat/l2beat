@@ -11,7 +11,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  chartSeriesStyle,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
@@ -100,7 +99,6 @@ export function MonthlyUpdateTvsChart({
             />
           </defs>
           <Area
-            {...chartSeriesStyle}
             dataKey="value"
             fill={`url(#${id})`}
             fillOpacity={1}

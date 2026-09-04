@@ -13,7 +13,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  chartSeriesStyle,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -138,7 +137,6 @@ export function EcosystemsTvsChart({
             />
           </defs>
           <Area
-            {...chartSeriesStyle}
             dataKey="value"
             fill="url(#fill)"
             fillOpacity={1}

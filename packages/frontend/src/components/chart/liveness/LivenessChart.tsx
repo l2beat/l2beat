@@ -24,7 +24,6 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
-  chartSeriesStyle,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
@@ -104,7 +103,6 @@ export function LivenessChart({
       <ComposedChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
-          {...chartSeriesStyle}
           dataKey="range"
           isAnimationActive={false}
           stroke="var(--secondary)"
@@ -114,7 +112,6 @@ export function LivenessChart({
           connectNulls
         />
         <Line
-          {...chartSeriesStyle}
           dataKey="avg"
           legendType="none"
           isAnimationActive={false}
@@ -154,7 +151,6 @@ export function LivenessChart({
         ])}
 
         <Area
-          {...chartSeriesStyle}
           dataKey="range"
           isAnimationActive={false}
           stroke="url(#strokeRange)"
@@ -162,7 +158,6 @@ export function LivenessChart({
           fillOpacity={0.4}
         />
         <Area
-          {...chartSeriesStyle}
           dataKey="avg"
           isAnimationActive={false}
           stroke="var(--chart-pink)"

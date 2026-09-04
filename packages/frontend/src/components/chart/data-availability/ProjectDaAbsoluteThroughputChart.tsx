@@ -13,7 +13,6 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
-  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -119,7 +118,6 @@ export function ProjectDaAbsoluteThroughputChart({
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
-          {...chartSeriesStyle}
           dataKey="project"
           fill={`url(#${project.id}-fill)`}
           fillOpacity={1}
@@ -129,7 +127,6 @@ export function ProjectDaAbsoluteThroughputChart({
           hide={!dataKeys.includes('project')}
         />
         <Area
-          {...chartSeriesStyle}
           dataKey="projectTarget"
           isAnimationActive={false}
           fillOpacity={0}
@@ -142,7 +139,6 @@ export function ProjectDaAbsoluteThroughputChart({
           hide={!dataKeys.includes('projectTarget')}
         />
         <Area
-          {...chartSeriesStyle}
           dataKey="projectMax"
           isAnimationActive={false}
           fillOpacity={0}

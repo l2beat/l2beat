@@ -1,6 +1,5 @@
 import type { ComponentProps } from 'react'
 import { Area } from 'recharts'
-import { chartSeriesStyle } from '../Chart'
 
 interface ChartStrokeOverFillAreaComponentsProps {
   data: Omit<ComponentProps<typeof Area>, 'ref'>[]
@@ -27,7 +26,6 @@ export function ChartStrokeOverFillAreaComponents({
   for (const props of data) {
     fillComponents.push(
       <Area
-        {...chartSeriesStyle}
         key={`fill-${index}`}
         isAnimationActive={false}
         fillOpacity={1}
@@ -39,7 +37,6 @@ export function ChartStrokeOverFillAreaComponents({
     )
     strokeComponents.push(
       <Area
-        {...chartSeriesStyle}
         key={`stroke-${index}`}
         isAnimationActive={false}
         {...props}

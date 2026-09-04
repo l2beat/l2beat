@@ -9,7 +9,6 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
-  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -82,7 +81,6 @@ export function EcosystemsProjectsChart({
             />
           </defs>
           <Area
-            {...chartSeriesStyle}
             dataKey="projectCount"
             fill="url(#fill)"
             fillOpacity={1}
