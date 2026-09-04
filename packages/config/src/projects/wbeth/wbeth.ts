@@ -31,41 +31,6 @@ const rateCapPercent = `${Number.parseFloat(
   (Number(BigInt(rateCap.amount)) / 1e16).toFixed(4),
 )}%`
 const rateCapInterval = formatSeconds(rateCap.interval, { fullUnit: true })
-const oracleCallerCount = discovery.getContractValue<string[]>(
-  'ExchangeRateUpdater',
-  'callers',
-).length
-
-const minterCount = discovery.getContractValue<string[]>(
-  'wBETH',
-  'minters',
-).length
-const hotWalletCount = discovery.getContractValue<string[]>(
-  'OperatorWallet',
-  'hotWallets',
-).length
-
-// Every token-level role is checked against the owner so the text can say
-// "one key" only when the chain agrees.
-const ownerKey = value('wBETH', 'owner')
-const tokenRolesOnOwner = ['masterMinter', 'pauser', 'blacklister'].every(
-  (role) => value('wBETH', role) === ownerKey,
-)
-const queueRolesOnOwner = ['owner', 'pauser', 'blacklister'].every(
-  (role) => value('UnwrapTokenV1ETH', role) === ownerKey,
-)
-const oracleOwnedByOwner = value('ExchangeRateUpdater', 'owner') === ownerKey
-const oneAdminKey = tokenRolesOnOwner && queueRolesOnOwner && oracleOwnedByOwner
-const adminKeyPhrase = oneAdminKey
-  ? 'a single externally owned account is owner, master minter, pauser and blacklister of the token, owner, pauser and blacklister of the redemption queue, and owner of the oracle'
-  : 'a small set of externally owned accounts hold the owner, master minter, pauser and blacklister roles across the token, the redemption queue and the oracle'
-
-const upgradeKeysAreOne =
-  value('wBETH', '$admin') === value('UnwrapTokenV1ETH', '$admin')
-const upgradePhrase = upgradeKeysAreOne
-  ? 'a second key can upgrade both the token and the redemption queue'
-  : 'separate keys can upgrade the token and the redemption queue'
-
 export const wbeth: BaseProject = {
   id: ProjectId('wbeth'),
   slug: 'wbeth',
@@ -81,19 +46,13 @@ export const wbeth: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `${value('wBETH', 'symbol')} is Binance's liquid staking token for ETH staked through the exchange. Onchain, anyone can mint it by depositing ETH at the current exchange rate and redeem it into a queue that pays out after ${duration('UnwrapTokenV1ETH', 'lockTimeSeconds')}, but the ETH does not stay in the contracts: an operator key moves it to a Binance-controlled address and the validators are run and accounted for off-chain. The exchange rate is a single number written by a Binance bot through a rate limiter that allows a cumulative move of ${rateCapPercent} per ${rateCapInterval}; nothing onchain ties it to validator balances. Every role is held by Binance keys: ${adminKeyPhrase}, with no delay, and ${upgradePhrase} instantly.`,
+    description: `${value('wBETH', 'symbol')} is Binance's liquid staking token for ETH. Users can mint by depositing ETH onchain, while Binance also mints it against BETH balances held on its exchange. Binance controls the exchange rate and custody, must fund queued redemptions (currently delayed by ${duration('UnwrapTokenV1ETH', 'lockTimeSeconds')}), and can mint, pause, blacklist or upgrade without delay.`,
     detailedDescription: readProjectMarkdown('wbeth', 'detailedDescription', {
       symbol: value('wBETH', 'symbol'),
       rateCapPercent,
       rateCapInterval,
-      oracleCallerCount,
-      minterCount,
-      hotWalletCount,
       lockTime: duration('UnwrapTokenV1ETH', 'lockTimeSeconds'),
       minLockTime: duration('UnwrapTokenV1ETH', 'MIN_LOCK_TIME'),
-      claimsRecorded: value('UnwrapTokenV1ETH', 'nextIndex'),
-      upgradePhrase,
-      adminKeyPhrase,
     }),
     links: {
       websites: ['https://www.binance.com/en/wbeth'],
