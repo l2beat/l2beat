@@ -519,16 +519,29 @@ function TransparentFlower({
   // Outline only, and unbroken: the plant is whole and simply see-through,
   // which is the opposite claim to the dashes on a crop nobody has assessed.
   const outline = {
-    fill: 'none',
     stroke: 'currentColor',
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
   } as const
 
+  // Every closed part of the plant inherits an opaque fill in the color of the
+  // surface behind it, so that where parts overlap - petal on petal, leaf and
+  // bloom on stem - the outline underneath is covered and only the silhouette
+  // of the plant reads as a line. Consumers sitting on a tinted card override
+  // `--crop-plant-bg`; everyone else is on the plain surface.
+  const knockout: CSSProperties = {
+    fill: 'var(--crop-plant-bg, var(--surface-primary))',
+  }
+
   return (
-    <g style={idleSway}>
+    <g style={{ ...idleSway, ...knockout }}>
       <g style={grow}>
-        <path d="M17 34 C17 27 17 20 17 13" strokeWidth="1.8" {...outline} />
+        <path
+          d="M17 31.5 C17 26 17 19.5 17 13"
+          strokeWidth="1.8"
+          fill="none"
+          {...outline}
+        />
         <path
           d="M17 27 C11 27.5 6.5 24 5.6 18.8 C11.2 18.4 15.7 22 17 27 Z"
           strokeWidth="1.4"
@@ -542,10 +555,24 @@ function TransparentFlower({
           style={leafR}
         />
         <g style={bloom}>
-          <circle cx="17" cy="5.2" r="3.2" strokeWidth="1.3" {...outline} />
-          <circle cx="12.4" cy="9" r="3.2" strokeWidth="1.3" {...outline} />
-          <circle cx="21.6" cy="9" r="3.2" strokeWidth="1.3" {...outline} />
-          <circle cx="17" cy="12.6" r="3.2" strokeWidth="1.3" {...outline} />
+          {/*
+            The four petals of the solid flower are circles at (17,5.2),
+            (12.4,9), (21.6,9) and (17,12.6) with r=3.2. Drawn as circles they
+            overlap, and outlined that would leave four arcs cutting across the
+            bloom - so this is the outline of their union instead: the four
+            major arcs, meeting at the outer intersections of each adjacent
+            pair. Same silhouette as the solid flower, one unbroken line.
+          */}
+          <path
+            d="M13.96 6.21 A3.2 3.2 0 1 1 20.04 6.21 A3.2 3.2 0 1 1 20.11 11.83 A3.2 3.2 0 1 1 13.89 11.83 A3.2 3.2 0 1 1 13.96 6.21 Z"
+            strokeWidth="1.3"
+            {...outline}
+          />
+          {/*
+            The eye, standing in for the yellow center of a solid flower. It
+            sits wholly inside the petal union - which is also what plugs the
+            hole the four circles leave in the middle - so it goes on top.
+          */}
           <circle cx="17" cy="9" r="2.05" strokeWidth="1.2" {...outline} />
         </g>
       </g>
