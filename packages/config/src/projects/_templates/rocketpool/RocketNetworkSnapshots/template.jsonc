@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkSnapshots",
+  "category": "core",
+  "description": "Block-indexed history of protocol values, used so a vote can be settled against the state at the block a proposal was made. Only registered contracts can append, and entries are append-only."
+}

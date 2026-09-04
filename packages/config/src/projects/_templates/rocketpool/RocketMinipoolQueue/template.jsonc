@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolQueue",
+  "category": "core",
+  "description": "Queue of legacy validator contracts waiting for pooled ETH. Entry and exit are driven by registered contracts only.",
+  "ignoreMethods": ["getMinipoolAt"],
+  "ignoreInWatchMode": [
+    "getTotalLength",
+    "getTotalCapacity",
+    "getEffectiveCapacity",
+    "getNextCapacity"
+  ]
+}

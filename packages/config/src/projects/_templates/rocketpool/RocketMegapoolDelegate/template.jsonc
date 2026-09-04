@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMegapoolDelegate",
+  "category": "core",
+  "description": "Shared implementation behind every node operator's pooled validator contract. One contract holds many validators for one operator, keeping the operator bond and the matched pooled ETH separate in its accounting. Exits and final balances are proven against beacon-chain state rather than asserted by a reporter. Splitting the balance is open to any caller; only moving the operator's own share out is restricted to the operator, so an absent operator cannot withhold the pooled share.",
+  "ignoreMethods": ["calculateRewards"]
+}

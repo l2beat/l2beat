@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketPoolTokenFixedSupply",
+  "category": "non-critical",
+  "description": "Superseded fixed-supply ERC-20 ({{ symbol }}), kept only so holders can still swap into its successor. Its owner can register a sale agent that mints, but minting asserts that total supply stays within the hard cap and {{ remainingTokens }} of the cap is left, so no further issuance is possible. The registry refuses to repoint this name.",
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "remainingTokens": {
+      "handler": {
+        "type": "call",
+        "method": "function getRemainingTokens() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "owner": {
+      "severity": "LOW",
+      "description": "Legacy owner role. It can register a sale agent, but the supply cap is already reached so no agent can mint."
+    },
+    "newOwner": {
+      "description": "Pending owner of the legacy role; the transfer is two-step."
+    }
+  },
+  "ignoreMethods": ["newOwner"]
+}

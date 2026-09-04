@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrustedSettingsMembers",
+  "category": "gov",
+  "description": "Parameters of oracle-set membership: the bond a member must post, the quorum, the cost and timing of a liveness challenge, and the unbonded-validator allowance. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}

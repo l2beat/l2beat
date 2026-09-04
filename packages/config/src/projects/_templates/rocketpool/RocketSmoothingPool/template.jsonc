@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketSmoothingPool",
+  "category": "core",
+  "description": "Holds the block-proposal income of operators who opted into pooled rewards. It only accepts ETH and lets a registered contract withdraw it; the split back to operators is decided by the periodic rewards tree, not here.",
+  "ignoreInWatchMode": ["$balance"]
+}

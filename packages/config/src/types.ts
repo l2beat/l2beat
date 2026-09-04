@@ -962,6 +962,7 @@ export interface TrustedSetup {
 
 export type ProjectDefiCategory =
   | 'DEX'
+  | 'Liquid Staking'
   | 'Oracle'
   | 'Prediction market'
   | 'Stablecoin'

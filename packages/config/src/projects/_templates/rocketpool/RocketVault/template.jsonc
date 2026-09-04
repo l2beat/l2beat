@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketVault",
+  "category": "core",
+  "description": "Custody contract for the protocol's pooled ETH and ERC-20 balances. Balances are booked against the *name* of the registered contract that deposited them, and a registered contract can only withdraw, transfer, or burn against its own name; anyone can deposit. The registry refuses to repoint this name, so the address holding the funds cannot be changed, but a contract that is upgraded inherits the balance booked to the name it replaced."
+}

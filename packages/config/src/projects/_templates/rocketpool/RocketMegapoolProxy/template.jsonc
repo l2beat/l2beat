@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMegapoolProxy",
+  "category": "core",
+  "ignoreMethods": ["getDelegateExpired", "getEffectiveDelegate"],
+  "description": "Proxy base each node operator's pooled validator contract runs. It delegates to the shared implementation resolved from the registry; the operator chooses whether to track the latest implementation or stay on the current one, within an expiry after which tracking resumes. The copy registered here is the uninitialised template."
+}

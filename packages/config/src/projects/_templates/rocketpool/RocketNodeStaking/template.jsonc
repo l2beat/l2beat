@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNodeStaking",
+  "category": "core",
+  "description": "Holds node operators' collateral-token stake. Staking and unstaking are open to the operator or their designated collateral withdrawal address; unstaking is a two-step withdrawal with a {{ unstakingPeriod }} waiting period. The stake is not inert: any registered contract can lock, burn, or transfer it, and a legacy validator contract can slash it, so an operator's collateral is exposed to whatever code is registered at those names.",
+  "ignoreInWatchMode": [
+    "getTotalRPLStake",
+    "getTotalMegapoolRPLStake",
+    "getTotalLegacyRPLStake"
+  ],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "nodeSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsNode")
+          "0x8ca4d6d0606ce014df1d1195bf14ab56b1115c8ab25bf8c7d3ea96995ecd3da3"
+        ]
+      }
+    },
+    "unstakingPeriod": {
+      "handler": {
+        "type": "call",
+        "address": "{{ nodeSettings }}",
+        "method": "function getUnstakingPeriod() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

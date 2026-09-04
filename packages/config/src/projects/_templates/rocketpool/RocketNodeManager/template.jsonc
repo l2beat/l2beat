@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNodeManager",
+  "category": "core",
+  "description": "Register of node operators. It records registration, the operator's withdrawal address for ETH and for the collateral token, timezone, smoothing-pool membership, and the address of the operator's pooled validator contract. Changing a withdrawal address is a two-step confirm, so a mistyped address cannot strand the operator. New registrations are currently {{ registrationState }}.",
+  "ignoreMethods": ["getNodeAt"],
+  "ignoreInWatchMode": ["getNodeCount"],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "nodeSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsNode")
+          "0x8ca4d6d0606ce014df1d1195bf14ab56b1115c8ab25bf8c7d3ea96995ecd3da3"
+        ]
+      }
+    },
+    "registrationState": {
+      "handler": {
+        "type": "call",
+        "address": "{{ nodeSettings }}",
+        "method": "function getRegistrationEnabled() view returns (bool)",
+        "args": []
+      },
+      "description": "True when a new operator may register."
+    }
+  }
+}

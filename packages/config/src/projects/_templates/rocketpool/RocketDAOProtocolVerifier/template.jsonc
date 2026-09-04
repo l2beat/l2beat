@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolVerifier",
+  "category": "gov",
+  "description": "Fraud-proof referee for the voting-power trees used by token-holder governance. A proposer stakes {{ proposalBond }} collateral tokens on a claimed tree; any address can stake {{ challengeBond }} to challenge a node of it, and the proposer must answer within {{ challengePeriod }} or the proposal is defeated and the bonds are transferred to the challengers. Nobody is trusted to assert the tree; the bonds and the response deadline are what make it binding.",
+  "ignoreMethods": [
+    "getChallengeBond",
+    "getChallengePeriod",
+    "getDefeatIndex",
+    "getProposalBond"
+  ],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "proposalSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsProposals")
+          "0x5aa44b41e40cd45c081364aad7a61c1f32e659ec04db2ab21b4b81488165d219"
+        ]
+      }
+    },
+    "proposalBond": {
+      "handler": {
+        "type": "call",
+        "address": "{{ proposalSettings }}",
+        "method": "function getProposalBond() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "challengeBond": {
+      "handler": {
+        "type": "call",
+        "address": "{{ proposalSettings }}",
+        "method": "function getChallengeBond() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "challengePeriod": {
+      "handler": {
+        "type": "call",
+        "address": "{{ proposalSettings }}",
+        "method": "function getChallengePeriod() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMerkleDistributorMainnet",
+  "category": "core",
+  "description": "Claim contract for the periodic rewards tree. Anyone can claim on behalf of a node operator with a valid proof, and the proceeds always go to that operator's recorded withdrawal address, so a claim cannot be redirected. Roots are relayed only by the rewards contract."
+}
