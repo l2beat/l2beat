@@ -171,9 +171,14 @@ export function RelationsDiagram({
         })}
       </div>
 
-      <p className="absolute bottom-3 left-3 rounded-md border border-divider bg-surface-primary px-2 py-1 text-label-value-12 text-secondary">
-        Past 24h crosschain volume
-      </p>
+      <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
+        <p className="hidden rounded-md border border-divider bg-surface-primary px-2 py-1 [@media(pointer:coarse)]:block">
+          Use two fingers to move the diagram
+        </p>
+        <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
+          Past 24h crosschain volume
+        </p>
+      </div>
       <div className="absolute right-3 bottom-3 flex flex-col gap-1">
         <ControlButton label="Zoom in" onClick={() => zoomBy(ZOOM_STEP)}>
           <Glyph d="M5 12h14M12 5v14" />
