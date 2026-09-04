@@ -6,7 +6,7 @@ export interface InteropTokenStats {
   avgDuration: number | null
 }
 
-export type InteropTokenStatsLookup = (
+type InteropTokenStatsLookup = (
   key: string | undefined,
   isSupported: boolean,
 ) => InteropTokenStats

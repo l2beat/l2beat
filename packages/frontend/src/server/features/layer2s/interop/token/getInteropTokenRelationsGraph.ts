@@ -18,7 +18,7 @@ import {
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import type { InteropTokenRelations } from './getInteropTokenRelations'
 
-export interface InteropTokenRelationsDeployment extends InteropTokenStats {
+export interface InteropTokenDeploymentView extends InteropTokenStats {
   chain: { id: string; name: string; iconUrl: string | undefined }
   address: string
   symbol: string
@@ -30,7 +30,7 @@ export interface InteropTokenRelationsDeployment extends InteropTokenStats {
 export interface InteropTokenRelationsNode extends InteropTokenStats {
   id: string
   /** More than one means the deployments are in a burn-and-mint relation. */
-  deployments: InteropTokenRelationsDeployment[]
+  deployments: InteropTokenDeploymentView[]
   bridges: ProjectIconListItem[]
 }
 
@@ -44,14 +44,6 @@ export interface InteropTokenRelationsEdge {
 export interface InteropTokenRelationsGraph {
   nodes: InteropTokenRelationsNode[]
   edges: InteropTokenRelationsEdge[]
-}
-
-/** Something to draw: an edge, or a cluster of deployments. */
-export function hasTokenRelations(graph: InteropTokenRelationsGraph): boolean {
-  return (
-    graph.edges.length > 0 ||
-    graph.nodes.some((node) => node.deployments.length > 1)
-  )
 }
 
 export function getInteropTokenRelationsGraph(
@@ -95,7 +87,7 @@ export function getInteropTokenRelationsGraph(
 
   const toDeployment = (
     deployment: InteropTokenOnchainDeployment,
-  ): InteropTokenRelationsDeployment => {
+  ): InteropTokenDeploymentView => {
     const chain = chainInfo.get(deployment.chain)
     return {
       chain: {
