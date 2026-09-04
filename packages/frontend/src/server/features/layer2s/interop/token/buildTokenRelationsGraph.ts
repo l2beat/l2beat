@@ -129,8 +129,9 @@ function groupBurnAndMint(
     if (route.bridgeType !== 'burnAndMint') continue
     const a = find(endpointKey(route, 'A'))
     const b = find(endpointKey(route, 'B'))
-    if (a < b) parent.set(b, a)
-    else if (b < a) parent.set(a, b)
+    const order = a.localeCompare(b)
+    if (order < 0) parent.set(b, a)
+    else if (order > 0) parent.set(a, b)
   }
   return new Map(keys.map((key) => [key, find(key)]))
 }

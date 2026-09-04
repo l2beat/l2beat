@@ -96,7 +96,7 @@ export function RelationsDiagram({
     <div
       ref={containerRef}
       className={cn(
-        'relative touch-none select-none overflow-hidden rounded-lg border border-divider bg-background',
+        'relative touch-pan-y select-none overflow-hidden rounded-lg border border-divider bg-background',
         className,
       )}
       style={dotGrid}

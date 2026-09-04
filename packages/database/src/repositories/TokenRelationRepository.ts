@@ -2,14 +2,13 @@ import type {
   InteropBridgeType,
   KnownInteropBridgeType,
 } from '@l2beat/shared-pure'
-import {
-  type Expression,
-  type ExpressionBuilder,
-  type Insertable,
-  type Selectable,
-  type SqlBool,
-  sql,
-  type Updateable,
+import type {
+  Expression,
+  ExpressionBuilder,
+  Insertable,
+  Selectable,
+  SqlBool,
+  Updateable,
 } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { DB, TokenRelation } from '../kysely/generated/types'
@@ -295,39 +294,31 @@ export class TokenRelationRepository extends BaseRepository {
   ): Promise<TokenRelationRoute[]> {
     if (tokens.length === 0) return []
 
-    // The set binds once as two array parameters, so it is not batched — a
-    // "both endpoints" condition could not be split across batches anyway.
+    // A token has a few dozen deployments at most, so no batching is needed —
+    // and a "both endpoints" condition could not be split across batches anyway.
+    const endpoints = tokens.map((token) => ({
+      chain: token.chain,
+      address: token.address.toLowerCase(),
+    }))
     const rows = await this.db
-      .with('endpoints', (db) =>
-        db
-          .selectFrom(
-            sql<{ chain: string; address: string }>`unnest(
-              ${tokens.map((token) => token.chain)}::varchar[],
-              ${tokens.map((token) => token.address.toLowerCase())}::varchar[]
-            )`.as<'endpoint'>(sql`endpoint(chain, address)`),
-          )
-          .select(['endpoint.chain', 'endpoint.address']),
-      )
       .selectFrom('TokenRelation')
       .select(ROUTE_COLUMNS)
       .where((eb) =>
         eb(
           eb.refTuple('tokenAChain', 'tokenAAddress'),
           'in',
-          eb
-            .selectFrom('endpoints')
-            .select(['chain', 'address'])
-            .$asTuple('chain', 'address'),
+          endpoints.map((endpoint) =>
+            eb.tuple(endpoint.chain, endpoint.address),
+          ),
         ),
       )
       .where((eb) =>
         eb(
           eb.refTuple('tokenBChain', 'tokenBAddress'),
           'in',
-          eb
-            .selectFrom('endpoints')
-            .select(['chain', 'address'])
-            .$asTuple('chain', 'address'),
+          endpoints.map((endpoint) =>
+            eb.tuple(endpoint.chain, endpoint.address),
+          ),
         ),
       )
       .execute()
