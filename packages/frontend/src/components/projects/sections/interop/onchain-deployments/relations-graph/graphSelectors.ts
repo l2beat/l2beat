@@ -140,52 +140,74 @@ export function getRelationsPaths(
     )
 }
 
-/** Bridges observed minting the node: its cluster bridges, or those of the edges backing it. */
-export function getMinters(
-  graph: InteropTokenRelationsGraph,
-  node: InteropTokenRelationsNode,
-): ProjectIconListItem[] {
-  if (node.bridges.length > 0) return node.bridges
-  const seen = new Map<string, ProjectIconListItem>()
-  for (const edge of graph.edges) {
-    if (edge.to !== node.id) continue
-    for (const bridge of edge.bridges) seen.set(bridge.id, bridge)
-  }
-  return [...seen.values()]
-}
-
-export interface SameChainAlternatives {
+export interface SameChainComparison {
   chain: InteropTokenRelationsDeployment['chain']
-  own: InteropTokenRelationsDeployment
-  others: {
+  /** Every deployment of the token on the chain, busiest first. */
+  ranked: {
     node: InteropTokenRelationsNode
     deployment: InteropTokenRelationsDeployment
+    selected: boolean
   }[]
+  /** 1-based position of the node's deployment; undefined without volume data. */
+  rank: number | undefined
 }
 
-/** Other deployments of the token on each chain the node is deployed on, busiest first. */
-export function getSameChainAlternatives(
+/** How the node's deployments rank against the token's other deployments on the same chains. */
+export function getSameChainComparisons(
   graph: InteropTokenRelationsGraph,
   node: InteropTokenRelationsNode,
-): SameChainAlternatives[] {
+): SameChainComparison[] {
   const all = graph.nodes.flatMap((candidate) =>
     candidate.deployments.map((deployment) => ({
       node: candidate,
       deployment,
+      selected: candidate.id === node.id,
     })),
   )
-  return node.deployments.flatMap((own) => {
-    const others = all
-      .filter(
-        (item) =>
-          item.deployment.chain.id === own.chain.id &&
-          !(
-            item.node.id === node.id && item.deployment.address === own.address
-          ),
+  return node.deployments
+    .flatMap((own) => {
+      const ranked = all
+        .filter((item) => item.deployment.chain.id === own.chain.id)
+        .toSorted(
+          (a, b) => (b.deployment.volume ?? -1) - (a.deployment.volume ?? -1),
+        )
+      if (ranked.length <= 1) return []
+      const index = ranked.findIndex(
+        (item) => item.selected && item.deployment.address === own.address,
       )
-      .toSorted(
-        (a, b) => (b.deployment.volume ?? -1) - (a.deployment.volume ?? -1),
-      )
-    return others.length > 0 ? [{ chain: own.chain, own, others }] : []
-  })
+      return [
+        {
+          chain: own.chain,
+          ranked,
+          rank: own.volume === null ? undefined : index + 1,
+          volume: own.volume ?? -1,
+        },
+      ]
+    })
+    .toSorted((a, b) => b.volume - a.volume)
+    .map(({ volume: _, ...comparison }) => comparison)
+}
+
+export interface BackedGroups {
+  /** Every directly backed node with the bridges minting it, busiest first. */
+  direct: { node: InteropTokenRelationsNode; bridges: ProjectIconListItem[] }[]
+  /** Paths reaching further than one hop. */
+  nested: RelationsPath[]
+}
+
+export function groupBackedPaths(paths: RelationsPath[]): BackedGroups {
+  const direct = new Map<string, BackedGroups['direct'][number]>()
+  const nested: RelationsPath[] = []
+  for (const path of paths) {
+    const target = path.nodes[1]
+    if (!target) continue
+    if (path.nodes.length > 2) nested.push(path)
+    if (!direct.has(target.id)) {
+      direct.set(target.id, {
+        node: target,
+        bridges: path.edges[0]?.bridges ?? [],
+      })
+    }
+  }
+  return { direct: [...direct.values()], nested }
 }
