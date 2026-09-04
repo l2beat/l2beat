@@ -23,7 +23,7 @@ import {
   Muted,
   NodeButton,
   NodeIcon,
-  Section,
+  PanelSection,
   Stats,
   Volume,
 } from './RelationsPrimitives'
@@ -47,11 +47,10 @@ export function RelationsDetails({
   onSelectNode,
   onClose,
 }: Props) {
-  if (node.deployments.length === 0) return null
   return (
     <div className="flex h-full flex-col divide-y divide-divider overflow-y-auto rounded-lg border border-divider bg-surface-primary px-4 shadow-xl">
       <Header node={node} onClose={onClose} />
-      <Section
+      <PanelSection
         title="Past 24h crosschain activity"
         hint={
           isCluster(node)
@@ -60,7 +59,7 @@ export function RelationsDetails({
         }
       >
         <Stats stats={node} />
-      </Section>
+      </PanelSection>
       <SameChainSection graph={graph} node={node} onSelectNode={onSelectNode} />
       <BackedBySection graph={graph} node={node} onSelectNode={onSelectNode} />
       <BacksSection graph={graph} node={node} onSelectNode={onSelectNode} />
@@ -144,7 +143,7 @@ function SameChainSection({ graph, node, onSelectNode }: SectionProps) {
     [graph, node],
   )
   return (
-    <Section title="Same-chain activity">
+    <PanelSection title="Same-chain activity">
       {comparisons.length === 0 ? (
         <Muted>
           {isCluster(node)
@@ -163,7 +162,7 @@ function SameChainSection({ graph, node, onSelectNode }: SectionProps) {
           <MoreNote count={comparisons.length - MAX_COMPARISONS} noun="chain" />
         </div>
       )}
-    </Section>
+    </PanelSection>
   )
 }
 
@@ -173,7 +172,7 @@ function BackedBySection({ graph, node, onSelectNode }: SectionProps) {
     [graph, node],
   )
   return (
-    <Section title="Backed by">
+    <PanelSection title="Backed by">
       {paths.length === 0 ? (
         <Muted>
           No upstream backing observed. This is a source deployment.
@@ -194,7 +193,7 @@ function BackedBySection({ graph, node, onSelectNode }: SectionProps) {
           />
         </div>
       )}
-    </Section>
+    </PanelSection>
   )
 }
 
@@ -204,7 +203,7 @@ function BacksSection({ graph, node, onSelectNode }: SectionProps) {
     [graph, node],
   )
   return (
-    <Section title="Backs">
+    <PanelSection title="Backs">
       {direct.length === 0 ? (
         <Muted>Backs no other deployment.</Muted>
       ) : (
@@ -256,7 +255,7 @@ function BacksSection({ graph, node, onSelectNode }: SectionProps) {
           )}
         </div>
       )}
-    </Section>
+    </PanelSection>
   )
 }
 
