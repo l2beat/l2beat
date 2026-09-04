@@ -17,7 +17,8 @@ const STALE_IF_ERROR_SECONDS = 3600
  * sends Cache-Control. Browsers keep revalidating (max-age=0) so a deploy is
  * visible immediately once the edge is purged. The edge serves the old copy
  * while one request refreshes it and keeps the site up if the origin returns
- * 5xx.
+ * 5xx. The edge is purged by a Coolify post-deployment command on the
+ * production frontend app, so a new build is visible within seconds.
  */
 export function pageCacheControl(edgeSeconds: number): string {
   return `public, max-age=0, s-maxage=${edgeSeconds}, stale-while-revalidate=${STALE_WHILE_REVALIDATE_SECONDS}, stale-if-error=${STALE_IF_ERROR_SECONDS}`
