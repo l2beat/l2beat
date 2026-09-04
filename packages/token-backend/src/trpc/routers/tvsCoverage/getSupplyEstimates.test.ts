@@ -73,7 +73,8 @@ describe(getSupplyEstimates.name, () => {
         chain: 'chain-a',
         address: pricedAddress,
         totalSupply: '100',
-        potentialTvsUsd: 200,
+        estimatedValueUsd: 50,
+        estimatedValueBasis: 'coingeckoCirculatingSupply',
         coingeckoCirculatingSupply: 25,
         coingeckoUpdatedAt: '2026-09-03T07:57:20.000Z',
         vaultAsset: {
@@ -85,7 +86,8 @@ describe(getSupplyEstimates.name, () => {
         chain: 'chain-a',
         address: unpricedAddress,
         totalSupply: '50',
-        potentialTvsUsd: undefined,
+        estimatedValueUsd: undefined,
+        estimatedValueBasis: undefined,
         coingeckoCirculatingSupply: undefined,
         coingeckoUpdatedAt: undefined,
         vaultAsset: undefined,
@@ -93,6 +95,49 @@ describe(getSupplyEstimates.name, () => {
       { chain: 'solana', address: 'not-an-evm-address' },
     ])
     expect(reads).toEqual([pricedAddress, unpricedAddress])
+  })
+
+  it('uses total supply when it is below global circulating supply', async () => {
+    const tokenAddress = address(1)
+    const deployedToken = mockObject<TokenDatabase['deployedToken']>({
+      getByChainAndAddress: mockFn().resolvesTo([
+        token('chain-a', tokenAddress, 18, 'priced'),
+      ]),
+    })
+    const chain = mockObject<TokenDatabase['chain']>({
+      getAll: mockFn().resolvesTo([
+        {
+          name: 'chain-a',
+          chainId: 1,
+          explorerUrl: null,
+          aliases: null,
+          apis: [{ type: 'rpc', url: 'https://rpc.example' }],
+        },
+      ]),
+    })
+    const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      getClosestPricesAtOrBefore: mockFn().resolvesTo(new Map([[0, 2]])),
+    })
+
+    const result = await getSupplyEstimates(
+      mockObject<Database>({ interopRecentPrices }),
+      mockObject<TokenDatabase>({ deployedToken, chain }),
+      [{ chain: 'chain-a', address: tokenAddress }],
+      {
+        readTotalSupply: async () => 100n * 10n ** 18n,
+        readVaultAsset: async () => undefined,
+        getCoinsMarketData: async () => [
+          {
+            id: 'priced',
+            circulating_supply: 250,
+            last_updated: '2026-09-03T07:57:20.000Z',
+          },
+        ],
+      },
+    )
+
+    expect(result[0]?.estimatedValueUsd).toEqual(200)
+    expect(result[0]?.estimatedValueBasis).toEqual('totalSupply')
   })
 
   it('does not calculate value from a price marked as unreliable', async () => {
@@ -141,7 +186,8 @@ describe(getSupplyEstimates.name, () => {
         chain: 'chain-a',
         address: tokenAddress,
         totalSupply: '100',
-        potentialTvsUsd: undefined,
+        estimatedValueUsd: undefined,
+        estimatedValueBasis: undefined,
         coingeckoCirculatingSupply: 50,
         coingeckoUpdatedAt: '2026-09-03T07:57:20.000Z',
         vaultAsset: undefined,

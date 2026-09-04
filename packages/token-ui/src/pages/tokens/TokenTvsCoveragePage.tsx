@@ -58,7 +58,7 @@ type SortKey =
   | 'chain'
   | 'token'
   | 'totalSupply'
-  | 'potentialTvsUsd'
+  | 'estimatedValueUsd'
   | 'volumeUsd'
   | 'included'
   | 'role'
@@ -73,7 +73,6 @@ const PAGE_SIZE = 25
 const MAX_SORTABLE_ROWS = 100
 const MAX_VISIBLE_PLUGINS = 4
 const SUPPLY_REQUEST_DEBOUNCE_MS = 300
-const COINGECKO_CIRCULATING_WARNING_RATIO = 1.1
 const CASE_SENSITIVE_TOKEN_ADDRESS_CHAINS = new Set(['solana', 'tron'])
 
 export function TokenTvsCoveragePage() {
@@ -85,7 +84,7 @@ export function TokenTvsCoveragePage() {
   const [search, setSearch] = useState('')
   const [visibleRows, setVisibleRows] = useState(PAGE_SIZE)
   const [sort, setSort] = useState<SortState>({
-    key: 'volumeUsd',
+    key: 'estimatedValueUsd',
     direction: 'desc',
   })
   const {
@@ -449,8 +448,8 @@ export function TokenTvsCoveragePage() {
                   />
                   <SortableTableHead
                     className="w-28"
-                    label="Supply value"
-                    sortKey="potentialTvsUsd"
+                    label="Est. value"
+                    sortKey="estimatedValueUsd"
                     sort={sort}
                     onSort={sortBy}
                     align="right"
@@ -617,12 +616,23 @@ export function TokenTvsCoveragePage() {
                             )}
                           </div>
                         </TableCell>
-                        <TableCell className="text-right font-medium tabular-nums">
-                          {supply?.potentialTvsUsd === undefined
-                            ? isLoadingSupplies
-                              ? '…'
-                              : '—'
-                            : formatCurrency(supply.potentialTvsUsd, 'usd')}
+                        <TableCell className="text-right tabular-nums">
+                          <div className="flex flex-col items-end gap-1">
+                            <span className="font-medium">
+                              {supply?.estimatedValueUsd === undefined
+                                ? isLoadingSupplies
+                                  ? '…'
+                                  : '—'
+                                : formatCurrency(
+                                    supply.estimatedValueUsd,
+                                    'usd',
+                                  )}
+                            </span>
+                            <EstimatedValueBasisBadge
+                              estimate={supply}
+                              symbol={symbol}
+                            />
+                          </div>
                         </TableCell>
                         <TableCell className="text-right tabular-nums">
                           <div className="font-medium">
@@ -812,8 +822,7 @@ function VaultAssetBadges({
             </span>
           </TooltipTrigger>
           <TooltipContent>
-            {label} is already used by {chainName} TVS. Supply value can
-            overlap.
+            {label} is already used by {chainName} TVS. Value can overlap.
           </TooltipContent>
         </Tooltip>
       )}
@@ -895,9 +904,10 @@ function CoinGeckoCirculatingSupplyBadge({
   const circulatingSupply = estimate?.coingeckoCirculatingSupply
   if (
     circulatingSupply === undefined ||
-    circulatingSupply <= 0 ||
+    !Number.isFinite(circulatingSupply) ||
+    circulatingSupply < 0 ||
     !Number.isFinite(totalSupply) ||
-    totalSupply <= circulatingSupply * COINGECKO_CIRCULATING_WARNING_RATIO
+    totalSupply <= circulatingSupply
   ) {
     return null
   }
@@ -933,12 +943,54 @@ function CoinGeckoCirculatingSupplyBadge({
           <span className="opacity-75">Difference</span>
           <span className="text-right">{differenceLabel}</span>
         </div>
-        <div className="opacity-75">Global CoinGecko value</div>
+        <div className="opacity-75">Global CoinGecko supply</div>
         {estimate?.coingeckoUpdatedAt && (
           <div className="opacity-75">
             Updated {formatCoinGeckoTimestamp(estimate.coingeckoUpdatedAt)}
           </div>
         )}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function EstimatedValueBasisBadge({
+  estimate,
+  symbol,
+}: {
+  estimate: SupplyEstimate | undefined
+  symbol: string
+}) {
+  if (
+    estimate?.estimatedValueBasis !== 'coingeckoCirculatingSupply' ||
+    estimate.coingeckoCirculatingSupply === undefined
+  ) {
+    return null
+  }
+
+  const circulatingLabel = formatTokenSupply(
+    String(estimate.coingeckoCirculatingSupply),
+  )
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span
+          className="inline-flex"
+          tabIndex={0}
+          aria-label={`Estimated value uses CoinGecko global circulating supply of ${circulatingLabel} ${symbol}`}
+        >
+          <Badge
+            variant="outline"
+            className="h-5 border-amber-300 bg-amber-50 px-1.5 font-normal text-[10px] text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200"
+          >
+            CG circ.
+          </Badge>
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-64 text-left text-xs">
+        Using CoinGecko global circulating supply ({circulatingLabel} {symbol})
+        because it is lower than local totalSupply().
       </TooltipContent>
     </Tooltip>
   )
@@ -1104,8 +1156,8 @@ function sortValue(
       const value = supply?.totalSupply
       return value === undefined ? undefined : Number(value)
     }
-    case 'potentialTvsUsd':
-      return supply?.potentialTvsUsd
+    case 'estimatedValueUsd':
+      return supply?.estimatedValueUsd
     case 'volumeUsd':
       return row.volumeUsd
     case 'included':

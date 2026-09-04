@@ -20,7 +20,8 @@ export interface SupplyEstimateRequest {
 
 export interface SupplyEstimate extends SupplyEstimateRequest {
   totalSupply?: string
-  potentialTvsUsd?: number
+  estimatedValueUsd?: number
+  estimatedValueBasis?: 'totalSupply' | 'coingeckoCirculatingSupply'
   coingeckoCirculatingSupply?: number
   coingeckoUpdatedAt?: string
   vaultAsset?: VaultAsset
@@ -145,16 +146,35 @@ export async function getSupplyEstimates(
       ? coinMarketsById.get(token.abstractToken.coingeckoId)
       : undefined
     const supply = totalSupply === undefined ? undefined : Number(totalSupply)
-    const potentialTvsUsd =
-      supply !== undefined && Number.isFinite(supply) && priceUsd !== undefined
-        ? supply * priceUsd
+    const coingeckoCirculatingSupply =
+      coinMarket?.circulating_supply ?? undefined
+    const useCirculatingSupply =
+      supply !== undefined &&
+      coingeckoCirculatingSupply !== undefined &&
+      Number.isFinite(coingeckoCirculatingSupply) &&
+      coingeckoCirculatingSupply >= 0 &&
+      coingeckoCirculatingSupply < supply
+    const estimatedSupply = useCirculatingSupply
+      ? coingeckoCirculatingSupply
+      : supply
+    const estimatedValueUsd =
+      estimatedSupply !== undefined &&
+      Number.isFinite(estimatedSupply) &&
+      priceUsd !== undefined
+        ? estimatedSupply * priceUsd
         : undefined
 
     estimatesByKey.set(requestKey(request), {
       ...request,
       totalSupply,
-      potentialTvsUsd,
-      coingeckoCirculatingSupply: coinMarket?.circulating_supply ?? undefined,
+      estimatedValueUsd,
+      estimatedValueBasis:
+        estimatedValueUsd === undefined
+          ? undefined
+          : useCirculatingSupply
+            ? 'coingeckoCirculatingSupply'
+            : 'totalSupply',
+      coingeckoCirculatingSupply,
       coingeckoUpdatedAt: coinMarket?.last_updated ?? undefined,
       vaultAsset: vaultAssets[index],
     })
