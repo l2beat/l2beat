@@ -1,5 +1,6 @@
 import type { TokenRelationRoute } from '@l2beat/database'
 import { MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
+import { deploymentKey } from '../utils/deploymentKey'
 
 type GraphBridgeType = 'burnAndMint' | 'lockAndMint'
 
@@ -33,10 +34,6 @@ interface Endpoint {
 }
 
 type GraphRoute = TokenRelationRoute & { bridgeType: GraphBridgeType }
-
-export function deploymentKey(token: Endpoint): string {
-  return `${token.chain}|${token.address.toLowerCase()}`
-}
 
 /**
  * Burn-and-mint relations are symmetric, so the deployments they connect
