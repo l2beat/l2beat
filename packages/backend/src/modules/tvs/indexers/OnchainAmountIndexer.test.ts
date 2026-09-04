@@ -24,17 +24,27 @@ describe(OnchainAmountIndexer.name, () => {
 
       const token1 = EthereumAddress.random()
       const token2 = EthereumAddress.random()
+      const token3 = EthereumAddress.random()
       const escrow1 = EthereumAddress.random()
       const escrow2 = EthereumAddress.random()
+      const escrow3 = EthereumAddress.random()
+      const escrow4 = EthereumAddress.random()
 
       const mockEscrowConfig1 = escrow('escrow-config-1', token1, escrow1)
       const mockEscrowConfig2 = escrow('escrow-config-2', token2, escrow2)
+      const mockEscrowsConfig = escrows(
+        'escrows-config',
+        token3,
+        escrow3,
+        escrow4,
+      )
       const mockTotalSupplyConfig1 = totalSupply('supply-config-1', token1)
       const mockTotalSupplyConfig2 = totalSupply('supply-config-2', token2)
 
       const configs = [
         mockEscrowConfig1,
         mockEscrowConfig2,
+        mockEscrowsConfig,
         mockTotalSupplyConfig1,
         mockTotalSupplyConfig2,
       ]
@@ -50,7 +60,12 @@ describe(OnchainAmountIndexer.name, () => {
       })
 
       const balanceProvider = mockObject<BalanceProvider>({
-        getBalances: mockFn().returnsOnce([BigInt(1000), BigInt(2000)]),
+        getBalances: mockFn().returnsOnce([
+          BigInt(1000),
+          BigInt(2000),
+          BigInt(3000),
+          BigInt(4000),
+        ]),
       })
 
       const totalSupplyProvider = mockObject<TotalSupplyProvider>({
@@ -102,6 +117,8 @@ describe(OnchainAmountIndexer.name, () => {
         [
           { token: token1, holder: escrow1 },
           { token: token2, holder: escrow2 },
+          { token: token3, holder: escrow3 },
+          { token: token3, holder: escrow4 },
         ],
         blockNumber,
         'ethereum',
@@ -121,6 +138,7 @@ describe(OnchainAmountIndexer.name, () => {
       const expectedRecords: TvsAmountRecord[] = [
         record('escrow-config-1', timestamp, 1000),
         record('escrow-config-2', timestamp, 2000),
+        record('escrows-config', timestamp, 7000),
         record('supply-config-1', timestamp, 5000),
         record('supply-config-2', timestamp, 6000),
       ]
@@ -415,6 +433,26 @@ function escrow(
       type: 'balanceOfEscrow' as const,
       address: tokenAddress,
       escrowAddress: escrowAddress,
+      sinceTimestamp: 0,
+      chain: 'chain',
+      decimals: 18,
+    },
+  }
+}
+
+function escrows(
+  id: string,
+  tokenAddress: EthereumAddress,
+  ...escrowAddresses: EthereumAddress[]
+) {
+  return {
+    id,
+    minHeight: 0,
+    maxHeight: null,
+    properties: {
+      type: 'balanceOfEscrows' as const,
+      address: tokenAddress,
+      escrowAddresses,
       sinceTimestamp: 0,
       chain: 'chain',
       decimals: 18,
