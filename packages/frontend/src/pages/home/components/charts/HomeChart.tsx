@@ -9,6 +9,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -119,10 +120,9 @@ export function HomeChart({
               {withEthereum && <EthereumFillGradientDef id={ethereumFillId} />}
             </defs>
             <Area
+              {...chartSeriesStyle}
               dataKey="value"
-              type="monotone"
               stroke={stroke}
-              strokeWidth={1.75}
               fill={`url(#${fillId})`}
               fillOpacity={1}
               dot={false}
@@ -137,10 +137,9 @@ export function HomeChart({
             />
             {withEthereum && (
               <Area
+                {...chartSeriesStyle}
                 dataKey="ethereum"
-                type="monotone"
                 stroke={STROKE_COLOR.ethereum}
-                strokeWidth={1.75}
                 fill={`url(#${ethereumFillId})`}
                 fillOpacity={1}
                 dot={false}

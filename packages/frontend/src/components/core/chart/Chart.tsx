@@ -32,6 +32,13 @@ export type ChartMeta = Record<
   | undefined
 >
 
+export const chartSeriesStyle = {
+  type: 'linear',
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+  strokeWidth: 1.75,
+} as const
+
 type ChartContextProps = {
   meta: ChartMeta
   interactiveLegend?: {

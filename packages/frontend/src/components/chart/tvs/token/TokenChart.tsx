@@ -13,6 +13,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -74,11 +75,11 @@ export function TokenChart({
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
+          {...chartSeriesStyle}
           dataKey="value"
           fill="url(#fill)"
           fillOpacity={1}
           stroke="url(#stroke)"
-          strokeWidth={2}
           isAnimationActive={false}
         />
         <ChartCommonComponents

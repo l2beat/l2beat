@@ -19,6 +19,7 @@ import {
   ChartLegendItemLabel,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -123,11 +124,10 @@ export function InclusionDelayChart({
 
           return (
             <Line
+              {...chartSeriesStyle}
               key={dataKey}
               dataKey={dataKey}
-              type="monotone"
               stroke={meta.color}
-              strokeWidth={2}
               strokeDasharray={
                 meta.indicatorType.strokeDasharray ? '5 5' : undefined
               }

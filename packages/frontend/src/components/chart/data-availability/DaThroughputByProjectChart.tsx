@@ -14,6 +14,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -179,6 +180,7 @@ export function DaThroughputByProjectChart({
         />
         {allProjects?.map((project) => (
           <Area
+            {...chartSeriesStyle}
             key={project}
             dataKey={project}
             stackId="a"

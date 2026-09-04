@@ -12,6 +12,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -105,6 +106,7 @@ export function AssetCategoryTvsChart({
       <AreaChart responsive data={data} margin={{ top: 20, right: 1 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
+          {...chartSeriesStyle}
           dataKey="rwaPublic"
           hide={!dataKeys.includes('rwaPublic')}
           fill={assetCategoryTvsChartMeta.rwaPublic.color}
@@ -115,6 +117,7 @@ export function AssetCategoryTvsChart({
         />
         {!excludeRwaRestrictedTokens && (
           <Area
+            {...chartSeriesStyle}
             dataKey="rwaRestricted"
             hide={!dataKeys.includes('rwaRestricted')}
             fill={assetCategoryTvsChartMeta.rwaRestricted.color}
@@ -125,6 +128,7 @@ export function AssetCategoryTvsChart({
           />
         )}
         <Area
+          {...chartSeriesStyle}
           dataKey="other"
           hide={!dataKeys.includes('other')}
           fill={assetCategoryTvsChartMeta.other.color}
@@ -139,6 +143,7 @@ export function AssetCategoryTvsChart({
           }
         />
         <Area
+          {...chartSeriesStyle}
           dataKey="btc"
           hide={!dataKeys.includes('btc')}
           fill={assetCategoryTvsChartMeta.btc.color}
@@ -151,6 +156,7 @@ export function AssetCategoryTvsChart({
           }
         />
         <Area
+          {...chartSeriesStyle}
           dataKey="stablecoin"
           hide={!dataKeys.includes('stablecoin')}
           fill={assetCategoryTvsChartMeta.stablecoin.color}
@@ -161,6 +167,7 @@ export function AssetCategoryTvsChart({
           activeDot={!dataKeys.includes('ether')}
         />
         <Area
+          {...chartSeriesStyle}
           dataKey="ether"
           hide={!dataKeys.includes('ether')}
           fill={assetCategoryTvsChartMeta.ether.color}

@@ -9,6 +9,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -87,6 +88,7 @@ export function PrivacyTvlBreakdownChart({
         />
         {projects.map((project) => (
           <Area
+            {...chartSeriesStyle}
             key={project.id}
             dataKey={project.id}
             stackId="a"

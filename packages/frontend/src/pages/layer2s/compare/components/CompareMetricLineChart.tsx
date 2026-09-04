@@ -9,6 +9,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -120,6 +121,7 @@ export function CompareMetricLineChart({
         >
           {projects.map((project) => (
             <Line
+              {...chartSeriesStyle}
               key={project.id}
               dataKey={project.id}
               stroke={chartMeta[project.id]?.color}
@@ -130,7 +132,6 @@ export function CompareMetricLineChart({
                   : 1
               }
               className="[&_.recharts-line-curve]:transition-[stroke-opacity] [&_.recharts-line-curve]:duration-200 motion-reduce:[&_.recharts-line-curve]:transition-none"
-              strokeWidth={2}
               dot={false}
               isAnimationActive={false}
             />

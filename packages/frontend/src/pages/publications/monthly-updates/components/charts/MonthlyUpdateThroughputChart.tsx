@@ -10,6 +10,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  chartSeriesStyle,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
@@ -94,11 +95,11 @@ export function MonthlyUpdateThroughputChart({
         >
           <ChartLegend content={<ChartLegendContent />} />
           <Area
+            {...chartSeriesStyle}
             dataKey="projects"
             fill={`url(#${fillId})`}
             fillOpacity={1}
             stroke={chartMeta.projects?.color}
-            strokeWidth={2}
             isAnimationActive={false}
             dot={false}
           />

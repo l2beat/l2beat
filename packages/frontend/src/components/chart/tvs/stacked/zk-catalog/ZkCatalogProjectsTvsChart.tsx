@@ -15,6 +15,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -167,6 +168,7 @@ export function ZkCatalogProjectsTvsChart({
         />
         {chartOrderedIds.map((projectId) => (
           <Area
+            {...chartSeriesStyle}
             key={projectId}
             dataKey={projectId}
             hide={!dataKeys.includes(projectId)}

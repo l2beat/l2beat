@@ -11,6 +11,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -61,11 +62,11 @@ export function TvsValueChart({
           <PinkStrokeGradientDef id="tvs-value-stroke" />
         </defs>
         <Area
+          {...chartSeriesStyle}
           dataKey="value"
           fill="url(#tvs-value-fill)"
           fillOpacity={1}
           stroke="url(#tvs-value-stroke)"
-          strokeWidth={2}
           isAnimationActive={false}
         />
         <ChartTooltip filterNull={false} content={<TvsValueChartTooltip />} />

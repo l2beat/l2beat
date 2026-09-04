@@ -20,6 +20,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -166,6 +167,7 @@ export function CostsChart({
       <ComposedChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
+          {...chartSeriesStyle}
           yAxisId="left"
           dataKey="overhead"
           fill={chartMeta.overhead.color}
@@ -181,6 +183,7 @@ export function CostsChart({
           hide={!dataKeys.includes('overhead')}
         />
         <Area
+          {...chartSeriesStyle}
           yAxisId="left"
           dataKey="compute"
           fill={chartMeta.compute.color}
@@ -195,6 +198,7 @@ export function CostsChart({
           hide={!dataKeys.includes('compute')}
         />
         <Area
+          {...chartSeriesStyle}
           yAxisId="left"
           dataKey="blobs"
           fill={chartMeta.blobs?.color}
@@ -206,6 +210,7 @@ export function CostsChart({
           hide={!dataKeys.includes('blobs') || !chartMeta.blobs}
         />
         <Area
+          {...chartSeriesStyle}
           yAxisId="left"
           dataKey="calldata"
           fill={chartMeta.calldata.color}
@@ -218,9 +223,9 @@ export function CostsChart({
 
         {chartMeta.ethereum && (
           <Line
+            {...chartSeriesStyle}
             yAxisId="right"
             dataKey="ethereum"
-            strokeWidth={2}
             stroke={chartMeta.ethereum.color}
             isAnimationActive={false}
             dot={false}
@@ -229,9 +234,9 @@ export function CostsChart({
         )}
         {chartMeta.celestia && (
           <Line
+            {...chartSeriesStyle}
             yAxisId="right"
             dataKey="celestia"
-            strokeWidth={2}
             stroke={chartMeta.celestia.color}
             isAnimationActive={false}
             dot={false}
@@ -240,9 +245,9 @@ export function CostsChart({
         )}
         {chartMeta.avail && (
           <Line
+            {...chartSeriesStyle}
             yAxisId="right"
             dataKey="avail"
-            strokeWidth={2}
             stroke={chartMeta.avail.color}
             isAnimationActive={false}
             dot={false}
@@ -251,9 +256,9 @@ export function CostsChart({
         )}
         {chartMeta.eigenda && (
           <Line
+            {...chartSeriesStyle}
             yAxisId="right"
             dataKey="eigenda"
-            strokeWidth={2}
             stroke={chartMeta.eigenda.color}
             isAnimationActive={false}
             dot={false}

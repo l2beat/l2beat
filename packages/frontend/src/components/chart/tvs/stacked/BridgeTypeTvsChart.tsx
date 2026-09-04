@@ -12,6 +12,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -97,6 +98,7 @@ export function BridgeTypeTvsChart({
           syncedUntil={syncedUntil}
         />
         <Area
+          {...chartSeriesStyle}
           dataKey="external"
           hide={!dataKeys.includes('external')}
           fill={bridgeTypeTvsChartMeta.external.color}
@@ -109,6 +111,7 @@ export function BridgeTypeTvsChart({
           }
         />
         <Area
+          {...chartSeriesStyle}
           dataKey="native"
           hide={!dataKeys.includes('native')}
           fill={bridgeTypeTvsChartMeta.native.color}
@@ -119,6 +122,7 @@ export function BridgeTypeTvsChart({
           activeDot={!dataKeys.includes('canonical')}
         />
         <Area
+          {...chartSeriesStyle}
           dataKey="canonical"
           hide={!dataKeys.includes('canonical')}
           fill={bridgeTypeTvsChartMeta.canonical.color}

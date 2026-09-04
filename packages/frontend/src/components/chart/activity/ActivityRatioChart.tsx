@@ -11,6 +11,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
+  chartSeriesStyle,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
@@ -49,10 +50,10 @@ export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
     >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
         <Area
+          {...chartSeriesStyle}
           dataKey="ratio"
           fillOpacity={1}
           fill="url(#fillRatio)"
-          strokeWidth={2}
           stroke={chartMeta.ratio.color}
           dot={false}
           isAnimationActive={false}
