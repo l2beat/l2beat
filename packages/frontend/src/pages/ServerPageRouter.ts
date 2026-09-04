@@ -1,6 +1,9 @@
 import express from 'express'
 import { env } from '~/env'
-import { PageCacheMiddleware } from '~/server/middlewares/PageCacheMiddleware'
+import {
+  ClearPageCacheMiddleware,
+  PageCacheMiddleware,
+} from '~/server/middlewares/PageCacheMiddleware'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
@@ -90,6 +93,10 @@ export function createServerPageRouter(
       router.use('/', subRouter)
     }
   }
+
+  // Anything reaching here was not a page (e.g. /api/*, /health, 404s) and
+  // must not be edge-cached.
+  router.use('/', ClearPageCacheMiddleware())
 
   return router
 }

@@ -2,6 +2,7 @@ import type { AddressInfo } from 'node:net'
 import { expect } from 'earl'
 import express from 'express'
 import {
+  ClearPageCacheMiddleware,
   DEFAULT_EDGE_SECONDS,
   PageCacheMiddleware,
   pageCacheControl,
@@ -41,6 +42,13 @@ describe(PageCacheMiddleware.name, () => {
     })
   })
 
+  it('clears the header for requests no page route handled', async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/not-a-page`)
+      expect(response.headers.get('cache-control')).toEqual(null)
+    })
+  })
+
   it('lets a route opt into a longer edge ttl', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/long`)
@@ -71,6 +79,10 @@ async function withServer(test: (baseUrl: string) => Promise<void>) {
   })
   app.get('/long', (_, res) => {
     setPageCacheHeaders(res, { edgeSeconds: 3600 })
+    res.status(200).send('ok')
+  })
+  app.use(ClearPageCacheMiddleware())
+  app.get('/api/not-a-page', (_, res) => {
     res.status(200).send('ok')
   })
 
