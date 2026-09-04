@@ -1,0 +1,32 @@
+// =============================================================================
+// Output relations: what the CLI renders.
+// =============================================================================
+
+.output deployable
+.output entryPoint
+.output writes
+.output transitivelyCalls
+.output callsIn
+.output writesIn
+.output containsAssembly
+.output unhandled
+
+// The storage-writers analyzer's table: for each storage variable of each deployable contract,
+// the entry points that (transitively) write it. Deployment is the pseudo entry "constructor".
+.decl storageWriters(C: symbol, V: symbol, Slot: number, E: symbol)
+storageWriters(C, V, Slot, E) :- storageSlot(C, V, Slot, _), reachesFrom(C, E, F), writesOwn(C, F, V, _).
+storageWriters(C, V, Slot, "constructor") :- deployable(C), storageSlot(C, V, Slot, _), initializer(V, _).
+.output storageWriters
+
+// Opaque writes reachable from an entry point, with the line of the offending site.
+.decl opaqueWrites(C: symbol, E: symbol, F: symbol, Kind: symbol, Detail: symbol, Line: number, K: symbol)
+opaqueWrites(C, E, F, Kind, Detail, Line, K) :-
+    reachesFrom(C, E, F), opaqueWrite(F, K, Kind, Detail), sourceLoc(K, _, Line, _, _, _).
+.output opaqueWrites
+.output possibleTargets
+
+// Claims with the line of their evidence (0 when there is none).
+.decl writeClaims(C: symbol, E: symbol, V: symbol, Claim: symbol, Trust: symbol, Line: number)
+writeClaims(C, E, V, Claim, Trust, Line) :- writeClaim(C, E, V, Claim, Trust, X), X != "", sourceLoc(X, _, Line, _, _, _).
+writeClaims(C, E, V, Claim, Trust, 0)    :- writeClaim(C, E, V, Claim, Trust, "").
+.output writeClaims

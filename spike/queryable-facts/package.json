@@ -1,0 +1,26 @@
+{
+  "name": "@l2beat/spike-queryable-facts",
+  "version": "0.0.0",
+  "private": true,
+  "description": "L2B-14851 spike: pragma -> solc AST + storage layout -> TSV facts -> Souffl\u00e9 rules, walked end to end on one contract.",
+  "scripts": {
+    "facts": "tsx src/main.ts facts",
+    "pipeline": "tsx src/main.ts pipeline",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "format": "biome format .",
+    "format:fix": "biome format --write ."
+  },
+  "dependencies": {
+    "@ethereum-sourcify/compilers": "^1.1.1",
+    "@ethereum-sourcify/compilers-types": "^1.2.0",
+    "semver": "^7.7.1",
+    "solc": "^0.8.34"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/semver": "^7.5.8",
+    "tsx": "^4.9.3"
+  }
+}

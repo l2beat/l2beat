@@ -1,0 +1,267 @@
+// =============================================================================
+// Rule library (spike). Layers, bottom to top: structure → call graph → writes → guards.
+// All analysis lives here; the extractor only states facts.
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// Layer 1: structure
+// ---------------------------------------------------------------------------
+
+// A concrete contract nobody inherits from — what actually gets deployed.
+.decl inheritedBy(B: symbol)
+inheritedBy(B) :- inherits(_, B, O), O > 0.
+
+.decl deployable(C: symbol)
+deployable(C) :- contract(C, _, "contract", 0), !inheritedBy(C).
+
+// The definition of signature Sig that contract C actually sees: the one earliest in its linearization.
+// (Solidity forces an explicit override when two unrelated bases define the same signature, so "earliest" is the most-derived one.)
+.decl memberFunction(C: symbol, F: symbol)
+memberFunction(C, F) :-
+    inherits(C, B, O),
+    function(F, B, _, Sig, Kind, _, _, _),
+    Kind != "constructor",
+    O = min O2 : { inherits(C, B2, O2), function(_, B2, _, Sig, Kind, _, _, _) }.
+
+// Deployment code of C: its constructor and every base constructor.
+.decl ctorChain(C: symbol, Ctor: symbol)
+ctorChain(C, Ctor) :- deployable(C), inherits(C, B, _), function(Ctor, B, _, _, "constructor", _, _, _).
+
+// What the outside world can call on a deployed C. Public getters are not in the AST and only read.
+.decl entryPoint(C: symbol, F: symbol)
+entryPoint(C, F) :-
+    deployable(C), memberFunction(C, F),
+    function(F, _, _, _, Kind, Vis, _, _),
+    (Kind = "function" ; Kind = "fallback" ; Kind = "receive"),
+    (Vis = "public" ; Vis = "external").
+
+// ---------------------------------------------------------------------------
+// Layer 2: call graph
+// ---------------------------------------------------------------------------
+
+// Static edges that stay inside this contract's code: internal calls, modifiers, libraries, base constructors.
+// External calls are deliberately not followed — another contract's body is not this contract's storage.
+.decl calls(F: symbol, G: symbol, Kind: symbol)
+calls(F, G, Kind) :-
+    callSite(_, _, F, Kind, G, _), G != "",
+    (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "modifier" ; Kind = "library" ; Kind = "baseConstructor").
+
+.decl transitivelyCalls(F: symbol, G: symbol)
+transitivelyCalls(F, G) :- calls(F, G, _).
+transitivelyCalls(F, H) :- calls(F, G, _), transitivelyCalls(G, H).
+
+// Virtual dispatch: inside deployable C, a static reference from F to G0 runs G — the override C sees.
+// `super.f()` / `Base.f()`, library calls and base constructors are explicit and resolve to themselves.
+.decl dispatch(C: symbol, F: symbol, G0: symbol, G: symbol)
+dispatch(C, F, G0, G) :-
+    calls(F, G0, Kind), (Kind = "internal" ; Kind = "modifier"),
+    deployable(C), function(G0, B0, _, Sig, K0, _, _, _), inherits(C, B0, _),
+    memberFunction(C, G), function(G, _, _, Sig, K0, _, _, _).
+dispatch(C, F, G0, G0) :-
+    calls(F, G0, Kind), (Kind = "internal" ; Kind = "modifier"),
+    deployable(C), function(G0, B0, _, _, _, _, _, _), !inherits(C, B0, _).
+dispatch(C, F, G0, G0) :-
+    calls(F, G0, Kind), deployable(C),
+    (Kind = "internalExplicit" ; Kind = "library" ; Kind = "baseConstructor").
+
+// Code that can run in deployable C, starting from its entry points and constructor chain.
+.decl reachableIn(C: symbol, F: symbol)
+reachableIn(C, F) :- entryPoint(C, F).
+reachableIn(C, F) :- ctorChain(C, F).
+reachableIn(C, G) :- reachableIn(C, F), callsIn(C, F, G).
+
+.decl callsIn(C: symbol, F: symbol, G: symbol)
+callsIn(C, F, G) :- reachableIn(C, F), dispatch(C, F, _, G).
+
+// Which entry point E of C reaches F. Deployment is one pseudo entry point labelled "constructor".
+.decl reachesFrom(C: symbol, E: symbol, F: symbol)
+reachesFrom(C, E, E) :- entryPoint(C, E).
+reachesFrom(C, "constructor", Ctor) :- ctorChain(C, Ctor).
+reachesFrom(C, E, G) :- reachesFrom(C, E, F), callsIn(C, F, G).
+
+// ---------------------------------------------------------------------------
+// Layer 3: state writes
+// ---------------------------------------------------------------------------
+
+// The hello world from the issue: function-level, context-insensitive.
+.decl writesDirect(F: symbol, V: symbol)
+writesDirect(F, V) :- writeSite(_, _, F, V, _), stateVariable(V, _, _, _, _, _).
+
+.decl writes(F: symbol, V: symbol)
+writes(F, V) :- writesDirect(F, V).
+writes(F, V) :- calls(F, G, _), writes(G, V).
+
+// Storage references (locals and parameters with `storage` location) may alias state variables.
+// Context-insensitive on purpose: every call site's argument flows to the parameter — the same
+// over-approximation the Python analyzer documents under "Precision".
+.decl aliases(R: symbol, V: symbol)
+aliases(R, V) :- refBinding(R, V), stateVariable(V, _, _, _, _, _).
+aliases(R, V) :- refBinding(R, R2), aliases(R2, V).
+aliases(P, V) :- param(G, I, P, _, "storage"), callSite(K, _, _, _, G, _), argBinding(K, I, X), denotes(X, V).
+
+// Call results: X = "<K>#<i>" denotes whatever callee G returns at index i (dispatch-insensitive: static callee).
+aliases(X, V) :- callResult(X, K, I), callSite(K, _, _, _, G, _), returnsRef(G, I, Y), denotes(Y, V).
+// `r.slot := p.slot` in assembly: reference r now points wherever p points.
+aliases(R, V) :- asmLet(A, RSlot, "ident", PSlot), asmExtRef(A, RSlot, R, "slot"), asmExtRef(A, PSlot, P, "slot"), denotes(P, V).
+
+// X (a state variable or a storage reference) ultimately denotes state variable V.
+.decl denotes(X: symbol, V: symbol)
+denotes(V, V) :- stateVariable(V, _, _, _, _, _).
+denotes(R, V) :- aliases(R, V).
+
+// Inside assembly block A (running in deployable C), Yul text T denotes the storage slot of V.
+.decl yulSlotOf(C: symbol, A: symbol, T: symbol, V: symbol)
+yulSlotOf(C, A, T, V) :- asmExtRef(A, T, V, "slot"), assembly(A, F, _), reachableIn(C, F).
+yulSlotOf(C, A, X, V) :- asmLet(A, X, "ident", T), yulSlotOf(C, A, T, V).
+yulSlotOf(C, A, T, V) :- asmSstore(_, A, "literal", T, N), N >= 0, assembly(A, F, _), reachableIn(C, F), storageSlot(C, V, N, _).
+
+// F's own writes, in the context of deployable C: direct, through a storage reference, or an sstore we can name.
+.decl writesOwn(C: symbol, F: symbol, V: symbol, How: symbol)
+writesOwn(C, F, V, "direct")     :- reachableIn(C, F), writeSite(_, _, F, V, _), stateVariable(V, _, _, _, _, _).
+writesOwn(C, F, V, "storageRef") :- reachableIn(C, F), writeSite(_, _, F, R, _), aliases(R, V).
+writesOwn(C, F, V, "assembly")   :- reachableIn(C, F), assembly(A, F, _), asmSstore(_, A, _, T, _), yulSlotOf(C, A, T, V).
+
+// Transitive writes in context.
+.decl writesIn(C: symbol, F: symbol, V: symbol)
+writesIn(C, F, V) :- writesOwn(C, F, V, _).
+writesIn(C, F, V) :- callsIn(C, F, G), writesIn(C, G, V).
+
+// Writes that cannot be tied to a named variable. Never dropped: a universal claim must see them.
+.decl resolvedSstore(K: symbol)
+resolvedSstore(K) :- asmSstore(K, A, _, T, _), yulSlotOf(_, A, T, _).
+
+.decl opaqueWrite(F: symbol, K: symbol, Kind: symbol, Detail: symbol)
+opaqueWrite(F, K, "delegatecall", T) :- callSite(K, _, F, "lowLevel", "delegatecall", T).
+opaqueWrite(F, K, "callcode", T)     :- callSite(K, _, F, "lowLevel", "callcode", T).
+opaqueWrite(F, K, "assembly", T)     :- asmSstore(K, A, _, T, _), assembly(A, F, _), !resolvedSstore(K).
+opaqueWrite(F, K, "asm-delegatecall", N) :- asmCall(K, A, N), (N = "delegatecall" ; N = "callcode"), assembly(A, F, _).
+opaqueWrite(F, A, "assembly", "assembly without Yul AST (solc < 0.6): effects unknown") :- assembly(A, F, 0).
+// A write through a storage reference we could not tie to any state variable is still a write.
+opaqueWrite(F, W, "storageRef", R)   :- writeSite(W, _, F, R, _), !stateVariable(R, _, _, _, _, _), !refHasAlias(R).
+
+.decl refHasAlias(R: symbol)
+refHasAlias(R) :- aliases(R, _).
+
+// For an unresolved sstore, the state variables the same assembly block touches are the likely targets.
+.decl possibleTargets(K: symbol, V: symbol)
+possibleTargets(K, V) :- opaqueWrite(_, K, "assembly", _), asmSstore(K, A, _, _, _), asmExtRef(A, _, V, _), stateVariable(V, _, _, _, _, _).
+
+// Entry E of deployable C reaches inline assembly in F: claims about E must be downgraded honestly.
+.decl containsAssembly(C: symbol, E: symbol, F: symbol)
+containsAssembly(C, E, F) :- reachesFrom(C, E, F), assembly(_, F, _).
+
+// ---------------------------------------------------------------------------
+// Layer 4: guards — the syntactic v1 of `guardedBy`. Everything here is heuristic:
+// it reads the statement tree, not a control-flow graph (see L2B-14860).
+// ---------------------------------------------------------------------------
+
+// Inner is nested anywhere inside statement Outer.
+.decl within(Outer: symbol, Inner: symbol)
+within(P, S) :- stmt(S, _, _, P, _), P != "".
+within(P, S) :- within(P, Q), stmt(S, _, _, Q, _).
+
+// A statement that runs whenever its function runs: every ancestor up to the body is a plain block.
+.decl unconditional(S: symbol)
+unconditional(B) :- functionBody(_, B).
+unconditional(S) :- stmt(S, _, _, P, _), unconditional(P), stmt(P, _, PK, _, _), (PK = "Block" ; PK = "UncheckedBlock").
+
+// The statement a site lives in; a statement is its own statement.
+.decl stmtOf(X: symbol, S: symbol)
+stmtOf(K, S) :- callSite(K, S, _, _, _, _), S != "".
+stmtOf(W, S) :- writeSite(W, S, _, _, _), S != "".
+stmtOf(S, S) :- stmt(S, _, _, _, _).
+
+// Statements that abort unconditionally when reached (require/assert abort only conditionally).
+.decl aborts(S: symbol)
+aborts(S) :- stmt(S, _, "RevertStatement", _, _).
+aborts(S) :- callSite(_, S, _, "builtin", "revert", _).
+
+.decl abortsWithin(S: symbol)
+abortsWithin(S) :- within(S, T), aborts(T).
+
+.decl returnsWithin(S: symbol)
+returnsWithin(S) :- within(S, T), stmt(T, _, "Return", _, _).
+
+// F can never complete: an unconditional abort in its body. Its writes never persist.
+.decl alwaysReverts(F: symbol)
+alwaysReverts(F) :- aborts(S), stmt(S, F, _, _, _), unconditional(S).
+
+// A *check*: require/assert on msg.sender, or `if (<msg.sender ...>) { ... revert ... }`.
+// A check anywhere in F protects every write in F — a revert rolls back earlier writes too.
+.decl senderCheck(X: symbol, F: symbol)
+senderCheck(K, F) :- callSite(K, _, F, "builtin", B, _), (B = "require" ; B = "assert"), refs(K, "msg.sender").
+senderCheck(S, F) :- stmt(S, F, "IfStatement", _, _), refs(S, "msg.sender"), abortsWithin(S).
+
+// A *gate*: `if (<msg.sender ...>) return;` — protects only the writes that come after it.
+.decl senderGate(S: symbol, F: symbol)
+senderGate(S, F) :- stmt(S, F, "IfStatement", _, _), refs(S, "msg.sender"), returnsWithin(S), !abortsWithin(S).
+
+// The state variables the sender is compared against, and checks that are disjunctions (bypassable).
+.decl checkPrincipal(X: symbol, P: symbol)
+checkPrincipal(X, P) :- (senderCheck(X, _) ; senderGate(X, _)), refs(X, P), stateVariable(P, _, _, _, _, _).
+
+.decl weakCheck(X: symbol)
+weakCheck(X) :- (senderCheck(X, _) ; senderGate(X, _)), condShape(X, "or").
+
+// F always checks the sender: an unconditional check in its own body, in a modifier, or in a function it
+// unconditionally calls (so `onlyOwner` → `_requireOwner()` → `if (msg.sender != owner) revert` is found).
+.decl alwaysChecksSender(F: symbol, X: symbol)
+alwaysChecksSender(F, X) :- senderCheck(X, F), stmtOf(X, S), unconditional(S).
+alwaysChecksSender(F, X) :- callSite(_, "", F, "modifier", M, _), alwaysChecksSender(M, X).
+alwaysChecksSender(F, X) :-
+    callSite(_, S, F, Kind, G, _), (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
+    unconditional(S), alwaysChecksSender(G, X).
+
+// F checks the sender only on some paths (inside a branch or loop, directly or through calls).
+.decl sometimesChecksSender(F: symbol, X: symbol)
+sometimesChecksSender(F, X) :- senderCheck(X, F), !alwaysChecksSender(F, X).
+sometimesChecksSender(F, X) :-
+    callSite(_, _, F, Kind, G, _), (Kind = "modifier" ; Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
+    (sometimesChecksSender(G, X) ; alwaysChecksSender(G, X)), !alwaysChecksSender(F, X).
+
+// Write W is protected by gate S when the gate is unconditional and textually precedes W (straight-line approximation of dominance).
+.decl gatedWrite(W: symbol, S: symbol)
+gatedWrite(W, S) :-
+    senderGate(S, F), unconditional(S),
+    writeSite(W, S2, F, _, _), stmt(S2, F, _, _, _),
+    sourceLoc(S, _, _, _, P1, _), sourceLoc(S2, _, _, _, P2, _), P2 > P1.
+
+.decl ungatedSite(F: symbol, V: symbol)
+ungatedSite(F, V) :- writeSite(W, _, F, V, _), !gatedWrite(W, _).
+
+.decl hasAnyCheck(F: symbol)
+hasAnyCheck(F) :- alwaysChecksSender(F, _).
+hasAnyCheck(F) :- sometimesChecksSender(F, _).
+hasAnyCheck(F) :- senderGate(_, F).
+
+.decl hasPrincipal(X: symbol)
+hasPrincipal(X) :- checkPrincipal(X, _).
+
+// ---------------------------------------------------------------------------
+// Claims: one row per observation about (deployable C, entry point E, variable V it writes).
+// Trust: "sound" when it follows from the AST alone, "heuristic" when it relies on the syntactic guard approximation.
+// ---------------------------------------------------------------------------
+.decl entryWrites(C: symbol, E: symbol, V: symbol)
+entryWrites(C, E, V) :- entryPoint(C, E), writesIn(C, E, V).
+// An opaque write (delegatecall, unresolved sstore) may hit any slot: claim it under the pseudo variable "*".
+entryWrites(C, E, "*") :- entryPoint(C, E), reachesFrom(C, E, F), opaqueWrite(F, _, _, _).
+
+.decl writeClaim(C: symbol, E: symbol, V: symbol, Claim: symbol, Trust: symbol, Evidence: symbol)
+writeClaim(C, E, V, "dead write: the function always reverts, nothing persists", "sound", S) :-
+    entryWrites(C, E, V), alwaysReverts(E), aborts(S), stmt(S, E, _, _, _), unconditional(S).
+writeClaim(C, E, V, cat("guarded: msg.sender is always checked against ", P), "heuristic", X) :-
+    entryWrites(C, E, V), !alwaysReverts(E), alwaysChecksSender(E, X), !weakCheck(X), checkPrincipal(X, P).
+writeClaim(C, E, V, "guarded: msg.sender is always checked", "heuristic", X) :-
+    entryWrites(C, E, V), !alwaysReverts(E), alwaysChecksSender(E, X), !weakCheck(X), !hasPrincipal(X).
+writeClaim(C, E, V, cat("weakly guarded: the sender check is one side of an OR: ", T), "heuristic", X) :-
+    entryWrites(C, E, V), !alwaysReverts(E), alwaysChecksSender(E, X), weakCheck(X), condition(X, T).
+writeClaim(C, E, V, cat("conditionally guarded: msg.sender is checked only on some paths, against ", P), "heuristic", X) :-
+    entryWrites(C, E, V), !alwaysReverts(E), sometimesChecksSender(E, X), checkPrincipal(X, P).
+writeClaim(C, E, V, "guarded: an early return on msg.sender precedes every write", "heuristic", S) :-
+    entryWrites(C, E, V), !alwaysReverts(E), senderGate(S, E), !ungatedSite(E, V).
+writeClaim(C, E, V, "UNGUARDED: the early return on msg.sender comes after the write, which persists", "heuristic", S) :-
+    entryWrites(C, E, V), !alwaysReverts(E), senderGate(S, E), ungatedSite(E, V).
+writeClaim(C, E, V, "UNGUARDED: no msg.sender check on the way to this write", "heuristic", "") :-
+    entryWrites(C, E, V), !alwaysReverts(E), !hasAnyCheck(E).
+writeClaim(C, E, V, "note: reaches inline assembly — universal claims about this path are not sound", "sound", F) :-
+    entryWrites(C, E, V), containsAssembly(C, E, F).

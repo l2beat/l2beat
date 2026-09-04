@@ -1,5 +1,6 @@
 packages:
   - 'packages/*'
+  - 'spike/*'
 
 # Only install package versions published at least a week ago, to reduce
 # exposure to supply chain attacks in freshly published releases.
