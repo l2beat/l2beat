@@ -36,7 +36,7 @@ export const CROP_CRITERIA: CropCriteria[] = [
       'Nobody - not the team, not an operator, not a governance vote - can stand between a user and their funds.',
     minimums: [
       'Permissionless access and exit: no allowlist, no KYC gate, no operator whose approval you need.',
-      'An infinite exit window, or one long enough to leave: the core contracts are immutable, unpausable, and cannot be upgraded out from under you.',
+      'An infinite exit window, or one long enough to leave: the core contracts are immutable, unpausable, and cannot be upgraded.',
       'Passes the walkaway test: with the team, the frontend and every relayer gone, users can still claim and withdraw.',
       'Any power over users is named and bounded - it applies to everyone equally and cannot reach payment or withdrawal logic.',
     ],
