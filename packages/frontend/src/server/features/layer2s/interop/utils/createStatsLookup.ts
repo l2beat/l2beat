@@ -1,5 +1,4 @@
 import type { InteropTransferDeployedTokenPairStats } from '@l2beat/database'
-import { Address32 } from '@l2beat/shared-pure'
 
 export interface InteropTokenStats {
   volume: number | null
@@ -7,7 +6,14 @@ export interface InteropTokenStats {
   avgDuration: number | null
 }
 
-export const NO_STATS: InteropTokenStats = {
+export type InteropTokenStatsLookup = (
+  key: string | undefined,
+  isSupported: boolean,
+) => InteropTokenStats
+
+type PairSide = NonNullable<InteropTransferDeployedTokenPairStats['src']>
+
+const NO_STATS: InteropTokenStats = {
   volume: null,
   transferCount: null,
   avgDuration: null,
@@ -19,23 +25,23 @@ const ZERO_STATS: InteropTokenStats = {
   avgDuration: null,
 }
 
-export type PairSide = NonNullable<InteropTransferDeployedTokenPairStats['src']>
-
-export function pairSideKey(side: PairSide): string {
-  return `${side.chain}|${side.address}`
+/**
+ * Sums the rows per group, counting a row once per group so a transfer between
+ * two members is not doubled. The lookup owns the "no data" policy: null
+ * without a snapshot or on an unsupported chain, zero for a supported key the
+ * snapshot has no transfers for.
+ */
+export function createStatsLookup(
+  rows: InteropTransferDeployedTokenPairStats[] | undefined,
+  groupOf: (side: PairSide) => string | undefined,
+): InteropTokenStatsLookup {
+  if (!rows) return () => NO_STATS
+  const stats = aggregate(rows, groupOf)
+  return (key, isSupported) =>
+    isSupported ? (key && stats.get(key)) || ZERO_STATS : NO_STATS
 }
 
-/** Deployed tokens carry 20-byte addresses, transfers carry Address32. */
-export function deploymentPairKey(deployment: {
-  chain: string
-  address: string
-}): string | undefined {
-  const address = Address32.fromOrUndefined(deployment.address)
-  return address ? `${deployment.chain}|${address}` : undefined
-}
-
-/** A row counts once per group, so a transfer between two members is not doubled. */
-export function aggregatePairStats(
+function aggregate(
   rows: InteropTransferDeployedTokenPairStats[],
   groupOf: (side: PairSide) => string | undefined,
 ): Map<string, InteropTokenStats> {
@@ -81,13 +87,4 @@ export function aggregatePairStats(
       },
     ]),
   )
-}
-
-/** Zero when the snapshot has no transfers for the key, null without a snapshot. */
-export function pickStats(
-  stats: Map<string, InteropTokenStats> | undefined,
-  key: string | undefined,
-): InteropTokenStats {
-  if (!stats) return NO_STATS
-  return (key && stats.get(key)) || ZERO_STATS
 }

@@ -108,6 +108,8 @@ function node(
       address,
       symbol: 'USDC',
       explorerUrl: undefined,
+      minters: [],
+      isSupported: true,
       volume,
       transferCount: null,
       avgDuration: null,
