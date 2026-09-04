@@ -54,6 +54,7 @@ export const ManualProxyType = v.enum([
   'Everclear proxy',
   'TaikoFork proxy',
   'NXV proxy',
+  'Railgun proxy',
   'immutable',
 ])
 

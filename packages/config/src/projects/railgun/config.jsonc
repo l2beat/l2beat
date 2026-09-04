@@ -19,6 +19,21 @@
     "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper"
   },
   "overrides": {
+    "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": {
+      "proxyType": "Railgun proxy"
+    },
+    "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": {
+      "proxyType": "Railgun proxy"
+    },
+    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": {
+      "proxyType": "Railgun proxy"
+    },
+    "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40": {
+      "proxyType": "Railgun proxy"
+    },
+    "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": {
+      "proxyType": "Railgun proxy"
+    },
     "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": {
       "ignoreDiscovery": true
     },
