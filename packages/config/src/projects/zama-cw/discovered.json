@@ -16,15 +16,7 @@
     {
       "address": "eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x0f81fd435d44Cc49f90BB74bF4BdE0e9A0554ae6",
@@ -67,20 +59,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aragon DAO that stores governance state and executes proposal action batches.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
-          "description": "change multisig plugin settings.",
-          "role": ".multisigSettingsAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
-          "description": "change multisig plugin target execution configuration.",
-          "role": ".multisigTargetConfigAdmins"
-        }
-      ],
       "deployerAddress": "eth:0x44E087f1c040788732C0B4e8ba474de05d751129",
       "sinceTimestamp": 1763470967,
       "sinceBlock": 23826177,
@@ -234,15 +212,7 @@
     {
       "address": "eth:0x373E36A8684A3344E177C5894179845Cbe57AE44",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-          "description": "sign encrypted input verification bundles accepted by the InputVerifier.",
-          "role": ".getCoprocessorSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "HCULimit",
@@ -343,15 +313,7 @@
     {
       "address": "eth:0x41b19EB4585450db79ac03ba9503106EC7895905",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x438Ce5730ACDBb58B3c712834142eD1ec8D0fF5A",
@@ -361,28 +323,12 @@
     {
       "address": "eth:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Conduit Multisig 1",
@@ -436,15 +382,7 @@
     {
       "address": "eth:0x4eC7200E392B97913cbD6d8160B011406EB019F1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5712aa301c9bFfA6fadF5F7aDC5E2414db03B743",
@@ -454,28 +392,12 @@
     {
       "address": "eth:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5e4f2616AA570d60EC6D7BBF08D070fb81353553",
@@ -485,15 +407,7 @@
     {
       "address": "eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x644f248299FA8E1DE46C97A72C36F354Ccdb8a1e",
@@ -661,54 +575,22 @@
     {
       "address": "eth:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Staking (Coprocessor)",
@@ -998,15 +880,7 @@
     {
       "address": "eth:0x74a1E2e87a4026b7B8b5252c747E514159515e9a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "KMSVerifier",
@@ -1136,28 +1010,12 @@
     {
       "address": "eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ConfidentialZAMAWrapper",
@@ -1449,28 +1307,12 @@
     {
       "address": "eth:0x8edFb885a32C72aF32943D4db13D319181d18CB8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x931FB6Ec104dDc9bc556983032b5b85b671db000",
@@ -1485,15 +1327,7 @@
     {
       "address": "eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Safe",
@@ -1542,15 +1376,7 @@
     {
       "address": "eth:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -1815,15 +1641,7 @@
     {
       "address": "eth:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DAO",
@@ -1836,253 +1654,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aragon DAO that stores governance state and executes proposal action batches.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
-          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
-          "role": ".defaultAdmin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
-          "role": ".managerRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin settings.",
-          "role": ".multisigSettingsAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin target execution configuration.",
-          "role": ".multisigTargetConfigAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "grant and revoke DAO permissions.",
-          "role": ".daoRootHolders"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "add, remove, or swap accounts that can pause the ACL.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
-          "role": ".defaultAdmin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
-          "role": ".managerRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
-          "description": "manage addresses in the registry",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
-          "description": "trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
-          "description": "upgrade the HCULimit implementation.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-          "description": "upgrade the KMSVerifier implementation.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "upgrade the DAO implementation.",
-          "role": ".daoUpgraders"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-          "description": "upgrade the InputVerifier implementation.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "upgrade the ProtocolConfig implementation.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
-          "description": "upgrade the FHEVMExecutor implementation.",
-          "role": ".aclOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
-          "description": "upgrade the KMSGeneration implementation.",
-          "role": ".aclOwner"
-        }
-      ],
       "deployerAddress": "eth:0xC11f43f0785da3bDd1464C9E5A389B9585A05FAD",
       "sinceTimestamp": 1763037479,
       "sinceBlock": 23790334,
@@ -2303,15 +1874,7 @@
     {
       "address": "eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ConfidentialBbqTGBPWrapper",
@@ -2431,15 +1994,7 @@
     {
       "address": "eth:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xBBBa07771b5cc8794234dfa884637743D78d4004",
@@ -2511,402 +2066,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
-          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
-          "role": ".managerRoleMembers",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin settings.",
-          "role": ".multisigSettingsAdmins",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin settings.",
-          "role": ".multisigSettingsAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin target execution configuration.",
-          "role": ".multisigTargetConfigAdmins",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin target execution configuration.",
-          "role": ".multisigTargetConfigAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "grant and revoke DAO permissions.",
-          "role": ".daoRootHolders",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "add, remove, or swap accounts that can pause the ACL.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
-          "role": ".managerRoleMembers",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
-          "description": "manage addresses in the registry",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
-          "description": "trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
-          "description": "upgrade the HCULimit implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-          "description": "upgrade the KMSVerifier implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "upgrade the DAO implementation.",
-          "role": ".daoUpgraders",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-          "description": "upgrade the InputVerifier implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "upgrade the ProtocolConfig implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
-          "description": "upgrade the FHEVMExecutor implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
-          "description": "upgrade the KMSGeneration implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades.",
-          "role": ".daoExecutors"
-        }
-      ],
       "deployerAddress": "eth:0xC11f43f0785da3bDd1464C9E5A389B9585A05FAD",
       "sinceTimestamp": 1763038427,
       "sinceBlock": 23790412,
@@ -2981,15 +2140,7 @@
     {
       "address": "eth:0xbcF4943A856497FB2345409D35f4d1eae9A0363E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xBe8b485D4029253375b11dEaAF506eEA781Bb192",
@@ -2999,28 +2150,12 @@
     {
       "address": "eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC105B5933446658D226582f7A112F49a70b54364",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xc2e5960EDa1E8D801b19e96D886B946Dfb4bE709",
@@ -3221,15 +2356,7 @@
     {
       "address": "eth:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ProtocolConfig",
@@ -3617,28 +2744,12 @@
     {
       "address": "eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ZamaGovMultisigA",
@@ -3651,402 +2762,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
-          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
-          "role": ".managerRoleMembers",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin settings.",
-          "role": ".multisigSettingsAdmins",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin settings.",
-          "role": ".multisigSettingsAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin target execution configuration.",
-          "role": ".multisigTargetConfigAdmins",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "change multisig plugin target execution configuration.",
-          "role": ".multisigTargetConfigAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "grant and revoke DAO permissions.",
-          "role": ".daoRootHolders",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "add, remove, or swap accounts that can pause the ACL.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
-          "role": ".managerRoleMembers",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
-          "description": "manage addresses in the registry",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
-          "description": "trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
-          "description": "upgrade the HCULimit implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-          "description": "upgrade the KMSVerifier implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "upgrade the DAO implementation.",
-          "role": ".daoUpgraders",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
-          "description": "upgrade the InputVerifier implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "upgrade the ProtocolConfig implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
-          "description": "upgrade the FHEVMExecutor implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
-          "description": "upgrade the KMSGeneration implementation.",
-          "role": ".aclOwner",
-          "via": [
-            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-          "description": "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades.",
-          "role": ".daoExecutors"
-        }
-      ],
       "deployerAddress": "eth:0x44E087f1c040788732C0B4e8ba474de05d751129",
       "sinceTimestamp": 1767962891,
       "sinceBlock": 24197223,
@@ -4439,15 +3154,7 @@
     {
       "address": "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ConfidentialTokenWrappersRegistry",
@@ -4535,15 +3242,7 @@
     {
       "address": "eth:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
-          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
-          "role": ".currentKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
@@ -4646,64 +3345,12 @@
     {
       "address": "zama:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "accept GatewayConfig ownership.",
-          "role": ".pendingOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x0000000000000000000000000000000000000001",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "participate in gateway key custody workflows.",
-          "role": ".getCustodianTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign gateway key custody material.",
-          "role": ".getCustodianSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MultichainACL",
@@ -4779,21 +3426,7 @@
     {
       "address": "zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Decryption",
@@ -5106,121 +3739,27 @@
     {
       "address": "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468",
-          "description": "submit public-decryption allowances, account handle allowances, and user-decryption delegation or revocation messages to MultichainACL.",
-          "role": ".gatewayCoprocessorTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
-          "description": "sign encrypted input proof verification responses accepted by InputVerification.",
-          "role": ".gatewayCoprocessorSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
-          "description": "submit coprocessor proof verification and rejection responses to InputVerification.",
-          "role": ".gatewayCoprocessorTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
-          "description": "submit ciphertext and SNS ciphertext digests to CiphertextCommits.",
-          "role": ".gatewayCoprocessorTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign encrypted input proof verification responses accepted by the gateway.",
-          "role": ".getCoprocessorSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit coprocessor responses, ACL mirror updates, and ciphertext material commitments to gateway contracts.",
-          "role": ".getCoprocessorTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x41b19EB4585450db79ac03ba9503106EC7895905",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "GatewayPauserSet",
@@ -5284,40 +3823,12 @@
     {
       "address": "zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SafeL2",
@@ -5330,79 +3841,6 @@
       ],
       "proxyType": "gnosis safe",
       "description": "Gateway owner Safe. Its LayerZero governance module is outside the Zama Gateway protocol surface covered here.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "unpause Decryption.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
-          "description": "add, remove, or swap gateway pausers.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
-          "description": "set gateway fee prices for input verification, public decryption, and user decryption.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
-          "description": "unpause InputVerification.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "create KMS contexts that immediately become current, destroy historical KMS contexts, update thresholds of any live context, manage coprocessors, custodians and host chains, transfer ownership, and unpause gateway workflow contracts.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468",
-          "description": "upgrade the MultichainACL implementation.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "upgrade the Decryption implementation.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "upgrade the KMSGeneration implementation.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
-          "description": "upgrade the ProtocolPayment implementation.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
-          "description": "upgrade the InputVerification implementation.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
-          "description": "upgrade the CiphertextCommits implementation.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "zama:0x9CF3c00bd77D710A148133815Ff0684D3B624598",
       "sinceTimestamp": 1765298555,
@@ -5435,142 +3873,42 @@
     {
       "address": "zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
-          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x705380c013c13B4ce62338ab1F012036BAC802b3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
-          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ProtocolPayment",
@@ -5665,180 +4003,52 @@
     {
       "address": "zama:0x8edFb885a32C72aF32943D4db13D319181d18CB8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
-          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
-          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
-          "role": ".pausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xC105B5933446658D226582f7A112F49a70b54364",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "InputVerification",
@@ -5950,21 +4160,7 @@
     {
       "address": "zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "CiphertextCommits",
@@ -6045,21 +4241,7 @@
     {
       "address": "zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "GatewayConfig",
@@ -6328,59 +4510,17 @@
     {
       "address": "zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption material accepted by gateway contracts.",
-          "role": ".getKmsSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
-          "description": "submit KMS decryption responses to Decryption.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
-          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption responses to gateway contracts.",
-          "role": ".getKmsTxSenders"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "zama:0xf299Cd189498D7d0F0FfACd4DdC94166f614fBBE",
@@ -8175,5 +6315,2005 @@
     "zama/ZamaProtocolConfig": "0xfb7d7b44691fe08077e0599f81136c1579f4123d76ccfb12fc11e8dffa8949c8"
   },
   "usedBlockNumbers": { "ethereum": 25846595, "zama": 2754431 },
-  "permissionsConfigHash": "0x9861a7101e638b3331670d08515df7552c9aed6ec3861b713690fca54d232f1c"
+  "permissionsConfigHash": "0x9861a7101e638b3331670d08515df7552c9aed6ec3861b713690fca54d232f1c",
+  "permissions": {
+    "eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
+          "description": "change multisig plugin settings.",
+          "role": ".multisigSettingsAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C",
+          "description": "change multisig plugin target execution configuration.",
+          "role": ".multisigTargetConfigAdmins"
+        }
+      ]
+    },
+    "eth:0x373E36A8684A3344E177C5894179845Cbe57AE44": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "sign encrypted input verification bundles accepted by the InputVerifier.",
+          "role": ".getCoprocessorSigners"
+        }
+      ]
+    },
+    "eth:0x41b19EB4585450db79ac03ba9503106EC7895905": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0x4eC7200E392B97913cbD6d8160B011406EB019F1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0x74a1E2e87a4026b7B8b5252c747E514159515e9a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x8edFb885a32C72aF32943D4db13D319181d18CB8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "pause the ACL.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin settings.",
+          "role": ".multisigSettingsAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin target execution configuration.",
+          "role": ".multisigTargetConfigAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "grant and revoke DAO permissions.",
+          "role": ".daoRootHolders"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "add, remove, or swap accounts that can pause the ACL.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "description": "manage addresses in the registry",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
+          "description": "trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "upgrade the HCULimit implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "upgrade the KMSVerifier implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "upgrade the DAO implementation.",
+          "role": ".daoUpgraders"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "upgrade the InputVerifier implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "upgrade the ProtocolConfig implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
+          "description": "upgrade the FHEVMExecutor implementation.",
+          "role": ".aclOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
+          "description": "upgrade the KMSGeneration implementation.",
+          "role": ".aclOwner"
+        }
+      ]
+    },
+    "eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin settings.",
+          "role": ".multisigSettingsAdmins",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin settings.",
+          "role": ".multisigSettingsAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin target execution configuration.",
+          "role": ".multisigTargetConfigAdmins",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin target execution configuration.",
+          "role": ".multisigTargetConfigAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "grant and revoke DAO permissions.",
+          "role": ".daoRootHolders",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "add, remove, or swap accounts that can pause the ACL.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "description": "manage addresses in the registry",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
+          "description": "trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "upgrade the HCULimit implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "upgrade the KMSVerifier implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "upgrade the DAO implementation.",
+          "role": ".daoUpgraders",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "upgrade the InputVerifier implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "upgrade the ProtocolConfig implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
+          "description": "upgrade the FHEVMExecutor implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
+          "description": "upgrade the KMSGeneration implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades.",
+          "role": ".daoExecutors"
+        }
+      ]
+    },
+    "eth:0xC105B5933446658D226582f7A112F49a70b54364": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin settings.",
+          "role": ".multisigSettingsAdmins",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin settings.",
+          "role": ".multisigSettingsAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin target execution configuration.",
+          "role": ".multisigTargetConfigAdmins",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "change multisig plugin target execution configuration.",
+          "role": ".multisigTargetConfigAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "grant and revoke DAO permissions.",
+          "role": ".daoRootHolders",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
+          "description": "add, remove, or swap accounts that can pause the ACL.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "description": "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "set the coprocessor signer set and signature threshold used for encrypted input verification.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "grant and revoke manager accounts, transfer or renounce the default admin role, and change the default admin transfer delay.",
+          "role": ".defaultAdmin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "description": "set the reward rate, set the unstake cooldown period, and add or remove reward-eligible staking accounts.",
+          "role": ".managerRoleMembers",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "description": "manage addresses in the registry",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
+          "description": "trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2",
+          "description": "upgrade the HCULimit implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
+          "description": "upgrade the KMSVerifier implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "upgrade the DAO implementation.",
+          "role": ".daoUpgraders",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xCe0FC2e05CFff1B719EFF7169f7D80Af770c8EA2",
+          "description": "upgrade the InputVerifier implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "upgrade the ProtocolConfig implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
+          "description": "upgrade the FHEVMExecutor implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa",
+          "description": "upgrade the KMSGeneration implementation.",
+          "role": ".aclOwner",
+          "via": [
+            { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+          "description": "execute arbitrary DAO actions, including calls as wrapper owner and UUPS upgrades.",
+          "role": ".daoExecutors"
+        }
+      ]
+    },
+    "eth:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0xbcF4943A856497FB2345409D35f4d1eae9A0363E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration.",
+          "role": ".currentKmsTxSenders"
+        }
+      ]
+    },
+    "eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x0000000000000000000000000000000000000000": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "accept GatewayConfig ownership.",
+          "role": ".pendingOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
+          "role": "admin"
+        }
+      ]
+    },
+    "zama:0x0000000000000000000000000000000000000001": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "participate in gateway key custody workflows.",
+          "role": ".getCustodianTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign gateway key custody material.",
+          "role": ".getCustodianSigners"
+        }
+      ]
+    },
+    "zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468",
+          "description": "submit public-decryption allowances, account handle allowances, and user-decryption delegation or revocation messages to MultichainACL.",
+          "role": ".gatewayCoprocessorTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+          "description": "sign encrypted input proof verification responses accepted by InputVerification.",
+          "role": ".gatewayCoprocessorSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+          "description": "submit coprocessor proof verification and rejection responses to InputVerification.",
+          "role": ".gatewayCoprocessorTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
+          "description": "submit ciphertext and SNS ciphertext digests to CiphertextCommits.",
+          "role": ".gatewayCoprocessorTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign encrypted input proof verification responses accepted by the gateway.",
+          "role": ".getCoprocessorSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit coprocessor responses, ACL mirror updates, and ciphertext material commitments to gateway contracts.",
+          "role": ".getCoprocessorTxSenders"
+        }
+      ]
+    },
+    "zama:0x41b19EB4585450db79ac03ba9503106EC7895905": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "unpause Decryption.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
+          "description": "add, remove, or swap gateway pausers.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
+          "description": "set gateway fee prices for input verification, public decryption, and user decryption.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+          "description": "unpause InputVerification.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "create KMS contexts that immediately become current, destroy historical KMS contexts, update thresholds of any live context, manage coprocessors, custodians and host chains, transfer ownership, and unpause gateway workflow contracts.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x055d9FD50a612A9027716ec8db663E7D68562468",
+          "description": "upgrade the MultichainACL implementation.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "upgrade the Decryption implementation.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
+          "description": "upgrade the KMSGeneration implementation.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
+          "description": "upgrade the ProtocolPayment implementation.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
+          "description": "upgrade the InputVerification implementation.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F",
+          "description": "upgrade the CiphertextCommits implementation.",
+          "role": ".gatewayOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "role": "admin"
+        }
+      ]
+    },
+    "zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
+          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x705380c013c13B4ce62338ab1F012036BAC802b3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
+          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x8edFb885a32C72aF32943D4db13D319181d18CB8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
+          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
+          "description": "pause GatewayConfig and pausable gateway workflow contracts.",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0xC105B5933446658D226582f7A112F49a70b54364": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "submit KMS decryption responses to Decryption.",
+          "role": ".gatewayKmsTxSenders"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "submit KMS decryption responses to gateway contracts.",
+          "role": ".getKmsTxSenders"
+        }
+      ]
+    },
+    "zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    },
+    "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+          "description": "sign public decryption results and user decryption shares accepted by Decryption.",
+          "role": ".gatewayKmsSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
+          "role": ".getKmsSigners"
+        }
+      ]
+    }
+  }
 }

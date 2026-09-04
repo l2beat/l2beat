@@ -368,6 +368,7 @@ export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
   | ChainBasicApi<'lighter'>
+  | ChainBasicApi<'payy'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
   | ChainBasicApi<'aztec-rpc'>
@@ -1001,6 +1002,11 @@ export interface ProjectPrivacyInfo {
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
   summaryTrackedItemName?: string
+  /**
+   * Privacy-specific detailed description shown on the privacy project page.
+   * Falls back to display.detailedDescription when not set.
+   */
+  detailedDescription?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue

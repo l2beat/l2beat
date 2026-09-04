@@ -103,11 +103,13 @@ export const zircuit: ScalingProject = {
     BADGES.Stack.OPStack,
     BADGES.RaaS.Conduit,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   capability: 'universal',
   type: 'layer2',
   display: {
     name: 'Zircuit',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'zircuit',
     purposes: ['Universal'],
     stacks: ['OP Stack'],
@@ -171,10 +173,7 @@ export const zircuit: ScalingProject = {
       rollupNodeLink: 'https://github.com/zircuit-labs/l2-geth-public',
     },
   ),
-  proofSystem: {
-    type: 'Optimistic',
-    challengeProtocol: 'Interactive',
-  },
+  proofSystem: undefined,
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(

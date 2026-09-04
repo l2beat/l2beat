@@ -32,15 +32,7 @@
     {
       "address": "eth:0x353800524721e11B453f73f523dD8840c215a213",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".trustedSequencer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Validium",
@@ -136,13 +128,6 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "sinceTimestamp": 1718630195,
       "sinceBlock": 20111746,
@@ -204,25 +189,7 @@
     {
       "address": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xcc543F5a2052eDf584216093A0547c4Acd84B80b",
@@ -232,27 +199,7 @@
     {
       "address": "eth:0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xef5F06e5C0493601829DacFA23f2fe30303b0166",
@@ -442,5 +389,68 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23726377 },
-  "permissionsConfigHash": "0x85546a6f264b6597638507b402ed8ec99886b3ff5fa417afeec083dcc8e71ea1"
+  "permissionsConfigHash": "0x85546a6f264b6597638507b402ed8ec99886b3ff5fa417afeec083dcc8e71ea1",
+  "permissions": {
+    "eth:0x353800524721e11B453f73f523dD8840c215a213": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".trustedSequencer"
+        }
+      ]
+    },
+    "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

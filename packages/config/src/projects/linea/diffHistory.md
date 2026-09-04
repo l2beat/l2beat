@@ -1,4 +1,124 @@
-Generated with discovered.json: 0x9e1124e9a1d7f4fd26d89207107ee3b6ed6d888d
+Generated with discovered.json: 0xe985fda43c2b47e91bd53b6d34cc1250616aa483
+
+# Diff at Thu, 03 Sep 2026 11:50:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1cf70ad7158229fcad098b8a04d22c969a0de6c2 block: 1788264976
+- current timestamp: 1788435170
+
+## Description
+
+Withdrawal reserve (LineaRollup ETH balance) fell below the 17,500 ETH minimum after a bridge-relayer EOA claimed ~5,087 ETH in three L2->L1 messages on Sep 2, one day after 23,408 ETH was staked into the Lido vault down to the exact 20,000 ETH target. The operator paused staking and requested 5,091 ETH of partial validator withdrawals (EIP-7002) the same hour; the ETH is pending on the beacon chain and will be routed back to the rollup. While the flag is true, no new ETH can be staked and reserve replenishment / unstaking are permissionless.
+
+## Watched changes
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency.
++++ severity: HIGH
+      values.isWithdrawalReserveBelowMinimum:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788264976 (main branch discovery), not current.
+
+```diff
+    contract LidoStVaultYieldProvider (eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3) [linea/LidoStakingVaultYieldProvider] {
+    +++ description: Yield provider adaptor, delegatecalled by the YieldManager, that deploys rollup ETH into a Lido V3 staking vault (stVault) and its beacon chain validators. Withdrawals back to the reserve are requested via EIP-7002 partial validator withdrawals, so refilling the reserve is subject to beacon chain latency; while the reserve is in deficit anyone can trigger them with a validator proof.
+      description:
++        "Yield provider adaptor, delegatecalled by the YieldManager, that deploys rollup ETH into a Lido V3 staking vault (stVault) and its beacon chain validators. Withdrawals back to the reserve are requested via EIP-7002 partial validator withdrawals, so refilling the reserve is subject to beacon chain latency; while the reserve is in deficit anyone can trigger them with a validator proof."
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      fieldMeta.isWithdrawalReserveBelowMinimum.description:
+-        "If true, no more ETH can be staked and users can permissionlessly withdraw staked ETH."
++        "True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency."
+      fieldMeta.minimumWithdrawalReserveAmount.description:
+-        "Absolute value, part of the computation of minimal rollup ETH reserve."
++        "Absolute minimum ETH balance the LineaRollup must hold as withdrawal reserve. The effective minimum is the larger of this and the percentage-based minimum."
+      fieldMeta.minimumWithdrawalReservePercentageBps.description:
+-        "Value relative to TVS, part of the computation of minimal rollup ETH reserve."
++        "Minimum withdrawal reserve in basis points of the total ETH in the native yield system (rollup balance + YieldManager balance + ETH deployed in yield providers). The effective minimum is the larger of this and minimumWithdrawalReserveAmount."
+      fieldMeta.targetWithdrawalReserveAmount.description:
+-        "Absolute value, part of the computation of target rollup ETH reserve."
++        "Absolute target ETH balance for the LineaRollup withdrawal reserve. Unstaking and replenishment (permissionless while in deficit) refill the reserve up to the effective target, the larger of this and the percentage-based target."
+      fieldMeta.targetWithdrawalReservePercentageBps.description:
+-        "Value relative to TVS, part of the computation of target rollup ETH reserve."
++        "Target withdrawal reserve in basis points of the total ETH in the native yield system (rollup balance + YieldManager balance + ETH deployed in yield providers). The effective target is the larger of this and targetWithdrawalReserveAmount; staking is only allowed while the reserve is at or above it."
+      fieldMeta.userFundsInYieldProvidersTotal:
++        {"description":"User ETH principal currently deployed into yield providers (staked), excluding accrued yield. Together with the rollup and YieldManager balances it forms the total system balance used for the reserve thresholds."}
+    }
+```
+
+Generated with discovered.json: 0x41195e2fb72761156676bf194d1ba2e6d59d7c82
+
+# Diff at Tue, 01 Sep 2026 12:50:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1784543140
+- current timestamp: 1788264976
+
+## Description
+
+Single line change (replace msg.sender) in the rollup: https://disco.l2beat.com/diff/eth:0x59290394dDC1cF84e671701A929710643c343530/eth:0x052b73d934E9412045Bf731574463Fd026D74645
+
+min and target Reserve percentage ~halved in the yield manager.
+
+## Watched changes
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      sourceHashes.1:
+-        "0xf3482110e327210ee9824abef6aa6fea72bf9a49a46187d08853a978c2210c65"
++        "0x99448a403aaba56b396cab263fdccd1a13345cb737178fc7813f1a5bf8d927d5"
+      values.$implementation:
+-        "eth:0x59290394dDC1cF84e671701A929710643c343530"
++        "eth:0x052b73d934E9412045Bf731574463Fd026D74645"
+      values.$pastUpgrades.12:
++        ["2026-09-01T09:07:47.000Z","0x0e551aff381b8c6c4c73eafddb326906ac0d3599295444324cee8b988aaa6a6a",["eth:0x052b73d934E9412045Bf731574463Fd026D74645"]]
+      values.$upgradeCount:
+-        12
++        13
+      implementationNames.eth:0x59290394dDC1cF84e671701A929710643c343530:
+-        "LineaRollup"
+      implementationNames.eth:0x052b73d934E9412045Bf731574463Fd026D74645:
++        "LineaRollup"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: Value relative to TVS, part of the computation of minimal rollup ETH reserve.
+      values.minimumWithdrawalReservePercentageBps:
+-        8500
++        3500
++++ description: Value relative to TVS, part of the computation of target rollup ETH reserve.
+      values.targetWithdrawalReservePercentageBps:
+-        9000
++        4000
+    }
+```
+
+## Source code changes
+
+```diff
+.../linea/{.flat@1784543140 => .flat}/LineaRollup/LineaRollup.sol       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x0d6f59f8d2f6768e737166b99a0a8e9c3ad49fb0
 
 # Diff at Thu, 27 Aug 2026 08:52:50 GMT:
 

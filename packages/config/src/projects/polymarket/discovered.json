@@ -6,25 +6,7 @@
     {
       "address": "matic:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-          "description": "transfer any ERC-20 tokens out of the contract.",
-          "role": ".rescuer"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xAC9930b2AE455a671b62dE86876A7e8587825294",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DepositWalletFactory",
@@ -1628,15 +1610,7 @@
     {
       "address": "matic:0x2bAaA41d155ad8a4126184950B31F50A1513cE25",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0xE58480CA74f1A819faFd777BEDED4E2D5629943d",
-          "description": "withdraw fees.",
-          "role": ".withdrawer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ManagedOptimisticOracleV2",
@@ -1815,15 +1789,7 @@
     {
       "address": "matic:0x33965F7D08F61A62B86C1Ab9Be5d82C42F4c3081",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
-          "description": "settle price requests. Settlement is restricted to this role, so no request becomes final without a resolver, and disputes stay possible until a resolver settles.",
-          "role": ".resolvers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "matic:0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
@@ -1971,79 +1937,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6",
-          "description": "manage the addresses on the whitelist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
-          "description": "set the requester and proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and add or remove request managers.",
-          "role": ".configAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x3A3BD7bb9528E159577F7C2e685CC81A765002E2",
-          "description": "can deposit underlying and mint wrapper units to any recipient, mint units to itself without depositing underlying, burn its own units, and release underlying held by the contract to any recipient. This owner is immutable and cannot be changed.",
-          "role": ".owner",
-          "via": [
-            { "address": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x65070BE91477460D8A7AeEb94ef92fe056C2f2A7",
-          "description": "pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
-          "role": ".admins"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
-          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
-          "role": ".admins"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x69c47De9D4D3Dad79590d61b9e05918E03775f24",
-          "description": "pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
-          "role": ".admins"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74",
-          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the 2d emergency safety period.",
-          "role": ".admins"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x7f67327E88c258932D7d8f72950bE0d46975E11D",
-          "description": "can transfer any ERC20 or ERC1155 balance out of the vault to any recipient with no delay, and add or remove admins.",
-          "role": ".admins"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xE111180000d2663C0091e4f400237545B87B996B",
-          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xe2222d279d744050d28e00520010520000310F59",
-          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
-          "role": ".admin"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296",
-          "description": "can transfer outcome tokens on behalf of a user through this adapter, but only if the user has independently approved both the admin and this adapter as operators on the token ledger, and can add or remove admins.",
-          "role": ".admins"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "matic:0x00447A08bf275b7FB3D5d832387a54Be1090d281",
       "sinceTimestamp": 1669146421,
@@ -2106,110 +1999,6 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock with enumerable roles: proposers queue batches with a delay of at least 12h and executors run them once it elapses. Role grants are not delayed, so an admin can install new proposers, executors or cancellers instantly.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854",
-          "description": "can grant and revoke the admin role that can pause unwrapping of supported assets through this contract with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x93070a847efEf7F70739046A929D47a521F5B8ee",
-          "description": "can grant and revoke the admin role that pauses wrapping through this contract.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xADa100874d00e3331D00F2007a9c336a65009718",
-          "description": "can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xAdA100Db00Ca00073811820692005400218FcE1f",
-          "description": "can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xAdA200001000ef00D07553cEE7006808F895c6F1",
-          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab",
-          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08",
-          "description": "can grant and revoke the admin and witness roles; admins can pause wrapping and unwrapping through this contract with no delay, witnesses co-sign every operation.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07",
-          "description": "can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF",
-          "description": "can upgrade the implementation of the outcome-token ledger and manage all roles.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba",
-          "description": "can upgrade the module implementation and manage all roles.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x200000900045e3B6259600682756002200028933",
-          "description": "can upgrade the module implementation and manage all roles.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x30000034706C7d8e12009DAB006Be20000c031A8",
-          "description": "can upgrade the module implementation and manage all roles.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a",
-          "description": "can replace the default implementation used by every caller without a pinned implementation.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xa1200000d0002264C9a1698e001292D00E1b00af",
-          "description": "can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
-          "description": "can upgrade the token implementation, and grant or revoke the minter and wrapper roles.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
-          "description": "can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.",
-          "role": ".getNativeOwner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa",
-          "description": "can upgrade the exchange implementation and manage all roles.",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924763,
       "sinceBlock": 84902363,
@@ -2411,14 +2200,6 @@
       ],
       "proxyType": "immutable",
       "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger. Anyone can call initialize, but the adapter is the requester seen by the oracle, and the oracle's own access controls determine who may propose and settle the answer. After the oracle has settled an answer, anyone can call resolve to copy it into the outcome-token ledger unless an admin has paused the question. Admins can pause, unpause, reset or flag initialized questions, unflag them until the safety period has passed, and after 1h manually resolve a flagged question with either outcome or an even split.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
-          "description": "report the boolean outcome of any prepared question.",
-          "role": ".oracle"
-        }
-      ],
       "deployerAddress": "matic:0xe9Ac97D2BE532C0de63Ec26270EA3F217E207326",
       "sinceTimestamp": 1768250807,
       "sinceBlock": 81565428,
@@ -2517,20 +2298,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
-          "description": "add and remove resolvers and resolver admins.",
-          "role": ".resolverAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x9F35885CE8f67a942D7B2f4Fbf937987DA08c463",
-          "description": "manage the addresses on the whitelist.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "matic:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
       "sinceTimestamp": 1648581388,
@@ -2570,28 +2337,12 @@
     {
       "address": "matic:0x748b17c94c95B9264861cc86175306009921ef65",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74",
-          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the 2d emergency safety period.",
-          "role": ".admins"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "matic:0x798048175D5Cfdc47abC72409789431191405e96",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0xaB45c5A4B0c941a2F231C04C3f49182e1A254052",
-          "description": "can replace the gas-relay module, whose code is executed via delegatecall in this contract's context when processing relayed calls, and transfer or renounce ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DepositWalletBeacon",
@@ -2666,14 +2417,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
-          "description": "can upgrade the oracle implementation and manage the config admin role.",
-          "role": ".defaultAdmin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "matic:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1754062108,
@@ -2781,15 +2524,7 @@
     {
       "address": "matic:0x9725e8172A108f2BaD87ef31eA4Ea729e939d869",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
-          "description": "settle price requests. Settlement is restricted to this role, so no request becomes final without a resolver, and disputes stay possible until a resolver settles.",
-          "role": ".resolvers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "matic:0x9B40E25dDd4518F36c50ce8AEf53Ee527419D55d",
@@ -3414,14 +3149,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
-          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
-          "role": ".admins"
-        }
-      ],
       "deployerAddress": "matic:0x3f68D7f32d163d3044f93BD75816765222EedB89",
       "sinceTimestamp": 1775594059,
       "sinceBlock": 85237011,
@@ -3596,32 +3323,6 @@
         "0xb954111ab638f401654ce02e088b44123a734b82cbe0ef278d128521711de06b"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
-          "description": "manage address mappings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x1020Ae36548ab28Bc0c41Fd2a08D24132C82cc55",
-          "description": "manage the addresses on the whitelist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0x2271a5E74eA8A29764ab10523575b41AA52455f0",
-          "description": "manage the whitelist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "matic:0xE58480CA74f1A819faFd777BEDED4E2D5629943d",
-          "description": "set fees for disputes and manage all roles in the contract.",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "matic:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1626103216,
       "sinceBlock": 16783575,
@@ -3861,14 +3562,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable adapter composing binary conditions into multi-outcome (negative-risk) markets and acting as the on-ledger oracle for them. Split, merge, redeem and conversion functions have no caller restriction; conversions can charge a per-market fee that accrues to a fixed vault.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x3A3BD7bb9528E159577F7C2e685CC81A765002E2",
-          "description": "can deposit underlying and mint wrapper units to any recipient, mint units to itself without depositing underlying, burn its own units, and release underlying held by the contract to any recipient. This owner is immutable and cannot be changed.",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "matic:0xe9Ac97D2BE532C0de63Ec26270EA3F217E207326",
       "sinceTimestamp": 1701203266,
       "sinceBlock": 50505403,
@@ -3913,15 +3606,7 @@
     {
       "address": "matic:0xDa64c7886E71D1bA1E1be0bd1546A16a289fFdE0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
-          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
-          "role": ".admins"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "matic:0xdBa96793A909415b0748F48626Cf207B7E1a887F",
@@ -16767,15 +16452,7 @@
     {
       "address": "matic:0xf4C89FCbeF0DBBa52bfe773BdAB56e8c2c9a7D41",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
-          "description": "set per-request proposer whitelists, bond amounts (within the allowed range) and liveness values.",
-          "role": ".requestManagers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DepositWallet",
@@ -20178,5 +19855,362 @@
     "uma/OptimisticOracleV2": "0xdb25a0cd206ef5646439b0ddbabcb9a6834c1c3c0f395b01803b7e38944859dc"
   },
   "usedBlockNumbers": { "polygonpos": 91186243 },
-  "permissionsConfigHash": "0x4c0b2f91971d2ab975155aeac4b43a3dd38991b714a6a13af00a539951e10a9b"
+  "permissionsConfigHash": "0x4c0b2f91971d2ab975155aeac4b43a3dd38991b714a6a13af00a539951e10a9b",
+  "permissions": {
+    "matic:0x0000000000000000000000000000000000000000": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xAC9930b2AE455a671b62dE86876A7e8587825294",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
+          "role": "admin"
+        }
+      ]
+    },
+    "matic:0x2bAaA41d155ad8a4126184950B31F50A1513cE25": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0xE58480CA74f1A819faFd777BEDED4E2D5629943d",
+          "description": "withdraw fees.",
+          "role": ".withdrawer"
+        }
+      ]
+    },
+    "matic:0x33965F7D08F61A62B86C1Ab9Be5d82C42F4c3081": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
+          "description": "settle price requests. Settlement is restricted to this role, so no request becomes final without a resolver, and disputes stay possible until a resolver settles.",
+          "role": ".resolvers"
+        }
+      ]
+    },
+    "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6",
+          "description": "manage the addresses on the whitelist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
+          "description": "set the requester and proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and add or remove request managers.",
+          "role": ".configAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x3A3BD7bb9528E159577F7C2e685CC81A765002E2",
+          "description": "can deposit underlying and mint wrapper units to any recipient, mint units to itself without depositing underlying, burn its own units, and release underlying held by the contract to any recipient. This owner is immutable and cannot be changed.",
+          "role": ".owner",
+          "via": [
+            { "address": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x65070BE91477460D8A7AeEb94ef92fe056C2f2A7",
+          "description": "pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
+          "role": ".admins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
+          "role": ".admins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x69c47De9D4D3Dad79590d61b9e05918E03775f24",
+          "description": "pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
+          "role": ".admins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74",
+          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the 2d emergency safety period.",
+          "role": ".admins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x7f67327E88c258932D7d8f72950bE0d46975E11D",
+          "description": "can transfer any ERC20 or ERC1155 balance out of the vault to any recipient with no delay, and add or remove admins.",
+          "role": ".admins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xE111180000d2663C0091e4f400237545B87B996B",
+          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xe2222d279d744050d28e00520010520000310F59",
+          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
+          "role": ".admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296",
+          "description": "can transfer outcome tokens on behalf of a user through this adapter, but only if the user has independently approved both the admin and this adapter as operators on the token ledger, and can add or remove admins.",
+          "role": ".admins"
+        }
+      ]
+    },
+    "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854",
+          "description": "can grant and revoke the admin role that can pause unwrapping of supported assets through this contract with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x93070a847efEf7F70739046A929D47a521F5B8ee",
+          "description": "can grant and revoke the admin role that pauses wrapping through this contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xADa100874d00e3331D00F2007a9c336a65009718",
+          "description": "can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xAdA100Db00Ca00073811820692005400218FcE1f",
+          "description": "can grant and revoke the admin role that can pause splitting, merging and redeeming through this contract with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xAdA200001000ef00D07553cEE7006808F895c6F1",
+          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab",
+          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xebC2459Ec962869ca4c0bd1E06368272732BCb08",
+          "description": "can grant and revoke the admin and witness roles; admins can pause wrapping and unwrapping through this contract with no delay, witnesses co-sign every operation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07",
+          "description": "can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF",
+          "description": "can upgrade the implementation of the outcome-token ledger and manage all roles.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba",
+          "description": "can upgrade the module implementation and manage all roles.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x200000900045e3B6259600682756002200028933",
+          "description": "can upgrade the module implementation and manage all roles.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x30000034706C7d8e12009DAB006Be20000c031A8",
+          "description": "can upgrade the module implementation and manage all roles.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a",
+          "description": "can replace the default implementation used by every caller without a pinned implementation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xa1200000d0002264C9a1698e001292D00E1b00af",
+          "description": "can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+          "description": "can upgrade the token implementation, and grant or revoke the minter and wrapper roles.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
+          "description": "can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.",
+          "role": ".getNativeOwner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa",
+          "description": "can upgrade the exchange implementation and manage all roles.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0x69c47De9D4D3Dad79590d61b9e05918E03775f24": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
+          "description": "report the boolean outcome of any prepared question.",
+          "role": ".oracle"
+        }
+      ]
+    },
+    "matic:0x6ee4D971142afadEa1828445124D6137080B4146": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
+          "description": "add and remove resolvers and resolver admins.",
+          "role": ".resolverAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x9F35885CE8f67a942D7B2f4Fbf937987DA08c463",
+          "description": "manage the addresses on the whitelist.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0x748b17c94c95B9264861cc86175306009921ef65": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74",
+          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the 2d emergency safety period.",
+          "role": ".admins"
+        }
+      ]
+    },
+    "matic:0x798048175D5Cfdc47abC72409789431191405e96": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0xaB45c5A4B0c941a2F231C04C3f49182e1A254052",
+          "description": "can replace the gas-relay module, whose code is executed via delegatecall in this contract's context when processing relayed calls, and transfer or renounce ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0x7FB4492Ff58E4326a99D7d4F66aE1f47c8286Fc6": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
+          "description": "can upgrade the oracle implementation and manage the config admin role.",
+          "role": ".defaultAdmin"
+        }
+      ]
+    },
+    "matic:0x9725e8172A108f2BaD87ef31eA4Ea729e939d869": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
+          "description": "settle price requests. Settlement is restricted to this role, so no request becomes final without a resolver, and disputes stay possible until a resolver settles.",
+          "role": ".resolvers"
+        }
+      ]
+    },
+    "matic:0xAC9930b2AE455a671b62dE86876A7e8587825294": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
+          "role": ".admins"
+        }
+      ]
+    },
+    "matic:0xDa64c7886E71D1bA1E1be0bd1546A16a289fFdE0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
+          "role": ".admins"
+        }
+      ]
+    },
+    "matic:0xb4AeaD497FCbEAA3C37919032d42C29682f46376": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
+          "description": "manage address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x1020Ae36548ab28Bc0c41Fd2a08D24132C82cc55",
+          "description": "manage the addresses on the whitelist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2271a5E74eA8A29764ab10523575b41AA52455f0",
+          "description": "manage the whitelist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xE58480CA74f1A819faFd777BEDED4E2D5629943d",
+          "description": "set fees for disputes and manage all roles in the contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x3A3BD7bb9528E159577F7C2e685CC81A765002E2",
+          "description": "can deposit underlying and mint wrapper units to any recipient, mint units to itself without depositing underlying, burn its own units, and release underlying held by the contract to any recipient. This owner is immutable and cannot be changed.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0xf4C89FCbeF0DBBa52bfe773BdAB56e8c2c9a7D41": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1",
+          "description": "set per-request proposer whitelists, bond amounts (within the allowed range) and liveness values.",
+          "role": ".requestManagers"
+        }
+      ]
+    }
+  }
 }

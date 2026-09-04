@@ -1,6 +1,6 @@
 {
   "name": "debridge",
-  "timestamp": 1787230295,
+  "timestamp": 1788265000,
   "configHash": "0x30959a30486a2b20ebfe121ac4252c57434c75215c91b6e43b764ae8ad6e40a6",
   "entries": [
     {
@@ -10,14 +10,6 @@
         "0xdddaab1d0ccad17e0578e5dad9eab7bf81a90144cf89b5f4d5714c407dd2c9c5"
       ],
       "proxyType": "EIP7702 EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "description": "force-cancel any not-yet-fulfilled order that has a cancel beneficiary set by its maker (refunds can only go to that maker-designated address).",
-          "role": ".govCancelAC"
-        }
-      ],
       "ignoreInWatchMode": [
         "keyCount",
         "keyHashes",
@@ -48,15 +40,7 @@
     {
       "address": "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96",
@@ -72,13 +56,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "sinceTimestamp": 1765183175,
       "sinceBlock": 23966953,
@@ -94,21 +71,7 @@
     {
       "address": "eth:0x391276932b5105C2DB8eE928dfd8872564d6d246",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "description": "withdraw all protocol fees accrued in the DeBridgeGate to itself.",
-          "role": ".feeCollectorAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "description": "withdraw accumulated DLN protocol fees (not user principal) to itself.",
-          "role": ".feeCollectorAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "IntentManagerValidator",
@@ -225,7 +188,7 @@
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "govMonitoringAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "lockedClaim": 1,
-        "nonce": 178259,
+        "nonce": 179446,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -268,54 +231,22 @@
     {
       "address": "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ExternalCallAdapter",
@@ -383,15 +314,7 @@
     {
       "address": "eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeBridgeRouter",
@@ -506,163 +429,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "description": "pause the DeBridgeGate, stopping all sends, claims and deToken deployments on this chain (only the admin can unpause).",
-          "role": ".govMonitoringAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "description": "replace the SignatureVerifier (and with it the entire validation layer of the deBridge messaging protocol), the CallProxy and the deToken deployer, censor individual submissions (blockSubmission), toggle supported chains, set all fees and per-address fee discounts, designate the fee withdrawal contract, unpause the gate, and grant/revoke all roles. Most of these setters emit no events.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
-          "description": "replace the executor contract that handles external calldata of DLN orders and pause the adapter.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
-          "description": "manage the whitelist of swap routers and forwarding targets this contract may call with arbitrary calldata (and grant infinite token approvals to), set the service fee and fee treasury, and sweep any funds held by the router.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "description": "administer all deployed deTokens: pause their transfers and grant/revoke minter rights, including the ability to grant itself the right to mint unbacked deTokens.",
-          "role": ".deBridgeTokenAdmin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "description": "replace the implementation of all deTokens at once (this contract acts as their beacon), change the admin assigned to newly deployed deTokens, and override deToken names/symbols. None of these setters emit events.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "description": "grant and revoke the DEBRIDGE_GATE_ROLE that authorizes contracts to execute arbitrary external calls through the CallProxy.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "add and remove deBridge validators (oracles), change all signature thresholds (quorum must remain a majority of the oracle set), and re-point the gate contract allowed to request verification. Threshold changes emit no events.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "description": "grant/revoke the FEE_COLLECTOR_ROLE that receives all deBridge protocol fees, pause fee withdrawals, and change the referenced gate contract.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "description": "set the trusted DlnSource address (message receiver) for each supported chain, replace the external call adapter that custodies funds of orders with attached calldata, unpause the contract, and grant/revoke all roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "description": "set the trusted DlnDestination address for each supported chain (a malicious address there can drain all escrowed order funds via forged unlock messages), change DLN fees without upper bound, unpause the contract, and grant/revoke all roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x9f856fC3e2ea6D2ef7b1f030D4A8BF34556eAc5d",
       "sinceTimestamp": 1637442903,
@@ -780,63 +546,12 @@
     {
       "address": "eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
-          "description": "grant and revoke the ALLOWED_SPENDER_ROLE, i.e. authorize any address (including itself) to spend all outstanding user approvals of the deBridge intent system.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
-          "description": "set intent fill fees up to 100% with immediate effect (fees are not part of the user-signed intent), manage the trusted solver set, sweep funds held by the contract, and grant/revoke all roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1",
@@ -846,15 +561,7 @@
     {
       "address": "eth:0x874f46124C1DAaD4749B94f82eD142754826240E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "CallProxy",
@@ -965,7 +672,7 @@
           }
         },
         "confirmationThreshold": 3,
-        "currentBlock": 25796378,
+        "currentBlock": 25882344,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
@@ -1021,23 +728,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
       "sinceTimestamp": 1670855027,
       "sinceBlock": 16169200,
@@ -1058,13 +748,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "sinceTimestamp": 1765183559,
       "sinceBlock": 23966985,
@@ -1107,13 +790,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x6681b27BEC88Ba8c6F0E4B42dD6E3e5c1a797021",
       "sinceTimestamp": 1761039275,
       "sinceBlock": 23625079,
@@ -1134,28 +810,12 @@
     {
       "address": "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
-          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.",
-          "role": ".defaultAdminAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SimpleFeeProxy",
@@ -1229,13 +889,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xFD830dd9B446c9b880b32A03FB9A750AaE4A68aa",
       "sinceTimestamp": 1647386205,
       "sinceBlock": 14394077,
@@ -1311,25 +964,7 @@
     {
       "address": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xd725E456D5beD8275E297C4Dd11135e3C5cDe544",
@@ -1339,15 +974,7 @@
     {
       "address": "eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeBridgeAllowanceHolder",
@@ -1391,24 +1018,16 @@
       "template": "debridge/DeBridgeIntentManager",
       "sourceHashes": [
         "0xf31aeb6e49fa6b302d2dc1ed76c4d201ad9c2accdb0d9a45c30b13ae334fb5e9",
-        "0xab4d827474b8362b953864f2ccb0de7e02c8c7150914446ea11c4c3f64413967"
+        "0x8bc472a2f0e9dd05e3781fa6f0e5b4bedc8e395196df151a26af1120fa398c8c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder (Permit2 or direct approvals) and forwards them into DlnSource in the same transaction, charging a variable fee that is NOT part of the user-signed intent. It is non-custodial in steady state. Note that the EIP-712 signature users sign covers only an opaque intent hash, and fills are permissionless unless the intent restricts senders.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
-          "description": "unconditionally transfer any amount of any token from any user who approved the DeBridgeAllowanceHolder (directly or via Permit2) to any recipient, and make arbitrary calls from its address.",
-          "role": ".allowedSpenderAC"
-        }
-      ],
+      "description": "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder and forwards them into DlnSource in the same transaction, charging a variable fee that is not part of the user-signed intent.",
       "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "sinceTimestamp": 1765183559,
       "sinceBlock": 23966985,
       "values": {
         "$admin": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
-        "$implementation": "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35",
+        "$implementation": "eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677",
         "$pastUpgrades": [
           [
             "2025-12-08T08:45:59.000Z",
@@ -1419,9 +1038,14 @@
             "2026-02-19T13:23:23.000Z",
             "0xf7dbc20fc35b64d5ad5c2586272236f205b7fef50a1401b35f2bc30850de4de8",
             ["eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35"]
+          ],
+          [
+            "2026-08-31T18:05:47.000Z",
+            "0x42218e55e5eab2e3c79d608b6302fd5dec0750f4426a55ed69d8564ed4a8dfb8",
+            ["eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1449,7 +1073,7 @@
         "paused": false,
         "permit2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "subscriptionId": 0,
-        "version": "2.1.0"
+        "version": "2.3.0"
       },
       "fieldMeta": {
         "getDefaultFeeBps": {
@@ -1470,7 +1094,7 @@
       },
       "implementationNames": {
         "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708": "TransparentUpgradeableProxy",
-        "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35": "DeBridgeIntentManager"
+        "eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677": "DeBridgeIntentManager"
       }
     },
     {
@@ -1482,33 +1106,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637594986,
       "sinceBlock": 13665292,
@@ -1663,15 +1260,7 @@
     {
       "address": "eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DlnSource",
@@ -1814,15 +1403,7 @@
     {
       "address": "eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2474,168 +2055,6 @@
       "function updateSwapVariableFeeBps(uint16 _swapVariableFeeBps)",
       "function version() pure returns (uint256)"
     ],
-    "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35": [
-      "constructor(address _permit2, address _allowanceHolder, address _dlnSource, address _feeTreasury, uint32 _subscriptionId)",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "error AdminBadRole()",
-      "error ChainIdTooHigh()",
-      "error DelegationExpiredOrMissing()",
-      "error DuplicatedDelegate(address delegate)",
-      "error DuplicatedInputToken(address inputToken)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error EmptyInputTokenList()",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error GovMonitoringBadRole()",
-      "error InputAmountExceedsUint160Limit()",
-      "error InputTokenMaxPartialAmountViolated(address inputToken, uint256 maxPartialAmount, uint256 inputAmount)",
-      "error InputTokenMinPartialAmountViolated(address inputToken, uint256 minPartialAmount, uint256 inputAmount)",
-      "error InsufficientDelegationTokenBudget()",
-      "error InsufficientIntentTokenBudget()",
-      "error IntentChainIdMismatch()",
-      "error IntentExpired()",
-      "error IntentExpiredBeforeCreated()",
-      "error IntentGiveTokenConstraintNotFound()",
-      "error IntentInputTokenConstraintNotFound()",
-      "error IntentInvalidUnrestrictedExternalCall()",
-      "error IntentIsCanceled()",
-      "error IntentNotSubmitted()",
-      "error IntentNullified()",
-      "error IntentNullifiedGlobally()",
-      "error IntentSenderNotAllowed()",
-      "error IntentTakeTokenConstraintNotFound()",
-      "error IntentTimestampInFuture()",
-      "error InvalidAllowanceMode()",
-      "error InvalidDelegationNonce()",
-      "error InvalidInitialization()",
-      "error InvalidInputTokenListSize()",
-      "error InvalidIntentOwnerSig()",
-      "error InvalidInteractionsMode()",
-      "error InvalidPermitEnvelopeSize()",
-      "error InvalidPermitSingleEnvelopeSize()",
-      "error InvalidSigBudgetEnvelopeSize()",
-      "error InvalidSigBudgetMode()",
-      "error InvalidSigConstraintsEnvelopeSize()",
-      "error InvalidSigConstraintsMode()",
-      "error InvalidSigDelegations()",
-      "error InvalidSigDelegationsSize()",
-      "error InvalidVariableFee()",
-      "error NativeTokenTransferFailed()",
-      "error NewGlobalNullificationTimestampIsEarlierThanCurrent()",
-      "error NewGlobalNullificationTimestampIsInFuture()",
-      "error NewNullificationTimestampIsEarlierThanCurrent()",
-      "error NewNullificationTimestampIsInFuture()",
-      "error NonEmptyTokenBudgetListForUnlimitedDelegation()",
-      "error NotInitializing()",
-      "error OrderAllowedTakerDstNotAllowed()",
-      "error OrderAllowedTakerDstRequired()",
-      "error OrderCancelBeneficiaryMismatch()",
-      "error OrderDlnMetadataMismatch()",
-      "error OrderDstAuthorityAddressNotAllowed()",
-      "error OrderExternalCallHashMismatch()",
-      "error OrderGiveAmountMismatch()",
-      "error OrderGiveTokenMismatch()",
-      "error OrderPriceTooHigh()",
-      "error OrderReceiverNotAllowed()",
-      "error OrderTakeChainIdTooHigh()",
-      "error PreSwapOutputAmountMismatch(uint256 exactExpected, uint256 actual)",
-      "error PreSwapOutputAmountTooLow(uint256 minExpected, uint256 actual)",
-      "error PreSwapPriceTooHigh()",
-      "error PreSwapReceiverNotAllowed()",
-      "error PreSwapResultSizeMismatch(uint256 expected, uint256 actual)",
-      "error PreSwapSingleInputTokenOutputAmountTooLow(address inputToken, uint256 minExpected, uint256 actual)",
-      "error RemainedInputTokenBudgetExceedsUint248Limit()",
-      "error SigDelegationsExpired()",
-      "error ZeroInitialAddress()",
-      "error ZeroInputTokenAddress()",
-      "error ZeroInputTokenAmount()",
-      "error ZeroIntentOwnerAddress()",
-      "event CrossChainIntentFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, bytes32 orderId, tuple(address token, uint256 amount) inputToken, uint256 giveTokenFeeAmount)",
-      "event CrossChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, bytes32 orderId, tuple(address inputToken, uint256 inputAmount, uint256 outputAmount)[] preSwapResults, uint256 giveTokenFeeAmount)",
-      "event DelegationBudgetSpent(bytes32 intentId, bytes32 tradeId, address delegate, address inputToken, uint256 spentAmount, uint256 remainedBudgetAmount)",
-      "event DelegationSubmitted(address caller, address intentOwner, tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline) delegation)",
-      "event EIP712DomainChanged()",
-      "event GlobalNullificationTimestampUpdated(uint256 globalNullificationTimestamp)",
-      "event Initialized(uint64 version)",
-      "event IntentBudgetSpent(bytes32 intentId, bytes32 tradeId, address inputToken, uint256 spentAmount, uint256 remainedBudgetAmount)",
-      "event IntentCanceled(address caller, bytes32 intentId)",
-      "event IntentSubmitted(address submitter, bytes32 intentId)",
-      "event IntentSubmittedVerbose(address submitter, bytes32 intentId, tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) intent)",
-      "event NullificationTimestampUpdated(address caller, uint256 nullificationTimestamp)",
-      "event OneToOneIntentSubmittedVerbose(address submitter, bytes32 intentId, tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) intent)",
-      "event OneToOneSameChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, tuple(address token, uint256 amount) inputToken, address takeToken, uint256 takeTokenAmountAfterFeeCharge, uint256 takeTokenFeeAmount, address takeTokenRecipient)",
-      "event PairVariableFeeDisabled(address inputToken, uint32 takeChainId, bytes takeToken)",
-      "event PairVariableFeeEnabled(address inputToken, uint32 takeChainId, bytes takeToken, uint16 feeBps)",
-      "event Paused(address account)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SameChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, tuple(address token, uint256 amount)[] inputTokens, address takeToken, uint256 takeTokenAmountAfterFeeCharge, uint256 takeTokenFeeAmount, address takeTokenRecipient)",
-      "event SubmittedIntentRevoked(address intentOwner, bytes32 intentId)",
-      "event TrustedSolversUpdated(address[] solvers, bool isTrusted)",
-      "event Unpaused(address account)",
-      "event VariableFeeUpdated(uint16 feeBps)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function GOVMONITORING_ROLE() view returns (bytes32)",
-      "function allowanceHolder() view returns (address)",
-      "function cancelIntent(bytes32 _intentId)",
-      "function cancelIntentBatch(bytes32[] _intentIds)",
-      "function disablePairVariableFee(address _inputToken, uint32 _takeChainId, bytes _takeToken)",
-      "function dlnSource() view returns (address)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function enablePairVariableFee(address _inputToken, uint32 _takeChainId, bytes _takeToken, uint16 _feeBps)",
-      "function feeTreasury() view returns (address)",
-      "function fillCrossChainIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, bytes32 _tradeId, tuple(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) orderCreation, uint64 salt, uint32 referralCode, bytes metadata) _saltedOrder)",
-      "function fillCrossChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, tuple(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) orderCreation, uint64 salt, uint32 referralCode, bytes metadata) _saltedOrder)",
-      "function fillOneToOneSameChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, address _takeToken)",
-      "function fillSameChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, address _takeToken, address _recipient)",
-      "function getChainId() view returns (uint32)",
-      "function getCustomFee(address _inputToken, uint32 _takeChainId, bytes _takeToken) view returns (tuple(bool enabled, uint16 feeBps))",
-      "function getDefaultFeeBps() view returns (uint16)",
-      "function getDelegation(address _intentOwner, address _delegate) view returns (uint256 nonce, uint256 deadline, bool isUnlimited)",
-      "function getEip712Digest(bytes32 _structHash) view returns (bytes32)",
-      "function getFeeBps(address _inputToken, uint32 _takeChainId, bytes _takeToken) view returns (uint16)",
-      "function getGlobalNullificationTimestamp() view returns (uint256)",
-      "function getIntentId(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent) pure returns (bytes32)",
-      "function getLastDelegationNonce(address _intentOwner, address _delegate) view returns (uint256)",
-      "function getNextDelegationNonce(address _intentOwner, address _delegate) view returns (uint256)",
-      "function getNullificationTimestamp(address _intentOwnerOrAuthority) view returns (uint256)",
-      "function getOneToOneSameChainIntentId(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent) pure returns (bytes32)",
-      "function getRemainedDelegationBudget(address _intentOwner, address _delegate, address _token) view returns (uint256 remainedBudget)",
-      "function getRemainedIntentBudget(bytes32 _intentId, address _token) view returns (tuple(bool isInitialized, uint248 amount))",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _admin)",
-      "function isIntentCanceled(address _intentOwnerOrAuthority, bytes32 _intentId) view returns (bool)",
-      "function isIntentSubmitted(address _intentOwner, bytes32 _intentId) view returns (bool)",
-      "function isTrustedSolver(address _solver) view returns (bool)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function permit2() view returns (address)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function rescueFunds(address _token, address _recipient, uint256 _amount)",
-      "function revokeRole(bytes32 role, address account)",
-      "function revokeSubmittedIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent)",
-      "function revokeSubmittedIntentById(bytes32 _intentId)",
-      "function revokeSubmittedOneToOneSameChainIntent(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent)",
-      "function setNullificationTimestamp(uint256 _nullificationTimestamp)",
-      "function submitDelegations(tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline)[] _delegations)",
-      "function submitDelegationsWithSig(address _intentOwner, tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline)[] _delegations, bytes _sigDelegations, uint256 _sigDeadline)",
-      "function submitIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent)",
-      "function submitIntentById(bytes32 _intentId)",
-      "function submitOneToOneSameChainIntent(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent)",
-      "function subscriptionId() view returns (uint32)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unpause()",
-      "function updateGlobalNullificationTimestamp(uint256 _globalNullificationTimestamp)",
-      "function updateTrustedSolvers(address[] _solvers, bool _isTrusted)",
-      "function updateVariableFee(uint16 _feeBps)",
-      "function version() pure returns (string)"
-    ],
     "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -2950,6 +2369,166 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateOracle(address _oracle, bool _isValid, bool _required)",
       "function version() pure returns (uint256)"
+    ],
+    "eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677": [
+      "constructor(address _permit2, address _allowanceHolder, address _dlnSource, address _feeTreasury, uint32 _subscriptionId)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AdminBadRole()",
+      "error ChainIdTooHigh()",
+      "error DelegationExpiredOrMissing()",
+      "error DuplicatedDelegate(address delegate)",
+      "error DuplicatedInputToken(address inputToken)",
+      "error EmptyInputTokenList()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error GovMonitoringBadRole()",
+      "error InputAmountExceedsUint160Limit()",
+      "error InputTokenMaxPartialAmountViolated(address inputToken, uint256 maxPartialAmount, uint256 inputAmount)",
+      "error InputTokenMinPartialAmountViolated(address inputToken, uint256 minPartialAmount, uint256 inputAmount)",
+      "error InsufficientDelegationTokenBudget()",
+      "error InsufficientIntentTokenBudget()",
+      "error IntentChainIdMismatch()",
+      "error IntentExpired()",
+      "error IntentExpiredBeforeCreated()",
+      "error IntentGiveTokenConstraintNotFound()",
+      "error IntentInputTokenConstraintNotFound()",
+      "error IntentInvalidUnrestrictedExternalCall()",
+      "error IntentIsCanceled()",
+      "error IntentNotSubmitted()",
+      "error IntentNullified()",
+      "error IntentNullifiedGlobally()",
+      "error IntentSenderNotAllowed()",
+      "error IntentTakeTokenConstraintNotFound()",
+      "error IntentTimestampInFuture()",
+      "error InvalidAllowanceMode()",
+      "error InvalidDelegationNonce()",
+      "error InvalidInitialization()",
+      "error InvalidInputTokenListSize()",
+      "error InvalidIntentOwnerSig()",
+      "error InvalidInteractionsMode()",
+      "error InvalidPermitEnvelopeSize()",
+      "error InvalidPermitSingleEnvelopeSize()",
+      "error InvalidSigBudgetEnvelopeSize()",
+      "error InvalidSigBudgetMode()",
+      "error InvalidSigConstraintsEnvelopeSize()",
+      "error InvalidSigConstraintsMode()",
+      "error InvalidSigDelegations()",
+      "error InvalidSigDelegationsMode()",
+      "error InvalidSigDelegationsSize()",
+      "error InvalidVariableFee()",
+      "error NativeTokenTransferFailed()",
+      "error NewGlobalNullificationTimestampIsEarlierThanCurrent()",
+      "error NewGlobalNullificationTimestampIsInFuture()",
+      "error NewNullificationTimestampIsEarlierThanCurrent()",
+      "error NewNullificationTimestampIsInFuture()",
+      "error NonEmptyTokenBudgetListForUnlimitedDelegation()",
+      "error NotInitializing()",
+      "error OrderAllowedTakerDstNotAllowed()",
+      "error OrderAllowedTakerDstRequired()",
+      "error OrderCancelBeneficiaryMismatch()",
+      "error OrderDlnMetadataMismatch()",
+      "error OrderDstAuthorityAddressNotAllowed()",
+      "error OrderExternalCallHashMismatch()",
+      "error OrderGiveAmountMismatch()",
+      "error OrderGiveTokenMismatch()",
+      "error OrderPriceTooHigh()",
+      "error OrderReceiverNotAllowed()",
+      "error OrderTakeChainIdTooHigh()",
+      "error PreSwapOutputAmountMismatch(uint256 exactExpected, uint256 actual)",
+      "error PreSwapOutputAmountTooLow(uint256 minExpected, uint256 actual)",
+      "error PreSwapPriceTooHigh()",
+      "error PreSwapReceiverNotAllowed()",
+      "error PreSwapResultSizeMismatch(uint256 expected, uint256 actual)",
+      "error PreSwapSingleInputTokenOutputAmountTooLow(address inputToken, uint256 minExpected, uint256 actual)",
+      "error RemainedInputTokenBudgetExceedsUint248Limit()",
+      "error SigDelegationsExpired()",
+      "error ZeroInitialAddress()",
+      "error ZeroInputTokenAddress()",
+      "error ZeroInputTokenAmount()",
+      "error ZeroIntentOwnerAddress()",
+      "event CrossChainIntentFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, bytes32 orderId, tuple(address token, uint256 amount) inputToken, uint256 giveTokenFeeAmount)",
+      "event CrossChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, bytes32 orderId, tuple(address inputToken, uint256 inputAmount, uint256 outputAmount)[] preSwapResults, uint256 giveTokenFeeAmount)",
+      "event DelegationBudgetSpent(bytes32 intentId, bytes32 tradeId, address delegate, address inputToken, uint256 spentAmount, uint256 remainedBudgetAmount)",
+      "event DelegationSubmitted(address caller, address intentOwner, tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline) delegation)",
+      "event EIP712DomainChanged()",
+      "event GlobalNullificationTimestampUpdated(uint256 globalNullificationTimestamp)",
+      "event Initialized(uint64 version)",
+      "event IntentBudgetSpent(bytes32 intentId, bytes32 tradeId, address inputToken, uint256 spentAmount, uint256 remainedBudgetAmount)",
+      "event IntentCanceled(address caller, bytes32 intentId)",
+      "event IntentSubmitted(address submitter, bytes32 intentId)",
+      "event IntentSubmittedVerbose(address submitter, bytes32 intentId, tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) intent)",
+      "event NullificationTimestampUpdated(address caller, uint256 nullificationTimestamp)",
+      "event OneToOneIntentSubmittedVerbose(address submitter, bytes32 intentId, tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) intent)",
+      "event OneToOneSameChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, tuple(address token, uint256 amount) inputToken, address takeToken, uint256 takeTokenAmountAfterFeeCharge, uint256 takeTokenFeeAmount, address takeTokenRecipient)",
+      "event PairVariableFeeDisabled(address inputToken, uint32 takeChainId, bytes takeToken)",
+      "event PairVariableFeeEnabled(address inputToken, uint32 takeChainId, bytes takeToken, uint16 feeBps)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SameChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, tuple(address token, uint256 amount)[] inputTokens, address takeToken, uint256 takeTokenAmountAfterFeeCharge, uint256 takeTokenFeeAmount, address takeTokenRecipient)",
+      "event SubmittedIntentRevoked(address intentOwner, bytes32 intentId)",
+      "event TrustedSolversUpdated(address[] solvers, bool isTrusted)",
+      "event Unpaused(address account)",
+      "event VariableFeeUpdated(uint16 feeBps)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GOVMONITORING_ROLE() view returns (bytes32)",
+      "function allowanceHolder() view returns (address)",
+      "function cancelIntent(bytes32 _intentId)",
+      "function cancelIntentBatch(bytes32[] _intentIds)",
+      "function disablePairVariableFee(address _inputToken, uint32 _takeChainId, bytes _takeToken)",
+      "function dlnSource() view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enablePairVariableFee(address _inputToken, uint32 _takeChainId, bytes _takeToken, uint16 _feeBps)",
+      "function feeTreasury() view returns (address)",
+      "function fillCrossChainIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, bytes32 _tradeId, tuple(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) orderCreation, uint64 salt, uint32 referralCode, bytes metadata) _saltedOrder)",
+      "function fillCrossChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, tuple(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) orderCreation, uint64 salt, uint32 referralCode, bytes metadata) _saltedOrder)",
+      "function fillOneToOneSameChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, address _takeToken)",
+      "function fillSameChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, address _takeToken, address _recipient)",
+      "function getChainId() view returns (uint32)",
+      "function getCustomFee(address _inputToken, uint32 _takeChainId, bytes _takeToken) view returns (tuple(bool enabled, uint16 feeBps))",
+      "function getDefaultFeeBps() view returns (uint16)",
+      "function getDelegation(address _intentOwner, address _delegate) view returns (uint256 nonce, uint256 deadline, bool isUnlimited)",
+      "function getEip712Digest(bytes32 _structHash) view returns (bytes32)",
+      "function getFeeBps(address _inputToken, uint32 _takeChainId, bytes _takeToken) view returns (uint16)",
+      "function getGlobalNullificationTimestamp() view returns (uint256)",
+      "function getIntentId(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent) pure returns (bytes32)",
+      "function getLastDelegationNonce(address _intentOwner, address _delegate) view returns (uint256)",
+      "function getNextDelegationNonce(address _intentOwner, address _delegate) view returns (uint256)",
+      "function getNullificationTimestamp(address _intentOwnerOrAuthority) view returns (uint256)",
+      "function getOneToOneSameChainIntentId(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent) pure returns (bytes32)",
+      "function getRemainedDelegationBudget(address _intentOwner, address _delegate, address _token) view returns (uint256 remainedBudget)",
+      "function getRemainedIntentBudget(bytes32 _intentId, address _token) view returns (tuple(bool isInitialized, uint248 amount))",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _admin)",
+      "function isIntentCanceled(address _intentOwnerOrAuthority, bytes32 _intentId) view returns (bool)",
+      "function isIntentSubmitted(address _intentOwner, bytes32 _intentId) view returns (bool)",
+      "function isTrustedSolver(address _solver) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function permit2() view returns (address)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function rescueFunds(address _token, address _recipient, uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function revokeSubmittedIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent)",
+      "function revokeSubmittedIntentById(bytes32 _intentId)",
+      "function revokeSubmittedOneToOneSameChainIntent(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent)",
+      "function setNullificationTimestamp(uint256 _nullificationTimestamp)",
+      "function submitDelegations(tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline)[] _delegations)",
+      "function submitDelegationsWithSig(address _intentOwner, tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline)[] _delegations, bytes _sigDelegations, uint256 _sigDeadline)",
+      "function submitIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent)",
+      "function submitIntentById(bytes32 _intentId)",
+      "function submitOneToOneSameChainIntent(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent)",
+      "function subscriptionId() view returns (uint32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function updateGlobalNullificationTimestamp(uint256 _globalNullificationTimestamp)",
+      "function updateTrustedSolvers(address[] _solvers, bool _isTrusted)",
+      "function updateVariableFee(uint16 _feeBps)",
+      "function version() pure returns (string)"
     ]
   },
   "usedTemplates": {
@@ -2969,6 +2548,482 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25796445 },
-  "permissionsConfigHash": "0x059b071fef39bee6c621d912a14e7bdc9a1475990c4e2dd4b78d45a1fd23ba8a"
+  "usedBlockNumbers": { "ethereum": 25882373 },
+  "permissionsConfigHash": "0x059b071fef39bee6c621d912a14e7bdc9a1475990c4e2dd4b78d45a1fd23ba8a",
+  "permissions": {
+    "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "description": "force-cancel any not-yet-fulfilled order that has a cancel beneficiary set by its maker (refunds can only go to that maker-designated address).",
+          "role": ".govCancelAC"
+        }
+      ]
+    },
+    "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x391276932b5105C2DB8eE928dfd8872564d6d246": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "description": "withdraw all protocol fees accrued in the DeBridgeGate to itself.",
+          "role": ".feeCollectorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "description": "withdraw accumulated DLN protocol fees (not user principal) to itself.",
+          "role": ".feeCollectorAC"
+        }
+      ]
+    },
+    "eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "description": "pause the DeBridgeGate, stopping all sends, claims and deToken deployments on this chain (only the admin can unpause).",
+          "role": ".govMonitoringAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "description": "replace the SignatureVerifier (and with it the entire validation layer of the deBridge messaging protocol), the CallProxy and the deToken deployer, censor individual submissions (blockSubmission), toggle supported chains, set all fees and per-address fee discounts, designate the fee withdrawal contract, unpause the gate, and grant/revoke all roles. Most of these setters emit no events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "description": "replace the executor contract that handles external calldata of DLN orders and pause the adapter.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "description": "manage the whitelist of swap routers and forwarding targets this contract may call with arbitrary calldata (and grant infinite token approvals to), set the service fee and fee treasury, and sweep any funds held by the router.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "description": "administer all deployed deTokens: pause their transfers and grant/revoke minter rights, including the ability to grant itself the right to mint unbacked deTokens.",
+          "role": ".deBridgeTokenAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "description": "replace the implementation of all deTokens at once (this contract acts as their beacon), change the admin assigned to newly deployed deTokens, and override deToken names/symbols. None of these setters emit events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "description": "grant and revoke the DEBRIDGE_GATE_ROLE that authorizes contracts to execute arbitrary external calls through the CallProxy.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "add and remove deBridge validators (oracles), change all signature thresholds (quorum must remain a majority of the oracle set), and re-point the gate contract allowed to request verification. Threshold changes emit no events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "description": "grant/revoke the FEE_COLLECTOR_ROLE that receives all deBridge protocol fees, pause fee withdrawals, and change the referenced gate contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "description": "set the trusted DlnSource address (message receiver) for each supported chain, replace the external call adapter that custodies funds of orders with attached calldata, unpause the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "description": "set the trusted DlnDestination address for each supported chain (a malicious address there can drain all escrowed order funds via forged unlock messages), change DLN fees without upper bound, unpause the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+          "description": "grant and revoke the ALLOWED_SPENDER_ROLE, i.e. authorize any address (including itself) to spend all outstanding user approvals of the deBridge intent system.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "description": "set intent fill fees up to 100% with immediate effect (fees are not part of the user-signed intent), manage the trusted solver set, sweep funds held by the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x874f46124C1DAaD4749B94f82eD142754826240E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+          "description": "unconditionally transfer any amount of any token from any user who approved the DeBridgeAllowanceHolder (directly or via Permit2) to any recipient, and make arbitrary calls from its address.",
+          "role": ".allowedSpenderAC"
+        }
+      ]
+    },
+    "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
+          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    }
+  }
 }

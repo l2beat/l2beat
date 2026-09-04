@@ -1,4 +1,58 @@
-Generated with discovered.json: 0xe0ab9103f54b76834d67f87058c5e9652a9f2864
+Generated with discovered.json: 0x812209c99c05f3bb23e4b0a5fed8c4105f1d6da6
+
+# Diff at Thu, 03 Sep 2026 10:45:52 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9f7b07492346f74d16743dd75dd367045293d930 block: 1780586199
+- current timestamp: 1788432287
+
+## Description
+
+Executed two Governance proposals:
+- https://tools.l2beat.com/decoder-new/?hash=0x72cd8876128636f521ee95d874b59f0ce2c6e7f621bca48e342262f4285e40f0&data=AwA changed security council from an EOA to a 2/3 Safe.
+- https://tools.l2beat.com/decoder-new/?hash=0xbbec72e508d41c1bae51c7c5a0624bb5d7bd7b72778e1701f96b09bab032c1ed&data=AwA changed governance execution delay from 0 to 3 days.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        10
++        12
++++ severity: HIGH
+      values.minDelay:
+-        0
++        259200
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        10
++        12
++++ severity: HIGH
+      values.securityCouncil:
+-        "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
++        "eth:0x95f0c748f60624ddAd536d979993fA23FD86021a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x95f0c748f60624ddAd536d979993fA23FD86021a) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 4 files changed, 1258 insertions(+)
+```
+
+Generated with discovered.json: 0xfbc64b521e846220b75c16cfb5df3e2726c48c37
 
 # Diff at Mon, 10 Aug 2026 13:06:53 GMT:
 

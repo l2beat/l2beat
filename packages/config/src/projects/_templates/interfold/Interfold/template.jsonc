@@ -25,7 +25,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "pause or unpause new requests; replace the registry, bonding, slashing and refund dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing, timeouts, parameter sets and committee thresholds without an onchain delay."
+          "description": "pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay."
         }
       ]
     },
@@ -45,6 +45,7 @@
     "bfvDecryptionThreshold": {
       "description": "Number of decryption shares required for the active minimum-size BFV committee.",
       "type": "RISK_PARAMETER",
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
@@ -54,6 +55,7 @@
     "bfvCommitteeSize": {
       "description": "Number of ciphernode seats in the active minimum-size BFV committee.",
       "type": "RISK_PARAMETER",
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
@@ -63,6 +65,7 @@
     "bfvParamSet": {
       "description": "ABI-encoded BFV parameter set accepted by the active circuits. Param-set index 0 is the only set accepted by the current crypto configuration.",
       "type": "RISK_PARAMETER",
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function paramSetRegistry(uint8 paramSet) view returns (bytes)",
@@ -72,6 +75,7 @@
     "bfvPkVerifier": {
       "description": "Verifier used for BFV distributed-key-generation proofs for future E3s.",
       "type": "CODE_CHANGE",
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getPkVerifier(bytes32 encryptionSchemeId) view returns (address)",
@@ -83,6 +87,7 @@
     "bfvDecryptionVerifier": {
       "description": "Verifier used for BFV threshold-decryption proofs for future E3s.",
       "type": "CODE_CHANGE",
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getDecryptionVerifier(bytes32 encryptionSchemeId) view returns (address)",
@@ -94,6 +99,7 @@
     "bfvCiphertextVerifier": {
       "description": "Verifier used for the encrypted computation output of future BFV E3s.",
       "type": "CODE_CHANGE",
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getCiphertextVerifier(bytes32 encryptionSchemeId) view returns (address)",
@@ -104,15 +110,20 @@
     },
     "activeCryptoConfigId": {
       "description": "Hash of the exact circuit configuration accepted for new requests.",
-      "type": "CODE_CHANGE"
+      "type": "CODE_CHANGE",
+      "severity": "HIGH"
     },
     "getTimeoutConfig": {
       "description": "Protocol-wide DKG, encrypted-computation and decryption timeout windows applied to new E3s.",
       "type": "RISK_PARAMETER"
     },
     "getPricingConfig": {
-      "description": "Fee model and fee split applied to new E3s, including minimum committee and threshold constraints.",
+      "description": "Fee model and fee split applied to new E3s, including minimum committee and threshold constraints. The randomnessFlatFee is a non-refundable request-time fee credited to the protocol treasury to reimburse the protocol-funded Chainlink VRF subscription.",
       "type": "RISK_PARAMETER"
+    },
+    "nodeReleaseRegistry": {
+      "description": "Registry controlling which self-attested ciphernode software releases remain eligible for new E3s. Replacing it requires paused requests and no active E3s, and instantly invalidates every operator's cached eligibility.",
+      "type": "CODE_CHANGE"
     },
     "maxDuration": {
       "description": "Maximum request duration accepted by the coordinator.",

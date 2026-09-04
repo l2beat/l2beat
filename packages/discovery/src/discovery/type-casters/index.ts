@@ -2,6 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import type { BaseTypeCaster } from './BaseTypeCaster'
 import { Bytes32ToString } from './Bytes32ToString'
 import { BytesToString } from './BytesToString'
+import { CCIPAllowedFinality } from './CCIPAllowedFinality'
 import { CCIPCurseSubject } from './CCIPCurseSubject'
 import { CCIPOcr3Config } from './CCIPOcr3Config'
 import { ChainPrefix } from './ChainPrefix'
@@ -16,6 +17,7 @@ import { Undecimal } from './Undecimal'
 export const TypeConverters = {
   Bytes32ToString,
   BytesToString,
+  CCIPAllowedFinality,
   CCIPCurseSubject,
   CCIPOcr3Config,
   FormatSeconds,

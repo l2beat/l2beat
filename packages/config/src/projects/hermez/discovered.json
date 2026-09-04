@@ -11,18 +11,6 @@
         "0x228d39e9354fb4359c868bd34cc144e1f4449270e99b6b6c29077f7cdc43b6ac"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1616482354,
       "sinceBlock": 12093588,
       "values": {
@@ -746,5 +734,21 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24016547 },
-  "permissionsConfigHash": "0x61e48a613dd50299f57b955c6be6b33644854bb063115c37418fd49874b31b24"
+  "permissionsConfigHash": "0x61e48a613dd50299f57b955c6be6b33644854bb063115c37418fd49874b31b24",
+  "permissions": {
+    "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

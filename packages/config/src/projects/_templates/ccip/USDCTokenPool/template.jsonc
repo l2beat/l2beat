@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "USDC pool that burns outgoing USDC through a fixed Circle TokenMessenger and forwards incoming Circle attestations through a fixed message-transmitter proxy. Its caller allowlist lets a routing proxy invoke it, and separate deployments handle Circle CCTP v1 and CCTP v2 messages.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool."
+        }
+      ]
+    },
+    "getAllAuthorizedCallers": {
+      "description": "Addresses allowed to invoke the pool's lock-or-burn and release-or-mint flows.",
+      "edit": ["sort"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "invoke USDC transfers through this pool for its configured remote chains."
+        }
+      ]
+    },
+    "getSupportedChains": {
+      "description": "Remote chains currently configured on this child pool.",
+      "edit": ["pipe", ["map", ["format", "CCIPChainName"]], ["sort"]]
+    },
+    "getRateLimitAdmin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the inbound and outbound rate limits for configured remote chains."
+        }
+      ]
+    },
+    "getRmnProxy": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block this pool's transfers when RMN marks a remote chain or the global subject as cursed."
+        }
+      ]
+    },
+    "i_tokenMessenger": {
+      "description": "Immutable Circle TokenMessenger used to burn outgoing USDC."
+    },
+    "i_messageTransmitterProxy": {
+      "description": "Immutable proxy through which this pool submits incoming Circle messages and attestations."
+    },
+    "i_supportedUSDCVersion": {
+      "description": "Circle onchain message-format version accepted by this child pool."
+    }
+  }
+}

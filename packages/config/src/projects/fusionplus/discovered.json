@@ -61,15 +61,7 @@
     {
       "address": "eth:0x89C8eeC57bD474816d407fe38354B8410B567Da3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
-          "description": "choose the authorized resolver set by minting, burning or force-transferring RES tokens, authorize token mints or transfers by signature, and transfer ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EscrowDst",
@@ -122,14 +114,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0AafA51a3F792e1fd2766c2E7cAb1E6710e94b3b",
-          "description": "collect fee-token credit consumed from resolver accounts, rescue arbitrary ERC20 or native-token balances (including funds backing unused resolver credit), and transfer ownership.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x11799622F4D98A24514011E8527B969f7488eF47",
       "sinceTimestamp": 1695632219,
@@ -553,5 +537,27 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25846473 },
-  "permissionsConfigHash": "0x80813850a7ac2bff36cca150f5f21eb9625f8dfe6516239de3b2a49a4a17b8e4"
+  "permissionsConfigHash": "0x80813850a7ac2bff36cca150f5f21eb9625f8dfe6516239de3b2a49a4a17b8e4",
+  "permissions": {
+    "eth:0x89C8eeC57bD474816d407fe38354B8410B567Da3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xACCe550000159e70908C0499a1119D04e7039C28",
+          "description": "choose the authorized resolver set by minting, burning or force-transferring RES tokens, authorize token mints or transfers by signature, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x9F8102b1bB05785BaD2874f2C7B1aaea4c6D976a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0AafA51a3F792e1fd2766c2E7cAb1E6710e94b3b",
+          "description": "collect fee-token credit consumed from resolver accounts, rescue arbitrary ERC20 or native-token balances (including funds backing unused resolver credit), and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

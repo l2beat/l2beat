@@ -252,15 +252,7 @@
     {
       "address": "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
-          "description": "withdraw fees.",
-          "role": ".withdrawer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Scroll_Adapter",
@@ -712,13 +704,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1779303359,
@@ -756,14 +741,6 @@
       ],
       "proxyType": "immutable",
       "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-          "description": "propose governance actions.",
-          "role": ".proposer"
-        }
-      ],
       "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "deployerAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1677231527,
@@ -1217,68 +1194,6 @@
       ],
       "proxyType": "immutable",
       "description": "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
-          "description": "set critical administrative parameters like migrating to a new contract and requesting governance actions (`requestPrice()`) directly.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
-          "description": "manage registered contracts.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-          "description": "manage address mappings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
-          "description": "set the bond amount.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
-          "description": "set fees for disputes and manage all roles in the contract.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-          "description": "manage all roles in the contract.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
-          "description": "remove and slash proposals, set the bond amount and the expiry time, manage the executor address.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
-          "description": "manage the whitelist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
-          "description": "manage the addresses on the whitelist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
-          "description": "set critical administrative parameters like default bonds, bond token, fees.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "deployerAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1677230459,
@@ -1312,14 +1227,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
-          "description": "remove proposals, execute emergency proposals.",
-          "role": ".executor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
       "sinceTimestamp": 1597806870,
@@ -1367,128 +1274,6 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3B03509645713718B78951126E0A6de6f10043f5",
-          "description": "update configuration values.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
-          "description": "set the token-to-messenger mappings that adapters use to route OFT cross-chain transfers.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
-          "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
-          "description": "manage the proposer role.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
-            {
-              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-              "delay": 172800
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
-          "delay": 172800,
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "deployerAddress": "eth:0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
       "sinceTimestamp": 1683067175,
       "sinceBlock": 17176107,
@@ -1605,14 +1390,6 @@
       ],
       "proxyType": "immutable",
       "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-          "description": "can bypass the voting system and execute proposals immediately.",
-          "role": ".emergencyProposer"
-        }
-      ],
       "ignoreInWatchMode": ["getCurrentTime"],
       "deployerAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1677231923,
@@ -1652,14 +1429,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "authenticate fills of V5-tagged deposits: only calls from this contract's live execution context can fill them, and executor-mode fills pull the output tokens from the standing token approvals that the current submitter (relayer) granted to the SpokePool.",
-          "role": ".gateway"
-        }
-      ],
       "deployerAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1785725843,
       "sinceBlock": 25671524,
@@ -1868,81 +1637,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3B03509645713718B78951126E0A6de6f10043f5",
-          "description": "update configuration values.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
-          "description": "set the token-to-messenger mappings that adapters use to route OFT cross-chain transfers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
-          "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
-          "description": "manage the proposer role.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
-          "role": ".crossDomainAdmin",
-          "via": [
-            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
       "sinceTimestamp": 1636157803,
@@ -2055,32 +1749,6 @@
       ],
       "proxyType": "immutable",
       "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
-          "role": ".crossDomainAdmin"
-        },
-        {
-          "permission": "interact",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
-          "role": ".crossDomainAdmin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
-          "role": ".crossDomainAdmin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
-          "role": ".crossDomainAdmin"
-        }
-      ],
       "ignoreInWatchMode": ["rootBundleProposal"],
       "deployerAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1653167916,
@@ -3669,15 +3337,7 @@
     {
       "address": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
-          "description": "propose new root bundles to the HubPool by posting an ABT bond. Proposals settle optimistically; only disputes (via `disputeRootBundle()`) escalate to UMA token voting.",
-          "role": ".proposers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OptimisticOracleV3",
@@ -3711,14 +3371,7 @@
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "oeth:0x2B9CAc7a18C70cBB6F6639571785b70a41B8AE03",
@@ -3891,14 +3544,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "description": "authenticate fills of V5-tagged deposits: only calls from this contract's live execution context can fill them, and executor-mode fills pull the output tokens from the standing token approvals that the current submitter (relayer) granted to the SpokePool.",
-          "role": ".gateway"
-        }
-      ],
       "deployerAddress": "oeth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1785725981,
       "sinceBlock": 155063602,
@@ -3953,13 +3598,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "oeth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1779304053,
@@ -5685,5 +5323,397 @@
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
   "usedBlockNumbers": { "ethereum": 25831121, "optimism": 156024494 },
-  "permissionsConfigHash": "0xabbd57a306f5ec35be77bc442afde5bca9d7d9168a41ca69a1598108a3966430"
+  "permissionsConfigHash": "0xabbd57a306f5ec35be77bc442afde5bca9d7d9168a41ca69a1598108a3966430",
+  "permissions": {
+    "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "description": "withdraw fees.",
+          "role": ".withdrawer"
+        }
+      ]
+    },
+    "eth:0x4c45F70B1d9a7A6D1984daccAd74D0E973B73F01": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "description": "propose governance actions.",
+          "role": ".proposer"
+        }
+      ]
+    },
+    "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
+          "description": "set critical administrative parameters like migrating to a new contract and requesting governance actions (`requestPrice()`) directly.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
+          "description": "manage registered contracts.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+          "description": "manage address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+          "description": "set the bond amount.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "description": "set fees for disputes and manage all roles in the contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "description": "manage all roles in the contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "description": "remove and slash proposals, set the bond amount and the expiry time, manage the executor address.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
+          "description": "manage the whitelist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
+          "description": "manage the addresses on the whitelist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+          "description": "set critical administrative parameters like default bonds, bond token, fees.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "description": "remove proposals, execute emergency proposals.",
+          "role": ".executor"
+        }
+      ]
+    },
+    "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3B03509645713718B78951126E0A6de6f10043f5",
+          "description": "update configuration values.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
+          "description": "set the token-to-messenger mappings that adapters use to route OFT cross-chain transfers.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
+          "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "manage the proposer role.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+          "delay": 172800,
+          "role": ".GnosisSafe_modules"
+        }
+      ]
+    },
+    "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "description": "can bypass the voting system and execute proposals immediately.",
+          "role": ".emergencyProposer"
+        }
+      ]
+    },
+    "eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "authenticate fills of V5-tagged deposits: only calls from this contract's live execution context can fill them, and executor-mode fills pull the output tokens from the standing token approvals that the current submitter (relayer) granted to the SpokePool.",
+          "role": ".gateway"
+        }
+      ]
+    },
+    "eth:0xB524735356985D2f267FA010D681f061DfF03715": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3B03509645713718B78951126E0A6de6f10043f5",
+          "description": "update configuration values.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
+          "description": "set the token-to-messenger mappings that adapters use to route OFT cross-chain transfers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
+          "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "manage the proposer role.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin"
+        }
+      ]
+    },
+    "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "propose new root bundles to the HubPool by posting an ABT bond. Proposals settle optimistically; only disputes (via `disputeRootBundle()`) escalate to UMA token voting.",
+          "role": ".proposers"
+        }
+      ]
+    },
+    "oeth:0x0000000000000000000000000000000000000000": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "role": "admin"
+        }
+      ]
+    },
+    "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "authenticate fills of V5-tagged deposits: only calls from this contract's live execution context can fill them, and executor-mode fills pull the output tokens from the standing token approvals that the current submitter (relayer) granted to the SpokePool.",
+          "role": ".gateway"
+        }
+      ]
+    },
+    "oeth:0xd396CcB6770EAB84045c9Bce2939c478639E2A7F": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

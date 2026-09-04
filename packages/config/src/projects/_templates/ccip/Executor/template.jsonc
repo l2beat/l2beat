@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Fee-policy implementation used by a CCIP 2.0 executor endpoint. It quotes a flat fee for supported destination chains and refuses to quote messages whose requested finality or verifier list falls outside its configured policy. It does not deliver destination messages itself.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, remove, enable, or disable destination chains and set the flat executor fee charged for each one."
+        },
+        {
+          "type": "interact",
+          "description": "change the accepted finality policy and fee aggregator, add or remove CCVs from the allowlist, and enable or disable allowlist enforcement for execution quotes."
+        }
+      ]
+    },
+    "getDestChains": {
+      "description": "Destination chains for which this implementation will quote an executor fee, including each route's fee in USD cents and enabled flag.",
+      "edit": [
+        "pipe",
+        ["map", ["set", "destChainSelector", ["format", "CCIPChainName"]]],
+        ["sort", ["get", "destChainSelector"]]
+      ]
+    },
+    "getAllowedCCVs": {
+      "description": "CCV resolver addresses accepted by this executor when ccvAllowlistEnabled is true. The allowlist is currently inert when that flag is false.",
+      "edit": ["sort"]
+    },
+    "getAllowedFinalityConfig": {
+      "description": "Finality modes this executor accepts when quoting a message. Full finality is always accepted; the decoded fields additionally show support for the safe head, the minimum block depth, and any currently unassigned flags.",
+      "edit": ["format", "CCIPAllowedFinality"]
+    },
+    "getMaxCCVsPerMessage": {
+      "description": "Immutable maximum number of CCVs for which this executor will quote a message."
+    }
+  }
+}

@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x16d3ca40c6375d1b118f529aa84b9252d67ee5ba
+Generated with discovered.json: 0xb5f341defcf0c9bf308c64f0f4d30a407861ed83
+
+# Diff at Tue, 01 Sep 2026 11:22:09 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1786960649
+- current timestamp: 1788261539
+
+## Description
+
+signer rotation.
+
+## Watched changes
+
+```diff
+    contract ChainlinkOracleMultisig (eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA) [GnosisSafe] {
+    +++ description: The Gnosis Safe that Chainlink uses to administer these price feeds and the Feed Registry. It owns the feed proxies, their aggregators, and the registry, so it can swap the aggregator behind any feed or registry pair and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink.
+      values.$members.4:
+-        "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17"
++        "eth:0x80D46daD5A5450a3611CD1d7F9110AEdFA55bfF6"
+    }
+```
+
+Generated with discovered.json: 0x7afaed6b816975f1cb755cc6411089378814d8ff
 
 # Diff at Mon, 17 Aug 2026 09:59:44 GMT:
 

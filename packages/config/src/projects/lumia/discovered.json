@@ -13,21 +13,7 @@
     {
       "address": "eth:0x258862dec9a77db57b398c441390783293E2a7A1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "set the trusted sequencer address.",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AgglayerBridge",
@@ -53,15 +39,7 @@
     {
       "address": "eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "sign state transitions (replaces state validation for this aggchain).",
-          "role": ".aggchainSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AggchainECDSAMultisig",
@@ -362,5 +340,33 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 23695838 },
-  "permissionsConfigHash": "0x3f6a7e0b8446d98dd5a03f381b6b8a47d2fa2e4a3a4c242b35fc93b2832c6843"
+  "permissionsConfigHash": "0x3f6a7e0b8446d98dd5a03f381b6b8a47d2fa2e4a3a4c242b35fc93b2832c6843",
+  "permissions": {
+    "eth:0x258862dec9a77db57b398c441390783293E2a7A1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "set the trusted sequencer address.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
+        }
+      ]
+    },
+    "eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "role": ".aggchainSigners"
+        }
+      ]
+    }
+  }
 }

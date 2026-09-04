@@ -1,12 +1,36 @@
 {
   "name": "lighter",
-  "timestamp": 1787738123,
+  "timestamp": 1788432281,
   "configHash": "0x36b0856e7e96a22b55750bb85e9fb086c12d7ed3d08041b93b337ad509c38243",
   "entries": [
     {
       "address": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x0d8be483cc5fa59dfb77bb3b3858ff01fb2ff458dc1e441e34f79ecc6c95858a",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "address": "eth:0x0bF05AA3b821Eaa341fAD0a674081A02d3dB169D",
@@ -16,15 +40,7 @@
     {
       "address": "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x2994d343b6b17EC23E9E4a08082184Fd43F763a3",
@@ -86,8 +102,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 225672,
-        "committedPriorityRequestCount": 1918838,
+        "committedBatchesCount": 228900,
+        "committedPriorityRequestCount": 1923858,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -210,7 +226,11 @@
           "MRNA",
           "XAUT/USDC",
           "rhSPY/USDC",
-          "rhQQQ/USDC"
+          "rhQQQ/USDC",
+          "STABLECOINX",
+          "SHEIN",
+          "PONS",
+          "AI"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -268,17 +288,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x866418061d4C1168e1c8E8f6facE79675395E008",
-        "executedBatchesCount": 225667,
-        "executedOnChainBatchesCount": 138772,
-        "executedPriorityRequestCount": 1918832,
+        "executedBatchesCount": 228895,
+        "executedOnChainBatchesCount": 140302,
+        "executedPriorityRequestCount": 1923839,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 741207,
-        "lastVerifiedEndBlockNumber": 320189188,
-        "lastVerifiedStateRoot": "0x787d6a097f8181e9a016892b865028e10f02eece32fcb2815687def4b4726837",
-        "lastVerifiedValidiumRoot": "0x4579427022de6c063976d8ebb5373e082b8be6cc6df2ddb3cb20d9c1db051ce1",
+        "lastAccountIndex": 742776,
+        "lastVerifiedEndBlockNumber": 325355588,
+        "lastVerifiedStateRoot": "0xdabe03fe7a7869400a72aa573e60ab9532af30539f02bbfd25de81e81081c9b1",
+        "lastVerifiedValidiumRoot": "0xbb1c84c12b957cad2ea5c4d25c11201aadd3daa6d11bc9b3bcca5caee36a5f81",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -300,8 +320,8 @@
         "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "openPriorityRequestCount": 10,
-        "pendingOnChainBatchesCount": 2,
+        "openPriorityRequestCount": 28,
+        "pendingOnChainBatchesCount": 4,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -353,13 +373,13 @@
             "tokenAddress": "eth:0x227fF9D1a9931db2585a45c41fC84e3b3f48B37b"
           }
         ],
-        "stateRoot": "0x787d6a097f8181e9a016892b865028e10f02eece32fcb2815687def4b4726837",
+        "stateRoot": "0x3278f183e1015a6b6ac9823031a707a81913159d106f245eb7683694c79bddf9",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0x4579427022de6c063976d8ebb5373e082b8be6cc6df2ddb3cb20d9c1db051ce1",
-        "verifiedBatchesCount": 225667,
-        "verifiedPriorityRequestCount": 1918832,
+        "validiumRoot": "0x3ba6835fef567b3baf677239177d1088559d9a7155d3f6a632224ea3d5c5a77f",
+        "verifiedBatchesCount": 228896,
+        "verifiedPriorityRequestCount": 1923843,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -431,15 +451,7 @@
     {
       "address": "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DesertVerifier",
@@ -477,14 +489,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-          "description": "can reduce the upgrade delay to zero seconds.",
-          "role": ".securityCouncilAddress"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
       "sinceTimestamp": 1737058487,
@@ -506,7 +510,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 79,
+        "nonce": 80,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -524,23 +528,6 @@
       ],
       "proxyType": "immutable",
       "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -559,7 +546,7 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 67,
+        "versionId": 68,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
@@ -582,55 +569,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-          "delay": 1814400,
-          "role": ".getMaster"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1747063631,
@@ -650,7 +588,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 188,
+        "nonce": 194,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -756,7 +694,7 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0x2bdf2a91d1eee5475a67f9eacc65aa114fe720836d91f4ec076ef9e1e19c9675"
+        "0x6a9f25dcb10a9155c210780fa3cb38f68ba814f2a1c593ce45855a2ad56d10b1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
@@ -765,15 +703,15 @@
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0xB1386c4266974D81256afB9908e104B00587112A",
+        "$implementation": "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0xB1386c4266974D81256afB9908e104B00587112A"
+        "getTarget": "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0xB1386c4266974D81256afB9908e104B00587112A": "ZkLighterVerifier"
+        "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C": "ZkLighterVerifier"
       }
     },
     {
@@ -789,15 +727,7 @@
     {
       "address": "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD80037fade5d25b9c8B23e5c43bB0577C165Dcf9",
@@ -924,6 +854,58 @@
       "function upgrade(bytes upgradeParameters)",
       "function usdc() view returns (address)",
       "function validators(address) view returns (bool)"
+    ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
     "eth:0x866418061d4C1168e1c8E8f6facE79675395E008": [
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
@@ -1103,6 +1085,11 @@
     "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
       "constructor(address _singleton)"
     ],
+    "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
     "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
@@ -1213,11 +1200,6 @@
       "function transferMastership(address _newMaster)",
       "function upgrade(bytes) pure",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
-    ],
-    "eth:0xB1386c4266974D81256afB9908e104B00587112A": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
     ]
   },
   "usedTemplates": {
@@ -1227,6 +1209,118 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0xf2193f542c5b2dc29610085ddafb70c168d82e65ee4e03f27faf3e9eaa11ece2"
   },
-  "usedBlockNumbers": { "ethereum": 25838624 },
-  "permissionsConfigHash": "0x70cd8169dab4019aa0d9fa1fadd61b0a842fd1dfd45497a304a1403dfa80186d"
+  "usedBlockNumbers": { "ethereum": 25896263 },
+  "permissionsConfigHash": "0x70cd8169dab4019aa0d9fa1fadd61b0a842fd1dfd45497a304a1403dfa80186d",
+  "permissions": {
+    "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+          "description": "can reduce the upgrade delay to zero seconds.",
+          "role": ".securityCouncilAddress"
+        }
+      ]
+    },
+    "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+          "delay": 1814400,
+          "role": ".getMaster"
+        }
+      ]
+    },
+    "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    }
+  }
 }

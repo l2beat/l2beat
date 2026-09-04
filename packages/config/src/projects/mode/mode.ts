@@ -17,9 +17,11 @@ export const mode: ScalingProject = opStackL2({
   discovery,
   daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 18586931 })],
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Mode Network',
+    warning:
+      'The fault proof system is deployed but is not functional. The permissioned dispute game commits to a placeholder absolute prestate (0xdead…) set by OP Stack Upgrade 19, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
     shortName: 'Mode',
     slug: 'mode',
     description:

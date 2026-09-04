@@ -34,28 +34,12 @@
     {
       "address": "base:0x1B23E9D34076EAe4C414b95Fc44728ee3F18E992",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0x25646667cD30e52c0b458bAAcCB9fAdA7046f167",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
-          "description": "pause and unpause the Bridge, which blocks outgoing messages, incoming relays and new message attestations in the BridgeValidator.",
-          "role": ".guardians"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Bridge",
@@ -198,41 +182,17 @@
     {
       "address": "base:0x5cdd49FC6c34cA3075F3c959E99429eE2c8b83ad",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0x675aeaCb0586E7B4F53cf087428ce4F67AB37A1F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0x77a7d8B04DB676496899a339c5D437b7711CFE02",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RBACTimelock",
@@ -244,20 +204,6 @@
       ],
       "proxyType": "immutable",
       "description": "Role based timelock used to administer CCIP contracts.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "add, remove and rotate the partner validator signers (up to 20) that attest Solana -> Base messages in the BridgeValidator.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "base:0x7B0328745A01634c32eFAf041d91432a075B308D",
-          "description": "grant or revoke roles on this timelock.",
-          "role": ".adminRoleMembers"
-        }
-      ],
       "deployerAddress": "base:0xa5E47E431BA433D1425039abF3CE091468440F72",
       "sinceTimestamp": 1697195841,
       "sinceBlock": 5203247,
@@ -356,85 +302,27 @@
     {
       "address": "base:0x994Ef538120DB2Ad4769a88A137C7D6F7c711509",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xa0c9e5CddD280370523A56c9866efaE85b36D5aE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xa0F80e237Be74A580cCAEd06236075C17f1fEc69",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
-          "description": "attest messages passed from Solana to Base by co-signing message batches (2 of 2 signatures required, alongside 3 partner validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".baseValidators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xa379f170d6461365E720cAE4B6512Ec8657875c4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
-          "description": "grant and revoke the guardian role and transfer ownership of the Bridge.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6",
-          "description": "change the implementation of the TwinBeacon and with it the code of every Twin account contract of the Base <> Solana bridge.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552",
-          "description": "change the implementation of the CrossChainERC20Beacon and with it the code of every bridged token (e.g. SOL, JitoSOL) of the Base <> Solana bridge.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "BridgeValidator",
@@ -540,28 +428,12 @@
     {
       "address": "base:0xbAB7077c1a5b2071A32554A14d2D688dCdA01b70",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "base:0xC2ea57E68D59bB32299Fd6902D06B70Ca84c5D48",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "CrossChainERC20Factory",
@@ -592,15 +464,7 @@
     {
       "address": "base:0xDD7D52578cf811aC63Ec3e0142315eCc633a8C93",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
-          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "CrossChainERC20Beacon",
@@ -628,15 +492,7 @@
     {
       "address": "base:0xe018748703F74b806399dd1ECe608453578DDE79",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
-          "description": "attest messages passed from Solana to Base by co-signing message batches (2 of 2 signatures required, alongside 3 partner validator signatures). Attested messages are executable on the Bridge without further verification.",
-          "role": ".baseValidators"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1040,5 +896,181 @@
     "transporter/RBACTimelock": "0x7e2aacb693365ed1a6996fe36a483ba61e87663e13acf6dcac56f4ecd50cc9e2"
   },
   "usedBlockNumbers": { "base": 50513643 },
-  "permissionsConfigHash": "0x4180a98de2e3950d23acfe912bd277a7544b1222d1ba82994d6359d53e8c2b28"
+  "permissionsConfigHash": "0x4180a98de2e3950d23acfe912bd277a7544b1222d1ba82994d6359d53e8c2b28",
+  "permissions": {
+    "base:0x1B23E9D34076EAe4C414b95Fc44728ee3F18E992": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0x25646667cD30e52c0b458bAAcCB9fAdA7046f167": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+          "description": "pause and unpause the Bridge, which blocks outgoing messages, incoming relays and new message attestations in the BridgeValidator.",
+          "role": ".guardians"
+        }
+      ]
+    },
+    "base:0x5cdd49FC6c34cA3075F3c959E99429eE2c8b83ad": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0x675aeaCb0586E7B4F53cf087428ce4F67AB37A1F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0x77a7d8B04DB676496899a339c5D437b7711CFE02": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0x7B0328745A01634c32eFAf041d91432a075B308D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "add, remove and rotate the partner validator signers (up to 20) that attest Solana -> Base messages in the BridgeValidator.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0x7B0328745A01634c32eFAf041d91432a075B308D",
+          "description": "grant or revoke roles on this timelock.",
+          "role": ".adminRoleMembers"
+        }
+      ]
+    },
+    "base:0x994Ef538120DB2Ad4769a88A137C7D6F7c711509": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0xC2ea57E68D59bB32299Fd6902D06B70Ca84c5D48": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0xDD7D52578cf811aC63Ec3e0142315eCc633a8C93": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0xa0F80e237Be74A580cCAEd06236075C17f1fEc69": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
+          "description": "attest messages passed from Solana to Base by co-signing message batches (2 of 2 signatures required, alongside 3 partner validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".baseValidators"
+        }
+      ]
+    },
+    "base:0xa0c9e5CddD280370523A56c9866efaE85b36D5aE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0xa379f170d6461365E720cAE4B6512Ec8657875c4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+          "description": "grant and revoke the guardian role and transfer ownership of the Bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6",
+          "description": "change the implementation of the TwinBeacon and with it the code of every Twin account contract of the Base <> Solana bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552",
+          "description": "change the implementation of the CrossChainERC20Beacon and with it the code of every bridged token (e.g. SOL, JitoSOL) of the Base <> Solana bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "base:0xbAB7077c1a5b2071A32554A14d2D688dCdA01b70": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "base:0xe018748703F74b806399dd1ECe608453578DDE79": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
+          "description": "attest messages passed from Solana to Base by co-signing message batches (2 of 2 signatures required, alongside 3 partner validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".baseValidators"
+        }
+      ]
+    }
+  }
 }
