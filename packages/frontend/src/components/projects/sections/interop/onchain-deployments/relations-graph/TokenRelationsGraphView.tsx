@@ -42,15 +42,18 @@ export function TokenRelationsGraphView({
         : graph,
     [graph, hideUnconnected, canHide, unconnectedIds],
   )
-  const selectedNode = visibleGraph.nodes.find(
-    (node) => node.id === selectedNodeId,
-  )
+  const selectedNode = graph.nodes.find((node) => node.id === selectedNodeId)
+  // The panel may point at a hidden deployment; selecting it brings it back.
+  const selectNode = (id: string | undefined) => {
+    if (id && unconnectedIds.has(id)) setHideUnconnected(false)
+    setSelectedNodeId(id)
+  }
 
   const details = selectedNode && (
     <RelationsDetails
-      graph={visibleGraph}
+      graph={graph}
       node={selectedNode}
-      onSelectNode={setSelectedNodeId}
+      onSelectNode={selectNode}
       onClose={() => setSelectedNodeId(undefined)}
     />
   )
@@ -58,9 +61,8 @@ export function TokenRelationsGraphView({
     <div className="relative">
       <RelationsDiagram
         graph={visibleGraph}
-        unconnectedIds={unconnectedIds}
         selectedNodeId={selectedNodeId}
-        onSelectNode={setSelectedNodeId}
+        onSelectNode={selectNode}
         onExpand={onExpand}
         className={className}
       />
@@ -87,7 +89,8 @@ export function TokenRelationsGraphView({
         )}
       </div>
 
-      {diagram('h-[380px] md:h-[520px]', () => setIsExpanded(true))}
+      {!isExpanded &&
+        diagram('h-[380px] md:h-[520px]', () => setIsExpanded(true))}
 
       {isMobile && (
         <Drawer
