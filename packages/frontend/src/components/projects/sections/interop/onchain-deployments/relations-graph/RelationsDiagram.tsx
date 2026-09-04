@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
@@ -69,6 +69,8 @@ export function RelationsDiagram({
     containerRef,
   )
   const pan = useDragToPan(camera, setCamera)
+  // A new layout (e.g. after toggling hidden nodes) invalidates a manual zoom.
+  useEffect(() => reset(), [layout, reset])
 
   const [hoveredId, setHoveredId] = useState<string>()
   const activeId = hoveredId ?? selectedNodeId

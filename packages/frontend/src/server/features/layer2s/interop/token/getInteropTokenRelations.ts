@@ -21,6 +21,7 @@ export async function getInteropTokenRelations(
   if (env.MOCK) {
     return MOCK_INTEROP_TOKEN_RELATIONS
   }
+  if (deployments.length === 0) return { routes: [], pairStats: undefined }
   const [routes, pairStats] = await Promise.all([
     getTokenDb().tokenRelation.getRoutesBetween(deployments),
     getPairStats(tokenId),

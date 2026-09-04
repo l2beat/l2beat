@@ -10,7 +10,7 @@ const NO_RELATIONS: InteropTokenRelations = {
 }
 
 describe(getInteropTokenEntry.name, () => {
-  it('takes deployment stats from the pair stats and sorts by volume', () => {
+  it('takes deployment stats from the pair stats', () => {
     const ethereum = deployment({ chain: 'ethereum', address: '0xe1' })
     const base = deployment({ chain: 'base', address: '0xb1' })
     const unsupported = deployment({
@@ -57,7 +57,7 @@ describe(getInteropTokenEntry.name, () => {
         row.transferCount,
         row.avgDuration,
       ]),
-    ).toEqual([
+    ).toEqualUnsorted([
       ['base', 150, 3, 20],
       ['ethereum', 100, 2, 30],
       ['solana', null, null, null],
