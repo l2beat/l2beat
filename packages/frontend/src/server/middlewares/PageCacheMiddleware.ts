@@ -20,7 +20,7 @@ const PAGE_CACHE_CONTROL =
 
 /**
  * Sets the page cache header on GET and HEAD. Routes that must not be
- * edge-cached (e.g. "/") override Cache-Control later in the chain. Pair with
+ * edge-cached override Cache-Control later in the chain. Pair with
  * ClearPageCacheMiddleware after the page routes so requests that fall through
  * (e.g. /api/*) leave without the header.
  */
