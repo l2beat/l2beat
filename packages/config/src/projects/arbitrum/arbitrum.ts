@@ -11,12 +11,14 @@ import {
   computeBoldDefenderAdvantage,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   SOA,
   UPGRADE_MECHANISM,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import {
   getNitroGovernance,
@@ -24,10 +26,14 @@ import {
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('arbitrum')
 
-const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+const assumedBlockTime = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+const l2BlockTimeMilliseconds = HARDCODED.ARBITRUM.L2_BLOCK_TIME_MILLISECONDS
+const timeboostExpressLaneAdvantageMilliseconds =
+  HARDCODED.ARBITRUM.TIMEBOOST_EXPRESS_LANE_ADVANTAGE_MILLISECONDS
 
 const challengeWindow = discovery.getContractValue<number>(
   'RollupProxy',
@@ -132,8 +138,63 @@ const maxTimeVariation = discovery.getContractValue<{
   delaySeconds: number
   futureSeconds: number
 }>('SequencerInbox', 'maxTimeVariation')
+const delayBuffer = discovery.getContractValue<{
+  bufferBlocks: number
+  max: number
+  threshold: number
+  prevBlockNumber: number
+  replenishRateInBasis: number
+  prevSequencedBlockNumber: number
+}>('SequencerInbox', 'buffer')
+const currentForceInclusionDelayBlocks = Math.min(
+  maxTimeVariation.delayBlocks,
+  delayBuffer.bufferBlocks,
+)
+const inboxMaxDataSize = discovery.getContractValue<number>(
+  'Inbox',
+  'maxDataSize',
+)
+const minimumAssertionPeriodSeconds =
+  discovery.getContractValue<number>('RollupProxy', 'minimumAssertionPeriod') *
+  assumedBlockTime
+const edgeChallengePeriodBlocks = discovery.getContractValue<number>(
+  'EdgeChallengeManager',
+  'challengePeriodBlocks',
+)
+const boldAssertionBond = discovery.getContractValue<string>(
+  'RollupProxy',
+  'baseStake',
+)
+const boldChallengeBonds = discovery.getContractValue<string[]>(
+  'EdgeChallengeManager',
+  'stakeAmounts',
+)
+const [, boldBigStepBond, boldSmallStepBond] = boldChallengeBonds
+assert(boldBigStepBond !== undefined && boldSmallStepBond !== undefined)
+const boldDefenderAdvantage = computeBoldDefenderAdvantage(
+  boldAssertionBond,
+  boldChallengeBonds,
+)
+const edgeChallengePeriodSeconds = edgeChallengePeriodBlocks * assumedBlockTime
+const worstCaseStateFinalizationDelaySeconds =
+  minimumAssertionPeriodSeconds +
+  edgeChallengePeriodSeconds * 2 +
+  challengeGracePeriodSeconds
+const worstCaseExitDelaySeconds =
+  currentForceInclusionDelayBlocks * assumedBlockTime +
+  worstCaseStateFinalizationDelaySeconds
+const worstCaseExitDelayDisplaySeconds =
+  Math.ceil(worstCaseExitDelaySeconds / 3_600) * 3_600
+const worstCaseStateFinalizationDisplaySeconds =
+  Math.ceil(worstCaseStateFinalizationDelaySeconds / 3_600) * 3_600
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
+const delayBufferReplenishIntervalSeconds = 1_200
+const basisPointsDivisor = 10_000
+
+function formatWethAmount(amount: string): string {
+  return `${Number(formatEther(amount)).toLocaleString('en-US')} WETH`
+}
 
 const chainId = 42161
 
@@ -438,18 +499,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'if-challenged',
       ),
       initialBond: {
-        value: formatEther(
-          discovery.getContractValue<number>('RollupProxy', 'baseStake'),
-        ),
+        value: formatEther(boldAssertionBond),
       },
       permissioned: false,
-      defenderAdvantage: computeBoldDefenderAdvantage(
-        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
-        discovery.getContractValue<number[]>(
-          'EdgeChallengeManager',
-          'stakeAmounts',
-        ),
-      ),
+      defenderAdvantage: boldDefenderAdvantage,
     },
   },
   isNodeAvailable: true,
@@ -497,6 +550,117 @@ export const arbitrum: ScalingProject = orbitStackL2({
     dataFormat: `Nitro supports Ethereum's data structures and formats by incorporating the core code of the popular go-ethereum ("Geth") Ethereum node software. The batch is composed of a header and a compressed blob, which results from compressing concatenated RLP-encoded transactions using the standard RLP encoding.`,
   },
   nonTemplateTechnology: {
+    sequencing: {
+      name: 'Transactions are ordered by a centralized sequencer',
+      description: readProjectMarkdown('arbitrum', 'technologySequencing', {
+        selfSequencingDelay: formatSeconds(selfSequencingDelay),
+        delayBufferThreshold: formatSeconds(
+          delayBuffer.threshold * assumedBlockTime,
+        ),
+        delayBufferMax: formatSeconds(delayBuffer.max * assumedBlockTime),
+        delayBufferReplenishRate: formatSeconds(
+          (delayBuffer.replenishRateInBasis / basisPointsDivisor) *
+            delayBufferReplenishIntervalSeconds,
+        ),
+        delayBufferReplenishInterval: formatSeconds(
+          delayBufferReplenishIntervalSeconds,
+        ),
+      }),
+      sequencingSpec: {
+        type: 'centralized',
+        trustedPreconfirmation: {
+          value: `${l2BlockTimeMilliseconds} ms`,
+          secondLine: `${l2BlockTimeMilliseconds} ms L2 block time`,
+          description: `The sequencer feed provides a trusted soft confirmation with no protocol enforcement or slashing. While a Timeboost express lane controller is active, non-express transactions are delayed by ${timeboostExpressLaneAdvantageMilliseconds} ms before ordering.`,
+          orderHint: l2BlockTimeMilliseconds / 1_000,
+        },
+        trustedOrdering: {
+          value: 'Timeboost',
+          secondLine: 'Auctioned express lane',
+          description: `The express lane controller, selected by auction for each round, receives a ${timeboostExpressLaneAdvantageMilliseconds} ms advantage over regular transactions. Transactions are otherwise ordered based on arrival time. This policy is operated by the centralized sequencer and is not enforced by the L1 contracts.`,
+        },
+        sequencer: {
+          value: 'Centralized',
+          secondLine: 'Redis HA',
+          sentiment: 'bad',
+          description:
+            'The Arbitrum operator controls the real-time sequencer feed. Their documented production HA architecture runs redundant sequencer replicas and selects one active instance through shared Redis state. This improves availability but is not BFT consensus and does not create independent operators or censorship resistance.',
+          orderHint: 1,
+        },
+        realtimeCensorshipResistance:
+          SEQUENCING_SPEC.NO_REALTIME_CENSORSHIP_RESISTANCE(),
+        forcedInclusion: {
+          value: 'Permissionless call',
+          secondLine: '2 L1 txs: enqueue + force',
+          sentiment: 'good',
+          description:
+            'The first Ethereum transaction enqueues the message in the delayed inbox. After the delay expires, anyone can submit a second transaction calling forceInclusion, which advances all delayed messages through the selected message.',
+        },
+        inclusionDelay: {
+          value: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime, { fullUnit: true })}`,
+          secondLine: `${delayBuffer.threshold.toLocaleString('en-US')}-${maxTimeVariation.delayBlocks.toLocaleString('en-US')} L1 blocks`,
+          sentiment: 'good',
+          description:
+            'The message-specific delay is the lower of delayBlocks and the delay buffer. The current buffer gives the maximum delay. The force call becomes valid in the following Ethereum block.',
+          orderHint: currentForceInclusionDelayBlocks,
+        },
+        inclusionMechanics: {
+          value: '2 L1 Tx',
+          secondLine: 'Address alias',
+          description: `Forced inclusion creates an L1-originated L2 message rather than submitting the original signed L2 transaction. The full delayed-inbox message is capped at ${inboxMaxDataSize.toLocaleString('en-US')} bytes, so the available call data is slightly smaller. L1 contract callers use an aliased address on L2. The rollup owner can pause the Inbox or enable its allowlist, preventing new submissions.`,
+        },
+        exitDelay: {
+          value: formatSeconds(worstCaseExitDelayDisplaySeconds, {
+            fullUnit: true,
+          }),
+          secondLine: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime)} inclusion + ${formatSeconds(
+            worstCaseStateFinalizationDisplaySeconds,
+          )} state`,
+          description: readProjectMarkdown('arbitrum', 'sequencingExitDelay', {
+            minimumAssertionPeriod: formatSeconds(
+              minimumAssertionPeriodSeconds,
+              { fullUnit: true },
+            ),
+            edgeChallengePeriodBlocks:
+              edgeChallengePeriodBlocks.toLocaleString('en-US'),
+            challengeGracePeriodBlocks: (
+              challengeGracePeriodSeconds / assumedBlockTime
+            ).toLocaleString('en-US'),
+          }),
+          orderHint: worstCaseExitDelaySeconds,
+        },
+        exitEconomics: {
+          value: formatWethAmount(boldAssertionBond),
+          secondLine: `Favors defender ${boldDefenderAdvantage.multiplier.toFixed(2)}×`,
+          description: `Self-proposing the assertion needed for an exit requires a ${formatWethAmount(boldAssertionBond)} bond. If challenged, the user must defend it through BoLD and post additional refundable bonds of ${formatWethAmount(boldBigStepBond)} and ${formatWethAmount(boldSmallStepBond)} to enter the lower challenge levels.`,
+        },
+      },
+      censorshipResistance:
+        'The centralized sequencer provides no real-time censorship resistance. The delayed inbox provides eventual censorship resistance, assuming Ethereum includes both the enqueue transaction and, when needed, the force-inclusion transaction.',
+      references: [
+        {
+          title: 'Arbitrum documentation - Sequencer and censorship resistance',
+          url: 'https://docs.arbitrum.io/how-arbitrum-works/deep-dives/sequencer',
+        },
+        {
+          title: 'Arbitrum - Timeboost launch',
+          url: 'https://blog.arbitrum.io/gattaca-titan-timeboost-live-on-arbitrum/',
+        },
+        {
+          title: 'Arbitrum documentation - High-availability sequencer',
+          url: 'https://docs.arbitrum.io/launch-arbitrum-chain/run-a-node/high-availability-sequencer',
+        },
+        {
+          title: 'SequencerInbox - source code',
+          url: 'https://etherscan.io/address/0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7#code',
+        },
+        {
+          title: 'Inbox - source code',
+          url: 'https://etherscan.io/address/0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10#code',
+        },
+      ],
+      risks: [],
+    },
     otherConsiderations: [
       ...WASMVM_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(

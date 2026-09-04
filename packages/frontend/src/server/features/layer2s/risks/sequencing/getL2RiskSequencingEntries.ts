@@ -91,7 +91,7 @@ function getInclusionDelayComparison(
     .map((project) => {
       const sequencing = project.scalingTechnology.sequencing
       const chart = sequencing?.inclusionDelayChart
-      if (!sequencing?.sequencerSetSpec || !chart) {
+      if (sequencing?.sequencingSpec?.type !== 'sequencer-set' || !chart) {
         return undefined
       }
       return {
@@ -145,10 +145,10 @@ function getL2RiskSequencingEntry(
   changes: ProjectChanges,
 ): L2RiskSequencingEntry | undefined {
   const sequencing = project.scalingTechnology.sequencing
-  const spec = sequencing?.sequencerSetSpec
-  if (!sequencing || !spec) {
+  if (sequencing?.sequencingSpec?.type !== 'sequencer-set') {
     return undefined
   }
+  const spec = sequencing.sequencingSpec
 
   return {
     ...getCommonL2Entry({ project, changes }),

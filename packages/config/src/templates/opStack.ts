@@ -19,6 +19,7 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -47,6 +48,7 @@ import type {
   InteropConfig,
   Milestone,
   ProjectActivityConfig,
+  ProjectCentralizedSequencingSpec,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEcosystemInfo,
@@ -285,6 +287,80 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   stackedRiskView?: ProjectScalingRiskView
   hostChain: string
+}
+
+export function getOpStackCentralizedSequencingCommon({
+  discovery,
+  l2BlockTimeSeconds,
+  flashblockIntervalMilliseconds,
+  sequencingWindowSeconds,
+  sequencingWindowBlocks,
+  maxDepositCalldataBytes,
+  trustedPreconfirmationDescription,
+  sequencer,
+}: {
+  discovery: ProjectDiscovery
+  l2BlockTimeSeconds: number
+  flashblockIntervalMilliseconds: number
+  sequencingWindowSeconds: number
+  sequencingWindowBlocks: number
+  maxDepositCalldataBytes: number
+  trustedPreconfirmationDescription: string
+  sequencer: TableReadyValue
+}): Omit<
+  ProjectCentralizedSequencingSpec,
+  'type' | 'exitDelay' | 'exitEconomics'
+> {
+  const depositResourceLimit = discovery.getContractValue<{
+    maxResourceLimit: number
+  }>('SystemConfig', 'resourceConfig').maxResourceLimit
+  const minimumDepositGasWithoutData = discovery.getContractValue<number>(
+    'OptimismPortal2',
+    'minimumGasLimitZeroBytes',
+  )
+  const minimumDepositGasWithOneByte = discovery.getContractValue<number>(
+    'OptimismPortal2',
+    'minimumGasLimitOneByte',
+  )
+  const minimumDepositGasPerByte =
+    minimumDepositGasWithOneByte - minimumDepositGasWithoutData
+
+  return {
+    trustedPreconfirmation: {
+      value: `${flashblockIntervalMilliseconds} ms`,
+      secondLine: `${l2BlockTimeSeconds} s L2 block time`,
+      description: trustedPreconfirmationDescription,
+      orderHint: flashblockIntervalMilliseconds / 1_000,
+    },
+    trustedOrdering: {
+      value: 'Dynamic priority auction',
+      secondLine: 'Fee order per Flashblock',
+      description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
+    },
+    sequencer,
+    realtimeCensorshipResistance:
+      SEQUENCING_SPEC.NO_REALTIME_CENSORSHIP_RESISTANCE(),
+    forcedInclusion: {
+      value: 'Automatic derivation',
+      secondLine: '1 L1 tx: portal deposit',
+      sentiment: 'good',
+      description:
+        'The user submits one Ethereum transaction to the OptimismPortal which is automatically derived by conforming nodes.',
+    },
+    inclusionDelay: {
+      value: formatSeconds(sequencingWindowSeconds, { fullUnit: true }),
+      secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
+      sentiment: 'good',
+      description:
+        'The static sequencing window is measured in Ethereum blocks.',
+      orderHint: sequencingWindowBlocks,
+    },
+    inclusionMechanics: {
+      value: '1 L1 Tx',
+      secondLine: 'Address alias',
+      description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
+    },
+  }
 }
 
 function opStackCommon(
@@ -1332,6 +1408,46 @@ function getStateValidation(
   }
 }
 
+export function getOpStackBondScalingFactor(gameMaxDepth: number): number {
+  return (
+    (HARDCODED.OPTIMISM.FAULT_PROOF_HIGH_GAS_CHARGED /
+      HARDCODED.OPTIMISM.FAULT_PROOF_BASE_GAS_CHARGED) **
+    (1 / gameMaxDepth)
+  )
+}
+
+export function getOpStackFullDisputeGameBondCost(
+  initialBondWei: number | string,
+  gameMaxDepth: number,
+): bigint {
+  const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
+  const initialBond = Number(initialBondWei)
+  let cost = 0
+  const scaleFactor = 100_000
+
+  for (let depth = 0; depth <= gameMaxDepth; depth++) {
+    cost += (initialBond / scaleFactor) * exponentialBondsFactor ** depth
+  }
+
+  return BigInt(Math.round(cost)) * BigInt(scaleFactor)
+}
+
+/**
+ * Maximum time added by clock extensions along a full-depth dispute-game path.
+ *
+ * FaultDisputeGame applies one extension to every claim from depth 1 through
+ * MAX_GAME_DEPTH - 1. The split-boundary claim gets one extra clock extension,
+ * while the final preimage-boundary claim also gets the oracle challenge
+ * period.
+ */
+export function getOpStackMaxCumulativeClockExtension(
+  gameMaxDepth: number,
+  gameClockExtension: number,
+  oracleChallengePeriod: number,
+): number {
+  return gameClockExtension * gameMaxDepth + oracleChallengePeriod
+}
+
 export function describeOPFP({
   disputeGameBonds,
   maxClockDuration,
@@ -1349,21 +1465,18 @@ export function describeOPFP({
   oracleChallengePeriod: number
   isPermissionless: boolean
 }): ProjectScalingStateValidation {
-  const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
+  const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
 
-  const gameMaxClockExtension =
-    gameClockExtension * 2 + // at SPLIT_DEPTH - 1
-    oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
-    gameClockExtension * (gameMaxDepth - 3) // the rest, excluding also the last depth
+  const gameMaxClockExtension = getOpStackMaxCumulativeClockExtension(
+    gameMaxDepth,
+    gameClockExtension,
+    oracleChallengePeriod,
+  )
 
-  const permissionlessGameFullCost = (() => {
-    let cost = 0
-    const scaleFactor = 100000
-    for (let i = 0; i <= gameMaxDepth; i++) {
-      cost += (disputeGameBonds / scaleFactor) * exponentialBondsFactor ** i
-    }
-    return BigInt(cost) * BigInt(scaleFactor)
-  })()
+  const permissionlessGameFullCost = getOpStackFullDisputeGameBondCost(
+    disputeGameBonds,
+    gameMaxDepth,
+  )
 
   return {
     description: readMarkdown('templates/opStack/opfpDescription.md', {
@@ -1389,7 +1502,7 @@ export function describeOPFP({
       {
         title: 'Challenges',
         description: readMarkdown('templates/opStack/opfpChallenges.md', {
-          exponentialBondsFactor,
+          exponentialBondsFactor: exponentialBondsFactor.toFixed(5),
           gameMaxDepth,
           fullGameCost: Number.parseFloat(
             formatEther(permissionlessGameFullCost),
@@ -1397,6 +1510,9 @@ export function describeOPFP({
           maxClockDuration: formatSeconds(maxClockDuration),
           gameClockExtension: formatSeconds(gameClockExtension),
           doubleGameClockExtension: formatSeconds(gameClockExtension * 2),
+          maxGameDepthClockExtension: formatSeconds(
+            gameClockExtension + oracleChallengePeriod,
+          ),
           gameSplitDepth,
           oracleChallengePeriod: formatSeconds(oracleChallengePeriod),
           gameMaxClockExtension: formatSeconds(gameMaxClockExtension),
@@ -1471,6 +1587,13 @@ function getRiskViewStateValidation(
       }
     }
     case 'Permissionless': {
+      const faultDisputeGame = getFaultDisputeGameName(templateVars)
+      const gameMaxDepth = templateVars.discovery.getContractValue<number>(
+        faultDisputeGame,
+        'maxGameDepth',
+      )
+      const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
+
       return {
         ...RISK_VIEW.STATE_FP_INT(
           getChallengePeriod(templateVars),
@@ -1480,10 +1603,13 @@ function getRiskViewStateValidation(
           value: formatEther(getPermissionlessGameBond(templateVars)),
         },
         permissioned: false,
-        // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
-        // so the resource ratio is exactly that factor — slightly favors the
-        // attacker.
-        defenderAdvantage: { multiplier: 1 / 1.09493, shape: 'linear' },
+        // OPFP bonds increase at every depth, so the immediate counterclaim
+        // costs more than the claim it counters and slightly favors the
+        // attacker in a resource-exhaustion attack.
+        defenderAdvantage: {
+          multiplier: 1 / exponentialBondsFactor,
+          shape: 'linear',
+        },
       }
     }
     case 'Kailua':
