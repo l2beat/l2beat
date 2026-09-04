@@ -19,24 +19,25 @@ const PAGE_CACHE_CONTROL =
   'public, max-age=0, s-maxage=60, stale-while-revalidate=300, stale-if-error=3600'
 
 /**
- * Sets the page cache header on GET and HEAD. Routes that must not be
- * edge-cached (e.g. "/") override Cache-Control later in the chain. Pair with
- * ClearPageCacheMiddleware after the page routes so requests that fall through
- * (e.g. /api/*) leave without the header.
+ * Marks successfully rendered pages as edge-cacheable. The header is decided
+ * when the response headers are written, so only 200 responses to GET/HEAD
+ * get it: 404s (unknown slug or unknown path), redirects and errors are never
+ * cached. A route that sets its own Cache-Control (e.g. "/") keeps it.
  */
 export function PageCacheMiddleware() {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (req.method === 'GET' || req.method === 'HEAD') {
-      res.set('Cache-Control', PAGE_CACHE_CONTROL)
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      next()
+      return
     }
-    next()
-  }
-}
-
-/** Removes the page cache header from requests no page route handled. */
-export function ClearPageCacheMiddleware() {
-  return (_: Request, res: Response, next: NextFunction) => {
-    res.removeHeader('Cache-Control')
+    const writeHead = res.writeHead
+    res.writeHead = function (this: Response, ...args: unknown[]) {
+      const statusCode = typeof args[0] === 'number' ? args[0] : res.statusCode
+      if (statusCode === 200 && !res.getHeader('Cache-Control')) {
+        res.setHeader('Cache-Control', PAGE_CACHE_CONTROL)
+      }
+      return writeHead.apply(this, args as Parameters<typeof writeHead>)
+    } as typeof res.writeHead
     next()
   }
 }
