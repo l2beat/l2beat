@@ -6,7 +6,7 @@ import { validateBlip } from '../../blip/validateBlip'
 import { UserHandlerDefinition } from '../handlers/user'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = v.enum(['HIGH', 'LOW'])
+export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
 
 export type StructureContractField = v.infer<typeof StructureContractField>
 export const _StructureContractField = {
