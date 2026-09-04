@@ -29,11 +29,17 @@ export async function getInteropTokenRelations(
   return { routes, pairStats }
 }
 
+// Mirrors the backend cleaner. Aggregates live twice as long, so an aggregates
+// timestamp override can point at a day whose raw transfers are already gone.
+const RAW_TRANSFER_RETENTION = 7 * UnixTime.DAY
+
 async function getPairStats(tokenId: string) {
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) return undefined
+  const from = snapshotTimestamp - UnixTime.DAY
+  if (from < UnixTime.now() - RAW_TRANSFER_RETENTION) return undefined
   return getDb().interopTransfer.getDeployedTokenPairStats(tokenId, {
-    from: snapshotTimestamp - UnixTime.DAY,
+    from,
     to: snapshotTimestamp,
   })
 }
