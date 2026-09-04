@@ -15,7 +15,7 @@ import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { InfoIcon } from '~/icons/Info'
 import { ChainIcon } from '~/pages/interop/components/ChainIcon'
 import type {
-  InteropTokenRelationsDeployment,
+  InteropTokenDeploymentView,
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import type { InteropTokenStats } from '~/server/features/layer2s/interop/utils/createStatsLookup'
@@ -150,7 +150,7 @@ export function Address({
   deployment,
   className,
 }: {
-  deployment: InteropTokenRelationsDeployment
+  deployment: InteropTokenDeploymentView
   className?: string
 }) {
   const label = shortAddress(deployment.address)

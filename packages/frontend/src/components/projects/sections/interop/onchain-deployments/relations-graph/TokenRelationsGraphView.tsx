@@ -33,13 +33,13 @@ export function TokenRelationsGraphView({
   const canHide = unconnectedIds.size > 0
   const visibleGraph = useMemo(
     () =>
-      hideUnconnected && canHide
+      hideUnconnected && unconnectedIds.size > 0
         ? {
             ...graph,
             nodes: graph.nodes.filter((node) => !unconnectedIds.has(node.id)),
           }
         : graph,
-    [graph, hideUnconnected, canHide, unconnectedIds],
+    [graph, hideUnconnected, unconnectedIds],
   )
   const selectedNode = graph.nodes.find((node) => node.id === selectedNodeId)
   // The panel may point at a hidden deployment; selecting it brings it back.
@@ -60,6 +60,7 @@ export function TokenRelationsGraphView({
     <div className="relative">
       <RelationsDiagram
         graph={visibleGraph}
+        unconnectedIds={unconnectedIds}
         selectedNodeId={selectedNodeId}
         onSelectNode={selectNode}
         onExpand={onExpand}
