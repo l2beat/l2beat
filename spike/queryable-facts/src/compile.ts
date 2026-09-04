@@ -41,6 +41,8 @@ export interface CompileRequest {
 }
 
 export interface CompileResult {
+  /** The standard-JSON request sent to solc. */
+  input: SolidityJsonInput
   output: SolidityOutput
   /** Full version, e.g. `0.8.20+commit.a1b79de6`. */
   solcVersion: string
@@ -219,6 +221,7 @@ export async function compile(req: CompileRequest): Promise<CompileResult> {
     const compileMs = performance.now() - t0
     const warnings = checkErrors(output)
     return {
+      input,
       output,
       solcVersion: solc.version(),
       constraints,
@@ -247,6 +250,7 @@ export async function compile(req: CompileRequest): Promise<CompileResult> {
   const t2 = performance.now()
   const warnings = checkErrors(output)
   return {
+    input,
     output,
     solcVersion: resolved.version,
     constraints,

@@ -12,6 +12,32 @@ flattened .sol ─► pragma → exact solc ─► standard JSON (AST + storageL
 The findings are written up as a comment on the Linear issue. This README is only
 enough to run and read the thing.
 
+## The explorer (start here if you are not going to read code)
+
+```sh
+cd spike/queryable-facts
+pnpm dev            # then open http://localhost:5178
+```
+
+A local web page that walks the pipeline as a six-step wizard on a contract you pick or paste:
+
+1. **Contract** – the prepared fixtures (including `ClaimSemanticsPlayground.sol`) and the zora flattened
+   files from `packages/config`, or your own text.
+2. **Compile** – which `solc` was chosen and why, the exact standard-JSON request, the AST as a tree linked
+   both ways to the source (click a word → its node, click a node → its text), and the storage layout.
+3. **Extract facts** – every relation as a table; hover a row to see the source it came from, click a line
+   badge to see every fact that line produced, pin a row to see the AST node that emitted it.
+4. **Rules** – `lib.dl` rendered as commented cards per relation, with the number of tuples each derived,
+   and a short explanation of what Soufflé is (and how its one least model relates to clingo's stable models).
+5. **Derive** – every derived relation, and a **why?** button per tuple that asks Soufflé (`-t explain`)
+   for the proof tree down to base facts and their source lines.
+6. **Report & ask** – placeholder for the next iteration.
+
+Every run is written to `out/runs/<contract>-<timestamp>/` (source, solc input/output, facts,
+`facts-provenance.tsv`, `program.dl`, derived CSVs, `report.md`, `README.txt`), which is what a later
+"ask an AI" step will be pointed at. The server is Vite's dev server with a tiny API (`web/server`);
+nothing is published anywhere.
+
 ## Running it
 
 Prerequisites:
@@ -43,14 +69,22 @@ the pragma, like the analyze repo's `resolve_solc`.
 contracts/   ClaimSemanticsPlayground.sol   the guard-semantics playground the spike was asked about
              StorageWriters.sol             l2beat/analyze's storage-writers fixture (copied verbatim)
 src/         compile.ts   pragma → version → solc standard JSON
-             extract.ts   AST + storageLayout → facts        (the only stage that looks at the AST)
+             extract.ts   AST + storageLayout → facts        (the only stage that looks at the AST;
+                                                              every row remembers the node it came from)
+             pipeline.ts  the whole loop as one function (used by the CLI and the explorer)
              report.ts    Soufflé outputs → Markdown in the storage-writers analyzer's shape
              compare.ts   mechanical diff of two storage-writers tables
              main.ts      CLI
+web/         vite.config.ts  dev server + API in one process (`pnpm dev`)
+             server/         run the pipeline, parse the .dl program, ask Soufflé to explain a tuple
+             client/         the React wizard (steps/, components/, lib/)
+             smoke.ts        renders every step server-side against a run (no browser needed)
 rules/       schema.dl    .decl + .input for every base relation, with a one-line meaning each
              lib.dl       the rule library: structure → call graph → writes → guards
              report.dl    .output relations
-out/<unit>/  facts/*.facts  derived/*.csv  program.dl  report.md   (checked in for the two contracts)
+out/<unit>/  facts/*.facts  derived/*.csv  program.dl  report.md   (CLI output; `out/` is gitignored repo-wide,
+                                                                       so run the CLI once to regenerate)
+out/runs/    one folder per explorer run
 ```
 
 ## What the facts look like

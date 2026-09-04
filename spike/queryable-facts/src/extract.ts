@@ -133,14 +133,33 @@ function sanitize(value: string): string {
   return value.replace(/\s+/g, ' ').trim()
 }
 
+/** Where a row came from: the AST node the extractor was looking at when it emitted the row. */
+export interface Origin {
+  /** solc node id (Yul nodes have none). */
+  id?: number
+  nodeType: string
+  /** solc `src`: "<byteStart>:<byteLength>:<fileIndex>". */
+  src: string
+}
+
+export interface FactRow {
+  cols: string[]
+  origin?: Origin
+}
+
 export class Facts {
-  readonly rows = new Map<string, Set<string>>()
+  /** relation → (TSV row → origin of its first emission). */
+  readonly rows = new Map<string, Map<string, Origin | undefined>>()
 
   constructor() {
-    for (const name of Object.keys(RELATIONS)) this.rows.set(name, new Set())
+    for (const name of Object.keys(RELATIONS)) this.rows.set(name, new Map())
   }
 
-  add(relation: string, ...cols: Array<string | number>): void {
+  add(
+    relation: string,
+    origin: AstNode | undefined,
+    ...cols: Array<string | number>
+  ): void {
     const arity = RELATIONS[relation]
     if (arity === undefined) throw new Error(`unknown relation ${relation}`)
     if (cols.length !== arity) {
@@ -151,11 +170,31 @@ export class Facts {
     const row = cols
       .map((c) => (typeof c === 'number' ? String(c) : sanitize(c)))
       .join('\t')
-    this.rows.get(relation)?.add(row)
+    const set = this.rows.get(relation)
+    if (set && !set.has(row)) {
+      set.set(
+        row,
+        origin
+          ? {
+              id: typeof origin.id === 'number' ? origin.id : undefined,
+              nodeType: origin.nodeType,
+              src: origin.src,
+            }
+          : undefined,
+      )
+    }
   }
 
   count(relation: string): number {
     return this.rows.get(relation)?.size ?? 0
+  }
+
+  /** Rows of one relation, split into columns, with their origin. */
+  entries(relation: string): FactRow[] {
+    return [...(this.rows.get(relation) ?? [])].map(([row, origin]) => ({
+      cols: row.split('\t'),
+      origin,
+    }))
   }
 
   /** Writes `<relation>.facts` files; returns total rows and bytes. */
@@ -164,7 +203,7 @@ export class Facts {
     let rows = 0
     let bytes = 0
     for (const [relation, set] of this.rows) {
-      const sorted = [...set].sort()
+      const sorted = [...set.keys()].sort()
       const content = sorted.length > 0 ? `${sorted.join('\n')}\n` : ''
       writeFileSync(join(dir, `${relation}.facts`), content)
       rows += sorted.length
@@ -246,7 +285,7 @@ class Extractor {
 
   run(): void {
     const { unit, fileName, solcVersion } = this.input
-    this.facts.add('codeUnit', unit, fileName, solcVersion)
+    this.facts.add('codeUnit', this.ast, unit, fileName, solcVersion)
     this.index(this.ast, {})
     for (const node of this.topLevelNodes()) this.emitTopLevel(node)
     this.emitStorageLayout()
@@ -400,7 +439,7 @@ class Extractor {
   private callResultId(F: string, call: AstNode, index: number): string {
     const K = this.site(F, call)
     const X = `${K}#${index}`
-    this.facts.add('callResult', X, K, index)
+    this.facts.add('callResult', call, X, K, index)
     return X
   }
 
@@ -418,6 +457,7 @@ class Extractor {
     const { start, end, length } = this.text.range(node)
     this.facts.add(
       'sourceLoc',
+      node,
       id,
       this.input.fileName,
       this.text.lineAt(start),
@@ -429,7 +469,7 @@ class Extractor {
 
   private unhandled(ctx: string, what: string, node: AstNode): void {
     const id = `${ctx}@${parseSrc(node.src).start}:unhandled`
-    this.facts.add('unhandled', ctx, what, this.text.slice(node))
+    this.facts.add('unhandled', node, ctx, what, this.text.slice(node))
     this.loc(id, node)
   }
 
@@ -445,6 +485,7 @@ class Extractor {
         const V = this.declId(node.id)
         this.facts.add(
           'stateVariable',
+          node,
           V,
           '',
           String(node.name),
@@ -476,6 +517,7 @@ class Extractor {
     const name = String(node.name)
     this.facts.add(
       'contract',
+      node,
       C,
       name,
       String(node.contractKind),
@@ -486,7 +528,7 @@ class Extractor {
     const linearized = node.linearizedBaseContracts
     if (Array.isArray(linearized)) {
       linearized.forEach((baseAstId, order) => {
-        this.facts.add('inherits', C, this.declId(baseAstId), order)
+        this.facts.add('inherits', node, C, this.declId(baseAstId), order)
       })
     }
 
@@ -502,7 +544,7 @@ class Extractor {
           break
         case 'EventDefinition': {
           const E = this.declId(child.id)
-          this.facts.add('event', E, C, String(child.name))
+          this.facts.add('event', child, E, C, String(child.name))
           this.loc(E, child)
           break
         }
@@ -543,6 +585,7 @@ class Extractor {
       const K = this.site(ownCtor, spec)
       this.facts.add(
         'callSite',
+        spec,
         K,
         '',
         ownCtor,
@@ -563,6 +606,7 @@ class Extractor {
     if (library) {
       this.facts.add(
         'usingFor',
+        node,
         C,
         this.declId(library.referencedDeclaration),
         typeText,
@@ -577,6 +621,7 @@ class Extractor {
         if (def)
           this.facts.add(
             'usingFor',
+            node,
             C,
             this.declId(def.referencedDeclaration),
             typeText,
@@ -595,6 +640,7 @@ class Extractor {
           : 'mutable'
     this.facts.add(
       'stateVariable',
+      node,
       V,
       C,
       String(node.name),
@@ -604,7 +650,8 @@ class Extractor {
     )
     this.loc(V, node)
     const value = node.value
-    if (isNode(value)) this.facts.add('initializer', V, this.text.slice(value))
+    if (isNode(value))
+      this.facts.add('initializer', value, V, this.text.slice(value))
   }
 
   private emitFunction(node: AstNode, C: string): void {
@@ -612,6 +659,7 @@ class Extractor {
     const kind = this.functionKind(node)
     this.facts.add(
       'function',
+      node,
       F,
       C,
       this.functionName(node),
@@ -626,7 +674,8 @@ class Extractor {
     for (const key of ['baseFunctions', 'baseModifiers']) {
       const bases = node[key]
       if (Array.isArray(bases)) {
-        for (const b of bases) this.facts.add('overrides', F, this.declId(b))
+        for (const b of bases)
+          this.facts.add('overrides', node, F, this.declId(b))
       }
     }
 
@@ -634,6 +683,7 @@ class Extractor {
       const P = this.declId(p.id)
       this.facts.add(
         'param',
+        p,
         F,
         i,
         P,
@@ -653,7 +703,7 @@ class Extractor {
     returnParams.forEach((r, i) => {
       this.emitLocal(r, F)
       if (r.storageLocation === 'storage' && r.name) {
-        this.facts.add('returnsRef', F, i, this.declId(r.id))
+        this.facts.add('returnsRef', r, F, i, this.declId(r.id))
       }
     })
 
@@ -673,20 +723,20 @@ class Extractor {
           refAstId !== undefined ? (this.constructorOf.get(refAstId) ?? '') : ''
       }
       const K = this.site(F, m)
-      this.facts.add('callSite', K, '', F, kind, callee, this.text.slice(m))
+      this.facts.add('callSite', m, K, '', F, kind, callee, this.text.slice(m))
       this.loc(K, m)
       const args = Array.isArray(m.arguments) ? m.arguments.filter(isNode) : []
       args.forEach((arg, i) => {
         this.visitExpr(arg, { F, S: '' })
         for (const root of this.valueRoots(arg, F))
-          this.facts.add('argBinding', K, i, root)
+          this.facts.add('argBinding', arg, K, i, root)
       })
     }
 
     const body = node.body
     if (isNode(body)) {
       const B = this.site(F, body)
-      this.facts.add('functionBody', F, B)
+      this.facts.add('functionBody', body, F, B)
       this.visitStmt(body, F, '', 0)
     }
   }
@@ -695,6 +745,7 @@ class Extractor {
     const L = this.declId(node.id)
     this.facts.add(
       'localVar',
+      node,
       L,
       F,
       String(node.name ?? ''),
@@ -715,7 +766,7 @@ class Extractor {
     index: number,
   ): void {
     const S = this.site(F, node)
-    this.facts.add('stmt', S, F, node.nodeType, parent, index)
+    this.facts.add('stmt', node, S, F, node.nodeType, parent, index)
     this.loc(S, node)
     const ctx: Ctx = { F, S }
     const child = (key: string): AstNode | undefined => {
@@ -779,7 +830,7 @@ class Extractor {
           ) {
             const roots = this.valueRoots(init, F)
             for (const root of roots)
-              this.facts.add('refBinding', this.declId(only.id), root)
+              this.facts.add('refBinding', node, this.declId(only.id), root)
             if (roots.length === 0) {
               this.unhandled(
                 F,
@@ -793,6 +844,7 @@ class Extractor {
               if (isNode(d) && d.storageLocation === 'storage') {
                 this.facts.add(
                   'refBinding',
+                  node,
                   this.declId(d.id),
                   this.callResultId(F, init, i),
                 )
@@ -816,7 +868,7 @@ class Extractor {
           parts.forEach((part, i) => {
             if (!isNode(part) || locations[i] !== 'storage') return
             for (const root of this.valueRoots(part, F))
-              this.facts.add('returnsRef', F, i, root)
+              this.facts.add('returnsRef', part, F, i, root)
           })
         }
         return
@@ -862,9 +914,10 @@ class Extractor {
   }
 
   private visitCondition(expr: AstNode, X: string, F: string): void {
-    this.facts.add('condition', X, this.text.slice(expr))
-    this.facts.add('condShape', X, this.conditionShape(expr))
-    for (const what of this.collectRefs(expr)) this.facts.add('refs', X, what)
+    this.facts.add('condition', expr, X, this.text.slice(expr))
+    this.facts.add('condShape', expr, X, this.conditionShape(expr))
+    for (const what of this.collectRefs(expr))
+      this.facts.add('refs', expr, X, what)
     this.visitExpr(expr, { F, S: X })
   }
 
@@ -941,7 +994,8 @@ class Extractor {
         return
       case 'Identifier': {
         const decl = this.decls.get(node.referencedDeclaration as number)
-        if (decl?.stateVariable) this.facts.add('readsDirect', ctx.F, decl.id)
+        if (decl?.stateVariable)
+          this.facts.add('readsDirect', node, ctx.F, decl.id)
         return
       }
       case 'MemberAccess':
@@ -1055,6 +1109,7 @@ class Extractor {
       this.visitExpr(root.node, ctx) // the call itself is a call site too
       this.facts.add(
         'writeSite',
+        site,
         W,
         ctx.S,
         ctx.F,
@@ -1069,10 +1124,10 @@ class Extractor {
       return
     }
     if (decl.stateVariable) {
-      this.facts.add('writeSite', W, ctx.S, ctx.F, decl.id, op)
+      this.facts.add('writeSite', site, W, ctx.S, ctx.F, decl.id, op)
       this.loc(W, site)
       if (op !== '=' && op !== 'delete')
-        this.facts.add('readsDirect', ctx.F, decl.id)
+        this.facts.add('readsDirect', site, ctx.F, decl.id)
       return
     }
     if (decl.storageLocation === 'storage') {
@@ -1080,7 +1135,7 @@ class Extractor {
         // `d = other;` re-points the storage reference instead of writing through it.
         const targets = this.valueRoots(rhs, ctx.F)
         for (const target of targets)
-          this.facts.add('refBinding', decl.id, target)
+          this.facts.add('refBinding', site, decl.id, target)
         if (targets.length === 0) {
           this.unhandled(
             ctx.F,
@@ -1090,7 +1145,7 @@ class Extractor {
         }
         return
       }
-      this.facts.add('writeSite', W, ctx.S, ctx.F, decl.id, op)
+      this.facts.add('writeSite', site, W, ctx.S, ctx.F, decl.id, op)
       this.loc(W, site)
     }
     // memory/calldata/value locals: not storage, nothing to record
@@ -1240,6 +1295,7 @@ class Extractor {
     const K = this.site(ctx.F, call)
     this.facts.add(
       'callSite',
+      call,
       K,
       ctx.S,
       ctx.F,
@@ -1259,10 +1315,10 @@ class Extractor {
     ) {
       const [cond] = args
       if (cond) {
-        this.facts.add('condition', K, this.text.slice(cond))
-        this.facts.add('condShape', K, this.conditionShape(cond))
+        this.facts.add('condition', cond, K, this.text.slice(cond))
+        this.facts.add('condShape', cond, K, this.conditionShape(cond))
         for (const what of this.collectRefs(cond))
-          this.facts.add('refs', K, what)
+          this.facts.add('refs', cond, K, what)
       }
     }
     if (info.kind === 'arrayOp' && info.base) {
@@ -1279,7 +1335,7 @@ class Extractor {
     const offset = info.bound ? 1 : 0
     if (info.bound && info.base) {
       for (const receiver of this.valueRoots(info.base, ctx.F)) {
-        this.facts.add('argBinding', K, 0, receiver)
+        this.facts.add('argBinding', info.base, K, 0, receiver)
       }
     }
     args.forEach((arg, i) => {
@@ -1290,7 +1346,7 @@ class Extractor {
         if (named >= 0) index = named
       }
       for (const root of this.valueRoots(arg, ctx.F))
-        this.facts.add('argBinding', K, index, root)
+        this.facts.add('argBinding', arg, K, index, root)
     })
 
     const options = call.expression as AstNode
@@ -1308,15 +1364,18 @@ class Extractor {
 
   private visitAssembly(node: AstNode, A: string, F: string): void {
     const yul = node.AST
-    this.facts.add('assembly', A, F, isNode(yul) ? 1 : 0)
+    this.facts.add('assembly', node, A, F, isNode(yul) ? 1 : 0)
     if (!isNode(yul)) {
       this.unhandled(F, 'InlineAssembly without Yul AST', node)
       return
     }
     const yulNameBySrc = new Map<string, string>()
+    const yulNodeBySrc = new Map<string, AstNode>()
     walk(yul, (y) => {
-      if (y.nodeType === 'YulIdentifier')
+      if (y.nodeType === 'YulIdentifier') {
         yulNameBySrc.set(y.src, String(y.name))
+        yulNodeBySrc.set(y.src, y)
+      }
       return true
     })
     const refs = Array.isArray(node.externalReferences)
@@ -1333,14 +1392,21 @@ class Extractor {
             : ref.isOffset
               ? 'offset'
               : 'value'
-      this.facts.add('asmExtRef', A, name, this.declId(ref.declaration), kind)
+      this.facts.add(
+        'asmExtRef',
+        yulNodeBySrc.get(src) ?? node,
+        A,
+        name,
+        this.declId(ref.declaration),
+        kind,
+      )
     }
     walk(yul, (y) => {
       if (y.nodeType === 'YulFunctionCall') {
         const fn = y.functionName as AstNode | undefined
         if (typeof fn?.name === 'string' && OPAQUE_YUL_CALLS.has(fn.name)) {
           const K = this.site(F, y)
-          this.facts.add('asmCall', K, A, fn.name)
+          this.facts.add('asmCall', y, K, A, fn.name)
           this.loc(K, y)
         }
         if (fn?.name === 'sstore') {
@@ -1352,6 +1418,7 @@ class Extractor {
           const K = this.site(F, y)
           this.facts.add(
             'asmSstore',
+            y,
             K,
             A,
             kind,
@@ -1377,7 +1444,7 @@ class Extractor {
           isNode(value)
         ) {
           const [kind, text] = this.yulOperand(value)
-          this.facts.add('asmLet', A, String(vars[0].name), kind, text)
+          this.facts.add('asmLet', y, A, String(vars[0].name), kind, text)
         }
       }
       return true
@@ -1414,6 +1481,7 @@ class Extractor {
         const decl = this.decls.get(entry.astId)
         this.facts.add(
           'storageSlot',
+          decl?.node,
           C,
           decl?.id ?? `?${entry.label}`,
           Number(entry.slot),

@@ -1,3 +1,5 @@
 .cache/
 node_modules/
 out/**/solc-output.json
+out/runs/
+web/dist/

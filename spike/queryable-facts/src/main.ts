@@ -5,16 +5,14 @@
 //   tsx src/main.ts facts    <file.sol> [...same]          # compile + extract only
 //
 // pipeline = compile → extract facts → run Soufflé on rules/*.dl → render report.md
+// (the loop itself lives in pipeline.ts, shared with the web explorer in web/).
 
-import { spawnSync } from 'child_process'
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
+import { readFileSync } from 'fs'
 import { basename, join, resolve } from 'path'
-import { type Backend, compile } from './compile'
-import { extractFacts } from './extract'
-import { renderReport } from './report'
+import type { Backend } from './compile'
+import { runPipeline, SouffleError } from './pipeline'
 
 const ROOT = resolve(__dirname, '..')
-const RULE_FILES = ['schema.dl', 'lib.dl', 'report.dl']
 
 interface Args {
   cmd: 'facts' | 'pipeline'
@@ -81,108 +79,54 @@ async function main(): Promise<void> {
   const source = readFileSync(file, 'utf8')
   const unit = args.unit ?? basename(file)
   const outDir = args.out ?? join(ROOT, 'out', unit.replace(/\.sol$/, ''))
-  const factsDir = join(outDir, 'facts')
-  const derivedDir = join(outDir, 'derived')
-  mkdirSync(outDir, { recursive: true })
 
-  // 1. compile
-  const compiled = await compile({
-    fileName: unit,
+  const result = await runPipeline({
+    unit,
     source,
+    outDir,
+    rulesDir: join(ROOT, 'rules'),
     cacheDir: join(ROOT, '.cache'),
     backend: args.backend,
     solcVersion: args.solc,
+    souffle: args.souffle,
+    jobs: Number(args.jobs),
+    factsOnly: args.cmd === 'facts',
   })
+  const { compiled, facts, factsWritten, timings } = result
   console.log(
-    `[compile] pragma ${JSON.stringify(compiled.constraints)} → solc ${compiled.solcVersion} (${compiled.resolvedFrom}); resolve ${ms(compiled.timings.resolveMs)}, compile ${ms(compiled.timings.compileMs)}, ${compiled.warnings} warning(s)`,
+    `[compile] pragma ${JSON.stringify(compiled.constraints)} → solc ${compiled.solcVersion} (${compiled.resolvedFrom}); resolve ${ms(timings.resolveMs)}, compile ${ms(timings.compileMs)}, ${compiled.warnings} warning(s)`,
   )
-  writeFileSync(
-    join(outDir, 'solc-output.json'),
-    JSON.stringify(compiled.output),
-  )
-
-  // 2. extract
-  const t0 = performance.now()
-  const { facts, stats } = extractFacts({
-    unit,
-    fileName: unit,
-    source,
-    output: compiled.output,
-    solcVersion: compiled.solcVersion,
-  })
-  const written = facts.write(factsDir)
-  const t1 = performance.now()
   const counts = [...facts.rows.entries()]
     .filter(([, rows]) => rows.size > 0)
     .map(([name, rows]) => `${name}=${rows.size}`)
     .join(' ')
   console.log(
-    `[extract] ${written.rows} rows, ${(written.bytes / 1024).toFixed(1)} KiB in ${ms(t1 - t0)}; ${stats.ignoredDeclarations} declaration(s) deliberately not modelled; ${stats.unhandled} unhandled`,
+    `[extract] ${factsWritten.rows} rows, ${(factsWritten.bytes / 1024).toFixed(1)} KiB in ${ms(timings.extractMs)}; ${result.ignoredDeclarations} declaration(s) deliberately not modelled; ${facts.count('unhandled')} unhandled`,
   )
   console.log(`[extract] ${counts}`)
-  for (const row of facts.rows.get('unhandled') ?? [])
-    console.log(`[extract] UNHANDLED ${row}`)
+  for (const { cols } of facts.entries('unhandled'))
+    console.log(`[extract] UNHANDLED ${cols.join('\t')}`)
   if (args.cmd === 'facts') return
 
-  // 3. Soufflé
-  const program = RULE_FILES.map(
-    (f) =>
-      `// ----- ${f} -----\n${readFileSync(join(ROOT, 'rules', f), 'utf8')}`,
-  ).join('\n')
-  const programPath = join(outDir, 'program.dl')
-  writeFileSync(programPath, program)
-  mkdirSync(derivedDir, { recursive: true })
-  const t2 = performance.now()
-  const run = spawnSync(
-    args.souffle,
-    [
-      '--no-preprocessor',
-      `-j${args.jobs}`,
-      '-F',
-      factsDir,
-      '-D',
-      derivedDir,
-      programPath,
-    ],
-    { encoding: 'utf8' },
-  )
-  const t3 = performance.now()
-  if (run.error) {
-    console.error(
-      `[souffle] could not run '${args.souffle}': ${run.error.message} (set --souffle or $SOUFFLE)`,
-    )
-    process.exitCode = 2
-    return
-  }
-  if (run.status !== 0) {
-    console.error(`[souffle] exit ${run.status}\n${run.stdout}\n${run.stderr}`)
-    process.exitCode = 1
-    return
-  }
-  if (run.stderr.trim()) console.log(`[souffle] ${run.stderr.trim()}`)
-  const sizes = readdirSync(derivedDir)
-    .filter((f) => f.endsWith('.csv'))
-    .sort()
-    .map(
-      (f) =>
-        `${f.replace(/\.csv$/, '')}=${readFileSync(join(derivedDir, f), 'utf8').split('\n').filter(Boolean).length}`,
-    )
+  if (result.souffle.stderr) console.log(`[souffle] ${result.souffle.stderr}`)
+  const sizes = [...result.derived.entries()]
+    .map(([name, rows]) => `${name}=${rows.length}`)
     .join(' ')
   console.log(
-    `[souffle] ${ms(t3 - t2)} (interpreter, -j${args.jobs}); ${sizes}`,
+    `[souffle] ${ms(timings.souffleMs)} (interpreter, -j${args.jobs}); ${sizes}`,
   )
-
-  // 4. report
-  const report = renderReport({ unit, factsDir, derivedDir })
-  writeFileSync(join(outDir, 'report.md'), report)
   console.log(`[report] ${join(outDir, 'report.md')}`)
   console.log(
-    `[timing] compile ${ms(compiled.timings.compileMs)} + extract ${ms(t1 - t0)} + souffle ${ms(t3 - t2)} = ${ms(compiled.timings.compileMs + (t1 - t0) + (t3 - t2))} (excluding one-off solc resolution/download)`,
+    `[timing] compile ${ms(timings.compileMs)} + extract ${ms(timings.extractMs)} + souffle ${ms(timings.souffleMs)} = ${ms(timings.compileMs + timings.extractMs + timings.souffleMs)} (excluding one-off solc resolution/download)`,
   )
-  console.log(`\n${report}`)
+  console.log(`\n${result.report}`)
 }
 
 main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : error)
+  if (error instanceof SouffleError) {
+    console.error(`${error.message}\n${error.stdout}\n${error.stderr}`)
+  } else {
+    console.error(error instanceof Error ? error.message : error)
+  }
   process.exitCode = 1
 })
