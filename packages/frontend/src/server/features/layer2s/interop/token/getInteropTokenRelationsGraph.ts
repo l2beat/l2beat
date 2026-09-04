@@ -1,13 +1,12 @@
+import { MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
+import { getLogger } from '~/server/utils/logger'
+import type { InteropProjectResolver } from '../utils/createInteropProjectResolver'
 import {
-  aggregatePairStats,
-  deploymentPairKey,
+  createStatsLookup,
   type InteropTokenStats,
-  NO_STATS,
-  pairSideKey,
-  pickStats,
-} from '../utils/aggregatePairStats'
-import type { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
+} from '../utils/createStatsLookup'
+import { deploymentTransferKey, transferTokenKey } from '../utils/deploymentKey'
 import { toInteropProjectIconListItems } from '../utils/toInteropProjectIconListItem'
 import {
   buildTokenRelationsGraph,
@@ -20,11 +19,15 @@ import {
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import type { InteropTokenRelations } from './getInteropTokenRelations'
 
+const logger = getLogger().for('getInteropTokenRelationsGraph')
+
 export interface InteropTokenRelationsDeployment extends InteropTokenStats {
   chain: { id: string; name: string; iconUrl: string | undefined }
   address: string
   symbol: string
   explorerUrl: string | undefined
+  minters: ProjectIconListItem[]
+  isSupported: boolean
 }
 
 export interface InteropTokenRelationsNode extends InteropTokenStats {
@@ -59,7 +62,7 @@ export function getInteropTokenRelationsGraph(
   deployments: InteropTokenOnchainDeployment[],
   relations: InteropTokenRelations,
   chainInfo: ChainDisplayInfoMap,
-  resolveProjects: ReturnType<typeof createInteropProjectResolver>,
+  resolveProjects: InteropProjectResolver,
 ): InteropTokenRelationsGraph {
   const graph = buildTokenRelationsGraph(deployments, relations.routes)
 
@@ -77,45 +80,54 @@ export function getInteropTokenRelationsGraph(
       ),
     )
 
-  const nodeOf = new Map<string, string>()
-  for (const node of graph.nodes) {
-    for (const member of node.members) {
-      const key = deploymentPairKey(member)
-      if (key) nodeOf.set(key, node.id)
+  const nodeOf = new Map(
+    graph.nodes.flatMap((node) =>
+      node.members.flatMap((member) => {
+        const key = deploymentTransferKey(member)
+        return key ? [[key, node.id] as const] : []
+      }),
+    ),
+  )
+  const nodeStats = createStatsLookup(relations.pairStats, (side) =>
+    nodeOf.get(transferTokenKey(side)),
+  )
+  const deploymentStats = createStatsLookup(
+    relations.pairStats,
+    transferTokenKey,
+  )
+
+  const toDeployment = (
+    deployment: InteropTokenOnchainDeployment,
+  ): InteropTokenRelationsDeployment => {
+    const chain = chainInfo.get(deployment.chain)
+    return {
+      chain: {
+        id: deployment.chain,
+        name: chain?.name ?? deployment.chain,
+        iconUrl: chain?.iconUrl,
+      },
+      address: deployment.address,
+      symbol: deployment.symbol,
+      explorerUrl: getExplorerAddressUrl(chain, deployment.address),
+      minters: resolveMinters(deployment, tokenId, resolveProjects),
+      isSupported: deployment.isSupported,
+      ...deploymentStats(
+        deploymentTransferKey(deployment),
+        deployment.isSupported,
+      ),
     }
   }
-  const nodeStats =
-    relations.pairStats &&
-    aggregatePairStats(relations.pairStats, (side) =>
-      nodeOf.get(pairSideKey(side)),
-    )
-  const deploymentStats =
-    relations.pairStats && aggregatePairStats(relations.pairStats, pairSideKey)
 
   return {
     nodes: graph.nodes.map((node) => ({
       id: node.id,
-      ...(node.members.some((member) => member.isSupported)
-        ? pickStats(nodeStats, node.id)
-        : NO_STATS),
+      ...nodeStats(
+        node.id,
+        node.members.some((member) => member.isSupported),
+      ),
       bridges: resolveBridges(node.sources),
       deployments: node.members
-        .map((deployment) => {
-          const chain = chainInfo.get(deployment.chain)
-          return {
-            chain: {
-              id: deployment.chain,
-              name: chain?.name ?? deployment.chain,
-              iconUrl: chain?.iconUrl,
-            },
-            address: deployment.address,
-            symbol: deployment.symbol,
-            explorerUrl: getExplorerAddressUrl(chain, deployment.address),
-            ...(deployment.isSupported
-              ? pickStats(deploymentStats, deploymentPairKey(deployment))
-              : NO_STATS),
-          }
-        })
+        .map(toDeployment)
         .sort((a, b) => (b.volume ?? -1) - (a.volume ?? -1)),
     })),
     edges: graph.edges.map((edge) => ({
@@ -124,4 +136,45 @@ export function getInteropTokenRelationsGraph(
       bridges: resolveBridges(edge.sources),
     })),
   }
+}
+
+function resolveMinters(
+  deployment: InteropTokenOnchainDeployment,
+  abstractTokenId: string,
+  resolveProjects: InteropProjectResolver,
+): ProjectIconListItem[] {
+  const projects = deployment.mintingPlugins.flatMap(
+    ({ plugin, bridgeType, relatedChain }) => {
+      // A manually added relation names no interop plugin, so it can never
+      // resolve to an interop project. Skipped deliberately — not warned
+      // about — until the public site decides how to present manual bridges.
+      if (plugin === MANUAL_RELATION_PLUGIN) {
+        return []
+      }
+      // Sides are arbitrary — the matcher is symmetric. A relation records
+      // only the minted endpoint's abstract token, hence no dstAbstractTokenId.
+      const matched = resolveProjects({
+        plugin,
+        bridgeType,
+        srcChain: deployment.chain,
+        dstChain: relatedChain,
+        srcAbstractTokenId: abstractTokenId,
+      })
+
+      if (matched.length === 0) {
+        logger.warn('Could not resolve minting plugin to an interop project', {
+          plugin,
+          bridgeType,
+          chain: deployment.chain,
+          relatedChain,
+          address: deployment.address,
+          abstractTokenId,
+        })
+      }
+
+      return matched
+    },
+  )
+
+  return toInteropProjectIconListItems(projects)
 }
