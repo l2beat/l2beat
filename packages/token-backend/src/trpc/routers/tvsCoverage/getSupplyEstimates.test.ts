@@ -74,7 +74,6 @@ describe(getSupplyEstimates.name, () => {
         address: pricedAddress,
         totalSupply: '100',
         estimatedValueUsd: 50,
-        estimatedValueBasis: 'coingeckoCirculatingSupply',
         coingeckoCirculatingSupply: 25,
         coingeckoUpdatedAt: '2026-09-03T07:57:20.000Z',
         vaultAsset: {
@@ -87,7 +86,6 @@ describe(getSupplyEstimates.name, () => {
         address: unpricedAddress,
         totalSupply: '50',
         estimatedValueUsd: undefined,
-        estimatedValueBasis: undefined,
         coingeckoCirculatingSupply: undefined,
         coingeckoUpdatedAt: undefined,
         vaultAsset: undefined,
@@ -137,7 +135,6 @@ describe(getSupplyEstimates.name, () => {
     )
 
     expect(result[0]?.estimatedValueUsd).toEqual(200)
-    expect(result[0]?.estimatedValueBasis).toEqual('totalSupply')
   })
 
   it('does not calculate value from a price marked as unreliable', async () => {
@@ -187,7 +184,6 @@ describe(getSupplyEstimates.name, () => {
         address: tokenAddress,
         totalSupply: '100',
         estimatedValueUsd: undefined,
-        estimatedValueBasis: undefined,
         coingeckoCirculatingSupply: 50,
         coingeckoUpdatedAt: '2026-09-03T07:57:20.000Z',
         vaultAsset: undefined,

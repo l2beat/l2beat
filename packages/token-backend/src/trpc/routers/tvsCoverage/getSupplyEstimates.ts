@@ -21,7 +21,6 @@ export interface SupplyEstimateRequest {
 export interface SupplyEstimate extends SupplyEstimateRequest {
   totalSupply?: string
   estimatedValueUsd?: number
-  estimatedValueBasis?: 'totalSupply' | 'coingeckoCirculatingSupply'
   coingeckoCirculatingSupply?: number
   coingeckoUpdatedAt?: string
   vaultAsset?: VaultAsset
@@ -168,12 +167,6 @@ export async function getSupplyEstimates(
       ...request,
       totalSupply,
       estimatedValueUsd,
-      estimatedValueBasis:
-        estimatedValueUsd === undefined
-          ? undefined
-          : useCirculatingSupply
-            ? 'coingeckoCirculatingSupply'
-            : 'totalSupply',
       coingeckoCirculatingSupply,
       coingeckoUpdatedAt: coinMarket?.last_updated ?? undefined,
       vaultAsset: vaultAssets[index],

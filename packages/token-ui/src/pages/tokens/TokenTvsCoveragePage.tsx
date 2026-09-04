@@ -616,23 +616,12 @@ export function TokenTvsCoveragePage() {
                             )}
                           </div>
                         </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          <div className="flex flex-col items-end gap-1">
-                            <span className="font-medium">
-                              {supply?.estimatedValueUsd === undefined
-                                ? isLoadingSupplies
-                                  ? '…'
-                                  : '—'
-                                : formatCurrency(
-                                    supply.estimatedValueUsd,
-                                    'usd',
-                                  )}
-                            </span>
-                            <EstimatedValueBasisBadge
-                              estimate={supply}
-                              symbol={symbol}
-                            />
-                          </div>
+                        <TableCell className="text-right font-medium tabular-nums">
+                          {supply?.estimatedValueUsd === undefined
+                            ? isLoadingSupplies
+                              ? '…'
+                              : '—'
+                            : formatCurrency(supply.estimatedValueUsd, 'usd')}
                         </TableCell>
                         <TableCell className="text-right tabular-nums">
                           <div className="font-medium">
@@ -949,48 +938,6 @@ function CoinGeckoCirculatingSupplyBadge({
             Updated {formatCoinGeckoTimestamp(estimate.coingeckoUpdatedAt)}
           </div>
         )}
-      </TooltipContent>
-    </Tooltip>
-  )
-}
-
-function EstimatedValueBasisBadge({
-  estimate,
-  symbol,
-}: {
-  estimate: SupplyEstimate | undefined
-  symbol: string
-}) {
-  if (
-    estimate?.estimatedValueBasis !== 'coingeckoCirculatingSupply' ||
-    estimate.coingeckoCirculatingSupply === undefined
-  ) {
-    return null
-  }
-
-  const circulatingLabel = formatTokenSupply(
-    String(estimate.coingeckoCirculatingSupply),
-  )
-
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <span
-          className="inline-flex"
-          tabIndex={0}
-          aria-label={`Estimated value uses CoinGecko global circulating supply of ${circulatingLabel} ${symbol}`}
-        >
-          <Badge
-            variant="outline"
-            className="h-5 border-amber-300 bg-amber-50 px-1.5 font-normal text-[10px] text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200"
-          >
-            CG circ.
-          </Badge>
-        </span>
-      </TooltipTrigger>
-      <TooltipContent className="max-w-64 text-left text-xs">
-        Using CoinGecko global circulating supply ({circulatingLabel} {symbol})
-        because it is lower than local totalSupply().
       </TooltipContent>
     </Tooltip>
   )
