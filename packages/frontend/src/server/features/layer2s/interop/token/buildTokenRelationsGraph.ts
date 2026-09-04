@@ -76,14 +76,14 @@ export function buildTokenRelationsGraph<T extends Endpoint>(
       endpointKey(route, route.lockedToken === 'A' ? 'B' : 'A'),
     ) as string
     if (from === to) continue
-    const edge = edges.get(`${from}->${to}`) ?? { from, to, sources: [] }
+    const edge = edges.get(edgeId(from, to)) ?? { from, to, sources: [] }
     addSource(edge.sources, route)
-    edges.set(`${from}->${to}`, edge)
+    edges.set(edgeId(from, to), edge)
   }
   for (const edge of [...edges.values()]) {
-    if (edges.has(`${edge.to}->${edge.from}`)) {
-      edges.delete(`${edge.from}->${edge.to}`)
-      edges.delete(`${edge.to}->${edge.from}`)
+    if (edges.has(edgeId(edge.to, edge.from))) {
+      edges.delete(edgeId(edge.from, edge.to))
+      edges.delete(edgeId(edge.to, edge.from))
     }
   }
 
@@ -100,6 +100,10 @@ export function buildTokenRelationsGraph<T extends Endpoint>(
       (a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to),
     ),
   }
+}
+
+function edgeId(from: string, to: string): string {
+  return `${from}->${to}`
 }
 
 function endpointKey(route: TokenRelationRoute, slot: 'A' | 'B'): string {

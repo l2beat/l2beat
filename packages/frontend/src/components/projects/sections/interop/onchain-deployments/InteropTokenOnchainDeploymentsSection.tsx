@@ -15,32 +15,31 @@ import {
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type {
-  InteropTokenRelationsDeployment,
-  InteropTokenRelationsGraph,
-} from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { ProjectSection } from '../../ProjectSection'
 import type { ProjectSectionProps } from '../../types'
 import {
   type DeploymentRow,
   interopTokenOnchainDeploymentsColumns,
 } from './columns'
+import { hasTokenRelations } from './relations-graph/graphSelectors'
 import { TokenRelationsGraphView } from './relations-graph/TokenRelationsGraphView'
 
 const DEPLOYMENTS_PER_PAGE = 8
 
 export interface InteropTokenOnchainDeploymentsSectionProps
   extends ProjectSectionProps {
-  deployments: InteropTokenRelationsDeployment[]
-  /** Absent when no relation between the deployments has been observed. */
-  relationsGraph?: InteropTokenRelationsGraph
+  graph: InteropTokenRelationsGraph
 }
 
 export function InteropTokenOnchainDeploymentsSection({
-  deployments,
-  relationsGraph,
+  graph,
   ...sectionProps
 }: InteropTokenOnchainDeploymentsSectionProps) {
+  const deployments = useMemo(
+    () => graph.nodes.flatMap((node) => node.deployments),
+    [graph],
+  )
   const table = useTable<DeploymentRow>({
     data: deployments,
     columns: interopTokenOnchainDeploymentsColumns,
@@ -70,9 +69,9 @@ export function InteropTokenOnchainDeploymentsSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      {relationsGraph && (
+      {hasTokenRelations(graph) && (
         <>
-          <TokenRelationsGraphView graph={relationsGraph} />
+          <TokenRelationsGraphView graph={graph} />
           <HorizontalSeparator className="my-4" />
         </>
       )}

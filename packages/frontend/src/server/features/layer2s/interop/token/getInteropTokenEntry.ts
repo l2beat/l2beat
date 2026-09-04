@@ -1,14 +1,6 @@
-import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
-import { getChainDisplayInfo } from './getChainDisplayInfo'
-import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
-import type { InteropTokenRelations } from './getInteropTokenRelations'
-import {
-  getInteropTokenRelationsGraph,
-  hasTokenRelations,
-} from './getInteropTokenRelationsGraph'
+import type { InteropTokenRelationsGraph } from './getInteropTokenRelationsGraph'
 
 export interface InteropTokenEntry {
   sections: ProjectDetailsSection[]
@@ -18,10 +10,8 @@ export interface InteropTokenEntry {
 export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
-  projectsWithChains: Project<'chainConfig'>[],
-  interopProjects: Project<'interopConfig'>[],
-  deployments: InteropTokenOnchainDeployment[],
-  relations: InteropTokenRelations,
+  /** Undefined when the token has no deployments. */
+  relationsGraph: InteropTokenRelationsGraph | undefined,
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
     {
@@ -42,27 +32,13 @@ export function getInteropTokenEntry(
     },
   ]
 
-  if (deployments.length > 0) {
-    const relationsGraph = getInteropTokenRelationsGraph(
-      tokenId,
-      deployments,
-      relations,
-      getChainDisplayInfo(
-        deployments.map((deployment) => deployment.chain),
-        interopChains,
-        projectsWithChains,
-      ),
-      createInteropProjectResolver(interopProjects),
-    )
+  if (relationsGraph) {
     sections.push({
       type: 'InteropTokenOnchainDeploymentsSection',
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
-        deployments: relationsGraph.nodes.flatMap((node) => node.deployments),
-        relationsGraph: hasTokenRelations(relationsGraph)
-          ? relationsGraph
-          : undefined,
+        graph: relationsGraph,
       },
     })
   }
@@ -77,5 +53,12 @@ export function getInteropTokenEntry(
     },
   })
 
-  return { sections, deploymentsCount: deployments.length }
+  return {
+    sections,
+    deploymentsCount:
+      relationsGraph?.nodes.reduce(
+        (sum, node) => sum + node.deployments.length,
+        0,
+      ) ?? 0,
+  }
 }

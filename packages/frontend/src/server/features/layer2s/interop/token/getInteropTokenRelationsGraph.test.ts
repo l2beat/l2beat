@@ -74,6 +74,31 @@ describe(getInteropTokenRelationsGraph.name, () => {
     expect(baseNode).toHaveSubset({ volume: 20, transferCount: 1 })
   })
 
+  it('reports null stats off supported chains and zero for supported ones the snapshot lacks', () => {
+    const solana = deployment(
+      'solana',
+      'So11111111111111111111111111111111111111112',
+    )
+    solana.isSupported = false
+    const graph = getInteropTokenRelationsGraph(
+      usdc,
+      [ethereum, solana],
+      {
+        routes: [],
+        pairStats: [pair(ethereum, arbitrum, { volume: 100, duration: 10 })],
+      },
+      new Map(),
+      resolveProjects,
+    )
+
+    expect(
+      graph.nodes.map((node) => [node.id, node.volume, node.transferCount]),
+    ).toEqual([
+      ['ethereum|0xe1', 100, 1],
+      ['solana|so11111111111111111111111111111111111111112', null, null],
+    ])
+  })
+
   it('resolves bridges per node and edge, honouring chain qualifiers', () => {
     const graph = getInteropTokenRelationsGraph(
       usdc,

@@ -2,7 +2,7 @@ import { type ReactNode, useMemo, useRef, useState } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
-import { edgeKey, getActiveBacking, getUnconnectedIds } from './graphSelectors'
+import { edgeKey, getActiveBacking } from './graphSelectors'
 import { layoutRelationsGraph } from './layoutRelationsGraph'
 import {
   RelationsEdgeBadge,
@@ -19,6 +19,7 @@ const DOT_GRID_STEP = 24
 
 interface Props {
   graph: InteropTokenRelationsGraph
+  unconnectedIds: ReadonlySet<string>
   selectedNodeId: string | undefined
   onSelectNode: (id: string | undefined) => void
   onExpand?: () => void
@@ -27,6 +28,7 @@ interface Props {
 
 export function RelationsDiagram({
   graph,
+  unconnectedIds,
   selectedNodeId,
   onSelectNode,
   onExpand,
@@ -36,7 +38,6 @@ export function RelationsDiagram({
   const size = useResizeObserver({ ref: containerRef })
   const viewport = { width: size.width ?? 960, height: size.height ?? 520 }
 
-  const unconnectedIds = useMemo(() => getUnconnectedIds(graph), [graph])
   const layout = useMemo(() => {
     const items = graph.nodes.map((node) => ({
       id: node.id,
