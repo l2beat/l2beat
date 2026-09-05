@@ -5,10 +5,11 @@
  *
  * The only accepted input is the sibling checkout
  * ../ossification-dataset/dist/latest (incidents.json plus manifest.json),
- * shaped by its schema/release-incidents.schema.json. There is intentionally
+ * release format version 2. There is intentionally
  * no fallback for older release formats.
  */
 import { getDiscoveryPaths } from '@l2beat/discovery'
+import { v } from '@l2beat/validate'
 import { execFileSync } from 'child_process'
 import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
@@ -22,7 +23,17 @@ export function runCurve(check: boolean) {
     'packages/shared/src/ossification/ossificationCurve.ts',
   )
 
-  const ageKnots = readCanonicalAgeKnots(datasetRoot)
+  const ageKnots = getCanonicalAgeKnots(
+    JSON.parse(
+      readFileSync(
+        path.join(datasetRoot, 'dist/latest/incidents.json'),
+        'utf8',
+      ),
+    ),
+    JSON.parse(
+      readFileSync(path.join(datasetRoot, 'dist/latest/manifest.json'), 'utf8'),
+    ),
+  )
   const head = execFileSync('git', ['-C', datasetRoot, 'rev-parse', 'HEAD'], {
     encoding: 'utf8',
   }).trim()
@@ -55,84 +66,39 @@ export function runCurve(check: boolean) {
   )
 }
 
-/** The release's curve rows, checked against the release schema's shape
- *  (constants and required keys) and the manifest's counts, so a changed
- *  format fails here instead of silently producing a different curve. */
-function readCanonicalAgeKnots(datasetRoot: string): number[] {
-  const release = readObject(
-    path.join(datasetRoot, 'dist/latest/incidents.json'),
-  )
-  const schema = readObject(
-    path.join(datasetRoot, 'schema/release-incidents.schema.json'),
-  )
-  const manifest = readObject(
-    path.join(datasetRoot, 'dist/latest/manifest.json'),
-  )
+// The dataset owns cohort admission and full evidence validation. Pin the
+// format we consume and validate only the runtime inputs here; reading the
+// producer's current schema would also silently accept its future versions.
+const NonNegativeInteger = v
+  .number()
+  .check(Number.isSafeInteger)
+  .check((x) => x >= 0)
+const Release = v.object({
+  formatVersion: v.literal(2),
+  incidents: v.array(v.object({ codeAgeSeconds: NonNegativeInteger })),
+})
+const Manifest = v.object({
+  formatVersion: v.literal(2),
+  counts: v.object({ curveIncidents: NonNegativeInteger }),
+})
 
-  if (schema.additionalProperties !== false) {
-    throw new Error(
-      'Release schema must reject additional top-level properties',
-    )
+export function getCanonicalAgeKnots(
+  releaseInput: unknown,
+  manifestInput: unknown,
+): number[] {
+  const release = Release.parse(releaseInput)
+  const manifest = Manifest.parse(manifestInput)
+  const ageKnots = release.incidents.map((incident) => incident.codeAgeSeconds)
+  if (ageKnots.length === 0) {
+    throw new Error('Release must contain at least one curve incident')
   }
-  const properties = asObject(schema.properties, 'schema.properties')
-  for (const property of asStringArray(schema.required, 'schema.required')) {
-    if (!(property in release)) {
-      throw new Error(`Release is missing required property ${property}`)
-    }
+  if (ageKnots.some((age, i) => age < (ageKnots[i - 1] ?? 0))) {
+    throw new Error('release.incidents must be sorted by codeAgeSeconds')
   }
-  for (const property of Object.keys(release)) {
-    if (!(property in properties)) {
-      throw new Error(`Release has unknown property ${property}`)
-    }
-  }
-  assertSchemaConstant(release, properties, '$schema')
-  assertSchemaConstant(release, properties, 'formatVersion')
-
-  const incidents = asArray(release.incidents, 'release.incidents')
-  const ageKnots = incidents.map((incident, i) => {
-    const row = asObject(incident, `release.incidents[${i}]`)
-    const loss = asObject(row.loss, `release.incidents[${i}].loss`)
-    const usd = asObject(loss.usd, `release.incidents[${i}].loss.usd`)
-    if (!(typeof usd.amount === 'number' && usd.amount >= 1000)) {
-      throw new Error(`release.incidents[${i}] lacks a concrete USD loss`)
-    }
-    const age = asInteger(
-      row.codeAgeSeconds,
-      `release.incidents[${i}].codeAgeSeconds`,
-    )
-    if (age < 0) {
-      throw new Error(`release.incidents[${i}].codeAgeSeconds is negative`)
-    }
-    return age
-  })
-  for (let i = 1; i < ageKnots.length; i++) {
-    if ((ageKnots[i] ?? 0) < (ageKnots[i - 1] ?? 0)) {
-      throw new Error('release.incidents must be sorted by codeAgeSeconds')
-    }
-  }
-
-  const counts = asObject(manifest.counts, 'manifest.counts')
-  if (
-    asInteger(counts.curveIncidents, 'manifest.counts.curveIncidents') !==
-    ageKnots.length
-  ) {
+  if (manifest.counts.curveIncidents !== ageKnots.length) {
     throw new Error('manifest.counts.curveIncidents does not match the release')
   }
   return ageKnots
-}
-
-function assertSchemaConstant(
-  release: Record<string, unknown>,
-  properties: Record<string, unknown>,
-  property: '$schema' | 'formatVersion',
-) {
-  const propertySchema = asObject(
-    properties[property],
-    `schema.properties.${property}`,
-  )
-  if (release[property] !== propertySchema.const) {
-    throw new Error(`Release has unsupported ${property}`)
-  }
 }
 
 function renderOutput(ageKnots: number[], revision: string): string {
@@ -148,37 +114,4 @@ function renderOutput(ageKnots: number[], revision: string): string {
 // biome-ignore format: preserve the canonical ageKnots serialization
 export const OSSIFICATION_CURVE_AGE_KNOTS = ${JSON.stringify(ageKnots)} as const
 `
-}
-
-function readObject(file: string): Record<string, unknown> {
-  return asObject(JSON.parse(readFileSync(file, 'utf8')), file)
-}
-
-function asObject(value: unknown, label: string): Record<string, unknown> {
-  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
-    throw new Error(`${label} must be an object`)
-  }
-  return value as Record<string, unknown>
-}
-
-function asArray(value: unknown, label: string): unknown[] {
-  if (!Array.isArray(value)) {
-    throw new Error(`${label} must be an array`)
-  }
-  return value
-}
-
-function asStringArray(value: unknown, label: string): string[] {
-  const array = asArray(value, label)
-  if (!array.every((item) => typeof item === 'string')) {
-    throw new Error(`${label} must contain only strings`)
-  }
-  return array as string[]
-}
-
-function asInteger(value: unknown, label: string): number {
-  if (!Number.isSafeInteger(value)) {
-    throw new Error(`${label} must be a safe integer`)
-  }
-  return value as number
 }

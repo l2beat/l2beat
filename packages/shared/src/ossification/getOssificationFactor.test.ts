@@ -562,7 +562,7 @@ describe(getOssificationFactor.name, () => {
     expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
   })
 
-  it('dates state diffs at the onchain upgrade bundled in the same update', () => {
+  it('does not backdate a state diff to another contract’s upgrade in the same scan', () => {
     const onchainTimestamp = NOW - 32 * DAY
     const iso = new Date(onchainTimestamp * 1000).toISOString()
     const bundledUpgrade: DiscoveryChangelogContract = {
@@ -587,10 +587,9 @@ describe(getOssificationFactor.name, () => {
       [update(NOW - 30 * DAY, [bundledUpgrade, highSeverityChange(ADDRESS_A)])],
       NOW,
     )
-    // the state change and the upgrade form one 24h cluster at onchain time
-    expect(result?.lastCriticalChange).toEqual(onchainTimestamp)
-    expect(result?.projectClockStart).toEqual(onchainTimestamp)
-    expect(result?.clusteredEventCount).toEqual(1)
+    expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+    expect(result?.projectClockStart).toEqual(NOW - 30 * DAY)
+    expect(result?.clusteredEventCount).toEqual(2)
   })
 
   it('keeps the review timestamp when an appended upgrade is a stale backfill', () => {

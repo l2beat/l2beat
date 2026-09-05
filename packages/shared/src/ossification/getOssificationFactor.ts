@@ -4,28 +4,18 @@ import type {
   DiscoveryChangelogField,
 } from '../tools/DiscoveryChangelog'
 import {
-  appendedUpgradeTimestamp,
   canonicalDiffField,
   isImplementationChangeField,
   isRepresentationOnly,
 } from './changelogFields'
 import { OSSIFICATION_CURVE_AGE_KNOTS } from './ossificationCurve'
 
-/** Critical changes within this window count as a single event, so the
- *  rate measures project decisions (one fork, one governance execution),
- *  not how many fields we annotated. */
+/** Group bursts of critical changes across contracts for the change rate.
+ *  A time cluster does not establish that they came from one transaction. */
 export const EVENT_CLUSTER_WINDOW_SECONDS = 24 * 60 * 60
 const RATE_WINDOW_SECONDS = 3 * 365 * 24 * 60 * 60
 const MIN_RATE_WINDOW_SECONDS = 30 * 24 * 60 * 60
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
-/** A diff update carrying an appended $pastUpgrades entry is dated at that
- *  onchain transaction instead of the discovery-run timestamp, as long as the
- *  transaction falls inside this window before the run. Governance actions
- *  routinely bundle an upgrade with state changes on sibling contracts; the
- *  review can lag the transaction by more than the cluster window, which
- *  would otherwise split one decision into two events. Older appends are
- *  handler backfills, not fresh observations, and keep the run timestamp. */
-const UPGRADE_SNAP_WINDOW_SECONDS = 14 * 24 * 60 * 60
 /** Fields carrying the code channel: their diffs are covered by
  *  $pastUpgrades / implementation detection and never count as state. */
 const CODE_CHANNEL_FIELDS = new Set([
@@ -138,10 +128,9 @@ export interface ProjectOssificationInfo {
 }
 
 export interface OssificationFactor {
-  /** 0-100: the share of recorded code-bug exploits (published, versioned
-   *  incident dataset — see ossificationCurve.ts) whose exploited code was
-   *  younger than this perimeter's age. 0 while any critical contract is
-   *  unverified. */
+  /** 0-100: interpolated percentile of the perimeter's age in the published
+   *  exploit-age dataset (see ossificationCurve.ts, including causal
+   *  configuration resets). 0 while any critical contract is unverified. */
   score: number
   /** score as a 0..1 fraction; 0 gates exposure when unverified */
   maturity: number
@@ -495,16 +484,9 @@ function collectDiffEvents(
       ContractRecord,
       { hasCodeChange: boolean; hasStateChange: boolean }
     >()
-    const appendedUpgradeTimestamps: number[] = []
     const superseded = supersededUpdates.get(update.id)
 
     for (const change of update.changes) {
-      for (const field of change.fields ?? []) {
-        const appended = appendedUpgradeTimestamp(field)
-        if (appended !== undefined) {
-          appendedUpgradeTimestamps.push(appended)
-        }
-      }
       const address = change.address.toLowerCase()
       const record = byAddress.get(address)
       if (!record) continue
@@ -531,10 +513,9 @@ function collectDiffEvents(
       evidenceByRecord.set(record, evidence)
     }
 
-    const timestamp = getUpdateEventTimestamp(
-      update.timestamp,
-      appendedUpgradeTimestamps,
-    )
+    // A scan can contain unrelated transactions. Use the observation time
+    // unless a reviewed criticalEvent supplies this contract's onchain date.
+    const timestamp = update.timestamp
 
     let updateType: OssificationChangeType | undefined
     for (const [record, evidence] of evidenceByRecord) {
@@ -580,25 +561,6 @@ function isCriticalStateField(
     !CODE_CHANNEL_FIELDS.has(name) &&
     !isRepresentationOnly(field)
   )
-}
-
-/** Events in an update carrying a fresh onchain $pastUpgrades append are
- *  dated at that transaction (the newest one, staying conservative) instead
- *  of the later discovery-run timestamp. */
-function getUpdateEventTimestamp(
-  updateTimestamp: number | null,
-  appendedUpgradeTimestamps: number[],
-): number | null {
-  if (updateTimestamp === null) return null
-  const onchain = appendedUpgradeTimestamps
-    .filter(
-      (timestamp) =>
-        timestamp <= updateTimestamp &&
-        updateTimestamp - timestamp <= UPGRADE_SNAP_WINDOW_SECONDS,
-    )
-    .sort((a, b) => a - b)
-    .at(-1)
-  return onchain ?? updateTimestamp
 }
 
 function getContractHistory(
@@ -675,8 +637,7 @@ function getObservationStart(
 }
 
 /** Interpolated percentile of `ageSeconds` within the published exploit-age
- *  curve: the share of recorded code-bug exploits whose exploited code was
- *  younger. Uses Weibull plotting positions p_i = (i+1)/(n+1), linear between
+ *  curve. Uses Weibull plotting positions p_i = (i+1)/(n+1), linear between
  *  knots, so the score approaches (not fakes) 0 and 100 at the extremes. */
 export function exploitAgePercentile(ageSeconds: number): number {
   const knots: readonly number[] = OSSIFICATION_CURVE_AGE_KNOTS
