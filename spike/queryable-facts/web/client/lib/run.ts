@@ -1,13 +1,13 @@
-// Everything the client needs to cross-reference one run: AST nodes by id/src, source ranges
-// of ids, which fact rows came from which line or node, id kinds and short labels.
+// Everything the client needs to cross-reference one run: AST nodes by id/src, which rows talk
+// about which node, source ranges of ids, id kinds and short labels.
+//
+// Three layers of rows live here:
+//   base     rules/schema.dl   the AST as facts (node, loc, child, attr, ...); a row's node is its Id column
+//   concept  rules/concepts.dl function, stmt, callSite, writeSite, ...; a row's node comes from `located`
+//   derived  lib.dl/report.dl  the analysis proper
 
 import { type AstNode, childNodes, isNode, parseSrc } from '../../../src/ast'
-import type {
-  FactRow,
-  Origin,
-  RelationInfo,
-  RunResult,
-} from '../../shared/types'
+import type { RelationInfo, RunResult } from '../../shared/types'
 
 /** Half-open range of UTF-16 code units into the source string. */
 export interface Range {
@@ -19,6 +19,8 @@ export interface RowRef {
   relation: string
   index: number
 }
+
+export type Layer = 'base' | 'concept' | 'derived'
 
 export type IdKind =
   | 'contract'
@@ -45,21 +47,44 @@ export interface Loc {
   length: number
 }
 
+/** Base relations whose Id-like columns name AST nodes (column name → it is a node id). */
+const NODE_COLUMNS = new Set(['Id', 'Parent', 'Child', 'AstId'])
+
+/** For concept relations whose first id column is not the most specific thing to point at. */
+const ANCHOR_COLUMN: Record<string, number> = {
+  param: 2,
+  storageSlot: 1,
+  functionBody: 1,
+  callResult: 1,
+}
+
 export class RunIndex {
   readonly source: string
   readonly nodesById = new Map<number, AstNode>()
   readonly nodesBySrc = new Map<string, AstNode>()
   readonly parentOf = new Map<AstNode, AstNode>()
+  /** solc's `loc` rows: every node id (synthetic Yul ids included) → where it sits. */
+  readonly locOfNode = new Map<number, Loc & { src: string }>()
+  /** Symbolic ids (from `sourceLoc`) → where they sit. */
   readonly locs = new Map<string, Loc>()
+  /** Symbolic ids → the node they were minted from (from `located`). */
+  readonly nodeIdOf = new Map<string, number>()
   readonly idKinds = new Map<string, IdKind>()
-  readonly facts = new Map<string, FactRow[]>()
+  readonly base = new Map<string, string[][]>()
+  readonly concepts = new Map<string, string[][]>()
   readonly derived = new Map<string, string[][]>()
   readonly relations = new Map<string, RelationInfo>()
-  readonly rowsByLine = new Map<number, RowRef[]>()
-  readonly rowsByNodeId = new Map<number, RowRef[]>()
-  readonly rowsBySrc = new Map<string, RowRef[]>()
-  readonly factCount: number
+  /** Base rows about a node (its Id column, or the Child column of `child`). */
+  readonly baseRowsByNode = new Map<number, RowRef[]>()
+  readonly baseRowsByLine = new Map<number, RowRef[]>()
+  /** Concept rows anchored at a node / starting on a line. */
+  readonly conceptRowsByNode = new Map<number, RowRef[]>()
+  readonly conceptRowsByLine = new Map<number, RowRef[]>()
+  readonly baseCount: number
+  readonly conceptCount: number
   readonly derivedCount: number
+  /** Helper relations of concepts.dl (tree reading, types, names, code): plumbing, not concepts. */
+  readonly plumbing = new Set<string>()
   private readonly byteToChar: Uint32Array | undefined
   private readonly lineStarts: number[] = [0]
   private readonly atomCache = new Map<string, Map<string, string[]>>()
@@ -103,15 +128,41 @@ export class RunIndex {
     }
     visit(run.ast)
 
-    for (const { relation, rows } of run.facts) this.facts.set(relation, rows)
-    for (const { relation, rows } of run.derived)
-      this.derived.set(relation, rows)
-    for (const info of run.program.relations)
+    for (const info of run.program.relations) {
       this.relations.set(info.name, info)
-    this.factCount = run.facts.reduce((n, f) => n + f.rows.length, 0)
-    this.derivedCount = run.derived.reduce((n, d) => n + d.rows.length, 0)
+      if (info.file === 'concepts.dl' && /^1[abcd]\./.test(info.section))
+        this.plumbing.add(info.name)
+    }
+    for (const { relation, rows } of run.facts) this.base.set(relation, rows)
+    for (const { relation, rows } of run.derived) {
+      if (this.relations.get(relation)?.file === 'concepts.dl')
+        this.concepts.set(relation, rows)
+      else this.derived.set(relation, rows)
+    }
+    this.baseCount = sum(this.base)
+    this.conceptCount = sum(this.concepts)
+    this.derivedCount = sum(this.derived)
 
-    for (const row of this.facts.get('sourceLoc') ?? []) {
+    // loc(Id, Src, Start, Len, StartLine, EndLine)
+    for (const row of this.base.get('loc') ?? []) {
+      const [
+        id = '',
+        src = '',
+        start = '0',
+        length = '0',
+        startLine = '0',
+        endLine = '0',
+      ] = row
+      this.locOfNode.set(Number(id), {
+        src,
+        start: Number(start),
+        length: Number(length),
+        startLine: Number(startLine),
+        endLine: Number(endLine),
+      })
+    }
+    // sourceLoc(Id, File, StartLine, EndLine, Start, Length)
+    for (const row of this.concepts.get('sourceLoc') ?? []) {
       const [
         id = '',
         ,
@@ -119,7 +170,7 @@ export class RunIndex {
         endLine = '0',
         start = '0',
         length = '0',
-      ] = row.cols
+      ] = row
       this.locs.set(id, {
         startLine: Number(startLine),
         endLine: Number(endLine),
@@ -127,14 +178,18 @@ export class RunIndex {
         length: Number(length),
       })
     }
+    // located(Id, N)
+    for (const [id = '', n = ''] of this.concepts.get('located') ?? [])
+      if (!this.nodeIdOf.has(id)) this.nodeIdOf.set(id, Number(n))
+
     const kind = (
       relation: string,
       col: number,
       k: IdKind | ((cols: string[]) => IdKind),
     ) => {
-      for (const row of this.facts.get(relation) ?? []) {
-        const id = row.cols[col]
-        if (id) this.idKinds.set(id, typeof k === 'function' ? k(row.cols) : k)
+      for (const row of this.concepts.get(relation) ?? []) {
+        const id = row[col]
+        if (id) this.idKinds.set(id, typeof k === 'function' ? k(row) : k)
       }
     }
     kind('contract', 0, 'contract')
@@ -153,17 +208,107 @@ export class RunIndex {
     kind('asmCall', 0, 'asm')
     kind('callResult', 0, 'result')
 
-    for (const { relation, rows } of run.facts) {
+    for (const [relation, rows] of this.base) {
+      const info = this.relations.get(relation)
+      const nodeCols = (info?.columns ?? [])
+        .map((c, i) => (NODE_COLUMNS.has(c.name) ? i : -1))
+        .filter((i) => i >= 0)
+      if (nodeCols.length === 0) continue
       rows.forEach((row, index) => {
         const ref = { relation, index }
-        const origin = row.origin
-        if (!origin) return
-        if (origin.id !== undefined) push(this.rowsByNodeId, origin.id, ref)
-        push(this.rowsBySrc, origin.src, ref)
-        const range = this.rangeOfSrc(origin.src)
-        push(this.rowsByLine, this.lineOf(range.start), ref)
+        for (const col of nodeCols) {
+          const id = Number(row[col])
+          if (Number.isNaN(id)) continue
+          push(this.baseRowsByNode, id, ref)
+        }
+        const first = Number(row[nodeCols[0] ?? 0])
+        const loc = this.locOfNode.get(first)
+        if (loc) push(this.baseRowsByLine, loc.startLine, ref)
       })
     }
+    for (const [relation, rows] of this.concepts) {
+      rows.forEach((_row, index) => {
+        const ref = { relation, index }
+        const n = this.anchorNodeId(ref)
+        if (n === undefined) return
+        push(this.conceptRowsByNode, n, ref)
+        const loc = this.locOfNode.get(n)
+        if (loc) push(this.conceptRowsByLine, loc.startLine, ref)
+      })
+    }
+  }
+
+  layerOf(relation: string): Layer {
+    if (this.base.has(relation)) return 'base'
+    if (this.concepts.has(relation)) return 'concept'
+    return 'derived'
+  }
+
+  rows(relation: string): string[][] {
+    return (
+      this.base.get(relation) ??
+      this.concepts.get(relation) ??
+      this.derived.get(relation) ??
+      []
+    )
+  }
+
+  row(ref: RowRef): string[] | undefined {
+    return this.rows(ref.relation)[ref.index]
+  }
+
+  /** The AST node a row is about: base rows name it directly, concept rows through their ids. */
+  anchorNodeId(ref: RowRef): number | undefined {
+    const row = this.row(ref)
+    if (!row) return undefined
+    if (this.base.has(ref.relation)) {
+      const info = this.relations.get(ref.relation)
+      const col = (info?.columns ?? []).findIndex((c) => NODE_COLUMNS.has(c.name))
+      if (col < 0) return undefined
+      const id = Number(row[col])
+      return Number.isNaN(id) ? undefined : id
+    }
+    const preferred = ANCHOR_COLUMN[ref.relation]
+    if (preferred !== undefined) {
+      const n = this.nodeIdOf.get(row[preferred] ?? '')
+      if (n !== undefined) return n
+    }
+    for (const c of row) {
+      const n = this.nodeIdOf.get(c)
+      if (n !== undefined) return n
+    }
+    return undefined
+  }
+
+  anchorNode(ref: RowRef): AstNode | undefined {
+    const id = this.anchorNodeId(ref)
+    return id === undefined ? undefined : this.nodeOfNumId(id)
+  }
+
+  rangeOfRow(ref: RowRef): Range | undefined {
+    const id = this.anchorNodeId(ref)
+    return id === undefined ? undefined : this.rangeOfNodeId(id)
+  }
+
+  /** A node by solc id, or by synthetic id (Yul) through its `loc` row. */
+  nodeOfNumId(id: number): AstNode | undefined {
+    const direct = this.nodesById.get(id)
+    if (direct) return direct
+    const loc = this.locOfNode.get(id)
+    return loc ? this.nodesBySrc.get(loc.src) : undefined
+  }
+
+  nodeOfSym(id: string): AstNode | undefined {
+    const n = this.nodeIdOf.get(id)
+    return n === undefined ? undefined : this.nodeOfNumId(n)
+  }
+
+  /** The number solc (or the emitter) gave a node; Yul nodes have none in the JSON. */
+  numIdOf(node: AstNode): number | undefined {
+    if (typeof node.id === 'number') return node.id
+    for (const [id, loc] of this.locOfNode)
+      if (loc.src === node.src && !this.nodesById.has(id)) return id
+    return undefined
   }
 
   toChar(byte: number): number {
@@ -206,8 +351,8 @@ export class RunIndex {
     return this.rangeOfSrc(node.src)
   }
 
-  rangeOfId(id: string): Range | undefined {
-    const loc = this.locs.get(id)
+  rangeOfNodeId(id: number): Range | undefined {
+    const loc = this.locOfNode.get(id)
     if (!loc) return undefined
     return {
       start: this.toChar(loc.start),
@@ -215,14 +360,13 @@ export class RunIndex {
     }
   }
 
-  rangeOfOrigin(origin: Origin | undefined): Range | undefined {
-    return origin ? this.rangeOfSrc(origin.src) : undefined
-  }
-
-  nodeOfOrigin(origin: Origin | undefined): AstNode | undefined {
-    if (!origin) return undefined
-    if (origin.id !== undefined) return this.nodesById.get(origin.id)
-    return this.nodesBySrc.get(origin.src)
+  rangeOfId(id: string): Range | undefined {
+    const loc = this.locs.get(id)
+    if (!loc) return undefined
+    return {
+      start: this.toChar(loc.start),
+      end: this.toChar(loc.start + loc.length),
+    }
   }
 
   /** The innermost AST node whose range contains the char offset. */
@@ -252,16 +396,12 @@ export class RunIndex {
     return out
   }
 
-  row(ref: RowRef): FactRow | undefined {
-    return this.facts.get(ref.relation)?.[ref.index]
-  }
-
   isId(value: string): boolean {
     return this.idKinds.has(value) || this.locs.has(value)
   }
 
   kindOf(id: string): IdKind {
-    return this.idKinds.get(id) ?? (this.locs.has(id) ? 'other' : 'other')
+    return this.idKinds.get(id) ?? 'other'
   }
 
   /** Strips the `<unit>:` prefix and shortens site ids to `L<line> <text>`. */
@@ -298,33 +438,37 @@ export class RunIndex {
     return `${relation}(${args.join(', ')})`
   }
 
-  /** Recovers the columns of an atom printed by Soufflé (base fact or derived tuple). */
+  /** Recovers the columns of an atom printed by Soufflé (base fact, concept or derived tuple). */
   matchAtom(
     text: string,
-  ): { relation: string; cols: string[]; isFact: boolean } | undefined {
+  ): { relation: string; cols: string[]; layer: Layer } | undefined {
     const relation = /^(\w+)\(/.exec(text)?.[1]
     if (!relation) return undefined
     let cache = this.atomCache.get(relation)
     if (!cache) {
       cache = new Map()
-      for (const row of this.facts.get(relation) ?? [])
-        cache.set(this.formatAtom(relation, row.cols), row.cols)
-      for (const cols of this.derived.get(relation) ?? [])
+      for (const cols of this.rows(relation))
         cache.set(this.formatAtom(relation, cols), cols)
       this.atomCache.set(relation, cache)
     }
     const cols = cache.get(text)
     if (!cols) return undefined
-    return { relation, cols, isFact: this.facts.has(relation) }
+    return { relation, cols, layer: this.layerOf(relation) }
   }
 
-  /** Index of a base fact row by its columns. */
-  findFactRow(relation: string, cols: string[]): RowRef | undefined {
-    const rows = this.facts.get(relation) ?? []
+  /** Index of a row by its columns. */
+  findRow(relation: string, cols: string[]): RowRef | undefined {
+    const rows = this.rows(relation)
     const key = cols.join('\t')
-    const index = rows.findIndex((r) => r.cols.join('\t') === key)
+    const index = rows.findIndex((r) => r.join('\t') === key)
     return index >= 0 ? { relation, index } : undefined
   }
+}
+
+function sum(map: Map<string, string[][]>): number {
+  let n = 0
+  for (const rows of map.values()) n += rows.length
+  return n
 }
 
 function push<K, V>(map: Map<K, V[]>, key: K, value: V): void {

@@ -1,0 +1,874 @@
+// =============================================================================
+// Layer 1: from syntax to concepts.
+//
+// Layer 0 only says "there is a node of type Assignment whose leftHandSide is node 17". This
+// layer says what that means: node 17 names a state variable, so the assignment is a *write
+// site* of that variable inside that function. Every relation below used to be produced by hand-
+// written TypeScript; now each one is a rule, so "why is line 28 a write to `value`?" has an
+// answer Soufflé can print: the rule that fired and the raw rows it fired on.
+//
+// The relations the upper layers consume are marked `.output` and keep their historical names
+// (contract, function, stmt, callSite, writeSite, ...). Everything else here is scaffolding on
+// the way to them. Ids are readable strings built from the tree:
+//   contract        <unit>:<Contract>
+//   function        <unit>:<Contract>.<name>(<paramTypes>)     (constructor(), fallback(), receive(), modifiers alike)
+//   free function   <unit>:<name>(<paramTypes>)
+//   state variable  <unit>:<Contract>.<name>
+//   parameter/local <function>/<name>@<offset>
+//   site (stmt, call, write, asm) <function>@<offset>:<length>
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// 1a. Reading the tree: small helpers over the raw rows
+// ---------------------------------------------------------------------------
+
+// A node has a given string attribute / numeric attribute / child field at all (for negation).
+.decl hasAttr(N: number, K: symbol)
+hasAttr(N, K) :- attr(N, K, _).
+.decl hasNum(N: number, K: symbol)
+hasNum(N, K) :- num(N, K, _).
+.decl hasChild(N: number, F: symbol)
+hasChild(N, F) :- child(N, F, _, _).
+
+// The compilation unit's id prefix.
+.decl unitName(U: symbol)
+unitName(U) :- unit(U, _, _).
+
+// Top-level declarations (children of the SourceUnit) and contract members (children of a contract).
+.decl topLevel(N: number)
+topLevel(N) :- node(SU, "SourceUnit"), child(SU, "nodes", _, N).
+.decl memberOf(N: number, C: number)
+memberOf(N, C) :- node(C, "ContractDefinition"), child(C, "nodes", _, N).
+
+// Functions and modifiers share almost everything: parameters, a body, a place in a contract.
+.decl fnNode(F: number)
+fnNode(F) :- node(F, "FunctionDefinition").
+fnNode(F) :- node(F, "ModifierDefinition").
+
+// The I-th parameter / return variable of F (positions come from the ParameterList's array index).
+.decl fnParam(F: number, I: number, P: number)
+fnParam(F, I, P) :- fnNode(F), child(F, "parameters", 0, L), child(L, "parameters", I, P).
+.decl fnReturn(F: number, I: number, P: number)
+fnReturn(F, I, P) :- fnNode(F), child(F, "returnParameters", 0, L), child(L, "parameters", I, P).
+.decl paramCount(F: number, N: number)
+paramCount(F, N) :- fnNode(F), N = count : { fnParam(F, _, _) }.
+.decl returnCount(F: number, N: number)
+returnCount(F, N) :- fnNode(F), N = count : { fnReturn(F, _, _) }.
+
+// The constructor of contract C, if it declares one.
+.decl ctorOf(C: number, F: number)
+ctorOf(C, F) :- memberOf(F, C), node(F, "FunctionDefinition"), attr(F, "kind", "constructor").
+.decl hasCtor(C: number)
+hasCtor(C) :- ctorOf(C, _).
+
+// solc's name resolution: N (an Identifier, MemberAccess, IdentifierPath, ...) refers to node D of
+// this unit. Builtins refer to negative ids (printed as uint32), which point at nothing here.
+.decl refOf(N: number, D: number)
+refOf(N, D) :- num(N, "referencedDeclaration", D), node(D, _).
+
+// The kinds of node a name can refer to.
+.decl declNode(D: number)
+declNode(D) :- node(D, T), (T = "ContractDefinition" ; T = "FunctionDefinition" ; T = "ModifierDefinition" ;
+                            T = "EventDefinition" ; T = "ErrorDefinition" ; T = "StructDefinition" ;
+                            T = "EnumDefinition" ; T = "UserDefinedValueTypeDefinition" ; T = "VariableDeclaration").
+
+// State variables and storage references (locals/parameters declared `storage`, i.e. pointers into state).
+.decl isStateVar(V: number)
+isStateVar(V) :- node(V, "VariableDeclaration"), attr(V, "stateVariable", "true").
+.decl storageRef(V: number)
+storageRef(V) :- node(V, "VariableDeclaration"), attr(V, "storageLocation", "storage"), !isStateVar(V).
+
+// Where a declared variable lives: default | storage | memory | calldata.
+.decl storageLoc(V: number, L: symbol)
+storageLoc(V, L) :- node(V, "VariableDeclaration"), attr(V, "storageLocation", L).
+storageLoc(V, "default") :- node(V, "VariableDeclaration"), !hasAttr(V, "storageLocation").
+
+// An expression whose type lives in storage (typeIdentifier mentions "_storage"): a storage
+// reference, or a call that returns one.
+.decl storageTyped(N: number)
+storageTyped(N) :- attr(N, "typeDescriptions.typeIdentifier", T), contains("_storage", T).
+
+// Identifiers naming a builtin: `require`, `msg`, `super`, `this`, ... solc gives them negative
+// declaration ids (uint32 >= 2^31 in the JSON). Old compilers gave some of them positive ids that
+// point outside the AST; the name list below catches those.
+.decl builtinName(N: symbol)
+builtinName("require"). builtinName("assert"). builtinName("revert"). builtinName("keccak256").
+builtinName("sha256"). builtinName("sha3"). builtinName("ripemd160"). builtinName("ecrecover").
+builtinName("addmod"). builtinName("mulmod"). builtinName("selfdestruct"). builtinName("suicide").
+builtinName("blockhash"). builtinName("gasleft"). builtinName("msg"). builtinName("block").
+builtinName("tx"). builtinName("abi"). builtinName("this"). builtinName("super"). builtinName("now").
+builtinName("type"). builtinName("log0"). builtinName("log1"). builtinName("log2"). builtinName("log3"). builtinName("log4").
+.decl builtinIdent(N: number)
+builtinIdent(N) :- node(N, "Identifier"), !hasNum(N, "referencedDeclaration").
+builtinIdent(N) :- node(N, "Identifier"), num(N, "referencedDeclaration", R), (R < 0 ; R >= 2147483648).
+builtinIdent(N) :- node(N, "Identifier"), num(N, "referencedDeclaration", R), !declNode(R), attr(N, "name", Nm), builtinName(Nm).
+
+// A member access with no declaration behind it: `.push`, `.call`, `msg.sender`, `arr.length`, ...
+.decl builtinMember(E: number)
+builtinMember(E) :- node(E, "MemberAccess"), !hasNum(E, "referencedDeclaration").
+builtinMember(E) :- node(E, "MemberAccess"), num(E, "referencedDeclaration", R), (R < 0 ; R >= 2147483648).
+builtinMember(E) :- node(E, "MemberAccess"), num(E, "referencedDeclaration", R), !declNode(R), child(E, "expression", 0, B), builtinIdent(B).
+
+// Tuples: `(a, b)`, `(x)`, `(a, )`. Null components count as slots (destructuring skips them).
+.decl tupleSlot(T: number, I: number)
+tupleSlot(T, I) :- node(T, "TupleExpression"), child(T, "components", I, _).
+tupleSlot(T, I) :- node(T, "TupleExpression"), attrList(T, "components", I, "null").
+.decl tupleArity(T: number, N: number)
+tupleArity(T, N) :- node(T, "TupleExpression"), N = count : { tupleSlot(T, _) }.
+.decl singleTuple(T: number)
+singleTuple(T) :- tupleArity(T, 1).
+.decl multiTuple(T: number)
+multiTuple(T) :- tupleArity(T, N), N != 1.
+
+// ---------------------------------------------------------------------------
+// 1b. Types, as text: solc's typeString shortened the way Slither prints it
+// ---------------------------------------------------------------------------
+
+// Every distinct type string solc attached to some node.
+.decl rawType(T: symbol)
+rawType(T) :- attr(_, "typeDescriptions.typeString", T).
+
+// Prefixes and suffixes are tested with substr, not regular expressions: solc's type strings can be
+// long (nested mappings, function types) and a backtracking regex on them can crash the interpreter.
+.decl typePrefix(P: symbol, Len: number)
+typePrefix("struct ", 7). typePrefix("contract ", 9). typePrefix("enum ", 5). typePrefix("library ", 8). typePrefix("interface ", 10).
+.decl typeSuffix(S: symbol, Len: number)
+typeSuffix(" storage pointer", 16). typeSuffix(" storage ref", 12). typeSuffix(" memory", 7). typeSuffix(" calldata", 9).
+
+// Drop the `struct ` / `contract ` / `enum ` prefix...
+.decl hasTypePrefix(T: symbol)
+hasTypePrefix(T) :- rawType(T), typePrefix(P, L), strlen(T) >= L, substr(T, 0, L) = P.
+.decl noPrefix(Raw: symbol, T: symbol)
+noPrefix(R, substr(R, L, strlen(R) - L)) :- rawType(R), typePrefix(P, L), strlen(R) >= L, substr(R, 0, L) = P.
+noPrefix(R, R) :- rawType(R), !hasTypePrefix(R).
+// ...and the data location suffix (older compilers put it on declarations; expressions always carry it).
+.decl hasTypeSuffix(T: symbol)
+hasTypeSuffix(T) :- noPrefix(_, T), typeSuffix(S, L), strlen(T) >= L, substr(T, strlen(T) - L, L) = S.
+.decl shortType(Raw: symbol, Short: symbol)
+shortType(R, substr(T, 0, strlen(T) - L)) :- noPrefix(R, T), typeSuffix(S, L), strlen(T) >= L, substr(T, strlen(T) - L, L) = S.
+shortType(R, T) :- noPrefix(R, T), !hasTypeSuffix(T).
+
+// The declared type of a variable ("?" when solc gave none).
+.decl declType(V: number, T: symbol)
+declType(V, T) :- node(V, "VariableDeclaration"), attr(V, "typeDescriptions.typeString", R), shortType(R, T).
+declType(V, "?") :- node(V, "VariableDeclaration"), !hasAttr(V, "typeDescriptions.typeString").
+
+// In signatures `address payable` prints as `address`, as Slither does, so labels line up.
+.decl payableType(T: symbol)
+payableType(T) :- declType(_, T), strlen(T) >= 15, substr(T, 0, 15) = "address payable".
+.decl sigType(P: number, T: symbol)
+sigType(P, cat("address", substr(T, 15, strlen(T) - 15))) :- declType(P, T), payableType(T).
+sigType(P, T) :- declType(P, T), !payableType(T).
+
+// ---------------------------------------------------------------------------
+// 1c. Names: readable, stable ids for everything the upper layers talk about
+// ---------------------------------------------------------------------------
+
+// <unit>:<Contract>
+.decl contractName(C: number, Sym: symbol)
+contractName(C, cat(U, ":", N)) :- node(C, "ContractDefinition"), attr(C, "name", N), unitName(U).
+
+// function | constructor | fallback | receive | modifier (| freeFunction is a `function` at top level)
+.decl fnKind(F: number, K: symbol)
+fnKind(F, "modifier") :- node(F, "ModifierDefinition").
+fnKind(F, K) :- node(F, "FunctionDefinition"), attr(F, "kind", K).
+
+// Constructors, fallback and receive functions have no name of their own: the kind stands in.
+.decl fnName(F: number, Name: symbol)
+fnName(F, K) :- fnKind(F, K), (K = "constructor" ; K = "fallback" ; K = "receive").
+fnName(F, N) :- fnKind(F, K), K != "constructor", K != "fallback", K != "receive", attr(F, "name", N).
+
+// name(type0,type1,...) — the parameter types folded left to right by position.
+.decl sigPrefix(F: number, I: number, Text: symbol)
+sigPrefix(F, 0, T) :- fnParam(F, 0, P), sigType(P, T).
+sigPrefix(F, I, cat(Prev, ",", T)) :- sigPrefix(F, J, Prev), fnParam(F, I, P), I = J + 1, sigType(P, T).
+.decl signature(F: number, Sig: symbol)
+signature(F, cat(Name, "()")) :- fnName(F, Name), paramCount(F, 0).
+signature(F, cat(Name, "(", Types, ")")) :- fnName(F, Name), paramCount(F, N), N > 0, sigPrefix(F, M, Types), M = N - 1.
+
+// <unit>:<Contract>.<signature>, or <unit>:<signature> for free functions.
+.decl functionName(F: number, Sym: symbol)
+functionName(F, cat(C, ".", Sig)) :- memberOf(F, CN), contractName(CN, C), signature(F, Sig).
+functionName(F, cat(U, ":", Sig)) :- fnNode(F), topLevel(F), unitName(U), signature(F, Sig).
+
+// Events, errors, structs, enums, user-defined value types: <Contract>.<name> or <unit>:<name>.
+.decl ownerKind(N: number)
+ownerKind(N) :- node(N, T), (T = "EventDefinition" ; T = "ErrorDefinition" ; T = "StructDefinition" ;
+                             T = "EnumDefinition" ; T = "UserDefinedValueTypeDefinition").
+.decl ownerName(N: number, Sym: symbol)
+ownerName(N, cat(C, ".", Name)) :- ownerKind(N), memberOf(N, CN), contractName(CN, C), attr(N, "name", Name).
+ownerName(N, cat(U, ":", Name)) :- ownerKind(N), topLevel(N), unitName(U), attr(N, "name", Name).
+
+// Which function a parameter, return variable or local belongs to.
+.decl declFn(V: number, F: number)
+declFn(V, F) :- fnParam(F, _, V).
+declFn(V, F) :- fnReturn(F, _, V).
+declFn(V, F) :- inFn(V, F), node(V, "VariableDeclaration").
+// Which struct / event / error a member or parameter belongs to.
+.decl declOwner(V: number, O: number)
+declOwner(V, O) :- ownerKind(O), child(O, "members", _, V).
+declOwner(V, O) :- ownerKind(O), child(O, "parameters", 0, L), child(L, "parameters", _, V).
+
+// Unnamed variables (e.g. `returns (uint256)`) print as "_".
+.decl varLabel(V: number, Name: symbol)
+varLabel(V, N) :- node(V, "VariableDeclaration"), attr(V, "name", N), N != "".
+varLabel(V, "_") :- node(V, "VariableDeclaration"), attr(V, "name", "").
+
+.decl varName(V: number, Sym: symbol)
+// state variable of a contract
+varName(V, cat(C, ".", Name)) :- isStateVar(V), memberOf(V, CN), contractName(CN, C), attr(V, "name", Name).
+// struct member, event or error parameter
+varName(V, cat(O, ".", Name)) :- declOwner(V, ON), ownerName(ON, O), attr(V, "name", Name).
+// parameter, return variable or local of a function: <function>/<name>@<offset>
+varName(V, cat(F, "/", Name, "@", to_string(S))) :- declFn(V, FN), functionName(FN, F), varLabel(V, Name), loc(V, _, S, _, _, _).
+// file-level constant
+varName(V, cat(U, ":", Name)) :- node(V, "VariableDeclaration"), topLevel(V), unitName(U), attr(V, "name", Name).
+
+// Every declaration id in one place.
+.decl name(N: number, Sym: symbol)
+name(N, S) :- contractName(N, S).
+name(N, S) :- functionName(N, S).
+name(N, S) :- ownerName(N, S).
+name(N, S) :- varName(N, S).
+.decl named(N: number)
+named(N) :- name(N, _).
+// A referenced id we could not name (should not happen in a flattened file): "?ast<id>".
+.decl nameOr(N: number, Sym: symbol)
+nameOr(N, S) :- name(N, S).
+nameOr(N, cat("?ast", to_string(N))) :- num(_, "referencedDeclaration", N), !named(N).
+nameOr(N, cat("?ast", to_string(N))) :- numList(_, _, _, N), !named(N).
+
+// ---------------------------------------------------------------------------
+// 1d. Code: which nodes belong to which function, and which statement they sit in
+// ---------------------------------------------------------------------------
+
+// N is part of F's code: inside its body, inside the arguments of one of its modifiers, or (for a
+// constructor) inside the arguments of an inheritance specifier `contract A is B(1, 2)`.
+.decl inFn(N: number, F: number)
+inFn(N, F) :- fnNode(F), child(F, "body", 0, N).
+inFn(M, F) :- modNode(M, F).
+inFn(Spec, Ctor) :- baseCtorSpec(Spec, _, Ctor, _).
+inFn(N, F) :- inFn(P, F), child(P, _, _, N).
+
+// Modifier invocations on F's header: `onlyOwner`, `initializer`, `Base(x)`.
+.decl modNode(M: number, F: number)
+modNode(M, F) :- fnNode(F), child(F, "modifiers", _, M).
+.decl modInvocation(M: number, F: number, D: number)
+modInvocation(M, F, D) :- modNode(M, F), child(M, "modifierName", 0, MN), num(MN, "referencedDeclaration", D).
+
+// `contract A is B(1, 2)`: base constructor arguments at the inheritance specifier, attributed to
+// A's own constructor. Needs both constructors to exist.
+.decl baseCtorSpec(Spec: number, C: number, OwnCtor: number, BaseCtor: number)
+baseCtorSpec(Spec, C, Own, Base) :- node(C, "ContractDefinition"), child(C, "baseContracts", _, Spec), hasChild(Spec, "arguments"),
+                                    ctorOf(C, Own), child(Spec, "baseName", 0, BN), num(BN, "referencedDeclaration", B), ctorOf(B, Base).
+
+// <function>@<offset>:<length> for any node inside a function.
+.decl siteId(N: number, Sym: symbol)
+siteId(N, cat(F, "@", to_string(S), ":", to_string(L))) :- inFn(N, FN), functionName(FN, F), loc(N, _, S, L, _, _).
+
+// The statement tree, exactly as a reader sees it: the body block, then statements nested through
+// blocks, if/else branches, loop parts and try clauses. Parent -1 marks the body itself.
+.decl stmtNode(S: number, F: number, P: number, I: number)
+stmtNode(B, F, -1, 0) :- fnNode(F), child(F, "body", 0, B).
+stmtNode(S, F, P, I) :- stmtNode(P, F, _, _), node(P, T), (T = "Block" ; T = "UncheckedBlock"), child(P, "statements", I, S).
+stmtNode(S, F, P, 0) :- stmtNode(P, F, _, _), node(P, "IfStatement"), child(P, "trueBody", 0, S).
+stmtNode(S, F, P, 1) :- stmtNode(P, F, _, _), node(P, "IfStatement"), child(P, "falseBody", 0, S).
+stmtNode(S, F, P, 0) :- stmtNode(P, F, _, _), node(P, "ForStatement"), child(P, "initializationExpression", 0, S).
+stmtNode(S, F, P, 1) :- stmtNode(P, F, _, _), node(P, "ForStatement"), child(P, "loopExpression", 0, S).
+stmtNode(S, F, P, 2) :- stmtNode(P, F, _, _), node(P, "ForStatement"), child(P, "body", 0, S).
+stmtNode(S, F, P, 0) :- stmtNode(P, F, _, _), node(P, T), (T = "WhileStatement" ; T = "DoWhileStatement"), child(P, "body", 0, S).
+stmtNode(S, F, P, I) :- stmtNode(P, F, _, _), node(P, "TryStatement"), child(P, "clauses", I, Cl), child(Cl, "block", 0, S).
+.decl isStmt(S: number)
+isStmt(S) :- stmtNode(S, _, _, _).
+
+// The innermost statement an expression node sits in (an if's condition sits in the if).
+.decl stmtOfNode(N: number, S: number)
+stmtOfNode(N, S) :- isStmt(S), child(S, _, _, N), !isStmt(N).
+stmtOfNode(N, S) :- stmtOfNode(P, S), child(P, _, _, N), !isStmt(N).
+.decl hasStmt(N: number)
+hasStmt(N) :- stmtOfNode(N, _).
+// ...as an id, or "" for code that sits on a function header (modifier / base constructor arguments).
+.decl ctxStmt(N: number, S: symbol)
+ctxStmt(N, S) :- stmtOfNode(N, SN), siteId(SN, S).
+ctxStmt(N, "") :- inFn(N, _), !hasStmt(N).
+
+// ---------------------------------------------------------------------------
+// 1e. Structure: contracts, inheritance, functions, variables (the `.output` relations start here)
+// ---------------------------------------------------------------------------
+
+.decl codeUnit(Unit: symbol, File: symbol, Solc: symbol)
+.output codeUnit
+codeUnit(U, F, S) :- unit(U, F, S).
+
+// Kind: contract | interface | library. Abstract: 0/1.
+.decl contract(C: symbol, Name: symbol, Kind: symbol, Abstract: number)
+.output contract
+contract(C, Name, Kind, 1) :- contractName(CN, C), attr(CN, "name", Name), attr(CN, "contractKind", Kind), attr(CN, "abstract", "true").
+contract(C, Name, Kind, 0) :- contractName(CN, C), attr(CN, "name", Name), attr(CN, "contractKind", Kind), !attr(CN, "abstract", "true").
+
+// C3 linearization as solc reports it: Order 0 is C itself, then bases most-derived first.
+.decl inherits(C: symbol, Base: symbol, Order: number)
+.output inherits
+inherits(C, Base, Order) :- contractName(CN, C), numList(CN, "linearizedBaseContracts", Order, B), nameOr(B, Base).
+
+// `using Lib for T;` (Type "*" for `using ... for *`), and `using {f, g} for T` (solc >= 0.8.13).
+.decl usingDirective(U: number, C: number)
+usingDirective(U, C) :- memberOf(U, C), node(U, "UsingForDirective").
+.decl usingType(U: number, T: symbol)
+usingType(U, T) :- usingDirective(U, _), child(U, "typeName", 0, TN), attr(TN, "typeDescriptions.typeString", R), shortType(R, T).
+usingType(U, "?") :- usingDirective(U, _), child(U, "typeName", 0, TN), !hasAttr(TN, "typeDescriptions.typeString").
+usingType(U, "*") :- usingDirective(U, _), !hasChild(U, "typeName").
+.decl usingFor(C: symbol, Lib: symbol, Type: symbol)
+.output usingFor
+usingFor(C, Lib, T) :- usingDirective(U, CN), child(U, "libraryName", 0, L), num(L, "referencedDeclaration", D), contractName(CN, C), nameOr(D, Lib), usingType(U, T).
+usingFor(C, Fn, T) :- usingDirective(U, CN), child(U, "functionList.definition", _, Def), num(Def, "referencedDeclaration", D), contractName(CN, C), nameOr(D, Fn), usingType(U, T).
+
+// Optional header attributes with their "absent" spelling.
+.decl fnVisibility(F: number, V: symbol)
+fnVisibility(F, V) :- fnNode(F), attr(F, "visibility", V).
+fnVisibility(F, "") :- fnNode(F), !hasAttr(F, "visibility").
+.decl fnMutability(F: number, M: symbol)
+fnMutability(F, M) :- fnNode(F), attr(F, "stateMutability", M).
+fnMutability(F, "") :- fnNode(F), !hasAttr(F, "stateMutability").
+.decl fnSelector(F: number, S: symbol)
+fnSelector(F, S) :- fnNode(F), attr(F, "functionSelector", S).
+fnSelector(F, "") :- fnNode(F), !hasAttr(F, "functionSelector").
+.decl fnContract(F: number, C: symbol)
+fnContract(F, C) :- fnNode(F), memberOf(F, CN), contractName(CN, C).
+fnContract(F, "") :- fnNode(F), topLevel(F).
+
+// Kind: function | constructor | fallback | receive | modifier. C is "" for free functions.
+.decl function(F: symbol, C: symbol, Name: symbol, Sig: symbol, Kind: symbol, Vis: symbol, Mut: symbol, Selector: symbol)
+.output function
+function(F, C, Name, Sig, Kind, Vis, Mut, Sel) :- functionName(FN, F), fnContract(FN, C), fnName(FN, Name), signature(FN, Sig),
+                                                 fnKind(FN, Kind), fnVisibility(FN, Vis), fnMutability(FN, Mut), fnSelector(FN, Sel).
+
+// F overrides Base (solc lists them in baseFunctions / baseModifiers).
+.decl overrides(F: symbol, Base: symbol)
+.output overrides
+overrides(F, Base) :- functionName(FN, F), numList(FN, "baseFunctions", _, B), nameOr(B, Base).
+overrides(F, Base) :- functionName(FN, F), numList(FN, "baseModifiers", _, B), nameOr(B, Base).
+
+// Location: default | storage | memory | calldata.
+.decl param(F: symbol, Index: number, P: symbol, Type: symbol, Location: symbol)
+.output param
+param(F, I, P, Type, Loc) :- fnParam(FN, I, PN), functionName(FN, F), name(PN, P), declType(PN, Type), storageLoc(PN, Loc).
+
+// Locals: return variables, `T x = ...;` declarations, and `catch (bytes memory reason)` parameters.
+.decl localDecl(D: number, F: number)
+localDecl(D, F) :- fnReturn(F, _, D).
+localDecl(D, F) :- stmtNode(St, F, _, _), node(St, "VariableDeclarationStatement"), child(St, "declarations", _, D).
+localDecl(D, F) :- stmtNode(Try, F, _, _), node(Try, "TryStatement"), child(Try, "clauses", _, Cl), child(Cl, "parameters", 0, PL), child(PL, "parameters", _, D).
+.decl localVar(L: symbol, F: symbol, Name: symbol, Type: symbol, Location: symbol)
+.output localVar
+localVar(L, F, Name, Type, Loc) :- localDecl(D, FN), name(D, L), functionName(FN, F), attr(D, "name", Name), declType(D, Type), storageLoc(D, Loc).
+
+// Mutability: mutable | constant | immutable (older compilers only have the `constant` flag).
+.decl varMutability(V: number, M: symbol)
+varMutability(V, M) :- node(V, "VariableDeclaration"), attr(V, "mutability", M).
+varMutability(V, "constant") :- node(V, "VariableDeclaration"), !hasAttr(V, "mutability"), attr(V, "constant", "true").
+varMutability(V, "mutable") :- node(V, "VariableDeclaration"), !hasAttr(V, "mutability"), !attr(V, "constant", "true").
+.decl varVisibility(V: number, Vis: symbol)
+varVisibility(V, Vis) :- node(V, "VariableDeclaration"), attr(V, "visibility", Vis).
+varVisibility(V, "internal") :- node(V, "VariableDeclaration"), !hasAttr(V, "visibility").
+
+// C is "" for file-level constants.
+.decl stateVariable(V: symbol, C: symbol, Name: symbol, Type: symbol, Mutability: symbol, Vis: symbol)
+.output stateVariable
+stateVariable(V, C, Name, Type, Mut, Vis) :- memberOf(VN, CN), node(VN, "VariableDeclaration"), name(VN, V), contractName(CN, C),
+                                            attr(VN, "name", Name), declType(VN, Type), varMutability(VN, Mut), varVisibility(VN, Vis).
+stateVariable(V, "", Name, Type, "constant", Vis) :- topLevel(VN), node(VN, "VariableDeclaration"), name(VN, V),
+                                                    attr(VN, "name", Name), declType(VN, Type), varVisibility(VN, Vis).
+
+// State variable declared with an inline initializer (runs at deployment).
+.decl initializer(V: symbol, Text: symbol)
+.output initializer
+initializer(V, Text) :- memberOf(VN, _), node(VN, "VariableDeclaration"), child(VN, "value", 0, E), name(VN, V), text(E, Text).
+
+// solc's storageLayout for contract C, with our ids: constants and immutables never appear here.
+.decl slotVar(AstId: number, Label: symbol, V: symbol)
+slotVar(Id, Label, V) :- storageLayout(_, Id, Label, _, _, _), name(Id, V).
+slotVar(Id, Label, cat("?", Label)) :- storageLayout(_, Id, Label, _, _, _), !named(Id).
+.decl storageSlot(C: symbol, V: symbol, Slot: number, Offset: number)
+.output storageSlot
+storageSlot(cat(U, ":", CName), V, Slot, Offset) :- storageLayout(CName, Id, Label, Slot, Offset, _), unitName(U), slotVar(Id, Label, V).
+
+.decl event(E: symbol, C: symbol, Name: symbol)
+.output event
+event(E, C, Name) :- memberOf(EN, CN), node(EN, "EventDefinition"), name(EN, E), contractName(CN, C), attr(EN, "name", Name).
+
+// F has a body (abstract functions and interface members do not).
+.decl functionBody(F: symbol, B: symbol)
+.output functionBody
+functionBody(F, B) :- fnNode(FN), child(FN, "body", 0, BN), functionName(FN, F), siteId(BN, B).
+
+// ---------------------------------------------------------------------------
+// 1f. Statements and conditions
+// ---------------------------------------------------------------------------
+
+// Statement tree: Kind is the AST node type; Parent is the enclosing statement ("" for the body block).
+.decl stmt(S: symbol, F: symbol, Kind: symbol, Parent: symbol, Index: number)
+.output stmt
+stmt(S, F, K, "", I) :- stmtNode(SN, FN, -1, I), siteId(SN, S), functionName(FN, F), node(SN, K).
+stmt(S, F, K, P, I) :- stmtNode(SN, FN, PN, I), PN >= 0, siteId(SN, S), siteId(PN, P), functionName(FN, F), node(SN, K).
+
+// The boolean expression a "checker" X tests: the condition of an if/loop, or the first argument of
+// require/assert. X is the statement or the call, E the expression node.
+.decl condExpr(X: number, E: number)
+condExpr(S, E) :- isStmt(S), node(S, T), (T = "IfStatement" ; T = "ForStatement" ; T = "WhileStatement" ; T = "DoWhileStatement"), child(S, "condition", 0, E).
+condExpr(K, E) :- callNode(K, _), callKind(K, "builtin", B), (B = "require" ; B = "assert"), child(K, "arguments", 0, E).
+
+// X is an if/loop statement or a require/assert call site; Text is the condition as written.
+.decl condition(X: symbol, Text: symbol)
+.output condition
+condition(X, Text) :- condExpr(XN, E), siteId(XN, X), text(E, Text).
+
+// The condition with redundant parentheses removed: `((a || b))` → `a || b`.
+.decl condChain(X: number, E: number)
+condChain(X, E) :- condExpr(X, E).
+condChain(X, Inner) :- condChain(X, T), singleTuple(T), child(T, "components", 0, Inner).
+.decl condCore(X: number, C: number)
+condCore(X, C) :- condChain(X, C), !singleTuple(C).
+
+// Top-level boolean shape of the condition: simple | and | or | not.
+.decl condShape(X: symbol, Shape: symbol)
+.output condShape
+condShape(X, "or")     :- condCore(XN, C), node(C, "BinaryOperation"), attr(C, "operator", "||"), siteId(XN, X).
+condShape(X, "and")    :- condCore(XN, C), node(C, "BinaryOperation"), attr(C, "operator", "&&"), siteId(XN, X).
+condShape(X, "not")    :- condCore(XN, C), node(C, "UnaryOperation"), attr(C, "operator", "!"), siteId(XN, X).
+condShape(X, "simple") :- condCore(XN, C), !boolOp(C), siteId(XN, X).
+.decl boolOp(C: number)
+boolOp(C) :- node(C, "BinaryOperation"), attr(C, "operator", "||").
+boolOp(C) :- node(C, "BinaryOperation"), attr(C, "operator", "&&").
+boolOp(C) :- node(C, "UnaryOperation"), attr(C, "operator", "!").
+
+// Every node under the condition of X.
+.decl condDesc(X: number, D: number)
+condDesc(X, E) :- condExpr(X, E).
+condDesc(X, D) :- condDesc(X, P), child(P, _, _, D).
+
+// The globals a check may talk about.
+.decl globalRef(Name: symbol)
+globalRef("msg.sender"). globalRef("msg.value"). globalRef("msg.data"). globalRef("tx.origin").
+globalRef("block.timestamp"). globalRef("block.number").
+
+// The condition of X mentions What: "msg.sender", "tx.origin", ..., a state variable id, or a callee id.
+.decl refs(X: symbol, What: symbol)
+.output refs
+refs(X, G) :- condDesc(XN, D), node(D, "MemberAccess"), child(D, "expression", 0, B), builtinIdent(B), attr(B, "name", BN),
+              attr(D, "memberName", M), G = cat(BN, ".", M), globalRef(G), siteId(XN, X).
+refs(X, V) :- condDesc(XN, D), node(D, "Identifier"), refOf(D, DV), isStateVar(DV), name(DV, V), siteId(XN, X).
+refs(X, G) :- condDesc(XN, D), node(D, "FunctionCall"), callKind(D, Kind, G), G != "",
+              (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library" ; Kind = "external" ; Kind = "emit" ; Kind = "error" ; Kind = "unknown"),
+              siteId(XN, X).
+
+// ---------------------------------------------------------------------------
+// 1g. Calls: what is being called, and how
+// ---------------------------------------------------------------------------
+
+// FunctionCall nodes inside F's code.
+.decl callNode(K: number, F: number)
+callNode(K, F) :- inFn(K, F), node(K, "FunctionCall").
+
+// The callee expression, with `{value: ..., gas: ...}` options unwrapped.
+.decl calleeExpr(K: number, E: number)
+calleeExpr(K, E) :- callNode(K, _), child(K, "expression", 0, E), node(E, T), T != "FunctionCallOptions".
+calleeExpr(K, E) :- callNode(K, _), child(K, "expression", 0, O), node(O, "FunctionCallOptions"), child(O, "expression", 0, E).
+
+// solc already tells type conversions and struct constructors apart from real calls.
+.decl plainCall(K: number, E: number)
+plainCall(K, E) :- calleeExpr(K, E), !attr(K, "kind", "typeConversion"), !attr(K, "kind", "structConstructorCall").
+
+// Calls through a member: `a.f(x)`, `Lib.f(x)`, `super.f()`, `this.f()`, `addr.call(data)`, `arr.push(x)`.
+.decl memberCallee(K: number, E: number, Base: number, Member: symbol)
+memberCallee(K, E, B, M) :- plainCall(K, E), node(E, "MemberAccess"), child(E, "expression", 0, B), attr(E, "memberName", M).
+// ...that solc resolved to a function definition D.
+.decl memberFn(K: number, E: number, Base: number, D: number)
+memberFn(K, E, B, D) :- memberCallee(K, E, B, _), refOf(E, D), node(D, "FunctionDefinition").
+.decl fnOwnerKind(D: number, Kind: symbol)
+fnOwnerKind(D, Kind) :- memberOf(D, C), attr(C, "contractKind", Kind).
+// The base names a contract or library directly (`Lib.f`, `Base.f`) or is `super`.
+.decl explicitBase(B: number)
+explicitBase(B) :- node(B, "Identifier"), attr(B, "name", "super").
+explicitBase(B) :- node(B, "Identifier"), refOf(B, D), node(D, "ContractDefinition").
+// The base is an expression of contract type (`this`, a state variable holding an address of a contract, ...).
+.decl contractTypedBase(B: number)
+contractTypedBase(B) :- attr(B, "typeDescriptions.typeIdentifier", T), strlen(T) >= 10, substr(T, 0, 10) = "t_contract".
+
+// The function a call resolves to statically (if any).
+.decl calleeDecl(K: number, D: number)
+calleeDecl(K, D) :- plainCall(K, E), node(E, "Identifier"), !builtinIdent(E), refOf(E, D), node(D, "FunctionDefinition").
+calleeDecl(K, D) :- memberFn(K, _, _, D).
+
+// Low-level members of addresses and storage array operations.
+.decl lowLevelName(M: symbol)
+lowLevelName("call"). lowLevelName("delegatecall"). lowLevelName("staticcall"). lowLevelName("callcode"). lowLevelName("send"). lowLevelName("transfer").
+.decl lowLevelCall(K: number, M: symbol)
+lowLevelCall(K, M) :- memberCallee(K, E, B, M), builtinMember(E), lowLevelName(M), attr(B, "typeDescriptions.typeIdentifier", T), strlen(T) >= 9, substr(T, 0, 9) = "t_address".
+.decl arrayOpCall(K: number, M: symbol, Base: number)
+arrayOpCall(K, M, B) :- memberCallee(K, E, B, M), builtinMember(E), (M = "push" ; M = "pop"), storageTyped(B).
+
+// `using Lib for T` bound call `x.f(y)`: the receiver x is the callee's first parameter.
+.decl boundCall(K: number)
+boundCall(K) :- memberFn(K, _, B, D), fnOwnerKind(D, "library"), !explicitBase(B).
+
+// An Identifier callee that resolves to something callable.
+.decl identCallee(E: number)
+identCallee(E) :- refOf(E, D), node(D, T), (T = "FunctionDefinition" ; T = "EventDefinition" ; T = "ErrorDefinition" ; T = "VariableDeclaration").
+.decl memberResolved(E: number)
+memberResolved(E) :- refOf(E, D), node(D, T), (T = "FunctionDefinition" ; T = "EventDefinition" ; T = "ErrorDefinition" ; T = "VariableDeclaration").
+
+// Kind: internal | internalExplicit (super.f / Base.f) | modifier | baseConstructor | library | external |
+//       lowLevel (Callee = call/delegatecall/staticcall/send/transfer) | builtin (Callee = require/assert/revert/...) |
+//       emit | error | new | typeConversion | structConstructor | arrayOp (push/pop) | functionPointer | unknown
+.decl callKind(K: number, Kind: symbol, Callee: symbol)
+callKind(K, "typeConversion", T) :- callNode(K, _), attr(K, "kind", "typeConversion"), attr(K, "typeDescriptions.typeString", R), shortType(R, T).
+callKind(K, "structConstructor", T) :- callNode(K, _), attr(K, "kind", "structConstructorCall"), attr(K, "typeDescriptions.typeString", R), shortType(R, T).
+// plain identifier callee
+callKind(K, "builtin", Nm) :- plainCall(K, E), node(E, "Identifier"), builtinIdent(E), attr(E, "name", Nm).
+callKind(K, "internal", G) :- plainCall(K, E), node(E, "Identifier"), !builtinIdent(E), refOf(E, D), node(D, "FunctionDefinition"), name(D, G).
+callKind(K, "emit", G) :- plainCall(K, E), node(E, "Identifier"), !builtinIdent(E), refOf(E, D), node(D, "EventDefinition"), name(D, G).
+callKind(K, "error", G) :- plainCall(K, E), node(E, "Identifier"), !builtinIdent(E), refOf(E, D), node(D, "ErrorDefinition"), name(D, G).
+callKind(K, "functionPointer", G) :- plainCall(K, E), node(E, "Identifier"), !builtinIdent(E), refOf(E, D), node(D, "VariableDeclaration"), name(D, G).
+callKind(K, "unknown", "") :- plainCall(K, E), node(E, "Identifier"), !builtinIdent(E), !identCallee(E).
+// member callee resolved to a function
+callKind(K, "library", G) :- memberFn(K, _, _, D), fnOwnerKind(D, "library"), name(D, G).
+callKind(K, "internalExplicit", G) :- memberFn(K, _, B, D), !fnOwnerKind(D, "library"), explicitBase(B), name(D, G).
+callKind(K, "external", G) :- memberFn(K, _, B, D), !fnOwnerKind(D, "library"), !explicitBase(B), contractTypedBase(B), name(D, G).
+callKind(K, "unknown", G) :- memberFn(K, _, B, D), !fnOwnerKind(D, "library"), !explicitBase(B), !contractTypedBase(B), name(D, G).
+// member callee resolved to something else
+callKind(K, "emit", G) :- memberCallee(K, E, _, _), refOf(E, D), node(D, "EventDefinition"), name(D, G).
+callKind(K, "error", G) :- memberCallee(K, E, _, _), refOf(E, D), node(D, "ErrorDefinition"), name(D, G).
+callKind(K, "functionPointer", G) :- memberCallee(K, E, _, _), refOf(E, D), node(D, "VariableDeclaration"), name(D, G).
+// member callee with no declaration: low-level address call, storage array op, or another builtin
+callKind(K, "lowLevel", M) :- lowLevelCall(K, M).
+callKind(K, "arrayOp", M) :- arrayOpCall(K, M, _).
+callKind(K, "builtin", cat(BN, ".", M)) :- memberCallee(K, E, B, M), builtinMember(E), !lowLevelCall(K, _), !arrayOpCall(K, _, _), builtinIdent(B), attr(B, "name", BN).
+callKind(K, "builtin", M) :- memberCallee(K, E, B, M), builtinMember(E), !lowLevelCall(K, _), !arrayOpCall(K, _, _), !builtinIdent(B).
+callKind(K, "unknown", "") :- memberCallee(K, E, _, _), !builtinMember(E), !memberResolved(E).
+// `new C(...)`
+callKind(K, "new", T) :- plainCall(K, E), node(E, "NewExpression"), child(E, "typeName", 0, TN), attr(TN, "typeDescriptions.typeString", R), shortType(R, T).
+callKind(K, "new", "?") :- plainCall(K, E), node(E, "NewExpression"), child(E, "typeName", 0, TN), !hasAttr(TN, "typeDescriptions.typeString").
+// anything else as a callee (a conditional, an index into a function array, ...)
+callKind(K, "unknown", "") :- plainCall(K, E), node(E, T), T != "Identifier", T != "MemberAccess", T != "NewExpression".
+
+// S is "" for modifier invocations and base-constructor calls (they sit on the function header).
+.decl callSite(K: symbol, S: symbol, F: symbol, Kind: symbol, Callee: symbol, Text: symbol)
+.output callSite
+callSite(K, S, F, Kind, Callee, Text) :- callNode(KN, FN), callKind(KN, Kind, Callee), siteId(KN, K), ctxStmt(KN, S), functionName(FN, F), text(KN, Text).
+// modifier invocations: a modifier, or a base constructor written modifier-style (`constructor() Base(1)`)
+callSite(K, "", F, "modifier", M, Text) :- modInvocation(MN, FN, D), node(D, "ModifierDefinition"), name(D, M), siteId(MN, K), functionName(FN, F), text(MN, Text).
+callSite(K, "", F, "baseConstructor", Ctor, Text) :- modInvocation(MN, FN, D), node(D, "ContractDefinition"), ctorOf(D, CN), name(CN, Ctor), siteId(MN, K), functionName(FN, F), text(MN, Text).
+callSite(K, "", F, "baseConstructor", "", Text) :- modInvocation(MN, FN, D), node(D, "ContractDefinition"), !hasCtor(D), siteId(MN, K), functionName(FN, F), text(MN, Text).
+// `contract A is B(1, 2)`
+callSite(K, "", F, "baseConstructor", Base, Text) :- baseCtorSpec(Spec, _, Own, BaseN), siteId(Spec, K), functionName(Own, F), name(BaseN, Base), text(Spec, Text).
+
+// Call arguments by position, and the parameter index each one lands on: positional (+1 for the
+// receiver of a bound library call), or by name for `f({a: 1, b: 2})`.
+.decl callArg(K: number, I: number, A: number)
+callArg(K, I, A) :- callNode(K, _), child(K, "arguments", I, A).
+.decl calleeParamName(K: number, J: number, Name: symbol)
+calleeParamName(K, J, Nm) :- calleeDecl(K, G), fnParam(G, J, P), attr(P, "name", Nm).
+.decl namedArg(K: number, I: number)
+namedArg(K, I) :- attrList(K, "names", I, Nm), calleeParamName(K, _, Nm).
+.decl argIndex(K: number, I: number, Idx: number)
+argIndex(K, I, J) :- callArg(K, I, _), attrList(K, "names", I, Nm), calleeParamName(K, J, Nm).
+argIndex(K, I, I + 1) :- callArg(K, I, _), boundCall(K), !namedArg(K, I).
+argIndex(K, I, I) :- callArg(K, I, _), !boundCall(K), !namedArg(K, I).
+
+// Call K passes X (state variable or storage reference) as the callee's parameter Index.
+.decl argBinding(K: symbol, Index: number, X: symbol)
+.output argBinding
+argBinding(K, Idx, X) :- callArg(KN, I, A), argIndex(KN, I, Idx), valueRoot(A, X), siteId(KN, K).
+argBinding(K, 0, X) :- boundCall(KN), memberCallee(KN, _, B, _), valueRoot(B, X), siteId(KN, K).
+argBinding(K, I, X) :- modNode(MN, _), child(MN, "arguments", I, A), valueRoot(A, X), siteId(MN, K).
+
+// ---------------------------------------------------------------------------
+// 1h. Writes and storage references: the heart of the matter
+// ---------------------------------------------------------------------------
+
+// A write: `lhs = rhs` (any assignment operator), `x++`, `x--`, `delete x`, `arr.push(v)`, `arr.pop()`.
+.decl writeOp(Site: number, Op: symbol, L: number)
+writeOp(A, Op, L) :- inFn(A, _), node(A, "Assignment"), attr(A, "operator", Op), child(A, "leftHandSide", 0, L).
+writeOp(U, Op, L) :- inFn(U, _), node(U, "UnaryOperation"), attr(U, "operator", Op), (Op = "++" ; Op = "--" ; Op = "delete"), child(U, "subExpression", 0, L).
+writeOp(K, M, B) :- arrayOpCall(K, M, B).
+
+// Destructuring `(a, b) = f()` writes each component; Direct is 1 for a plain (non-tuple) left side.
+.decl lhsCand(Site: number, Op: symbol, E: number, Direct: number)
+lhsCand(S, Op, E, 1) :- writeOp(S, Op, E).
+lhsCand(S, Op, C, 0) :- lhsCand(S, Op, T, _), multiTuple(T), child(T, "components", _, C).
+.decl lhs(Site: number, Op: symbol, E: number, Direct: number)
+lhs(S, Op, E, D) :- lhsCand(S, Op, E, D), !multiTuple(E).
+
+// Peeling an access chain down to its root: `items[i].x` → `items`, `(d)` → `d`.
+.decl accessPeel(E: number, B: number)
+accessPeel(E, B) :- node(E, "IndexAccess"), child(E, "baseExpression", 0, B).
+accessPeel(E, B) :- node(E, "IndexRangeAccess"), child(E, "baseExpression", 0, B).
+accessPeel(E, B) :- node(E, "MemberAccess"), child(E, "expression", 0, B).
+.decl parenPeel(E: number, B: number)
+parenPeel(E, B) :- singleTuple(E), child(E, "components", 0, B).
+
+// Expressions whose root we care about: left sides, right sides, call arguments, receivers,
+// initial values, returned values — and both arms of a `c ? a : b`.
+.decl rootStart(E: number)
+rootStart(E) :- lhs(_, _, E, _).
+rootStart(E) :- inFn(A, _), node(A, "Assignment"), child(A, "rightHandSide", 0, E).
+rootStart(E) :- callArg(_, _, E).
+rootStart(E) :- modNode(M, _), child(M, "arguments", _, E).
+rootStart(E) :- memberCallee(_, _, E, _).
+rootStart(E) :- isStmt(St), node(St, "VariableDeclarationStatement"), child(St, "initialValue", 0, E).
+rootStart(E) :- returnPart(_, _, E).
+rootStart(T) :- rootStart(C), node(C, "Conditional"), child(C, "trueExpression", 0, T).
+rootStart(T) :- rootStart(C), node(C, "Conditional"), child(C, "falseExpression", 0, T).
+.decl peelNode(N: number)
+peelNode(E) :- rootStart(E).
+peelNode(B) :- peelNode(E), accessPeel(E, B).
+peelNode(B) :- peelNode(E), parenPeel(E, B).
+// rootOf(N, R, Bare): following peels from N ends at R; Bare is 1 when no index/member was crossed.
+.decl rootOf(N: number, R: number, Bare: number)
+rootOf(N, N, 1) :- peelNode(N), !accessPeel(N, _), !parenPeel(N, _).
+rootOf(N, R, 0) :- peelNode(N), accessPeel(N, B), rootOf(B, R, _).
+rootOf(N, R, Bare) :- peelNode(N), parenPeel(N, B), rootOf(B, R, Bare).
+
+// The state variable or storage reference an rvalue is rooted in ("what does this expression point into").
+// A call returning a storage reference is named by its result: "<call site>#0".
+.decl valueRoot(E: number, X: symbol)
+valueRoot(E, V) :- rootStart(E), rootOf(E, R, _), node(R, "Identifier"), refOf(R, D), (isStateVar(D) ; storageRef(D)), name(D, V).
+valueRoot(E, X) :- rootStart(E), rootOf(E, R, _), node(R, "FunctionCall"), storageTyped(R), siteId(R, K), X = cat(K, "#0").
+valueRoot(C, X) :- rootStart(C), node(C, "Conditional"), child(C, "trueExpression", 0, T), valueRoot(T, X).
+valueRoot(C, X) :- rootStart(C), node(C, "Conditional"), child(C, "falseExpression", 0, T), valueRoot(T, X).
+.decl hasValueRoot(E: number)
+hasValueRoot(E) :- valueRoot(E, _).
+
+// The root of each left side.
+.decl lhsRoot(Site: number, Op: symbol, E: number, R: number, Bare: number, Direct: number)
+lhsRoot(S, Op, E, R, Bare, D) :- lhs(S, Op, E, D), rootOf(E, R, Bare).
+
+// `d = other;` where d is a bare storage reference re-points d instead of writing through it.
+.decl refRebind(Site: number, D: number, Rhs: number)
+refRebind(SN, D, Rhs) :- lhsRoot(SN, "=", _, RN, 1, 1), node(SN, "Assignment"), node(RN, "Identifier"), refOf(RN, D), storageRef(D), child(SN, "rightHandSide", 0, Rhs).
+
+// Writes, at the node level: site SN writes target Target (an id) with operator Op.
+.decl writeAt(Site: number, Target: symbol, Op: symbol)
+// the root names a state variable
+writeAt(SN, V, Op) :- lhsRoot(SN, Op, _, R, _, _), node(R, "Identifier"), refOf(R, D), isStateVar(D), name(D, V).
+// the root names a storage reference, and this is a write through it (not a re-binding)
+writeAt(SN, V, Op) :- lhsRoot(SN, Op, _, R, _, _), node(R, "Identifier"), refOf(R, D), storageRef(D), !refRebind(SN, D, _), name(D, V).
+// the root is a call returning a storage reference: `find(key).value = 1`
+writeAt(SN, X, Op) :- lhsRoot(SN, Op, _, R, _, _), node(R, "FunctionCall"), storageTyped(R), siteId(R, K), X = cat(K, "#0").
+
+// F writes Target (a state variable, or a storage reference local/parameter) at site W inside statement S.
+// Op: = += -= ... ++ -- delete push pop
+.decl writeSite(W: symbol, S: symbol, F: symbol, Target: symbol, Op: symbol)
+.output writeSite
+writeSite(W, S, F, T, Op) :- writeAt(SN, T, Op), siteId(SN, W), ctxStmt(SN, S), inFn(SN, FN), functionName(FN, F).
+
+// Identifiers read as values: every Identifier in F's code except the root of a left side and a
+// callee name. (`x += 1` reads x too — see readsDirect.)
+.decl lhsRootNode(R: number)
+lhsRootNode(R) :- lhsRoot(_, _, _, R, _, _).
+.decl calleeIdent(E: number)
+calleeIdent(E) :- child(K, "expression", 0, E), node(K, "FunctionCall"), node(E, "Identifier").
+calleeIdent(E) :- child(K, "expression", 0, O), node(K, "FunctionCall"), node(O, "FunctionCallOptions"), child(O, "expression", 0, E), node(E, "Identifier").
+.decl readsDirect(F: symbol, V: symbol)
+.output readsDirect
+readsDirect(F, V) :- inFn(N, FN), node(N, "Identifier"), !lhsRootNode(N), !calleeIdent(N), refOf(N, D), isStateVar(D), name(D, V), functionName(FN, F).
+readsDirect(F, V) :- lhsRoot(SN, Op, _, R, _, _), Op != "=", Op != "delete", node(R, "Identifier"), refOf(R, D), isStateVar(D), name(D, V), inFn(SN, FN), functionName(FN, F).
+
+// Storage reference R (local/param with `storage` location) is bound to X: a state variable or another reference.
+// `Data storage d = items[i];`
+.decl declCount(St: number, N: number)
+declCount(St, N) :- isStmt(St), node(St, "VariableDeclarationStatement"), N = count : { child(St, "declarations", _, _) }.
+.decl singleStorageDecl(St: number, D: number, Init: number)
+singleStorageDecl(St, D, Init) :- declCount(St, 1), child(St, "declarations", _, D), storageRef(D), child(St, "initialValue", 0, Init).
+// `(A storage a, , B storage b) = f(...)`: each storage component is bound to the call's I-th result.
+.decl multiDeclCall(St: number, I: number, D: number, K: number)
+multiDeclCall(St, I, D, K) :- declCount(St, N), N > 1, child(St, "initialValue", 0, K), node(K, "FunctionCall"), child(St, "declarations", I, D), storageRef(D).
+.decl refBinding(R: symbol, X: symbol)
+.output refBinding
+refBinding(R, X) :- singleStorageDecl(_, D, Init), name(D, R), valueRoot(Init, X).
+refBinding(R, X) :- multiDeclCall(_, I, D, K), name(D, R), siteId(K, KS), X = cat(KS, "#", to_string(I)).
+refBinding(R, X) :- refRebind(_, D, Rhs), name(D, R), valueRoot(Rhs, X).
+
+// Where a call's result is named: (1) a storage-typed call used as a left side or as a value root,
+// (2) a destructuring declaration. X = "<K>#<Index>" names the Index-th value returned by call K.
+.decl usedValue(E: number)
+usedValue(Rhs) :- refRebind(_, _, Rhs).
+usedValue(Init) :- singleStorageDecl(_, _, Init).
+usedValue(A) :- callArg(_, _, A).
+usedValue(B) :- boundCall(K), memberCallee(K, _, B, _).
+usedValue(A) :- modNode(M, _), child(M, "arguments", _, A).
+usedValue(E) :- storageReturnPart(_, _, E).
+usedValue(T) :- usedValue(C), node(C, "Conditional"), child(C, "trueExpression", 0, T).
+usedValue(T) :- usedValue(C), node(C, "Conditional"), child(C, "falseExpression", 0, T).
+.decl callResultUse(K: number, I: number)
+callResultUse(R, 0) :- usedValue(E), rootOf(E, R, _), node(R, "FunctionCall"), storageTyped(R).
+callResultUse(R, 0) :- lhsRoot(_, _, _, R, _, _), node(R, "FunctionCall"), storageTyped(R).
+callResultUse(K, I) :- multiDeclCall(_, I, _, K).
+.decl callResult(X: symbol, K: symbol, Index: number)
+.output callResult
+callResult(cat(K, "#", to_string(I)), K, I) :- callResultUse(KN, I), siteId(KN, K).
+
+// F's Index-th return value is the storage reference X: a named `returns (Data storage d)`, or the
+// root of what a `return` statement hands back in a storage-located position.
+.decl returnPart(Ret: number, I: number, E: number)
+returnPart(Ret, I, C) :- isStmt(Ret), node(Ret, "Return"), child(Ret, "expression", 0, E), node(E, "TupleExpression"),
+                         stmtNode(Ret, F, _, _), returnCount(F, N), N > 1, child(E, "components", I, C).
+returnPart(Ret, 0, E) :- isStmt(Ret), node(Ret, "Return"), child(Ret, "expression", 0, E), !multiReturnTuple(Ret).
+.decl multiReturnTuple(Ret: number)
+multiReturnTuple(Ret) :- isStmt(Ret), node(Ret, "Return"), child(Ret, "expression", 0, E), node(E, "TupleExpression"),
+                         stmtNode(Ret, F, _, _), returnCount(F, N), N > 1.
+.decl storageReturnPart(F: number, I: number, E: number)
+storageReturnPart(F, I, E) :- returnPart(Ret, I, E), stmtNode(Ret, F, _, _), fnReturn(F, I, RP), storageRef(RP).
+.decl returnsRef(F: symbol, Index: number, X: symbol)
+.output returnsRef
+returnsRef(F, I, X) :- fnReturn(FN, I, R), storageRef(R), attr(R, "name", N), N != "", name(R, X), functionName(FN, F).
+returnsRef(F, I, X) :- storageReturnPart(FN, I, E), valueRoot(E, X), functionName(FN, F).
+
+// ---------------------------------------------------------------------------
+// 1i. Inline assembly (Yul): opaque by design, but its storage-touching parts are visible
+// ---------------------------------------------------------------------------
+
+// Every Yul node inside the InlineAssembly statement N.
+.decl yulIn(Y: number, N: number)
+yulIn(Y, N) :- node(N, "InlineAssembly"), child(N, "AST", 0, Y).
+yulIn(Y, N) :- yulIn(P, N), child(P, _, _, Y).
+.decl asmSite(N: number, A: symbol)
+asmSite(N, A) :- isStmt(N), node(N, "InlineAssembly"), siteId(N, A).
+
+// Inline assembly block A inside F. HasYul is 0 for solc < 0.6, where the AST carries only the assembly text.
+.decl assembly(A: symbol, F: symbol, HasYul: number)
+.output assembly
+assembly(A, F, 1) :- asmSite(N, A), hasChild(N, "AST"), stmtNode(N, FN, _, _), functionName(FN, F).
+assembly(A, F, 0) :- asmSite(N, A), !hasChild(N, "AST"), stmtNode(N, FN, _, _), functionName(FN, F).
+
+// Solidity variables referenced from Yul (`v.slot`, `v.offset`, `v`): solc lists them as
+// externalReferences with the src of the YulIdentifier that mentions them.
+.decl extRef(N: number, I: number, D: number)
+extRef(N, I, D) :- node(N, "InlineAssembly"), numList(N, "externalReferences.declaration", I, D).
+.decl extRefKind(N: number, I: number, Kind: symbol)
+extRefKind(N, I, Suf) :- extRef(N, I, _), attrList(N, "externalReferences.suffix", I, Suf).
+extRefKind(N, I, "slot") :- extRef(N, I, _), !hasSuffix(N, I), attrList(N, "externalReferences.isSlot", I, "true").
+extRefKind(N, I, "offset") :- extRef(N, I, _), !hasSuffix(N, I), !attrList(N, "externalReferences.isSlot", I, "true"), attrList(N, "externalReferences.isOffset", I, "true").
+extRefKind(N, I, "value") :- extRef(N, I, _), !hasSuffix(N, I), !attrList(N, "externalReferences.isSlot", I, "true"), !attrList(N, "externalReferences.isOffset", I, "true").
+.decl hasSuffix(N: number, I: number)
+hasSuffix(N, I) :- attrList(N, "externalReferences.suffix", I, _).
+.decl yulIdentAt(N: number, Src: symbol, Name: symbol)
+yulIdentAt(N, Src, Name) :- yulIn(Y, N), node(Y, "YulIdentifier"), loc(Y, Src, _, _, _, _), attr(Y, "name", Name).
+.decl hasYulIdentAt(N: number, Src: symbol)
+hasYulIdentAt(N, Src) :- yulIdentAt(N, Src, _).
+// Solidity variable V referenced from Yul under YulName; Kind: slot | offset | value.
+.decl asmExtRef(A: symbol, YulName: symbol, V: symbol, Kind: symbol)
+.output asmExtRef
+asmExtRef(A, YulName, V, Kind) :- extRef(N, I, D), asmSite(N, A), extRefKind(N, I, Kind), attrList(N, "externalReferences.src", I, Src), yulIdentAt(N, Src, YulName), nameOr(D, V).
+asmExtRef(A, "?", V, Kind) :- extRef(N, I, D), asmSite(N, A), extRefKind(N, I, Kind), attrList(N, "externalReferences.src", I, Src), !hasYulIdentAt(N, Src), nameOr(D, V).
+
+// A Yul operand as text: a literal, an identifier, or some expression. Number literals written in
+// hex print in decimal when they fit in 64 bits (`0x60` → 96), so slot numbers line up with the layout.
+.decl yulLiteralText(Y: number, V: symbol)
+yulLiteralText(Y, V) :- node(Y, "YulLiteral"), attr(Y, "value", V).
+yulLiteralText(Y, V) :- node(Y, "YulLiteral"), !hasAttr(Y, "value"), attr(Y, "hexValue", V).
+.decl smallHex(V: symbol)
+smallHex(V) :- yulLiteralText(_, V), strlen(V) >= 3, strlen(V) <= 17, substr(V, 0, 2) = "0x", match("0x[0-9a-fA-F]+", V).
+.decl yulOperand(Y: number, Kind: symbol, Text: symbol)
+yulOperand(Y, "literal", to_string(to_number(V))) :- yulLiteralText(Y, V), attr(Y, "kind", "number"), smallHex(V).
+yulOperand(Y, "literal", V) :- yulLiteralText(Y, V), !attr(Y, "kind", "number").
+yulOperand(Y, "literal", V) :- yulLiteralText(Y, V), attr(Y, "kind", "number"), !smallHex(V).
+yulOperand(Y, "ident", Nm) :- node(Y, "YulIdentifier"), attr(Y, "name", Nm).
+yulOperand(Y, "expr", T) :- yulIn(Y, _), node(Y, K), K != "YulLiteral", K != "YulIdentifier", text(Y, T).
+// A decimal literal small enough to be a slot number, else -1.
+.decl smallDecimal(V: symbol)
+smallDecimal(V) :- yulOperand(_, "literal", V), strlen(V) >= 1, strlen(V) < 16, match("[0-9]+", V).
+.decl yulLiteralNum(Y: number, N: number)
+yulLiteralNum(Y, to_number(V)) :- yulOperand(Y, "literal", V), smallDecimal(V).
+yulLiteralNum(Y, -1) :- yulOperand(Y, "literal", V), !smallDecimal(V).
+yulLiteralNum(Y, -1) :- yulOperand(Y, Kind, _), Kind != "literal".
+
+// Yul calls with storage or control effects: delegatecall | callcode | call | staticcall | create | create2 | selfdestruct | tstore.
+.decl opaqueYul(Name: symbol)
+opaqueYul("delegatecall"). opaqueYul("callcode"). opaqueYul("call"). opaqueYul("staticcall").
+opaqueYul("create"). opaqueYul("create2"). opaqueYul("selfdestruct"). opaqueYul("tstore").
+.decl yulCall(Y: number, N: number, Name: symbol)
+yulCall(Y, N, Name) :- yulIn(Y, N), node(Y, "YulFunctionCall"), child(Y, "functionName", 0, Fn), attr(Fn, "name", Name).
+.decl asmCall(K: symbol, A: symbol, Name: symbol)
+.output asmCall
+asmCall(K, A, Name) :- yulCall(Y, N, Name), opaqueYul(Name), siteId(Y, K), asmSite(N, A).
+
+// sstore(<slot>, ...) sites. SlotKind: literal | ident | expr. SlotNum is the literal as a number, else -1.
+.decl sstoreSite(Y: number, N: number, Slot: number)
+sstoreSite(Y, N, S) :- yulCall(Y, N, "sstore"), child(Y, "arguments", 0, S).
+.decl asmSstore(K: symbol, A: symbol, SlotKind: symbol, SlotText: symbol, SlotNum: number)
+.output asmSstore
+asmSstore(K, A, Kind, Text, Num) :- sstoreSite(Y, N, S), yulOperand(S, Kind, Text), yulLiteralNum(S, Num), siteId(Y, K), asmSite(N, A).
+
+// `let x := <value>` and `x := <value>` with a single variable: how slot names travel inside a block.
+.decl yulLet(Y: number, N: number, Var: symbol, Val: number)
+yulLet(Y, N, Var, Val) :- yulIn(Y, N), node(Y, "YulVariableDeclaration"), child(Y, "variables", 0, V0), !child(Y, "variables", 1, _), attr(V0, "name", Var), child(Y, "value", 0, Val).
+yulLet(Y, N, Var, Val) :- yulIn(Y, N), node(Y, "YulAssignment"), child(Y, "variableNames", 0, V0), !child(Y, "variableNames", 1, _), attr(V0, "name", Var), child(Y, "value", 0, Val).
+.decl asmLet(A: symbol, Var: symbol, ValueKind: symbol, ValueText: symbol)
+.output asmLet
+asmLet(A, Var, Kind, Text) :- yulLet(_, N, Var, Val), asmSite(N, A), yulOperand(Val, Kind, Text).
+
+// ---------------------------------------------------------------------------
+// 1j. Bookkeeping: where every id lives, and what these rules do not understand
+// ---------------------------------------------------------------------------
+
+// Node kinds each layer of the walk knows how to read. Anything else is reported, never ignored.
+.decl knownTop(T: symbol)
+knownTop("ContractDefinition"). knownTop("FunctionDefinition"). knownTop("VariableDeclaration"). knownTop("PragmaDirective").
+knownTop("ImportDirective"). knownTop("StructDefinition"). knownTop("EnumDefinition"). knownTop("ErrorDefinition").
+knownTop("EventDefinition"). knownTop("UsingForDirective"). knownTop("UserDefinedValueTypeDefinition").
+.decl knownMember(T: symbol)
+knownMember("FunctionDefinition"). knownMember("ModifierDefinition"). knownMember("VariableDeclaration"). knownMember("EventDefinition").
+knownMember("UsingForDirective"). knownMember("StructDefinition"). knownMember("EnumDefinition"). knownMember("ErrorDefinition").
+knownMember("UserDefinedValueTypeDefinition").
+.decl knownStmt(T: symbol)
+knownStmt("Block"). knownStmt("UncheckedBlock"). knownStmt("IfStatement"). knownStmt("ForStatement"). knownStmt("WhileStatement").
+knownStmt("DoWhileStatement"). knownStmt("ExpressionStatement"). knownStmt("VariableDeclarationStatement"). knownStmt("Return").
+knownStmt("EmitStatement"). knownStmt("RevertStatement"). knownStmt("InlineAssembly"). knownStmt("TryStatement").
+knownStmt("PlaceholderStatement"). knownStmt("Break"). knownStmt("Continue"). knownStmt("Throw").
+
+// A left side we could not tie to a declaration, or a call we could not classify, and so on.
+// Ctx is the function (or contract / unit) it happened in; N the offending node.
+.decl unhandledAt(Ctx: symbol, What: symbol, N: number)
+unhandledAt(U, cat("top:", T), N) :- topLevel(N), node(N, T), !knownTop(T), unitName(U).
+unhandledAt(C, cat("member:", T), N) :- memberOf(N, CN), node(N, T), !knownMember(T), contractName(CN, C).
+unhandledAt(F, cat("stmt:", T), N) :- stmtNode(N, FN, _, _), node(N, T), !knownStmt(T), functionName(FN, F).
+unhandledAt(F, cat("lvalue:", T), E) :- lhsRoot(SN, _, E, R, _, _), !lvalueOk(R), node(R, T), inFn(SN, FN), functionName(FN, F).
+unhandledAt(F, "call:unresolved", K) :- callNode(K, FN), callKind(K, "unknown", _), functionName(FN, F).
+unhandledAt(F, "storage reference bound to unresolved value", Init) :- singleStorageDecl(St, _, Init), !hasValueRoot(Init), stmtNode(St, FN, _, _), functionName(FN, F).
+unhandledAt(F, "storage reference re-bound to unresolved value", Rhs) :- refRebind(SN, _, Rhs), !hasValueRoot(Rhs), inFn(SN, FN), functionName(FN, F).
+unhandledAt(F, "InlineAssembly without Yul AST", N) :- asmSite(N, _), !hasChild(N, "AST"), stmtNode(N, FN, _, _), functionName(FN, F).
+unhandledAt(C, "InheritanceSpecifier.arguments without both constructors", Spec) :- node(CN, "ContractDefinition"), child(CN, "baseContracts", _, Spec), hasChild(Spec, "arguments"), !baseCtorSpec(Spec, _, _, _), contractName(CN, C).
+.decl lvalueOk(R: number)
+lvalueOk(R) :- node(R, "Identifier"), refOf(R, D), node(D, "VariableDeclaration").
+lvalueOk(R) :- node(R, "FunctionCall"), storageTyped(R).
+
+// (Ctx, What, Text)  loud coverage check
+.decl unhandled(Ctx: symbol, What: symbol, Text: symbol)
+.output unhandled
+unhandled(Ctx, What, Text) :- unhandledAt(Ctx, What, N), text(N, Text).
+
+// Which node each id points at (contracts, functions, variables, events, statements, calls, writes,
+// assembly sites, unhandled sites). The explorer uses it to jump from any id to the tree and the source.
+.decl located(Id: symbol, N: number)
+located(S, N) :- contractName(N, S).
+located(S, N) :- functionName(N, S).
+located(S, N) :- memberOf(N, _), node(N, "EventDefinition"), name(N, S).
+located(S, N) :- memberOf(N, _), node(N, "VariableDeclaration"), name(N, S).
+located(S, N) :- topLevel(N), node(N, "VariableDeclaration"), name(N, S).
+located(S, N) :- fnParam(_, _, N), name(N, S).
+located(S, N) :- localDecl(N, _), name(N, S).
+located(S, N) :- isStmt(N), siteId(N, S).
+located(S, N) :- callNode(N, _), siteId(N, S).
+located(S, N) :- modNode(N, _), siteId(N, S).
+located(S, N) :- baseCtorSpec(N, _, _, _), siteId(N, S).
+located(S, N) :- writeAt(N, _, _), siteId(N, S).
+located(S, N) :- yulCall(N, _, Name), opaqueYul(Name), siteId(N, S).
+located(S, N) :- sstoreSite(N, _, _), siteId(N, S).
+located(cat(Ctx, "@", to_string(St), ":unhandled"), N) :- unhandledAt(Ctx, _, N), loc(N, _, St, _, _, _).
+
+// Every id has a sourceLoc row: file, first and last line, byte offset and length.
+.decl sourceLoc(Id: symbol, File: symbol, StartLine: number, EndLine: number, Start: number, Length: number)
+.output sourceLoc
+sourceLoc(Id, File, L1, L2, St, Len) :- located(Id, N), loc(N, _, St, Len, L1, L2), unit(_, File, _).

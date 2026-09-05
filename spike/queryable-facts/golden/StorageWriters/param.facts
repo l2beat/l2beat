@@ -1,0 +1,12 @@
+StorageWriters.sol:SetLib.bump(SetLib.Data)	0	StorageWriters.sol:SetLib.bump(SetLib.Data)/d@260	SetLib.Data	storage
+StorageWriters.sol:StorageWriters._add(uint256)	0	StorageWriters.sol:StorageWriters._add(uint256)/amount@1715	uint256	default
+StorageWriters.sol:StorageWriters._inc(SetLib.Data)	0	StorageWriters.sol:StorageWriters._inc(SetLib.Data)/d@1923	SetLib.Data	storage
+StorageWriters.sol:StorageWriters.addTotal(uint256)	0	StorageWriters.sol:StorageWriters.addTotal(uint256)/amount@1631	uint256	default
+StorageWriters.sol:StorageWriters.asmLetWrite(uint256)	0	StorageWriters.sol:StorageWriters.asmLetWrite(uint256)/value@2382	uint256	default
+StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)	0	StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)/value@2132	uint256	default
+StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	0	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)/key@2538	address	default
+StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	1	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)/value@2551	uint256	default
+StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)	0	StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)/value@2252	uint256	default
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	0	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)/target@2779	address	default
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	1	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)/data@2795	bytes	calldata
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)	0	StorageWriters.sol:StorageWriters.pointerWrite(uint256)/value@2008	uint256	default

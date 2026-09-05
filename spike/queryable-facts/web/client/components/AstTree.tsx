@@ -65,10 +65,11 @@ export function AstTree({
     const children = [...childNodes(node)]
     const open = expanded.has(node)
     const label = nodeLabel(node)
-    const facts =
-      typeof node.id === 'number'
-        ? index.rowsByNodeId.get(node.id)?.length
-        : index.rowsBySrc.get(node.src)?.length
+    const numId = index.numIdOf(node)
+    const concepts =
+      numId === undefined
+        ? undefined
+        : index.conceptRowsByNode.get(numId)?.length
     const line = index.lineOf(index.rangeOfNode(node).start)
     const key = typeof node.id === 'number' ? node.id : node.src
     return (
@@ -92,9 +93,9 @@ export function AstTree({
           <span className="meta">
             {typeof node.id === 'number' ? `#${node.id}` : ''} L{line}
           </span>
-          {facts ? (
-            <span className="fc" title="facts emitted from this node">
-              {facts} facts
+          {concepts ? (
+            <span className="fc" title="concept rows anchored at this node (step 4)">
+              {concepts} concept{concepts === 1 ? '' : 's'}
             </span>
           ) : null}
         </div>

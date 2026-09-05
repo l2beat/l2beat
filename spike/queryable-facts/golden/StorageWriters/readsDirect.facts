@@ -1,0 +1,7 @@
+StorageWriters.sol:Owned._track()	StorageWriters.sol:Owned.opCount
+StorageWriters.sol:Owned.onlyOwner()	StorageWriters.sol:Owned.opCount
+StorageWriters.sol:Owned.onlyOwner()	StorageWriters.sol:Owned.owner
+StorageWriters.sol:StorageWriters._add(uint256)	StorageWriters.sol:StorageWriters.total
+StorageWriters.sol:StorageWriters.bumpLib()	StorageWriters.sol:StorageWriters.libData
+StorageWriters.sol:StorageWriters.bumpParam()	StorageWriters.sol:StorageWriters.paramData
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)	StorageWriters.sol:StorageWriters.ptrData

@@ -1,10 +1,8 @@
 // Types shared by the explorer's server (web/server) and client (web/client).
 
 import type { AstNode } from '../../src/ast'
-import type { FactRow } from '../../src/extract'
 
-export type { AstNode, FactRow }
-export type { Origin } from '../../src/extract'
+export type { AstNode }
 
 export interface ContractChoice {
   id: string
@@ -89,9 +87,10 @@ export interface Program {
   relations: RelationInfo[]
 }
 
+/** Rows of one relation, split into columns. Base facts and derived relations share this shape. */
 export interface FactRelation {
   relation: string
-  rows: FactRow[]
+  rows: string[][]
 }
 
 export interface DerivedRelation {
@@ -102,7 +101,7 @@ export interface DerivedRelation {
 export interface Timings {
   resolveMs: number
   compileMs: number
-  extractMs: number
+  emitMs: number
   souffleMs: number
   reportMs: number
 }
@@ -123,8 +122,12 @@ export interface RunResult {
   }
   ast: AstNode
   storageLayout: ContractStorageLayout[]
+  /** Layer 0: the AST as facts (rules/schema.dl), exactly what Soufflé read from disk. */
   facts: FactRelation[]
+  /** Yul nodes got synthetic ids above the largest solc id; this many. */
+  syntheticIds: number
   program: Program
+  /** Everything Soufflé derived, concept relations (rules/concepts.dl) included. */
   derived: DerivedRelation[]
   souffle: { version: string; command: string; stderr: string }
   timings: Timings

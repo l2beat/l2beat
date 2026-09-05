@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from 'react'
 
-/** Keys of AST nodes the extractor actually reads; highlighted so the eye lands on them. */
+/** Keys of AST nodes the concept rules actually read; highlighted so the eye lands on them. */
 const USED_KEYS = new Set([
   'id',
   'nodeType',

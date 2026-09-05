@@ -1,0 +1,4 @@
+StorageWriters.sol:StorageWriters.asmLetWrite(uint256)@2416:85	StorageWriters.sol:StorageWriters.asmLetWrite(uint256)	1
+StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)@2166:49	StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)	1
+StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)@2585:162	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	1
+StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)@2286:63	StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)	1

@@ -1,5 +1,5 @@
 // Server-side smoke test: renders every step with a real run (no browser needed).
-//   pnpm exec tsx --tsconfig web/tsconfig.json web/smoke.ts /tmp/qf-run.json
+//   pnpm exec tsx --tsconfig web/tsconfig.json web/smoke.ts /tmp/qf-run.json [/tmp/qf-proof.json]
 import { readFileSync } from 'fs'
 import { createElement, type ReactElement } from 'react'
 import { renderToString } from 'react-dom/server'
@@ -8,44 +8,48 @@ import { type Ctx, type Nav, RunContext } from './client/lib/context'
 import { RunIndex } from './client/lib/run'
 import { Step2Compile } from './client/steps/Step2Compile'
 import { Step3Facts } from './client/steps/Step3Facts'
-import { Step4Rules } from './client/steps/Step4Rules'
-import { Step5Derive } from './client/steps/Step5Derive'
-import { Step6Report } from './client/steps/Step6Report'
+import { Step4Concepts } from './client/steps/Step4Concepts'
+import { Step5Rules } from './client/steps/Step5Rules'
+import { Step6Derive } from './client/steps/Step6Derive'
+import { Step7Report } from './client/steps/Step7Report'
 import type { RunResult } from './shared/types'
 
 const run = JSON.parse(
   readFileSync(process.argv[2] ?? '/tmp/qf-run.json', 'utf8'),
 ) as RunResult
 const index = new RunIndex(run)
-const fnNode = index.nodesById.get(
-  run.facts.find((f) => f.relation === 'writeSite')?.rows[0]?.origin?.id ?? -1,
-)
+const firstWrite = index.concepts.get('writeSite')?.[0]
+const writeNode = firstWrite ? index.nodeOfSym(firstWrite[0] ?? '') : undefined
+const writeNodeId = writeNode ? index.numIdOf(writeNode) : undefined
 
 const navs: Array<[string, Partial<Nav>]> = [
   ['plain', {}],
   [
     'node selected',
     {
-      astNode: fnNode,
-      range: fnNode ? index.rangeOfNode(fnNode) : undefined,
+      astNode: writeNode,
+      range: writeNode ? index.rangeOfNode(writeNode) : undefined,
       line: 12,
+      baseNodeId: writeNodeId,
     },
   ],
+  ['base relation child', { baseRelation: 'child', baseLine: 16 }],
   [
-    'relation stmt',
+    'concept stmt pinned',
     { relation: 'stmt', factRef: { relation: 'stmt', index: 0 } },
   ],
   ['filter line', { filterLine: 16 }],
-  ['filter node', { filterNodeId: fnNode?.id }],
+  ['filter node', { filterNodeId: writeNodeId }],
   ['derived writes', { derivedRelation: 'writes' }],
   ['focus relation', { focusRelation: 'writesOwn' }],
 ]
 const steps: Array<[string, () => ReactElement]> = [
   ['Step2Compile', () => createElement(Step2Compile)],
   ['Step3Facts', () => createElement(Step3Facts)],
-  ['Step4Rules', () => createElement(Step4Rules)],
-  ['Step5Derive', () => createElement(Step5Derive)],
-  ['Step6Report', () => createElement(Step6Report)],
+  ['Step4Concepts', () => createElement(Step4Concepts)],
+  ['Step5Rules', () => createElement(Step5Rules)],
+  ['Step6Derive', () => createElement(Step6Derive)],
+  ['Step7Report', () => createElement(Step7Report)],
 ]
 let failures = 0
 for (const [navName, patch] of navs) {
@@ -63,7 +67,7 @@ for (const [navName, patch] of navs) {
         createElement(RunContext.Provider, { value: ctx }, make()),
       )
       console.log(
-        `ok   ${name.padEnd(12)} ${navName.padEnd(16)} ${html.length} chars`,
+        `ok   ${name.padEnd(13)} ${navName.padEnd(20)} ${html.length} chars`,
       )
     } catch (e) {
       failures++
@@ -78,7 +82,7 @@ if (process.argv[3]) {
   const proof = JSON.parse(readFileSync(process.argv[3], 'utf8'))
   const ctx: Ctx = {
     index,
-    nav: { step: 5, nonce: 0 },
+    nav: { step: 6, nonce: 0 },
     setNav: () => {},
     showRange: () => {},
     showId: () => {},
@@ -91,22 +95,30 @@ if (process.argv[3]) {
     ),
   )
   console.log(
-    `ok   ProofTree ${html.length} chars; matched atoms: ${(html.match(/class="rn"/g) ?? []).length}, snippets: ${(html.match(/class="snippet"/g) ?? []).length}`,
+    `ok   ProofTree ${html.length} chars; matched atoms: ${(html.match(/class="rn"/g) ?? []).length}, snippets: ${(html.match(/class="snippet"/g) ?? []).length}, concept tags: ${(html.match(/tag concept/g) ?? []).length}`,
   )
 }
 // Index sanity
 console.log(
-  'deepestNodeAt(600):',
+  'layers:',
+  `base ${index.baseCount}, concepts ${index.conceptCount}, derived ${index.derivedCount}`,
+  '| deepestNodeAt(600):',
   index.deepestNodeAt(600)?.nodeType,
   '| shortLabel writeSite:',
-  index.shortLabel(
-    run.facts.find((f) => f.relation === 'writeSite')?.rows[1]?.cols[0] ?? '',
-  ),
+  index.shortLabel(firstWrite?.[0] ?? ''),
+  '| anchor of writeSite[0]:',
+  writeNode?.nodeType,
+  writeNodeId,
 )
 console.log(
-  'rowsByLine sizes:',
-  [...index.rowsByLine.entries()]
-    .slice(0, 8)
+  'baseRowsByLine:',
+  [...index.baseRowsByLine.entries()]
+    .slice(0, 6)
+    .map(([l, r]) => `${l}:${r.length}`)
+    .join(' '),
+  '| conceptRowsByLine:',
+  [...index.conceptRowsByLine.entries()]
+    .slice(0, 6)
     .map(([l, r]) => `${l}:${r.length}`)
     .join(' '),
 )

@@ -1,0 +1,4 @@
+StorageWriters.sol:Owned	StorageWriters.sol:Owned	0
+StorageWriters.sol:SetLib	StorageWriters.sol:SetLib	0
+StorageWriters.sol:StorageWriters	StorageWriters.sol:Owned	1
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters	0

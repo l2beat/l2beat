@@ -17,8 +17,9 @@ export function PipelineFlow({
   const nodes = [
     ['📄', 'Contract', 'one flattened .sol file'],
     ['⚙️', 'Compile', 'solc → AST + storage layout'],
-    ['🧱', 'Extract facts', 'AST → TSV, one file per relation'],
-    ['📜', 'Rules', 'Datalog: what follows from the facts'],
+    ['🧱', 'Tree as facts', 'the AST written down as rows, mechanically'],
+    ['🔎', 'Concepts', 'rules: function, statement, call, write…'],
+    ['📜', 'Rules', 'rules: call graph, writes, guards, claims'],
     ['🔁', 'Derive', 'Soufflé computes the unique model'],
   ]
   return (
@@ -185,7 +186,7 @@ export function Step1Contract({
         >
           {running ? (
             <>
-              <span className="spinner" /> running compile → extract → Soufflé…
+              <span className="spinner" /> running compile → emit → Soufflé…
             </>
           ) : hasRun && initial?.source === source ? (
             'Run again ▸'

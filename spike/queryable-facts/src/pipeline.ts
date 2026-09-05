@@ -1,5 +1,6 @@
 // The whole loop as one function, shared by the CLI (main.ts) and the web explorer (web/server):
-// compile → extract facts → run Soufflé on rules/*.dl → render report.md, everything written to one folder.
+// compile → emit the AST as facts → run Soufflé on rules/*.dl → render report.md, everything written
+// to one folder.
 
 import { spawnSync } from 'child_process'
 import {
@@ -11,17 +12,17 @@ import {
 } from 'fs'
 import { join } from 'path'
 import { type Backend, type CompileResult, compile } from './compile'
-import { extractFacts, type Facts } from './extract'
+import { emitFacts, type Facts } from './emit'
 import { renderReport } from './report'
 
-export const RULE_FILES = ['schema.dl', 'lib.dl', 'report.dl']
+export const RULE_FILES = ['schema.dl', 'concepts.dl', 'lib.dl', 'report.dl']
 
 export interface PipelineOptions {
   /** Source unit name, e.g. `Flat.sol` (also the <unit> prefix of every id). */
   unit: string
   source: string
   outDir: string
-  /** Folder with schema.dl / lib.dl / report.dl. */
+  /** Folder with schema.dl / concepts.dl / lib.dl / report.dl. */
   rulesDir: string
   /** Where solc binaries and the release list are cached. */
   cacheDir: string
@@ -31,7 +32,7 @@ export interface PipelineOptions {
   jobs?: number
   /** Add `.output` for every derived relation, not just the ones report.dl exports. */
   outputAllRelations?: boolean
-  /** Stop after extraction (no Soufflé, no report). */
+  /** Stop after emitting the base facts (no Soufflé, no report). */
   factsOnly?: boolean
 }
 
@@ -43,9 +44,11 @@ export interface RuleFile {
 export interface PipelineResult {
   outDir: string
   compiled: CompileResult
+  /** Layer 0: the AST as facts. */
   facts: Facts
   factsWritten: { rows: number; bytes: number }
-  ignoredDeclarations: number
+  /** Yul nodes carry no id in solc's JSON; this many got synthetic ids. */
+  syntheticIds: number
   ruleFiles: RuleFile[]
   /** The concatenated program Soufflé ran (empty when factsOnly). */
   program: string
@@ -56,7 +59,7 @@ export interface PipelineResult {
   timings: {
     resolveMs: number
     compileMs: number
-    extractMs: number
+    emitMs: number
     souffleMs: number
     reportMs: number
   }
@@ -150,9 +153,9 @@ export async function runPipeline(
     JSON.stringify(compiled.output),
   )
 
-  // 2. extract
+  // 2. emit the AST as facts
   const t0 = performance.now()
-  const { facts, stats } = extractFacts({
+  const { facts, syntheticIds } = emitFacts({
     unit,
     fileName: unit,
     source,
@@ -160,7 +163,7 @@ export async function runPipeline(
     solcVersion: compiled.solcVersion,
   })
   const factsWritten = facts.write(factsDir)
-  const extractMs = performance.now() - t0
+  const emitMs = performance.now() - t0
 
   const ruleFiles = readRuleFiles(opts.rulesDir)
   const result: PipelineResult = {
@@ -168,7 +171,7 @@ export async function runPipeline(
     compiled,
     facts,
     factsWritten,
-    ignoredDeclarations: stats.ignoredDeclarations,
+    syntheticIds,
     ruleFiles,
     program: '',
     derived: new Map(),
@@ -177,7 +180,7 @@ export async function runPipeline(
     timings: {
       resolveMs: compiled.timings.resolveMs,
       compileMs: compiled.timings.compileMs,
-      extractMs,
+      emitMs,
       souffleMs: 0,
       reportMs: 0,
     },
@@ -224,7 +227,7 @@ export async function runPipeline(
 
   // 4. report
   const t4 = performance.now()
-  const report = renderReport({ unit, factsDir, derivedDir })
+  const report = renderReport({ unit, derivedDir })
   writeFileSync(join(outDir, 'report.md'), report)
   const reportMs = performance.now() - t4
 

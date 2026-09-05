@@ -646,6 +646,22 @@ input[type="text"] {
   border-color: #d5d5cf;
   background: #f5f5f2;
 }
+.chip.node {
+  background: #eef1f5;
+  border-color: #cfd6df;
+  color: #2b3440;
+}
+.chip.node .k {
+  color: #6b7785;
+}
+.pn.plumbing .line {
+  opacity: 0.75;
+}
+.tag.concept {
+  background: #e8f1fb;
+  color: #1f5f99;
+  border: 1px solid #b9d3ee;
+}
 .chip.assembly,
 .chip.asm {
   border-color: #f0d38f;

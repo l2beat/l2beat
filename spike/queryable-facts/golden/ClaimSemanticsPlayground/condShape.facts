@@ -1,0 +1,14 @@
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)@599:79	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)@626:41	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.deadWrite(uint256)@1677:41	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.guardAfterWrite(uint256)@792:41	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.openOrOwner(uint256)@1422:46	or
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)@1866:41	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)@1970:39	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)@1173:161	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)@1204:41	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)@1276:47	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerWrite(uint256)@450:41	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnAfterWrite(uint256)@1053:32	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnBeforeWrite(uint256)@906:32	simple
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.setOpen(bool)@1550:41	simple

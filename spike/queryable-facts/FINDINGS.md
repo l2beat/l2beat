@@ -223,3 +223,35 @@ Proceed to the schema issue. Nothing fundamental is broken; the two things that 
 changed the plan — Soufflé being hard to ship, or the solc AST being an unfaithful base — both
 came out fine. The corpus diff should become a permanent fixture of steps 3 and 5: it found five
 real analyzer bugs in an afternoon.
+
+## Update: the extractor became rules
+
+After the explorer was reviewed, the hand-written TypeScript extractor (`src/extract.ts`, ~1500
+lines) was replaced. The objection was fair: it decided what a "write" or a "condition" is in code
+nobody could query, and its 31 relations were reverse-engineered from the report we wanted, so any
+new question ("is the branch condition caller-controlled?") needed a code change first.
+
+What changed:
+
+| Before | After |
+| --- | --- |
+| `src/extract.ts` walks the AST and emits 31 *concept* relations, deciding on the way what counts as a write, a call, a condition | `src/emit.ts` (~200 lines) writes the AST down mechanically: one rule per JSON shape (`node`, `loc`, `child`, `attr`, `num`, `attrList`, `numList`, `text`, `storageLayout`, `unit`). No Solidity knowledge. |
+| the 31 relations are `.input` | the same 31 relations are *derived* by `rules/concepts.dl` (layer 1, ~600 lines of commented Datalog) from the raw rows; `lib.dl` and `report.dl` are unchanged |
+| provenance = "the node the walker stood on" | provenance = Soufflé's proof: `why is line 28 a write to value?` answers with the rule and the raw `node`/`child`/`attr` rows |
+
+The old extractor's output is the oracle. Its TSVs for the two fixtures and 41 zora flattened files
+(solc 0.5.14 – 0.8.25) were frozen before it was deleted; the derived concept relations reproduce
+them **byte for byte on all 43 files** (`src/parity.ts`; the fixtures' goldens are checked in under
+`golden/`). The only deliberate change on the way: Yul number literals written in hex now print in
+decimal only when they fit in 64 bits, where the extractor used BigInt.
+
+Costs, measured on the same corpus: base rows grow about 15× (2.2k instead of 264 on the playground;
+974k instead of 63k across the corpus) because every field of every node is a row; Soufflé goes from
+~100 ms to ~450 ms per file (max 670 ms on a 124k-row file), still interpreter mode. One Soufflé
+bug found on the way: `match(regex, s)` on a 47 KB type string overflows the interpreter's stack, so
+the rules use `substr`/`contains` instead of regular expressions.
+
+What this buys: the researcher's question about `conditionalGuard` — "the check is a decoy because
+the caller controls `enforce`" — is now a rule away. `if (enforce)` is `node(N, "IfStatement")`,
+`child(N, "condition", 0, E)`, `node(E, "Identifier")`, `num(E, "referencedDeclaration", P)` and
+`fnParam(F, _, P)`; nothing has to be added to the emitter for it.

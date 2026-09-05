@@ -1,0 +1,2 @@
+StorageWriters.sol:StorageWriters.asmLetWrite(uint256)@2416:85	s	ident	asmViaLet.slot
+StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)@2585:162	h	expr	keccak256(0x00, 0x40)

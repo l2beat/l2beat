@@ -8,7 +8,7 @@ import { Callout, ms, Panel, Stat } from '../components/ui'
 import { useRun } from '../lib/context'
 
 /** The node without its child nodes: the fields the compiler attached to this one construct. */
-function ownFields(node: AstNode): Record<string, unknown> {
+export function ownFields(node: AstNode): Record<string, unknown> {
   const out: Record<string, unknown> = {}
   for (const [k, v] of Object.entries(node)) {
     if (k === 'typeDescriptions' || k === 'argumentTypes') continue
@@ -56,14 +56,21 @@ export function Step2Compile() {
     })
   }
 
-  const factsHere = selected
-    ? ((typeof selected.id === 'number'
-        ? index.rowsByNodeId.get(selected.id)
-        : index.rowsBySrc.get(selected.src)) ?? [])
-    : []
-  const factsByRelation = new Map<string, number>()
-  for (const r of factsHere)
-    factsByRelation.set(r.relation, (factsByRelation.get(r.relation) ?? 0) + 1)
+  const selectedId = selected ? index.numIdOf(selected) : undefined
+  const baseHere =
+    selectedId === undefined
+      ? []
+      : (index.baseRowsByNode.get(selectedId) ?? [])
+  const conceptsHere =
+    selectedId === undefined
+      ? []
+      : (index.conceptRowsByNode.get(selectedId) ?? [])
+  const conceptsByRelation = new Map<string, number>()
+  for (const r of conceptsHere)
+    conceptsByRelation.set(
+      r.relation,
+      (conceptsByRelation.get(r.relation) ?? 0) + 1,
+    )
 
   const resolvedFromText: Record<string, string> = {
     cache:
@@ -174,7 +181,7 @@ export function Step2Compile() {
             pointing back into the text. Identifiers carry{' '}
             <code>referencedDeclaration</code>: the id of the thing they name.
             That single field is what makes name resolution free for us. Fields
-            the extractor reads are <span className="used">tinted</span>.
+            the concept rules read are <span className="used">tinted</span>.
           </p>
           <div className="grid-2" style={{ alignItems: 'start' }}>
             <div style={{ maxHeight: 520, overflow: 'auto' }}>
@@ -203,46 +210,61 @@ export function Step2Compile() {
                         : 'full JSON incl. children'}
                     </button>
                   </div>
-                  {factsHere.length > 0 ? (
-                    <Callout kind="ok">
-                      <b>{factsHere.length} fact rows</b> were emitted while the
-                      extractor stood on this node:{' '}
-                      {[...factsByRelation.entries()].map(([r, n]) => (
-                        <span key={r}>
-                          <code>{r}</code>×{n}{' '}
-                        </span>
-                      ))}
-                      <button
-                        type="button"
-                        className="btn link"
-                        onClick={() =>
-                          setNav({
-                            step: 3,
-                            filterNodeId:
-                              typeof selected.id === 'number'
-                                ? selected.id
-                                : undefined,
-                            filterLine:
-                              typeof selected.id === 'number'
-                                ? undefined
-                                : index.lineOf(
-                                    index.rangeOfNode(selected).start,
-                                  ),
-                            relation: undefined,
-                            factRef: undefined,
-                          })
-                        }
-                      >
-                        see them in step 3 →
-                      </button>
-                    </Callout>
-                  ) : (
-                    <Callout kind="plain">
-                      No fact row was emitted <i>from this node itself</i>; its
-                      children or parent may carry the information (e.g. a
-                      Block's statements, an Identifier's enclosing assignment).
-                    </Callout>
-                  )}
+                  <Callout kind={conceptsHere.length > 0 ? 'ok' : 'plain'}>
+                    This node is <b>{baseHere.length} base rows</b> in step 3
+                    {selectedId !== undefined && (
+                      <>
+                        {' '}
+                        <button
+                          type="button"
+                          className="btn link"
+                          onClick={() =>
+                            setNav({
+                              step: 3,
+                              baseNodeId: selectedId,
+                              baseLine: undefined,
+                            })
+                          }
+                        >
+                          see them →
+                        </button>
+                      </>
+                    )}
+                    {conceptsHere.length > 0 ? (
+                      <>
+                        {' '}
+                        and anchors <b>{conceptsHere.length} concept rows</b>{' '}
+                        in step 4:{' '}
+                        {[...conceptsByRelation.entries()].map(([r, n]) => (
+                          <span key={r}>
+                            <code>{r}</code>×{n}{' '}
+                          </span>
+                        ))}
+                        <button
+                          type="button"
+                          className="btn link"
+                          onClick={() =>
+                            setNav({
+                              step: 4,
+                              filterNodeId: selectedId,
+                              filterLine: undefined,
+                              relation: undefined,
+                              factRef: undefined,
+                            })
+                          }
+                        >
+                          see them →
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        . No concept row is anchored <i>at this node itself</i>
+                        ; its children or parent may carry the meaning (e.g. a
+                        Block's statements, an Identifier's enclosing
+                        assignment).
+                      </>
+                    )}
+                  </Callout>
                   <JsonView
                     value={showAllJson ? selected : ownFields(selected)}
                     depth={showAllJson ? 2 : 1}
@@ -252,8 +274,8 @@ export function Step2Compile() {
               ) : (
                 <Callout kind="plain">
                   Select a node on the left, or click a word in the source, to
-                  see the JSON solc produced for it and which facts were derived
-                  from it.
+                  see the JSON solc produced for it, how it was written down as
+                  facts, and which concepts were derived from it.
                 </Callout>
               )}
             </div>
@@ -263,9 +285,9 @@ export function Step2Compile() {
         <Panel title="4 · … and the storage layout">
           <p className="small muted">
             Per contract, the compiler's assignment of state variables to
-            32-byte slots (constants and immutables have no slot). The extractor
-            copies this into the <code>storageSlot</code> relation, matching
-            entries to declarations through <code>astId</code>.
+            32-byte slots (constants and immutables have no slot). It is copied
+            verbatim into the <code>storageLayout</code> base relation; the
+            rules match its entries to declarations through <code>astId</code>.
           </p>
           {run.storageLayout.length === 0 && (
             <p className="muted">No contract with storage in this file.</p>

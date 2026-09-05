@@ -1,0 +1,4 @@
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.guardian	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground	guardian	address	mutable	public
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.open	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground	open	bool	mutable	public
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.owner	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground	owner	address	mutable	public
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.value	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground	value	uint256	mutable	public

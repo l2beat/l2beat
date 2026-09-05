@@ -7,18 +7,21 @@ import { type Range, RunIndex } from './lib/run'
 import { Step1Contract } from './steps/Step1Contract'
 import { Step2Compile } from './steps/Step2Compile'
 import { Step3Facts } from './steps/Step3Facts'
-import { Step4Rules } from './steps/Step4Rules'
-import { Step5Derive } from './steps/Step5Derive'
-import { Step6Report } from './steps/Step6Report'
+import { Step4Concepts } from './steps/Step4Concepts'
+import { Step5Rules } from './steps/Step5Rules'
+import { Step6Derive } from './steps/Step6Derive'
+import { Step7Report } from './steps/Step7Report'
 
 const STEPS = [
   ['📄', 'Contract'],
   ['⚙️', 'Compile'],
-  ['🧱', 'Extract facts'],
+  ['🧱', 'Tree as facts'],
+  ['🔎', 'Concepts'],
   ['📜', 'Rules'],
   ['🔁', 'Derive'],
   ['📊', 'Report & ask'],
 ]
+const LAST = STEPS.length
 
 export function App() {
   const [run, setRun] = useState<RunResult | undefined>()
@@ -93,10 +96,10 @@ export function App() {
               <button
                 type="button"
                 key={label}
-                className={`step-btn ${step === n ? 'active' : ''} ${run && n < step ? 'done' : ''} ${n === 6 ? 'future' : ''}`}
+                className={`step-btn ${step === n ? 'active' : ''} ${run && n < step ? 'done' : ''} ${n === LAST ? 'future' : ''}`}
                 disabled={disabled}
                 onClick={() => goTo(n)}
-                title={n === 6 ? 'placeholder — next iteration' : undefined}
+                title={n === LAST ? 'placeholder — next iteration' : undefined}
               >
                 <span className="num">{n}</span>
                 <span className="icon">{icon}</span>
@@ -117,7 +120,8 @@ export function App() {
               <span className="box">
                 solc {run.compile.solcVersion.split('+')[0]}
               </span>
-              →<span className="box">{index.factCount} facts</span>→
+              →<span className="box">{index.baseCount} base rows</span>→
+              <span className="box">{index.conceptCount} concepts</span>→
               <span className="box">
                 {run.program.items.filter((i) => i.kind === 'clause').length}{' '}
                 rules
@@ -125,13 +129,12 @@ export function App() {
               →<span className="box">{index.derivedCount} derived tuples</span>
             </span>
             <span>
-              compile {ms(run.timings.compileMs)} + extract{' '}
-              {ms(run.timings.extractMs)} + Soufflé {ms(run.timings.souffleMs)}{' '}
-              ={' '}
+              compile {ms(run.timings.compileMs)} + emit{' '}
+              {ms(run.timings.emitMs)} + Soufflé {ms(run.timings.souffleMs)} ={' '}
               <b>
                 {ms(
                   run.timings.compileMs +
-                    run.timings.extractMs +
+                    run.timings.emitMs +
                     run.timings.souffleMs,
                 )}
               </b>
@@ -162,9 +165,10 @@ export function App() {
           <RunContext.Provider value={ctx}>
             {step === 2 && <Step2Compile />}
             {step === 3 && <Step3Facts />}
-            {step === 4 && <Step4Rules />}
-            {step === 5 && <Step5Derive />}
-            {step === 6 && <Step6Report />}
+            {step === 4 && <Step4Concepts />}
+            {step === 5 && <Step5Rules />}
+            {step === 6 && <Step6Derive />}
+            {step === 7 && <Step7Report />}
           </RunContext.Provider>
         )}
       </main>
@@ -182,15 +186,17 @@ export function App() {
           {step === 1 && !run && 'Run the pipeline to unlock the next steps.'}
           {step === 2 && 'Click a word in the source, or a node in the tree.'}
           {step === 3 &&
-            'Hover the source; badges count the facts that start on each line.'}
-          {step === 4 && 'Relation names in the rules are links.'}
-          {step === 5 &&
+            'Click a word to see how its node was written down as rows.'}
+          {step === 4 &&
+            'Pin a row to see the rule that produced it and the raw rows it used.'}
+          {step === 5 && 'Relation names in the rules are links.'}
+          {step === 6 &&
             'Press “why?” on a tuple to get its proof tree from Soufflé.'}
         </span>
         <button
           type="button"
           className="btn primary"
-          disabled={!run || step === 6}
+          disabled={!run || step === LAST}
           onClick={() => goTo(step + 1)}
         >
           Next →

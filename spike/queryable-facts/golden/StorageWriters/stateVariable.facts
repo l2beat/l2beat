@@ -1,0 +1,12 @@
+StorageWriters.sol:Owned.opCount	StorageWriters.sol:Owned	opCount	uint256	mutable	internal
+StorageWriters.sol:Owned.owner	StorageWriters.sol:Owned	owner	address	mutable	public
+StorageWriters.sol:StorageWriters.asmLiteral	StorageWriters.sol:StorageWriters	asmLiteral	uint256	mutable	public
+StorageWriters.sol:StorageWriters.asmSlotRef	StorageWriters.sol:StorageWriters	asmSlotRef	uint256	mutable	public
+StorageWriters.sol:StorageWriters.asmViaLet	StorageWriters.sol:StorageWriters	asmViaLet	uint256	mutable	public
+StorageWriters.sol:StorageWriters.balances	StorageWriters.sol:StorageWriters	balances	mapping(address => uint256)	mutable	public
+StorageWriters.sol:StorageWriters.ctorOnly	StorageWriters.sol:StorageWriters	ctorOnly	uint256	mutable	public
+StorageWriters.sol:StorageWriters.libData	StorageWriters.sol:StorageWriters	libData	SetLib.Data	mutable	internal
+StorageWriters.sol:StorageWriters.neverWritten	StorageWriters.sol:StorageWriters	neverWritten	uint256	mutable	public
+StorageWriters.sol:StorageWriters.paramData	StorageWriters.sol:StorageWriters	paramData	SetLib.Data	mutable	internal
+StorageWriters.sol:StorageWriters.ptrData	StorageWriters.sol:StorageWriters	ptrData	SetLib.Data	mutable	internal
+StorageWriters.sol:StorageWriters.total	StorageWriters.sol:StorageWriters	total	uint256	mutable	public

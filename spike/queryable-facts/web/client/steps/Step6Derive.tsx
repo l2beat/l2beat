@@ -10,7 +10,7 @@ import { useRun } from '../lib/context'
 
 const HEADLINE = ['storageWriters', 'writeClaims', 'opaqueWrites', 'writes']
 
-export function Step5Derive() {
+export function Step6Derive() {
   const { index, nav, setNav } = useRun()
   const run = index.run
   const relation = nav.derivedRelation ?? 'writeClaims'
@@ -23,7 +23,7 @@ export function Step5Derive() {
   const [showSource, setShowSource] = useState(true)
   const [hoverRow, setHoverRow] = useState<number | undefined>()
 
-  const derivedRelations = derivedGroups(index)
+  const groups = derivedGroups(index)
   const clauses = run.program.items.filter(
     (i) => i.kind === 'clause' && i.head === relation,
   )
@@ -85,7 +85,7 @@ export function Step5Derive() {
               }}
             />
           ))}
-          {derivedRelations.map(([section, names]) => (
+          {groups.map(([section, names]) => (
             <div key={section}>
               <div className="g">{section.split(':')[0]}</div>
               {names.map((name) => (
@@ -102,21 +102,32 @@ export function Step5Derive() {
               ))}
             </div>
           ))}
+          <div className="g">Layer 1</div>
+          <button
+            type="button"
+            className="rel"
+            onClick={() => setNav({ step: 4 })}
+          >
+            <span>concepts → step 4</span>
+            <span className="c">{index.conceptCount}</span>
+          </button>
         </div>
       </div>
 
       <div className="pane stack">
         <div className="intro" style={{ marginBottom: 0 }}>
-          <h2>🔁 Step 5 · Let Soufflé derive everything that follows</h2>
+          <h2>🔁 Step 6 · Let Soufflé derive everything that follows</h2>
           <p className="lead">
-            Soufflé read <b>{index.factCount}</b> base facts, applied the{' '}
-            <b>{ruleCount}</b> rules to a fixpoint and derived{' '}
-            <b>{index.derivedCount}</b> tuples across{' '}
+            Soufflé read <b>{index.baseCount}</b> base rows, applied the{' '}
+            <b>{ruleCount}</b> rules of layers 1–5 to a fixpoint and derived{' '}
+            <b>{index.conceptCount}</b> concept rows plus{' '}
+            <b>{index.derivedCount}</b> analysis tuples across{' '}
             {run.derived.filter((d) => d.rows.length > 0).length} relations in{' '}
             <b>{ms(run.timings.souffleMs)}</b> (interpreter mode, including
             start-up). This is the one and only model of the program: a tuple is
             here if and only if some chain of rules produces it from the facts.
-            Press <b>why?</b> on any tuple to see that chain.
+            Press <b>why?</b> on any tuple to see that chain — all the way down
+            through the concepts of step 4 to the raw rows of step 3.
           </p>
           <div className="row small muted">
             <code>
@@ -150,7 +161,7 @@ export function Step5Derive() {
               <button
                 type="button"
                 className="btn small"
-                onClick={() => setNav({ step: 4, focusRelation: relation })}
+                onClick={() => setNav({ step: 5, focusRelation: relation })}
               >
                 rules →
               </button>
@@ -182,9 +193,13 @@ export function Step5Derive() {
                   <DatalogView
                     text={c.kind === 'clause' ? c.text : ''}
                     firstLine={c.line}
-                    onRelationClick={(name) =>
-                      setNav({ step: 4, focusRelation: name })
-                    }
+                    onRelationClick={(name) => {
+                      if (index.concepts.has(name))
+                        setNav({ step: 4, relation: name })
+                      else if (index.base.has(name))
+                        setNav({ step: 3, baseRelation: name })
+                      else setNav({ step: 5, focusRelation: name })
+                    }}
                   />
                 </div>
               ))}
@@ -248,9 +263,11 @@ export function Step5Derive() {
               <>
                 <p className="small muted">
                   Read top-down: each <b>↳</b> tuple was produced by the rule
-                  shown, from the tuples indented under it; <b>●</b> leaves are
-                  base facts from step 3 (with the source line they came from);{' '}
-                  <b>∄</b> marks a negated atom the rule checked was absent.
+                  shown, from the tuples indented under it; rows tagged{' '}
+                  <span className="tag concept">concept</span> come from step 4;{' '}
+                  <b>●</b> leaves are base rows from step 3 (with the source
+                  line of the node they describe); <b>∄</b> marks a negated atom
+                  the rule checked was absent.
                 </p>
                 <div className="proof">
                   <ProofTree node={proof.result.proof} />
@@ -310,13 +327,13 @@ function RelButton({
   )
 }
 
-/** Derived relations grouped by the section of lib.dl they are declared in. */
+/** Analysis relations (lib.dl / report.dl) grouped by the section they are declared in. */
 function derivedGroups(
   index: ReturnType<typeof useRun>['index'],
 ): Array<[string, string[]]> {
   const groups = new Map<string, string[]>()
   for (const r of index.run.program.relations) {
-    if (r.isInput) continue
+    if (r.isInput || r.file === 'concepts.dl') continue
     const list = groups.get(r.section) ?? []
     list.push(r.name)
     groups.set(r.section, list)

@@ -1,0 +1,2 @@
+StorageWriters.sol:Owned.onlyOwner()@498:41	StorageWriters.sol:Owned.owner
+StorageWriters.sol:Owned.onlyOwner()@498:41	msg.sender

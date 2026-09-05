@@ -1,0 +1,2 @@
+StorageWriters.sol:Owned.onlyOwner()@498:41	simple
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2884:34	simple

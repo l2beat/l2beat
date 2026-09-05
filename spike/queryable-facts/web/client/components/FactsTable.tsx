@@ -11,6 +11,7 @@ export function FactsTable({
   onSelect,
   extra,
   extraHeader,
+  onNodeClick,
   limit = 400,
 }: {
   columns: Column[]
@@ -21,6 +22,8 @@ export function FactsTable({
   onSelect?: (i: number) => void
   extra?: (i: number) => ReactNode
   extraHeader?: ReactNode
+  /** Base relations: what to do when an AST node id is clicked (default: highlight it in the source). */
+  onNodeClick?: (id: number) => void
   limit?: number
 }) {
   const shown = rows.slice(0, limit)
@@ -51,7 +54,12 @@ export function FactsTable({
                 key={j}
                 className={columns[j]?.type === 'number' ? 'num' : ''}
               >
-                <Cell value={v} type={columns[j]?.type} />
+                <Cell
+                  value={v}
+                  type={columns[j]?.type}
+                  column={columns[j]}
+                  onNodeClick={onNodeClick}
+                />
               </td>
             ))}
           </tr>

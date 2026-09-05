@@ -11,7 +11,7 @@ import {
 import { basename, join, relative } from 'path'
 import { fileURLToPath } from 'url'
 import { isNode } from '../../src/ast'
-import { RELATIONS } from '../../src/extract'
+import { BASE_RELATIONS } from '../../src/emit'
 import { runPipeline } from '../../src/pipeline'
 import type {
   ContractChoice,
@@ -93,16 +93,20 @@ const RUN_README = `This folder is one run of the queryable-facts pipeline (spik
   source.sol         the flattened Solidity source exactly as compiled
   solc-input.json    the standard-JSON request sent to solc (asks for the AST and the storage layout)
   solc-output.json   solc's answer: sources.<unit>.ast (compact AST) and contracts.<unit>.<Name>.storageLayout
-  facts/<rel>.facts  base facts: one tab-separated file per relation, produced by src/extract.ts from the AST
-  facts-provenance.tsv  for every fact row: relation, row, the AST node id and src it came from
-  program.dl         the Soufflé program that ran: rules/schema.dl + rules/lib.dl + rules/report.dl (+ .output for all)
-  derived/<rel>.csv  every relation Soufflé derived (tab-separated)
+  facts/<rel>.facts  layer 0, the AST as facts: one tab-separated file per relation (node, loc, child, attr,
+                     num, attrList, numList, text, storageLayout, unit), produced mechanically by src/emit.ts.
+                     Every row is something solc said; nothing here interprets Solidity.
+  program.dl         the Soufflé program that ran: rules/schema.dl (layer 0 declarations) + rules/concepts.dl
+                     (layer 1: syntax → concepts such as function, stmt, callSite, writeSite) + rules/lib.dl
+                     (layers 2-5: call graph, writes, guards, claims) + rules/report.dl (+ .output for all)
+  derived/<rel>.csv  every relation Soufflé derived (tab-separated), concept relations included
   report.md          the storage-writers style report rendered from the derived relations
   run.json           metadata: solc version, timings, counts
 
 To re-run Soufflé by hand:      souffle --no-preprocessor -F facts -D derived program.dl
 To ask why a tuple holds:       souffle --no-preprocessor -t explain -F facts -D derived program.dl
-                                then type: explain writes("<F>", "<V>")
+                                then type: explain writeSite("<W>", "<S>", "<F>", "<V>", "=")
+                                (any derived relation works, down to the raw node/child/attr rows)
 `
 
 export async function runForExplorer(
@@ -153,19 +157,10 @@ export async function runForExplorer(
     })
   }
 
-  const factRelations = Object.keys(RELATIONS).map((relation) => ({
+  const factRelations = Object.keys(BASE_RELATIONS).map((relation) => ({
     relation,
     rows: facts.entries(relation),
   }))
-  const provenance = factRelations
-    .flatMap(({ relation, rows }) =>
-      rows.map(
-        (r) =>
-          `${relation}\t${r.cols.join('\t')}\t${r.origin?.id ?? ''}\t${r.origin?.src ?? ''}`,
-      ),
-    )
-    .join('\n')
-  writeFileSync(join(runDir, 'facts-provenance.tsv'), `${provenance}\n`)
 
   const input = compiled.input as {
     sources?: Record<string, { content?: string }>
@@ -204,6 +199,7 @@ export async function runForExplorer(
     ast,
     storageLayout,
     facts: factRelations,
+    syntheticIds: result.syntheticIds,
     program: parseProgram(result.program),
     derived: [...result.derived.entries()].map(([relation, rows]) => ({
       relation,
@@ -224,7 +220,7 @@ export async function runForExplorer(
         resolvedFrom: compiled.resolvedFrom,
         souffle: result.souffle,
         timings: result.timings,
-        factRows: result.factsWritten.rows,
+        baseRows: result.factsWritten.rows,
         derivedRows: run.derived.reduce((n, d) => n + d.rows.length, 0),
       },
       null,

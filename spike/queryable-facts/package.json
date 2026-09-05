@@ -2,7 +2,7 @@
   "name": "@l2beat/spike-queryable-facts",
   "version": "0.0.0",
   "private": true,
-  "description": "L2B-14851 spike: pragma -> solc AST + storage layout -> TSV facts -> Soufflé rules, walked end to end on one contract.",
+  "description": "L2B-14851 spike: pragma -> solc AST as facts -> Souffl\u00e9 rules (syntax -> concepts -> analysis), walked end to end on one contract.",
   "scripts": {
     "facts": "tsx src/main.ts facts",
     "pipeline": "tsx src/main.ts pipeline",
@@ -11,7 +11,8 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "format": "biome format .",
     "format:fix": "biome format --write .",
-    "dev": "vite --config web/vite.config.ts"
+    "dev": "vite --config web/vite.config.ts",
+    "parity": "tsx src/parity.ts --fixtures"
   },
   "dependencies": {
     "@ethereum-sourcify/compilers": "^1.1.1",

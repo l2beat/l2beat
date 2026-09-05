@@ -1,0 +1,16 @@
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)/enforce@552	bool	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)	1	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)/next@566	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.constructor(address,address)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.constructor(address,address)/_owner@213	address	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.constructor(address,address)	1	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.constructor(address,address)/_guardian@229	address	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.deadWrite(uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.deadWrite(uint256)/next@1644	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.guardAfterWrite(uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.guardAfterWrite(uint256)/next@737	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.openOrOwner(uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.openOrOwner(uint256)/next@1389	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)/target@1810	address	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)	1	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)/data@1826	bytes	calldata
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)/ownerBranch@1122	bool	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)	1	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)/next@1140	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerWrite(uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerWrite(uint256)/next@417	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnAfterWrite(uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnAfterWrite(uint256)/next@998	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnBeforeWrite(uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnBeforeWrite(uint256)/next@873	uint256	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.setOpen(bool)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.setOpen(bool)/next@1520	bool	default
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.unguardedWrite(uint256)	0	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.unguardedWrite(uint256)/next@339	uint256	default

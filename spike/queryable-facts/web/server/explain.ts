@@ -2,6 +2,7 @@
 // (`souffle -t explain`), and turns the JSON it prints into a small tree.
 
 import { spawnSync } from 'child_process'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import type { Column, ExplainResult, ProofNode } from '../shared/types'
 
@@ -85,12 +86,32 @@ function convert(raw: RawProof, rules: RawRule[]): ProofNode {
   return { kind: 'constraint', text: axiom, children: [] }
 }
 
+/**
+ * program.dl with a single `.output`: the relation being explained. In provenance mode Soufflé
+ * writes every output relation with its proof annotations, which costs seconds for 200 relations;
+ * with no output at all it computes nothing (dead relations are removed). One output keeps exactly
+ * the relation asked about and everything it depends on.
+ */
+function explainProgram(runDir: string, relation: string): string {
+  if (!/^\w+$/.test(relation)) throw new Error(`bad relation name ${relation}`)
+  const path = join(runDir, `program.explain.${relation}.dl`)
+  if (!existsSync(path)) {
+    const text = readFileSync(join(runDir, 'program.dl'), 'utf8')
+      .split('\n')
+      .filter((line) => !/^\.output\b/.test(line))
+      .join('\n')
+    writeFileSync(path, `${text}\n.output ${relation}\n`)
+  }
+  return path
+}
+
 export function explainTuple(
   souffle: string,
   runDir: string,
   atom: string,
 ): ExplainResult {
   const t0 = performance.now()
+  const relation = /^(\w+)\(/.exec(atom)?.[1] ?? ''
   const run = spawnSync(
     souffle,
     [
@@ -101,7 +122,7 @@ export function explainTuple(
       join(runDir, 'facts'),
       '-D',
       join(runDir, 'derived'),
-      join(runDir, 'program.dl'),
+      explainProgram(runDir, relation),
     ],
     {
       encoding: 'utf8',

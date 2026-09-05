@@ -1,0 +1,14 @@
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)@599:79	enforce
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.conditionalGuard(bool,uint256)@626:41	msg.sender == owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.deadWrite(uint256)@1677:41	msg.sender == owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.guardAfterWrite(uint256)@792:41	msg.sender == owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.openOrOwner(uint256)@1422:46	open || msg.sender == owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)@1866:41	msg.sender == owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)@1970:39	success
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)@1173:161	ownerBranch
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)@1204:41	msg.sender == owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerOrGuardian(bool,uint256)@1276:47	msg.sender == guardian
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerWrite(uint256)@450:41	msg.sender == owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnAfterWrite(uint256)@1053:32	msg.sender != owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.returnBeforeWrite(uint256)@906:32	msg.sender != owner
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.setOpen(bool)@1550:41	msg.sender == owner

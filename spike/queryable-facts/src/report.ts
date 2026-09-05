@@ -19,19 +19,15 @@ function code(items: string[]): string {
 
 export interface ReportInput {
   unit: string
-  factsDir: string
+  /** Soufflé's output folder: concept relations (stateVariable, function, storageSlot, ...) live there too. */
   derivedDir: string
 }
 
-export function renderReport({
-  unit,
-  factsDir,
-  derivedDir,
-}: ReportInput): string {
+export function renderReport({ unit, derivedDir }: ReportInput): string {
   const label = (id: string): string =>
     id.startsWith(`${unit}:`) ? id.slice(unit.length + 1) : id
-  const fact = (name: string) => readTsv(join(factsDir, `${name}.facts`))
   const derived = (name: string) => readTsv(join(derivedDir, `${name}.csv`))
+  const fact = derived
 
   const typeOf = new Map<string, string>()
   for (const [V, , , type] of fact('stateVariable'))

@@ -1,0 +1,40 @@
+StorageWriters.sol:Owned._track()@673:29	StorageWriters.sol:Owned._track()	Block		0
+StorageWriters.sol:Owned._track()@683:12	StorageWriters.sol:Owned._track()	ExpressionStatement	StorageWriters.sol:Owned._track()@673:29	0
+StorageWriters.sol:Owned.constructor()@426:35	StorageWriters.sol:Owned.constructor()	Block		0
+StorageWriters.sol:Owned.constructor()@436:18	StorageWriters.sol:Owned.constructor()	ExpressionStatement	StorageWriters.sol:Owned.constructor()@426:35	0
+StorageWriters.sol:Owned.onlyOwner()@488:91	StorageWriters.sol:Owned.onlyOwner()	Block		0
+StorageWriters.sol:Owned.onlyOwner()@498:41	StorageWriters.sol:Owned.onlyOwner()	ExpressionStatement	StorageWriters.sol:Owned.onlyOwner()@488:91	0
+StorageWriters.sol:Owned.onlyOwner()@549:12	StorageWriters.sol:Owned.onlyOwner()	ExpressionStatement	StorageWriters.sol:Owned.onlyOwner()@488:91	1
+StorageWriters.sol:Owned.onlyOwner()@571:1	StorageWriters.sol:Owned.onlyOwner()	PlaceholderStatement	StorageWriters.sol:Owned.onlyOwner()@488:91	2
+StorageWriters.sol:Owned.tracked()@604:36	StorageWriters.sol:Owned.tracked()	Block		0
+StorageWriters.sol:Owned.tracked()@614:8	StorageWriters.sol:Owned.tracked()	ExpressionStatement	StorageWriters.sol:Owned.tracked()@604:36	0
+StorageWriters.sol:Owned.tracked()@632:1	StorageWriters.sol:Owned.tracked()	PlaceholderStatement	StorageWriters.sol:Owned.tracked()@604:36	1
+StorageWriters.sol:SetLib.bump(SetLib.Data)@285:25	StorageWriters.sol:SetLib.bump(SetLib.Data)	Block		0
+StorageWriters.sol:SetLib.bump(SetLib.Data)@295:8	StorageWriters.sol:SetLib.bump(SetLib.Data)	ExpressionStatement	StorageWriters.sol:SetLib.bump(SetLib.Data)@285:25	0
+StorageWriters.sol:StorageWriters._add(uint256)@1740:32	StorageWriters.sol:StorageWriters._add(uint256)	Block		0
+StorageWriters.sol:StorageWriters._add(uint256)@1750:15	StorageWriters.sol:StorageWriters._add(uint256)	ExpressionStatement	StorageWriters.sol:StorageWriters._add(uint256)@1740:32	0
+StorageWriters.sol:StorageWriters._inc(SetLib.Data)@1955:25	StorageWriters.sol:StorageWriters._inc(SetLib.Data)	Block		0
+StorageWriters.sol:StorageWriters._inc(SetLib.Data)@1965:8	StorageWriters.sol:StorageWriters._inc(SetLib.Data)	ExpressionStatement	StorageWriters.sol:StorageWriters._inc(SetLib.Data)@1955:25	0
+StorageWriters.sol:StorageWriters.addTotal(uint256)@1666:29	StorageWriters.sol:StorageWriters.addTotal(uint256)	Block		0
+StorageWriters.sol:StorageWriters.addTotal(uint256)@1676:12	StorageWriters.sol:StorageWriters.addTotal(uint256)	ExpressionStatement	StorageWriters.sol:StorageWriters.addTotal(uint256)@1666:29	0
+StorageWriters.sol:StorageWriters.asmLetWrite(uint256)@2406:101	StorageWriters.sol:StorageWriters.asmLetWrite(uint256)	Block		0
+StorageWriters.sol:StorageWriters.asmLetWrite(uint256)@2416:85	StorageWriters.sol:StorageWriters.asmLetWrite(uint256)	InlineAssembly	StorageWriters.sol:StorageWriters.asmLetWrite(uint256)@2406:101	0
+StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)@2156:65	StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)	Block		0
+StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)@2166:49	StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)	InlineAssembly	StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)@2156:65	0
+StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)@2575:178	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	Block		0
+StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)@2585:162	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	InlineAssembly	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)@2575:178	0
+StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)@2276:79	StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)	Block		0
+StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)@2286:63	StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)	InlineAssembly	StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)@2276:79	0
+StorageWriters.sol:StorageWriters.bumpLib()@1804:31	StorageWriters.sol:StorageWriters.bumpLib()	Block		0
+StorageWriters.sol:StorageWriters.bumpLib()@1814:14	StorageWriters.sol:StorageWriters.bumpLib()	ExpressionStatement	StorageWriters.sol:StorageWriters.bumpLib()@1804:31	0
+StorageWriters.sol:StorageWriters.bumpParam()@1871:32	StorageWriters.sol:StorageWriters.bumpParam()	Block		0
+StorageWriters.sol:StorageWriters.bumpParam()@1881:15	StorageWriters.sol:StorageWriters.bumpParam()	ExpressionStatement	StorageWriters.sol:StorageWriters.bumpParam()@1871:32	0
+StorageWriters.sol:StorageWriters.constructor()@1578:29	StorageWriters.sol:StorageWriters.constructor()	Block		0
+StorageWriters.sol:StorageWriters.constructor()@1588:12	StorageWriters.sol:StorageWriters.constructor()	ExpressionStatement	StorageWriters.sol:StorageWriters.constructor()@1578:29	0
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2825:100	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	Block		0
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2835:39	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	VariableDeclarationStatement	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2825:100	0
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2884:34	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	ExpressionStatement	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2825:100	1
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)@2032:69	StorageWriters.sol:StorageWriters.pointerWrite(uint256)	Block		0
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)@2042:31	StorageWriters.sol:StorageWriters.pointerWrite(uint256)	VariableDeclarationStatement	StorageWriters.sol:StorageWriters.pointerWrite(uint256)@2032:69	0
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)@2083:11	StorageWriters.sol:StorageWriters.pointerWrite(uint256)	ExpressionStatement	StorageWriters.sol:StorageWriters.pointerWrite(uint256)@2032:69	1
+StorageWriters.sol:StorageWriters.trackedWrite()@2972:75	StorageWriters.sol:StorageWriters.trackedWrite()	Block		0

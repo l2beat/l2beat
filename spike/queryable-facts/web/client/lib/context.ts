@@ -11,13 +11,18 @@ export interface Nav {
   line?: number
   nonce: number
   astNode?: AstNode
+  /** Step 3: base relation being browsed, and the node whose rows are listed. */
+  baseRelation?: string
+  baseNodeId?: number
+  baseLine?: number
+  /** Step 4: concept relation being browsed, pinned row, and filters by node / line. */
   relation?: string
   factRef?: RowRef
-  derivedRelation?: string
-  /** Step 3 filters: facts that came from one AST node / one source line. */
   filterNodeId?: number
   filterLine?: number
-  /** Step 4: scroll to the card of this relation. */
+  /** Step 6: derived relation being browsed. */
+  derivedRelation?: string
+  /** Steps 4/5: scroll to the card of this relation. */
   focusRelation?: string
 }
 

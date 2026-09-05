@@ -1,0 +1,8 @@
+StorageWriters.sol:Owned._track()@683:12	StorageWriters.sol:Owned._track()@683:12	StorageWriters.sol:Owned._track()	StorageWriters.sol:Owned.opCount	+=
+StorageWriters.sol:Owned.constructor()@436:18	StorageWriters.sol:Owned.constructor()@436:18	StorageWriters.sol:Owned.constructor()	StorageWriters.sol:Owned.owner	=
+StorageWriters.sol:Owned.onlyOwner()@549:12	StorageWriters.sol:Owned.onlyOwner()@549:12	StorageWriters.sol:Owned.onlyOwner()	StorageWriters.sol:Owned.opCount	+=
+StorageWriters.sol:SetLib.bump(SetLib.Data)@295:8	StorageWriters.sol:SetLib.bump(SetLib.Data)@295:8	StorageWriters.sol:SetLib.bump(SetLib.Data)	StorageWriters.sol:SetLib.bump(SetLib.Data)/d@260	+=
+StorageWriters.sol:StorageWriters._add(uint256)@1750:15	StorageWriters.sol:StorageWriters._add(uint256)@1750:15	StorageWriters.sol:StorageWriters._add(uint256)	StorageWriters.sol:StorageWriters.total	+=
+StorageWriters.sol:StorageWriters._inc(SetLib.Data)@1965:8	StorageWriters.sol:StorageWriters._inc(SetLib.Data)@1965:8	StorageWriters.sol:StorageWriters._inc(SetLib.Data)	StorageWriters.sol:StorageWriters._inc(SetLib.Data)/d@1923	+=
+StorageWriters.sol:StorageWriters.constructor()@1588:12	StorageWriters.sol:StorageWriters.constructor()@1588:12	StorageWriters.sol:StorageWriters.constructor()	StorageWriters.sol:StorageWriters.ctorOnly	=
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)@2083:11	StorageWriters.sol:StorageWriters.pointerWrite(uint256)@2083:11	StorageWriters.sol:StorageWriters.pointerWrite(uint256)	StorageWriters.sol:StorageWriters.pointerWrite(uint256)/d@2042	=

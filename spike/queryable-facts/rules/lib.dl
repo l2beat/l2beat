@@ -1,6 +1,7 @@
 // =============================================================================
 // Rule library (spike). Layers, bottom to top: structure → call graph → writes → guards → claims.
-// All analysis lives here; the extractor only states facts. Every relation below is *derived*:
+// These rules never look at the raw tree: they read the concept relations that rules/concepts.dl
+// derives from it (function, stmt, callSite, writeSite, ...). Every relation below is *derived*:
 // Soufflé computes it from the base facts, and can explain any tuple back down to those facts.
 //
 // Reading a rule:  head(X, Y) :- body1(X, Z), body2(Z, Y), !body3(X).
@@ -9,7 +10,7 @@
 // =============================================================================
 
 // ---------------------------------------------------------------------------
-// Layer 1: structure
+// Layer 2: structure
 // Which contracts matter, which functions they really have, what can be called from outside.
 // ---------------------------------------------------------------------------
 
@@ -52,7 +53,7 @@ entryPoint(C, F) :-
     (Vis = "public" ; Vis = "external").
 
 // ---------------------------------------------------------------------------
-// Layer 2: call graph
+// Layer 3: call graph
 // Who calls whom, first textually, then resolved inside one deployable contract.
 // ---------------------------------------------------------------------------
 
@@ -108,7 +109,7 @@ reachesFrom(C, "constructor", Ctor) :- ctorChain(C, Ctor).
 reachesFrom(C, E, G) :- reachesFrom(C, E, F), callsIn(C, F, G).
 
 // ---------------------------------------------------------------------------
-// Layer 3: state writes
+// Layer 4: state writes
 // From "this statement assigns to that variable" to "this entry point can change that slot".
 // ---------------------------------------------------------------------------
 
@@ -199,7 +200,7 @@ possibleTargets(K, V) :- opaqueWrite(_, K, "assembly", _), asmSstore(K, A, _, _,
 containsAssembly(C, E, F) :- reachesFrom(C, E, F), assembly(_, F, _).
 
 // ---------------------------------------------------------------------------
-// Layer 4: guards — the syntactic v1 of `guardedBy`. Everything here is heuristic:
+// Layer 5: guards — the syntactic v1 of `guardedBy`. Everything here is heuristic:
 // it reads the statement tree, not a control-flow graph (see L2B-14860).
 // The question it answers: "is msg.sender checked before this write can take effect?"
 // ---------------------------------------------------------------------------

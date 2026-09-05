@@ -2,9 +2,9 @@
 //
 //   tsx src/main.ts pipeline <file.sol> [--unit <id>] [--out <dir>] [--backend native|solcjs]
 //                                      [--solc <x.y.z>] [--souffle <bin>] [--jobs <n>]
-//   tsx src/main.ts facts    <file.sol> [...same]          # compile + extract only
+//   tsx src/main.ts facts    <file.sol> [...same]          # compile + emit base facts only
 //
-// pipeline = compile → extract facts → run Soufflé on rules/*.dl → render report.md
+// pipeline = compile → emit the AST as facts → run Soufflé on rules/*.dl → render report.md
 // (the loop itself lives in pipeline.ts, shared with the web explorer in web/).
 
 import { readFileSync } from 'fs'
@@ -101,11 +101,9 @@ async function main(): Promise<void> {
     .map(([name, rows]) => `${name}=${rows.size}`)
     .join(' ')
   console.log(
-    `[extract] ${factsWritten.rows} rows, ${(factsWritten.bytes / 1024).toFixed(1)} KiB in ${ms(timings.extractMs)}; ${result.ignoredDeclarations} declaration(s) deliberately not modelled; ${facts.count('unhandled')} unhandled`,
+    `[emit] ${factsWritten.rows} rows, ${(factsWritten.bytes / 1024).toFixed(1)} KiB in ${ms(timings.emitMs)}; ${facts.count('node')} AST nodes (${result.syntheticIds} Yul nodes given synthetic ids)`,
   )
-  console.log(`[extract] ${counts}`)
-  for (const { cols } of facts.entries('unhandled'))
-    console.log(`[extract] UNHANDLED ${cols.join('\t')}`)
+  console.log(`[emit] ${counts}`)
   if (args.cmd === 'facts') return
 
   if (result.souffle.stderr) console.log(`[souffle] ${result.souffle.stderr}`)
@@ -115,9 +113,11 @@ async function main(): Promise<void> {
   console.log(
     `[souffle] ${ms(timings.souffleMs)} (interpreter, -j${args.jobs}); ${sizes}`,
   )
+  for (const cols of result.derived.get('unhandled') ?? [])
+    console.log(`[souffle] UNHANDLED ${cols.join('\t')}`)
   console.log(`[report] ${join(outDir, 'report.md')}`)
   console.log(
-    `[timing] compile ${ms(timings.compileMs)} + extract ${ms(timings.extractMs)} + souffle ${ms(timings.souffleMs)} = ${ms(timings.compileMs + timings.extractMs + timings.souffleMs)} (excluding one-off solc resolution/download)`,
+    `[timing] compile ${ms(timings.compileMs)} + emit ${ms(timings.emitMs)} + souffle ${ms(timings.souffleMs)} = ${ms(timings.compileMs + timings.emitMs + timings.souffleMs)} (excluding one-off solc resolution/download)`,
   )
   console.log(`\n${result.report}`)
 }

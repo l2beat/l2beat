@@ -1,0 +1,2 @@
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)/ok@2836	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	ok	bool	default
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)/d@2042	StorageWriters.sol:StorageWriters.pointerWrite(uint256)	d	SetLib.Data	storage

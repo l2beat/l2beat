@@ -1,136 +1,70 @@
 // =============================================================================
-// Base relations (spike schema v0). Produced by src/extract.ts, one TSV per relation.
+// Layer 0: base facts — what solc said, verbatim.
 //
-// Ids are stable, human-readable symbols scoped by code unit:
-//   contract        <unit>:<Contract>
-//   function        <unit>:<Contract>.<name>(<paramTypes>)     (constructor(), fallback(), receive(), modifiers alike)
-//   free function   <unit>:<name>(<paramTypes>)
-//   state variable  <unit>:<Contract>.<name>
-//   parameter/local <function>/<name>@<offset>
-//   site (stmt, call, write, asm) <function>@<offset>:<length>
-// Every id has a sourceLoc row. The <unit> is the flattened file name for now.
+// These are the only relations read from disk (`.input`). They are produced by src/emit.ts,
+// which walks solc's compact JSON AST and writes every object and every field down once, using
+// an encoding that depends only on the *shape* of the JSON, never on what a field means:
+//
+//   { nodeType, id, src, ... }    →  node(Id, Type)  loc(Id, Src, Start, Len, Line, EndLine)  text(Id, Text)
+//   field holding another node    →  child(Parent, Field, Index, Child)
+//   field holding a string/bool   →  attr(Id, Field, Value)
+//   field holding a number        →  num(Id, Field, Value)
+//   field holding an array        →  one row per element with its Index (child / attrList / numList)
+//   field holding a plain object  →  flattened with dotted keys ("typeDescriptions.typeString")
+//
+// Nothing here knows what a function or an assignment is. That knowledge lives in the next
+// layer (rules/concepts.dl), where every step from syntax to meaning is a rule that Soufflé can
+// explain back down to these rows.
 // =============================================================================
 
-.decl codeUnit(Unit: symbol, File: symbol, Solc: symbol)
-.input codeUnit
+// The source unit this run is about: its id prefix, the file name solc saw, the compiler version.
+.decl unit(Unit: symbol, File: symbol, Solc: symbol)
+.input unit
 
-// Kind: contract | interface | library. Abstract: 0/1.
-.decl contract(C: symbol, Name: symbol, Kind: symbol, Abstract: number)
-.input contract
+// One row per AST node: solc's own node id and its nodeType ("FunctionDefinition", "Assignment",
+// "YulFunctionCall", ...). Yul nodes have no id in solc's JSON and get synthetic ids above the
+// largest solc id.
+.decl node(Id: number, Type: symbol)
+.input node
 
-// C3 linearization as solc reports it: Order 0 is C itself, then bases most-derived first.
-.decl inherits(C: symbol, Base: symbol, Order: number)
-.input inherits
+// Where a node sits in the source. Src is solc's "<start>:<length>:<file>" string, Start/Len decode it
+// (bytes), StartLine/EndLine are 1-based lines of the first and last byte.
+.decl loc(Id: number, Src: symbol, Start: number, Len: number, StartLine: number, EndLine: number)
+.input loc
 
-// `using Lib for T;` (Type "*" for `using ... for *`).
-.decl usingFor(C: symbol, Lib: symbol, Type: symbol)
-.input usingFor
+// The tree itself: node Child sits in field Field of node Parent. Index is the position when the
+// field is an array (`statements`, `arguments`, `parameters`, ...), 0 otherwise. Fields inside plain
+// objects inside arrays are flattened with dotted keys ("functionList.definition").
+.decl child(Parent: number, Field: symbol, Index: number, Child: number)
+.input child
 
-// Kind: function | constructor | fallback | receive | freeFunction | modifier. C is "" for free functions.
-.decl function(F: symbol, C: symbol, Name: symbol, Sig: symbol, Kind: symbol, Vis: symbol, Mut: symbol, Selector: symbol)
-.input function
+// String and boolean fields of a node: name, operator, visibility, kind, stateMutability,
+// storageLocation, memberName, value, "typeDescriptions.typeString", ... Booleans are "true"/"false".
+.decl attr(Id: number, Key: symbol, Value: symbol)
+.input attr
 
-.decl overrides(F: symbol, Base: symbol)
-.input overrides
+// Numeric fields of a node. The important one is referencedDeclaration: the id of the node an
+// Identifier / MemberAccess / IdentifierPath refers to (solc's name resolution, for free).
+// Builtins (`require`, `msg`, ...) have negative ids that the JSON prints as uint32 (>= 2^31).
+.decl num(Id: number, Key: symbol, Value: number)
+.input num
 
-// Location: default | storage | memory | calldata.
-.decl param(F: symbol, Index: number, P: symbol, Type: symbol, Location: symbol)
-.input param
+// Strings/booleans inside arrays, with their index: `names` of a call with named arguments,
+// "externalReferences.src" / "externalReferences.isSlot" of an inline assembly block, ...
+.decl attrList(Id: number, Key: symbol, Index: number, Value: symbol)
+.input attrList
 
-.decl localVar(L: symbol, F: symbol, Name: symbol, Type: symbol, Location: symbol)
-.input localVar
+// Numbers inside arrays, with their index: linearizedBaseContracts (the C3 order, most-derived
+// first), baseFunctions (what an override overrides), "externalReferences.declaration", ...
+.decl numList(Id: number, Key: symbol, Index: number, Value: number)
+.input numList
 
-// Mutability: mutable | constant | immutable. C is "" for file-level constants.
-.decl stateVariable(V: symbol, C: symbol, Name: symbol, Type: symbol, Mutability: symbol, Vis: symbol)
-.input stateVariable
+// The source text under a node, collapsed to one line and cut at 200 characters. Display only:
+// no rule should reason about text when the tree is available.
+.decl text(Id: number, Text: symbol)
+.input text
 
-// State variable declared with an inline initializer (runs at deployment).
-.decl initializer(V: symbol, Text: symbol)
-.input initializer
-
-// solc's storageLayout for contract C: constants and immutables never appear here.
-.decl storageSlot(C: symbol, V: symbol, Slot: number, Offset: number)
-.input storageSlot
-
-.decl event(E: symbol, C: symbol, Name: symbol)
-.input event
-
-// F has a body (abstract functions and interface members do not).
-.decl functionBody(F: symbol, B: symbol)
-.input functionBody
-
-// Statement tree: Kind is the AST node type; Parent is the enclosing statement ("" for the body block).
-.decl stmt(S: symbol, F: symbol, Kind: symbol, Parent: symbol, Index: number)
-.input stmt
-
-// X is an if/loop statement or a require/assert call site.
-.decl condition(X: symbol, Text: symbol)
-.input condition
-
-// Top-level boolean shape of the condition: simple | and | or | not.
-.decl condShape(X: symbol, Shape: symbol)
-.input condShape
-
-// The condition of X mentions What: "msg.sender", "tx.origin", ..., a state variable id, or a callee id.
-.decl refs(X: symbol, What: symbol)
-.input refs
-
-// F writes Target (a state variable, or a storage reference local/parameter) at site W inside statement S.
-// Op: = += -= ... ++ -- delete push pop
-.decl writeSite(W: symbol, S: symbol, F: symbol, Target: symbol, Op: symbol)
-.input writeSite
-
-.decl readsDirect(F: symbol, V: symbol)
-.input readsDirect
-
-// Storage reference R (local/param with `storage` location) is bound to X: a state variable or another reference.
-.decl refBinding(R: symbol, X: symbol)
-.input refBinding
-
-// Kind: internal | internalExplicit (super.f / Base.f) | modifier | baseConstructor | library | external |
-//       lowLevel (Callee = call/delegatecall/staticcall/send/transfer) | builtin (Callee = require/assert/revert/...) |
-//       emit | error | new | typeConversion | structConstructor | arrayOp (push/pop) | functionPointer | unknown
-// S is "" for modifier invocations and base-constructor calls (they sit on the function header).
-.decl callSite(K: symbol, S: symbol, F: symbol, Kind: symbol, Callee: symbol, Text: symbol)
-.input callSite
-
-// Call K passes X (state variable or storage reference) as the callee's parameter Index
-// (for `using for` bound calls the receiver is parameter 0).
-.decl argBinding(K: symbol, Index: number, X: symbol)
-.input argBinding
-
-// Inline assembly block A inside F. Opaque by design: rules must treat it as "anything may happen here".
-// HasYul is 0 for solc < 0.6, where the AST carries only the assembly text: treat the block as fully opaque.
-.decl assembly(A: symbol, F: symbol, HasYul: number)
-.input assembly
-
-// Yul calls with storage or control effects: delegatecall | callcode | call | staticcall | create | create2 | selfdestruct | tstore.
-.decl asmCall(K: symbol, A: symbol, Name: symbol)
-.input asmCall
-
-// Solidity variable V referenced from Yul under YulName; Kind: slot | offset | value.
-.decl asmExtRef(A: symbol, YulName: symbol, V: symbol, Kind: symbol)
-.input asmExtRef
-
-// sstore(<slot>, ...) sites. SlotKind: literal | ident | expr. SlotNum is the literal as a number, else -1.
-.decl asmSstore(K: symbol, A: symbol, SlotKind: symbol, SlotText: symbol, SlotNum: number)
-.input asmSstore
-
-// `let Var := <value>` / `Var := <value>` in Yul, single-variable form.
-.decl asmLet(A: symbol, Var: symbol, ValueKind: symbol, ValueText: symbol)
-.input asmLet
-
-// F's Index-th return value is the storage reference X (a state variable, a local/param, or a call result).
-.decl returnsRef(F: symbol, Index: number, X: symbol)
-.input returnsRef
-
-// X = "<K>#<Index>" names the Index-th value returned by call K; used as a write target / binding source.
-.decl callResult(X: symbol, K: symbol, Index: number)
-.input callResult
-
-.decl sourceLoc(Id: symbol, File: symbol, StartLine: number, EndLine: number, Start: number, Length: number)
-.input sourceLoc
-
-// Loud coverage check: AST constructs the extractor met but does not model.
-.decl unhandled(Ctx: symbol, What: symbol, Text: symbol)
-.input unhandled
+// solc's storageLayout for each contract, one row per state variable that occupies storage
+// (constants and immutables never appear). AstId is the VariableDeclaration's node id.
+.decl storageLayout(Contract: symbol, AstId: number, Label: symbol, Slot: number, Offset: number, Type: symbol)
+.input storageLayout

@@ -1,0 +1,9 @@
+StorageWriters.sol:Owned.onlyOwner()@498:41	StorageWriters.sol:Owned.onlyOwner()@498:41	StorageWriters.sol:Owned.onlyOwner()	builtin	require	require(msg.sender == owner, "not owner")
+StorageWriters.sol:Owned.tracked()@614:8	StorageWriters.sol:Owned.tracked()@614:8	StorageWriters.sol:Owned.tracked()	internal	StorageWriters.sol:Owned._track()	_track()
+StorageWriters.sol:StorageWriters.addTotal(uint256)@1656:9		StorageWriters.sol:StorageWriters.addTotal(uint256)	modifier	StorageWriters.sol:Owned.onlyOwner()	onlyOwner
+StorageWriters.sol:StorageWriters.addTotal(uint256)@1676:12	StorageWriters.sol:StorageWriters.addTotal(uint256)@1676:12	StorageWriters.sol:StorageWriters.addTotal(uint256)	internal	StorageWriters.sol:StorageWriters._add(uint256)	_add(amount)
+StorageWriters.sol:StorageWriters.bumpLib()@1814:14	StorageWriters.sol:StorageWriters.bumpLib()@1814:14	StorageWriters.sol:StorageWriters.bumpLib()	library	StorageWriters.sol:SetLib.bump(SetLib.Data)	libData.bump()
+StorageWriters.sol:StorageWriters.bumpParam()@1881:15	StorageWriters.sol:StorageWriters.bumpParam()@1881:15	StorageWriters.sol:StorageWriters.bumpParam()	internal	StorageWriters.sol:StorageWriters._inc(SetLib.Data)	_inc(paramData)
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2849:25	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2835:39	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	lowLevel	delegatecall	target.delegatecall(data)
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2884:34	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2884:34	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	builtin	require	require(ok, "delegatecall failed")
+StorageWriters.sol:StorageWriters.trackedWrite()@2964:7		StorageWriters.sol:StorageWriters.trackedWrite()	modifier	StorageWriters.sol:Owned.tracked()	tracked

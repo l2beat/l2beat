@@ -1,0 +1,18 @@
+StorageWriters.sol:Owned._track()	StorageWriters.sol:Owned	_track	_track()	function	internal	nonpayable	
+StorageWriters.sol:Owned.constructor()	StorageWriters.sol:Owned	constructor	constructor()	constructor	public	nonpayable	
+StorageWriters.sol:Owned.onlyOwner()	StorageWriters.sol:Owned	onlyOwner	onlyOwner()	modifier	internal		
+StorageWriters.sol:Owned.tracked()	StorageWriters.sol:Owned	tracked	tracked()	modifier	internal		
+StorageWriters.sol:SetLib.bump(SetLib.Data)	StorageWriters.sol:SetLib	bump	bump(SetLib.Data)	function	internal	nonpayable	
+StorageWriters.sol:StorageWriters._add(uint256)	StorageWriters.sol:StorageWriters	_add	_add(uint256)	function	internal	nonpayable	
+StorageWriters.sol:StorageWriters._inc(SetLib.Data)	StorageWriters.sol:StorageWriters	_inc	_inc(SetLib.Data)	function	internal	nonpayable	
+StorageWriters.sol:StorageWriters.addTotal(uint256)	StorageWriters.sol:StorageWriters	addTotal	addTotal(uint256)	function	external	nonpayable	3ff435ab
+StorageWriters.sol:StorageWriters.asmLetWrite(uint256)	StorageWriters.sol:StorageWriters	asmLetWrite	asmLetWrite(uint256)	function	external	nonpayable	e59b17d4
+StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)	StorageWriters.sol:StorageWriters	asmLiteralWrite	asmLiteralWrite(uint256)	function	external	nonpayable	191ca316
+StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	StorageWriters.sol:StorageWriters	asmMappingWrite	asmMappingWrite(address,uint256)	function	external	nonpayable	b2c09e57
+StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)	StorageWriters.sol:StorageWriters	asmSlotRefWrite	asmSlotRefWrite(uint256)	function	external	nonpayable	9404c49c
+StorageWriters.sol:StorageWriters.bumpLib()	StorageWriters.sol:StorageWriters	bumpLib	bumpLib()	function	public	nonpayable	f315d02e
+StorageWriters.sol:StorageWriters.bumpParam()	StorageWriters.sol:StorageWriters	bumpParam	bumpParam()	function	external	nonpayable	f31e091c
+StorageWriters.sol:StorageWriters.constructor()	StorageWriters.sol:StorageWriters	constructor	constructor()	constructor	public	nonpayable	
+StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	StorageWriters.sol:StorageWriters	doDelegate	doDelegate(address,bytes)	function	external	nonpayable	e59f343a
+StorageWriters.sol:StorageWriters.pointerWrite(uint256)	StorageWriters.sol:StorageWriters	pointerWrite	pointerWrite(uint256)	function	external	nonpayable	8254129f
+StorageWriters.sol:StorageWriters.trackedWrite()	StorageWriters.sol:StorageWriters	trackedWrite	trackedWrite()	function	external	nonpayable	384dceb2

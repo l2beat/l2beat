@@ -1,27 +1,38 @@
 import { useMemo, useState } from 'react'
 import { FactsTable } from '../components/FactsTable'
-import { IdChip } from '../components/IdChip'
+import { NodeChip } from '../components/IdChip'
+import { JsonView } from '../components/JsonView'
 import { type Highlight, SourceView } from '../components/SourceView'
 import { Callout, kib, ms, Panel } from '../components/ui'
 import { useRun } from '../lib/context'
 import type { RowRef } from '../lib/run'
+import { ownFields } from './Step2Compile'
 
-/** Base relations grouped the way a reader thinks about a contract. */
-export const FACT_GROUPS: Array<[string, string[]]> = [
-  ['Structure', ['codeUnit', 'contract', 'inherits', 'usingFor', 'event']],
-  ['Functions', ['function', 'overrides', 'param', 'localVar', 'functionBody']],
-  ['State', ['stateVariable', 'initializer', 'storageSlot']],
-  ['Statements & conditions', ['stmt', 'condition', 'condShape', 'refs']],
-  [
-    'Writes & references',
-    ['writeSite', 'readsDirect', 'refBinding', 'returnsRef', 'callResult'],
-  ],
-  ['Calls', ['callSite', 'argBinding']],
-  [
-    'Inline assembly',
-    ['assembly', 'asmExtRef', 'asmSstore', 'asmLet', 'asmCall'],
-  ],
-  ['Bookkeeping', ['sourceLoc', 'unhandled']],
+/** The encoding, as a table: which JSON shape becomes which relation. */
+const ENCODING: Array<[string, string, string]> = [
+  ['an object with nodeType', 'node(Id, Type)', 'one row per AST node'],
+  ['…its src', 'loc(Id, Src, Start, Len, Line, EndLine)', 'decoded into bytes and lines'],
+  ['…the text under it', 'text(Id, Text)', 'one line, cut at 200 chars (display only)'],
+  ['a field holding a node', 'child(Parent, Field, Index, Child)', 'the tree edges'],
+  ['a string or boolean field', 'attr(Id, Key, Value)', 'name, operator, visibility, kind, …'],
+  ['a number field', 'num(Id, Key, Value)', 'referencedDeclaration, scope, …'],
+  ['strings inside an array', 'attrList(Id, Key, Index, Value)', 'e.g. names of named arguments'],
+  ['numbers inside an array', 'numList(Id, Key, Index, Value)', 'e.g. linearizedBaseContracts'],
+  ['solc’s storage layout', 'storageLayout(Contract, AstId, Label, Slot, Offset, Type)', 'copied verbatim'],
+  ['the run itself', 'unit(Unit, File, Solc)', 'id prefix, file, compiler version'],
+]
+
+const BASE_ORDER = [
+  'node',
+  'loc',
+  'text',
+  'child',
+  'attr',
+  'num',
+  'attrList',
+  'numList',
+  'storageLayout',
+  'unit',
 ]
 
 export function Step3Facts() {
@@ -30,60 +41,67 @@ export function Step3Facts() {
   const [hoverLine, setHoverLine] = useState<number | undefined>()
   const [hoverRow, setHoverRow] = useState<RowRef | undefined>()
   const [raw, setRaw] = useState(false)
-  const relation = nav.relation ?? 'writeSite'
+  const relation = nav.baseRelation ?? 'node'
   const info = index.relations.get(relation)
-  const rows = index.facts.get(relation) ?? []
+  const rows = index.base.get(relation) ?? []
 
   const badges = useMemo(() => {
     const m = new Map<number, number>()
-    for (const [line, refs] of index.rowsByLine) m.set(line, refs.length)
+    for (const [line, refs] of index.baseRowsByLine) m.set(line, refs.length)
     return m
   }, [index])
 
-  // Filtered view: facts that came from one line or one node.
-  const filtered: RowRef[] | undefined =
-    nav.filterNodeId !== undefined
-      ? (index.rowsByNodeId.get(nav.filterNodeId) ?? [])
-      : nav.filterLine !== undefined
-        ? (index.rowsByLine.get(nav.filterLine) ?? [])
-        : undefined
-  const filterLabel =
-    nav.filterNodeId !== undefined
-      ? `facts emitted from AST node #${nav.filterNodeId} (${index.nodesById.get(nav.filterNodeId)?.nodeType ?? '?'})`
-      : nav.filterLine !== undefined
-        ? `facts whose origin starts on line ${nav.filterLine}`
-        : undefined
+  const nodeId = nav.baseNodeId
+  const node = nodeId === undefined ? undefined : index.nodeOfNumId(nodeId)
+  const nodeRows = nodeId === undefined ? [] : (index.baseRowsByNode.get(nodeId) ?? [])
+  const nodeRange = nodeId === undefined ? undefined : index.rangeOfNodeId(nodeId)
+  const conceptsHere =
+    nodeId === undefined ? [] : (index.conceptRowsByNode.get(nodeId) ?? [])
 
-  const selectedRow = nav.factRef ? index.row(nav.factRef) : undefined
-  const selectedRange = index.rangeOfOrigin(selectedRow?.origin)
-  const hoverRange = hoverRow
-    ? index.rangeOfOrigin(index.row(hoverRow)?.origin)
-    : undefined
+  // Nodes that start on the badge-clicked line.
+  const lineNodes = useMemo(() => {
+    if (nav.baseLine === undefined) return []
+    const ids = new Set<number>()
+    for (const ref of index.baseRowsByLine.get(nav.baseLine) ?? []) {
+      const id = index.anchorNodeId(ref)
+      if (id !== undefined) ids.add(id)
+    }
+    return [...ids].sort((a, b) => {
+      const la = index.locOfNode.get(a)
+      const lb = index.locOfNode.get(b)
+      return (la?.start ?? 0) - (lb?.start ?? 0) || (lb?.length ?? 0) - (la?.length ?? 0)
+    })
+  }, [index, nav.baseLine])
+
+  const hoverRange = hoverRow ? index.rangeOfRow(hoverRow) : undefined
   const highlights: Highlight[] = []
-  if (selectedRange) highlights.push({ ...selectedRange, kind: 'primary' })
+  if (nodeRange) highlights.push({ ...nodeRange, kind: 'primary' })
+  else if (nav.range) highlights.push({ ...nav.range, kind: 'primary' })
   if (hoverRange) highlights.push({ ...hoverRange, kind: 'secondary' })
-  if (nav.range && !selectedRange)
-    highlights.push({ ...nav.range, kind: 'primary' })
-  const activeLine = hoverLine ?? nav.filterLine
 
-  const selectRow = (ref: RowRef) => {
-    const row = index.row(ref)
-    const range = index.rangeOfOrigin(row?.origin)
+  const selectNode = (id: number) => {
+    const range = index.rangeOfNodeId(id)
     setNav({
-      factRef: ref,
+      baseNodeId: id,
+      baseLine: undefined,
       range,
       line: range ? index.lineOf(range.start) : undefined,
       nonce: nav.nonce + 1,
     })
   }
 
+  const bytes = run.facts.reduce(
+    (n, f) => n + f.rows.reduce((m, r) => m + r.join('\t').length + 1, 0),
+    0,
+  )
+
   return (
     <div className="step split">
       <div className="pane">
         <div className="pane-head">
           <h3>
-            Source · badge = facts that start on this line · click a badge to
-            list them
+            Source · badge = rows about nodes that start on this line · click a
+            word to pick its node
           </h3>
         </div>
         <SourceView
@@ -91,358 +109,293 @@ export function Step3Facts() {
           lang="solidity"
           highlights={highlights}
           badges={badges}
-          activeLine={activeLine}
+          activeLine={hoverLine ?? nav.baseLine}
           scrollTo={nav.line ? { line: nav.line, nonce: nav.nonce } : undefined}
           onLineEnter={setHoverLine}
           onLineLeave={() => setHoverLine(undefined)}
           onBadgeClick={(line) =>
-            setNav({
-              filterLine: line,
-              filterNodeId: undefined,
-              factRef: undefined,
-              range: undefined,
-            })
+            setNav({ baseLine: line, baseNodeId: undefined, range: undefined })
           }
-          onLineClick={(line) => {
-            if (index.rowsByLine.has(line))
-              setNav({
-                filterLine: line,
-                filterNodeId: undefined,
-                factRef: undefined,
-                range: undefined,
-              })
+          onOffsetClick={(offset) => {
+            const n = index.deepestNodeAt(offset)
+            const id = n ? index.numIdOf(n) : undefined
+            if (id !== undefined) selectNode(id)
           }}
         />
       </div>
       <div className="pane stack">
         <div className="intro" style={{ marginBottom: 0 }}>
-          <h2>🧱 Step 3 · Write down what the tree says, as facts</h2>
+          <h2>🧱 Step 3 · Write the tree down as facts, and nothing else</h2>
           <p className="lead">
-            The extractor walks the AST once and records what it sees, one row
-            per observation, in tab-separated files: one file per{' '}
-            <b>relation</b>. It never reasons. No "transitively", no "always": a
-            function exists, a statement sits inside another, this assignment
-            targets that variable, this call names that function. Every row is
-            something the compiler already knew, re-encoded so a query engine
-            can join on it. Reasoning is the job of the rules in the next step.
+            Layer 0 is the compiler's answer re-encoded as rows, mechanically.
+            The emitter (<code>src/emit.ts</code>) has no idea what a function
+            or an assignment is: it walks the JSON and applies one rule per JSON
+            shape — an object becomes a <code>node</code> row, a field that
+            holds another object becomes a <code>child</code> edge, a string
+            field becomes an <code>attr</code>, a number a <code>num</code>.
+            Nothing is selected, summarised or interpreted, so there is nothing
+            here to argue about: every row is something solc said. The meaning
+            (this node is a <i>write to that variable</i>) comes in the next
+            step, as rules you can read.
           </p>
           <div className="stats">
             <span className="stat">
-              <span className="v">{index.factCount}</span>
-              <span className="l">fact rows</span>
+              <span className="v">{index.baseCount}</span>
+              <span className="l">rows</span>
             </span>
             <span className="stat">
-              <span className="v">
-                {run.facts.filter((f) => f.rows.length > 0).length}/
-                {run.facts.length}
-              </span>
-              <span className="l">relations non-empty</span>
+              <span className="v">{index.base.get('node')?.length ?? 0}</span>
+              <span className="l">AST nodes</span>
             </span>
             <span className="stat">
-              <span className="v">{ms(run.timings.extractMs)}</span>
-              <span className="l">to extract</span>
+              <span className="v">{run.syntheticIds}</span>
+              <span className="l">Yul nodes given ids</span>
             </span>
             <span className="stat">
-              <span className="v">
-                {kib(
-                  run.facts.reduce(
-                    (n, f) =>
-                      n +
-                      f.rows.reduce(
-                        (m, r) => m + r.cols.join('\t').length + 1,
-                        0,
-                      ),
-                    0,
-                  ),
-                )}
-              </span>
+              <span className="v">{kib(bytes)}</span>
               <span className="l">of TSV</span>
+            </span>
+            <span className="stat">
+              <span className="v">{ms(run.timings.emitMs)}</span>
+              <span className="l">to emit</span>
             </span>
           </div>
         </div>
 
-        <Panel title="How to read an id" tight>
+        <Panel title="The encoding · one rule per JSON shape" tight>
           <div className="panel-body">
-            <div className="legend">
-              <code>{run.unit}:Owner</code>
-              <span>
-                a contract: <i>unit</i>:<i>Name</i>
-              </span>
-              <code>…:Owner.transfer(address)</code>
-              <span>
-                a function, constructor, modifier: <i>contract</i>.<i>name</i>(
-                <i>param types</i>)
-              </span>
-              <code>…:Owner.owner</code>
-              <span>
-                a state variable: <i>contract</i>.<i>name</i>
-              </span>
-              <code>…transfer(address)/to@612</code>
-              <span>
-                a parameter or local: <i>function</i>/<i>name</i>@
-                <i>byte offset</i>
-              </span>
-              <code>…transfer(address)@640:17</code>
-              <span>
-                a site (statement, call, write, assembly): <i>function</i>@
-                <i>offset</i>:<i>length</i>
-              </span>
-            </div>
+            <table className="plain">
+              <tbody>
+                {ENCODING.map(([shape, rel, note]) => (
+                  <tr key={rel}>
+                    <td className="small">{shape}</td>
+                    <td className="mono small">→ {rel}</td>
+                    <td className="small muted">{note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             <p className="small muted" style={{ marginTop: 6 }}>
-              Ids are plain strings, readable without a lookup table, and stable
-              across runs as long as the text does not move. Every id has a{' '}
-              <code>sourceLoc</code> row; the chips in the tables are clickable
-              and jump to it.
+              Nested plain objects flatten into dotted keys (
+              <code>typeDescriptions.typeString</code>); Yul nodes, which solc
+              leaves without an id, get synthetic ids above the largest one.
+              The full declaration with comments is <code>rules/schema.dl</code>
+              .
             </p>
           </div>
         </Panel>
 
-        {filtered ? (
+        {nav.baseLine !== undefined && node === undefined && (
           <Panel
-            title={
-              <span>
-                {filterLabel} · {filtered.length} row(s)
-              </span>
-            }
+            title={`Nodes that start on line ${nav.baseLine}`}
             actions={
               <button
                 type="button"
                 className="btn small"
-                onClick={() =>
-                  setNav({ filterLine: undefined, filterNodeId: undefined })
-                }
-              >
-                ✕ back to browsing by relation
-              </button>
-            }
-          >
-            {filtered.length === 0 && (
-              <p className="muted">Nothing was emitted from here.</p>
-            )}
-            {[...new Set(filtered.map((r) => r.relation))].map((rel) => {
-              const refs = filtered.filter((r) => r.relation === rel)
-              const cols = index.relations.get(rel)?.columns ?? []
-              return (
-                <div key={rel} style={{ marginBottom: 12 }}>
-                  <div className="row" style={{ marginBottom: 4 }}>
-                    <b className="mono">{rel}</b>
-                    <span className="muted small">
-                      {index.relations.get(rel)?.comment.split('\n')[0]}
-                    </span>
-                    <button
-                      type="button"
-                      className="btn link small"
-                      onClick={() =>
-                        setNav({
-                          relation: rel,
-                          filterLine: undefined,
-                          filterNodeId: undefined,
-                        })
-                      }
-                    >
-                      all {index.facts.get(rel)?.length ?? 0} rows →
-                    </button>
-                  </div>
-                  <FactsTable
-                    columns={cols}
-                    rows={refs.map((r) => index.row(r)?.cols ?? [])}
-                    selected={refs.findIndex(
-                      (r) =>
-                        nav.factRef &&
-                        r.relation === nav.factRef.relation &&
-                        r.index === nav.factRef.index,
-                    )}
-                    onHover={(i) =>
-                      setHoverRow(i === undefined ? undefined : refs[i])
-                    }
-                    onSelect={(i) => {
-                      const ref = refs[i]
-                      if (ref) selectRow(ref)
-                    }}
-                  />
-                </div>
-              )
-            })}
-          </Panel>
-        ) : (
-          <>
-            <div className="rel-groups">
-              {FACT_GROUPS.map(([group, names]) => (
-                <div className="rel-group" key={group}>
-                  <div className="g">{group}</div>
-                  <div className="rel-list">
-                    {names.map((name) => {
-                      const n = index.facts.get(name)?.length ?? 0
-                      return (
-                        <button
-                          type="button"
-                          key={name}
-                          className={`rel ${relation === name ? 'active' : ''} ${n === 0 ? 'empty' : ''}`}
-                          onClick={() =>
-                            setNav({
-                              relation: name,
-                              factRef: undefined,
-                              range: undefined,
-                            })
-                          }
-                        >
-                          {name}
-                          <span className="c">{n}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <Panel
-              title={
-                <span className="mono">
-                  {relation}({info?.columns.map((c) => c.name).join(', ')})
-                </span>
-              }
-              actions={
-                <>
-                  <span className="muted small">{rows.length} rows</span>
-                  <button
-                    type="button"
-                    className="btn small"
-                    onClick={() => setRaw(!raw)}
-                  >
-                    {raw ? 'table' : `raw ${relation}.facts`}
-                  </button>
-                </>
-              }
-              tight
-            >
-              <div className="panel-body" style={{ paddingBottom: 0 }}>
-                {info?.comment ? (
-                  <p className="small" style={{ color: '#3a3f47' }}>
-                    {info.comment}
-                  </p>
-                ) : (
-                  <p className="small muted">
-                    (no comment in schema.dl for this relation)
-                  </p>
-                )}
-                <p className="small muted">
-                  Hover a row to see where it came from; click to pin it and
-                  inspect its origin.
-                </p>
-              </div>
-              {raw ? (
-                <pre className="tsv">
-                  {rows.map((r) => r.cols.join('\t')).join('\n') ||
-                    '(empty file)'}
-                </pre>
-              ) : (
-                <div style={{ maxHeight: 460, overflow: 'auto' }}>
-                  <FactsTable
-                    columns={info?.columns ?? []}
-                    rows={rows.map((r) => r.cols)}
-                    selected={
-                      nav.factRef?.relation === relation
-                        ? nav.factRef.index
-                        : undefined
-                    }
-                    onHover={(i) =>
-                      setHoverRow(
-                        i === undefined ? undefined : { relation, index: i },
-                      )
-                    }
-                    onSelect={(i) => selectRow({ relation, index: i })}
-                  />
-                </div>
-              )}
-            </Panel>
-          </>
-        )}
-
-        {selectedRow && nav.factRef && (
-          <Panel
-            title="Where the pinned row came from"
-            actions={
-              <button
-                type="button"
-                className="btn small"
-                onClick={() => setNav({ factRef: undefined, range: undefined })}
+                onClick={() => setNav({ baseLine: undefined })}
               >
                 ✕
               </button>
             }
           >
-            <p className="mono small" style={{ wordBreak: 'break-all' }}>
-              {nav.factRef.relation}
-              {'\t'}
-              {selectedRow.cols.join(' ⇥ ')}
+            <p className="small muted">
+              Outermost first. Pick one to see every row that describes it.
             </p>
-            {selectedRow.origin ? (
-              <>
-                <p className="small">
-                  Emitted while the extractor visited the{' '}
-                  <b className="mono">{selectedRow.origin.nodeType}</b> node
-                  {selectedRow.origin.id !== undefined ? (
-                    <span className="mono"> #{selectedRow.origin.id}</span>
-                  ) : (
-                    ' (a Yul node)'
-                  )}
-                  , which covers lines{' '}
-                  {selectedRange
-                    ? `${index.lineOf(selectedRange.start)}–${index.lineOf(Math.max(selectedRange.end - 1, 0))}`
-                    : '?'}{' '}
-                  of the source (highlighted).
-                </p>
-                <div className="row">
-                  <button
-                    type="button"
-                    className="btn small"
-                    onClick={() => {
-                      const node = index.nodeOfOrigin(selectedRow.origin)
-                      setNav({
-                        step: 2,
-                        astNode: node,
-                        range: selectedRange,
-                        line: selectedRange
-                          ? index.lineOf(selectedRange.start)
-                          : undefined,
-                        nonce: nav.nonce + 1,
-                      })
-                    }}
-                  >
-                    show this node in the AST (step 2)
-                  </button>
-                  <button
-                    type="button"
-                    className="btn small"
-                    onClick={() => showRange(selectedRange)}
-                  >
-                    re-center source
-                  </button>
-                </div>
-                <p className="small muted" style={{ marginTop: 6 }}>
-                  Columns that are ids:{' '}
-                  {selectedRow.cols
-                    .filter((c) => index.isId(c))
-                    .map((c) => (
-                      <IdChip key={c} id={c} />
-                    ))}
-                </p>
-              </>
-            ) : (
-              <p className="small muted">
-                This row has no single origin node (e.g. <code>codeUnit</code>{' '}
-                describes the whole file).
-              </p>
-            )}
+            <div className="row" style={{ flexWrap: 'wrap' }}>
+              {lineNodes.map((id) => (
+                <NodeChip key={id} id={id} onClick={selectNode} />
+              ))}
+            </div>
           </Panel>
         )}
 
+        {node && nodeId !== undefined && (
+          <Panel
+            title={
+              <span>
+                One node, all its rows ·{' '}
+                <span className="mono">
+                  {node.nodeType} #{nodeId}
+                </span>
+                <span className="muted small">
+                  {' '}
+                  · lines {index.locOfNode.get(nodeId)?.startLine}–
+                  {index.locOfNode.get(nodeId)?.endLine}
+                </span>
+              </span>
+            }
+            actions={
+              <>
+                <button
+                  type="button"
+                  className="btn small"
+                  onClick={() =>
+                    setNav({
+                      step: 2,
+                      astNode: node,
+                      range: nodeRange,
+                      line: nodeRange ? index.lineOf(nodeRange.start) : undefined,
+                      nonce: nav.nonce + 1,
+                    })
+                  }
+                >
+                  in the AST (step 2)
+                </button>
+                <button
+                  type="button"
+                  className={`btn small ${conceptsHere.length === 0 ? 'muted' : ''}`}
+                  onClick={() =>
+                    setNav({
+                      step: 4,
+                      filterNodeId: nodeId,
+                      filterLine: undefined,
+                      relation: undefined,
+                      factRef: undefined,
+                    })
+                  }
+                >
+                  {conceptsHere.length} concept
+                  {conceptsHere.length === 1 ? '' : 's'} derived here → step 4
+                </button>
+                <button
+                  type="button"
+                  className="btn small"
+                  onClick={() =>
+                    setNav({ baseNodeId: undefined, range: undefined })
+                  }
+                >
+                  ✕
+                </button>
+              </>
+            }
+          >
+            <div className="grid-2">
+              <div>
+                <p className="small muted" style={{ marginTop: 0 }}>
+                  What solc wrote (own fields, children collapsed):
+                </p>
+                <JsonView value={ownFields(node)} depth={1} />
+              </div>
+              <div>
+                <p className="small muted" style={{ marginTop: 0 }}>
+                  What the emitter wrote down ({nodeRows.length} rows):
+                </p>
+                {BASE_ORDER.filter((rel) =>
+                  nodeRows.some((r) => r.relation === rel),
+                ).map((rel) => {
+                  const refs = nodeRows.filter((r) => r.relation === rel)
+                  return (
+                    <div key={rel} style={{ marginBottom: 8 }}>
+                      <div className="row" style={{ marginBottom: 2 }}>
+                        <b className="mono small">{rel}</b>
+                        {rel === 'child' && (
+                          <span className="muted small">
+                            (as parent and as child)
+                          </span>
+                        )}
+                      </div>
+                      <FactsTable
+                        columns={index.relations.get(rel)?.columns ?? []}
+                        rows={refs.map((r) => index.row(r) ?? [])}
+                        onHover={(i) =>
+                          setHoverRow(i === undefined ? undefined : refs[i])
+                        }
+                        onNodeClick={selectNode}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </Panel>
+        )}
+
+        <div className="rel-groups">
+          <div className="rel-group">
+            <div className="g">Base relations · rules/schema.dl</div>
+            <div className="rel-list">
+              {BASE_ORDER.map((name) => {
+                const n = index.base.get(name)?.length ?? 0
+                return (
+                  <button
+                    type="button"
+                    key={name}
+                    className={`rel ${relation === name ? 'active' : ''} ${n === 0 ? 'empty' : ''}`}
+                    onClick={() => setNav({ baseRelation: name })}
+                  >
+                    {name}
+                    <span className="c">{n}</span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
+        <Panel
+          title={
+            <span className="mono">
+              {relation}({info?.columns.map((c) => c.name).join(', ')})
+            </span>
+          }
+          actions={
+            <>
+              <span className="muted small">{rows.length} rows</span>
+              <button
+                type="button"
+                className="btn small"
+                onClick={() => setRaw(!raw)}
+              >
+                {raw ? 'table' : `raw ${relation}.facts`}
+              </button>
+            </>
+          }
+          tight
+        >
+          <div className="panel-body" style={{ paddingBottom: 0 }}>
+            {info?.comment && (
+              <p className="small" style={{ color: '#3a3f47' }}>
+                {info.comment}
+              </p>
+            )}
+            <p className="small muted">
+              Hover a row to see the node it is about; click a node chip to pin
+              that node and list all its rows.
+            </p>
+          </div>
+          {raw ? (
+            <pre className="tsv">
+              {rows
+                .slice(0, 400)
+                .map((r) => r.join('\t'))
+                .join('\n') || '(empty file)'}
+              {rows.length > 400 ? `\n… ${rows.length - 400} more rows` : ''}
+            </pre>
+          ) : (
+            <div style={{ maxHeight: 460, overflow: 'auto' }}>
+              <FactsTable
+                columns={info?.columns ?? []}
+                rows={rows}
+                onHover={(i) =>
+                  setHoverRow(i === undefined ? undefined : { relation, index: i })
+                }
+                onSelect={(i) => {
+                  const id = index.anchorNodeId({ relation, index: i })
+                  if (id !== undefined) selectNode(id)
+                  else showRange(undefined)
+                }}
+                onNodeClick={selectNode}
+              />
+            </div>
+          )}
+        </Panel>
+
         <Callout kind="plain">
           <b>Where this lives on disk:</b>{' '}
-          <code>{run.runDir}/facts/&lt;relation&gt;.facts</code>, plus{' '}
-          <code>facts-provenance.tsv</code> mapping every row to the AST node it
-          came from.
+          <code>{run.runDir}/facts/&lt;relation&gt;.facts</code> — exactly the
+          files Soufflé reads with <code>.input</code>. There is no separate
+          provenance file any more: a row's origin is the node id in its first
+          column.
         </Callout>
       </div>
     </div>
