@@ -13,6 +13,15 @@ interface Props extends AppLayoutProps {
 
 export function TokensPage({ firstPage, ...props }: Props) {
   const [opened, setOpened] = useState<TokenGraphTile>()
+  // The full graph wants a wide viewport, and its details drawer would sit
+  // under the dialog on a phone; the token page has room for both.
+  const open = (tile: TokenGraphTile) => {
+    if (tile.href && window.matchMedia('(max-width: 767px)').matches) {
+      window.location.assign(tile.href)
+      return
+    }
+    setOpened(tile)
+  }
 
   return (
     <AppLayout {...props}>
@@ -21,7 +30,7 @@ export function TokensPage({ firstPage, ...props }: Props) {
           Tokens
         </MainPageHeader>
         <div className="max-md:px-4">
-          <TokenGraphGrid firstPage={firstPage} onOpen={setOpened} />
+          <TokenGraphGrid firstPage={firstPage} onOpen={open} />
         </div>
         <TokenGraphDialog tile={opened} onClose={() => setOpened(undefined)} />
       </SideNavLayout>
