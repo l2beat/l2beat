@@ -5,7 +5,10 @@ import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
-import type { ConfigReader } from '../config/ConfigReader'
+import {
+  type ConfigReader,
+  getReferencedProjects,
+} from '../config/ConfigReader'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { PermissionsConfig } from '../config/PermissionConfig'
 import type {
@@ -91,12 +94,24 @@ export function addReferencedDiscoveries(
   configReader: ConfigReader,
   logger: Logger = Logger.SILENT,
 ): void {
-  const referenced = loadDiscoveriesForModelling(project, configReader)
-
-  for (const name of referenced.getSortedProjects()) {
-    if (name === project) {
+  // Membership comes from the fresh crawl, versions from disk. Re-reading the
+  // base file here would miss a newly reached module (or retain a removed one).
+  const fresh = discoveries.get(project).discoveryOutput
+  const seen = new Set([project])
+  const pending = getReferencedProjects(fresh)
+  const referenced = new DiscoveryRegistry()
+  for (const name of pending) {
+    if (seen.has(name)) {
       continue
     }
+    seen.add(name)
+    const discovery = configReader.readDiscovery(name)
+    referenced.set(name, discovery)
+    pending.push(...getReferencedProjects(discovery))
+  }
+
+  // Only update the caller's registry after every reference has been read.
+  for (const name of referenced.getSortedProjects()) {
     logger.info(`Modelling against referenced project ${name}`)
     discoveries.set(name, referenced.get(name).discoveryOutput)
   }

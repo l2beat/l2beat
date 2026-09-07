@@ -128,6 +128,38 @@ describe(entriesForDiffPair.name, () => {
 
     expect(entries.map((e) => e.address)).toEqual([TIMELOCK, COUNCIL])
   })
+
+  for (const removed of [false, true]) {
+    it(`keeps a permission change visible when its Reference is ${removed ? 'removed' : 'added'}`, () => {
+      const without = output([contract(TIMELOCK)], {})
+      const withReference = output([contract(TIMELOCK), reference(COUNCIL)], {
+        [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
+      })
+      const [previous, current] = removed
+        ? [withReference, without]
+        : [without, withReference]
+
+      const diff = diffDiscovery(...entriesForDiffPair(previous, current))
+
+      expect(diff.length).toEqual(1)
+      expect(diff[0]?.type).toEqual(undefined)
+      expect(diff[0]?.diff?.map((field) => field.key) ?? []).toInclude(
+        'receivedPermissions',
+      )
+    })
+  }
+
+  it('does not mutate the discoveries being diffed', () => {
+    const before = output([contract(TIMELOCK)], {})
+    const after = output([contract(TIMELOCK), reference(COUNCIL)], {
+      [COUNCIL]: { receivedPermissions: [perm(TIMELOCK)] },
+    })
+    const original = structuredClone([before, after])
+
+    diffDiscovery(...entriesForDiffPair(before, after))
+
+    expect([before, after]).toEqual(original)
+  })
 })
 
 function address(hex: string): ChainSpecificAddress {

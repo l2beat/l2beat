@@ -28,10 +28,11 @@ export function entriesForDiffPair(
   // entry on either side must keep its own creation or deletion: standing in
   // for it would turn a newly deployed contract that happens to hold a
   // permission into a Reference-to-contract field modification.
-  const discovered = new Set([
-    ...(previous?.entries ?? []).map((entry) => entry.address.toString()),
-    ...(current?.entries ?? []).map((entry) => entry.address.toString()),
-  ])
+  const discovered = new Set(
+    [...(previous?.entries ?? []), ...(current?.entries ?? [])]
+      .filter((entry) => entry.type !== 'Reference')
+      .map((entry) => entry.address.toString()),
+  )
   const holders = new Set(
     [
       ...Object.keys(previous?.permissions ?? {}),

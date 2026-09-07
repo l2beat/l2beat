@@ -149,6 +149,57 @@ describe(combinePermissionsIntoDiscovery.name, () => {
       COUNCIL,
     ])
   })
+
+  it('uses the full target category even when a Reference precedes it', () => {
+    const discovery = output([reference(TIMELOCK), contract(COUNCIL)])
+    combinePermissionsIntoDiscovery(
+      discovery,
+      {
+        ...permissions([upgrade(COUNCIL, TIMELOCK)]),
+        eoasWithUpgradePermissions: [COUNCIL],
+      },
+      [
+        ...discovery.entries,
+        {
+          ...contract(TIMELOCK),
+          category: { name: 'Non-critical', priority: 0 },
+        },
+      ],
+    )
+
+    expect(discovery.permissions?.[COUNCIL]?.eoaWithUpgradePermissions).toEqual(
+      undefined,
+    )
+    expect(
+      discovery.permissions?.[COUNCIL]?.receivedPermissions ?? [],
+    ).toHaveLength(1)
+  })
+
+  it('can write one model twice without reversing the caller or the first result', () => {
+    const giver = address('0x444')
+    const first = output([
+      contract(giver),
+      contract(TIMELOCK),
+      contract(PROXY_ADMIN),
+      contract(COUNCIL),
+    ])
+    const second = structuredClone(first)
+    const model = permissions([
+      {
+        ...upgrade(COUNCIL, giver),
+        via: [{ address: TIMELOCK }, { address: PROXY_ADMIN }],
+      },
+    ])
+    const original = structuredClone(model)
+
+    combinePermissionsIntoDiscovery(first, model, first.entries)
+    const stored = structuredClone(first.permissions)
+    combinePermissionsIntoDiscovery(second, model, second.entries)
+
+    expect(model).toEqual(original)
+    expect(first.permissions).toEqual(stored)
+    expect(second.permissions).toEqual(stored)
+  })
 })
 
 function address(hex: string): ChainSpecificAddress {

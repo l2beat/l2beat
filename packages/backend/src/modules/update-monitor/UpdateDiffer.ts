@@ -241,9 +241,8 @@ const UPGRADE = 'upgrade'
 //   receivedPermissions.N         one element was added or removed
 //   receivedPermissions.N.field   one element was modified in place
 //
-// Only the third leaves the latest array safe to index. Adding or removing an
-// element shifts every index after it, so reading `latest[N]` there answers a
-// question about a different permission entirely.
+// Only the third uses an array index, and it indexes the previous array.
+// Added or removed elements must be read from their serialised values.
 function involvesUpgrade(
   f: FieldDiff,
   previous: ReceivedPermission[],

@@ -7,6 +7,7 @@ import {
 } from '../discovery/config/getDiscoveryPaths'
 import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery'
 import {
+  clusterEntries,
   loadDiscoveriesForModelling,
   modelPermissions,
 } from '../discovery/modelling/modelPermissions'
@@ -47,9 +48,7 @@ export async function modelPermissionsCommand(
     project,
     ultimatePermissions,
     configReader,
-    discoveries
-      .getSortedProjects()
-      .flatMap((name) => discoveries.get(name).discoveryOutput.entries),
+    clusterEntries(discoveries),
   )
 }
 
