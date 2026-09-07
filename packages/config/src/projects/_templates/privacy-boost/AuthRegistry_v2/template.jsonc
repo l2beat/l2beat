@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry of PrivacyBoost account authorization keys and onchain spend approvals. Supports BabyJubJub keys authorized by account-owner signatures, approval-only accounts and revocable batches of spend approvals. Tracks current and recently superseded auth roots; forced withdrawals validate live auth records directly.",
+  "ignoreMethods": [
+    "authTreeCount",
+    "authTreeRoot",
+    "getAuthKeys",
+    "nonces",
+    "ownerOf",
+    "approvalOnly"
+  ],
+  "ignoreInWatchMode": [
+    "registryRoot",
+    "getAllAuthTreeRoots",
+    "currentAuthTreeNumber"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the operator address of the AuthRegistry."
+        }
+      ]
+    },
+    "operator": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the allowlist of relays that can submit key operations to the AuthRegistry on behalf of users."
+        }
+      ]
+    },
+    "allowedRelays": {
+      "handler": {
+        "type": "event",
+        "select": "relay",
+        "add": {
+          "event": "RelayUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "RelayUpdated",
+          "where": ["!=", "#allowed", true]
+        }
+      },
+      "description": "Relays allowed to submit account key registrations, rotations and revocations signed by account owners.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit account key registrations, rotations and revocations with valid owner signatures."
+        }
+      ]
+    },
+    "authTreeDepth": {
+      "description": "Depth of the auth Merkle trees."
+    },
+    "authPoseidon": {
+      "severity": "HIGH",
+      "description": "External Poseidon2 helper for account IDs, authorization leaves and auth Merkle tree hashing."
+    },
+    "MAX_APPROVAL_LIFETIME": {
+      "description": "Maximum lifetime of an onchain spend approval, in seconds.",
+      "severity": "HIGH"
+    }
+  }
+}
