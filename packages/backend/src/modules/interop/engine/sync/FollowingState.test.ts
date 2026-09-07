@@ -151,7 +151,6 @@ describe(FollowingState.name, () => {
         .returnsOnce([eventA])
         .returnsOnce([eventB, eventC])
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
-      const clearChainSyncError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
         getLastSyncedRange: mockFn().resolvesTo(
           makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
@@ -162,7 +161,6 @@ describe(FollowingState.name, () => {
         }),
         captureLog,
         saveProducedInteropEvents,
-        clearChainSyncError,
       })
       const state = new FollowingState(syncer, Logger.SILENT)
 
@@ -182,7 +180,6 @@ describe(FollowingState.name, () => {
         [],
         [],
       )
-      expect(clearChainSyncError).toHaveBeenCalled()
     })
 
     it('bootstraps range from the oldest event when no synced range exists', async () => {
@@ -394,7 +391,6 @@ function createSyncer(
     }),
     captureTx: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
-    clearChainSyncError: mockFn().resolvesTo(undefined),
     blockProcessingStats: mockObject<
       InteropEventSyncer['blockProcessingStats']
     >({

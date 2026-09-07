@@ -97,7 +97,6 @@ export class FollowingState implements BlockProcessorState {
         checkedInHistoryEvents,
       )
 
-      this.syncer.clearChainSyncError()
       this.status = 'idle'
       return this
     } finally {

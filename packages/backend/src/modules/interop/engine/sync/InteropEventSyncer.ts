@@ -148,6 +148,10 @@ export class InteropEventSyncer extends TimeLoop {
   public latestBlockNumber?: bigint
   public waitingForWipe = false
   public hasError = false
+  // InteropPluginSyncState.lastError may hold a value from a previous run or a
+  // failed attempt. It is cleared lazily on the next success, so steady-state
+  // block processing never writes to that table.
+  private storedErrorMayExist = true
   public readonly blockProcessingStats = new BlockProcessingStats()
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
@@ -177,11 +181,11 @@ export class InteropEventSyncer extends TimeLoop {
         'interop.sync',
         this.getRpcMetricsContext(),
         async () => {
+          this.state = await fn(state)
+          this.hasError = false
           if (options?.clearError ?? true) {
             await this.clearChainSyncError()
           }
-          this.state = await fn(state)
-          this.hasError = false
         },
       )
     } catch (error) {
@@ -333,15 +337,21 @@ export class InteropEventSyncer extends TimeLoop {
     })
   }
 
+  /** Writes only when an error may be stored, see `storedErrorMayExist`. */
   async clearChainSyncError() {
+    if (!this.storedErrorMayExist) {
+      return
+    }
     await this.db.interopPluginSyncState.setLastError(
       this.cluster.name,
       this.chain,
       null,
     )
+    this.storedErrorMayExist = false
   }
 
   async saveChainSyncError(error: unknown) {
+    this.storedErrorMayExist = true
     await this.db.interopPluginSyncState.setLastError(
       this.cluster.name,
       this.chain,

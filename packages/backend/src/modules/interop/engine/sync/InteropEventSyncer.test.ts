@@ -245,9 +245,82 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.run()
 
-      expect(setLastError.calls.length).toEqual(2)
-      expect(setLastError.calls[0]?.args[2]).toEqual(null)
-      expect(setLastError.calls[1]?.args[2]).toInclude('boom')
+      expect(setLastError.calls.length).toEqual(1)
+      expect(setLastError.calls[0]?.args[2]).toInclude('boom')
+    })
+
+    it('clears a possibly stale stored error once on the first success', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        db: mockObject<InteropEventSyncer['db']>({
+          interopPluginSyncState: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncState']
+          >({
+            setLastError,
+          }),
+        }),
+      })
+      const { state: timeLoopState } = makeTimeLoopState()
+      syncer.state = timeLoopState
+
+      await syncer.run()
+      await syncer.run()
+      await syncer.run()
+
+      expect(setLastError.calls.length).toEqual(1)
+      expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
+    })
+
+    it('clears the stored error once after recovering from a failure', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        db: mockObject<InteropEventSyncer['db']>({
+          interopPluginSyncState: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncState']
+          >({
+            setLastError,
+          }),
+        }),
+      })
+      const { state: timeLoopState, run } = makeTimeLoopState()
+      syncer.state = timeLoopState
+
+      await syncer.run() // clears the stale error
+      run.throwsOnce(new Error('boom'))
+      await syncer.run()
+      expect(syncer.hasError).toEqual(true)
+      await syncer.run()
+      await syncer.run()
+
+      expect(syncer.hasError).toEqual(false)
+      expect(setLastError.calls.map((c) => c.args[2])).toEqual([
+        null,
+        expect.includes('boom'),
+        null,
+      ])
+    })
+
+    it('keeps the stored error when a status check succeeds', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        db: mockObject<InteropEventSyncer['db']>({
+          interopPluginSyncState: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncState']
+          >({
+            setLastError,
+          }),
+        }),
+      })
+      const { state: blockProcessorState, processNewestBlock } =
+        makeBlockProcessorState()
+      processNewestBlock.throwsOnce(new Error('boom'))
+      syncer.state = blockProcessorState
+
+      await syncer.processNewestBlock(makeBlock(1), [])
+      await syncer.run()
+
+      expect(setLastError.calls.length).toEqual(1)
+      expect(setLastError.calls[0]?.args[2]).toInclude('boom')
     })
   })
 
@@ -542,6 +615,11 @@ describe(InteropEventSyncer.name, () => {
         ...makeSyncedRange(),
       })
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
+
+      await syncer.saveProducedInteropEvents([], makeSyncedRange())
+
+      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(setLastError.calls.length).toEqual(1)
     })
   })
 
