@@ -1,6 +1,6 @@
 {
   "name": "xai",
-  "timestamp": 1788769532,
+  "timestamp": 1788816912,
   "configHash": "0xc31ae61b190b179bf4f24be5b43c733f57a4532ce1fd80c4a2d6486525cd0c12",
   "entries": [
     {
@@ -560,8 +560,8 @@
         "outboxHistory": ["arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 196582,
-        "sequencerReportedSubMessageCount": 136085641
+        "sequencerMessageCount": 196633,
+        "sequencerReportedSubMessageCount": 136113912
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -679,7 +679,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 196582,
+        "batchCount": 196633,
         "batchPosterManager": "arb1:0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["arb1:0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -1004,13 +1004,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 22941,
+        "firstUnresolvedNode": 22954,
         "inbox": "arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 22940,
-        "latestNodeCreated": 23092,
+        "latestConfirmed": 22953,
+        "latestNodeCreated": 23105,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1478,7 +1478,7 @@
           "4459189497716894977168",
           "78125000000000000000000000"
         ],
-        "challengeCounter": 23817,
+        "challengeCounter": 23830,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2653,8 +2653,8 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 502619952 },
-  "permissionsConfigHash": "0xc45c22722e1c10fb25af8b6e69912d041ccf07cf2842d75a293d15e894a53378",
+  "usedBlockNumbers": { "arbitrum": 502808542 },
+  "permissionsConfigHash": "0xc533f1c9a4e098f3f3ec1a65ba6b1d649f7615b86ca342d1f68ed34d2168b3c8",
   "permissions": {
     "arb1:0x000d8C5A70B8805DF02f409F2715d05B9A63E871": {
       "directlyReceivedPermissions": [

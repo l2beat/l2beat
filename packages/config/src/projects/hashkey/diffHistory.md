@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x89c32e1d088b833d6387845f08ecd71f946ac00a
+Generated with discovered.json: 0x65bf7dc174a46ba213039c7206b38b17b9050d5c
 
-# Diff at Mon, 07 Sep 2026 08:24:24 GMT:
+# Diff at Mon, 07 Sep 2026 21:35:56 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1786436525
-- current timestamp: 1788769375
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1786436525
+- current timestamp: 1788816891
 
 ## Description
 
@@ -21,7 +21,7 @@ SystemConfig `unsafeBlockSigner` rotated.
     }
 ```
 
-Generated with discovered.json: 0xf8c30ecd10b48950a3a5f561ba4af61ad43439c3
+Generated with discovered.json: 0x6da3a19f07a8293d39b77dc8c97d70b74aa15e24
 
 # Diff at Tue, 11 Aug 2026 08:23:09 GMT:
 

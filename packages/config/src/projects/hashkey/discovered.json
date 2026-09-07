@@ -1,6 +1,6 @@
 {
   "name": "hashkey",
-  "timestamp": 1788769375,
+  "timestamp": 1788816891,
   "configHash": "0x6e86a69cd233990fd1ca1058a30fb5d4d3134f7629238fbedf30e81ea7bb4901",
   "entries": [
     {
@@ -86,7 +86,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 837,
+        "gameCount": 850,
         "gameImpls": [
           "eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
           "eth:0xE38135e20BA018a5542C83De258d80d6883Da8A3",
@@ -100,7 +100,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 837,
+        "permissionedGamesTotal": 850,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.1-beta.1",
         "wethFromDGF": "UNRESOLVED"
@@ -1917,8 +1917,8 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25924256 },
-  "permissionsConfigHash": "0xa889b735fe5191150db546bb2ea2a466d286203af6fd0f5ec22ce286a5e36d46",
+  "usedBlockNumbers": { "ethereum": 25928196 },
+  "permissionsConfigHash": "0xa22d79e5f787c2df26c21cdf8162007c16cf1b3ed21f11efd9ffc606ad6cc5cf",
   "permissions": {
     "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f": {
       "receivedPermissions": [

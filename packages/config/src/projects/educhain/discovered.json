@@ -1,6 +1,6 @@
 {
   "name": "educhain",
-  "timestamp": 1788769472,
+  "timestamp": 1788816897,
   "configHash": "0xf27c8026758915086aac6f66ba6b7d637c5e4e51cbab4e63bee07e30697b33cd",
   "entries": [
     {
@@ -103,8 +103,8 @@
         "outboxHistory": ["arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
         "rollup": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "arb1:0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 176063,
-        "sequencerReportedSubMessageCount": 76368146
+        "sequencerMessageCount": 176076,
+        "sequencerReportedSubMessageCount": 76368384
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -501,7 +501,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 176063,
+        "batchCount": 176076,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0xfB61f6Dff37F794eE56D9A1Cf4BB73f189E92399"],
         "bridge": "arb1:0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -612,13 +612,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "10000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 15691,
+        "firstUnresolvedNode": 15692,
         "inbox": "arb1:0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 25630738,
-        "latestConfirmed": 15690,
-        "latestNodeCreated": 15690,
+        "latestConfirmed": 15691,
+        "latestNodeCreated": 15691,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 10,
         "outbox": "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -894,7 +894,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 15671,
+        "nonce": 15672,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1679,8 +1679,8 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 502619720 },
-  "permissionsConfigHash": "0x4db706c76ea3015526d7cd2951af21f21aa3219132e5af988589a7b0e9bb3187",
+  "usedBlockNumbers": { "arbitrum": 502808483 },
+  "permissionsConfigHash": "0x066308298032a79901bae4b38534eb272fbe20b9571293d637a3a2e9c17a1783",
   "permissions": {
     "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": {
       "receivedPermissions": [

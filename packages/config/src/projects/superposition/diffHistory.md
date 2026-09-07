@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x73ab499b0ebd83959a2b420a20c4421b1d8bec67
+Generated with discovered.json: 0xf5eff3fcce373d15ecd101e0d47cf9eda9755835
 
-# Diff at Mon, 07 Sep 2026 08:26:32 GMT:
+# Diff at Mon, 07 Sep 2026 21:36:11 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1787669012
-- current timestamp: 1788769502
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1787669012
+- current timestamp: 1788816904
 
 ## Description
 
@@ -23,7 +23,7 @@ Conduit Multisig 2: member added; threshold 4/10 → 4/11.
     }
 ```
 
-Generated with discovered.json: 0xa7bc7da3fb262d497e2379566780f2dcf2c673cb
+Generated with discovered.json: 0xc52f88d328f3427af115811182f2e3a94fa5f8c1
 
 # Diff at Tue, 25 Aug 2026 14:44:40 GMT:
 

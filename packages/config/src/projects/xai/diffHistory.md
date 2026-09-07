@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9a305aebd5a05f3d04bd86560d6dc5f0261ccf21
+Generated with discovered.json: 0xf40ad1bc693f957d92d46374ff35b62d02a697c1
 
-# Diff at Mon, 07 Sep 2026 08:27:02 GMT:
+# Diff at Mon, 07 Sep 2026 21:36:18 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1787669025
-- current timestamp: 1788769532
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1787669025
+- current timestamp: 1788816912
 
 ## Description
 
@@ -46,7 +46,7 @@ XaiFundsReiceiverMultisig: 3 members removed; threshold 3/7 → 2/4.
     }
 ```
 
-Generated with discovered.json: 0x067f55880cc9c57fbf3d12e1c4b71fee89da9706
+Generated with discovered.json: 0x0739ddbfaf861deec07ee961a14cf42b037da89d
 
 # Diff at Tue, 25 Aug 2026 14:44:53 GMT:
 
