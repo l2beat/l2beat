@@ -2609,7 +2609,7 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "ethereum": 25885371, "robinhood": 52069252 },
-  "permissionsConfigHash": "0xd5c71e3e8c6e84682ff855379a8db3ed952ed14b74316054abc650900e680d39",
+  "permissionsConfigHash": "0xe595523f9f305f89089055a34ff3412f3268df174ee4baf52f77f98cfd9d4797",
   "permissions": {
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": {
       "directlyReceivedPermissions": [

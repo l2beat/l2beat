@@ -40,7 +40,7 @@ export const r0ar: ScalingProject = opStackL2({
   chainConfig: {
     name: 'r0ar',
     chainId: 193939,
-    apis: [{ type: 'rpc', url: 'https://rpc-r0ar.io/', callsPerMinute: 300 }],
+    apis: [{ type: 'rpc', url: 'https://rpc-r0ar.io/', callsPerMinute: 2500 }],
   },
   activityConfig: {
     type: 'block',

@@ -5323,7 +5323,7 @@
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
   "usedBlockNumbers": { "ethereum": 25831121, "optimism": 156024494 },
-  "permissionsConfigHash": "0xabbd57a306f5ec35be77bc442afde5bca9d7d9168a41ca69a1598108a3966430",
+  "permissionsConfigHash": "0xf530192448d50d82206f92b43d92750e52be30a2a47c16b9b8a593773e1bb5a6",
   "permissions": {
     "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25": {
       "receivedPermissions": [

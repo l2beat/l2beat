@@ -15645,7 +15645,7 @@
     "lido/WstETHReferralStaker": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25904744 },
-  "permissionsConfigHash": "0x7e52a08b2f27e99211c02fe1d09d85b542eb5d3ef7907802eb021263a2b6e353",
+  "permissionsConfigHash": "0xcff2cdd54be8b33c2215331c470a4ee7d947b035dc9a3e7eee7658f7097b787d",
   "permissions": {
     "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5": {
       "receivedPermissions": [
