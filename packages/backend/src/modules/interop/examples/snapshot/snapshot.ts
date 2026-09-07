@@ -46,12 +46,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
       metricsEnabled: MetricsAggregator.metricsEnabled,
       maxCallsPerMinute: deps.callsPerMinute,
     })
-    const client = new EthRpcClient(
-      http,
-      deps.url,
-      `${RpcSnapshotClient.name}:${deps.chain}`,
-      deps.generateId,
-    )
+    const client = new EthRpcClient(http, deps.url, deps.generateId)
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcSnapshotClient(
       client,

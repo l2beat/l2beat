@@ -102,7 +102,6 @@ export class RpcClientCompat implements IRpcClient {
     const client = new EthRpcClient(
       http,
       deps.url,
-      `${RpcClientCompat.name}:${deps.chain}`,
       deps.generateId,
       deps.timeout,
       deps.rpcMetricsAggregator?.createRecorder({

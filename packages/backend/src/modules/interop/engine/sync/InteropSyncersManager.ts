@@ -273,7 +273,6 @@ export class InteropSyncersManager {
       client = new EthRpcClient(
         http,
         rpcConfig.url,
-        `${EthRpcClient.name}:${chainConfig.name}`,
         undefined,
         undefined,
         this.rpcMetricsAggregator.createRecorder({
