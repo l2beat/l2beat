@@ -615,11 +615,61 @@ describe(InteropEventSyncer.name, () => {
         ...makeSyncedRange(),
       })
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
+    })
+
+    it('writes only the range, outside a transaction, when there is nothing else to write', async () => {
+      const saveNewEvents = mockFn().resolvesTo(undefined)
+      const upsert = mockFn().resolvesTo(undefined)
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [makePlugin({ name: 'across' })],
+        }),
+        store: mockObject<InteropEventStore>({
+          saveNewEvents,
+          updateDerivedFulfilled: mockFn().resolvesTo(undefined),
+          updateDerivedCheckedInHistory: mockFn().resolvesTo(undefined),
+        }),
+        db: mockObject<InteropEventSyncer['db']>({
+          interopPluginSyncedRange: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncedRange']
+          >({
+            upsert,
+          }),
+          interopPluginSyncState: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncState']
+          >({
+            setLastError,
+          }),
+        }),
+      })
+
+      // a stored error may exist after start-up, so the first save clears it
+      await syncer.saveProducedInteropEvents([], makeSyncedRange())
+      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
 
       await syncer.saveProducedInteropEvents([], makeSyncedRange())
+      await syncer.saveProducedInteropEvents([], makeSyncedRange())
 
+      expect(syncer.runInTransactionCalls).toEqual(1)
+      expect(saveNewEvents).toHaveBeenCalledTimes(1)
+      expect(setLastError).toHaveBeenCalledTimes(1)
+      expect(upsert).toHaveBeenCalledTimes(3)
+
+      // events make it a multi-statement write again
+      await syncer.saveProducedInteropEvents(
+        [{ ...makeInteropEvent(), plugin: 'cluster' }],
+        makeSyncedRange(),
+      )
       expect(syncer.runInTransactionCalls).toEqual(2)
-      expect(setLastError.calls.length).toEqual(1)
+
+      // so does a stored error
+      await syncer.saveChainSyncError(new Error('boom'))
+      await syncer.saveProducedInteropEvents([], makeSyncedRange())
+      expect(syncer.runInTransactionCalls).toEqual(3)
+      expect(setLastError.calls.at(-1)?.args[2]).toEqual(null)
     })
   })
 

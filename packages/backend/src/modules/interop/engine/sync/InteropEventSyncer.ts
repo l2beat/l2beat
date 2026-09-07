@@ -317,17 +317,30 @@ export class InteropEventSyncer extends TimeLoop {
     fulfilledCreatorEvents: InteropEvent[] = [],
     checkedInHistoryEvents: InteropEvent[] = [],
   ) {
-    await this.runInTransaction(async () => {
-      await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
-      await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
-      await this.store.updateDerivedCheckedInHistory(checkedInHistoryEvents)
-      await this.db.interopPluginSyncedRange.upsert({
+    const upsertRange = () =>
+      this.db.interopPluginSyncedRange.upsert({
         pluginName: this.cluster.name,
         chain: this.chain,
         ...fullRange,
       })
-      await this.clearChainSyncError()
-    })
+
+    const hasEventWrites =
+      interopEvents.length > 0 ||
+      fulfilledCreatorEvents.length > 0 ||
+      checkedInHistoryEvents.length > 0
+    if (!hasEventWrites && !this.storedErrorMayExist) {
+      // Most followed blocks produce nothing. A single upsert is atomic on its
+      // own, so skip the BEGIN/COMMIT round trips.
+      await upsertRange()
+    } else {
+      await this.runInTransaction(async () => {
+        await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+        await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
+        await this.store.updateDerivedCheckedInHistory(checkedInHistoryEvents)
+        await upsertRange()
+        await this.clearChainSyncError()
+      })
+    }
 
     this.logger.debug('Events captured for resyncable cluster', {
       plugin: this.cluster.name,
