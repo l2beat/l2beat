@@ -7,7 +7,6 @@ import {
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
-import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -17,7 +16,7 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('privacy-boost')
 
-// PrivacyBoost measures both of its delays in blocks, not seconds.
+// PrivacyBoost measures exit delays and auth-root staleness in blocks.
 const OP_MAINNET_BLOCK_TIME = 2
 const OP_MAINNET_CHAIN_ID = 10
 
@@ -28,9 +27,19 @@ const PRIVACY_BOOST_SINCE_TIMESTAMP = UnixTime(pool.sinceTimestamp ?? 0)
 const forcedWithdrawalDelay =
   discovery.getContractValue<number>('PrivacyBoost', 'forcedWithdrawalDelay') *
   OP_MAINNET_BLOCK_TIME
-const authSnapshotInterval =
-  discovery.getContractValue<number>('PrivacyBoost', 'authSnapshotInterval') *
-  OP_MAINNET_BLOCK_TIME
+const epochAuthStaleness =
+  discovery.getContractValue<number>(
+    'PrivacyBoost',
+    'maxEpochAuthStalenessBlocks',
+  ) * OP_MAINNET_BLOCK_TIME
+const maxForcedInputs = discovery.getContractValue<number>(
+  'PrivacyBoost',
+  'maxForcedInputs',
+)
+const portalSweepFeeBps = discovery.getContractValue<number>(
+  'PrivacyBoost',
+  'portalSweepFeeBps',
+)
 const withdrawFeeBps = discovery.getContractValue<number>(
   'PrivacyBoost',
   'withdrawFeeBps',
@@ -73,10 +82,12 @@ export const privacyBoost: BaseProject = {
         forcedWithdrawalDelay: formatSeconds(forcedWithdrawalDelay, {
           fullUnit: true,
         }),
-        authSnapshotInterval: formatSeconds(authSnapshotInterval, {
+        epochAuthStaleness: formatSeconds(epochAuthStaleness, {
           fullUnit: true,
         }),
         withdrawFee: formatBasisPoints(withdrawFeeBps),
+        portalSweepFee: formatBasisPoints(portalSweepFeeBps),
+        maxForcedInputs: String(maxForcedInputs),
       },
     ),
     links: {
@@ -115,7 +126,13 @@ export const privacyBoost: BaseProject = {
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        ...TRUSTED_SETUPS.PrivacyBoost,
+        id: 'PrivacyBoost20260903',
+        name: 'Privacy Boost September 2026',
+        risk: 'red',
+        shortDescription:
+          'Circuit-specific trusted setup for the deployed verifiers. L2BEAT has not reproduced their verification keys or verified their ceremony provenance.',
+        longDescription:
+          'The deployed protocol uses 21 circuit configurations across five verifier families. Circuit and ceremony configuration sources are public, but L2BEAT has not identified the exact source revision and ceremony artifacts used to generate the deployed verification keys. Reproduction is blocked until these inputs are available. The participant count and contribution history for the deployed keys remain unverified.',
       },
     ],
     projectsForTvs: [
@@ -125,6 +142,92 @@ export const privacyBoost: BaseProject = {
       },
     ],
     verifierHashes: [
+      {
+        hash: 'Privacy Boost epoch verifier 03.09.2026',
+        name: 'Privacy Boost epoch verifier (September 2026)',
+        description:
+          'Verifies private transfer and withdrawal epochs. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        sourceLink:
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/epoch_circuit.go',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress(
+              'oeth:0xab52453B02ca68cfbe7B264d3C4bBa566198C6B6',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: 'Privacy Boost deposit verifier 03.09.2026',
+        name: 'Privacy Boost deposit verifier (September 2026)',
+        description:
+          'Verifies deposit epochs. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        sourceLink:
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/deposit_epoch_circuit.go',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress(
+              'oeth:0x16e1dE876dEB1C3251A1E923A206605D084F25C5',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: 'Privacy Boost forced withdrawal verifier 03.09.2026',
+        name: 'Privacy Boost forced withdrawal verifier (September 2026)',
+        description:
+          'Verifies forced withdrawals. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        sourceLink:
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/forced_withdraw_circuit.go',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress(
+              'oeth:0x78ff16aD4D38e560B81A7B33ae06607fe69D6641',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: 'Privacy Boost portal deposit verifier 03.09.2026',
+        name: 'Privacy Boost portal deposit verifier (September 2026)',
+        description:
+          'Verifies portal deposits. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        sourceLink:
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/deposit_portal_circuit.go',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress(
+              'oeth:0x6806eA551C3c8350Ab156eC5001D28705dCda2B6',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: 'Privacy Boost gift claim verifier 03.09.2026',
+        name: 'Privacy Boost gift claim verifier (September 2026)',
+        description:
+          'Verifies gift settlements and public gift exits. The deployed verification keys have not yet been reproduced by L2BEAT.',
+        sourceLink:
+          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/23907eeebf0e50cd18da42a287671189e61ecb0f/frontend/gift_claim_circuit.go',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress(
+              'oeth:0x249ae8887E15e3728187dd4E341a66cb0221B1B4',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      // Historical deployments: the August attestations apply only to these addresses.
       {
         hash: 'Privacy Boost epoch verifier 18.08.2026',
         name: 'Privacy Boost epoch verifier, 14 circuits',
@@ -214,21 +317,22 @@ export const privacyBoost: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Reproducible',
+      value: 'Not verified',
       sentiment: 'warning',
       description:
-        'ZK circuits guaranteeing user fund security are published and reproduced, however the TEE sources guaranteeing privacy are not yet published. TEE logic could not be verified for correctness.',
+        'Circuit sources are published, but the verification keys deployed in September 2026 have not yet been reproduced by L2BEAT. TEE sources are not published, so the privacy logic has not been verified.',
     },
     privacy: {
-      value: 'Auditable admin API',
+      value: 'Admin API',
       sentiment: 'bad',
       description:
-        "All private data lives as plaintext within a TEE server. Registered auditors can use the TEE's Audit API to fetch the balance and transaction history of any address, and the TEE produces an auditable onchain record on the AuditGateway smart contract.",
+        "Registered 'auditors' can query the TEE's Audit API to retrieve the balance and transaction history of any address. These queries can be logged publicly on the AuditGateway smart contract, but there is no verifiable guarantee that all queries are logged.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.tee,
       PRIVACY_ATTRIBUTES.transfers,
+      PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     riskSummary: readProjectMarkdown('privacy-boost', 'riskSummary'),
@@ -259,6 +363,14 @@ function getPrivacyBoostVerifiers(): ChainSpecificAddress[] {
     discovery.getContractValue<ChainSpecificAddress>(
       'PrivacyBoost',
       'forcedVerifier',
+    ),
+    discovery.getContractValue<ChainSpecificAddress>(
+      'PrivacyBoost',
+      'portalDepositVerifier',
+    ),
+    discovery.getContractValue<ChainSpecificAddress>(
+      'PrivacyBoost',
+      'giftClaimVerifier',
     ),
   ]
 }

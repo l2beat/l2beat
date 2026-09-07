@@ -7384,6 +7384,20 @@
       }
     },
     {
+      "name": "Gauntlet USDC Prime",
+      "coingeckoId": "usd-coin",
+      "address": "0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59",
+      "symbol": "gtusdcp",
+      "decimals": 18,
+      "deploymentTimestamp": 1759890593,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 10,
+      "source": "native",
+      "supply": "zero"
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
@@ -7525,6 +7539,20 @@
       "chainId": 10,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Re7 WETH",
+      "coingeckoId": "weth",
+      "address": "0x3d63934715b6D4c4DFbBC1a00Fe2A2145079DD76",
+      "symbol": "Re7WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1776731785,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 10,
+      "source": "native",
+      "supply": "zero"
     },
     {
       "name": "Renzo Restaked ETH",

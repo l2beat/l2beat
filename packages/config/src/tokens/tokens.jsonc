@@ -4054,6 +4054,24 @@
   ],
   "optimism": [
     {
+      // Gauntlet USDC Prime vault share; approximate price with USDC, excluding accrued yield.
+      "symbol": "gtusdcp",
+      "address": "0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59",
+      "source": "native",
+      "supply": "zero",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Re7 WETH vault share; approximate price with WETH, excluding accrued yield.
+      "symbol": "Re7WETH",
+      "address": "0x3d63934715b6D4c4DFbBC1a00Fe2A2145079DD76",
+      "source": "native",
+      "supply": "zero",
+      "coingeckoId": "weth",
+      "category": "ether"
+    },
+    {
       // Optimism representation of EURC locked on Ethereum and minted through
       // LayerZero v2 OFT. Track the locally minted supply.
       "symbol": "EURC",
