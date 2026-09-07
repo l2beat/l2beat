@@ -216,6 +216,34 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
     })
   })
 
+  describe(AbstractTokenRepository.prototype.getAllSummaries.name, () => {
+    it('returns identity fields of every record', async () => {
+      await repository.insert(
+        abstractToken({
+          id: 'TK0001',
+          symbol: 'ETH',
+          issuer: 'ethereum',
+          iconUrl: 'https://example.com/eth.png',
+          category: 'ether',
+          comment: 'not part of the summary',
+        }),
+      )
+      await repository.insert(abstractToken({ id: 'TK0002', symbol: 'DAI' }))
+
+      const result = await repository.getAllSummaries()
+
+      expect(result).toEqualUnsorted([
+        {
+          id: 'TK0001',
+          symbol: 'ETH',
+          issuer: 'ethereum',
+          iconUrl: 'https://example.com/eth.png',
+        },
+        { id: 'TK0002', symbol: 'DAI', issuer: null, iconUrl: null },
+      ])
+    })
+  })
+
   describe(AbstractTokenRepository.prototype.deleteByIds.name, () => {
     it('deletes selected records', async () => {
       await repository.insert(abstractToken({ id: 'TK0001' }))

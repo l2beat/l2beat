@@ -612,6 +612,51 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     })
   })
 
+  describe(DeployedTokenRepository.prototype.getAllAssignments.name, () => {
+    it('returns the assignment of every record, addresses as stored', async () => {
+      await chains.insert(mockChain({ name: 'ethereum', chainId: 1 }))
+      await chains.insert(mockChain({ name: 'arbitrum', chainId: 42161 }))
+      await abstractTokens.insert(abstractToken({ id: 'TK0001' }))
+
+      await repository.insert(
+        deployedToken({
+          abstractTokenId: 'TK0001',
+          chain: 'ethereum',
+          address: '0x1111111111111111111111111111111111111111',
+          symbol: 'USDC',
+        }),
+      )
+      await repository.insert(
+        deployedToken({
+          abstractTokenId: null,
+          chain: 'arbitrum',
+          address: '0x2222222222222222222222222222222222222222',
+          symbol: 'USDC.e',
+          ignored: true,
+        }),
+      )
+
+      const result = await repository.getAllAssignments()
+
+      expect(result).toEqualUnsorted([
+        {
+          chain: 'ethereum',
+          address: '0x1111111111111111111111111111111111111111',
+          symbol: 'USDC',
+          abstractTokenId: 'TK0001',
+          ignored: false,
+        },
+        {
+          chain: 'arbitrum',
+          address: '0x2222222222222222222222222222222222222222',
+          symbol: 'USDC.e',
+          abstractTokenId: null,
+          ignored: true,
+        },
+      ])
+    })
+  })
+
   describe(DeployedTokenRepository.prototype.deleteByPrimaryKeys.name, () => {
     it('removes selected records', async () => {
       const chainRecord1 = mockChain({ name: 'ethereum', chainId: 1 })

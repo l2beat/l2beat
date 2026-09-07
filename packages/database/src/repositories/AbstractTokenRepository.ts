@@ -19,6 +19,11 @@ export type AbstractTokenRecord = {
   isPriceUnreliable: boolean
 }
 
+export type AbstractTokenSummary = Pick<
+  AbstractTokenRecord,
+  'id' | 'symbol' | 'issuer' | 'iconUrl'
+>
+
 export type CoingeckoEntry = {
   coingeckoId: string
   coingeckoListingTimestamp: UnixTime | null
@@ -180,6 +185,18 @@ export class AbstractTokenRepository extends BaseRepository {
       .selectAll()
       .execute()
     return result.map(toRecord)
+  }
+
+  /**
+   * Identity only, for listings over the whole catalogue. `getAll` carries
+   * coingecko entries, comments and review flags — megabytes of JSON a listing
+   * never reads.
+   */
+  async getAllSummaries(): Promise<AbstractTokenSummary[]> {
+    return await this.db
+      .selectFrom('AbstractToken')
+      .select(['id', 'symbol', 'issuer', 'iconUrl'])
+      .execute()
   }
 
   async deleteById(id: string): Promise<number> {
