@@ -4,9 +4,11 @@
   "category": "core",
   "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.",
   "ignoreInWatchMode": [
+    "bondOwners",
     "bondingAssetConfigurationVersion",
     "ciphernodeBonds",
     "eligibilityConfigurationVersion",
+    "numRegisteredOperators",
     "reservedSlashedTicketBalance",
     "slashedCiphernodeBond",
     "slashedTicketBalance",
@@ -48,13 +50,13 @@
       ]
     },
     "bondOwners": {
-      "description": "Latest collateral owner for each operator key, reconstructed from ownership events. One address can own several operator positions.",
-      "type": "PERMISSION",
+      "description": "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions.",
       "handler": {
         "type": "event",
         "groupBy": "operator",
         "select": "bondOwner",
-        "set": { "event": "BondOwnerSet" }
+        "set": { "event": "BondOwnerSet" },
+        "ignoreRelative": true
       }
     },
     "ticketBalances": {
@@ -133,7 +135,10 @@
       "description": "Version counter of the operator-eligibility configuration. Each bump instantly invalidates every operator's cached active status until it refreshes under the new version. The configured NodeReleaseRegistry can bump it to force re-attestation during a release cutover."
     },
     "numActiveOperators": {
-      "description": "Number of operators whose active status is valid under the current eligibility-configuration version."
+      "description": "Number of operators whose active status is valid under the current eligibility-configuration version. Unlike activeOperators, this drops immediately when the version is bumped, so it is the signal for a mass invalidation."
+    },
+    "numRegisteredOperators": {
+      "description": "Number of operator keys with a registered collateral position."
     }
   }
 }

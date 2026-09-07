@@ -4,8 +4,7 @@
 3. the admin multisig deploys a malicious [upgrade](#upgrades-and-governance) or registers a malicious verifying key.
 <br>
 ## Funds can be lost if
-1. a user loses the note secrets or the approval key required to spend their notes.
-2. the operator and relays stop before a user's approval key is included in an auth snapshot.
+1. a user loses their note secrets, or loses access to both the account-owner wallet and any usable authorization keys.
 <br>
 ## Privacy can be lost if
 1. the TEE is compromised.

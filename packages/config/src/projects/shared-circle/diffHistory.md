@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xf7f663856af181ec3f709afc454c7f38ef61146b
+Generated with discovered.json: 0x8169f64e253bb883d8f03a74696dde05f9dace02
+
+# Diff at Mon, 07 Sep 2026 15:05:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@041f4be232de31648e9a26f8b80fa8f2d65fc60d block: 1788265075
+- current timestamp: 1788793431
+
+## Description
+
+Minters added.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) [tokens/circle/USDC] {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.27:
++        "eth:0x89661a593106fF15B24B8DD25ab8Efad63cFEEA7"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.28:
++        "eth:0xe898a5C06C1166178495e0faf27dae8dd4C97096"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.29:
++        "eth:0x93Cb3290185Be000AfAeAd63c47C40EBcE86Bf7E"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.30:
++        "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D"
+    }
+```
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter] {
+    +++ description: None
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.37:
++        "eth:0xFe1e61E23698d619235B88936eF670AcF9FB398B"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.38:
++        "eth:0x162Bd3604c3bAfF49F91bA845ad79c6B2Cc7682E"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.39:
++        "eth:0x3F1d9e1b241C918eFd1564018eE0e1Dc3C429d2f"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.40:
++        "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D"
+    }
+```
+
+Generated with discovered.json: 0x9ee3fb3bbe2758a687b27294533d2123d3062164
 
 # Diff at Tue, 01 Sep 2026 12:19:06 GMT:
 

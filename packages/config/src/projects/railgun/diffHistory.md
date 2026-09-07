@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x99a7723ef78a0e6a113c6a1cbde205b208f4bfb0
+Generated with discovered.json: 0x9a741caf14a980385ac26bf86c3f1d3331702152
+
+# Diff at Mon, 07 Sep 2026 15:08:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@041f4be232de31648e9a26f8b80fa8f2d65fc60d block: 1788265057
+- current timestamp: 1788793617
+
+## Description
+
+Four new proposals (IDs 29-32) created 2026-09-06 by the same proposer (0x5964ed1e...), all byte-identical, so effectively one proposal submitted four times. Title: "Add USDC and USDT to AGR Rewards". Single action: Delegator calls `addTokens([USDT, USDC])` on GovernorRewards, adding both stablecoins to the Active Governor Rewards distribution set (4.2% of Treasury balance per 2-week interval streamed to stakers). No other parameter changes. Only ID 32 has sponsorship (~90.7k of the 500k RAIL threshold), 29-31 have none. None has gone to vote or been executed. Proposal 28 (swap ~15.1k Treasury USDC to DAI via Curve 3pool, all DAI returned to Treasury) is still open with zero sponsorship.
+
+Governance UI: https://governance.railgun.org/proposals/v2/32 (proposal document on IPFS: bafkreia5rfx3x4phxl3tyscjc55eaac5sd7dnfjpsk4nywlgq55viy4e5e).
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        29
++        33
+    }
+```
+
+Generated with discovered.json: 0x92545357fb8d6dd48dd38419a5e25b563564f80d
 
 # Diff at Fri, 04 Sep 2026 10:21:19 GMT:
 

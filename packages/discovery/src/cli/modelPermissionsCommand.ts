@@ -7,12 +7,16 @@ import {
 } from '../discovery/config/getDiscoveryPaths'
 import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery'
 import {
-  DiscoveryRegistry,
+  clusterEntries,
+  loadDiscoveriesForModelling,
   modelPermissions,
 } from '../discovery/modelling/modelPermissions'
 import { saveDiscoveredJson } from '../discovery/output/saveDiscoveryResult'
 import { sortEntry } from '../discovery/output/toDiscoveryOutput'
-import type { PermissionsOutput } from '../discovery/output/types'
+import type {
+  EntryParameters,
+  PermissionsOutput,
+} from '../discovery/output/types'
 
 export async function modelPermissionsCommand(
   project: string,
@@ -29,13 +33,7 @@ export async function modelPermissionsCommand(
 
   logger.info(`Modelling: ${project}`)
   logger.info('Reading all related discoveries:')
-  const dependencies: string[] = [project]
-  const discoveries = new DiscoveryRegistry()
-  for (const dependency of dependencies) {
-    const discovery = configReader.readDiscovery(dependency)
-    logger.info(` - ${dependency}`)
-    discoveries.set(dependency, discovery)
-  }
+  const discoveries = loadDiscoveriesForModelling(project, configReader, logger)
 
   const ultimatePermissions = await modelPermissions(
     project,
@@ -50,6 +48,7 @@ export async function modelPermissionsCommand(
     project,
     ultimatePermissions,
     configReader,
+    clusterEntries(discoveries),
   )
 }
 
@@ -57,9 +56,10 @@ export async function writePermissionsIntoDiscovery(
   project: string,
   permissionsOutput: PermissionsOutput,
   configReader: ConfigReader,
+  clusterEntries: EntryParameters[],
 ) {
   const discovery = configReader.readDiscovery(project)
-  combinePermissionsIntoDiscovery(discovery, permissionsOutput)
+  combinePermissionsIntoDiscovery(discovery, permissionsOutput, clusterEntries)
 
   const projectDiscoveryFolder = configReader.getProjectPath(project)
   discovery.entries = discovery.entries.map((e) => sortEntry(e))

@@ -2817,7 +2817,7 @@
     "ethereum": 25587657,
     "mantle": 98292777
   },
-  "permissionsConfigHash": "0x3401d8a0787441b5a10f77622619fc5ad0ba9e702cf85a97eb41893b2ef3ee95",
+  "permissionsConfigHash": "0xceca241429dcf929f4e4a221d3b3cd43c10ce86ca5e27347ff0abfa8ef690f95",
   "permissions": {
     "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190": {
       "receivedPermissions": [

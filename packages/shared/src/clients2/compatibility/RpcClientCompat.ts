@@ -93,7 +93,7 @@ export class RpcClientCompat implements IRpcClient {
   static create(deps: Dependencies) {
     const logger = deps.logger
       .for(RpcClientCompat.name)
-      .tag({ source: deps.chain })
+      .tag({ source: deps.chain, chain: deps.chain })
     const http = new Http({
       logger,
       metricsEnabled: MetricsAggregator.metricsEnabled,
@@ -102,7 +102,6 @@ export class RpcClientCompat implements IRpcClient {
     const client = new EthRpcClient(
       http,
       deps.url,
-      `${RpcClientCompat.name}:${deps.chain}`,
       deps.generateId,
       deps.timeout,
       deps.rpcMetricsAggregator?.createRecorder({

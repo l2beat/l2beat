@@ -182,6 +182,7 @@ describe(UpdateDiffer.name, () => {
       const result = updateDiffer.getUpdateDiffs(
         [diff],
         mockObject<EntryParameters[]>(),
+        mockObject<EntryParameters[]>(),
         PROJECT_A,
         timestamp,
         123,
@@ -226,6 +227,7 @@ describe(UpdateDiffer.name, () => {
       const result = updateDiffer.getUpdateDiffs(
         [diff],
         mockObject<EntryParameters[]>(),
+        mockObject<EntryParameters[]>(),
         PROJECT_A,
         timestamp,
         123,
@@ -243,6 +245,159 @@ describe(UpdateDiffer.name, () => {
         },
       ])
     })
+
+    // Every shape `diffContracts` produces for a receivedPermissions change,
+    // taken from the real output rather than assumed. `latest` is the array as
+    // it stands after the change, which is what getUpdateDiffs is handed.
+    const upgradeCases: [
+      string,
+      { key: string; before?: string; after?: string },
+      string[],
+      string[],
+      boolean,
+    ][] = [
+      [
+        'whole field added',
+        {
+          key: 'receivedPermissions',
+          after: json([{ permission: 'upgrade' }]),
+        },
+        [],
+        ['upgrade'],
+        true,
+      ],
+      [
+        'whole field removed',
+        {
+          key: 'receivedPermissions',
+          before: json([{ permission: 'upgrade' }]),
+        },
+        ['upgrade'],
+        [],
+        true,
+      ],
+      [
+        'whole field removed, never an upgrade',
+        {
+          key: 'receivedPermissions',
+          before: json([{ permission: 'interact' }]),
+        },
+        ['interact'],
+        [],
+        false,
+      ],
+      [
+        'element removed, others remain',
+        {
+          key: 'receivedPermissions.1',
+          before: json({ permission: 'upgrade' }),
+        },
+        ['interact', 'upgrade'],
+        ['interact'],
+        true,
+      ],
+      [
+        'non-upgrade removed before an unchanged upgrade',
+        {
+          key: 'receivedPermissions.0',
+          before: json({ permission: 'interact' }),
+        },
+        ['interact', 'upgrade'],
+        ['upgrade'],
+        false,
+      ],
+      [
+        'element added',
+        {
+          key: 'receivedPermissions.1',
+          after: json({ permission: 'upgrade' }),
+        },
+        ['interact'],
+        ['interact', 'upgrade'],
+        true,
+      ],
+      [
+        'permission replaced in place',
+        {
+          key: 'receivedPermissions.0.permission',
+          before: json('upgrade'),
+          after: json('interact'),
+        },
+        ['upgrade'],
+        ['interact'],
+        true,
+      ],
+      [
+        'unrelated permission replaced in place',
+        {
+          key: 'receivedPermissions.0.permission',
+          before: json('interact'),
+          after: json('act'),
+        },
+        ['interact'],
+        ['act'],
+        false,
+      ],
+      [
+        'giver of an upgrade changed',
+        {
+          key: 'receivedPermissions.0.from',
+          before: json('0xa'),
+          after: json('0xb'),
+        },
+        ['upgrade'],
+        ['upgrade'],
+        true,
+      ],
+      [
+        'giver of a non-upgrade changed',
+        {
+          key: 'receivedPermissions.0.from',
+          before: json('0xa'),
+          after: json('0xb'),
+        },
+        ['interact'],
+        ['interact'],
+        false,
+      ],
+    ]
+
+    for (const [label, field, previous, latest, expected] of upgradeCases) {
+      it(`grades an upgrader change: ${label}`, () => {
+        const updateDiffer = new UpdateDiffer(
+          mockObject<ConfigReader>({
+            readDiscovery: mockFn().returns(mockProject),
+          }),
+          mockObject<Database>({}),
+          mockObject<DiscoveryOutputCache>(),
+          Logger.SILENT,
+        )
+        const address = ChainSpecificAddress.random()
+
+        const asEntries = (names: string[]) => [
+          mockObject<EntryParameters>({
+            address,
+            receivedPermissions: names.map((permission) =>
+              mockObject<ReceivedPermission>({ permission } as never),
+            ),
+          }),
+        ]
+
+        const result = updateDiffer.getUpdateDiffs(
+          [{ address, addressType: 'Contract', diff: [field] }],
+          asEntries(previous),
+          asEntries(latest),
+          PROJECT_A,
+          UnixTime.now(),
+          123,
+          456,
+        )
+
+        expect(result.some((r) => r.type === 'ultimateUpgraderChange')).toEqual(
+          expected,
+        )
+      })
+    }
 
     it('detects upgrade changes', () => {
       const configReader = mockObject<ConfigReader>({
@@ -262,7 +417,11 @@ describe(UpdateDiffer.name, () => {
         addressType: 'Contract',
         diff: [
           {
-            key: 'receivedPermissions.2',
+            // A field of the element changed, which is the shape that leaves
+            // index 2 valid on both sides.
+            key: 'receivedPermissions.2.from',
+            before: JSON.stringify('0xa'),
+            after: JSON.stringify('0xb'),
           },
         ],
       }
@@ -284,6 +443,7 @@ describe(UpdateDiffer.name, () => {
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
+        latestDiscovery.entries,
         latestDiscovery.entries,
         PROJECT_A,
         timestamp,
@@ -438,4 +598,8 @@ function mockContract(
     address,
     values: { $immutable: true },
   }
+}
+
+function json(value: unknown): string {
+  return JSON.stringify(value)
 }
