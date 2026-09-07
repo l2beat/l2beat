@@ -6,57 +6,7 @@
     {
       "address": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
-          "description": "blacklist any address, blocking it from claiming its redeemed ETH.",
-          "role": ".blacklister"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
-          "description": "pause the contract. While paused, no claim can be paid out and no new claims or top-ups are accepted.",
-          "role": ".pauser"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
-          "description": "replace the operator, rechargeAddress, ethBackAddress, pauser and blacklister at any time, with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
-          "description": "whitelist or remove callers and set each caller's allowance and refill interval, with no delay.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "description": "blacklist any address, blocking it from transferring, receiving, depositing or redeeming.",
-          "role": ".blacklister"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "description": "configure minters and their allowances. A minter can mint wBETH to any address with no ETH backing, up to its allowance.",
-          "role": ".masterMinter"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "description": "pause and unpause the token. While paused, transfers, deposits (mint) and redemption requests (burn) all revert.",
-          "role": ".pauser"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "description": "replace the oracle, operator, ethReceiver, masterMinter, pauser, blacklister and rescuer addresses at any time, with no delay. Replacing the oracle removes the rate limit that the current oracle contract enforces.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
@@ -66,27 +16,7 @@
     {
       "address": "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
-          "description": "allocate ETH to pending claims (a claim is not payable until allocated, which otherwise happens only when the queue is pre-funded), set the claim lock time to any value of at least 2 days, and move surplus ETH to the ethBackAddress even while paused.",
-          "role": ".operatorAddress"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
-          "description": "set the wBETH exchange rate, up or down, by at most its allowance per refill interval.",
-          "role": ".callers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "description": "move any amount of the ETH held by this contract to the ethReceiver or to the unwrap contract.",
-          "role": ".operator"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1",
@@ -174,15 +104,7 @@
     {
       "address": "eth:0x7CfE99c15537753682def016D17d4b29A7caB4EE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ExchangeRateUpdater",
@@ -194,14 +116,6 @@
       ],
       "proxyType": "immutable",
       "description": "Rate-limited relay that is the token's registered oracle. Whitelisted callers write the wBETH exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and it can be bypassed by the token owner repointing the oracle.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "description": "set the exchange rate used for minting and redemption. The token itself only requires the new rate to be at least 1e18; any tighter bound comes from the oracle contract.",
-          "role": ".oracle"
-        }
-      ],
       "deployerAddress": "eth:0x86Fd4673527F9d5999C5e490Ab98766c0CFA8801",
       "sinceTimestamp": 1681902335,
       "sinceBlock": 17080242,
@@ -325,33 +239,12 @@
     {
       "address": "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xa42436335a41fA6C82CDe224Ae2B82C025027e5b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
-          "description": "mint unbacked wBETH to a registered hot wallet and transfer tokens held here to a hot wallet.",
-          "role": ".operator"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OperatorWallet",
@@ -364,14 +257,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Binance's minting wallet. It is the only configured wBETH minter and its allowance is unlimited. Its operator or owner can mint wBETH to itself or to a registered hot wallet with no ETH deposited on-chain; this is how wBETH is issued to users who wrap BETH on the exchange, and it accounts for nearly all of the supply. The owner can also add hot wallets, pause the wallet, and execute arbitrary calls from it, which lets it mint to any address.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-          "description": "mint wBETH to itself or to any address with no ETH backing, up to its minter allowance, and burn its own balance.",
-          "role": ".minters"
-        }
-      ],
       "deployerAddress": "eth:0x35CB5f7418CFEFB695194193bE3702583899AbE3",
       "sinceTimestamp": 1681893923,
       "sinceBlock": 17079552,
@@ -408,15 +293,7 @@
     {
       "address": "eth:0xB2F56fc21EFe0f3921FC28adeCacC36A4bFdcAC1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
-          "description": "mint unbacked wBETH to any address (through execTransaction), add or remove hot wallets, replace the operator, pause the wallet, and withdraw anything the wallet holds.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -663,5 +540,146 @@
     "wbeth/WrapTokenV3ETH": "0x49732aee04baa0e994a33265af990039b9b2e38aeff872b635d167a9a49c1b68"
   },
   "usedBlockNumbers": { "ethereum": 25863845 },
-  "permissionsConfigHash": "0x1866032595f79be69584abbe5fec970746a6c2295b10b23556719ea3dc81accc"
+  "permissionsConfigHash": "0xfd60d5a8e890e4194051f0ee2c4d97bae85636b992bd6af7a53689d21c5f89e6",
+  "permissions": {
+    "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "description": "blacklist any address, blocking it from claiming its redeemed ETH.",
+          "role": ".blacklister"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "description": "pause the contract. While paused, no claim can be paid out and no new claims or top-ups are accepted.",
+          "role": ".pauser"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "description": "replace the operator, rechargeAddress, ethBackAddress, pauser and blacklister at any time, with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "description": "whitelist or remove callers and set each caller's allowance and refill interval, with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "description": "blacklist any address, blocking it from transferring, receiving, depositing or redeeming.",
+          "role": ".blacklister"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "description": "configure minters and their allowances. A minter can mint wBETH to any address with no ETH backing, up to its allowance.",
+          "role": ".masterMinter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "description": "pause and unpause the token. While paused, transfers, deposits (mint) and redemption requests (burn) all revert.",
+          "role": ".pauser"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "description": "replace the oracle, operator, ethReceiver, masterMinter, pauser, blacklister and rescuer addresses at any time, with no delay. Replacing the oracle removes the rate limit that the current oracle contract enforces.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "description": "allocate ETH to pending claims (a claim is not payable until allocated, which otherwise happens only when the queue is pre-funded), set the claim lock time to any value of at least 2 days, and move surplus ETH to the ethBackAddress even while paused.",
+          "role": ".operatorAddress"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "description": "set the wBETH exchange rate, up or down, by at most its allowance per refill interval.",
+          "role": ".callers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "description": "move any amount of the ETH held by this contract to the ethReceiver or to the unwrap contract.",
+          "role": ".operator"
+        }
+      ]
+    },
+    "eth:0x7CfE99c15537753682def016D17d4b29A7caB4EE": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "description": "set the exchange rate used for minting and redemption. The token itself only requires the new rate to be at least 1e18; any tighter bound comes from the oracle contract.",
+          "role": ".oracle"
+        }
+      ]
+    },
+    "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xB2F56fc21EFe0f3921FC28adeCacC36A4bFdcAC1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "description": "mint unbacked wBETH to any address (through execTransaction), add or remove hot wallets, replace the operator, pause the wallet, and withdraw anything the wallet holds.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xa42436335a41fA6C82CDe224Ae2B82C025027e5b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "description": "mint unbacked wBETH to a registered hot wallet and transfer tokens held here to a hot wallet.",
+          "role": ".operator"
+        }
+      ]
+    },
+    "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "description": "mint wBETH to itself or to any address with no ETH backing, up to its minter allowance, and burn its own balance.",
+          "role": ".minters"
+        }
+      ]
+    }
+  }
 }
