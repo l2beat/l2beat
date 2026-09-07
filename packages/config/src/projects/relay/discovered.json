@@ -242,7 +242,7 @@
     "relay/RelayRouterV3": "0x049fbaf102429afdd380204496e7d58fc9629baef7742f72b31a8d94b111a21c"
   },
   "usedBlockNumbers": { "base": 49962920 },
-  "permissionsConfigHash": "0x30f51cc7797a54ec328f2826bd71b34b4bb0e5910109d21f538e9bbf2049c778",
+  "permissionsConfigHash": "0x640d5a3106b72fd492656bf4fe6119ef02f20ee0584892e6185f0d17022714e1",
   "permissions": {
     "base:0x463cB782c8dd0a1887b77336DfF74D60F006F56E": {
       "receivedPermissions": [
