@@ -24,6 +24,11 @@
     "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "RocketTokenRETH",
     "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": "RocketTokenRPL",
     // The security council's only seat.
-    "eth:0x6C565aF34f15dE064b56afEdF7B0F59C15bB20FE": "SecurityCouncilSafe"
+    "eth:0x6C565aF34f15dE064b56afEdF7B0F59C15bB20FE": "SecurityCouncilSafe",
+    // Replacement verifier from the September 2026 hotfix, still a pending
+    // upgrade in RocketDAONodeTrustedUpgrade and not yet the registered one.
+    // When the upgrade executes, swap the names so the registered contract
+    // keeps the canonical RocketDAOProtocolVerifier name.
+    "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a": "RocketDAOProtocolVerifierV2"
   }
 }

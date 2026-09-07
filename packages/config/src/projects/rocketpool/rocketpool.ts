@@ -81,10 +81,6 @@ export const rocketpool: BaseProject = {
         ),
         oracleSetQuorum: membersNeeded('RocketDAONodeTrusted'),
         oracleSetBond: value('RocketDAONodeTrusted', 'memberBond'),
-        consensusThreshold: percent(
-          'RocketDAOProtocolSettingsNetwork',
-          'getNodeConsensusThreshold',
-        ),
         submitFrequency: duration(
           'RocketDAOProtocolSettingsNetwork',
           'getSubmitBalancesFrequency',
@@ -92,10 +88,6 @@ export const rocketpool: BaseProject = {
         maxRethDelta: percent(
           'RocketDAOProtocolSettingsNetwork',
           'getMaxRethDelta',
-        ),
-        upgradeVetoQuorum: percent(
-          'RocketDAOProtocolSettingsSecurity',
-          'getUpgradeVetoQuorum',
         ),
         upgradeDelay: duration(
           'RocketDAOProtocolSettingsSecurity',
@@ -115,19 +107,10 @@ export const rocketpool: BaseProject = {
           'RocketDAOProtocolSettingsNode',
           'getUnstakingPeriod',
         ),
-        maxPenaltyRate: percent('RocketMinipoolPenalty', 'getMaxPenaltyRate'),
         megapoolPenaltyCap: value('RocketMegapoolPenalties', 'maximumPenalty'),
         megapoolPenaltyThreshold: percent(
           'RocketDAOProtocolSettingsMegapool',
           'getPenaltyThreshold',
-        ),
-        proposalQuorum: percent(
-          'RocketDAOProtocolSettingsProposals',
-          'getProposalQuorum',
-        ),
-        proposalVetoQuorum: percent(
-          'RocketDAOProtocolSettingsProposals',
-          'getProposalVetoQuorum',
         ),
         proposalBond: value('RocketDAOProtocolVerifier', 'proposalBond'),
         challengeBond: value('RocketDAOProtocolVerifier', 'challengeBond'),

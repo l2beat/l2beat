@@ -1,6 +1,6 @@
 {
   "name": "rocketpool",
-  "timestamp": 1788348224,
+  "timestamp": 1788817670,
   "configHash": "0xa6a9822ddd71880057980f9e2c341ca5e55c753ecf65ea6e21995f167d043aff",
   "entries": [
     {
@@ -19,8 +19,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x49e3260000000000",
-        "get_deposit_root": "0x17925ac2f6c9212f951b219add19ebc74ff3231f40b12be523a71a412bbf57e6"
+        "get_deposit_count": "0x0def260000000000",
+        "get_deposit_root": "0xe9244f90d5c8b745b86054fe0f3108954caabeee62be24a5702f604b87909972"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -334,12 +334,12 @@
         "constructorArgs": {
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
-        "getBalancesBlock": 25887674,
-        "getBalancesTimestamp": 1788330035,
+        "getBalancesBlock": 25923544,
+        "getBalancesTimestamp": 1788761927,
         "getETHUtilizationRate": "1000000000000000000",
-        "getStakingETHBalance": "372175152490476276753065",
-        "getTotalETHBalance": "372175152490476276753065",
-        "getTotalRETHSupply": "317858793560933652513718",
+        "getStakingETHBalance": "371500029257049244335939",
+        "getTotalETHBalance": "371500029257049244335939",
+        "getTotalRETHSupply": "317188318865139284891372",
         "maxDelta": "2",
         "networkSettings": "eth:0x67Fd03a5095197D1aD1F932BC55E022C420b1153",
         "oracleSet": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
@@ -434,7 +434,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -458,8 +458,8 @@
         "constructorArgs": {
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
-        "getPricesBlock": 25887674,
-        "getRPLPrice": 660354418460187,
+        "getPricesBlock": 25923544,
+        "getRPLPrice": 696573990000173,
         "oracleSet": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
         "version": 4
       },
@@ -1035,7 +1035,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -1167,7 +1167,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -1180,7 +1180,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -1232,14 +1232,18 @@
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
         "councilVeto": "eth:0x950BaF0358164339114914169BF16754789B5Dc4",
-        "getTotal": 1,
+        "getTotal": 2,
         "oracleSet": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
         "pendingUpgradeAddresses": [
-          "eth:0x91003AD0e47d3B963467A22f2a42F92fdc161d22"
+          "eth:0x91003AD0e47d3B963467A22f2a42F92fdc161d22",
+          "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a"
         ],
-        "pendingUpgradeExecuted": [true],
-        "pendingUpgradeNames": ["rocketUpgradeOneDotFourDissolveHotfix"],
-        "pendingUpgradeVetoed": [false],
+        "pendingUpgradeExecuted": [true, false],
+        "pendingUpgradeNames": [
+          "rocketUpgradeOneDotFourDissolveHotfix",
+          "rocketDAOProtocolVerifier"
+        ],
+        "pendingUpgradeVetoed": [false, false],
         "securitySettings": "eth:0xC9D771AaF504F33bB3C8a7E67eA9f1881F837cFf",
         "upgradeDelay": "7d",
         "version": 2
@@ -1363,7 +1367,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -1437,7 +1441,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -1572,14 +1576,14 @@
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
         "decimals": 18,
-        "getCollateralRate": 6489244,
-        "getExchangeRate": "1170882039540397857",
-        "getTotalCollateral": 2415178776227,
+        "getCollateralRate": 11645,
+        "getExchangeRate": "1171228595637539761",
+        "getTotalCollateral": 4325484140,
         "name": "Rocket Pool ETH",
         "networkSettings": "eth:0x67Fd03a5095197D1aD1F932BC55E022C420b1153",
         "symbol": "rETH",
         "targetCollateralRate": "1",
-        "totalSupply": "317864460884167403191891",
+        "totalSupply": "317114898221225804877930",
         "transferDelayBlocks": 0,
         "version": 1
       },
@@ -1690,7 +1694,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -1897,6 +1901,37 @@
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
+      "name": "RocketDAOProtocolVerifierV2",
+      "address": "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a",
+      "type": "Contract",
+      "template": "rocketpool/RocketDAOProtocolVerifier",
+      "sourceHashes": [
+        "0x05fc9a9064dd7155b87a6e0ef7aa67555f62a6ef3dc3e4a5a63a3c58c3386cd6"
+      ],
+      "proxyType": "immutable",
+      "description": "Fraud-proof referee for the voting-power trees used by token-holder governance. A proposer stakes 100 collateral tokens on a claimed tree; any address can stake 10 to challenge a node of it, and the proposer must answer within 30m or the proposal is defeated and the bonds are transferred to the challengers. Nobody is trusted to assert the tree; the bonds and the response deadline are what make it binding.",
+      "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
+      "sinceTimestamp": 1787801843,
+      "sinceBlock": 25843914,
+      "values": {
+        "$immutable": true,
+        "challengeBond": "10",
+        "challengePeriod": "30m",
+        "constructorArgs": {
+          "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
+        },
+        "getDepthPerRound": 5,
+        "proposalBond": "100",
+        "proposalSettings": "eth:0xf6ad771dfB1cd10c66F688E251b5E5c21cbfDF81",
+        "version": 3
+      },
+      "implementationNames": {
+        "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a": "RocketDAOProtocolVerifier"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
       "address": "eth:0xc5D291607600044348E5014404cc18394BD1D57d",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1904,7 +1939,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -2067,10 +2102,10 @@
         "getClaimIntervalsPassed": 0,
         "getClaimIntervalTime": 2419200,
         "getClaimIntervalTimeStart": 1787808939,
-        "getEthBalance": "6461371241883828514",
-        "getPendingETHRewards": "3886359096839606188",
-        "getPendingRPLRewards": "21331354393497514233063",
-        "getPendingVoterShare": "6461371241883828514",
+        "getEthBalance": "7652204343873828514",
+        "getPendingETHRewards": "6904534939728249994",
+        "getPendingRPLRewards": "36580261009788123336550",
+        "getPendingVoterShare": "7652204343873828514",
         "getRewardIndex": 53,
         "getRPLBalance": "3046114450335216979695",
         "oracleSet": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
@@ -2119,16 +2154,16 @@
         },
         "depositFee": "0.05",
         "depositSettings": "eth:0x227BE8dD01DF8ad9BED0178e4F8cEC2996C5c365",
-        "getBalance": "15739140722506135779",
+        "getBalance": "19739140722506135779",
         "getExcessBalance": 0,
-        "getExpressQueueLength": 1347,
-        "getMaximumDepositAmount": "6061936260859277493864221",
+        "getExpressQueueLength": 1348,
+        "getMaximumDepositAmount": "6061932260859277493864221",
         "getMinipoolQueueLength": 0,
         "getNodeBalance": "7744000000000000000000",
         "getQueueIndex": 2170,
-        "getStandardQueueLength": 589,
+        "getStandardQueueLength": 588,
         "getTotalQueueLength": 1936,
-        "getUserBalance": "-7728260859277493864221",
+        "getUserBalance": "-7724260859277493864221",
         "maximumPoolSize": "6,000,000",
         "minimumDeposit": "0.01",
         "version": 4
@@ -2283,17 +2318,17 @@
         "decimals": 18,
         "getInflationCalcTime": 1787809314,
         "getInflationIntervalRate": "1000133680617113500",
-        "getInflationIntervalsPassed": 6,
+        "getInflationIntervalsPassed": 11,
         "getInflationIntervalStartTime": 1633066914,
         "getInflationIntervalTime": 86400,
         "getInflationRewardsContractAddress": "eth:0xCba5951fc706Fc783b7C142DaE8576Ebe29c41FD",
-        "inflationCalculate": "18285239943162297253368",
+        "inflationCalculate": "33534146559452906356855",
         "inflationInterval": "1d",
         "inflationRate": "1.0001336806171135",
         "name": "Rocket Pool Protocol",
         "symbol": "RPL",
         "totalSupply": "22789554107220508640973240",
-        "totalSwappedRPL": "17311636013478537123496760",
+        "totalSwappedRPL": "17312454945148412440631736",
         "version": 1
       },
       "implementationNames": {
@@ -2368,7 +2403,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -2442,7 +2477,7 @@
         {
           "permission": "interact",
           "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree; votes on operator penalties, member kicks, and contract upgrades.",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
           "role": ".members"
         }
       ]
@@ -2555,10 +2590,10 @@
       "sinceBlock": 24416589,
       "values": {
         "$immutable": true,
-        "getActiveMinipoolCount": 14207,
-        "getFinalisedMinipoolCount": 28110,
+        "getActiveMinipoolCount": 14174,
+        "getFinalisedMinipoolCount": 28143,
         "getMinipoolCount": 42317,
-        "getStakingMinipoolCount": 14195,
+        "getStakingMinipoolCount": 14162,
         "getVacantMinipoolCount": 0,
         "version": 6
       },
@@ -2701,9 +2736,9 @@
         "constructorArgs": {
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
-        "getTotalLegacyStakedRPL": "6757450435382560190389491",
-        "getTotalMegapoolStakedRPL": "3379278208124839885700999",
-        "getTotalStakedRPL": "10136728643507400076090490",
+        "getTotalLegacyStakedRPL": "6751545486699781815802051",
+        "getTotalMegapoolStakedRPL": "3382328173046231270943019",
+        "getTotalStakedRPL": "10133873659746013086745070",
         "nodeSettings": "eth:0xb02B883303e658Ddcd58D3871Dc4Ca0C91f0fc9D",
         "unstakingPeriod": "28d",
         "version": 7
@@ -2727,7 +2762,7 @@
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770607739,
       "sinceBlock": 24416528,
-      "values": { "$immutable": true, "getValidatorCount": 4950, "version": 1 },
+      "values": { "$immutable": true, "getValidatorCount": 4951, "version": 1 },
       "implementationNames": {
         "eth:0xf2CCd522Ba5fFEda28fe0389963845D61F342034": "RocketMegapoolManager"
       },
@@ -2781,7 +2816,7 @@
       "sinceBlock": 17002376,
       "values": {
         "$immutable": true,
-        "getNodeDemand": "15739140722506135779",
+        "getNodeDemand": "19739140722506135779",
         "getNodeFee": "50000000000000000",
         "version": 2
       },
@@ -3867,6 +3902,28 @@
       "function set(address[] _addresses, string[] _abis)",
       "function version() view returns (uint8)"
     ],
+    "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a": [
+      "constructor(address _rocketStorageAddress)",
+      "event ChallengeSubmitted(uint256 indexed proposalID, address indexed challenger, uint256 index, uint256 timestamp)",
+      "event ProposalBondBurned(uint256 indexed proposalID, address indexed proposer, uint256 amount, uint256 timestamp)",
+      "event RootSubmitted(uint256 indexed proposalID, address indexed proposer, uint32 blockNumber, uint256 index, tuple(uint256 sum, bytes32 hash) root, tuple(uint256 sum, bytes32 hash)[] treeNodes, uint256 timestamp)",
+      "function burnProposalBond(uint256 _proposalID)",
+      "function claimBondChallenger(uint256 _proposalID, uint256[] _indices)",
+      "function claimBondProposer(uint256 _proposalID, uint256[] _indices)",
+      "function createChallenge(uint256 _proposalID, uint256 _index, tuple(uint256 sum, bytes32 hash) _node, tuple(uint256 sum, bytes32 hash)[] _witness)",
+      "function defeatProposal(uint256 _proposalID, uint256 _index)",
+      "function getChallengeBond(uint256 _proposalID) view returns (uint256)",
+      "function getChallengePeriod(uint256 _proposalID) view returns (uint256)",
+      "function getChallengeState(uint256 _proposalID, uint256 _index) view returns (uint8)",
+      "function getDefeatIndex(uint256 _proposalID) view returns (uint256)",
+      "function getDepthPerRound() pure returns (uint256)",
+      "function getNode(uint256 _proposalID, uint256 _index) view returns (tuple(uint256 sum, bytes32 hash))",
+      "function getProposalBond(uint256 _proposalID) view returns (uint256)",
+      "function submitProposalRoot(uint256 _proposalID, address _proposer, uint32 _blockNumber, tuple(uint256 sum, bytes32 hash)[] _treeNodes)",
+      "function submitRoot(uint256 _proposalID, uint256 _index, tuple(uint256 sum, bytes32 hash)[] _nodes)",
+      "function verifyVote(address _voter, uint256 _nodeIndex, uint256 _proposalID, uint256 _votingPower, tuple(uint256 sum, bytes32 hash)[] _witness) view returns (bool)",
+      "function version() view returns (uint8)"
+    ],
     "eth:0xC680a22b4F03977f69b51A09f3Dbe922eb77C8FE": [
       "constructor(address _rocketStorageAddress)",
       "function execute()",
@@ -4599,6 +4656,6 @@
     "rocketpool/RocketUpgradeOneDotTwo": "0x327a0ba9225fde0a0eb14e2dc57a9de8dbdc2609e8145ddd325d2cc5099d7be5",
     "rocketpool/RocketVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25889284 },
-  "permissionsConfigHash": "0xd9fe1707abed60b37a2eac7913b7ffb6343b249b4f22af6f69c2a2a11c2f88d5"
+  "usedBlockNumbers": { "ethereum": 25928261 },
+  "permissionsConfigHash": "0x571a81a805a23530ed9f36338f6a9e7a4a4801e1ee566a5f30cb522e994ba858"
 }

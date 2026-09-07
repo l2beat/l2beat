@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x440d0a7312828eea233c2cd7d46abd4397019314
+Generated with discovered.json: 0xe14aed43933c681a34b77bf0d34bafff3e0fed61
 
-# Diff at Wed, 02 Sep 2026 11:24:50 GMT:
+# Diff at Mon, 07 Sep 2026 21:48:57 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1788348224
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- current timestamp: 1788817670
 
 ## Description
 
@@ -303,6 +303,12 @@ Initial discovery of Rocket Pool. RocketStorage is the only seed; every other co
 +   Status: CREATED
     contract RocketUpgradeOneDotThreeDotOne (eth:0xc2C81454427b1E53Fdf5d3B45561e3c18F90f9eD) [rocketpool/RocketUpgradeOneDotThreeDotOne]
     +++ description: One-shot migration job. It was registered as a protocol contract so that it could write to the shared registry, ran once, and latched a flag that makes a second run revert. It is still registered, so it still holds registry write access, but every entry point it exposes is now either gated by that flag or bounded to repairing existing bookkeeping.
+```
+
+```diff
++   Status: CREATED
+    contract RocketDAOProtocolVerifierV2 (eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a) [rocketpool/RocketDAOProtocolVerifier]
+    +++ description: Fraud-proof referee for the voting-power trees used by token-holder governance. A proposer stakes 100 collateral tokens on a claimed tree; any address can stake 10 to challenge a node of it, and the proposer must answer within 30m or the proposal is defeated and the bonds are transferred to the challengers. Nobody is trusted to assert the tree; the bonds and the response deadline are what make it binding.
 ```
 
 ```diff

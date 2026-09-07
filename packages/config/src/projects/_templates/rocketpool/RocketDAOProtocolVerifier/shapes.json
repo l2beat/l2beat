@@ -4,5 +4,11 @@
     "address": "eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A",
     "chain": "ethereum",
     "blockNumber": 25827555
+  },
+  "RocketDAOProtocolVerifierV2.sol": {
+    "hash": "0x05fc9a9064dd7155b87a6e0ef7aa67555f62a6ef3dc3e4a5a63a3c58c3386cd6",
+    "address": "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a",
+    "chain": "ethereum",
+    "blockNumber": 25926114
   }
 }
