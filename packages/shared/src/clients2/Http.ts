@@ -67,8 +67,9 @@ export class Http {
   ): Promise<HttpResponse> {
     const init: RequestInit = { timeout: this.timeoutMs, ...rest }
     if (this.rateLimiter) {
-      return await this.rateLimiter.call(() =>
-        this._fetch(url, init, metricsLabel),
+      return await this.rateLimiter.call(
+        () => this._fetch(url, init, metricsLabel),
+        metricsLabel,
       )
     }
     return await this._fetch(url, init, metricsLabel)
@@ -111,16 +112,36 @@ export class Http {
   }
 
   private _flushMetrics() {
-    for (const key in this.metrics) {
-      const metrics = this.metrics[key]
-      // Note, there is no division by zero, because there are no zero count
-      // metrics
+    const limiter = this.rateLimiter?.takeStats()
+    const labels = new Set([
+      ...Object.keys(this.metrics),
+      ...Object.keys(limiter?.labels ?? {}),
+    ])
+    for (const label of labels) {
+      const metrics = this.metrics[label] ?? {
+        durationTotal: 0,
+        sizeTotal: 0,
+        count: 0,
+      }
+      const wait = limiter?.labels[label]
       this.logger.info('Http metrics', {
+        label,
         durationTotal: metrics.durationTotal,
-        durationAvg: metrics.durationTotal / metrics.count,
+        durationAvg:
+          metrics.count > 0 ? metrics.durationTotal / metrics.count : 0,
         sizeTotal: metrics.sizeTotal,
-        sizeAvg: metrics.sizeTotal / metrics.count,
+        sizeAvg: metrics.count > 0 ? metrics.sizeTotal / metrics.count : 0,
         count: metrics.count,
+        ...(wait && {
+          waitTotal: wait.waitMsTotal,
+          waitAvg:
+            wait.dispatched > 0
+              ? Math.floor(wait.waitMsTotal / wait.dispatched)
+              : 0,
+          waitMax: wait.waitMsMax,
+          queueDepthMax: wait.queueDepthMax,
+        }),
+        ...(limiter && { limiterInFlightMax: limiter.inFlightMax }),
       })
     }
     this.metrics = {}

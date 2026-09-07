@@ -1,8 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { ClientCore } from './ClientCore'
+import { ClientCore, UNCATEGORIZED_METRICS_LABEL } from './ClientCore'
 import type { HttpClient } from './http/HttpClient'
+import { withRpcMetricsContext } from './rpc/RpcMetricsContext'
 
 describe(ClientCore.name, () => {
   describe(ClientCore.prototype.fetch.name, () => {
@@ -35,6 +36,40 @@ describe(ClientCore.name, () => {
       await expect(
         async () => await clientCore.fetch('https://api.test.com/data', {}),
       ).toBeRejected()
+    })
+
+    it('Labels metrics with the rpc metrics context core feature', async () => {
+      const { clientCore } = mocks()
+
+      await withRpcMetricsContext({ coreFeature: 'blockSync.fetch' }, () =>
+        clientCore.fetch('https://api.test.com/data', {}),
+      )
+      await clientCore.fetch('https://api.test.com/data', {})
+
+      expect(clientCore.metricsAggregator.buffer.map((m) => m.label)).toEqual([
+        'blockSync.fetch',
+        UNCATEGORIZED_METRICS_LABEL,
+      ])
+      const stats = clientCore.rateLimiter.takeStats()
+      expect(Object.keys(stats.labels).sort()).toEqual([
+        'blockSync.fetch',
+        UNCATEGORIZED_METRICS_LABEL,
+      ])
+      expect(stats.labels['blockSync.fetch']?.dispatched).toEqual(1)
+    })
+
+    it('Keeps the label across retries', async () => {
+      const { clientCore, http } = mocks()
+      http.fetch.rejectsWithOnce(new Error('Network error'))
+
+      await withRpcMetricsContext({ coreFeature: 'blockSync.fetch' }, () =>
+        clientCore.fetch('https://api.test.com/data', {}),
+      )
+
+      expect(
+        clientCore.rateLimiter.takeStats().labels['blockSync.fetch']
+          ?.dispatched,
+      ).toEqual(2)
     })
   })
 })

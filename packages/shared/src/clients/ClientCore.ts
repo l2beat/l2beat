@@ -4,6 +4,7 @@ import type { RequestInit } from 'node-fetch'
 import { RetryHandler, type RetryHandlerVariant } from '../tools'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 import type { HttpClient } from './http/HttpClient'
+import { getRpcMetricsContext } from './rpc/RpcMetricsContext'
 
 export interface ClientCoreDependencies {
   http: HttpClient
@@ -13,6 +14,9 @@ export interface ClientCoreDependencies {
   retryStrategy: RetryHandlerVariant
 }
 
+/** Label used when a call is made outside of any RPC metrics context. */
+export const UNCATEGORIZED_METRICS_LABEL = 'uncategorized'
+
 export abstract class ClientCore {
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
@@ -20,16 +24,17 @@ export abstract class ClientCore {
 
   constructor(private readonly deps: ClientCoreDependencies) {
     const logger = deps.logger.for(this).tag({ source: deps.sourceName })
+    this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
     this.metricsAggregator = new ClientMetricsAggregator({
       logger,
       flushInterval: 30_000,
+      rateLimiter: this.rateLimiter,
     })
 
     this.retryHandler = RetryHandler.create(
       deps.retryStrategy,
       logger.tag({ tag: deps.sourceName, source: deps.sourceName }),
     )
-    this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
   }
 
   /**
@@ -41,17 +46,29 @@ export abstract class ClientCore {
    * @returns Parsed JSON object
    */
   async fetch(url: string, init: RequestInit): Promise<json> {
+    // Resolved here, synchronously in the caller's async context. The rate
+    // limiter dispatches later from a timer or another call's completion, so
+    // the context is not reliable inside `_fetch`.
+    const label =
+      getRpcMetricsContext()?.coreFeature ?? UNCATEGORIZED_METRICS_LABEL
     try {
-      return await this.rateLimiter.call(() => this._fetch(url, init))
+      return await this.rateLimiter.call(
+        () => this._fetch(url, init, label),
+        label,
+      )
     } catch (error) {
       return await this.retryHandler.retry(
-        () => this.rateLimiter.call(() => this._fetch(url, init)),
+        () => this.rateLimiter.call(() => this._fetch(url, init, label), label),
         { error, url, init },
       )
     }
   }
 
-  private async _fetch(url: string, init: RequestInit): Promise<json> {
+  private async _fetch(
+    url: string,
+    init: RequestInit,
+    label: string,
+  ): Promise<json> {
     const start = Date.now()
 
     const response = await this.deps.http.fetch(url, init)
@@ -59,7 +76,7 @@ export abstract class ClientCore {
     const duration = Date.now() - start
     const size = Buffer.byteLength(JSON.stringify(response), 'utf8')
 
-    this.metricsAggregator.push({ duration, size: size })
+    this.metricsAggregator.push({ duration, size, label })
 
     const validationInfo = this.validateResponse(response)
 
