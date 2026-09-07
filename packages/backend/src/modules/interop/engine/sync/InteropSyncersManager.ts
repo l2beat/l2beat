@@ -263,7 +263,7 @@ export class InteropSyncersManager {
 
       const rpcLogger = this.logger
         .for(EthRpcClient.name)
-        .tag({ source: chainConfig.name })
+        .tag({ source: chainConfig.name, chain: chainConfig.name })
 
       const http = new Http({
         logger: rpcLogger,

@@ -43,6 +43,7 @@ export const DEFAULT_RATE_LIMITER_LABEL = 'default'
 const MS_PER_MINUTE = 60 * 1000
 
 export class RateLimiter {
+  readonly callsPerMinute: number
   // biome-ignore lint/suspicious/noExplicitAny: generic type
   private queue: QueuedFunction<any>[] = []
   private lastCalled = 0
@@ -52,6 +53,7 @@ export class RateLimiter {
   private inFlightMax = 0
 
   constructor(options: RateLimiterOptions) {
+    this.callsPerMinute = options.callsPerMinute
     this.minTimeElapsed = MS_PER_MINUTE / options.callsPerMinute
   }
 
