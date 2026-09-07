@@ -111,8 +111,10 @@ describe(getInteropTokenRelationsGraph.name, () => {
         transferCount: pairStats ? 0 : null,
         avgDuration: null,
       }
-      expect(graph.nodes[0]).toHaveSubset(expected)
-      expect(graph.nodes[0]?.deployments[0]).toHaveSubset(expected)
+      const node = graph.nodes[0]
+      assert(node?.deployments[0])
+      expect(node).toHaveSubset(expected)
+      expect(node.deployments[0]).toHaveSubset(expected)
     }
   })
 
@@ -144,7 +146,9 @@ describe(getInteropTokenRelationsGraph.name, () => {
       interopProjects,
     )
 
-    expect(graph.nodes[0]).toHaveSubset({
+    const node = graph.nodes[0]
+    assert(node)
+    expect(node).toHaveSubset({
       volume: 110,
       transferCount: 5,
       avgDuration: 20,
@@ -257,8 +261,11 @@ describe(getInteropTokenRelationsGraph.name, () => {
       interopProjects,
     )
 
-    const deployments = graph.nodes.flatMap((node) => node.deployments)
-    expect(deployments[0]).toHaveSubset({
+    const [custom, supported, unknown] = graph.nodes.flatMap(
+      (node) => node.deployments,
+    )
+    assert(custom && supported && unknown)
+    expect(custom).toHaveSubset({
       chain: {
         id: 'custom-chain',
         name: 'Custom Chain',
@@ -266,8 +273,8 @@ describe(getInteropTokenRelationsGraph.name, () => {
       },
       explorerUrl: 'https://explorer.example/address/0xfa',
     })
-    expect(deployments[1]?.explorerUrl).toEqual(undefined)
-    expect(deployments[2]).toHaveSubset({
+    expect(supported.explorerUrl).toEqual(undefined)
+    expect(unknown).toHaveSubset({
       chain: { id: 'unknown-chain', name: 'unknown-chain', iconUrl: undefined },
       explorerUrl: undefined,
     })
