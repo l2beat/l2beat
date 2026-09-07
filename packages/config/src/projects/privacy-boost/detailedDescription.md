@@ -8,15 +8,14 @@ Accounts can authorize spending with registered approval keys or with explicit o
 
 Users can locally prove a forced withdrawal of up to {{maxForcedInputs}} notes. The contract checks that the referenced auth key or spend approval is live and unexpired when the request is submitted, and records the authorized withdrawal and fee. Anyone can execute it {{forcedWithdrawalDelay}} later if the notes remain unspent, without cooperation from the TEE or relays. The account owner can cancel a pending request.
 
-Portal deposits use EIP-7702 delegated deposit addresses to sweep tokens into escrow while hiding the recipient in the deposit proof. Gift notes can be claimed by recipients or refunded by senders after a bound deadline, either privately through a relay or through a permissionless public gift exit. Proof-authorized withdrawals can also call approved external gateways for DeFi operations.
+Users can locally generate and deploy portal deposit EIP-7702 addresses. Anyone can send ERC-20 to such a portal address, the tokens are regularly swept into Privacy Boost escrow for the hidden recipient.
+Gift notes can be claimed by recipients or refunded by senders after a bound deadline, either privately through a relay or through a permissionless public gift exit. Proof-authorized withdrawals can also call approved external gateways for DeFi operations.
 
 If the operator disappears, no new deposits or private transfers can be processed and the pool effectively enters this exit-only mode, in which the zero-knowledge guarantees alone are sufficient to recover funds.
 
 ### Privacy considerations
 
 All private data exists in plaintext inside the operator's TEE. This privacy depends on the hardware security of the TEE against actors with physical access (side-channel and microarchitectural attacks could expose the full plaintext ledger), as well as vendor vulnerabilities. The source code running within the TEE is not published.
-
-Portal recipient anonymity additionally depends on the offchain discovery registry that maps portal addresses to their recipients. Access to its plaintext data can reveal those links.
 
 A permissionless forced withdrawal publishes the commitments of the spent notes and the registered account ID, publicly linking the exit of specific notes with the EOA that registered auth keys. It is a fallback mechanism that reclaims the user's tokens but strips the privacy.
 

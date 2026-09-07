@@ -5,8 +5,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
-import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
+import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -126,13 +126,7 @@ export const privacyBoost: BaseProject = {
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        id: 'PrivacyBoost20260903',
-        name: 'Privacy Boost September 2026',
-        risk: 'red',
-        shortDescription:
-          'Circuit-specific trusted setup for the deployed verifiers. L2BEAT has not reproduced their verification keys or verified their ceremony provenance.',
-        longDescription:
-          'The deployed protocol uses 21 circuit configurations across five verifier families. Circuit and ceremony configuration sources are public, but L2BEAT has not identified the exact source revision and ceremony artifacts used to generate the deployed verification keys. Reproduction is blocked until these inputs are available. The participant count and contribution history for the deployed keys remain unverified.',
+        ...TRUSTED_SETUPS.PrivacyBoostv2,
       },
     ],
     projectsForTvs: [
@@ -226,74 +220,6 @@ export const privacyBoost: BaseProject = {
           },
         ],
         verificationStatus: 'notVerified',
-      },
-      // Historical deployments: the August attestations apply only to these addresses.
-      {
-        hash: 'Privacy Boost epoch verifier 18.08.2026',
-        name: 'Privacy Boost epoch verifier, 14 circuits',
-        description:
-          'Verifies the batched private transfer and withdrawal proofs.',
-        sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/7b2a01864a706a6d440ada20a92e4ae75dcbfc0a/frontend/epoch_circuit.go',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'optimism',
-              '0x67b1bD839203223870fBF51e4CDf2104E3Ca966b',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'privacy-boost',
-          'verificationSteps-epoch-18.08.2026',
-        ),
-      },
-      {
-        hash: 'Privacy Boost deposit verifier 18.08.2026',
-        name: 'Privacy Boost deposit verifier, 3 circuits',
-        description: 'Verifies the batched deposit epoch proofs.',
-        sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/7b2a01864a706a6d440ada20a92e4ae75dcbfc0a/frontend/deposit_epoch_circuit.go',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'optimism',
-              '0xC829061276e95D11aF92E678DE2B767AcFB4e924',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'privacy-boost',
-          'verificationSteps-deposit-18.08.2026',
-        ),
-      },
-      {
-        hash: 'Privacy Boost forced withdrawal verifier 18.08.2026',
-        name: 'Privacy Boost forced withdrawal verifier, 1 circuit',
-        description: 'Verifies the client-side forced withdrawal proofs.',
-        sourceLink:
-          'https://github.com/sunnyside-io/privacy-boost-protocol/blob/7b2a01864a706a6d440ada20a92e4ae75dcbfc0a/frontend/forced_withdraw_circuit.go',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'optimism',
-              '0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'privacy-boost',
-          'verificationSteps-forced-18.08.2026',
-        ),
       },
     ],
   },
