@@ -24,6 +24,7 @@ import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
+import { createTokensRouter } from './tokens/TokensRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
 const cache = new FrontendInMemoryCache('createServerPageRouter')
@@ -58,6 +59,7 @@ export function createServerPageRouter(
     ...(env.CLIENT_SIDE_HOME_PAGE ? [createHomeRouter] : []),
     createL2Router,
     createInteropRouter,
+    createTokensRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,

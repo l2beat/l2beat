@@ -20,8 +20,13 @@ import { RelationsDiagram } from './RelationsDiagram'
 
 export function TokenRelationsGraphView({
   graph,
+  diagramClassName = 'h-[380px] md:h-[520px]',
+  expandable = true,
 }: {
   graph: InteropTokenRelationsGraph
+  diagramClassName?: string
+  /** Off when the view already fills a dialog and has nowhere larger to go. */
+  expandable?: boolean
 }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>()
   const [hideUnconnected, setHideUnconnected] = useState(true)
@@ -91,8 +96,8 @@ export function TokenRelationsGraphView({
 
       {!isExpanded &&
         diagram(
-          'h-[380px] md:h-[520px]',
-          isMobile ? undefined : () => setIsExpanded(true),
+          diagramClassName,
+          isMobile || !expandable ? undefined : () => setIsExpanded(true),
         )}
 
       {isMobile && (
