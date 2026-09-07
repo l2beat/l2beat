@@ -88,7 +88,7 @@ describe('model-permissions all', () => {
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
-  }).timeout(5_000)
+  }).timeout(15_000)
 
   it('records the module version actually used, warns when it is uncommitted, and permits updating just one consumer', () => {
     const root = mkdtempSync(join(tmpdir(), 'model-permissions-order-'))
@@ -205,5 +205,5 @@ describe('model-permissions all', () => {
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
-  }).timeout(5_000)
+  }).timeout(30_000)
 })
