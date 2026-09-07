@@ -22,7 +22,6 @@ import { generateAccessibleColors } from '~/utils/generateColors'
 export interface PrivacyTvlBreakdownProject {
   id: string
   name: string
-  hasTvl: boolean
 }
 
 interface Props {
