@@ -1,3 +1,143 @@
+Generated with discovered.json: 0x30ff4a57af617f6c15972893189c47530c07b2b6
+
+# Diff at Mon, 07 Sep 2026 14:03:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@67fdb90ab08ace2a9b29f762ed2ddc4056f5d916 block: 1788273501
+- current timestamp: 1788789718
+
+## Description
+
+Operator changes only. The protocol is still paused, while ciphernodes are bonding and registering. No request has been processed yet.
+
+## Watched changes
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.13:
++        "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.14:
++        "eth:0x59461947EC279863138fae477C35B0c551A5c3a6"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.15:
++        "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.16:
++        "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe"
++++ description: Number of operators whose active status is valid under the current eligibility-configuration version. Unlike activeOperators, this drops immediately when the version is bumped, so it is the signal for a mass invalidation.
+      values.numActiveOperators:
+-        9
++        14
+    }
+```
+
+```diff
+    EOA (eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"member","from":"eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7","description":"eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption.","role":".$members"}
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.7:
+-        "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.15:
++        "eth:0x59461947EC279863138fae477C35B0c551A5c3a6"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.16:
++        "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.17:
++        "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671"
+    }
+```
+
+```diff
+    EOA (eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788273501 (main branch discovery), not current.
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.
+      fieldMeta.bondOwners.description:
+-        "Latest collateral owner for each operator key, reconstructed from ownership events. One address can own several operator positions."
++        "Latest collateral owner for each operator key, reconstructed from ownership events. The owner controls that operator's collateral and exits (operators self-administer this via propose/accept); one address can own several operator positions."
+      fieldMeta.bondOwners.type:
+-        "PERMISSION"
+      fieldMeta.numActiveOperators.description:
+-        "Number of operators whose active status is valid under the current eligibility-configuration version."
++        "Number of operators whose active status is valid under the current eligibility-configuration version. Unlike activeOperators, this drops immediately when the version is bumped, so it is the signal for a mass invalidation."
+      fieldMeta.numRegisteredOperators:
++        {"description":"Number of operator keys with a registered collateral position."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x0EebbDa2423b58e59Df0F4969e6Ce96af69BEFC3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x11E91FB4793047a68dFff29158387229eA313ffE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x2F3A1d13525748D2e6CC8EEA715CEFCF5B8ff833)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x34aA3F359A9D614239015126635CE7732c18fDF3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x60Ca282757BA67f3aDbF21F3ba2eBe4Ab3eb01fc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x8B405dBf2F30844B608b08DaD20447A6955A6C6E) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x8d138c01765483cB79d787ce5933F609CbFDabcF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x97843608a00e2bbc75ab0C1911387E002565DEDE) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x54c930d603ca0c5b57bab5605f540ecc5a177391
 
 # Diff at Tue, 01 Sep 2026 14:42:58 GMT:

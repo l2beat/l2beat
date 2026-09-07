@@ -107,6 +107,25 @@
     "katana:0x420000000000000000000000000000000000001b"
   ],
   "overrides": {
+    // OPContractsManagerV2 (v7.1.17): shared OP-stack upgrade tooling, referenced by
+    // SystemConfig.lastUsedOPCM since the 2026-09-01 upgrade. Ignored so discovery doesn't
+    // follow it into the OPCM container/utils/validator and bare implementations.
+    // Upgrade authority is the ProxyAdmin owner (Polygon Multisig 2), which delegatecalls it.
+    "eth:0x6FD5B86B93A0405c1eF082ED6Ed3b28e94f022f4": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {
+      "fields": {
+        "guardian": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "pause the OptimismPortal and L1CrossDomainMessenger of Katana (pauses expire automatically after the configured pause expiry)."
+            }
+          ]
+        }
+      }
+    },
     "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666": {
       "fields": {
         "selectedOpSuccinctConfig": {
@@ -207,18 +226,18 @@
           ]
         }
       }
-    }
-  },
-  "katana:0x420000000000000000000000000000000000001b": {
-    "description": "Collects the sequencer fees.",
-    "fields": {
-      "recipient": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "receive fees."
-          }
-        ]
+    },
+    "katana:0x420000000000000000000000000000000000001b": {
+      "description": "Collects the operator fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
       }
     }
   }
