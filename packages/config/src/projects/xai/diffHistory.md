@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x9a305aebd5a05f3d04bd86560d6dc5f0261ccf21
+
+# Diff at Mon, 07 Sep 2026 08:27:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1787669025
+- current timestamp: 1788769532
+
+## Description
+
+SafeL2 0x7542…5CBa (owner of the ProxyAdmin for the Sentry contracts): member added; threshold lowered 4/6 → 3/7.
+
+XaiFundsReiceiverMultisig: 3 members removed; threshold 3/7 → 2/4.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x754286508D57Fae1256bC288461E075552175CBa) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
+    contract XaiFundsReiceiverMultisig (arb1:0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) [GnosisSafe] {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      values.$members.1:
+-        "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f"
+      values.$members.2:
+-        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+      values.$members.5:
+-        "arb1:0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x067f55880cc9c57fbf3d12e1c4b71fee89da9706
 
 # Diff at Tue, 25 Aug 2026 14:44:53 GMT:

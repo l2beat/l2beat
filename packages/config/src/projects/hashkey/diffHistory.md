@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x89c32e1d088b833d6387845f08ecd71f946ac00a
+
+# Diff at Mon, 07 Sep 2026 08:24:24 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1786436525
+- current timestamp: 1788769375
+
+## Description
+
+SystemConfig: `unsafeBlockSigner` changed to 0x98a6…fbfC.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.unsafeBlockSigner:
+-        "eth:0x0dD773e949a7E53f622A3A5cC89a6C6663652638"
++        "eth:0x98a6bBaE1f8F7e78c96d90f1705c1fA3BD29fbfC"
+    }
+```
+
 Generated with discovered.json: 0xf8c30ecd10b48950a3a5f561ba4af61ad43439c3
 
 # Diff at Tue, 11 Aug 2026 08:23:09 GMT:
