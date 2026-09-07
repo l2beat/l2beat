@@ -13,6 +13,8 @@ import {
   addReferencedDiscoveries,
   clusterEntries,
   DiscoveryRegistry,
+  findStaleReferences,
+  loadDiscoveriesForModelling,
   modelPermissions,
 } from './modelPermissions'
 
@@ -86,14 +88,32 @@ describe('cluster permission modelling', () => {
       )
       combinePermissionsIntoDiscovery(fresh, model, clusterEntries(registry))
 
-      expect(fresh.modelledAgainst).toEqual({
-        governance: outputs[2]!.permissionsConfigHash!,
-        shared: outputs[1]!.permissionsConfigHash!,
-      })
+      // The committed module hashes are random here, so they are behind the
+      // clingo their configs produce. Provenance must still name the version
+      // that was fed to this run: the one each module gets when remodelled.
+      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([
+        'governance',
+        'shared',
+      ])
+      const templateService = new TemplateService(root)
+      for (const name of ['governance', 'shared']) {
+        const own = await modelPermissions(
+          name,
+          loadDiscoveriesForModelling(name, reader),
+          reader,
+          templateService,
+          paths,
+          { debug: false },
+        )
+        expect(fresh.modelledAgainst[name]).toEqual(own.permissionsConfigHash)
+        registry.get(name).discoveryOutput.permissionsConfigHash =
+          own.permissionsConfigHash
+      }
       expect(Object.keys(fresh.modelledAgainst)).toEqual([
         'governance',
         'shared',
       ])
+      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([])
 
       const upgrades = fresh.permissions?.[council]?.receivedPermissions ?? []
       expect(upgrades.length).toEqual(1)

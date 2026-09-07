@@ -68,6 +68,7 @@ export {
   addReferencedDiscoveries,
   clusterEntries,
   DiscoveryRegistry,
+  findStaleReferences,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   loadDiscoveriesForModelling,

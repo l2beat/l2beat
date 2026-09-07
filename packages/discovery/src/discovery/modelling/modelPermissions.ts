@@ -200,16 +200,6 @@ export async function modelPermissionFactsUsingClingo(
     debug: boolean
   },
 ) {
-  // Record the committed module versions used by this run. These hashes are
-  // provenance, not inputs to the project's own permission hash.
-  const modelledAgainst: Record<string, Hash256> = {}
-  for (const name of discoveries.getSortedProjects()) {
-    if (name === project) continue
-    const hash = discoveries.get(name).discoveryOutput.permissionsConfigHash
-    assert(hash !== undefined, `Missing permissionsConfigHash for ${name}.`)
-    modelledAgainst[name] = hash
-  }
-
   const clingoByProject = generateClingoForDiscoveries(
     discoveries,
     configReader,
@@ -246,11 +236,52 @@ export async function modelPermissionFactsUsingClingo(
   const ownClingo = clingoByProject[project]
   assert(ownClingo !== undefined, `No clingo generated for ${project}.`)
   const permissionsConfigHash = generatePermissionConfigHash(ownClingo)
+  const modelledAgainst = hashReferencedClingo(
+    project,
+    discoveries,
+    clingoByProject,
+  )
   return {
     permissionsConfigHash,
     modelledAgainst,
     permissionFacts: result,
   }
+}
+
+// Provenance is taken from the clingo this run actually consumed, not from the
+// hashes committed in the referenced discovered.json files. The two only differ
+// when a module's config or model changed without it being remodelled, and in
+// that case the committed hash names a version that was never used here.
+function hashReferencedClingo(
+  project: string,
+  discoveries: DiscoveryRegistry,
+  clingoByProject: Record<string, string>,
+): Record<string, Hash256> {
+  const modelledAgainst: Record<string, Hash256> = {}
+  for (const name of discoveries.getSortedProjects()) {
+    if (name === project) continue
+    const clingo = clingoByProject[name]
+    assert(clingo !== undefined, `No clingo generated for ${name}.`)
+    modelledAgainst[name] = generatePermissionConfigHash(clingo)
+  }
+  return modelledAgainst
+}
+
+// Referenced projects whose committed permissionsConfigHash is behind the
+// clingo their current config and model produce.
+export function findStaleReferences(
+  discoveries: DiscoveryRegistry,
+  modelledAgainst: Record<string, Hash256>,
+): string[] {
+  const stale: string[] = []
+  for (const [name, hash] of Object.entries(modelledAgainst)) {
+    const committed =
+      discoveries.get(name).discoveryOutput.permissionsConfigHash
+    if (committed !== hash) {
+      stale.push(name)
+    }
+  }
+  return stale
 }
 
 export function readModelPermissionsClingoFile(paths: DiscoveryPaths): string {

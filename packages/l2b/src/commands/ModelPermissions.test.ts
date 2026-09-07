@@ -90,7 +90,7 @@ describe('model-permissions all', () => {
     }
   }).timeout(5_000)
 
-  it('records newly modelled module hashes and permits updating just one consumer', () => {
+  it('records the module version actually used, warns when it is uncommitted, and permits updating just one consumer', () => {
     const root = mkdtempSync(join(tmpdir(), 'model-permissions-order-'))
     try {
       const discoveryRoot = join(root, 'discovery')
@@ -163,13 +163,15 @@ describe('model-permissions all', () => {
         )
         expect(result.stderr).toEqual('')
         expect(result.status).toEqual(0)
+        return result.stdout
       }
       const read = (name: string): DiscoveryOutput =>
         JSON.parse(
           readFileSync(join(discoveryRoot, name, 'discovered.json'), 'utf8'),
         )
+      const staleWarning = 'A mismatch has been detected'
 
-      run('all')
+      expect(run('all')).not.toInclude(staleWarning)
       const module = read('z')
       expect(module.permissionsConfigHash).not.toEqual(Hash256.ZERO)
       expect(module.modelledAgainst).toEqual({})
@@ -186,8 +188,13 @@ describe('model-permissions all', () => {
         join(discoveryRoot, 'z', 'model.lp'),
         'provenanceVersion(2).',
       )
-      run('z')
-      run('a')
+      const consumerFirst = run('a')
+      expect(consumerFirst).toInclude(staleWarning)
+      expect(consumerFirst).toInclude('l2b model-permissions z')
+      expect(read('a').modelledAgainst.z).not.toEqual(
+        module.permissionsConfigHash!,
+      )
+      expect(run('z')).not.toInclude(staleWarning)
       expect(read('z').permissionsConfigHash).not.toEqual(
         module.permissionsConfigHash,
       )
