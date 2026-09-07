@@ -35,8 +35,8 @@ const ROW_GAP = 112
 
 /**
  * Rows of nodes by backing depth, widest layers wrapped onto several rows so a
- * busy token stays readable. Within a layer nodes keep a tidy-tree order and a
- * backer's children are never split across a wrap.
+ * busy token stays readable. Children follow their parent's order, busiest
+ * first within each sibling group. Groups stay together when they fit a row.
  */
 export function layoutRelationsGraph(
   nodes: LayoutNode[],
@@ -47,17 +47,13 @@ export function layoutRelationsGraph(
   const layerOf = new Map(
     layers.flatMap((layer, index) => layer.map((node) => [node.id, index])),
   )
-  const nodeOf = new Map(nodes.map((node) => [node.id, node]))
   const primaryParent = getPrimaryParents(edges, layerOf)
-  const order = orderWithinLayers(layers, edges, primaryParent, layerOf, nodeOf)
+  const orderedLayers = orderLayers(layers, primaryParent)
 
-  const extent = Math.max(
-    0,
-    ...nodes.map((node) => (order.get(node.id) ?? 0) + node.width),
-  )
+  const widestLayer = Math.max(0, ...layers.map(rowWidth))
   const width = Math.min(
     MAX_WORLD_WIDTH,
-    Math.max(MIN_WORLD_WIDTH, extent + SIDE_LANE_WIDTH * 2),
+    Math.max(MIN_WORLD_WIDTH, widestLayer + SIDE_LANE_WIDTH * 2),
   )
   const usableWidth = width - SIDE_LANE_WIDTH * 2
 
@@ -78,14 +74,9 @@ export function layoutRelationsGraph(
     }
   }
 
-  for (const layer of layers) {
-    const ordered = layer.toSorted(
-      (a, b) =>
-        (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0) ||
-        a.id.localeCompare(b.id),
-    )
+  for (const layer of orderedLayers) {
     placeRows(
-      packRows(ordered, usableWidth, (node) => primaryParent.get(node.id)),
+      packRows(layer, usableWidth, (node) => primaryParent.get(node.id)),
     )
   }
 
@@ -141,7 +132,7 @@ function assignLayers(
     const index = layer.get(node.id) ?? 0
     layers[index] = [...(layers[index] ?? []), node]
   }
-  return layers.map((nodes) => nodes.toSorted(byVolumeThenId))
+  return layers
 }
 
 /** The first backer one layer up claims the child; other backers are extra lines. */
@@ -160,136 +151,24 @@ function getPrimaryParents(
   return result
 }
 
-/**
- * X positions on an unbounded row, used only for ordering: each backer's
- * children are contiguous and the backer sits over their centre.
- */
-function orderWithinLayers(
+/** Order roots by volume, then each layer by parent order and sibling volume. */
+function orderLayers(
   layers: LayoutNode[][],
-  edges: LayoutEdge[],
   primaryParent: ReadonlyMap<string, string>,
-  layerOf: ReadonlyMap<string, number>,
-  nodeOf: ReadonlyMap<string, LayoutNode>,
-): Map<string, number> {
-  const width = (id: string) => nodeOf.get(id)?.width ?? 0
-  const position = placeTidyTree(
-    layers,
-    getChildrenByBacker(primaryParent, nodeOf),
-    width,
-  )
-  // Centring a backer can push it into its neighbour.
-  for (const layer of layers) {
-    repack(layer, position, (id) => position.get(id) ?? 0)
+): LayoutNode[][] {
+  const order = new Map<string, number>()
+  const parentOrder = (node: LayoutNode) => {
+    const parent = primaryParent.get(node.id)
+    return parent === undefined ? -1 : (order.get(parent) ?? -1)
   }
-  pullBackersOverChildren(layers, edges, layerOf, position, width)
-  return position
-}
 
-function getChildrenByBacker(
-  primaryParent: ReadonlyMap<string, string>,
-  nodeOf: ReadonlyMap<string, LayoutNode>,
-): Map<string, string[]> {
-  const children = new Map<string, string[]>()
-  for (const [child, parent] of primaryParent) {
-    children.set(parent, [...(children.get(parent) ?? []), child])
-  }
-  for (const [parent, kids] of children) {
-    children.set(
-      parent,
-      kids.toSorted((a, b) =>
-        byVolumeThenId(
-          nodeOf.get(a) as LayoutNode,
-          nodeOf.get(b) as LayoutNode,
-        ),
-      ),
+  return layers.map((layer) => {
+    const ordered = layer.toSorted(
+      (a, b) => parentOrder(a) - parentOrder(b) || byVolumeThenId(a, b),
     )
-  }
-  return children
-}
-
-/** Leaves go left to right; a backer is centred over its children. */
-function placeTidyTree(
-  layers: LayoutNode[][],
-  children: ReadonlyMap<string, string[]>,
-  width: (id: string) => number,
-): Map<string, number> {
-  const position = new Map<string, number>()
-  let cursor = 0
-  const place = (id: string): void => {
-    const kids = children.get(id) ?? []
-    if (kids.length === 0) {
-      position.set(id, cursor)
-      cursor += width(id) + NODE_GAP
-      return
-    }
-    for (const kid of kids) place(kid)
-    const middle =
-      (centerOf(position, width, kids[0] as string) +
-        centerOf(position, width, kids.at(-1) as string)) /
-      2
-    position.set(id, middle - width(id) / 2)
-  }
-  for (const layer of layers) {
-    for (const node of layer) {
-      if (!position.has(node.id)) place(node.id)
-    }
-  }
-  return position
-}
-
-/** Slides nodes right, in `desired` order, until none overlap. */
-function repack(
-  layer: LayoutNode[],
-  position: Map<string, number>,
-  desired: (id: string) => number,
-) {
-  let minimum = Number.NEGATIVE_INFINITY
-  for (const node of layer.toSorted(
-    (a, b) => desired(a.id) - desired(b.id) || a.id.localeCompare(b.id),
-  )) {
-    const next = Math.max(desired(node.id), minimum)
-    position.set(node.id, next)
-    minimum = next + node.width + NODE_GAP
-  }
-}
-
-/**
- * A child with several backers leaves the non-primary ones stranded, so pull
- * every backer toward the centre of all its children, bottom layer up.
- */
-function pullBackersOverChildren(
-  layers: LayoutNode[][],
-  edges: LayoutEdge[],
-  layerOf: ReadonlyMap<string, number>,
-  position: Map<string, number>,
-  width: (id: string) => number,
-) {
-  const allChildren = new Map<string, string[]>()
-  for (const edge of edges) {
-    if (layerOf.get(edge.to) !== (layerOf.get(edge.from) ?? 0) + 1) continue
-    allChildren.set(edge.from, [...(allChildren.get(edge.from) ?? []), edge.to])
-  }
-  for (let index = layers.length - 2; index >= 0; index--) {
-    const desired = new Map(
-      (layers[index] ?? []).map((node) => {
-        const kids = allChildren.get(node.id) ?? []
-        if (kids.length === 0) return [node.id, position.get(node.id) ?? 0]
-        const mean =
-          kids.reduce((sum, id) => sum + centerOf(position, width, id), 0) /
-          kids.length
-        return [node.id, mean - node.width / 2]
-      }),
-    )
-    repack(layers[index] ?? [], position, (id) => desired.get(id) ?? 0)
-  }
-}
-
-function centerOf(
-  position: ReadonlyMap<string, number>,
-  width: (id: string) => number,
-  id: string,
-): number {
-  return (position.get(id) ?? 0) + width(id) / 2
+    ordered.forEach((node, index) => order.set(node.id, index))
+    return ordered
+  })
 }
 
 /** Rows never split a backer's block unless the block alone is wider than a row. */

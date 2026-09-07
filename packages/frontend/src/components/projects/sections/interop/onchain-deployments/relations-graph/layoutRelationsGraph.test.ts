@@ -2,7 +2,7 @@ import { expect } from 'earl'
 import { type LayoutNode, layoutRelationsGraph } from './layoutRelationsGraph'
 
 describe(layoutRelationsGraph.name, () => {
-  it('rows nodes by backing depth, busiest first, children under their backer', () => {
+  it('places nodes in centred rows by backing depth, busiest first', () => {
     const layout = layoutRelationsGraph(
       [node('E', 100), node('A', 50), node('B', null), node('C', 10)],
       [edge('E', 'A'), edge('E', 'B'), edge('A', 'C')],
@@ -38,6 +38,22 @@ describe(layoutRelationsGraph.name, () => {
       height: 416,
       unconnectedDividerY: undefined,
     })
+  })
+
+  it("keeps siblings together in their parents' display order", () => {
+    const layout = layoutRelationsGraph(
+      [
+        node('P', 10),
+        node('Q', 20),
+        node('p1', 100),
+        node('q1', 5),
+        node('p2', 0),
+        node('q2', 50),
+      ],
+      [edge('P', 'p1'), edge('Q', 'q1'), edge('P', 'p2'), edge('Q', 'q2')],
+    )
+
+    expect([...layout.boxes.keys()]).toEqual(['Q', 'P', 'q2', 'q1', 'p1', 'p2'])
   })
 
   it("wraps a wide layer without splitting a backer's children across rows", () => {
