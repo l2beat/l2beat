@@ -71,6 +71,7 @@ export {
   findStaleReferences,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
+  hashPermissionsConfigInOwnCluster,
   loadDiscoveriesForModelling,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'

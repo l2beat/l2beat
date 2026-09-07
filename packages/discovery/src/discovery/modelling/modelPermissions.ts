@@ -236,10 +236,11 @@ export async function modelPermissionFactsUsingClingo(
   const ownClingo = clingoByProject[project]
   assert(ownClingo !== undefined, `No clingo generated for ${project}.`)
   const permissionsConfigHash = generatePermissionConfigHash(ownClingo)
-  const modelledAgainst = hashReferencedClingo(
+  const modelledAgainst = hashReferencedProjectsInOwnClusters(
     project,
     discoveries,
-    clingoByProject,
+    configReader,
+    templateService,
   )
   return {
     permissionsConfigHash,
@@ -248,23 +249,46 @@ export async function modelPermissionFactsUsingClingo(
   }
 }
 
-// Provenance is taken from the clingo this run actually consumed, not from the
-// hashes committed in the referenced discovered.json files. The two only differ
-// when a module's config or model changed without it being remodelled, and in
-// that case the committed hash names a version that was never used here.
-function hashReferencedClingo(
+// Provenance is computed from each module's current config and model, not
+// copied from the hash committed in its discovered.json. The two only differ
+// when the module changed without being remodelled, and then the committed
+// hash names a version this run never saw.
+function hashReferencedProjectsInOwnClusters(
   project: string,
   discoveries: DiscoveryRegistry,
-  clingoByProject: Record<string, string>,
+  configReader: ConfigReader,
+  templateService: TemplateService,
 ): Record<string, Hash256> {
   const modelledAgainst: Record<string, Hash256> = {}
   for (const name of discoveries.getSortedProjects()) {
     if (name === project) continue
-    const clingo = clingoByProject[name]
-    assert(clingo !== undefined, `No clingo generated for ${name}.`)
-    modelledAgainst[name] = generatePermissionConfigHash(clingo)
+    modelledAgainst[name] = hashPermissionsConfigInOwnCluster(
+      name,
+      configReader,
+      templateService,
+    )
   }
   return modelledAgainst
+}
+
+// The clingo of a project depends on the cluster it is generated in, because
+// the cluster's address map decides which permission targets resolve. Hashing
+// the project inside its own cluster gives the same value regardless of which
+// consumer asks, and it is the value the project itself commits when modelled.
+export function hashPermissionsConfigInOwnCluster(
+  project: string,
+  configReader: ConfigReader,
+  templateService: TemplateService,
+): Hash256 {
+  const discoveries = loadDiscoveriesForModelling(project, configReader)
+  const clingoByProject = generateClingoForDiscoveries(
+    discoveries,
+    configReader,
+    templateService,
+  )
+  const ownClingo = clingoByProject[project]
+  assert(ownClingo !== undefined, `No clingo generated for ${project}.`)
+  return generatePermissionConfigHash(ownClingo)
 }
 
 // Referenced projects whose committed permissionsConfigHash is behind the

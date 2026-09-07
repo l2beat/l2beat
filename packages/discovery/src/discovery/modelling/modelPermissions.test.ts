@@ -14,6 +14,9 @@ import {
   clusterEntries,
   DiscoveryRegistry,
   findStaleReferences,
+  generateClingoForDiscoveries,
+  generatePermissionConfigHash,
+  hashPermissionsConfigInOwnCluster,
   loadDiscoveriesForModelling,
   modelPermissions,
 } from './modelPermissions'
@@ -144,6 +147,100 @@ describe('cluster permission modelling', () => {
         governance.entries.find((entry) => entry.address === council)
           ?.receivedPermissions,
       ).toEqual(upgrades)
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  it('records a module hash that does not depend on the consumer cluster', async () => {
+    const root = mkdtempSync(join(tmpdir(), 'cluster-provenance-'))
+    try {
+      const diamond = ChainSpecificAddress.from('eth', '0x111')
+      const admin = ChainSpecificAddress.from('eth', '0x222')
+      const owner = ChainSpecificAddress.from('eth', '0x333')
+      // The module's owner lives in a sibling module the module itself never
+      // reached, so only the consumer's cluster can resolve that permission.
+      const outputs = [
+        output('consumer', [
+          { type: 'Contract', address: diamond, values: { $admin: admin } },
+          { type: 'Reference', address: admin, targetProject: 'module' },
+          { type: 'Reference', address: owner, targetProject: 'sibling' },
+        ]),
+        output('module', [
+          { type: 'Contract', address: admin, values: { owner } },
+        ]),
+        output('sibling', [{ type: 'Contract', address: owner }]),
+      ]
+      for (const discovery of outputs) {
+        const dir = join(root, discovery.name)
+        mkdirSync(dir)
+        writeFileSync(join(dir, 'discovered.json'), JSON.stringify(discovery))
+        writeFileSync(
+          join(dir, 'config.jsonc'),
+          JSON.stringify({
+            name: discovery.name,
+            initialAddresses: [discovery.entries[0]?.address],
+            overrides:
+              discovery.name === 'module'
+                ? {
+                    [admin]: {
+                      fields: {
+                        owner: { permissions: [{ type: 'act', delay: 60 }] },
+                      },
+                    },
+                  }
+                : {},
+          }),
+        )
+      }
+      const reader = new ConfigReader(root)
+      const templateService = new TemplateService(root)
+      const paths = getDiscoveryPaths()
+      const registry = loadDiscoveriesForModelling('consumer', reader)
+
+      const inConsumerCluster = generateClingoForDiscoveries(
+        registry,
+        reader,
+        templateService,
+      )
+      const ownHash = hashPermissionsConfigInOwnCluster(
+        'module',
+        reader,
+        templateService,
+      )
+      expect(
+        generatePermissionConfigHash(inConsumerCluster.module!),
+      ).not.toEqual(ownHash)
+
+      const model = await modelPermissions(
+        'consumer',
+        registry,
+        reader,
+        templateService,
+        paths,
+        { debug: false },
+      )
+      const standalone = await modelPermissions(
+        'module',
+        loadDiscoveriesForModelling('module', reader),
+        reader,
+        templateService,
+        paths,
+        { debug: false },
+      )
+      expect(model.modelledAgainst.module).toEqual(ownHash)
+      expect(model.modelledAgainst.module).toEqual(
+        standalone.permissionsConfigHash,
+      )
+      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([
+        'module',
+        'sibling',
+      ])
+      registry.get('module').discoveryOutput.permissionsConfigHash =
+        standalone.permissionsConfigHash
+      registry.get('sibling').discoveryOutput.permissionsConfigHash =
+        model.modelledAgainst.sibling
+      expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([])
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
