@@ -20,8 +20,7 @@ export const settlus: ScalingProject = opStackL2({
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
-      sinceBlock: 21890837, // first batch posted to the inbox
-      untilBlock: 24433367, // last blob batch before the switch to Celestia
+      sinceBlock: 21890837, // first batch posted to the inbox; blobs again since block 25875293 (2026-08-31), Celestia in between
       inbox: EthereumAddress('0x003E40D3125591bD722aB1bB880c78e4D74d0977'),
       sequencers: [
         EthereumAddress('0xD0b4c3aC8A50B6F1B3949ADaf55Cc9805620EB57'),
@@ -31,13 +30,11 @@ export const settlus: ScalingProject = opStackL2({
       type: 'celestia',
       daLayer: ProjectId('celestia'),
       sinceBlock: 9779673,
+      untilBlock: 13618693, // last Celestia commitment before the switch back to blobs
       namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs=',
     },
   ],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: false,
   display: {
     name: 'Settlus',
@@ -65,4 +62,14 @@ export const settlus: ScalingProject = opStackL2({
   discovery,
   genesisTimestamp,
   isNodeAvailable: 'UnderReview',
+  milestones: [
+    {
+      title: 'Settlus switches back to Ethereum blobs',
+      url: 'https://etherscan.io/tx/0xc9fff1fdd3ce712e0885d383459a132ba0d409021249e4d5f4543ed7ff936911',
+      date: '2026-08-31T00:00:00Z',
+      description:
+        'Settlus stops posting data to Celestia and uses Ethereum blobs for data availability.',
+      type: 'general',
+    },
+  ],
 })
