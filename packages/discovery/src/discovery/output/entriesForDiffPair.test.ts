@@ -181,6 +181,7 @@ function output(
     abis: {},
     configHash: Hash256.random(),
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
     permissions,
   }

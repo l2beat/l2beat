@@ -86,6 +86,15 @@ describe('cluster permission modelling', () => {
       )
       combinePermissionsIntoDiscovery(fresh, model, clusterEntries(registry))
 
+      expect(fresh.modelledAgainst).toEqual({
+        governance: outputs[2]!.permissionsConfigHash!,
+        shared: outputs[1]!.permissionsConfigHash!,
+      })
+      expect(Object.keys(fresh.modelledAgainst)).toEqual([
+        'governance',
+        'shared',
+      ])
+
       const upgrades = fresh.permissions?.[council]?.receivedPermissions ?? []
       expect(upgrades.length).toEqual(1)
       expect(upgrades[0]?.permission).toEqual('upgrade')
@@ -128,7 +137,9 @@ function output(name: string, entries: EntryParameters[]): DiscoveryOutput {
     timestamp: 0,
     abis: {},
     configHash: Hash256.ZERO,
+    permissionsConfigHash: Hash256.random(),
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
   }
 }

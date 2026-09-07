@@ -65,7 +65,7 @@ export function combineStructureAndColor(
   structure: StructureOutput,
   color: ColorOutput,
 ): DiscoveryOutput {
-  const result = merge({}, structure, color)
+  const result = merge({ modelledAgainst: {} }, structure, color)
   result.entries = result.entries.map((e) => sortEntry(e))
   return result
 }

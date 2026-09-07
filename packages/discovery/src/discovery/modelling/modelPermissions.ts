@@ -136,7 +136,7 @@ export async function modelPermissions(
     debug: boolean
   },
 ): Promise<PermissionsOutput> {
-  const { permissionFacts, permissionsConfigHash } =
+  const { permissionFacts, permissionsConfigHash, modelledAgainst } =
     await modelPermissionFactsUsingClingo(
       project,
       discoveries,
@@ -145,12 +145,17 @@ export async function modelPermissions(
       paths,
       options,
     )
-  return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
+  return buildPermissionsOutput(
+    permissionFacts,
+    permissionsConfigHash,
+    modelledAgainst,
+  )
 }
 
 export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
   permissionsConfigHash: Hash256,
+  modelledAgainst: Record<string, Hash256>,
 ): PermissionsOutput {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
@@ -164,6 +169,7 @@ export function buildPermissionsOutput(
   )
   return {
     permissionsConfigHash,
+    modelledAgainst,
     permissions: ultimatePermissions,
     eoasWithUpgradePermissions,
   }
@@ -194,6 +200,16 @@ export async function modelPermissionFactsUsingClingo(
     debug: boolean
   },
 ) {
+  // Record the committed module versions used by this run. These hashes are
+  // provenance, not inputs to the project's own permission hash.
+  const modelledAgainst: Record<string, Hash256> = {}
+  for (const name of discoveries.getSortedProjects()) {
+    if (name === project) continue
+    const hash = discoveries.get(name).discoveryOutput.permissionsConfigHash
+    assert(hash !== undefined, `Missing permissionsConfigHash for ${name}.`)
+    modelledAgainst[name] = hash
+  }
+
   const clingoByProject = generateClingoForDiscoveries(
     discoveries,
     configReader,
@@ -232,6 +248,7 @@ export async function modelPermissionFactsUsingClingo(
   const permissionsConfigHash = generatePermissionConfigHash(ownClingo)
   return {
     permissionsConfigHash,
+    modelledAgainst,
     permissionFacts: result,
   }
 }
