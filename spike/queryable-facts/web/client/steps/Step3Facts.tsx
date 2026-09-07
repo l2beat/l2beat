@@ -11,15 +11,47 @@ import { ownFields } from './Step2Compile'
 /** The encoding, as a table: which JSON shape becomes which relation. */
 const ENCODING: Array<[string, string, string]> = [
   ['an object with nodeType', 'node(Id, Type)', 'one row per AST node'],
-  ['…its src', 'loc(Id, Src, Start, Len, Line, EndLine)', 'decoded into bytes and lines'],
-  ['…the text under it', 'text(Id, Text)', 'one line, cut at 200 chars (display only)'],
-  ['a field holding a node', 'child(Parent, Field, Index, Child)', 'the tree edges'],
-  ['a string or boolean field', 'attr(Id, Key, Value)', 'name, operator, visibility, kind, …'],
+  [
+    '…its src',
+    'loc(Id, Src, Start, Len, Line, EndLine)',
+    'decoded into bytes and lines',
+  ],
+  [
+    '…the text under it',
+    'text(Id, Text)',
+    'one line, cut at 200 chars (display only)',
+  ],
+  [
+    'a field holding a node',
+    'child(Parent, Field, Index, Child)',
+    'the tree edges',
+  ],
+  [
+    'a string or boolean field',
+    'attr(Id, Key, Value)',
+    'name, operator, visibility, kind, …',
+  ],
   ['a number field', 'num(Id, Key, Value)', 'referencedDeclaration, scope, …'],
-  ['strings inside an array', 'attrList(Id, Key, Index, Value)', 'e.g. names of named arguments'],
-  ['numbers inside an array', 'numList(Id, Key, Index, Value)', 'e.g. linearizedBaseContracts'],
-  ['solc’s storage layout', 'storageLayout(Contract, AstId, Label, Slot, Offset, Type)', 'copied verbatim'],
-  ['the run itself', 'unit(Unit, File, Solc)', 'id prefix, file, compiler version'],
+  [
+    'strings inside an array',
+    'attrList(Id, Key, Index, Value)',
+    'e.g. names of named arguments',
+  ],
+  [
+    'numbers inside an array',
+    'numList(Id, Key, Index, Value)',
+    'e.g. linearizedBaseContracts',
+  ],
+  [
+    'solc’s storage layout',
+    'storageLayout(Contract, AstId, Label, Slot, Offset, Type)',
+    'copied verbatim',
+  ],
+  [
+    'the run itself',
+    'unit(Unit, File, Solc)',
+    'id prefix, file, compiler version',
+  ],
 ]
 
 const BASE_ORDER = [
@@ -53,8 +85,10 @@ export function Step3Facts() {
 
   const nodeId = nav.baseNodeId
   const node = nodeId === undefined ? undefined : index.nodeOfNumId(nodeId)
-  const nodeRows = nodeId === undefined ? [] : (index.baseRowsByNode.get(nodeId) ?? [])
-  const nodeRange = nodeId === undefined ? undefined : index.rangeOfNodeId(nodeId)
+  const nodeRows =
+    nodeId === undefined ? [] : (index.baseRowsByNode.get(nodeId) ?? [])
+  const nodeRange =
+    nodeId === undefined ? undefined : index.rangeOfNodeId(nodeId)
   const conceptsHere =
     nodeId === undefined ? [] : (index.conceptRowsByNode.get(nodeId) ?? [])
 
@@ -69,7 +103,10 @@ export function Step3Facts() {
     return [...ids].sort((a, b) => {
       const la = index.locOfNode.get(a)
       const lb = index.locOfNode.get(b)
-      return (la?.start ?? 0) - (lb?.start ?? 0) || (lb?.length ?? 0) - (la?.length ?? 0)
+      return (
+        (la?.start ?? 0) - (lb?.start ?? 0) ||
+        (lb?.length ?? 0) - (la?.length ?? 0)
+      )
     })
   }, [index, nav.baseLine])
 
@@ -178,9 +215,8 @@ export function Step3Facts() {
             <p className="small muted" style={{ marginTop: 6 }}>
               Nested plain objects flatten into dotted keys (
               <code>typeDescriptions.typeString</code>); Yul nodes, which solc
-              leaves without an id, get synthetic ids above the largest one.
-              The full declaration with comments is <code>rules/schema.dl</code>
-              .
+              leaves without an id, get synthetic ids above the largest one. The
+              full declaration with comments is <code>rules/schema.dl</code>.
             </p>
           </div>
         </Panel>
@@ -234,7 +270,9 @@ export function Step3Facts() {
                       step: 2,
                       astNode: node,
                       range: nodeRange,
-                      line: nodeRange ? index.lineOf(nodeRange.start) : undefined,
+                      line: nodeRange
+                        ? index.lineOf(nodeRange.start)
+                        : undefined,
                       nonce: nav.nonce + 1,
                     })
                   }
@@ -377,7 +415,9 @@ export function Step3Facts() {
                 columns={info?.columns ?? []}
                 rows={rows}
                 onHover={(i) =>
-                  setHoverRow(i === undefined ? undefined : { relation, index: i })
+                  setHoverRow(
+                    i === undefined ? undefined : { relation, index: i },
+                  )
                 }
                 onSelect={(i) => {
                   const id = index.anchorNodeId({ relation, index: i })

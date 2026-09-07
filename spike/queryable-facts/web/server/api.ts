@@ -1,10 +1,12 @@
 // The explorer's tiny API, mounted into Vite's dev server (see web/vite.config.ts).
-// The server has the CLI at hand: it compiles, extracts, runs Soufflé and answers `explain` queries.
+// The server has the CLI at hand: it compiles, emits facts, runs Soufflé, answers `explain` queries
+// and, for step 7, drives the `codex` CLI on a run folder.
 
 import { existsSync, readFileSync } from 'fs'
 import type { IncomingMessage, ServerResponse } from 'http'
 import { join } from 'path'
-import type { ExplainRequest } from '../shared/types'
+import type { AskRequest, ExplainRequest } from '../shared/types'
+import { askConfig, streamAsk } from './ask'
 import { explainTuple, formatAtom } from './explain'
 import { parseProgram } from './program'
 import { listContracts, RUNS_DIR, readContract, runForExplorer } from './run'
@@ -65,12 +67,29 @@ export async function handleApi(
       send(res, 200, explainTuple(SOUFFLE, runDir, atom))
       return
     }
+    if (req.method === 'GET' && url.pathname === '/api/ask/config') {
+      send(res, 200, askConfig())
+      return
+    }
+    if (req.method === 'POST' && url.pathname === '/api/ask') {
+      const body = JSON.parse(await readBody(req)) as AskRequest
+      if (!/^[\w.-]+$/.test(body.runId)) throw new Error('bad runId')
+      const runDir = join(RUNS_DIR, body.runId)
+      if (!existsSync(runDir)) throw new Error(`unknown run ${body.runId}`)
+      // streams NDJSON and ends the response itself; errors after the first byte travel in-band
+      await streamAsk(body, runDir, res)
+      return
+    }
     if (url.pathname.startsWith('/api/')) {
       send(res, 404, { error: `no route ${req.method} ${url.pathname}` })
       return
     }
     next()
   } catch (error) {
+    if (res.headersSent) {
+      res.end()
+      return
+    }
     send(res, 500, {
       error: error instanceof Error ? error.message : String(error),
     })

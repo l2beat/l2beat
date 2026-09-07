@@ -40,11 +40,18 @@ A local web page that walks the pipeline as a seven-step wizard on a contract yo
    its one least model relates to clingo's stable models).
 6. **Derive** – every analysis relation, and a **why?** button per tuple for the proof tree down through the
    concepts to the base facts. Naming helpers in a proof fold by default ("plumbing · 12 steps").
-7. **Report & ask** – placeholder for the next iteration.
+7. **Report & ask** – `report.md` rendered (every id in it is a link into the source), and a box to ask an
+   AI about the contract. The agent is the `codex` CLI (`codex exec --json`), started *in the run folder*
+   with a sandbox that can write only there, briefed on the layers, the id scheme and how to run Soufflé,
+   and asked to cite its evidence as Datalog atoms and source lines. Citations become links: a relation
+   name opens that row in step 6 (or 4, or 3), an id lights up in the source, `L25` jumps there; a cited
+   tuple the run does not contain is marked. Follow-ups resume the same codex thread. Model and reasoning
+   effort are selectable (default `gpt-5.6-sol` at `high`; `CODEX_MODEL` / `CODEX_EFFORT` change the
+   default, `CODEX` the binary). Each question leaves a transcript in `<run>/ask/`.
 
 Every run is written to `out/runs/<contract>-<timestamp>/` (source, solc input/output, `facts/`,
-`program.dl`, `derived/`, `report.md`, `README.txt`), which is what a later "ask an AI" step will be
-pointed at. The server is Vite's dev server with a tiny API (`web/server`); nothing is published anywhere.
+`program.dl`, `derived/`, `report.md`, `README.txt`, `ask/`), which is exactly what the agent of step 7
+sees. The server is Vite's dev server with a tiny API (`web/server`); nothing is published anywhere.
 
 ## Running it
 
@@ -55,7 +62,8 @@ Prerequisites:
   root: download the official `.deb` from the Soufflé GitHub release, check it against the
   release's `sha512sum.txt`, `dpkg-deb -x` it into `~/.local/opt/souffle-2.5` and symlink
   `~/.local/bin/souffle`. Interpreter mode needs none of the `-dev` packages the `.deb` lists;
-- for the analyzer comparison only: `l2analyze` from l2beat/analyze.
+- for the analyzer comparison only: `l2analyze` from l2beat/analyze;
+- for step 7 only: the `codex` CLI on `PATH` and logged in (`codex login`). Nothing else talks to a network.
 
 ```sh
 cd spike/queryable-facts
@@ -86,8 +94,11 @@ src/         compile.ts   pragma → version → solc standard JSON
              compare.ts   mechanical diff of two storage-writers tables
              main.ts      CLI
 web/         vite.config.ts  dev server + API in one process (`pnpm dev`)
-             server/         run the pipeline, parse the .dl program, ask Soufflé to explain a tuple
-             client/         the React wizard (steps/, components/, lib/)
+             server/         run the pipeline, parse the .dl program, ask Soufflé to explain a tuple,
+                             drive codex on a run folder and stream what it does (ask.ts)
+             client/         the React wizard (steps/, components/, lib/); Markdown.tsx renders report.md and
+                             answers, Cite.tsx turns cited atoms / ids / lines into links, lib/ask.ts keeps
+                             the conversations
              smoke.ts        renders every step server-side against a run (no browser needed)
 rules/       schema.dl    layer 0: .decl + .input for the ten base relations, with the encoding explained
              concepts.dl  layer 1: names, statements, calls, writes, storage references, inline assembly
@@ -95,7 +106,8 @@ rules/       schema.dl    layer 0: .decl + .input for the ten base relations, wi
              report.dl    .output relations
 out/<unit>/  facts/*.facts  derived/*.csv  program.dl  report.md   (CLI output; `out/` is gitignored repo-wide,
                                                                        so run the CLI once to regenerate)
-out/runs/    one folder per explorer run
+out/runs/    one folder per explorer run; <run>/ask/ holds the transcripts of step 7, <run>/scratch/ what the
+             agent wrote while answering (extra rules, Soufflé outputs)
 ```
 
 ## The three layers

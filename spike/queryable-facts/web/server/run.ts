@@ -82,7 +82,7 @@ export function readContract(id: string): { name: string; source: string } {
   return { name: basename(path), source: readFileSync(path, 'utf8') }
 }
 
-function timestamp(): string {
+export function timestamp(): string {
   const d = new Date()
   const p = (n: number) => String(n).padStart(2, '0')
   return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`
@@ -102,6 +102,9 @@ const RUN_README = `This folder is one run of the queryable-facts pipeline (spik
   derived/<rel>.csv  every relation Soufflé derived (tab-separated), concept relations included
   report.md          the storage-writers style report rendered from the derived relations
   run.json           metadata: solc version, timings, counts
+  ask/<n>-*.md       one transcript per question asked in the explorer's step 7: the question, the model,
+                     every command the agent ran (sandboxed to this folder) and its answer
+  scratch/           whatever the agent wrote while answering (extra Datalog rules, Soufflé outputs)
 
 To re-run Soufflé by hand:      souffle --no-preprocessor -F facts -D derived program.dl
 To ask why a tuple holds:       souffle --no-preprocessor -t explain -F facts -D derived program.dl

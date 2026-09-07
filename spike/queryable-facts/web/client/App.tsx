@@ -96,10 +96,9 @@ export function App() {
               <button
                 type="button"
                 key={label}
-                className={`step-btn ${step === n ? 'active' : ''} ${run && n < step ? 'done' : ''} ${n === LAST ? 'future' : ''}`}
+                className={`step-btn ${step === n ? 'active' : ''} ${run && n < step ? 'done' : ''}`}
                 disabled={disabled}
                 onClick={() => goTo(n)}
-                title={n === LAST ? 'placeholder — next iteration' : undefined}
               >
                 <span className="num">{n}</span>
                 <span className="icon">{icon}</span>
@@ -192,6 +191,8 @@ export function App() {
           {step === 5 && 'Relation names in the rules are links.'}
           {step === 6 &&
             'Press “why?” on a tuple to get its proof tree from Soufflé.'}
+          {step === 7 &&
+            'Tuples, ids and line numbers cited in the report and in the answers are links back into steps 3–6.'}
         </span>
         <button
           type="button"

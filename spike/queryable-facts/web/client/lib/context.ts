@@ -20,8 +20,9 @@ export interface Nav {
   factRef?: RowRef
   filterNodeId?: number
   filterLine?: number
-  /** Step 6: derived relation being browsed. */
+  /** Step 6: derived relation being browsed, and a row (by its columns) to select and scroll to. */
   derivedRelation?: string
+  derivedRow?: string[]
   /** Steps 4/5: scroll to the card of this relation. */
   focusRelation?: string
 }

@@ -40,7 +40,10 @@ const STRUCTURAL_KEYS = new Set(['id', 'nodeType', 'src'])
 
 /** TSV-safe: no tabs or line breaks inside a cell. Whitespace runs collapse to one space. */
 function cell(value: string): string {
-  return value.replace(/[\t\r\n]+/g, ' ').replace(/\s+/g, ' ').trim()
+  return value
+    .replace(/[\t\r\n]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 /** Decimal text → number when it fits comfortably in Soufflé's 64-bit `number`, else -1. */
@@ -148,7 +151,8 @@ export function emitFacts(input: EmitInput): EmitResult {
   const facts = new Facts(BASE_RELATIONS)
   const text = new SourceText(input.source)
   const ast = input.output.sources?.[input.fileName]?.ast
-  if (!isNode(ast)) throw new Error(`no AST for ${input.fileName} in solc output`)
+  if (!isNode(ast))
+    throw new Error(`no AST for ${input.fileName} in solc output`)
 
   facts.add('unit', input.unit, input.fileName, input.solcVersion)
 

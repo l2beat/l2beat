@@ -1,4 +1,7 @@
 import type {
+  AskConfig,
+  AskEvent,
+  AskRequest,
   ContractChoice,
   ExplainRequest,
   ExplainResult,
@@ -30,4 +33,48 @@ export const api = {
     post('/api/run', { name, source }).then((r) => json<RunResult>(r)),
   explain: (req: ExplainRequest): Promise<ExplainResult> =>
     post('/api/explain', req).then((r) => json<ExplainResult>(r)),
+  askConfig: (): Promise<AskConfig> =>
+    fetch('/api/ask/config').then((r) => json<AskConfig>(r)),
+  /** Streams the agent's progress, one AskEvent per line; resolves when the server ends the stream. */
+  ask: async (
+    req: AskRequest,
+    onEvent: (event: AskEvent) => void,
+    signal?: AbortSignal,
+  ): Promise<void> => {
+    const res = await fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(req),
+      signal,
+    })
+    if (!res.ok) {
+      const text = await res.text()
+      let message = text
+      try {
+        message = (JSON.parse(text) as { error?: string }).error ?? text
+      } catch {
+        // not JSON: the raw text is the message
+      }
+      throw new Error(message || `${res.status} ${res.statusText}`)
+    }
+    const reader = res.body?.getReader()
+    if (!reader) throw new Error('no response body')
+    const decoder = new TextDecoder()
+    let buffer = ''
+    const emit = (line: string) => {
+      if (line.trim() !== '') onEvent(JSON.parse(line) as AskEvent)
+    }
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      buffer += decoder.decode(value, { stream: true })
+      let nl = buffer.indexOf('\n')
+      while (nl >= 0) {
+        emit(buffer.slice(0, nl))
+        buffer = buffer.slice(nl + 1)
+        nl = buffer.indexOf('\n')
+      }
+    }
+    emit(buffer)
+  },
 }

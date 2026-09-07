@@ -255,3 +255,52 @@ What this buys: the researcher's question about `conditionalGuard` — "the chec
 the caller controls `enforce`" — is now a rule away. `if (enforce)` is `node(N, "IfStatement")`,
 `child(N, "condition", 0, E)`, `node(E, "Identifier")`, `num(E, "referencedDeclaration", P)` and
 `fnParam(F, _, P)`; nothing has to be added to the emitter for it.
+
+## Update: step 7, the report and an agent that writes rules
+
+The last step of the explorer now renders `report.md` and lets a researcher ask an AI about the run.
+The agent is the `codex` CLI (`codex exec --json`, model and reasoning effort selectable, default
+`gpt-5.6-sol` at `high`), started *inside the run folder* with a sandbox that can write only there.
+It gets a one-page briefing: what each file is, the id scheme, how to read the CSVs, how to add a
+Datalog rule and run Soufflé on it, how to ask Soufflé for a proof, and an answer format that cites
+evidence as Datalog atoms and source lines. The explorer turns those citations into links (a relation
+name opens the row in step 6 / 4 / 3, an id lights up in the source, `L25` jumps there) and marks a
+cited tuple the run does not contain, so a made-up citation shows as such. Follow-ups resume the same
+codex thread. Every question leaves a transcript in `<run>/ask/` with each command the agent ran.
+
+First real question, on the playground, `gpt-5.6-sol` at `high`: *"Is conditionalGuard(bool,uint256)
+really guarded? Who decides whether its msg.sender check runs, and can anyone change value? Check the
+claim in writeClaims against the code."* In 113 s (413k input tokens, 381k of them cached, 4.5k
+output) the agent read `README.txt`, `report.md`, the `.decl` comments in `program.dl` and a dozen
+CSVs, wrote this into `scratch/extra.dl`, ran Soufflé on `program.dl` plus the new rule, and answered
+"No, `conditionalGuard` is effectively unguarded: the external caller chooses `enforce`":
+
+```
+callerSelectableCheck(C, F, P, Guard, Check, W, V) :-
+    entryPoint(C, F),
+    param(F, _, P, "bool", _),
+    located(P, PN), attr(PN, "name", ParamName),
+    stmt(Guard, F, "IfStatement", _, _), condition(Guard, ParamName),
+    located(Guard, GuardNode), !child(GuardNode, "falseBody", _, _),
+    senderCheck(Check, F), stmtOf(Check, CheckStmt), within(Guard, CheckStmt),
+    writeSite(W, WriteStmt, F, V, _), !within(Guard, WriteStmt).
+```
+
+Three things about that rule are worth noting. It spans all layers at once: `entryPoint`, `senderCheck`,
+`within` from the analysis, `param`, `stmt`, `condition`, `writeSite` from the concepts, `located`,
+`attr`, `child` from the raw tree, which is exactly what the pure encoding was meant to allow. It
+includes the condition a human reviewer would insist on and the built-in claim lacks: the write must
+sit *outside* the branch (`!within(Guard, WriteStmt)`), otherwise skipping the branch skips the write.
+And it stopped one step short of a general answer: the rule requires the `if` to have no `else`,
+which is why the follow-up ("which other entry point has a branch-dependent check, and is it the same
+decoy?", 8 s on the same thread) correctly said `ownerOrGuardian` is not one, because both arms check
+the sender. Every atom the agent cited (`writeClaims`, `entryPoint`, `param`, `condition`, `writeSite`)
+resolves to a row of the run; its own `callerSelectableCheck` tuple does not, since the scratch
+relation is not part of the program, and is shown as plain code.
+
+Where this leaves the "question we do not know yet" problem: the agent can answer it in about two
+minutes by writing the rule, and the rule is legible enough to be promoted into `lib.dl` after review.
+What it cannot do is make the claim vocabulary right by itself: `writeClaims` still says
+"conditionally guarded" for `conditionalGuard` until someone lands a decoy rule in the library. The
+cost side: a high-effort question is a few hundred thousand mostly-cached input tokens and about two
+minutes; a follow-up on the same thread is seconds.

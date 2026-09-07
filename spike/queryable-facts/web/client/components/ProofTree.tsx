@@ -112,7 +112,9 @@ export function ProofTree({
   // Naming and tree-reading helpers (how an id was spelled, which function a node sits in) are
   // true but uninteresting: fold them unless asked.
   const plumbing =
-    !root && node.kind === 'derived' && index.plumbing.has(relationOf(node.text))
+    !root &&
+    node.kind === 'derived' &&
+    index.plumbing.has(relationOf(node.text))
   if (plumbing && !open) {
     return (
       <div className="pn derived plumbing">
@@ -146,9 +148,7 @@ export function ProofTree({
         {node.kind === 'negation' && (
           <span className="muted small">no tuple</span>
         )}
-        {node.kind === 'fact' && (
-          <span className="muted small">base fact</span>
-        )}
+        {node.kind === 'fact' && <span className="muted small">base fact</span>}
         {node.kind === 'derived' &&
           index.layerOf(relationOf(node.text)) === 'concept' && (
             <span className="tag concept">concept</span>

@@ -58,9 +58,7 @@ export function Step2Compile() {
 
   const selectedId = selected ? index.numIdOf(selected) : undefined
   const baseHere =
-    selectedId === undefined
-      ? []
-      : (index.baseRowsByNode.get(selectedId) ?? [])
+    selectedId === undefined ? [] : (index.baseRowsByNode.get(selectedId) ?? [])
   const conceptsHere =
     selectedId === undefined
       ? []
@@ -233,8 +231,8 @@ export function Step2Compile() {
                     {conceptsHere.length > 0 ? (
                       <>
                         {' '}
-                        and anchors <b>{conceptsHere.length} concept rows</b>{' '}
-                        in step 4:{' '}
+                        and anchors <b>{conceptsHere.length} concept rows</b> in
+                        step 4:{' '}
                         {[...conceptsByRelation.entries()].map(([r, n]) => (
                           <span key={r}>
                             <code>{r}</code>×{n}{' '}
@@ -258,8 +256,8 @@ export function Step2Compile() {
                       </>
                     ) : (
                       <>
-                        . No concept row is anchored <i>at this node itself</i>
-                        ; its children or parent may carry the meaning (e.g. a
+                        . No concept row is anchored <i>at this node itself</i>;
+                        its children or parent may carry the meaning (e.g. a
                         Block's statements, an Identifier's enclosing
                         assignment).
                       </>

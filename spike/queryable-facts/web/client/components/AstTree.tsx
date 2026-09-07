@@ -94,7 +94,10 @@ export function AstTree({
             {typeof node.id === 'number' ? `#${node.id}` : ''} L{line}
           </span>
           {concepts ? (
-            <span className="fc" title="concept rows anchored at this node (step 4)">
+            <span
+              className="fc"
+              title="concept rows anchored at this node (step 4)"
+            >
               {concepts} concept{concepts === 1 ? '' : 's'}
             </span>
           ) : null}

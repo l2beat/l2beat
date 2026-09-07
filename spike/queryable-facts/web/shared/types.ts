@@ -164,3 +164,56 @@ export interface ExplainResult {
   proof: ProofNode
   ms: number
 }
+
+// ---------- step 7: ask an AI about the run (web/server/ask.ts drives the `codex` CLI) ----------
+
+export interface ModelChoice {
+  slug: string
+  label: string
+  efforts: string[]
+}
+
+/** What the server knows about the `codex` CLI it drives, and the defaults the ask box starts with. */
+export interface AskConfig {
+  /** CODEX_MODEL / CODEX_EFFORT environment variables, else gpt-5.6-sol at high. */
+  model: string
+  effort: string
+  models: ModelChoice[]
+  codex: { command: string; version?: string; error?: string }
+  /** Where every transcript goes, relative to the run folder. */
+  transcriptDir: string
+}
+
+export interface AskRequest {
+  runId: string
+  question: string
+  model: string
+  effort: string
+  /** Codex thread to continue for a follow-up question; omitted for a fresh conversation. */
+  threadId?: string
+}
+
+/** One line of the NDJSON stream `POST /api/ask` answers with, in the order things happen. */
+export type AskEvent =
+  | { type: 'started'; threadId: string; command: string }
+  | { type: 'reasoning'; text: string }
+  | {
+      type: 'command'
+      id: string
+      command: string
+      status: 'running' | 'completed' | 'failed'
+      exitCode?: number
+      output?: string
+    }
+  | { type: 'note'; text: string }
+  /** An agent message; the last one before `done` is the answer. */
+  | { type: 'message'; text: string }
+  | {
+      type: 'done'
+      ms: number
+      exitCode: number | null
+      usage?: Record<string, number>
+      /** Transcript written into the run folder, relative to it. */
+      transcript?: string
+    }
+  | { type: 'error'; message: string }

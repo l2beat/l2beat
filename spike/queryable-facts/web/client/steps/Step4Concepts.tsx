@@ -212,7 +212,11 @@ export function Step4Concepts() {
             </span>
             <span className="stat">
               <span className="v">
-                {publicRelations.filter((n) => (index.concepts.get(n)?.length ?? 0) > 0).length}
+                {
+                  publicRelations.filter(
+                    (n) => (index.concepts.get(n)?.length ?? 0) > 0,
+                  ).length
+                }
                 /{publicRelations.length}
               </span>
               <span className="l">concept relations non-empty</span>
@@ -260,7 +264,8 @@ export function Step4Concepts() {
               byte offsets (<code>cat</code> in Datalog), so they are readable
               without a lookup table and stable while the text does not move.
               Every id has a <code>sourceLoc</code> row and a{' '}
-              <code>located</code> row pointing at its node; chips are clickable.
+              <code>located</code> row pointing at its node; chips are
+              clickable.
             </p>
           </div>
         </Panel>
@@ -287,8 +292,8 @@ export function Step4Concepts() {
             {filtered.length === 0 && (
               <p className="muted">
                 No concept is anchored here. Concepts anchor at the node that
-                carries them (the assignment, the call, the declaration), so
-                try the line of the construct itself.
+                carries them (the assignment, the call, the declaration), so try
+                the line of the construct itself.
               </p>
             )}
             {[...new Set(filtered.map((r) => r.relation))].map((rel) => {
@@ -595,12 +600,18 @@ export function Step4Concepts() {
         </Panel>
 
         {clauses.length > 0 && !showRules && (
-          <Panel title={`The rule${clauses.length === 1 ? '' : 's'} behind ${relation}`} tight>
+          <Panel
+            title={`The rule${clauses.length === 1 ? '' : 's'} behind ${relation}`}
+            tight
+          >
             <div className="panel-body">
               {clauses.map((c) => (
                 <div key={c.line} style={{ margin: '6px 0' }}>
                   {c.kind === 'clause' && c.comment && (
-                    <div className="muted small" style={{ fontStyle: 'italic' }}>
+                    <div
+                      className="muted small"
+                      style={{ fontStyle: 'italic' }}
+                    >
                       {c.comment}
                     </div>
                   )}
@@ -620,8 +631,8 @@ export function Step4Concepts() {
           <code>rules/concepts.dl</code>; the rows are{' '}
           <code>{run.runDir}/derived/&lt;relation&gt;.csv</code>, next to the
           analysis relations of step 6. The legacy TypeScript extractor's output
-          on 43 contracts is the parity oracle these rules are checked against
-          (<code>src/parity.ts</code>).
+          on 43 contracts is the parity oracle these rules are checked against (
+          <code>src/parity.ts</code>).
         </Callout>
       </div>
     </div>

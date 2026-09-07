@@ -263,7 +263,9 @@ export class RunIndex {
     if (!row) return undefined
     if (this.base.has(ref.relation)) {
       const info = this.relations.get(ref.relation)
-      const col = (info?.columns ?? []).findIndex((c) => NODE_COLUMNS.has(c.name))
+      const col = (info?.columns ?? []).findIndex((c) =>
+        NODE_COLUMNS.has(c.name),
+      )
       if (col < 0) return undefined
       const id = Number(row[col])
       return Number.isNaN(id) ? undefined : id

@@ -13,8 +13,7 @@ export function Step5Rules() {
     () =>
       buildCards(program.items).filter(
         (s) =>
-          (s.file === 'lib.dl' || s.file === 'report.dl') &&
-          s.cards.length > 0,
+          (s.file === 'lib.dl' || s.file === 'report.dl') && s.cards.length > 0,
       ),
     [program.items],
   )
@@ -72,7 +71,9 @@ export function Step5Rules() {
       </div>
       <div className="pane">
         <div className="intro">
-          <h2>📜 Step 5 · Say what follows from the concepts: the analysis rules</h2>
+          <h2>
+            📜 Step 5 · Say what follows from the concepts: the analysis rules
+          </h2>
           <p className="lead">
             <b>Soufflé</b> is a Datalog engine. A Datalog program is a list of
             rules of the form <code>head :- body.</code>, read as:{' '}
@@ -131,7 +132,10 @@ export function Step5Rules() {
           </Panel>
         ) : (
           <>
-            <Panel title="Inputs of this layer · the concept relations from step 4" tight>
+            <Panel
+              title="Inputs of this layer · the concept relations from step 4"
+              tight
+            >
               <div className="panel-body">
                 <p className="small muted">
                   The rules below never touch the raw tree: they read the

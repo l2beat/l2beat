@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { ExplainResult } from '../../shared/types'
 import { api } from '../api'
 import { DatalogView } from '../components/DatalogView'
@@ -24,13 +24,23 @@ export function Step6Derive() {
   const [hoverRow, setHoverRow] = useState<number | undefined>()
 
   const groups = derivedGroups(index)
+  // A row cited elsewhere (step 7) arrives as its columns; select it and make sure it is rendered.
+  const pinnedIndex = useMemo(() => {
+    const key = nav.derivedRow?.join('\t')
+    return key === undefined ? -1 : rows.findIndex((r) => r.join('\t') === key)
+  }, [rows, nav.derivedRow])
   const clauses = run.program.items.filter(
     (i) => i.kind === 'clause' && i.head === relation,
   )
 
   const highlights: Highlight[] = []
   if (nav.range) highlights.push({ ...nav.range, kind: 'primary' })
-  const hovered = hoverRow !== undefined ? rows[hoverRow] : undefined
+  const hovered =
+    hoverRow !== undefined
+      ? rows[hoverRow]
+      : pinnedIndex >= 0
+        ? rows[pinnedIndex]
+        : undefined
   if (hovered) {
     for (const c of hovered) {
       // whole-contract ranges would flood the pane; functions, variables and sites are what matter
@@ -80,7 +90,7 @@ export function Step6Derive() {
               active={relation === name}
               count={index.derived.get(name)?.length ?? 0}
               onClick={() => {
-                setNav({ derivedRelation: name })
+                setNav({ derivedRelation: name, derivedRow: undefined })
                 setProof(undefined)
               }}
             />
@@ -95,7 +105,7 @@ export function Step6Derive() {
                   active={relation === name}
                   count={index.derived.get(name)?.length ?? 0}
                   onClick={() => {
-                    setNav({ derivedRelation: name })
+                    setNav({ derivedRelation: name, derivedRow: undefined })
                     setProof(undefined)
                   }}
                 />
@@ -209,8 +219,11 @@ export function Step6Derive() {
             <FactsTable
               columns={info?.columns ?? []}
               rows={rows}
-              selected={proof?.row}
+              selected={
+                proof?.row ?? (pinnedIndex >= 0 ? pinnedIndex : undefined)
+              }
               onHover={setHoverRow}
+              limit={Math.max(400, pinnedIndex + 1)}
               extraHeader=""
               extra={(i) => (
                 <button
@@ -280,8 +293,8 @@ export function Step6Derive() {
         <Callout kind="plain">
           <b>Where this lives on disk:</b>{' '}
           <code>{run.runDir}/derived/&lt;relation&gt;.csv</code>; the report
-          rendered from them is <code>{run.runDir}/report.md</code> (next step,
-          next iteration).
+          rendered from them is <code>{run.runDir}/report.md</code>, shown in
+          the next step, where you can also ask an AI about this run.
         </Callout>
       </div>
 

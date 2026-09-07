@@ -80,7 +80,9 @@ export function formatParity(
   let ok = true
   for (const r of results) {
     if (r.missing.length === 0 && r.extra.length === 0) {
-      lines.push(`  = ${r.relation.padEnd(14)} ${String(r.golden).padStart(6)} rows`)
+      lines.push(
+        `  = ${r.relation.padEnd(14)} ${String(r.golden).padStart(6)} rows`,
+      )
       continue
     }
     ok = false

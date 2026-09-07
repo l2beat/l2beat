@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { type ReactNode, useEffect, useRef } from 'react'
 import type { Column } from '../../shared/types'
 import { Cell } from './IdChip'
 
@@ -27,8 +27,20 @@ export function FactsTable({
   limit?: number
 }) {
   const shown = rows.slice(0, limit)
+  const table = useRef<HTMLTableElement>(null)
+  // A row selected from elsewhere (a citation in step 7) should be visible without hunting for it.
+  useEffect(() => {
+    if (selected === undefined) return
+    table.current
+      ?.querySelector('tr.selected')
+      ?.scrollIntoView({ block: 'nearest' })
+  }, [selected])
   return (
-    <table className="facts" onMouseLeave={() => onHover?.(undefined)}>
+    <table
+      className="facts"
+      ref={table}
+      onMouseLeave={() => onHover?.(undefined)}
+    >
       <thead>
         <tr>
           {extra && <th>{extraHeader}</th>}
