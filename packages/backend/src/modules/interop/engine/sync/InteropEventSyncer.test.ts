@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type { InteropPluginName } from '@l2beat/config'
 import type {
   BlockRangeWithTimestamps,
+  Database,
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
@@ -76,9 +77,9 @@ describe(InteropEventSyncer.name, () => {
     it('does not clear errors when checking blockProcessor status', async () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             setLastError,
             findByPluginNameAndChain: mockFn().resolvesTo(undefined),
@@ -226,9 +227,9 @@ describe(InteropEventSyncer.name, () => {
     it('stores last error when state throws', async () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             setLastError,
           }),
@@ -252,9 +253,9 @@ describe(InteropEventSyncer.name, () => {
     it('clears a possibly stale stored error once on the first success', async () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             setLastError,
           }),
@@ -274,9 +275,9 @@ describe(InteropEventSyncer.name, () => {
     it('clears the stored error once after recovering from a failure', async () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             setLastError,
           }),
@@ -303,9 +304,9 @@ describe(InteropEventSyncer.name, () => {
     it('keeps the stored error when a status check succeeds', async () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             setLastError,
           }),
@@ -583,14 +584,14 @@ describe(InteropEventSyncer.name, () => {
           updateDerivedFulfilled,
           updateDerivedCheckedInHistory,
         }),
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncedRange: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncedRange']
+            Database['interopPluginSyncedRange']
           >({
             upsert,
           }),
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             setLastError,
           }),
@@ -631,14 +632,14 @@ describe(InteropEventSyncer.name, () => {
           updateDerivedFulfilled: mockFn().resolvesTo(undefined),
           updateDerivedCheckedInHistory: mockFn().resolvesTo(undefined),
         }),
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncedRange: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncedRange']
+            Database['interopPluginSyncedRange']
           >({
             upsert,
           }),
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             setLastError,
           }),
@@ -676,9 +677,9 @@ describe(InteropEventSyncer.name, () => {
   describe(InteropEventSyncer.prototype.getResyncState.name, () => {
     it('returns empty resync state when no resync requested', async () => {
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             findByPluginNameAndChain: mockFn().resolvesTo(undefined),
           }),
@@ -695,9 +696,9 @@ describe(InteropEventSyncer.name, () => {
 
     it('returns resync state when present', async () => {
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
+            Database['interopPluginSyncState']
           >({
             findByPluginNameAndChain: mockFn().resolvesTo({
               resyncRequestedFrom: UnixTime(123),
@@ -895,13 +896,13 @@ describe(InteropEventSyncer.name, () => {
       const oldestEvent = makeInteropEventRecord()
       const getOldestEventForPluginAndChain = mockFn().resolvesTo(oldestEvent)
       const syncer = createSyncer({
-        db: mockObject<InteropEventSyncer['db']>({
+        db: mockObject<Database>({
           interopPluginSyncedRange: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncedRange']
+            Database['interopPluginSyncedRange']
           >({
             findByPluginNameAndChain: mockFn().resolvesTo(lastRange),
           }),
-          interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
+          interopEvent: mockObject<Database['interopEvent']>({
             getOldestEventForPluginAndChain,
           }),
         }),
@@ -931,8 +932,8 @@ describe(InteropEventSyncer.name, () => {
             makePlugin({ name: 'wormhole' }),
           ],
         }),
-        db: mockObject<InteropEventSyncer['db']>({
-          interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
+        db: mockObject<Database>({
+          interopEvent: mockObject<Database['interopEvent']>({
             getOldestEventForPluginAndChain,
           }),
         }),
@@ -1244,30 +1245,26 @@ function mockStore() {
   })
 }
 
-function mockDb(): InteropEventSyncer['db'] {
-  return mockObject<InteropEventSyncer['db']>({
+function mockDb(): Database {
+  return mockObject<Database>({
     transaction: mockFn().executes(async (cb) => await cb()),
-    interopPluginSyncedRange: mockObject<
-      InteropEventSyncer['db']['interopPluginSyncedRange']
-    >({
+    interopPluginSyncedRange: mockObject<Database['interopPluginSyncedRange']>({
       findByPluginNameAndChain: mockFn().resolvesTo(makeSyncedRangeRecord()),
       upsert: mockFn().resolvesTo(undefined),
     }),
-    interopPluginSyncState: mockObject<
-      InteropEventSyncer['db']['interopPluginSyncState']
-    >({
+    interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
       setLastError: mockFn().resolvesTo(undefined),
       findByPluginNameAndChain: mockFn().resolvesTo(undefined),
     }),
-    interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
+    interopEvent: mockObject<Database['interopEvent']>({
       getOldestEventForPluginAndChain: mockFn().resolvesTo(
         makeInteropEventRecord(),
       ),
     }),
-    interopMessage: mockObject<InteropEventSyncer['db']['interopMessage']>({
+    interopMessage: mockObject<Database['interopMessage']>({
       deleteForPlugin: mockFn().resolvesTo(undefined),
     }),
-    interopTransfer: mockObject<InteropEventSyncer['db']['interopTransfer']>({
+    interopTransfer: mockObject<Database['interopTransfer']>({
       deleteForPlugin: mockFn().resolvesTo(undefined),
     }),
   })
