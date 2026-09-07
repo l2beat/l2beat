@@ -635,6 +635,32 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-ETHFI-1",
+      "priceId": "ether-fi",
+      "symbol": "ETHFI",
+      "name": "ether.fi governance token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe0080d2F853ecDdbd81A643dC10DA075Df26fD3f",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1774807473
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "optimism-EURC",
       "priceId": "euro-coin",
       "symbol": "EURC",
@@ -2391,6 +2417,25 @@
       },
       "category": "btc",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-WCT",
+      "priceId": "connect-token-wct",
+      "symbol": "WCT",
+      "name": "WalletConnect",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50390/large/wc-token1.png?1727569464",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "connect-token-wct",
+        "decimals": 18,
+        "sinceTimestamp": 1744675200,
+        "address": "0xeF4461891DfB3AC8572cCf7C794664A8DD927945",
+        "chain": "optimism"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {

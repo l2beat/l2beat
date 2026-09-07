@@ -137,14 +137,12 @@ export function EcosystemsActivityChart({
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
-                strokeWidth: 2,
                 fill: 'url(#fillEthereum)',
                 hide: !dataKeys.includes('ethereum'),
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
-                strokeWidth: 2,
                 fill: 'url(#fillProjects)',
                 hide: !dataKeys.includes('projects'),
               },

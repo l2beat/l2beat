@@ -562,7 +562,7 @@ export const linea: ScalingProject = {
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
-            url: 'https://etherscan.io/address/0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc',
+            url: 'https://etherscan.io/address/0xAFF26999780901ee8B48f0a1271a177ff46fD53F',
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',

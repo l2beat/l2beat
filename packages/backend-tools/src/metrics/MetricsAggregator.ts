@@ -34,19 +34,24 @@ export abstract class MetricsAggregator<T> {
   }
 
   private flush() {
-    if (!this.buffer.length) {
-      return
-    }
-
     const metrics = [...this.buffer]
 
     //clear buffer
     this.buffer.splice(0)
 
-    const aggregatedMetrics = this.aggregate(metrics)
+    // `aggregate` is called even for an empty buffer so implementations can
+    // report state that is not derived from pushed metrics (e.g. queue waits).
+    const aggregated = this.aggregate(metrics)
+    const entries = Array.isArray(aggregated) ? aggregated : [aggregated]
 
-    this.$.logger.info('Http metrics', { ...aggregatedMetrics })
+    for (const entry of entries) {
+      this.$.logger.info('Http metrics', { ...entry })
+    }
   }
 
-  protected abstract aggregate(metrics: T[]): object
+  /**
+   * Returns one object per log line to emit. Return an empty array to emit
+   * nothing.
+   */
+  protected abstract aggregate(metrics: T[]): object | object[]
 }

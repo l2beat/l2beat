@@ -640,7 +640,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23796692 },
-  "permissionsConfigHash": "0xeb5b65494022006b366d9813f45a340050c6c497467585273bdc743c858f147a",
+  "permissionsConfigHash": "0xa127aa25dfc6736ca600d442c25ff8f06e43b707533c5a4d200e110a4437067f",
   "permissions": {
     "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": {
       "receivedPermissions": [

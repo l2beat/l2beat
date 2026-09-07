@@ -85,6 +85,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const rpcClients: IRpcClient[] = []
 
   for (const chain of config.chainConfig) {
+    const chainLogger = logger.tag({ chain: chain.name })
     for (const indexerApi of chain.indexerApis) {
       const indexerClient = new BlockIndexerClient(
         http,
@@ -114,7 +115,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 http,
                 callsPerMinute: blockApi.callsPerMinute,
                 retryStrategy: blockApi.retryStrategy,
-                logger,
+                logger: chainLogger,
                 multicallClient,
                 rpcMetricsAggregator,
                 timeout: blockApi.timeout,
@@ -125,7 +126,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 http,
                 callsPerMinute: blockApi.callsPerMinute,
                 retryStrategy: blockApi.retryStrategy,
-                logger,
+                logger: chainLogger,
                 multicallClient,
                 rpcMetrics: rpcMetricsAggregator.createRecorder({
                   rpcChain: chain.name,
@@ -149,7 +150,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
-            logger,
+            logger: chainLogger,
           })
           blockClients.push(client)
           starknetClients.push(client)
@@ -162,7 +163,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
-            logger,
+            logger: chainLogger,
           })
           blockClients.push(fuelClient)
           break
@@ -173,7 +174,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             apiKey: blockApi.apiKey,
             http,
             retryStrategy: blockApi.retryStrategy,
-            logger,
+            logger: chainLogger,
             callsPerMinute: blockApi.callsPerMinute,
           })
           break
@@ -185,7 +186,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
-            logger,
+            logger: chainLogger,
           })
           svmBlockClients.push(client)
           break
@@ -197,7 +198,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
-            logger,
+            logger: chainLogger,
           })
           aztecBlockClients.push(client)
           break

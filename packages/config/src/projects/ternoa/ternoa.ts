@@ -50,7 +50,7 @@ export const ternoa: ScalingProject = agglayer({
         type: 'rpc',
         // successfully tested at 5k/min
         url: 'https://rpc-mainnet.zkevm.ternoa.network',
-        callsPerMinute: 300,
+        callsPerMinute: 10000,
       },
     ],
   },

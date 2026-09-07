@@ -149,6 +149,9 @@ export const base: ScalingProject = opStackL2({
     ],
     type: 'canonical',
   },
+  // ~679M of ICNT's 700M total supply sits in the L1 standard bridge while only
+  // ~253M circulates, so the amount resolves to min(circulatingSupply, escrow).
+  l1StandardBridgePremintedTokens: ['ICNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

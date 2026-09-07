@@ -1704,7 +1704,7 @@
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
   "usedBlockNumbers": { "ethereum": 25882379 },
-  "permissionsConfigHash": "0x883359499a400ce8ec6e77a0e603371272bee54e7600c6594ee70a49a93fc927",
+  "permissionsConfigHash": "0xc3c549182e13977ba12daf00c45cdb5a5a989b1a6add424870e61ffe2d92277f",
   "permissions": {
     "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5": {
       "receivedPermissions": [

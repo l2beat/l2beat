@@ -1,4 +1,4 @@
-import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -6,6 +6,7 @@ import type {
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
+import { getReachableEntries } from '../utils/reachable'
 
 // Permissions are stored outside `entries`, in one map keyed by the address
 // that holds them, so that an entry stays a description of a contract and
@@ -17,29 +18,50 @@ import type {
 export function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
+  // Every entry of the cluster. Required rather than defaulted to this
+  // project's own entries: an upgrade target or the original of an aliased
+  // address can live in a referenced project, and reachability computed
+  // against one project alone would prune every external holder in silence.
+  clusterEntries: EntryParameters[],
 ) {
   discovery.permissionsConfigHash = permissionsOutput.permissionsConfigHash
 
   const allAddresses = new Set(
-    discovery.entries.map((e) => e.address.toLowerCase()),
+    clusterEntries.map((e) => e.address.toLowerCase()),
+  )
+
+  // Keyed by receiver rather than by entry: modelling now spans the whole
+  // cluster, so an address that holds a permission is often owned by a
+  // referenced project and has no entry here beyond a Reference stub.
+  const receivers = new Set(
+    permissionsOutput.permissions.map((p) => p.receiver.toString()),
   )
 
   const byAddress: Record<string, PermissionEntry> = {}
-  for (const entry of discovery.entries) {
+  for (const receiver of receivers) {
     const permissionEntry = buildPermissionEntry(
-      entry,
+      ChainSpecificAddress(receiver),
       permissionsOutput,
-      discovery,
+      clusterEntries,
       allAddresses,
     )
     if (Object.keys(permissionEntry).length === 0) {
       continue
     }
-    byAddress[entry.address] = permissionEntry
+    byAddress[receiver] = permissionEntry
   }
+
+  const reachable = reachableFromEntrypoints(
+    discovery,
+    clusterEntries,
+    byAddress,
+  )
 
   const sorted: Record<string, PermissionEntry> = {}
   for (const address of Object.keys(byAddress).sort()) {
+    if (!reachable.has(address)) {
+      continue
+    }
     const permissionEntry = byAddress[address]
     assert(permissionEntry !== undefined)
     sorted[address] = permissionEntry
@@ -48,15 +70,39 @@ export function combinePermissionsIntoDiscovery(
   discovery.permissions = Object.keys(sorted).length === 0 ? undefined : sorted
 }
 
-function buildPermissionEntry(
-  entry: EntryParameters,
-  permissionsOutput: PermissionsOutput,
+// A reference points at one specific deployment inside a shared module, not at
+// everything else that module discovered, so a project holds only the part of
+// the cluster its own entrypoints reach. This is the same filter the read side
+// applies in ProjectDiscovery: storing more than that would store what nothing
+// ever shows.
+function reachableFromEntrypoints(
   discovery: DiscoveryOutput,
+  clusterEntries: EntryParameters[],
+  byAddress: Record<string, PermissionEntry>,
+): Set<string> {
+  // Reachability walks issued permissions, so they have to be on the entries
+  // before it runs. The copy keeps them off the entries that get written.
+  const withPermissions = clusterEntries
+    .filter((entry) => entry.type !== 'Reference')
+    .map((entry) => ({ ...entry, ...(byAddress[entry.address] ?? {}) }))
+
+  const entrypoints = discovery.entries.map((entry) => entry.address)
+  return new Set(
+    getReachableEntries(withPermissions, entrypoints).map((entry) =>
+      entry.address.toString(),
+    ),
+  )
+}
+
+function buildPermissionEntry(
+  receiver: ChainSpecificAddress,
+  permissionsOutput: PermissionsOutput,
+  clusterEntries: EntryParameters[],
   allAddresses: Set<string>,
 ): PermissionEntry {
   const pick = (isFinal: boolean) => {
     const forEntry = permissionsOutput.permissions.filter(
-      (p) => p.receiver.startsWith(entry.address) && p.isFinal === isFinal,
+      (p) => p.receiver === receiver && p.isFinal === isFinal,
     )
     if (forEntry.length === 0) {
       return undefined
@@ -88,10 +134,10 @@ function buildPermissionEntry(
   }
 
   if (
-    permissionsOutput.eoasWithUpgradePermissions?.includes(entry.address) &&
-    !isZeroAddress(entry.address) &&
-    !isAlias(entry.address, allAddresses) &&
-    upgradesCriticalContract(receivedPermissions, discovery)
+    permissionsOutput.eoasWithUpgradePermissions?.includes(receiver) &&
+    !isZeroAddress(receiver) &&
+    !isAlias(receiver, allAddresses) &&
+    upgradesCriticalContract(receivedPermissions, clusterEntries)
   ) {
     permissionEntry.eoaWithUpgradePermissions = true
   }
@@ -153,14 +199,20 @@ function isAlias(
 
 function upgradesCriticalContract(
   receivedPermissions: ReceivedPermission[] | undefined,
-  discovery: DiscoveryOutput,
+  clusterEntries: EntryParameters[],
 ): boolean {
   const upgradeTargets =
     receivedPermissions
       ?.filter((p) => p.permission === 'upgrade')
       .map((p) => p.from) ?? []
   return upgradeTargets.some((target) => {
-    const targetEntry = discovery.entries.find((e) => e.address === target)
+    // Skipping stubs for the same reason reachability does: a project carries a
+    // Reference for an address its module owns in full, the stub has no
+    // `category`, and no category reads as critical. Whichever copy came first
+    // would otherwise decide, which is alphabetical order by project name.
+    const targetEntry = clusterEntries.find(
+      (e) => e.address === target && e.type !== 'Reference',
+    )
     if (targetEntry === undefined) return false
     return (
       targetEntry.category === undefined || targetEntry.category.priority > 0
@@ -168,7 +220,10 @@ function upgradesCriticalContract(
   })
 }
 
-// Temporary reversal of via for backwards compatibility
+// Temporary reversal of via for backwards compatibility.
+// Copies before reversing: the array belongs to the caller's PermissionsOutput,
+// and reversing in place would both mutate the model output and corrupt any
+// earlier result that stored the same array.
 function reverseVia(p: ReceivedPermission[]) {
   return p.map((p) => {
     const { via, ...rest } = p
@@ -177,7 +232,7 @@ function reverseVia(p: ReceivedPermission[]) {
     }
     return {
       ...rest,
-      via: via.reverse(),
+      via: [...via].reverse(),
     }
   })
 }

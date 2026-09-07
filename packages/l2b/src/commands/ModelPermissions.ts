@@ -55,7 +55,7 @@ export const ModelPermissions = command({
         paths,
         args.debug,
       )
-      updateDiffHistory(project, args.message)
+      await updateDiffHistory(project, args.message)
     }
   },
 })

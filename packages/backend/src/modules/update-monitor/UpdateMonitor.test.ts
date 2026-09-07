@@ -194,12 +194,70 @@ describe(UpdateMonitor.name, () => {
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
         {
-          ['project-a']: { severityCounts: { low: 0, high: 0, unknown: 2 } },
+          ['project-a']: {
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+          },
         },
         timestamp,
         [],
         [],
       )
+    })
+
+    it('does not process archived projects', async () => {
+      const processedProjects: string[] = []
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        run: mockFn(async (config: ConfigRegistry) => {
+          processedProjects.push(config.name)
+          return {
+            discovery: DISCOVERY_RESULT,
+            flatSources: {},
+          }
+        }),
+      })
+      const archivedConfig = new ConfigRegistry({
+        name: PROJECT_B,
+        initialAddresses: [],
+        archived: true,
+      })
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: () => ({
+          ...mockProject,
+          entries: COMMITTED,
+        }),
+        readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
+        readConfig: mockFn((name: string) =>
+          name === PROJECT_B ? archivedConfig : mockConfig(name),
+        ),
+      })
+      const timestamp = 0
+
+      const updateMonitor = new UpdateMonitor(
+        discoveryRunner,
+        updateNotifier,
+        updateDiffer,
+        configReader,
+        mockObject<Database>({
+          updateMonitor: mockObject<Database['updateMonitor']>({
+            findLatest: async () => undefined,
+            upsert: async () => undefined,
+          }),
+          flatSources: flatSourcesRepository,
+          updateDiff: mockObject<Database['updateDiff']>({
+            deleteAll: async () => 0,
+          }),
+        }),
+        mockObject<Clock>(),
+        discoveryOutputCache,
+        Logger.SILENT,
+        false,
+        instantWorkerPool,
+      )
+
+      await updateMonitor.update(timestamp)
+
+      expect(processedProjects).toEqual([PROJECT_A, PROJECT_A])
+      expect(updateDiffer.run).toHaveBeenCalledWith([PROJECT_A], timestamp)
     })
 
     // Diffs are written as one snapshot, so they run once every discovery lands.
@@ -511,8 +569,12 @@ describe(UpdateMonitor.name, () => {
       const result = updateMonitor.generateDailyReminder()
 
       expect(result).toEqual({
-        [PROJECT_A]: { severityCounts: { low: 0, high: 0, unknown: 1 } },
-        [PROJECT_B]: { severityCounts: { low: 0, high: 0, unknown: 2 } },
+        [PROJECT_A]: {
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 1 },
+        },
+        [PROJECT_B]: {
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+        },
       })
     })
 
@@ -566,7 +628,9 @@ describe(UpdateMonitor.name, () => {
 
       expect(Object.entries(result).length).toEqual(1)
       expect(result).toEqual({
-        [PROJECT_A]: { severityCounts: { low: 0, high: 0, unknown: 3 } },
+        [PROJECT_A]: {
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
+        },
       })
     })
 

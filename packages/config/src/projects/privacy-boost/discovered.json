@@ -1120,7 +1120,7 @@
     "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
   },
   "usedBlockNumbers": { "optimism": 155851822 },
-  "permissionsConfigHash": "0xa70b0a3a95dc2b47eba5d9f3ef81b42fd0846297128492b2dc8c4293cadfee7f",
+  "permissionsConfigHash": "0x0b2fc0e568ab8969a10209d3a45724667fca04b8c0239c0cf1d2d80d82ee7411",
   "permissions": {
     "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": {
       "directlyReceivedPermissions": [

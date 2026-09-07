@@ -68,6 +68,28 @@ describe(InMemoryCache.name, () => {
       expect(result2).toEqual('test2')
     })
 
+    it('should not overwrite cache when superseded fallback resolves last', async () => {
+      const cache = new InMemoryCache({ promiseTimeout: 0 })
+      const cacheOptions = { key: ['key'], ttl: 1000 }
+      const first = deferred<string>()
+      const second = deferred<string>()
+
+      const firstRequest = cache.get(cacheOptions, () => first.promise)
+      const secondRequest = cache.get(cacheOptions, () => second.promise)
+
+      second.resolve('new')
+      expect(await secondRequest).toEqual('new')
+
+      first.resolve('old')
+      expect(await firstRequest).toEqual('old')
+
+      const fallback = mockFn().resolvesTo('unexpected')
+      const result = await cache.get(cacheOptions, fallback)
+
+      expect(result).toEqual('new')
+      expect(fallback).not.toHaveBeenCalled()
+    })
+
     describe('stale-while-revalidate', () => {
       it('should serve stale data and revalidate in background', async () => {
         const now = UnixTime.now()
@@ -229,6 +251,33 @@ describe(InMemoryCache.name, () => {
 
         expect(result2).toEqual('stale')
         expect(fallback).toHaveBeenCalledTimes(2)
+      })
+
+      it('should not overwrite cache when superseded revalidation resolves last', async () => {
+        const now = UnixTime.now()
+        const cache = new InMemoryCache({ promiseTimeout: 0 })
+        cache._set(['key'], { result: 'stale', timestamp: now - 2 })
+        const cacheOptions = {
+          key: ['key'],
+          ttl: 1,
+          staleWhileRevalidate: 100,
+        }
+        const first = deferred<string>()
+        const second = deferred<string>()
+
+        expect(await cache.get(cacheOptions, () => first.promise)).toEqual(
+          'stale',
+        )
+        expect(await cache.get(cacheOptions, () => second.promise)).toEqual(
+          'stale',
+        )
+
+        second.resolve('new')
+        await new Promise((resolve) => setTimeout(resolve, 0))
+        first.resolve('old')
+        await new Promise((resolve) => setTimeout(resolve, 0))
+
+        expect(cache._get(['key'])?.result).toEqual('new')
       })
 
       it('should keep stale data when revalidation resolves to undefined', async () => {
@@ -464,6 +513,110 @@ describe(InMemoryCache.name, () => {
         expect(await second).toEqual('second')
         expect(await third).toEqual('second')
       })
+
+      it('should not let a superseded fallback clear a newer in-flight one', async () => {
+        const cache = new InMemoryCache({ promiseTimeout: 30 })
+        const cacheOptions = { key: ['key'], ttl: 1000 }
+        const first = deferred<string>()
+        const second = deferred<string>()
+
+        const firstRequest = cache.get(cacheOptions, () => first.promise)
+        fakeNow += 31
+        const secondRequest = cache.get(cacheOptions, () => second.promise)
+
+        first.resolve('old')
+        expect(await firstRequest).toEqual('old')
+
+        cache._set(['key'], { result: 'expired', timestamp: fakeNow - 2000 })
+        const fallback = mockFn().resolvesTo('unexpected')
+        const thirdRequest = cache.get(cacheOptions, fallback)
+        expect(fallback).not.toHaveBeenCalled()
+
+        second.resolve('new')
+        expect(await secondRequest).toEqual('new')
+        expect(await thirdRequest).toEqual('new')
+      })
+
+      it('should store a superseded result when the newer fallback failed', async () => {
+        const cache = new InMemoryCache({ promiseTimeout: 30 })
+        const cacheOptions = { key: ['key'], ttl: 1000 }
+        const first = deferred<string>()
+
+        const firstRequest = cache.get(cacheOptions, () => first.promise)
+        fakeNow += 31
+        const secondRequest = cache
+          .get(cacheOptions, () => Promise.reject(new Error('failed')))
+          .catch(() => 'failed')
+        expect(await secondRequest).toEqual('failed')
+
+        fakeNow += 5
+        first.resolve('old')
+        expect(await firstRequest).toEqual('old')
+
+        expect(cache._get(['key'])).toEqual({
+          result: 'old',
+          timestamp: fakeNow,
+          maxLifetime: 1000,
+        })
+      })
+
+      it('should not let a superseded fallback overwrite a newer result', async () => {
+        const cache = new InMemoryCache({ promiseTimeout: 30 })
+        const cacheOptions = { key: ['key'], ttl: 1000 }
+        const first = deferred<string>()
+
+        const firstRequest = cache.get(cacheOptions, () => first.promise)
+        fakeNow += 31
+        expect(await cache.get(cacheOptions, async () => 'new')).toEqual('new')
+        const storedAt = fakeNow
+
+        fakeNow += 5
+        first.resolve('old')
+        expect(await firstRequest).toEqual('old')
+
+        expect(cache._get(['key'])).toEqual({
+          result: 'new',
+          timestamp: storedAt,
+          maxLifetime: 1000,
+        })
+      })
+
+      it('should not let a superseded revalidation clear a newer in-flight one', async () => {
+        const cache = new InMemoryCache({ promiseTimeout: 30 })
+        cache._set(['key'], { result: 'stale', timestamp: fakeNow - 2 })
+        const cacheOptions = {
+          key: ['key'],
+          ttl: 1,
+          staleWhileRevalidate: 100,
+        }
+        const first = deferred<string>()
+        const second = deferred<string>()
+
+        await cache.get(cacheOptions, () => first.promise)
+        fakeNow += 31
+        await cache.get(cacheOptions, () => second.promise)
+
+        first.resolve('old')
+        await new Promise((resolve) => setTimeout(resolve, 0))
+
+        cache._set(['key'], { result: 'stale', timestamp: fakeNow - 2 })
+        const fallback = mockFn().resolvesTo('unexpected')
+        await cache.get(cacheOptions, fallback)
+        expect(fallback).not.toHaveBeenCalled()
+
+        second.resolve('new')
+        await new Promise((resolve) => setTimeout(resolve, 0))
+        expect(cache._get(['key'])?.result).toEqual('new')
+      })
     })
   })
 })
+
+function deferred<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void
+  const promise = new Promise<T>((res) => {
+    resolve = res
+  })
+
+  return { promise, resolve }
+}

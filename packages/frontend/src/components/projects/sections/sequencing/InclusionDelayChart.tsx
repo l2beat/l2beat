@@ -125,9 +125,7 @@ export function InclusionDelayChart({
             <Line
               key={dataKey}
               dataKey={dataKey}
-              type="monotone"
               stroke={meta.color}
-              strokeWidth={2}
               strokeDasharray={
                 meta.indicatorType.strokeDasharray ? '5 5' : undefined
               }

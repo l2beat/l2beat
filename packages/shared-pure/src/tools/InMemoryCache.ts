@@ -88,26 +88,28 @@ export class InMemoryCache {
       return existingPromise.promise as Promise<T>
     }
 
-    const promise: Promise<T> = fallback().finally(() => {
-      if (this.inFlight.get(key)?.promise === promise) {
-        this.inFlight.delete(key)
-      }
-    })
+    const promise = fallback()
     this.inFlight.set(key, { promise, timestamp: now })
 
     this.logger?.info('Cache miss', { key })
 
     const start = Date.now()
-    const fallbackResult = await promise
-    const duration = Date.now() - start
+    try {
+      const fallbackResult = await promise
+      const duration = Date.now() - start
 
-    const stored = this.store(key, fallbackResult, options)
-    this.logger?.info(stored ? 'Cache set' : 'Cache not stored', {
-      key,
-      duration,
-    })
+      const stored = this.store(key, fallbackResult, options, now)
+      this.logger?.info(stored ? 'Cache set' : 'Cache not stored', {
+        key,
+        duration,
+      })
 
-    return fallbackResult
+      return fallbackResult
+    } finally {
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.inFlight.delete(key)
+      }
+    }
   }
 
   private async revalidateInBackground<T>(
@@ -123,29 +125,44 @@ export class InMemoryCache {
       return
     }
 
-    try {
-      const promise: Promise<T> = fallback().finally(() => {
-        if (this.inFlight.get(key)?.promise === promise) {
-          this.inFlight.delete(key)
-        }
-      })
-      this.inFlight.set(key, { promise, timestamp: UnixTime.now() })
+    const startedAt = UnixTime.now()
+    const promise = fallback()
+    this.inFlight.set(key, { promise, timestamp: startedAt })
 
-      this.store(key, await promise, options)
+    try {
+      this.store(key, await promise, options, startedAt)
     } catch (error) {
       // If revalidation fails, we keep the stale data
       this.logger?.warn('Cache revalidation failed', {
         key,
         error,
       })
+    } finally {
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.inFlight.delete(key)
+      }
     }
   }
 
-  private store(key: string, result: unknown, options: Options): boolean {
+  private store(
+    key: string,
+    result: unknown,
+    options: Options,
+    startedAt: number,
+  ): boolean {
     if (result === undefined || result === null) {
       if (options.cacheNullish !== true) {
         return false
       }
+    }
+
+    // A fallback that outlived promiseTimeout may settle after a newer one
+    // for the same key. Its data is older, so it must not replace what the
+    // newer fallback stored. It is still worth keeping when nothing newer
+    // made it into the cache, e.g. because the newer fallback failed.
+    const existing = this.cache.get(key)
+    if (existing && existing.timestamp >= startedAt) {
+      return false
     }
 
     this.cache.set(key, {
