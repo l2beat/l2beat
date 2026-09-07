@@ -1,6 +1,6 @@
 {
   "name": "privacy-boost",
-  "timestamp": 1788785608,
+  "timestamp": 1788787273,
   "configHash": "0x60336af145f53acb240c8cf8e9345a7fc84b53db5c2909b9cfe81635da0c7c11",
   "entries": [
     {
@@ -2417,7 +2417,7 @@
     "privacy-boost/PrivacyBoost_v2": "0xfa919fb7deac56c5265566b40b691108381cf867ebde39c52ba2780bdf80dfbc",
     "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
   },
-  "usedBlockNumbers": { "optimism": 156593415 },
+  "usedBlockNumbers": { "optimism": 156594248 },
   "permissionsConfigHash": "0x956daf2f610948409d0cd6b7dd3a943abd8ad3bf6917f60a6e76a95243b10d5e",
   "permissions": {
     "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": {

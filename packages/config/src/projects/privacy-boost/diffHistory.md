@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x75726324912c68f4f0af48def11d20571a9f189b
+Generated with discovered.json: 0xc76ccb0fee3a5b19ee4d7ec47ec000263a8103bb
 
-# Diff at Mon, 07 Sep 2026 08:34:22 GMT:
+# Diff at Mon, 07 Sep 2026 13:24:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1787302421
-- current timestamp: 1788769982
+- comparing to: main@67fdb90ab08ace2a9b29f762ed2ddc4056f5d916 block: 1787302421
+- current timestamp: 1788787273
 
 ## Description
 
@@ -106,7 +106,7 @@ PrivacyBoost: https://disco.l2beat.com/diff/oeth:0x0b9B98d3B95D74487C481e7830ab4
 ```
 
 ```diff
-    EOA  (oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0) {
+    EOA (oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0) {
     +++ description: None
       receivedPermissions.1.description:
 -        "submit epochs of private transfers, withdrawals and deposits with validity proofs, and snapshot auth tree roots."
@@ -381,7 +381,7 @@ PrivacyBoost: https://disco.l2beat.com/diff/oeth:0x0b9B98d3B95D74487C481e7830ab4
  10 files changed, 16616 insertions(+), 2250 deletions(-)
 ```
 
-Generated with discovered.json: 0x665e91319f0483ef0a617dc1706100596f95024f
+Generated with discovered.json: 0x7214da74ad7f19593258c48f8c4590657cef22ea
 
 # Diff at Fri, 21 Aug 2026 08:54:45 GMT:
 
