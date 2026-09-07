@@ -1,5 +1,6 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import fetch, { Headers, type RequestInit } from 'node-fetch'
+import { getRpcMetricsLabel } from '../clients/rpc/RpcMetricsContext'
 
 export interface HttpOptions {
   timeoutMs: number
@@ -7,10 +8,6 @@ export interface HttpOptions {
   metricsEnabled: boolean
   metricsFlushIntervalMs: number
   logger: Logger
-}
-
-export interface HttpRequestInit extends RequestInit {
-  metricsLabel: string
 }
 
 export interface HttpResponse {
@@ -61,31 +58,32 @@ export class Http {
     }
   }
 
-  async fetch(
-    url: string,
-    { metricsLabel, ...rest }: HttpRequestInit,
-  ): Promise<HttpResponse> {
-    const init: RequestInit = { timeout: this.timeoutMs, ...rest }
+  async fetch(url: string, init: RequestInit): Promise<HttpResponse> {
+    // Resolved here, synchronously in the caller's async context. The rate
+    // limiter dispatches later from a timer or another call's completion, so
+    // the context is not reliable inside `_fetch`.
+    const label = getRpcMetricsLabel()
+    const request: RequestInit = { timeout: this.timeoutMs, ...init }
     if (this.rateLimiter) {
       return await this.rateLimiter.call(
-        () => this._fetch(url, init, metricsLabel),
-        metricsLabel,
+        () => this._fetch(url, request, label),
+        label,
       )
     }
-    return await this._fetch(url, init, metricsLabel)
+    return await this._fetch(url, request, label)
   }
 
-  private async _fetch(
+  protected async _fetch(
     url: string,
     init: RequestInit,
-    metricsLabel: string,
+    label: string,
   ): Promise<HttpResponse> {
     const start = Date.now()
     const res = await fetch(url, init)
     // We need to await text because we don't know if someone wants json or not
     // and we need to actually consume the response body not just the headers
     const body = await res.text()
-    this._trackMetrics(metricsLabel, Date.now() - start, res.size)
+    this._trackMetrics(label, Date.now() - start, res.size)
     return {
       body,
       ok: res.ok,
@@ -94,13 +92,9 @@ export class Http {
     }
   }
 
-  private _trackMetrics(
-    metricsLabel: string,
-    durationMs: number,
-    size: number,
-  ) {
+  protected _trackMetrics(label: string, durationMs: number, size: number) {
     if (!this.metricsEnabled) return
-    const metrics = this.metrics[metricsLabel] ?? {
+    const metrics = this.metrics[label] ?? {
       durationTotal: 0,
       sizeTotal: 0,
       count: 0,
@@ -108,7 +102,7 @@ export class Http {
     metrics.durationTotal += durationMs
     metrics.sizeTotal += size
     metrics.count += 1
-    this.metrics[metricsLabel] = metrics
+    this.metrics[label] = metrics
   }
 
   private _flushMetrics() {

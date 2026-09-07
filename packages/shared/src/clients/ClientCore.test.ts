@@ -1,9 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { ClientCore, UNCATEGORIZED_METRICS_LABEL } from './ClientCore'
+import { ClientCore } from './ClientCore'
 import type { HttpClient } from './http/HttpClient'
-import { withRpcMetricsContext } from './rpc/RpcMetricsContext'
+import {
+  UNCATEGORIZED_METRICS_LABEL,
+  withRpcMetricsContext,
+} from './rpc/RpcMetricsContext'
 
 describe(ClientCore.name, () => {
   describe(ClientCore.prototype.fetch.name, () => {

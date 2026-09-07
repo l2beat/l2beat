@@ -4,7 +4,7 @@ import type { RequestInit } from 'node-fetch'
 import { RetryHandler, type RetryHandlerVariant } from '../tools'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 import type { HttpClient } from './http/HttpClient'
-import { getRpcMetricsContext } from './rpc/RpcMetricsContext'
+import { getRpcMetricsLabel } from './rpc/RpcMetricsContext'
 
 export interface ClientCoreDependencies {
   http: HttpClient
@@ -13,9 +13,6 @@ export interface ClientCoreDependencies {
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
 }
-
-/** Label used when a call is made outside of any RPC metrics context. */
-export const UNCATEGORIZED_METRICS_LABEL = 'uncategorized'
 
 export abstract class ClientCore {
   rateLimiter: RateLimiter
@@ -49,8 +46,7 @@ export abstract class ClientCore {
     // Resolved here, synchronously in the caller's async context. The rate
     // limiter dispatches later from a timer or another call's completion, so
     // the context is not reliable inside `_fetch`.
-    const label =
-      getRpcMetricsContext()?.coreFeature ?? UNCATEGORIZED_METRICS_LABEL
+    const label = getRpcMetricsLabel()
     try {
       return await this.rateLimiter.call(
         () => this._fetch(url, init, label),
