@@ -8,7 +8,7 @@ Generated with discovered.json: 0x89c32e1d088b833d6387845f08ecd71f946ac00a
 
 ## Description
 
-SystemConfig: `unsafeBlockSigner` changed to 0x98a6…fbfC.
+SystemConfig `unsafeBlockSigner` rotated.
 
 ## Watched changes
 

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x9a305aebd5a05f3d04bd86560d6dc5f0261ccf21
 
 ## Description
 
-SafeL2 0x7542…5CBa (owner of the ProxyAdmin for the Sentry contracts): member added; threshold lowered 4/6 → 3/7.
+SafeL2 owning the ProxyAdmin of the Sentry contracts: member added; threshold lowered 4/6 → 3/7.
 
 XaiFundsReiceiverMultisig: 3 members removed; threshold 3/7 → 2/4.
 
