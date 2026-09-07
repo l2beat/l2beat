@@ -20,9 +20,24 @@ export function Head({ manifest, metadata }: HeadProps) {
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <FontStyles fonts={fonts} manifest={manifest} />
+      {/* Unhashed ICO/PNG fallbacks for crawlers that do not render SVG (e.g. search engines).
+          Browsers pick the last equally-appropriate icon, so the SVG goes last. */}
+      <link
+        rel="icon"
+        type="image/x-icon"
+        sizes="16x16 32x32 48x48"
+        href="/favicon.ico"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon-32x32.png"
+      />
       <link
         rel="icon"
         type="image/svg+xml"
+        sizes="any"
         href={manifest.getUrl('/icon.svg')}
       />
       <link
