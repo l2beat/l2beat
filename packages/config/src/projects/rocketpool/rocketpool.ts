@@ -31,7 +31,6 @@ const membersNeeded = (contract: string): number =>
   Math.ceil(Number(value(contract, 'quorumVotes')))
 
 const oracleSetSize = Number(value('RocketDAONodeTrusted', 'memberCount'))
-const securityCouncilSize = Number(value('RocketDAOSecurity', 'memberCount'))
 
 // Registration of new node operators is a live protocol switch; render its
 // state from discovery so the page never hardcodes it.
@@ -68,7 +67,7 @@ export const rocketpool: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Rocket Pool is a permissionless Ethereum staking pool. Depositors receive ${value('RocketTokenRETH', 'symbol')}, a token whose redemption price is set by a permissioned oracle set of ${oracleSetSize} node operators: ${membersNeeded('RocketDAONodeTrusted')} of them agreeing writes the network balance from which the price is derived, bounded to a ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} move per report and to one report every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}. Validator keys are run by node operators who post their own ETH bond; staking ${value('RocketTokenRPL', 'symbol')} is optional, and registration of new operators is gated by a governance switch, currently ${registrationStatus}. Redeeming ${value('RocketTokenRETH', 'symbol')} on-chain is open to any holder and cannot be paused, but pays only out of the protocol's liquid buffer. The same oracle set is the only body that can change protocol code, after a delay of ${duration('RocketDAOProtocolSettingsSecurity', 'getUpgradeDelay')} that a security council of ${securityCouncilSize} seat${securityCouncilSize === 1 ? '' : 's'}, held by a ${councilSeatThreshold} Safe, can veto.`,
+    description: `Rocket Pool is an Ethereum liquid staking protocol. Users deposit ETH and receive ${value('RocketTokenRETH', 'symbol')}, a token whose value tracks the protocol's pooled ETH and staking rewards. Validators are run by registered node operators who combine their own ETH bond with ETH supplied by the pool. Withdrawal credentials point to protocol contracts, so operators cannot take user principal. The core trust surface is a ${membersNeeded('RocketDAONodeTrusted')}-of-${oracleSetSize} oracle set that reports the balances used to price ${value('RocketTokenRETH', 'symbol')}, with each report limited to a ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} price move and one report every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}. The same oracle set can upgrade protocol contracts after a delay of ${duration('RocketDAOProtocolSettingsSecurity', 'getUpgradeDelay')}, subject to a veto by a ${councilSeatThreshold} security council Safe. On-chain redemptions cannot be paused, but depend on available protocol liquidity.`,
     detailedDescription: readProjectMarkdown(
       'rocketpool',
       'detailedDescription',
