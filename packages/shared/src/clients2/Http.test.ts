@@ -44,6 +44,7 @@ describe(Http.name, () => {
         durationTotal: 10,
         sizeTotal: 100,
         waitMax: expect.a(Number),
+        callsPerMinute: 100_000,
       }),
     )
     expect(logger.info).toHaveBeenCalledWith(

@@ -26,6 +26,8 @@ export interface AggregatedClientMetric {
   queueDepthMax?: number
   /** Largest number of concurrently running calls across all labels of the limiter. */
   limiterInFlightMax?: number
+  /** Configured budget of the limiter; `count / callsPerMinute` over a minute is utilisation. */
+  callsPerMinute?: number
 }
 
 export interface ClientMetricsAggregatorOptions
@@ -84,8 +86,9 @@ export class ClientMetricsAggregator extends MetricsAggregator<ClientMetric> {
         entry.durationAvg = Math.floor(entry.durationTotal / entry.count)
         entry.sizeAvg = Math.floor(entry.sizeTotal / entry.count)
       }
-      if (limiter) {
+      if (limiter && this.options.rateLimiter) {
         entry.limiterInFlightMax = limiter.inFlightMax
+        entry.callsPerMinute = this.options.rateLimiter.callsPerMinute
       }
     }
     return result

@@ -106,7 +106,8 @@ export class Http {
   }
 
   private _flushMetrics() {
-    const limiter = this.rateLimiter?.takeStats()
+    const rateLimiter = this.rateLimiter
+    const limiter = rateLimiter?.takeStats()
     const labels = new Set([
       ...Object.keys(this.metrics),
       ...Object.keys(limiter?.labels ?? {}),
@@ -135,7 +136,11 @@ export class Http {
           waitMax: wait.waitMsMax,
           queueDepthMax: wait.queueDepthMax,
         }),
-        ...(limiter && { limiterInFlightMax: limiter.inFlightMax }),
+        ...(rateLimiter &&
+          limiter && {
+            limiterInFlightMax: limiter.inFlightMax,
+            callsPerMinute: rateLimiter.callsPerMinute,
+          }),
       })
     }
     this.metrics = {}
