@@ -2,7 +2,6 @@ import type { InteropPlugin, Project } from '@l2beat/config'
 import type { TokenRelationRoute } from '@l2beat/database'
 import { Address32, assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 import { getInteropTokenRelationsGraph } from './getInteropTokenRelationsGraph'
 
@@ -28,7 +27,7 @@ const backing: TokenRelationRoute = {
   bridgeType: 'lockAndMint',
   lockedToken: 'B',
 }
-const resolveProjects = createInteropProjectResolver([
+const interopProjects = [
   project('cctpv2', 'CCTP v2', [
     { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
   ]),
@@ -38,7 +37,7 @@ const resolveProjects = createInteropProjectResolver([
   project('optimism', 'OP Bridge', [
     { plugin: 'opstack', bridgeType: 'lockAndMint', chain: 'optimism' },
   ]),
-])
+]
 
 describe(getInteropTokenRelationsGraph.name, () => {
   it('counts a transfer once per node and once per deployment it touches', () => {
@@ -53,8 +52,8 @@ describe(getInteropTokenRelationsGraph.name, () => {
           pair(ethereum, base, { volume: 20, duration: 20 }),
         ],
       },
-      new Map(),
-      resolveProjects,
+      [],
+      interopProjects,
     )
 
     const [clusterNode, baseNode] = graph.nodes
@@ -65,9 +64,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
       transferCount: 3,
       avgDuration: 20,
     })
-    expect(
-      clusterNode.deployments.map((d) => [d.chain.name, d.volume]),
-    ).toEqual([
+    expect(clusterNode.deployments.map((d) => [d.chain.id, d.volume])).toEqual([
       ['ethereum', 170],
       ['arbitrum', 150],
     ])
@@ -82,21 +79,76 @@ describe(getInteropTokenRelationsGraph.name, () => {
     solana.isSupported = false
     const graph = getInteropTokenRelationsGraph(
       usdc,
-      [ethereum, solana],
+      [ethereum, base, solana],
       {
         routes: [],
         pairStats: [pair(ethereum, arbitrum, { volume: 100, duration: 10 })],
       },
-      new Map(),
-      resolveProjects,
+      [],
+      interopProjects,
     )
 
     expect(
       graph.nodes.map((node) => [node.id, node.volume, node.transferCount]),
     ).toEqual([
+      ['base|0xb1', 0, 0],
       ['ethereum|0xe1', 100, 1],
       ['solana|so11111111111111111111111111111111111111112', null, null],
     ])
+  })
+
+  it('distinguishes an empty snapshot from a missing snapshot', () => {
+    for (const pairStats of [[], undefined]) {
+      const graph = getInteropTokenRelationsGraph(
+        usdc,
+        [ethereum],
+        { routes: [], pairStats },
+        [],
+        interopProjects,
+      )
+      const expected = {
+        volume: pairStats ? 0 : null,
+        transferCount: pairStats ? 0 : null,
+        avgDuration: null,
+      }
+      expect(graph.nodes[0]).toHaveSubset(expected)
+      expect(graph.nodes[0]?.deployments[0]).toHaveSubset(expected)
+    }
+  })
+
+  it('weights duration by measured transfers and counts one-sided pairs', () => {
+    const graph = getInteropTokenRelationsGraph(
+      usdc,
+      [ethereum, arbitrum],
+      {
+        routes: [cluster],
+        pairStats: [
+          {
+            ...pair(ethereum, arbitrum, { volume: 100, duration: 60 }),
+            transferCount: 4,
+            transfersWithDurationCount: 3,
+          },
+          {
+            src: {
+              chain: ethereum.chain,
+              address: Address32.from(ethereum.address),
+            },
+            volume: 10,
+            transferCount: 1,
+            transfersWithDurationCount: 1,
+            totalDurationSum: 20,
+          },
+        ],
+      },
+      [],
+      interopProjects,
+    )
+
+    expect(graph.nodes[0]).toHaveSubset({
+      volume: 110,
+      transferCount: 5,
+      avgDuration: 20,
+    })
   })
 
   it('resolves bridges per node and edge, honouring chain qualifiers', () => {
@@ -104,17 +156,8 @@ describe(getInteropTokenRelationsGraph.name, () => {
       usdc,
       [ethereum, arbitrum, base],
       { routes: [cluster, backing], pairStats: undefined },
-      new Map([
-        [
-          'base',
-          {
-            name: 'Base',
-            iconUrl: undefined,
-            explorerUrl: 'https://basescan.org',
-          },
-        ],
-      ]),
-      resolveProjects,
+      [],
+      interopProjects,
     )
 
     expect(graph.nodes.map((node) => node.bridges.map((b) => b.name))).toEqual([
@@ -136,7 +179,7 @@ describe(getInteropTokenRelationsGraph.name, () => {
       },
     ])
     expect(graph.nodes[1]?.deployments[0]).toEqual({
-      chain: { id: 'base', name: 'Base', iconUrl: undefined },
+      chain: { id: 'base', name: 'Base', iconUrl: '/icons/base.png' },
       address: '0xb1',
       symbol: 'USDC',
       explorerUrl: 'https://basescan.org/address/0xb1',
@@ -170,8 +213,8 @@ describe(getInteropTokenRelationsGraph.name, () => {
         ]),
       ],
       { routes: [], pairStats: undefined },
-      new Map(),
-      createInteropProjectResolver([
+      [],
+      [
         project('zeta', 'Zeta bridge', [
           { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
         ]),
@@ -179,13 +222,55 @@ describe(getInteropTokenRelationsGraph.name, () => {
           { plugin: 'ccip', bridgeType: 'burnAndMint' },
           { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
         ]),
-      ]),
+      ],
     )
 
     expect(graph.nodes[0]?.deployments[0]?.minters.map((m) => m.name)).toEqual([
       'Alpha bridge',
       'Zeta bridge',
     ])
+  })
+
+  it('falls back to project metadata and keeps unknown chains identifiable', () => {
+    const chainProject: Project<'chainConfig'> = {
+      id: ProjectId('custom-project'),
+      slug: 'custom-project',
+      name: 'Custom Chain',
+      shortName: undefined,
+      addedAt: UnixTime(0),
+      chainConfig: {
+        name: 'custom-chain',
+        chainId: 1234,
+        explorerUrl: 'https://explorer.example',
+        apis: [],
+      },
+    }
+    const graph = getInteropTokenRelationsGraph(
+      usdc,
+      [
+        deployment('custom-chain', '0xfa'),
+        deployment('custom-chain', 'native:token'),
+        deployment('unknown-chain', '0xfb'),
+      ],
+      { routes: [], pairStats: undefined },
+      [chainProject],
+      interopProjects,
+    )
+
+    const deployments = graph.nodes.flatMap((node) => node.deployments)
+    expect(deployments[0]).toHaveSubset({
+      chain: {
+        id: 'custom-chain',
+        name: 'Custom Chain',
+        iconUrl: '/icons/custom-project.png',
+      },
+      explorerUrl: 'https://explorer.example/address/0xfa',
+    })
+    expect(deployments[1]?.explorerUrl).toEqual(undefined)
+    expect(deployments[2]).toHaveSubset({
+      chain: { id: 'unknown-chain', name: 'unknown-chain', iconUrl: undefined },
+      explorerUrl: undefined,
+    })
   })
 })
 

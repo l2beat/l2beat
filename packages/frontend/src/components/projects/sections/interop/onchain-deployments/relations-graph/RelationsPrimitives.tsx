@@ -17,8 +17,8 @@ import { ChainIcon } from '~/pages/interop/components/ChainIcon'
 import type {
   InteropTokenDeploymentView,
   InteropTokenRelationsNode,
+  InteropTokenStats,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
-import type { InteropTokenStats } from '~/server/features/layer2s/interop/utils/createStatsLookup'
 import { cn } from '~/utils/cn'
 import { describeNode, isCluster } from './graphSelectors'
 
