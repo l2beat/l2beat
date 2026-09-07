@@ -68,7 +68,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
     ],
     gasTokens: ['G'],
     apis: [
-      { type: 'rpc', url: 'https://rpc.gravity.xyz', callsPerMinute: 1200 },
+      { type: 'rpc', url: 'https://rpc.gravity.xyz', callsPerMinute: 600 },
       { type: 'blockscout', url: 'https://explorer.gravity.xyz/api' },
       { type: 'blockscoutV2', url: 'https://explorer.gravity.xyz/api/v2' },
     ],
