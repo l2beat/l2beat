@@ -45,7 +45,7 @@ export const xai: ScalingProject = orbitStackL3({
     name: 'xai',
     chainId: 660279,
     apis: [
-      { type: 'rpc', url: 'https://xai-chain.net/rpc', callsPerMinute: 300 },
+      { type: 'rpc', url: 'https://xai-chain.net/rpc', callsPerMinute: 2400 },
     ],
   },
   stateValidation: {
