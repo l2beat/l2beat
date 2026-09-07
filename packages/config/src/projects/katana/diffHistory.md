@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xad9db78f32f2cde9c9e195d0e1f66ae04e6aa9a8
+Generated with discovered.json: 0x7b81c462fb20687a9880f41907cb2ee375118741
 
-# Diff at Mon, 07 Sep 2026 14:43:45 GMT:
+# Diff at Mon, 07 Sep 2026 15:06:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@041f4be232de31648e9a26f8b80fa8f2d65fc60d block: 1787645431
-- current timestamp: 1788792094
+- current timestamp: 1788793515
 
 ## Description
 
@@ -103,7 +103,7 @@ Implementation diffs:
 
 ```diff
     contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
-    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging (ETH deposits and deposits from the L1StandardBridge / L1ERC721Bridge revert), but it allows forced transactions. Withdrawals are not used in this setup, as state validation happens through the AggchainFEP.
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
       sourceHashes.1:
 -        "0xfcecb325a86c39482f8e9d29272f25089eec0b5fbefe21444fd1ea690c911f0c"
 +        "0xcdca45f93efdef12515a42464aa744c87143d83208163ef6a97317da454c7eac"
@@ -487,10 +487,7 @@ discovery. Values are for block 1787645431 (main branch discovery), not current.
 
 ```diff
     contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
-    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging (ETH deposits and deposits from the L1StandardBridge / L1ERC721Bridge revert), but it allows forced transactions. Withdrawals are not used in this setup, as state validation happens through the AggchainFEP.
-      description:
--        "Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions."
-+        "Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging (ETH deposits and deposits from the L1StandardBridge / L1ERC721Bridge revert), but it allows forced transactions. Withdrawals are not used in this setup, as state validation happens through the AggchainFEP."
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
       usedTypes.0.arg.621:
 +        "AggregateVerifier"
       usedTypes.0.arg.8:
@@ -502,7 +499,7 @@ discovery. Values are for block 1787645431 (main branch discovery), not current.
     contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","description":"pause the OptimismPortal and L1CrossDomainMessenger of Katana (pauses expire automatically after the configured pause expiry). Since bridging through the OP stack contracts is disabled and state validation happens through the AggchainFEP, this only affects the unused withdrawal path; forced transactions are not paused.","role":".guardian"}]
++        [{"permission":"interact","from":"eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","description":"pause the OptimismPortal and L1CrossDomainMessenger of Katana (pauses expire automatically after the configured pause expiry).","role":".guardian"}]
     }
 ```
 
