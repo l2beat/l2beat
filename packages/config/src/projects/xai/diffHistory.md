@@ -12,6 +12,8 @@ SafeL2 owning the ProxyAdmin of the Sentry contracts: member added; threshold lo
 
 XaiFundsReiceiverMultisig: 3 members removed; threshold 3/7 → 2/4.
 
+Team Secret removed from the listed DAC members: its key left the keyset on 2025-01-12; the current 3/5 keyset is Xai, Ex Populus, LayerZero, Alt Layer and Offchain Labs.
+
 ## Watched changes
 
 ```diff
