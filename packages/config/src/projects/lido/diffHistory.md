@@ -1,3 +1,937 @@
+Generated with discovered.json: 0x8d1b329c7306e488b781e9f4b136b4ac7f571fb1
+
+# Diff at Fri, 04 Sep 2026 15:07:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@28702f068bf7b25ad61fbb2f841b9fb3792b78cc block: 1787647851
+- current timestamp: 1788534406
+
+## Description
+
+Name Lido committee multisigs and the tiebreaker subcommittees after the Lido multisig registry; show the CircuitBreaker, Finance, DepositSecurityModule and TokenManager permission aggregators as actors in their own right; scope the Agent TRANSFER_ROLE description to ETH and ERC-20
+
+## Watched changes
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [lido/stETH] {
+    +++ description: The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.
+      values.getFeeDistribution.treasuryFeeBasisPoints:
+-        3793
++        3783
+      values.getFeeDistribution.operatorsFeeBasisPoints:
+-        6206
++        6216
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787647851 (main branch discovery), not current.
+
+```diff
+    contract ValidatorsExitBusOracle (eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) [lido/ValidatorsExitBusOracle] {
+    +++ description: Receives committee-consensus lists of validators that staking modules must exit and emits the exit requests. SRv3 accounts for the validators' effective-balance weights and key indices when applying per-report and replenishing exit limits.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
+    }
+```
+
+```diff
+    contract ConsolidationGateway (eth:0x17be979344f2c2cC806229a532D92f8742C10462) [lido/ConsolidationGateway] {
+    +++ description: Validates validator ownership proofs and submits EIP-7251 consolidation requests through the protocol consolidation-request predeploy. It rate-limits the amount consolidated and preserves its ETH balance across requests.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"spend vault ETH on EIP-7251 validator consolidation requests.","role":".CONSOLIDATION_GATEWAY"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"spend vault ETH on EIP-7251 validator consolidation requests.","role":".CONSOLIDATION_GATEWAY"}]
+    }
+```
+
+```diff
+    contract StVaultsCommittee (eth:0x18A1065c81b0Cc356F1b1C843ddd5E14e4AefffF) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "StVaultsCommittee"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) [lido/VaultHub] {
+    +++ description: The central registry and lifecycle manager for stVaults connected to Lido. It enforces collateral and risk parameters, tracks vault reports and liabilities, mints and burns stETH shares, settles fees, rebalances unhealthy vaults, and manages bad debt.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"},{"permission":"interact","from":"eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"},{"permission":"interact","from":"eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"},{"permission":"interact","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"},{"permission":"interact","from":"eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"},{"permission":"interact","from":"eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"},{"permission":"interact","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","description":"withdraw ETH and ERC-20 tokens, pause or resume Beacon Chain deposits, request or trigger validator withdrawals, choose the depositor, transfer vault ownership, and irreversibly pin the vault implementation.","role":".owner"}]
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract Core Accounting (eth:0x23ED611be0e1a820978875C0122F92260804cdDf) [lido/CoreAccounting] {
+    +++ description: Calculates and applies a complete Lido oracle report: it reconciles validator balances, smooths the rebase, collects vault balances, finalizes withdrawals, burns shares, distributes module rewards, and updates stETH accounting.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"queue stETH shares already held by Burner for cover or non-cover burning.","role":".shareBurnRequesters"},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"notify modules about newly minted staking rewards and advance their reward accounting.","role":".rewardsMintReporters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"queue stETH shares already held by Burner for cover or non-cover burning.","role":".shareBurnRequesters"},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"notify modules about newly minted staking rewards and advance their reward accounting.","role":".rewardsMintReporters"}]
+    }
+```
+
+```diff
+    contract CuratedModuleCommittee (eth:0x2570e0b22AD904501dfB0d49575991ACB801dD91) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "CuratedModuleCommittee"
+      receivedPermissions.2.description:
+-        "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
++        "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
+    }
+```
+
+```diff
+    contract VaultsAdapter (eth:0x28F9Ac198C4E0FA6A9Ad2c2f97CB38F1A3120f27) [lido/VaultsAdapter] {
+    +++ description: EasyTrack adapter for stVault administration. The EVMScriptExecutor may change vault fees and jail status, liability targets, socialize bad debt, and force validator exits; a separate trusted caller controls the maximum exit fee and ETH recovery.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"disconnect an unhealthy vault and either socialize its bad debt across other vaults or queue it for internalization as a Lido protocol loss.","role":".badDebtMasters"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"trigger EIP-7002 withdrawals for validators of connected vaults.","role":".validatorExiters"},{"permission":"interact","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","description":"register node-operator groups, set their aggregate share limits, create or alter vault risk and fee tiers, change confirmation timing, and jail or unjail vaults.","role":".registryManagers"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"disconnect an unhealthy vault and either socialize its bad debt across other vaults or queue it for internalization as a Lido protocol loss.","role":".badDebtMasters"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"trigger EIP-7002 withdrawals for validators of connected vaults.","role":".validatorExiters"},{"permission":"interact","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","description":"register node-operator groups, set their aggregate share limits, create or alter vault risk and fee tiers, change confirmation timing, and jail or unjail vaults.","role":".registryManagers"}]
+    }
+```
+
+```diff
+    contract Voting (eth:0x2e59A20f205bB85a89C53f1936454680651E618e) [lido/Voting] {
+    +++ description: Lido DAO's Aragon token voting application. LDO holders vote on executable DAO scripts, with configurable support, quorum, vote duration, and an objection phase.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"grant or revoke every ValidatorsExitBusOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"pause validator-exit report processing for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"resume validator-exit report processing.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x147f8d3cf3004FAf9Bf94E88B54b6C06De507be9","description":"grant or revoke OracleReportSanityChecker roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c","description":"change the minimum asset-lock duration and convert this signalling escrow into a Rage Quit escrow.","role":".DUAL_GOVERNANCE","via":[{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"grant or revoke ConsolidationGateway roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"pause validator consolidation requests for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"resume validator consolidation requests.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"grant or revoke every VaultHub role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"pause VaultHub operations for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"resume VaultHub operations.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021","description":"make arbitrary calls through this executor and transfer its ownership.","role":".owner","via":[{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.19:
++        {"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.21:
++        {"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"resume bond deposits and reward claims.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.22:
++        {"permission":"interact","from":"eth:0x367d23c756599c20DCc8D6943F4976E8F88D60d7","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.24:
++        {"permission":"interact","from":"eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951","description":"add or remove subcommittee members, change quorum and voting timelock, or transfer subcommittee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","description":"grant, revoke, parameterize, or transfer management of the Agent execution permission.","role":".executePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.27:
++        {"permission":"interact","from":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","description":"grant, revoke, parameterize, or transfer management of the Agent script-runner permission.","role":".scriptPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"grant or revoke TopUpGateway roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.29:
++        {"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"pause validator top-ups for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"resume validator top-ups.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"pause fee report submission for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"resume fee report submission.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.34:
++        {"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.36:
++        {"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"resume bond deposits and reward claims.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.37:
++        {"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"add, activate, deactivate, rename, and change reward addresses of node operators, update penalty settings, and manage signing keys.","role":".nodeOperatorManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the node-operator management permission.","role":".nodeOperatorPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.39:
++        {"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the operator-limit permission.","role":".nodeOperatorLimitPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.40:
++        {"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the signing-key permission.","role":".signingKeyPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.41:
++        {"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the staking-router permission.","role":".stakingRouterPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.43:
++        {"permission":"interact","from":"eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c","description":"grant or revoke LazyOracle roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.44:
++        {"permission":"interact","from":"eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0x6019CB557978296BA3C08a7B73225C0975DFB2F7","description":"change pause and heartbeat durations and assign, replace, or remove pausers for supported protocol contracts.","role":".ADMIN","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.46:
++        {"permission":"interact","from":"eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.47:
++        {"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"grant or revoke Ejector roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"pause validator ejection requests.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.49:
++        {"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"resume validator ejection requests.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.50:
++        {"permission":"interact","from":"eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.51:
++        {"permission":"interact","from":"eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.52:
++        {"permission":"interact","from":"eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.53:
++        {"permission":"interact","from":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24","description":"reseal an already paused contract indefinitely or resume a paused contract through this adapter.","role":".governance","via":[{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.55:
++        {"permission":"interact","from":"eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.56:
++        {"permission":"interact","from":"eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.57:
++        {"permission":"interact","from":"eth:0x852deD011285fe67063a08005c71a85690503Cee","description":"grant or revoke every AccountingOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.58:
++        {"permission":"interact","from":"eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A","description":"grant, revoke, parameterize, or transfer management of the executor-adder permission.","role":".executorAdderPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.59:
++        {"permission":"interact","from":"eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A","description":"grant, revoke, parameterize, or transfer management of the registry-manager permission.","role":".registryManagerPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.60:
++        {"permission":"interact","from":"eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.61:
++        {"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"grant or revoke every WithdrawalQueue role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.62:
++        {"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"pause new withdrawal requests for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.63:
++        {"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"resume new withdrawal requests.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.65:
++        {"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"pause fee report submission for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.67:
++        {"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"resume fee report submission.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.68:
++        {"permission":"interact","from":"eth:0x902D64c93F6595339aA46105627a085591051aFb","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.69:
++        {"permission":"interact","from":"eth:0x902D64c93F6595339aA46105627a085591051aFb","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb","description":"create new Aragon app permissions and assign their initial grantee and manager.","role":".permissionCreators","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.71:
++        {"permission":"interact","from":"eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb","description":"grant, revoke, parameterize, or transfer management of the permission-creator permission.","role":".permissionCreatorManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.72:
++        {"permission":"interact","from":"eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.73:
++        {"permission":"interact","from":"eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7","description":"grant or revoke ConsolidationMigrator roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.74:
++        {"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.75:
++        {"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"pause onboarding and curve claims through this gate.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.76:
++        {"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"resume onboarding and curve claims through this gate.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.77:
++        {"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"grant or revoke MetaRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.78:
++        {"permission":"interact","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.79:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"change the ETH deposit-reserve target retained in the stETH buffer.","role":".bufferReserveManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.80:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the buffer-reserve permission.","role":".bufferReservePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.81:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the staking-control permission.","role":".stakingControlPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the staking-pause permission.","role":".stakingPausePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the stETH pause permission.","role":".pausePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.84:
++        {"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the stETH resume permission.","role":".resumePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"grant, revoke, parameterize, or transfer management of the node-operator management permission.","role":".nodeOperatorPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.86:
++        {"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"grant, revoke, parameterize, or transfer management of the operator-limit permission.","role":".nodeOperatorLimitPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.87:
++        {"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"grant, revoke, parameterize, or transfer management of the staking-router permission.","role":".stakingRouterPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.88:
++        {"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.89:
++        {"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"pause onboarding and curve claims through this gate.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.90:
++        {"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"resume onboarding and curve claims through this gate.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.91:
++        {"permission":"interact","from":"eth:0xb8cd8F059Ad7a5dB8CAfDe34aAb007317F7156C8","description":"grant or revoke asset-recovery and administrative roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.92:
++        {"permission":"interact","from":"eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc","description":"grant, revoke, parameterize, or transfer management of the Aragon application-manager permission.","role":".appManagerPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.12.description:
+-        "create one-time or recurring DAO payments."
++        "create one-time or recurring DAO payments out of the Agent's assets, within the limits set on the role's ACL parameters."
+      receivedPermissions.103:
++        {"permission":"interact","from":"eth:0xbe05d12Fd10919F1881125006523452F6aFF791b","description":"add or remove token-rate observers and transfer or renounce ownership.","role":".owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.104:
++        {"permission":"interact","from":"eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE","description":"add or remove subcommittee members, change quorum and voting timelock, or transfer subcommittee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.105:
++        {"permission":"interact","from":"eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09","description":"grant or revoke OracleDaemonConfig roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.107:
++        {"permission":"interact","from":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E","description":"change Dual Governance configuration, proposer executors, tiebreaker and reseal settings.","role":".adminExecutor","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.109:
++        {"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.110:
++        {"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"pause processing of validator proofs.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.111:
++        {"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"resume processing of validator proofs.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.112:
++        {"permission":"interact","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","description":"grant or revoke OperatorGrid roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.113:
++        {"permission":"interact","from":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","description":"change timelock delays and governance, transfer executor ownership, configure emergency protection, or deactivate emergency mode before its timeout.","role":".getAdminExecutor","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.114:
++        {"permission":"interact","from":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","description":"submit, schedule, and cancel timelocked proposals. Execution additionally waits 86400 after scheduling.","role":".getGovernance","via":[{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.115:
++        {"permission":"interact","from":"eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.116:
++        {"permission":"interact","from":"eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.117:
++        {"permission":"interact","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","description":"grant or revoke ConsolidationBus roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.118:
++        {"permission":"interact","from":"eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.119:
++        {"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"grant or revoke Curated Staking Module roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.120:
++        {"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.121:
++        {"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"resume the Curated Staking Module.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.122:
++        {"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"grant or revoke Community Staking Module roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.123:
++        {"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.124:
++        {"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"resume the Community Staking Module.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.125:
++        {"permission":"interact","from":"eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C","description":"add or remove subcommittee members, change quorum and voting timelock, or transfer subcommittee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.126:
++        {"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"change the maximum, replenishment rate, and frame duration of the triggerable-withdrawal limit.","role":".exitLimitManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.127:
++        {"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"grant or revoke every TriggerableWithdrawalsGateway role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.128:
++        {"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"pause triggerable withdrawals for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.129:
++        {"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"resume triggerable withdrawals.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.130:
++        {"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"grant or revoke Ejector roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.131:
++        {"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"pause validator ejection requests.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.132:
++        {"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"resume validator ejection requests.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.133:
++        {"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"grant or revoke Burner roles and enable migration of excess stETH.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.134:
++        {"permission":"interact","from":"eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.139:
++        {"permission":"interact","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.140:
++        {"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"grant or revoke PredepositGuarantee roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.141:
++        {"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"pause predeposit proving and validator-deposit operations for a chosen duration.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.142:
++        {"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"resume predeposit proving and validator-deposit operations.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.143:
++        {"permission":"interact","from":"eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be","description":"transfer ownership, configure guardians, quorum and pause parameters, and unpause staking-module deposits.","role":".getOwner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.144:
++        {"permission":"interact","from":"eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5","description":"add or remove committee members, change quorum and voting timelock, or transfer committee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.153:
++        {"permission":"interact","from":"eth:0xF95f069F9AD107938F6ba802a3da87892298610E","description":"appoint or dismiss the relay-list manager, transfer ownership, and recover ERC-20 tokens.","role":".get_owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.154:
++        {"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.155:
++        {"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"pause processing of validator proofs.","role":".pausers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.156:
++        {"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"resume processing of validator proofs.","role":".resumers","via":[{"address":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.157:
++        {"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"add staking modules, change their fees and status, set deposit and top-up limits, and configure router-wide module parameters.","role":".stakingModuleManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.158:
++        {"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"grant or revoke StakingRouter roles and administer the router's privileged operations.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.160:
++        {"permission":"interact","from":"eth:0xffC1C5d59CeAC6F6c27E701F04a70cb50474607C","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.161:
++        {"permission":"upgrade","from":"eth:0x004aFb7DAA7dEA20EbAaB75c9F4892C879FaCCe0","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.162:
++        {"permission":"upgrade","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.163:
++        {"permission":"upgrade","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.164:
++        {"permission":"upgrade","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.165:
++        {"permission":"upgrade","from":"eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.166:
++        {"permission":"upgrade","from":"eth:0x23ED611be0e1a820978875C0122F92260804cdDf","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.167:
++        {"permission":"upgrade","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.168:
++        {"permission":"upgrade","from":"eth:0x367d23c756599c20DCc8D6943F4976E8F88D60d7","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.169:
++        {"permission":"upgrade","from":"eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.170:
++        {"permission":"upgrade","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.171:
++        {"permission":"upgrade","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.172:
++        {"permission":"upgrade","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.173:
++        {"permission":"upgrade","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.174:
++        {"permission":"upgrade","from":"eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.175:
++        {"permission":"upgrade","from":"eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.176:
++        {"permission":"upgrade","from":"eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.177:
++        {"permission":"upgrade","from":"eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.178:
++        {"permission":"upgrade","from":"eth:0x852deD011285fe67063a08005c71a85690503Cee","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.179:
++        {"permission":"upgrade","from":"eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.180:
++        {"permission":"upgrade","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.181:
++        {"permission":"upgrade","from":"eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.182:
++        {"permission":"upgrade","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.183:
++        {"permission":"upgrade","from":"eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.184:
++        {"permission":"upgrade","from":"eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.185:
++        {"permission":"upgrade","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.186:
++        {"permission":"upgrade","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.187:
++        {"permission":"upgrade","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.188:
++        {"permission":"upgrade","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.189:
++        {"permission":"upgrade","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.190:
++        {"permission":"upgrade","from":"eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.191:
++        {"permission":"upgrade","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.192:
++        {"permission":"upgrade","from":"eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.193:
++        {"permission":"upgrade","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.194:
++        {"permission":"upgrade","from":"eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.195:
++        {"permission":"upgrade","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.196:
++        {"permission":"upgrade","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.197:
++        {"permission":"upgrade","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.198:
++        {"permission":"upgrade","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.199:
++        {"permission":"upgrade","from":"eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.200:
++        {"permission":"upgrade","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.201:
++        {"permission":"upgrade","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.202:
++        {"permission":"upgrade","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      receivedPermissions.203:
++        {"permission":"upgrade","from":"eth:0xffC1C5d59CeAC6F6c27E701F04a70cb50474607C","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"},{"address":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200},{"address":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E","role":".proposers"}]
+    }
+```
+
+```diff
+    contract Accounting (eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6) [lido/Accounting] {
+    +++ description: Manages node-operator bonds for a permissionless staking module. It accepts ETH, stETH and wstETH bonds, applies bond curves, locks or penalizes bond, and lets eligible node-operator addresses claim rewards after the module's fee distribution.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"transfer their own stETH to Burner and queue its shares for cover or non-cover burning.","role":".selfBurnRequesters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"transfer their own stETH to Burner and queue its shares for cover or non-cover burning.","role":".selfBurnRequesters"}]
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract TiebreakerBuildersSubcommittee (eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      name:
+-        "TiebreakerSubCommittee"
++        "TiebreakerBuildersSubcommittee"
+    }
+```
+
+```diff
+-   Status: DELETED
+    reference FeedRegistry (eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf)
+    +++ description: None
+```
+
+```diff
+    contract FeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) [lido/FeeOracle] {
+    +++ description: Receives committee-consensus reports containing a staking module's reward-distribution Merkle root and forwards them to FeeDistributor and ValidatorStrikes.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","description":"replace the validator-strikes Merkle root and its content identifier through an oracle report.","role":".ORACLE"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","description":"replace the validator-strikes Merkle root and its content identifier through an oracle report.","role":".ORACLE"}]
+    }
+```
+
+```diff
+    contract Accounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) [lido/Accounting] {
+    +++ description: Manages node-operator bonds for a permissionless staking module. It accepts ETH, stETH and wstETH bonds, applies bond curves, locks or penalizes bond, and lets eligible node-operator addresses claim rewards after the module's fee distribution.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"transfer their own stETH to Burner and queue its shares for cover or non-cover burning.","role":".selfBurnRequesters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"transfer their own stETH to Burner and queue its shares for cover or non-cover burning.","role":".selfBurnRequesters"}]
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract Ejector (eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5) [lido/Ejector] {
+    +++ description: Submits triggerable full-withdrawal requests for validators. Node operators may voluntarily eject their own validators, while ValidatorStrikes can eject validators for poor performance.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
+    }
+```
+
+```diff
+    contract EmergencyBrakesEthereum (eth:0x73b047fe6337183A454c5217241D780a932777bD) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Lido Multisig 1"
++        "EmergencyBrakesEthereum"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract ResealManager (eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24) [lido/ResealManager] {
+    +++ description: Adapter that lets the governance configured in the EmergencyProtectedTimelock indefinitely extend an existing pause or resume a supported sealable contract.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"pause validator-exit report processing for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"resume validator-exit report processing.","role":".resumers"},{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"pause validator consolidation requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"resume validator consolidation requests.","role":".resumers"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"pause VaultHub operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"resume VaultHub operations.","role":".resumers"},{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"resume bond deposits and reward claims.","role":".resumers"},{"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"pause validator top-ups for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"resume validator top-ups.","role":".resumers"},{"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"resume fee report submission.","role":".resumers"},{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"resume bond deposits and reward claims.","role":".resumers"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"resume validator ejection requests.","role":".resumers"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"pause new withdrawal requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"resume new withdrawal requests.","role":".resumers"},{"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"resume fee report submission.","role":".resumers"},{"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"resume onboarding and curve claims through this gate.","role":".resumers"},{"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"resume onboarding and curve claims through this gate.","role":".resumers"},{"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"pause processing of validator proofs.","role":".pausers"},{"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"resume processing of validator proofs.","role":".resumers"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"resume the Curated Staking Module.","role":".resumers"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"resume the Community Staking Module.","role":".resumers"},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"pause triggerable withdrawals for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"resume triggerable withdrawals.","role":".resumers"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"resume validator ejection requests.","role":".resumers"},{"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"pause predeposit proving and validator-deposit operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"resume predeposit proving and validator-deposit operations.","role":".resumers"},{"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"pause processing of validator proofs.","role":".pausers"},{"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"resume processing of validator proofs.","role":".resumers"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"pause validator-exit report processing for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"resume validator-exit report processing.","role":".resumers"},{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"pause validator consolidation requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"resume validator consolidation requests.","role":".resumers"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"pause VaultHub operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"resume VaultHub operations.","role":".resumers"},{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"resume bond deposits and reward claims.","role":".resumers"},{"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"pause validator top-ups for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"resume validator top-ups.","role":".resumers"},{"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"resume fee report submission.","role":".resumers"},{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"pause bond deposits and reward claims for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"resume bond deposits and reward claims.","role":".resumers"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"resume validator ejection requests.","role":".resumers"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"pause new withdrawal requests for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"resume new withdrawal requests.","role":".resumers"},{"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"pause fee report submission for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"resume fee report submission.","role":".resumers"},{"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"resume onboarding and curve claims through this gate.","role":".resumers"},{"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"pause onboarding and curve claims through this gate.","role":".pausers"},{"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"resume onboarding and curve claims through this gate.","role":".resumers"},{"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"pause processing of validator proofs.","role":".pausers"},{"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"resume processing of validator proofs.","role":".resumers"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"resume the Curated Staking Module.","role":".resumers"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"pause module deposits and operator-management operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"resume the Community Staking Module.","role":".resumers"},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"pause triggerable withdrawals for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"resume triggerable withdrawals.","role":".resumers"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"pause validator ejection requests.","role":".pausers"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"resume validator ejection requests.","role":".resumers"},{"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"pause predeposit proving and validator-deposit operations for a chosen duration.","role":".pausers"},{"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"resume predeposit proving and validator-deposit operations.","role":".resumers"},{"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"pause processing of validator proofs.","role":".pausers"},{"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"resume processing of validator proofs.","role":".resumers"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    reference Chainlink_ETH_USD_Aggregator (eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5)
+    +++ description: None
+```
+
+```diff
+    contract AccountingOracle (eth:0x852deD011285fe67063a08005c71a85690503Cee) [lido/AccountingOracle] {
+    +++ description: Receives committee-consensus reports of Lido's Beacon Chain balances, validator state, withdrawals, and staking-module accounting data, then drives the stETH accounting rebase and related protocol updates.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x23ED611be0e1a820978875C0122F92260804cdDf","description":"apply an oracle report and its resulting stETH rebase, withdrawals, burns, fee minting, and staking-module accounting updates.","role":".accountingOracle"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"update bunker-mode status and the withdrawal queue's latest oracle-report timestamp.","role":".oracleReporters"},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report exited-validator counts and balances for staking modules and node operators.","role":".exitedValidatorReporters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x23ED611be0e1a820978875C0122F92260804cdDf","description":"apply an oracle report and its resulting stETH rebase, withdrawals, burns, fee minting, and staking-module accounting updates.","role":".accountingOracle"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"update bunker-mode status and the withdrawal queue's latest oracle-report timestamp.","role":".oracleReporters"},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report exited-validator counts and balances for staking modules and node operators.","role":".exitedValidatorReporters"}]
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract CircuitBreakerCommittee (eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "CircuitBreakerCommittee"
+      receivedPermissions.0.description:
+-        "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
++        "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
+    }
+```
+
+```diff
+    contract DualGovernanceEmergencyActivationCommittee (eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "DualGovernanceEmergencyActivationCommittee"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract P2P (eth:0x8ed4dfd3A610CCF1FB45e797bf5D8e0f93084F22) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "P2P"
+    }
+```
+
+```diff
+    contract FeeOracle (eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5) [lido/FeeOracle] {
+    +++ description: Receives committee-consensus reports containing a staking module's reward-distribution Merkle root and forwards them to FeeDistributor and ValidatorStrikes.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","description":"replace the validator-strikes Merkle root and its content identifier through an oracle report.","role":".ORACLE"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","description":"replace the validator-strikes Merkle root and its content identifier through an oracle report.","role":".ORACLE"}]
+    }
+```
+
+```diff
+    contract ConsolidationMigrator (eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7) [lido/ConsolidationMigrator] {
+    +++ description: Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","description":"publish validator consolidation batches to the delayed queue.","role":".publishers"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","description":"publish validator consolidation batches to the delayed queue.","role":".publishers"}]
+    }
+```
+
+```diff
+    contract VettedGate (eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8) [lido/VettedGate] {
+    +++ description: Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"create node operators on behalf of other addresses.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"create node operators on behalf of other addresses.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract ValidatorStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) [lido/ValidatorStrikes] {
+    +++ description: Stores the oracle-provided Merkle root of validator performance strikes. Proven strike data can cause a poor-performing validator to be ejected and penalized.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","description":"record the configured poor-performance penalty for a validator.","role":".STRIKES"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"request the full withdrawal of a validator identified as a poor performer.","role":".STRIKES"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","description":"record the configured poor-performance penalty for a validator.","role":".STRIKES"},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"request the full withdrawal of a validator identified as a poor performer.","role":".STRIKES"}]
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [lido/stETH] {
+    +++ description: The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x388C818CA8B9251b393131C08a736A67ccB19297","description":"withdraw accumulated ETH rewards into the stETH accounting buffer.","role":".LIDO"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"finalize queued withdrawal requests using supplied ETH and a chosen maximum stETH share rate.","role":".finalizers"},{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"withdraw accumulated consensus-layer withdrawals into the stETH accounting buffer.","role":".LIDO"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x388C818CA8B9251b393131C08a736A67ccB19297","description":"withdraw accumulated ETH rewards into the stETH accounting buffer.","role":".LIDO"},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"finalize queued withdrawal requests using supplied ETH and a chosen maximum stETH share rate.","role":".finalizers"},{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"withdraw accumulated consensus-layer withdrawals into the stETH accounting buffer.","role":".LIDO"}]
+    }
+```
+
+```diff
+    contract VettedGate (eth:0xB314D4A76C457c93150d308787939063F4Cc67E0) [lido/VettedGate] {
+    +++ description: Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"create node operators on behalf of other addresses.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"create node operators on behalf of other addresses.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract PermissionlessGate (eth:0xb8cd8F059Ad7a5dB8CAfDe34aAb007317F7156C8) [lido/PermissionlessGate] {
+    +++ description: Permissionless Community Staking Module onboarding contract. Any address can create a node operator using its fixed bond curve by depositing ETH, stETH or wstETH.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"create node operators on behalf of other addresses.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"create node operators on behalf of other addresses.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract Finance (eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86) [lido/Finance] {
+    +++ description: Lido DAO's Aragon Finance application. ACL roles create and execute one-time or recurring treasury payments and change their budgets, recipients, amounts and accounting period.
+      receivedPermissions.0.description:
+-        "transfer ETH, ERC-20, ERC-721, ERC-1155 and EtherToken assets held by the Agent."
++        "transfer ETH and ERC-20 tokens held by the Agent."
+    }
+```
+
+```diff
+    contract ValidatorExitDelayVerifier (eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f) [lido/ValidatorExitDelayVerifier] {
+    +++ description: Permissionless EIP-4788 proof verifier that detects validators which remained active after a ValidatorExitBus exit request and reports their exit delay to the StakingRouter.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report that validator exits have been requested and update the module's exit state.","role":".validatorExitingStatusReporters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report that validator exits have been requested and update the module's exit state.","role":".validatorExitingStatusReporters"}]
+    }
+```
+
+```diff
+    contract TiebreakerEthereumEcosystemSubcommittee (eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      name:
+-        "TiebreakerSubCommittee"
++        "TiebreakerEthereumEcosystemSubcommittee"
+    }
+```
+
+```diff
+    contract DualGovernance (eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E) [lido/DualGovernance] {
+    +++ description: Lido Dual Governance state machine. Registered proposers submit calls through an associated executor, while stETH, wstETH and unstETH holders can lock assets in an escrow to delay or stop governance execution and enter Rage Quit.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c","description":"change the minimum asset-lock duration and convert this signalling escrow into a Rage Quit escrow.","role":".DUAL_GOVERNANCE"},{"permission":"interact","from":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24","description":"reseal an already paused contract indefinitely or resume a paused contract through this adapter.","role":".governance"},{"permission":"interact","from":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","description":"submit, schedule, and cancel timelocked proposals.","role":".getGovernance"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24","role":".governance"},{"permission":"act","from":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","delay":259200,"role":".getGovernance"},{"permission":"interact","from":"eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c","description":"change the minimum asset-lock duration and convert this signalling escrow into a Rage Quit escrow.","role":".DUAL_GOVERNANCE"},{"permission":"interact","from":"eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24","description":"reseal an already paused contract indefinitely or resume a paused contract through this adapter.","role":".governance"},{"permission":"interact","from":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","description":"submit, schedule, and cancel timelocked proposals. Execution additionally waits 86400 after scheduling.","role":".getGovernance"}]
+    }
+```
+
+```diff
+    contract Community Staking Module Verifier (eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3) [lido/CSVerifier] {
+    +++ description: Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"report normally withdrawn validators for node operators.","role":".regularWithdrawalReporters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"report validator balances, slashing, withdrawal, and exit-delay evidence used for operator accounting and penalties.","role":".verifiers"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"report normally withdrawn validators for node operators.","role":".regularWithdrawalReporters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"report validator balances, slashing, withdrawal, and exit-delay evidence used for operator accounting and penalties.","role":".verifiers"}]
+    }
+```
+
+```diff
+    contract CommunityStakingModuleCommittee (eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "CommunityStakingModuleCommittee"
+      receivedPermissions.1.description:
+-        "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
++        "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
+    }
+```
+
+```diff
+    contract DualGovernanceEmergencyExecutionCommittee (eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "DualGovernanceEmergencyExecutionCommittee"
+    }
+```
+
+```diff
+    contract EmergencyProtectedTimelock (eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316) [lido/EmergencyProtectedTimelock] {
+    +++ description: Timelock used by Dual Governance. Governance submits and schedules batches, anyone may execute a ready batch, and time-bounded emergency committees can activate emergency mode and execute already submitted proposals without the ordinary schedule delay.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"grant or revoke every ValidatorsExitBusOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x147f8d3cf3004FAf9Bf94E88B54b6C06De507be9","description":"grant or revoke OracleReportSanityChecker roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"grant or revoke ConsolidationGateway roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"grant or revoke every VaultHub role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021","description":"make arbitrary calls through this executor and transfer its ownership.","role":".owner"},{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x367d23c756599c20DCc8D6943F4976E8F88D60d7","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951","description":"add or remove subcommittee members, change quorum and voting timelock, or transfer subcommittee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","description":"grant, revoke, parameterize, or transfer management of the Agent execution permission.","role":".executePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","description":"grant, revoke, parameterize, or transfer management of the Agent script-runner permission.","role":".scriptPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"grant or revoke TopUpGateway roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"add, activate, deactivate, rename, and change reward addresses of node operators, update penalty settings, and manage signing keys.","role":".nodeOperatorManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the node-operator management permission.","role":".nodeOperatorPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the operator-limit permission.","role":".nodeOperatorLimitPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the signing-key permission.","role":".signingKeyPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"grant, revoke, parameterize, or transfer management of the staking-router permission.","role":".stakingRouterPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c","description":"grant or revoke LazyOracle roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x6019CB557978296BA3C08a7B73225C0975DFB2F7","description":"change pause and heartbeat durations and assign, replace, or remove pausers for supported protocol contracts.","role":".ADMIN","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"grant or revoke Ejector roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x852deD011285fe67063a08005c71a85690503Cee","description":"grant or revoke every AccountingOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A","description":"grant, revoke, parameterize, or transfer management of the executor-adder permission.","role":".executorAdderPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A","description":"grant, revoke, parameterize, or transfer management of the registry-manager permission.","role":".registryManagerPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"grant or revoke every WithdrawalQueue role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x902D64c93F6595339aA46105627a085591051aFb","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x902D64c93F6595339aA46105627a085591051aFb","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb","description":"create new Aragon app permissions and assign their initial grantee and manager.","role":".permissionCreators","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb","description":"grant, revoke, parameterize, or transfer management of the permission-creator permission.","role":".permissionCreatorManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7","description":"grant or revoke ConsolidationMigrator roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"grant or revoke MetaRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"change the ETH deposit-reserve target retained in the stETH buffer.","role":".bufferReserveManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the buffer-reserve permission.","role":".bufferReservePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the staking-control permission.","role":".stakingControlPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the staking-pause permission.","role":".stakingPausePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the stETH pause permission.","role":".pausePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","description":"grant, revoke, parameterize, or transfer management of the stETH resume permission.","role":".resumePermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"grant, revoke, parameterize, or transfer management of the node-operator management permission.","role":".nodeOperatorPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"grant, revoke, parameterize, or transfer management of the operator-limit permission.","role":".nodeOperatorLimitPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"grant, revoke, parameterize, or transfer management of the staking-router permission.","role":".stakingRouterPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xb8cd8F059Ad7a5dB8CAfDe34aAb007317F7156C8","description":"grant or revoke asset-recovery and administrative roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc","description":"grant, revoke, parameterize, or transfer management of the Aragon application-manager permission.","role":".appManagerPermissionManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xbe05d12Fd10919F1881125006523452F6aFF791b","description":"add or remove token-rate observers and transfer or renounce ownership.","role":".owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE","description":"add or remove subcommittee members, change quorum and voting timelock, or transfer subcommittee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09","description":"grant or revoke OracleDaemonConfig roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E","description":"change Dual Governance configuration, proposer executors, tiebreaker and reseal settings.","role":".adminExecutor","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","description":"grant or revoke OperatorGrid roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316","description":"change timelock delays and governance, transfer executor ownership, configure emergency protection, or deactivate emergency mode before its timeout.","role":".getAdminExecutor","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288","description":"add or remove oracle committee members and change the report quorum.","role":".memberAndQuorumManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","description":"grant or revoke ConsolidationBus roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"grant or revoke Curated Staking Module roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"grant or revoke Community Staking Module roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C","description":"add or remove subcommittee members, change quorum and voting timelock, or transfer subcommittee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"change the maximum, replenishment rate, and frame duration of the triggerable-withdrawal limit.","role":".exitLimitManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"grant or revoke every TriggerableWithdrawalsGateway role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"grant or revoke Ejector roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"grant or revoke Burner roles and enable migration of excess stETH.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"grant or revoke PredepositGuarantee roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xF573E9E3de1f86B085417ab294f56E7920B4e9Be","description":"transfer ownership, configure guardians, quorum and pause parameters, and unpause staking-module deposits.","role":".getOwner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5","description":"add or remove committee members, change quorum and voting timelock, or transfer committee ownership.","role":".owner","via":[{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xF95f069F9AD107938F6ba802a3da87892298610E","description":"appoint or dismiss the relay-list manager, transfer ownership, and recover ERC-20 tokens.","role":".get_owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"add staking modules, change their fees and status, set deposit and top-up limits, and configure router-wide module parameters.","role":".stakingModuleManagers","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"grant or revoke StakingRouter roles and administer the router's privileged operations.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"interact","from":"eth:0xffC1C5d59CeAC6F6c27E701F04a70cb50474607C","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x004aFb7DAA7dEA20EbAaB75c9F4892C879FaCCe0","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x23ED611be0e1a820978875C0122F92260804cdDf","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x367d23c756599c20DCc8D6943F4976E8F88D60d7","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x852deD011285fe67063a08005c71a85690503Cee","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]},{"permission":"upgrade","from":"eth:0xffC1C5d59CeAC6F6c27E701F04a70cb50474607C","role":"admin","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021","description":"make arbitrary calls through this executor and transfer its ownership.","role":".owner"}
+    }
+```
+
+```diff
+    contract ConsolidationBus (eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8) [lido/ConsolidationBus] {
+    +++ description: Queues validator consolidation batches and, after an execution delay, forwards proven EIP-7251 requests to ConsolidationGateway.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"submit consolidation requests after proving control of the source and target validators.","role":".consolidationRequesters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"submit consolidation requests after proving control of the source and target validators.","role":".consolidationRequesters"}]
+    }
+```
+
+```diff
+    contract CuratedModule (eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1) [lido/CuratedModule] {
+    +++ description: The permissioned Curated Staking Module. It manages approved node operators and validator keys, accepts deposits and top-ups from the StakingRouter, and processes validator lifecycle reports and penalties.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x004aFb7DAA7dEA20EbAaB75c9F4892C879FaCCe0","description":"record validator exit-delay and triggerable-withdrawal fees and query whether an exit-delay penalty applies.","role":".MODULE"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x004aFb7DAA7dEA20EbAaB75c9F4892C879FaCCe0","description":"record validator exit-delay and triggerable-withdrawal fees and query whether an exit-delay penalty applies.","role":".MODULE"}]
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [lido/CSModule] {
+    +++ description: Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","description":"record validator exit-delay and triggerable-withdrawal fees and query whether an exit-delay penalty applies.","role":".MODULE"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","description":"record validator exit-delay and triggerable-withdrawal fees and query whether an exit-delay penalty applies.","role":".MODULE"}]
+    }
+```
+
+```diff
+    contract TiebreakerNodeOperatorsSubcommittee (eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C) [lido/TiebreakerSubCommittee] {
+    +++ description: A tiebreaker subcommittee whose members reach quorum on a proposal before forwarding it to the top-level tiebreaker committee.
+      name:
+-        "TiebreakerSubCommittee"
++        "TiebreakerNodeOperatorsSubcommittee"
+    }
+```
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) [lido/TriggerableWithdrawalsGateway] {
+    +++ description: The permissioned entrypoint for full EIP-7002 validator withdrawals. It charges the current request fee, applies a replenishing global exit limit, forwards requests to WithdrawalVault, and notifies StakingRouter.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"spend vault ETH on EIP-7002 validator withdrawal requests.","role":".TRIGGERABLE_WITHDRAWALS_GATEWAY"},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report that triggerable validator withdrawals have been submitted.","role":".validatorExitTriggerReporters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","description":"spend vault ETH on EIP-7002 validator withdrawal requests.","role":".TRIGGERABLE_WITHDRAWALS_GATEWAY"},{"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"report that triggerable validator withdrawals have been submitted.","role":".validatorExitTriggerReporters"}]
+    }
+```
+
+```diff
+    contract Ejector (eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E) [lido/Ejector] {
+    +++ description: Submits triggerable full-withdrawal requests for validators. Node operators may voluntarily eject their own validators, while ValidatorStrikes can eject validators for poor performance.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"trigger full EIP-7002 withdrawals for validator public keys, subject to fees and the global request limit.","role":".withdrawalRequesters"}]
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"assign a bond curve to an individual node operator.","role":".bondCurveSetters"},{"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"set a node operator's metadata and group assignments.","role":".operatorInfoSetters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"create curated node operators.","role":".nodeOperatorCreators"}]
+    }
+```
+
+```diff
+    contract EasyTrack (eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea) [lido/EasyTrack] {
+    +++ description: Optimistic Lido DAO motion system. Approved factories restrict the target and selector of each motion; LDO holders can object, and an unobstructed motion is executed through the EVMScriptExecutor after its delay.
+      receivedPermissions.2.description:
+-        "change stVault fees and jail status, set liability targets, socialize bad debt, and force validator exits through this adapter."
++        "change stVault fees and jail status, set liability targets, socialize bad debt between connected vaults, and force validator exits of vaults with an obligations shortfall, through this adapter's fixed function surface."
+      receivedPermissions.18.description:
+-        "create one-time or recurring DAO payments."
++        "create one-time or recurring DAO payments out of the Agent's assets, within the limits set on the role's ACL parameters."
+    }
+```
+
+```diff
+    contract ValidatorStrikes (eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db) [lido/ValidatorStrikes] {
+    +++ description: Stores the oracle-provided Merkle root of validator performance strikes. Proven strike data can cause a poor-performing validator to be ejected and penalized.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x004aFb7DAA7dEA20EbAaB75c9F4892C879FaCCe0","description":"record the configured poor-performance penalty for a validator.","role":".STRIKES"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"request the full withdrawal of a validator identified as a poor performer.","role":".STRIKES"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x004aFb7DAA7dEA20EbAaB75c9F4892C879FaCCe0","description":"record the configured poor-performance penalty for a validator.","role":".STRIKES"},{"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"request the full withdrawal of a validator identified as a poor performer.","role":".STRIKES"}]
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) [lido/PredepositGuarantee] {
+    +++ description: Protects StakingVault deposits by proving validator withdrawal credentials and requiring an initial predeposit before the remaining validator deposit is sent.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"},{"permission":"interact","from":"eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"},{"permission":"interact","from":"eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"},{"permission":"interact","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"},{"permission":"interact","from":"eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"},{"permission":"interact","from":"eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"},{"permission":"interact","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","description":"stage or unstage vault ETH and deposit it to validator keys on the Beacon Chain.","role":".depositor"}]
+    }
+```
+
+```diff
+    contract GatewayFM (eth:0xf8Bfa395744Cb25fa4368Ffe2344Dc35546092d9) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "GatewayFM"
+    }
+```
+
+```diff
+    contract Community Staking Module Verifier (eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba) [lido/CSVerifier] {
+    +++ description: Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"report normally withdrawn validators for node operators.","role":".regularWithdrawalReporters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"report validator balances, slashing, withdrawal, and exit-delay evidence used for operator accounting and penalties.","role":".verifiers"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"report normally withdrawn validators for node operators.","role":".regularWithdrawalReporters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"report validator balances, slashing, withdrawal, and exit-delay evidence used for operator accounting and penalties.","role":".verifiers"}]
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [lido/StakingRouter] {
+    +++ description: Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"obtain deposit data, update validator and target limits, report exited validators, and finalize rewards.","role":".stakingRouters"},{"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"obtain deposit data, update validator and target limits, report exited validators, and finalize rewards.","role":".stakingRouters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"submit validator deposits and top-ups, update validator and target limits, and finalize reward accounting.","role":".stakingRouters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"submit validator deposits and top-ups, update validator and target limits, and finalize reward accounting.","role":".stakingRouters"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5","description":"obtain deposit data, update validator and target limits, report exited validators, and finalize rewards.","role":".stakingRouters"},{"permission":"interact","from":"eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433","description":"obtain deposit data, update validator and target limits, report exited validators, and finalize rewards.","role":".stakingRouters"},{"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"submit validator deposits and top-ups, update validator and target limits, and finalize reward accounting.","role":".stakingRouters"},{"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"submit validator deposits and top-ups, update validator and target limits, and finalize reward accounting.","role":".stakingRouters"}]
+    }
+```
+
+```diff
+    contract EVMScriptExecutor (eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977) [lido/EVMScriptExecutor] {
+    +++ description: EasyTrack execution adapter. It executes the Aragon CallsScript produced by an approved EasyTrack motion, making downstream calls from this contract's address.
+      directlyReceivedPermissions.2.description:
+-        "change stVault fees and jail status, set liability targets, socialize bad debt, and force validator exits through this adapter."
++        "change stVault fees and jail status, set liability targets, socialize bad debt between connected vaults, and force validator exits of vaults with an obligations shortfall, through this adapter's fixed function surface."
+      directlyReceivedPermissions.18.description:
+-        "create one-time or recurring DAO payments."
++        "create one-time or recurring DAO payments out of the Agent's assets, within the limits set on the role's ACL parameters."
+    }
+```
+
+```diff
+    contract ResealCommittee (eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Safe"
++        "ResealCommittee"
+    }
+```
+
 Generated with discovered.json: 0x9c2092be071b3160b1f9bffb89770161666c87b3
 
 # Diff at Thu, 27 Aug 2026 08:52:49 GMT:
