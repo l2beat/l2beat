@@ -52,20 +52,13 @@ export function PrivacyProjectStats({
     />
   ) : undefined
 
-  if (!hasFlowTracking && !hasRelayerTracking) {
+  if (!hasFlowTracking && !hasRelayerTracking && !hasTvl) {
     return (
       <div className="grid gap-4 md:grid-cols-4">
-        <ProjectSummaryStat
+        <NotTrackedStat
           className="md:col-span-4"
           title="Live metrics"
-          value={
-            <div className="flex flex-col md:gap-1">
-              <span>Not tracked</span>
-              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
-                Onchain monitoring is not available for this project.
-              </span>
-            </div>
-          }
+          description="Onchain monitoring is not available for this project."
         />
       </div>
     )
@@ -73,17 +66,21 @@ export function PrivacyProjectStats({
 
   if (!hasFlowTracking) {
     return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <ProjectSummaryStat
+      <div
+        className={cn(
+          'grid gap-4',
+          hasTvl && hasRelayerTracking ? 'md:grid-cols-3' : 'md:grid-cols-2',
+        )}
+      >
+        {hasTvl && (
+          <ProjectSummaryStat
+            title="Total Value Locked"
+            value={<TvlValue totalValueLockedUsd={totalValueLockedUsd} />}
+          />
+        )}
+        <NotTrackedStat
           title="Live asset metrics"
-          value={
-            <div className="flex flex-col md:gap-1">
-              <span>Not tracked</span>
-              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
-                Onchain asset monitoring is not available for this project.
-              </span>
-            </div>
-          }
+          description="Onchain asset monitoring is not available for this project."
         />
         {relayerStatElement}
       </div>
@@ -120,12 +117,10 @@ export function PrivacyProjectStats({
         className="md:hidden"
         title="TVL"
         value={
-          !hasTvl ? (
-            <NotApplicableBadge />
-          ) : totalValueLockedUsd === undefined ? (
-            <NoDataBadge />
+          hasTvl ? (
+            <TvlValue totalValueLockedUsd={totalValueLockedUsd} />
           ) : (
-            formatCurrency(totalValueLockedUsd, 'usd')
+            <NotApplicableBadge />
           )
         }
       />
@@ -153,5 +148,41 @@ export function PrivacyProjectStats({
       />
       {relayerStatElement}
     </div>
+  )
+}
+
+function TvlValue({
+  totalValueLockedUsd,
+}: {
+  totalValueLockedUsd: number | undefined
+}) {
+  if (totalValueLockedUsd === undefined) {
+    return <NoDataBadge />
+  }
+  return formatCurrency(totalValueLockedUsd, 'usd')
+}
+
+function NotTrackedStat({
+  title,
+  description,
+  className,
+}: {
+  title: string
+  description: string
+  className?: string
+}) {
+  return (
+    <ProjectSummaryStat
+      className={className}
+      title={title}
+      value={
+        <div className="flex flex-col md:gap-1">
+          <span>Not tracked</span>
+          <span className="font-medium text-paragraph-12 text-secondary leading-normal">
+            {description}
+          </span>
+        </div>
+      }
+    />
   )
 }
