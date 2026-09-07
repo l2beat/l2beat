@@ -22,7 +22,7 @@
     "sortitionTicketPrices"
   ],
   "ignoreRelatives": ["pendingDkgFoldAttestationVerifier"],
-  "ignoreInWatchMode": ["ciphernodes", "root", "treeSize"],
+  "ignoreInWatchMode": ["ciphernodes", "numCiphernodes", "root", "treeSize"],
   "fields": {
     "owner": {
       "description": "Account controlling registry configuration.",
