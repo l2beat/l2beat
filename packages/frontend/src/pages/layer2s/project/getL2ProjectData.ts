@@ -64,6 +64,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       'colors',
       'ecosystemColors',
       'discoveryInfo',
+      'discoveryUpdates',
       'daTrackingConfig',
       'costsInfo',
       'activityConfig',

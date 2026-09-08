@@ -8,10 +8,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import {
-  countRecentDiscoveryUpdates,
-  getDiscoveryUpdates,
-} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
+import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -138,7 +135,7 @@ export async function getPrivacyProjectEntry(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
-  const discoveryUpdates = getDiscoveryUpdates(details.id)
+  const discoveryUpdates = details.discoveryUpdates ?? []
 
   const sections: ProjectDetailsSection[] = []
 

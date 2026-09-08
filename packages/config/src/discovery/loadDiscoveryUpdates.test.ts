@@ -1,13 +1,9 @@
 import { expect } from 'earl'
-import {
-  countRecentDiscoveryUpdates,
-  type DiscoveryUpdate,
-  parseDiscoveryUpdates,
-} from './getDiscoveryUpdates'
+import { parseDiscoveryUpdates } from './loadDiscoveryUpdates'
 
 describe(parseDiscoveryUpdates.name, () => {
   it('keeps only public changes', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -42,16 +38,17 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates.length).toEqual(1)
-    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
-    expect(updates[0]?.description).toEqual('A public update.')
-    expect(updates[0]?.sections).toEqual([
+    expect(discoveryUpdates.length).toEqual(1)
+    const update = discoveryUpdates[0]!
+    expect(update.id).toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(update.description).toEqual('A public update.')
+    expect(update.changeCount).toEqual(1)
+    expect(update.sections).toEqual([
       {
         kind: 'watched-changes',
         body: ['```diff', '+ watched', '```'].join('\n'),
       },
     ])
-    expect(updates[0]?.changeCount).toEqual(1)
   })
 
   it('keeps verified and created contracts from config related changes', () => {
@@ -74,7 +71,7 @@ describe(parseDiscoveryUpdates.name, () => {
       '```',
     ].join('\n')
 
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -109,14 +106,15 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates.length).toEqual(1)
-    expect(updates[0]?.sections).toEqual([
+    expect(discoveryUpdates.length).toEqual(1)
+    const update = discoveryUpdates[0]!
+    expect(update.sections).toEqual([
       {
         kind: 'config-related-changes',
         body: [verifiedContract, createdContract].join('\n\n'),
       },
     ])
-    expect(updates[0]?.changeCount).toEqual(3)
+    expect(update.changeCount).toEqual(3)
   })
 
   it('keeps standalone contracts added through config', () => {
@@ -127,7 +125,7 @@ describe(parseDiscoveryUpdates.name, () => {
       '    +++ description: None',
       '```',
     ].join('\n')
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -138,7 +136,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates[0]?.sections).toEqual([
+    expect(discoveryUpdates[0]?.sections).toEqual([
       {
         kind: 'config-related-changes',
         body: createdContract,
@@ -147,7 +145,7 @@ describe(parseDiscoveryUpdates.name, () => {
   })
 
   it('keeps initial discovery entries', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -160,12 +158,12 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates.length).toEqual(1)
-    expect(updates[0]?.sections[0]?.kind).toEqual('initial-discovery')
+    expect(discoveryUpdates.length).toEqual(1)
+    expect(discoveryUpdates[0]?.sections[0]?.kind).toEqual('initial-discovery')
   })
 
   it('marks high severity for implementation changes', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -180,11 +178,11 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates[0]?.isHighSeverity).toEqual(true)
+    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(true)
   })
 
   it('marks high severity from explicit severity metadata', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -198,11 +196,11 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates[0]?.isHighSeverity).toEqual(true)
+    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(true)
   })
 
   it('does not mark descriptions mentioning implementation as high severity', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -215,11 +213,11 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates[0]?.isHighSeverity).toEqual(false)
+    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(false)
   })
 
   it('uses current timestamp metadata when present', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
         '',
@@ -234,12 +232,12 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates[0]?.timestamp).toEqual(1700000000)
-    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(discoveryUpdates[0]?.timestamp).toEqual(1700000000)
+    expect(discoveryUpdates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
   })
 
   it('creates unique ids for entries with the same discovery timestamp and date', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         'Generated with discovered.json: 0x111',
         '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
@@ -266,9 +264,9 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates[0]?.id).not.toEqual(updates[1]?.id)
-    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
-    expect(updates[1]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(discoveryUpdates[0]?.id).not.toEqual(discoveryUpdates[1]?.id)
+    expect(discoveryUpdates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
+    expect(discoveryUpdates[1]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
   })
 
   it('creates stable unique ids without a discovery hash', () => {
@@ -294,17 +292,17 @@ describe(parseDiscoveryUpdates.name, () => {
       '```',
       '',
     ].join('\n')
-    const updates = parseDiscoveryUpdates(content)
+    const discoveryUpdates = parseDiscoveryUpdates(content)
     const repeated = parseDiscoveryUpdates(content)
 
-    expect(updates[0]?.id).not.toEqual(updates[1]?.id)
+    expect(discoveryUpdates[0]?.id).not.toEqual(discoveryUpdates[1]?.id)
     expect(repeated.map((update) => update.id)).toEqual(
-      updates.map((update) => update.id),
+      discoveryUpdates.map((update) => update.id),
     )
   })
 
   it('creates a linkable id for legacy entries with an invalid date', () => {
-    const updates = parseDiscoveryUpdates(
+    const discoveryUpdates = parseDiscoveryUpdates(
       [
         '# Diff at legacy entry:',
         '',
@@ -317,73 +315,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(updates[0]?.timestamp).toEqual(null)
-    expect(updates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
-  })
-
-  it('respects the result limit', () => {
-    const updates = parseDiscoveryUpdates(
-      [
-        '# Diff at Tue, 21 Jan 2026 09:00:00 GMT:',
-        '',
-        '## Watched changes',
-        '',
-        '```diff',
-        '+ first',
-        '```',
-        '',
-        '# Diff at Mon, 20 Jan 2026 09:00:00 GMT:',
-        '',
-        '## Watched changes',
-        '',
-        '```diff',
-        '+ second',
-        '```',
-        '',
-      ].join('\n'),
-      1,
-    )
-
-    expect(updates.length).toEqual(1)
-    expect(updates[0]?.date).toEqual('Tue, 21 Jan 2026 09:00:00 GMT')
-  })
-})
-
-describe(countRecentDiscoveryUpdates.name, () => {
-  const DAY = 24 * 60 * 60
-  const NOW = 1700000000
-
-  function update(timestamp: number | null): DiscoveryUpdate {
-    return {
-      id: `${timestamp ?? 'unknown'}`,
-      date: 'Tue, 21 Jan 2026 09:00:00 GMT',
-      timestamp,
-      description: '',
-      isHighSeverity: false,
-      changeCount: 1,
-      sections: [],
-    }
-  }
-
-  it('counts only updates from the past 7 days', () => {
-    const count = countRecentDiscoveryUpdates(
-      [
-        update(NOW - 1 * DAY),
-        update(NOW - 7 * DAY),
-        update(NOW - 8 * DAY),
-        update(NOW - 30 * DAY),
-      ],
-      NOW,
-    )
-
-    expect(count).toEqual(2)
-  })
-
-  it('ignores updates without a timestamp', () => {
-    expect(countRecentDiscoveryUpdates([update(null)], NOW)).toEqual(0)
-  })
-
-  it('returns zero for no updates', () => {
-    expect(countRecentDiscoveryUpdates([], NOW)).toEqual(0)
+    expect(discoveryUpdates[0]?.timestamp).toEqual(null)
+    expect(discoveryUpdates[0]?.id ?? '').toMatchRegex(/^[0-9a-f]{8}$/)
   })
 })

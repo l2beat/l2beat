@@ -214,6 +214,8 @@ export interface BaseProject {
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
   discoveryInfo?: ProjectDiscoveryInfo
+  /** Public entries of diffHistory.md, newest first. */
+  discoveryUpdates?: ProjectDiscoveryUpdate[]
 
   // tags
   archivedAt?: UnixTime
@@ -1501,6 +1503,30 @@ export interface ProjectDiscoveryInfo {
   contractsDiscoDriven: boolean
   baseTimestamp: number | undefined
   hasDiscoUi: boolean
+}
+
+export interface ProjectDiscoveryUpdate {
+  /** Fingerprint of the whole entry, the same one the update card's copy
+   *  link has always used. */
+  id: string
+  date: string
+  /** Run timestamp; header date for legacy block-numbered entries; null when
+   *  neither parses. */
+  timestamp: number | null
+  description: string
+  isHighSeverity: boolean
+  changeCount: number
+  sections: ProjectDiscoveryUpdateSection[]
+}
+
+export type ProjectDiscoveryUpdateSectionKind =
+  | 'initial-discovery'
+  | 'watched-changes'
+  | 'config-related-changes'
+
+export interface ProjectDiscoveryUpdateSection {
+  kind: ProjectDiscoveryUpdateSectionKind
+  body: string
 }
 
 export type InteropPluginName =
