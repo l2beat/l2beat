@@ -13,6 +13,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { privacyBoostAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-boost')
 
@@ -261,6 +262,7 @@ export const privacyBoost: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: privacyBoostAdversaries,
     riskSummary: readProjectMarkdown('privacy-boost', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {

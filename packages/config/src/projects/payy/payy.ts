@@ -21,6 +21,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { payyAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('payy')
 
@@ -292,6 +293,7 @@ export const payy: ScalingProject = {
       PRIVACY_ATTRIBUTES.privateAmounts,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: payyAdversaries,
     riskSummary: readProjectMarkdown('payy', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('payy', 'upgradesAndGovernance', {

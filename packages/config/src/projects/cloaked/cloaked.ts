@@ -5,6 +5,7 @@ import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscov
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { cloakedAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('cloaked')
 
@@ -77,6 +78,7 @@ export const cloaked: BaseProject = {
       PRIVACY_ATTRIBUTES.stealthAddresses,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: cloakedAdversaries,
     riskSummary: readProjectMarkdown('cloaked', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),

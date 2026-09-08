@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { strk20Adversaries } from './adversaries'
 
 const STRK20_POOL = {
   chain: 'starknet',
@@ -160,6 +161,7 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: strk20Adversaries,
     quantumResistant: true,
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
     upgradesAndGovernance: {

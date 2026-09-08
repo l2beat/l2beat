@@ -16,6 +16,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { privacyPoolsAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-pools')
 
@@ -185,6 +186,7 @@ export const privacyPools: BaseProject = {
         'In privacy Pools UI, the user needs to provide the seed phrase, from which their nullifiers and secrets are derived deterministically. The private user balance is computed locally by scanning every `Deposited`, `Withdrawn`, and `Ragequit` event of every supported pool and matching the derived commitments against the ones in the events. Because every event is requested, the RPC provider learns neither which events belong to the user, nor into which pool the user has deposited from the queries alone.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
+    adversaries: privacyPoolsAdversaries,
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {
