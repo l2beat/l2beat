@@ -11,8 +11,8 @@ describeDatabase(DefiTvlRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  it('upserts and sums the latest per-chain snapshot per project', async () => {
-    await repository.upsertMany([
+  it('replaces and sums the latest per-chain snapshot per project', async () => {
+    await repository.replaceMany([
       record('project-a', 'config000001', 'ethereum', 100, 10),
       record('project-a', 'config000001', 'arbitrum', 100, 20),
       record('project-a', 'config000001', 'ethereum', 200, 11),
@@ -44,7 +44,7 @@ describeDatabase(DefiTvlRepository.name, (db) => {
   })
 
   it('returns summed snapshots in the requested range', async () => {
-    await repository.upsertMany([
+    await repository.replaceMany([
       record('project-a', 'config000001', 'ethereum', 100, 10),
       record('project-a', 'config000001', 'arbitrum', 100, 20),
       record('project-a', 'config000001', 'ethereum', 200, 11),
@@ -68,18 +68,53 @@ describeDatabase(DefiTvlRepository.name, (db) => {
     ])
   })
 
-  it('updates a snapshot and deletes all data for a configuration', async () => {
-    await repository.upsertMany([
+  it('removes chains omitted from a replaced snapshot', async () => {
+    await repository.replaceMany([
+      record('project-a', 'config000001', 'ethereum', 100, 10),
+      record('project-a', 'config000001', 'arbitrum', 100, 20),
+      record('project-a', 'config000001', 'arbitrum', 200, 30),
+    ])
+
+    await repository.replaceMany([
+      record('project-a', 'config000001', 'ethereum', 100, 15, 101),
+    ])
+
+    expect(await repository.getAll()).toEqualUnsorted([
+      record('project-a', 'config000001', 'ethereum', 100, 15, 101),
+      record('project-a', 'config000001', 'arbitrum', 200, 30),
+    ])
+  })
+
+  it('deletes data in range for matching configuration', async () => {
+    await repository.replaceMany([
+      record('project-a', 'config000001', 'ethereum', 100, 10),
+      record('project-a', 'config000001', 'ethereum', 200, 20),
+      record('project-a', 'config000001', 'ethereum', 300, 30),
+      record('project-b', 'config000002', 'ethereum', 200, 40),
+    ])
+
+    expect(
+      await repository.deleteByConfigInTimeRange(
+        'config000001',
+        UnixTime(100),
+        UnixTime(200),
+      ),
+    ).toEqual(2)
+    expect(await repository.getAll()).toEqualUnsorted([
+      record('project-a', 'config000001', 'ethereum', 300, 30),
+      record('project-b', 'config000002', 'ethereum', 200, 40),
+    ])
+  })
+
+  it('deletes all data for a configuration', async () => {
+    await repository.replaceMany([
       record('project-a', 'config000001', 'ethereum', 100, 10),
       record('project-b', 'config000002', 'ethereum', 100, 20),
-    ])
-    await repository.upsertMany([
-      record('project-a', 'config000001', 'ethereum', 100, 15, 101),
     ])
 
     expect(await repository.deleteByConfigIds(['config000002'])).toEqual(1)
     expect(await repository.getAll()).toEqualUnsorted([
-      record('project-a', 'config000001', 'ethereum', 100, 15, 101),
+      record('project-a', 'config000001', 'ethereum', 100, 10),
     ])
   })
 })

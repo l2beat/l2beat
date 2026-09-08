@@ -37,24 +37,36 @@ export function toRow(record: DefiTvlRecord): Insertable<DefiTvl> {
 }
 
 export class DefiTvlRepository extends BaseRepository {
-  async upsertMany(records: DefiTvlRecord[]): Promise<number> {
+  async replaceMany(records: DefiTvlRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-    await this.batch(rows, 2_000, async (batch) => {
-      await this.db
-        .insertInto('DefiTvl')
-        .values(batch)
-        .onConflict((oc) =>
-          oc
-            .columns(['timestamp', 'configurationId', 'chain'])
-            .doUpdateSet((eb) => ({
-              sourceTimestamp: eb.ref('excluded.sourceTimestamp'),
-              projectId: eb.ref('excluded.projectId'),
-              valueUsd: eb.ref('excluded.valueUsd'),
-            })),
-        )
-        .execute()
+    const timestampsByConfiguration = new Map<string, Set<UnixTime>>()
+    for (const record of records) {
+      const timestamps =
+        timestampsByConfiguration.get(record.configurationId) ?? new Set()
+      timestamps.add(record.timestamp)
+      timestampsByConfiguration.set(record.configurationId, timestamps)
+    }
+
+    await this.transaction(async () => {
+      for (const [configurationId, timestamps] of timestampsByConfiguration) {
+        await this.batch([...timestamps], 2_000, async (batch) => {
+          await this.db
+            .deleteFrom('DefiTvl')
+            .where('configurationId', '=', configurationId)
+            .where(
+              'timestamp',
+              'in',
+              batch.map((timestamp) => UnixTime.toDate(timestamp)),
+            )
+            .execute()
+        })
+      }
+
+      await this.batch(rows, 2_000, async (batch) => {
+        await this.db.insertInto('DefiTvl').values(batch).execute()
+      })
     })
 
     return rows.length
@@ -126,6 +138,20 @@ export class DefiTvlRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('DefiTvl')
       .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByConfigInTimeRange(
+    configurationId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('DefiTvl')
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
