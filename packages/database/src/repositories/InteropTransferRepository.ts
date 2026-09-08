@@ -10,6 +10,7 @@ import {
   type Expression,
   type ExpressionBuilder,
   type Insertable,
+  type RawBuilder,
   type Selectable,
   type SqlBool,
   sql,
@@ -132,6 +133,11 @@ export interface InteropTransferDeployedTokenPairStats {
   transfersWithDurationCount: number
   totalDurationSum: number
   volume: number
+}
+
+export interface InteropTransferDeployedTokenPairStatsByToken
+  extends InteropTransferDeployedTokenPairStats {
+  abstractTokenId: string
 }
 
 export interface InteropTransferTokenAddressBatch {
@@ -979,58 +985,86 @@ export class InteropTransferRepository extends BaseRepository {
   }
 
   /**
-   * Transfers of the abstract token in the range, aggregated per pair of
-   * deployed tokens. A side is kept only when it is the abstract token, so a
+   * Transfers in the range aggregated per pair of deployed tokens, one row per
+   * abstract token involved. A side is kept only when it is that token, so a
    * swap out of it, or a side not yet assigned, still counts for the other
    * side. Volume values a transfer like `getInteropTransferValue`.
    */
+  getAllDeployedTokenPairStats(
+    timeRange: InteropTransferTimeRange,
+  ): Promise<InteropTransferDeployedTokenPairStatsByToken[]> {
+    return this.queryDeployedTokenPairStats(
+      timeRange,
+      sql`"srcAbstractTokenId" IS NOT NULL OR "dstAbstractTokenId" IS NOT NULL`,
+    )
+  }
+
+  /** `getAllDeployedTokenPairStats` narrowed to one abstract token. */
   async getDeployedTokenPairStats(
     abstractTokenId: string,
     timeRange: InteropTransferTimeRange,
   ): Promise<InteropTransferDeployedTokenPairStats[]> {
-    const from = UnixTime.toDate(timeRange.from)
-    const to = UnixTime.toDate(timeRange.to)
+    const rows = await this.queryDeployedTokenPairStats(
+      timeRange,
+      sql`"srcAbstractTokenId" = ${abstractTokenId} OR "dstAbstractTokenId" = ${abstractTokenId}`,
+    )
+    return rows.filter((row) => row.abstractTokenId === abstractTokenId)
+  }
+
+  private async queryDeployedTokenPairStats(
+    timeRange: InteropTransferTimeRange,
+    tokenFilter: RawBuilder<unknown>,
+  ): Promise<InteropTransferDeployedTokenPairStatsByToken[]> {
     const result = await sql<{
-      srcChain: string | null
-      srcTokenAddress: string | null
-      dstChain: string | null
-      dstTokenAddress: string | null
+      srcAbstractTokenId: string | null
+      srcChain: string
+      srcTokenAddress: string
+      dstAbstractTokenId: string | null
+      dstChain: string
+      dstTokenAddress: string
       transferCount: string
       transfersWithDurationCount: string
       totalDurationSum: string
       volume: number
     }>`
       SELECT
-        CASE WHEN "srcAbstractTokenId" = ${abstractTokenId} THEN "srcChain" END AS "srcChain",
-        CASE WHEN "srcAbstractTokenId" = ${abstractTokenId} THEN "srcTokenAddress" END AS "srcTokenAddress",
-        CASE WHEN "dstAbstractTokenId" = ${abstractTokenId} THEN "dstChain" END AS "dstChain",
-        CASE WHEN "dstAbstractTokenId" = ${abstractTokenId} THEN "dstTokenAddress" END AS "dstTokenAddress",
+        "srcAbstractTokenId", "srcChain", "srcTokenAddress",
+        "dstAbstractTokenId", "dstChain", "dstTokenAddress",
         COUNT(*) AS "transferCount",
         COUNT("duration") AS "transfersWithDurationCount",
         COALESCE(SUM("duration"), 0) AS "totalDurationSum",
         COALESCE(SUM(GREATEST("srcValueUsd", "dstValueUsd")), 0) AS "volume"
       FROM "InteropTransfer"
-      WHERE "timestamp" > ${from}
-        AND "timestamp" <= ${to}
-        AND (
-          "srcAbstractTokenId" = ${abstractTokenId}
-          OR "dstAbstractTokenId" = ${abstractTokenId}
-        )
-      GROUP BY 1, 2, 3, 4
+      WHERE "timestamp" > ${UnixTime.toDate(timeRange.from)}
+        AND "timestamp" <= ${UnixTime.toDate(timeRange.to)}
+        AND (${tokenFilter})
+      GROUP BY 1, 2, 3, 4, 5, 6
     `.execute(this.db)
 
-    return result.rows.map((row) => ({
-      ...(row.srcChain && row.srcTokenAddress
-        ? { src: { chain: row.srcChain, address: row.srcTokenAddress } }
-        : {}),
-      ...(row.dstChain && row.dstTokenAddress
-        ? { dst: { chain: row.dstChain, address: row.dstTokenAddress } }
-        : {}),
-      transferCount: Number(row.transferCount),
-      transfersWithDurationCount: Number(row.transfersWithDurationCount),
-      totalDurationSum: Number(row.totalDurationSum),
-      volume: Number(row.volume),
-    }))
+    return result.rows.flatMap((row) => {
+      const stats = {
+        transferCount: Number(row.transferCount),
+        transfersWithDurationCount: Number(row.transfersWithDurationCount),
+        totalDurationSum: Number(row.totalDurationSum),
+        volume: Number(row.volume),
+      }
+      const src = { chain: row.srcChain, address: row.srcTokenAddress }
+      const dst = { chain: row.dstChain, address: row.dstTokenAddress }
+      const sameToken = row.srcAbstractTokenId === row.dstAbstractTokenId
+      const rows: InteropTransferDeployedTokenPairStatsByToken[] = []
+      if (row.srcAbstractTokenId) {
+        rows.push({
+          abstractTokenId: row.srcAbstractTokenId,
+          src,
+          ...(sameToken ? { dst } : {}),
+          ...stats,
+        })
+      }
+      if (row.dstAbstractTokenId && !sameToken) {
+        rows.push({ abstractTokenId: row.dstAbstractTokenId, dst, ...stats })
+      }
+      return rows
+    })
   }
 
   async getExistingItems(

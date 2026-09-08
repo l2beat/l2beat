@@ -54,6 +54,7 @@ function graph(
     nodes: ids.map((id) => ({
       id,
       chains: [{ id: 'ethereum', iconUrl: undefined }],
+      volume: null,
     })),
     edges,
   }

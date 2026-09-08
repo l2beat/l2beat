@@ -1,8 +1,10 @@
 import type { Project } from '@l2beat/config'
 import {
+  type InteropTransferDeployedTokenPairStats,
   normalizeTokenRelation,
   type TokenRelationRoute,
 } from '@l2beat/database'
+import { Address32 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
@@ -47,6 +49,8 @@ describe(buildTokenGraphTiles.name, () => {
       linkableTokenIds: new Set([usdt.id]),
       chainInfo,
       resolveProjects: () => [],
+      activeChainIds: new Set(['ethereum', 'arbitrum']),
+      pairStatsByTokenId: undefined,
     })
 
     expect(tiles.map((tile) => [tile.id, tile.volume, tile.href])).toEqual([
@@ -71,6 +75,8 @@ describe(buildTokenGraphTiles.name, () => {
       linkableTokenIds: new Set([usdc.id]),
       chainInfo,
       resolveProjects,
+      activeChainIds: new Set(['ethereum', 'nova']),
+      pairStatsByTokenId: undefined,
     })
 
     expect(tile).toEqual({
@@ -86,9 +92,14 @@ describe(buildTokenGraphTiles.name, () => {
       bridgesCount: 2,
       graph: {
         nodes: [
-          { id: 'base|0xb1', chains: [{ id: 'base', iconUrl: undefined }] },
+          {
+            id: 'base|0xb1',
+            volume: null,
+            chains: [{ id: 'base', iconUrl: undefined }],
+          },
           {
             id: 'ethereum|0xe1',
+            volume: null,
             // Display-name order, not id order.
             chains: [
               { id: 'nova', iconUrl: 'nova.png' },
@@ -100,15 +111,47 @@ describe(buildTokenGraphTiles.name, () => {
       },
     })
   })
+
+  it('gives nodes the volume the full graph sorts by', () => {
+    const ethereum = deployment('ethereum', full('e1'), usdc.id)
+    const nova = deployment('nova', full('f1'), usdc.id)
+    const base = deployment('base', full('b1'), usdc.id)
+    const [tile] = buildTokenGraphTiles({
+      tokens: [usdc],
+      deployments: [ethereum, nova, base],
+      routes: [
+        route(ethereum, nova, 'cctp-v2', 'burnAndMint'),
+        route(ethereum, base, 'cctp-v1', 'lockAndMint', 'A'),
+      ],
+      volumeByTokenId: new Map(),
+      linkableTokenIds: new Set(),
+      chainInfo,
+      resolveProjects: () => [],
+      activeChainIds: new Set(['ethereum', 'nova']),
+      pairStatsByTokenId: new Map([
+        [
+          usdc.id,
+          [transfer(ethereum, nova, 100), transfer(ethereum, base, 50)],
+        ],
+      ]),
+    })
+
+    expect(tile?.graph.nodes.map((node) => [node.id, node.volume])).toEqual([
+      [`base|${full('b1')}`, null], // off the active chains
+      [`ethereum|${full('e1')}`, 150], // the intra-cluster transfer counts once
+    ])
+  })
 })
 
 function deployment(chain: string, address: string, abstractTokenId: string) {
   return { chain, address, abstractTokenId }
 }
 
+type Endpoint = { chain: string; address: string }
+
 function route(
-  a: { chain: string; address: string },
-  b: { chain: string; address: string },
+  a: Endpoint,
+  b: Endpoint,
   plugin: string,
   bridgeType: TokenRelationRoute['bridgeType'],
   lockedToken: TokenRelationRoute['lockedToken'] = null,
@@ -122,6 +165,29 @@ function route(
     bridgeType,
     lockedToken,
   })
+}
+
+function full(byte: string) {
+  return `0x${byte.repeat(20)}`
+}
+
+function transfer(
+  src: Endpoint,
+  dst: Endpoint,
+  volume: number,
+): InteropTransferDeployedTokenPairStats {
+  const side = (d: Endpoint) => ({
+    chain: d.chain,
+    address: Address32.from(d.address),
+  })
+  return {
+    src: side(src),
+    dst: side(dst),
+    volume,
+    transferCount: 1,
+    transfersWithDurationCount: 0,
+    totalDurationSum: 0,
+  }
 }
 
 function project(id: string): Project<'interopConfig'> {

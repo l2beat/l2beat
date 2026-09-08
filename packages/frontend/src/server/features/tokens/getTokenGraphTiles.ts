@@ -4,8 +4,10 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import { groupBy } from '~/utils/groupBy'
 import { manifest } from '~/utils/Manifest'
 import { getActiveInteropAbstractTokens } from '../layer2s/interop/token/getInteropAbstractTokens'
+import { getPairStatsTimeRange } from '../layer2s/interop/token/getInteropTokenRelations'
 import { getChainDisplayInfo } from '../layer2s/interop/token/getInteropTokenRelationsGraph'
 import { createInteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
 import { getAggregatedInteropSnapshotTimestamp } from '../layer2s/interop/utils/getAggregatedInteropTimestamp'
@@ -39,6 +41,7 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     routes,
     volumeByTokenId,
     tokensWithPage,
+    pairStatsByTokenId,
     projectsWithChains,
     interopProjects,
   ] = await Promise.all([
@@ -47,6 +50,7 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     tokenDb.tokenRelation.getAllRoutes(),
     getVolumeByTokenId(),
     getActiveInteropAbstractTokens(),
+    getPairStatsByTokenId(),
     ps.getProjects({ select: ['chainConfig'] }),
     ps.getProjects({ select: ['interopConfig'] }),
   ])
@@ -69,7 +73,16 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     linkableTokenIds: new Set(tokensWithPage.map((token) => token.id)),
     chainInfo,
     resolveProjects: createInteropProjectResolver(interopProjects),
+    activeChainIds: new Set(getActiveInteropChainIds()),
+    pairStatsByTokenId,
   })
+}
+
+async function getPairStatsByTokenId() {
+  const range = await getPairStatsTimeRange()
+  if (!range) return undefined
+  const rows = await getDb().interopTransfer.getAllDeployedTokenPairStats(range)
+  return groupBy(rows, (row) => row.abstractTokenId)
 }
 
 async function getVolumeByTokenId(): Promise<Map<string, number>> {
@@ -115,9 +128,10 @@ function getMockTokenGraphTiles(): TokenGraphTile[] {
           {
             id: 'arbitrum|0xaf88',
             chains: [chain('arbitrum'), chain('ethereum')],
+            volume: null,
           },
-          { id: 'base|0x8335', chains: [chain('base')] },
-          { id: 'optimism|0x0b2c', chains: [chain('optimism')] },
+          { id: 'base|0x8335', chains: [chain('base')], volume: null },
+          { id: 'optimism|0x0b2c', chains: [chain('optimism')], volume: null },
         ],
         edges: [
           { from: 'arbitrum|0xaf88', to: 'base|0x8335' },
@@ -138,9 +152,9 @@ function getMockTokenGraphTiles(): TokenGraphTile[] {
       bridgesCount: 1,
       graph: {
         nodes: [
-          { id: 'ethereum|0xdac1', chains: [chain('ethereum')] },
-          { id: 'arbitrum|0xfd08', chains: [chain('arbitrum')] },
-          { id: 'optimism|0x94b0', chains: [chain('optimism')] },
+          { id: 'ethereum|0xdac1', chains: [chain('ethereum')], volume: null },
+          { id: 'arbitrum|0xfd08', chains: [chain('arbitrum')], volume: null },
+          { id: 'optimism|0x94b0', chains: [chain('optimism')], volume: null },
         ],
         edges: [
           { from: 'ethereum|0xdac1', to: 'arbitrum|0xfd08' },
@@ -161,7 +175,11 @@ function getMockTokenGraphTiles(): TokenGraphTile[] {
       bridgesCount: 0,
       graph: {
         nodes: [
-          { id: 'base|0x4200', chains: [chain('base'), chain('optimism')] },
+          {
+            id: 'base|0x4200',
+            chains: [chain('base'), chain('optimism')],
+            volume: null,
+          },
         ],
         edges: [],
       },

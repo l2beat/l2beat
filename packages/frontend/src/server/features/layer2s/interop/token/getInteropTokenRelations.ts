@@ -30,16 +30,22 @@ export async function getInteropTokenRelations(
 }
 
 async function getPairStats(tokenId: string) {
+  const range = await getPairStatsTimeRange()
+  if (!range) return undefined
+  return getDb().interopTransfer.getDeployedTokenPairStats(tokenId, range)
+}
+
+/** The day before the aggregated snapshot; undefined once raw transfers are gone. */
+export async function getPairStatsTimeRange(): Promise<
+  { from: UnixTime; to: UnixTime } | undefined
+> {
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) return undefined
   const from = snapshotTimestamp - UnixTime.DAY
   // Aggregates outlive raw transfers, so an aggregates timestamp override can
   // point at a day the cleaner has already emptied.
   if (from < UnixTime.now() - 7 * UnixTime.DAY) return undefined
-  return getDb().interopTransfer.getDeployedTokenPairStats(tokenId, {
-    from,
-    to: snapshotTimestamp,
-  })
+  return { from, to: snapshotTimestamp }
 }
 
 const MOCK_INTEROP_TOKEN_RELATIONS: InteropTokenRelations = {

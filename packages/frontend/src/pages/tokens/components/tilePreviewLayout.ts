@@ -79,7 +79,7 @@ function getRows({ nodes, edges }: TokenGraphTile['graph']) {
   const layout = layoutRelationsGraph(
     nodes.map((node) => ({
       id: node.id,
-      volume: null,
+      volume: node.volume,
       ...getRelationsNodeSize(node.chains.length),
     })),
     edges,

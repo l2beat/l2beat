@@ -82,6 +82,7 @@ export {
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
   type InteropTransferDeployedTokenPairStats,
+  type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
   type InteropTransferFinancialsStats,
   type InteropTransferRecord,

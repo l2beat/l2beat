@@ -11,6 +11,7 @@ import { deploymentTransferKey, transferTokenKey } from '../utils/deploymentKey'
 import { INTEROP_CHAIN_DETAILS } from '../utils/interopChainDetails'
 import {
   buildTokenRelationsGraph,
+  type TokenRelationsGraphNode,
   type TokenRelationsGraphSource,
 } from './buildTokenRelationsGraph'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
@@ -74,18 +75,8 @@ export function getInteropTokenRelationsGraph(
       ),
     )
 
-  const nodeOf = new Map(
-    graph.nodes.flatMap((node) =>
-      node.members.flatMap((member) => {
-        const key = deploymentTransferKey(member)
-        return key ? [[key, node.id] as const] : []
-      }),
-    ),
-  )
   const pairs = relations.pairStats ?? []
-  const nodeStats = aggregateStats(pairs, (side) =>
-    nodeOf.get(transferTokenKey(side)),
-  )
+  const nodeStats = getNodeStats(graph.nodes, pairs)
   const deploymentStats = aggregateStats(pairs, transferTokenKey)
 
   function getStats(
@@ -202,6 +193,22 @@ export function getChainDisplayInfo(
       explorerUrl: project.chainConfig.explorerUrl,
     }
   )
+}
+
+/** Stats per node; a transfer counts once even when both ends are in the node. */
+export function getNodeStats<T extends { chain: string; address: string }>(
+  nodes: TokenRelationsGraphNode<T>[],
+  pairStats: InteropTransferDeployedTokenPairStats[],
+): Map<string, InteropTokenStats> {
+  const nodeOf = new Map(
+    nodes.flatMap((node) =>
+      node.members.flatMap((member) => {
+        const key = deploymentTransferKey(member)
+        return key ? [[key, node.id] as const] : []
+      }),
+    ),
+  )
+  return aggregateStats(pairStats, (side) => nodeOf.get(transferTokenKey(side)))
 }
 
 /** Count a transfer once per group, even when both endpoints belong to it. */

@@ -1,4 +1,8 @@
-import type { AbstractTokenSummary, TokenRelationRoute } from '@l2beat/database'
+import type {
+  AbstractTokenSummary,
+  InteropTransferDeployedTokenPairStats,
+  TokenRelationRoute,
+} from '@l2beat/database'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { groupBy } from '~/utils/groupBy'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -6,6 +10,7 @@ import {
   buildTokenRelationsGraph,
   type TokenRelationsGraphSource,
 } from '../layer2s/interop/token/buildTokenRelationsGraph'
+import { getNodeStats } from '../layer2s/interop/token/getInteropTokenRelationsGraph'
 import type { InteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
 import { deploymentKey } from '../layer2s/interop/utils/deploymentKey'
 
@@ -18,6 +23,8 @@ export interface TokenGraphTileNode {
   id: string
   /** More than one means the deployments are in a burn-and-mint relation. */
   chains: TokenGraphTileChain[]
+  /** Same value the full graph sorts by; null off the active chains. */
+  volume: number | null
 }
 
 export interface TokenGraphTileEdge {
@@ -63,6 +70,11 @@ export interface BuildTokenGraphTilesInput {
   linkableTokenIds: ReadonlySet<string>
   chainInfo: ReadonlyMap<string, TokenGraphTileChainInfo>
   resolveProjects: InteropProjectResolver
+  activeChainIds: ReadonlySet<string>
+  /** Undefined when there is no snapshot; then every node volume is null. */
+  pairStatsByTokenId:
+    | ReadonlyMap<string, InteropTransferDeployedTokenPairStats[]>
+    | undefined
 }
 
 export function buildTokenGraphTiles({
@@ -73,6 +85,8 @@ export function buildTokenGraphTiles({
   linkableTokenIds,
   chainInfo,
   resolveProjects,
+  activeChainIds,
+  pairStatsByTokenId,
 }: BuildTokenGraphTilesInput): TokenGraphTile[] {
   const deploymentsByToken = groupBy(
     deployments.filter((d) => d.abstractTokenId !== null),
@@ -107,6 +121,9 @@ export function buildTokenGraphTiles({
     if (nodes.length === 0) continue
 
     const members = nodes.flatMap((node) => node.members)
+    const nodeStats =
+      pairStatsByTokenId &&
+      getNodeStats(nodes, pairStatsByTokenId.get(token.id) ?? [])
     const sources = [
       ...nodes.flatMap((node) => node.sources),
       ...graph.edges.flatMap((edge) => edge.sources),
@@ -127,6 +144,10 @@ export function buildTokenGraphTiles({
       graph: {
         nodes: nodes.map((node) => ({
           id: node.id,
+          volume:
+            nodeStats && node.members.some((m) => activeChainIds.has(m.chain))
+              ? (nodeStats.get(node.id)?.volume ?? 0)
+              : null,
           chains: node.members
             .map((member) => member.chain)
             .toSorted((a, b) => chainName(a).localeCompare(chainName(b)))
