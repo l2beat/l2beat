@@ -1,4 +1,5 @@
-import { orderRelationLayers } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/layoutRelationsGraph'
+import { layoutRelationsGraph } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/layoutRelationsGraph'
+import { getRelationsNodeSize } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/nodeSize'
 import type {
   TokenGraphTile,
   TokenGraphTileEdge,
@@ -37,7 +38,7 @@ export function buildPreview(graph: TokenGraphTile['graph']): {
     edges.map((edge) => edge.from).filter((id) => !backed.has(id)),
   )
 
-  const rows = orderRelationLayers(nodes, edges)
+  const rows = getRows(graph)
 
   const scale = getScale(nodes.length, rows, sourceIds)
   const radius = BASE_RADIUS * scale
@@ -71,6 +72,22 @@ export function buildPreview(graph: TokenGraphTile['graph']): {
     path: buildPaths(edges, marks).join(' '),
     scale,
   }
+}
+
+/** The same rows the full graph shows: real card sizes, so wrapping matches. */
+function getRows({ nodes, edges }: TokenGraphTile['graph']) {
+  const layout = layoutRelationsGraph(
+    nodes.map((node) => ({
+      id: node.id,
+      volume: null,
+      ...getRelationsNodeSize(node.chains.length),
+    })),
+    edges,
+  )
+  const x = (node: TokenGraphTileNode) => layout.boxes.get(node.id)?.x ?? 0
+  return [...groupBy(nodes, (node) => layout.rowOf.get(node.id))]
+    .toSorted(([a], [b]) => a - b)
+    .map(([, row]) => row.toSorted((a, b) => x(a) - x(b)))
 }
 
 function getScale(

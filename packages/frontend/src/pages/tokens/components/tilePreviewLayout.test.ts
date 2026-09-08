@@ -19,6 +19,9 @@ describe(buildPreview.name, () => {
     )
 
     expect(preview.marks.length).toEqual(31)
+    expect(new Set(preview.marks.map((mark) => mark.row)).size).toBeGreaterThan(
+      2,
+    )
     expectInsideViewport(preview)
   })
 
