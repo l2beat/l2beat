@@ -973,9 +973,11 @@ export interface ProjectDefiInfo {
 
 export type ProjectDefiTvlConfig =
   | {
+      /** Uses L2BEAT TVS data and requires the project to define tvsConfig. */
       source: 'l2beat'
     }
   | {
+      /** Uses external DeFiLlama data and must not be combined with tvsConfig. */
       source: 'defillama'
       /** DeFiLlama protocol slug used by /protocol/{slug}. */
       protocolSlug: string

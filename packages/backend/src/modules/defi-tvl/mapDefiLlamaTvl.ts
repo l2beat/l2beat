@@ -4,7 +4,8 @@ import type { DefiLlamaProtocol } from './DefiLlamaClient'
 import type { DefiTvlProjectConfig } from './types'
 
 const RECONCILIATION_WINDOW = 30 * UnixTime.DAY
-const MAX_STALENESS = 6 * UnixTime.HOUR
+// The free protocol endpoint publishes daily history with variable delay.
+const MAX_SOURCE_AGE = UnixTime.DAY + 12 * UnixTime.HOUR
 const MAX_FUTURE_SKEW = 3 * UnixTime.HOUR
 
 export function mapDefiLlamaTvl(
@@ -13,6 +14,8 @@ export function mapDefiLlamaTvl(
   from: UnixTime,
   to: UnixTime,
 ): DefiTvlRecord[] {
+  // Backfills import the requested gap. Incremental runs reconcile the last 30
+  // days because DeFiLlama can revise historical daily points.
   const historyFrom = Math.max(
     config.sinceTimestamp,
     to - from > RECONCILIATION_WINDOW ? from : to - RECONCILIATION_WINDOW,
@@ -39,7 +42,7 @@ export function mapDefiLlamaTvl(
     const latest = history.reduce((a, b) => (a.date > b.date ? a : b))
     const sourceTimestamp = UnixTime(latest.date)
     assert(
-      sourceTimestamp >= to - MAX_STALENESS,
+      sourceTimestamp >= to - MAX_SOURCE_AGE,
       `${config.protocolSlug}: Stale TVL for ${chainConfig.providerChain}`,
     )
     assert(
@@ -79,7 +82,10 @@ export function mapDefiLlamaTvl(
       sourceTimestamp,
       currentValue,
     )
-    records.set(recordKey(currentRecord), currentRecord)
+    const currentRecordKey = recordKey(currentRecord)
+    if (!records.has(currentRecordKey)) {
+      records.set(currentRecordKey, currentRecord)
+    }
   }
 
   return [...records.values()].sort((a, b) => a.timestamp - b.timestamp)

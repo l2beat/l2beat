@@ -7,6 +7,7 @@ import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import type { DefiLlamaClient } from './DefiLlamaClient'
@@ -45,7 +46,7 @@ export class DefiTvlIndexer extends ManagedMultiIndexer<DefiTvlProjectConfig> {
     const records = mapDefiLlamaTvl(data, config, UnixTime(from), UnixTime(to))
 
     return async () => {
-      await this.$.db.defiTvl.upsertMany(records)
+      await this.$.db.defiTvl.replaceMany(records)
       this.logger.info('Saved DeFi TVL records', {
         project: config.projectId,
         records: records.length,
@@ -65,6 +66,28 @@ export class DefiTvlIndexer extends ManagedMultiIndexer<DefiTvlProjectConfig> {
 
     if (deletedRecords > 0) {
       this.logger.info('Wiped DeFi TVL records', { deletedRecords })
+    }
+  }
+
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      const [from, to] = configuration.range
+      const deletedRecords = await this.$.db.defiTvl.deleteByConfigInTimeRange(
+        configuration.id,
+        UnixTime(from),
+        UnixTime(to),
+      )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DeFi TVL records', {
+          id: configuration.id,
+          from,
+          to,
+          deletedRecords,
+        })
+      }
     }
   }
 }
