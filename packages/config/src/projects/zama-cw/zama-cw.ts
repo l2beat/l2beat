@@ -12,6 +12,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { zamaCwAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('zama-cw')
 
@@ -220,6 +221,7 @@ export const zamaCw: BaseProject = {
           'Interop with DeFi (swaps, vaults) from within the confidential token.',
       },
     ],
+    adversaries: zamaCwAdversaries,
     quantumResistant: true,
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
       kmsThreshold,

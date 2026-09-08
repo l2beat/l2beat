@@ -20,6 +20,7 @@ import {
 } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { railgunAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -261,6 +262,7 @@ export const railgun: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: railgunAdversaries,
     riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),

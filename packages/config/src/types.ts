@@ -1015,6 +1015,11 @@ export interface ProjectPrivacyInfo {
   noteDiscovery?: PrivacyNoteDiscovery
   attributes?: PrivacyAttribute[]
   /**
+   * PoC: per-adversary privacy assessment. Intended to replace `privacy`
+   * and `noteDiscovery` once it covers all privacy projects.
+   */
+  adversaries?: PrivacyAdversaryAssessments
+  /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
    * ProjectZkCatalogInfo.quantumResistant
    */
@@ -1069,6 +1074,88 @@ export interface PrivacyAttribute {
   label: string
   description: string
 }
+
+// #region privacy adversaries (PoC)
+
+/**
+ * Adversaries are defined by capability, never by identity. Real-world actors
+ * (governments, data brokers, chain analytics firms) are unions of these
+ * capabilities and are described as personas on top of the assessments.
+ */
+export type PrivacyAdversaryId =
+  | 'publicObserver'
+  | 'dragnetAnalyst'
+  | 'networkObserver'
+  | 'privilegedInsider'
+  | 'futureAdversary'
+
+export interface PrivacyAdversary {
+  id: PrivacyAdversaryId
+  label: string
+  /** What this adversary can observe or do. */
+  description: string
+  /** Real-world actors that hold (at least) this capability. */
+  examples: string
+}
+
+/** What can be learned about a single user action. */
+export type PrivacyLeakField =
+  | 'sender'
+  | 'recipient'
+  | 'amount'
+  | 'asset'
+  | 'linkage'
+  | 'membership'
+
+export interface PrivacyLeakFieldInfo {
+  id: PrivacyLeakField
+  label: string
+  description: string
+}
+
+/**
+ * hidden: hidden by construction.
+ * hygiene: hidden only if the user avoids a specific footgun (named in `note`).
+ * leaked: visible to this adversary by design.
+ * unverifiable: cannot be derived from onchain state or published source.
+ * n/a: the field does not exist for this segment.
+ */
+export type PrivacyLeakVerdict =
+  | 'hidden'
+  | 'hygiene'
+  | 'leaked'
+  | 'unverifiable'
+  | 'n/a'
+
+export type PrivacyLeak =
+  | PrivacyLeakVerdict
+  | { verdict: PrivacyLeakVerdict; note: string }
+
+export type PrivacyLeakMap = Partial<Record<PrivacyLeakField, PrivacyLeak>>
+
+export interface PrivacyAdversaryAssessment extends PrivacySummaryValue {
+  /**
+   * Entry and exit: the Ethereum transactions that put funds under the
+   * protocol and take them out again.
+   */
+  boundary?: PrivacyLeakMap
+  /** Actions taken while shielded (private transfers, in-pool DeFi). */
+  interior?: PrivacyLeakMap
+  /** Pointers to the onchain state or source code backing the verdicts. */
+  sources?: PrivacySource[]
+}
+
+export interface PrivacySource {
+  title: string
+  url: string
+}
+
+export type PrivacyAdversaryAssessments = Record<
+  PrivacyAdversaryId,
+  PrivacyAdversaryAssessment
+>
+
+// #endregion
 
 export interface ProjectPrivacyToken {
   token: {

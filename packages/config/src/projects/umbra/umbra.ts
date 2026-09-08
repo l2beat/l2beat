@@ -6,6 +6,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { umbraAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('umbra')
 
@@ -133,6 +134,7 @@ export const umbra: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
       PRIVACY_ATTRIBUTES.stealthAddresses,
     ],
+    adversaries: umbraAdversaries,
     riskSummary: readProjectMarkdown('umbra', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
