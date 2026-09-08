@@ -28,7 +28,7 @@ The signature authenticates the answer as one accepted by Fluidkey, but it is no
 
 ### Auto-earn
 
-When auto-earn is enabled, receiving Safes are initialized with the Fluidkey Earn module. It allows authorized relayers to wrap native tokens when needed and deposit funds into configured ERC-4626 vaults, with the vault shares credited to the same Safe. These deposits do not require a new owner signature for each execution.
+When auto-earn is enabled, receiving Safes are initialized with the Fluidkey Earn module. It allows the module owner and authorized relayers to wrap native tokens when needed and deposit funds into configured ERC-4626 vaults, with the vault shares credited to the same Safe. Anyone can also submit a deposit instruction signed by an authorized relayer. These deposits do not require a new Safe owner signature for each execution.
 
 The module owner publishes token and vault configurations identified by a hash of their contents. Changing a vault produces a different configuration hash, and selecting a different hash requires a call from the Safe. The owner cannot silently replace the vault set under an already selected hash. Both the module owner and authorized relayers can manage relayer permissions. Users can disable the module through their Safe, but funds already deposited remain exposed to the underlying vaults' losses, liquidity, and withdrawal restrictions.
 
