@@ -955,6 +955,9 @@
   },
   "usedBlockNumbers": { "ethereum": 23674967 },
   "permissionsConfigHash": "0x491efa30d79d5461ff774687833a8483dcc7ed0ffca3d23a2cc8a5b9b7326c2f",
+  "modelledAgainst": {
+    "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9"
+  },
   "permissions": {
     "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": {
       "directlyReceivedPermissions": [

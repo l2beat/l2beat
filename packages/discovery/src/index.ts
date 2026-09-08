@@ -27,7 +27,10 @@ export {
   ConfigHealthService,
   type HealthHint,
 } from './discovery/config/ConfigHealthService'
-export { ConfigReader } from './discovery/config/ConfigReader'
+export {
+  ConfigReader,
+  getReferencedProjects,
+} from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
 export { ConfigWriter } from './discovery/config/ConfigWriter'
@@ -65,8 +68,10 @@ export {
   addReferencedDiscoveries,
   clusterEntries,
   DiscoveryRegistry,
+  findStaleReferences,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
+  hashPermissionsConfigInOwnCluster,
   loadDiscoveriesForModelling,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'

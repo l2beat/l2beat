@@ -1686,6 +1686,10 @@
   },
   "usedBlockNumbers": { "arbitrum": 423633475 },
   "permissionsConfigHash": "0x66d99805ef6f08c9d0fcb3ee0d714ba0a5e580215f5aba8fcaa83021c54f2646",
+  "modelledAgainst": {
+    "blobstream": "0x7ad6b67fdb402e712f4d84a19d277949cd27ca8f45cde13be7353f33164ec1a9",
+    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+  },
   "permissions": {
     "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6": {
       "receivedPermissions": [

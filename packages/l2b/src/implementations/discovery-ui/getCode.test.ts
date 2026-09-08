@@ -24,6 +24,7 @@ const DISCOVERY: DiscoveryOutput = {
   abis: {},
   configHash: Hash256.ZERO,
   usedTemplates: {},
+  modelledAgainst: {},
   usedBlockNumbers: {},
 }
 

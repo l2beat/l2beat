@@ -850,6 +850,9 @@
     "ethereum": 25072407
   },
   "permissionsConfigHash": "0x7ad6b67fdb402e712f4d84a19d277949cd27ca8f45cde13be7353f33164ec1a9",
+  "modelledAgainst": {
+    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+  },
   "permissions": {
     "arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D": {
       "receivedPermissions": [

@@ -18,6 +18,20 @@ const COUNCIL = address('0x333')
 const HASH = Hash256.random()
 
 describe(combinePermissionsIntoDiscovery.name, () => {
+  it('replaces the recorded module versions, including when references are removed', () => {
+    const discovery = output([])
+    discovery.modelledAgainst = { removed: Hash256.ZERO }
+    combinePermissionsIntoDiscovery(
+      discovery,
+      { ...permissions([]), modelledAgainst: { shared: HASH } },
+      [],
+    )
+    expect(discovery.modelledAgainst).toEqual({ shared: HASH })
+
+    combinePermissionsIntoDiscovery(discovery, permissions([]), [])
+    expect(discovery.modelledAgainst).toEqual({})
+  })
+
   it('stores a permission in the map, never on the entry', () => {
     const discovery = output([contract(TIMELOCK), contract(PROXY_ADMIN)])
 
@@ -216,7 +230,7 @@ function upgrade(
 function permissions(
   permissions: PermissionsOutput['permissions'],
 ): PermissionsOutput {
-  return { permissionsConfigHash: HASH, permissions }
+  return { permissionsConfigHash: HASH, modelledAgainst: {}, permissions }
 }
 
 function output(entries: EntryParameters[]): DiscoveryOutput {
@@ -227,6 +241,7 @@ function output(entries: EntryParameters[]): DiscoveryOutput {
     abis: {},
     configHash: HASH,
     usedTemplates: {},
+    modelledAgainst: {},
     usedBlockNumbers: {},
   }
 }
