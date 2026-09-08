@@ -101,7 +101,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 12_345n, sender: depositor })
+      expect(result).toEqual({ count: 1, amount: 12_345n })
     })
 
     it('extracts value from Withdrawn event', () => {

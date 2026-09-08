@@ -116,7 +116,6 @@ export interface PrivacyRpcLog {
 export interface PrivacyFlowExtractResult {
   count: number
   amount: bigint
-  sender?: EthereumAddress
 }
 
 export interface PrivacyRelayerActivityExtractResult {

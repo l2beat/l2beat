@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type {
   BlockProvider,
@@ -58,7 +59,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
         blobVersionedHashes: undefined,
         blockNumber: log.blockNumber,
       }),
-      upsertMany,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
     })
 
     const save = await indexer.multiUpdate(from, to, [configuration])
@@ -106,7 +109,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       logs: [log],
       timestamps: new Map([[log.blockNumber, timestamp]]),
       getTransaction,
-      upsertMany,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
     })
 
     const save = await indexer.multiUpdate(from, to, [configuration])
@@ -139,7 +144,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       logs: [],
       timestamps: new Map(),
       getTransaction: mockFn(),
-      upsertMany,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
     })
 
     const save = await indexer.multiUpdate(from, from + 36 * UnixTime.HOUR, [
@@ -148,20 +155,183 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
 
     expect(await save()).toEqual(from + UnixTime.DAY)
   })
+
+  it('does not fetch transaction senders for boundary logs outside the range', async () => {
+    const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const to = from + UnixTime.DAY
+    const timestamp = from - 1
+    const configuration = fixedConfiguration('1')
+    const log = makeLog({ topics: [FIXED_TOPIC], timestamp })
+    const getTransaction = mockFn<IRpcClient['getTransaction']>()
+    const upsertMany =
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(0)
+    const indexer = makeIndexer({
+      configuration,
+      logs: [log],
+      timestamps: new Map([[log.blockNumber, timestamp]]),
+      getTransaction,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
+    })
+
+    const save = await indexer.multiUpdate(from, to, [configuration])
+    await save()
+
+    expect(getTransaction).not.toHaveBeenCalled()
+    expect(upsertMany).toHaveBeenOnlyCalledWith([])
+  })
+
+  it('fetches transaction senders in batches of 25', async () => {
+    const from = UnixTime.toStartOf(UnixTime(1_700_000_000), 'day')
+    const to = from + UnixTime.DAY
+    const timestamp = from + UnixTime.HOUR
+    const configuration = fixedConfiguration('1')
+    const transactionHashes = Array.from(
+      { length: 26 },
+      (_, i) => `0x${i.toString(16).padStart(64, '0')}`,
+    )
+    const logs = transactionHashes.map((transactionHash, logIndex) =>
+      makeLog({
+        topics: [FIXED_TOPIC],
+        timestamp,
+        transactionHash,
+        logIndex,
+      }),
+    )
+    const firstBatch = deferred()
+    const started: string[] = []
+    const getTransaction = mockFn<IRpcClient['getTransaction']>().executes(
+      async (hash) => {
+        const waitsForFirstBatch = started.length < 25
+        started.push(hash)
+        if (waitsForFirstBatch) await firstBatch.promise
+        return makeTransaction(hash)
+      },
+    )
+    const upsertMany =
+      mockFn<Database['privacyAnonymitySetEvent']['upsertMany']>().resolvesTo(
+        26,
+      )
+    const indexer = makeIndexer({
+      configuration,
+      logs,
+      timestamps: new Map([[100, timestamp]]),
+      getTransaction,
+      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+        upsertMany,
+      }),
+    })
+
+    const update = indexer.multiUpdate(from, to, [configuration])
+    await new Promise<void>((resolve) => setImmediate(resolve))
+
+    expect(getTransaction).toHaveBeenCalledTimes(25)
+
+    firstBatch.resolve()
+    const save = await update
+    await save()
+
+    expect(getTransaction).toHaveBeenCalledTimes(26)
+    expect(upsertMany.calls[0]?.args[0]).toHaveLength(26)
+  })
+
+  describe(PrivacyAnonymitySetIndexer.prototype.wipeData.name, () => {
+    it('deletes all records for the given configurations', async () => {
+      const deleteByConfigIds =
+        mockFn<
+          Database['privacyAnonymitySetEvent']['deleteByConfigIds']
+        >().resolvesTo(3)
+      const indexer = makeIdleIndexer(
+        mockObject<Database['privacyAnonymitySetEvent']>({
+          deleteByConfigIds,
+        }),
+      )
+
+      await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
+
+      expect(deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        'config-1',
+        'config-2',
+      ])
+    })
+  })
+
+  describe(PrivacyAnonymitySetIndexer.prototype.trimData.name, () => {
+    it('deletes records for each configuration in the given time range', async () => {
+      const deleteByConfigInTimeRange = mockFn<
+        Database['privacyAnonymitySetEvent']['deleteByConfigInTimeRange']
+      >()
+        .resolvesToOnce(3)
+        .resolvesToOnce(0)
+      const indexer = makeIdleIndexer(
+        mockObject<Database['privacyAnonymitySetEvent']>({
+          deleteByConfigInTimeRange,
+        }),
+      )
+
+      await indexer.trimData([
+        { id: 'config-1', range: [100, 200] },
+        { id: 'config-2', range: [300, 400] },
+      ])
+
+      expect(deleteByConfigInTimeRange).toHaveBeenNthCalledWith(
+        1,
+        'config-1',
+        100,
+        200,
+      )
+      expect(deleteByConfigInTimeRange).toHaveBeenNthCalledWith(
+        2,
+        'config-2',
+        300,
+        400,
+      )
+    })
+  })
+
+  describe(PrivacyAnonymitySetIndexer.idToConfigurationId.name, () => {
+    it('keeps the existing configuration id', () => {
+      expect(
+        PrivacyAnonymitySetIndexer.idToConfigurationId({
+          projectId: 'project-1',
+          bucketId: 'bucket-1',
+          chain: 'ethereum',
+          address: POOL,
+          event: FIXED_TOPIC,
+          sinceTimestamp: UnixTime(0),
+          extractor: 'fixedAmount',
+          params: { amount: '1000000000000000000' },
+        }),
+      ).toEqual('c33ffb1b7442')
+    })
+  })
 })
+
+function makeIdleIndexer(
+  repository: Database['privacyAnonymitySetEvent'],
+): PrivacyAnonymitySetIndexer {
+  return makeIndexer({
+    configuration: fixedConfiguration('1'),
+    logs: [],
+    timestamps: new Map(),
+    getTransaction: mockFn(),
+    repository,
+  })
+}
 
 function makeIndexer({
   configuration,
   logs,
   timestamps,
   getTransaction,
-  upsertMany,
+  repository,
 }: {
   configuration: Configuration<PrivacyAnonymitySetIndexerConfig>
   logs: Log[]
   timestamps: Map<number, UnixTime>
   getTransaction: IRpcClient['getTransaction']
-  upsertMany: Database['privacyAnonymitySetEvent']['upsertMany']
+  repository: Database['privacyAnonymitySetEvent']
 }) {
   return new PrivacyAnonymitySetIndexer(
     {
@@ -180,9 +350,7 @@ function makeIndexer({
       }),
       rpcClient: mockObject<IRpcClient>({ getTransaction }),
       db: mockDatabase({
-        privacyAnonymitySetEvent: mockObject<
-          Database['privacyAnonymitySetEvent']
-        >({ upsertMany }),
+        privacyAnonymitySetEvent: repository,
       }),
     },
     Logger.SILENT,
@@ -210,24 +378,23 @@ function privacyPoolsConfiguration(
 }
 
 function baseConfiguration(
-  extractor: Pick<
-    PrivacyAnonymitySetIndexerConfig,
-    'event' | 'extractor' | 'params'
-  >,
+  source: PrivacyAnonymitySetDepositSource,
 ): Configuration<PrivacyAnonymitySetIndexerConfig> {
+  const properties = {
+    id: 'config-1',
+    projectId: 'project-1',
+    bucketId: 'bucket-1',
+    chain: 'ethereum',
+    address: POOL,
+    sinceTimestamp: UnixTime(0),
+    ...source,
+  } satisfies PrivacyAnonymitySetIndexerConfig
+
   return {
     id: 'config-1',
     minHeight: 0,
     maxHeight: null,
-    properties: {
-      id: 'config-1',
-      projectId: 'project-1',
-      bucketId: 'bucket-1',
-      chain: 'ethereum',
-      address: POOL,
-      sinceTimestamp: UnixTime(0),
-      ...extractor,
-    } as PrivacyAnonymitySetIndexerConfig,
+    properties,
   }
 }
 
@@ -235,19 +402,49 @@ function makeLog({
   topics,
   data = '0x',
   timestamp,
+  blockNumber = 100,
+  transactionHash = TRANSACTION_HASH,
+  logIndex = 7,
 }: {
   topics: string[]
   data?: string
   timestamp: UnixTime
+  blockNumber?: number
+  transactionHash?: string
+  logIndex?: number
 }): Log {
   return {
     address: POOL.toString(),
     topics,
     data,
-    blockNumber: 100,
+    blockNumber,
     blockHash: `0x${'cc'.repeat(32)}`,
-    transactionHash: TRANSACTION_HASH,
-    logIndex: 7,
+    transactionHash,
+    logIndex,
     blockTimestamp: timestamp,
   }
+}
+
+function makeTransaction(
+  hash: string,
+): Awaited<ReturnType<IRpcClient['getTransaction']>> {
+  return {
+    hash,
+    value: undefined,
+    from: TRANSACTION_SENDER.toString(),
+    to: undefined,
+    data: undefined,
+    type: undefined,
+    calls: undefined,
+    blobVersionedHashes: undefined,
+    blockNumber: 100,
+  }
+}
+
+function deferred() {
+  let resolve!: () => void
+  const promise = new Promise<void>((res) => {
+    resolve = res
+  })
+  return { promise, resolve }
 }

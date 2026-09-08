@@ -5,13 +5,9 @@ import type {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { PrivacyFlowExtractResult, PrivacyRpcLog } from '../types'
+import { extractPrivacyPoolsEvent } from './extractPrivacyPoolsEvent'
 
 const ERC20_TOKEN_TYPE = 0
-
-const privacyPoolsInterface = new utils.Interface([
-  'event Deposited(address indexed depositor, uint256 commitment, uint256 label, uint256 value, uint256 precommitmentHash)',
-  'event Withdrawn(address indexed processooor, uint256 value, uint256 spentNullifier, uint256 newCommitment)',
-])
 
 const railgunInterface = new utils.Interface([
   'event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)',
@@ -43,7 +39,10 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
         amount: BigInt(source.params.amount),
       }
     case 'privacyPoolsValue':
-      return extractPrivacyPoolsValue(log)
+      return {
+        count: 1,
+        amount: extractPrivacyPoolsEvent(log).amount,
+      }
     case 'railgunShield':
       return extractRailgunShield(source, log)
     case 'railgunUnshield':
@@ -56,23 +55,6 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
       return extractZamaUnwrap(source, log)
     default:
       return undefined
-  }
-}
-
-function extractPrivacyPoolsValue(
-  log: PrivacyRpcLog,
-): PrivacyFlowExtractResult | undefined {
-  const parsedLog = privacyPoolsInterface.parseLog(log)
-  const value = parsedLog.args.value
-  const sender =
-    parsedLog.name === 'Deposited'
-      ? EthereumAddress(parsedLog.args.depositor)
-      : undefined
-
-  return {
-    count: 1,
-    amount: BigInt(value.toString()),
-    ...(sender !== undefined ? { sender } : {}),
   }
 }
 

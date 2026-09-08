@@ -9,7 +9,6 @@ import type {
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
-import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   assert,
   assertUnreachable,
@@ -17,6 +16,7 @@ import {
   EthereumAddress,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import { PrivacyAnonymitySetIndexer } from '../../modules/privacy/indexers/PrivacyAnonymitySetIndexer'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
@@ -263,10 +263,7 @@ function toAnonymitySetConfig(
   }
 
   return {
-    id: createPrivacyAnonymitySetConfigurationId({
-      ...config,
-      address: config.address.toString(),
-    }),
+    id: PrivacyAnonymitySetIndexer.idToConfigurationId(config),
     ...config,
   }
 }

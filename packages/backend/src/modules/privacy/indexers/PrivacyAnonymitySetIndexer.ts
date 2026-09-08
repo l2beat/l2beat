@@ -6,6 +6,7 @@ import type {
   IRpcClient,
   LogsProvider,
 } from '@l2beat/shared'
+import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   assert,
   EthereumAddress,
@@ -22,7 +23,10 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { PrivacyAnonymitySetIndexerConfig } from '../types'
+import type {
+  PrivacyAnonymitySetIndexerConfig,
+  PrivacyAnonymitySetIndexerConfigProperties,
+} from '../types'
 import {
   extractPrivacyAnonymitySetDeposit,
   type PrivacyAnonymitySetDeposit,
@@ -79,7 +83,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       configurations: configurations.length,
     })
 
-    const records = await this.fetchRecordsForGroup(
+    const records = await this.fetchDepositsForConfigurations(
       configurations,
       from,
       adjustedTo,
@@ -143,7 +147,7 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     }
   }
 
-  private async fetchRecordsForGroup(
+  private async fetchDepositsForConfigurations(
     configurations: Configuration<PrivacyAnonymitySetIndexerConfig>[],
     from: number,
     to: number,
@@ -161,6 +165,9 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
       ),
     ])
 
+    // atOrBefore can make adjacent time ranges share boundary blocks. Filtering
+    // by timestamp below keeps the exact range; repository upserts deduplicate
+    // any boundary logs fetched again by the following update.
     const { addresses, events } = buildPrivacyLogFilter(configurations)
     const logs = await this.$.logsProvider.getLogs(
       blockFrom,
@@ -173,20 +180,10 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     const rawRecords = extractRawRecords(logs, configMap)
     if (rawRecords.length === 0) return []
 
-    const [blockTimestamps, transactionSenders] = await Promise.all([
-      this.$.blockProvider.getBlockTimestamps(
-        unique(rawRecords.map((record) => record.log.blockNumber)),
-      ),
-      this.getTransactionSenders(
-        unique(
-          rawRecords
-            .filter((record) => record.origin.type === 'transaction')
-            .map((record) => record.log.transactionHash.toLowerCase()),
-        ),
-      ),
-    ])
-
-    return rawRecords.flatMap((record) => {
+    const blockTimestamps = await this.$.blockProvider.getBlockTimestamps(
+      unique(rawRecords.map((record) => record.log.blockNumber)),
+    )
+    const recordsInRange = rawRecords.flatMap((record) => {
       const timestamp = blockTimestamps.get(record.log.blockNumber)
       assert(
         timestamp !== undefined,
@@ -195,31 +192,51 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
 
       if (timestamp < from || timestamp > to) return []
 
-      const sender =
-        record.origin.type === 'event'
-          ? record.origin.sender.toString()
-          : transactionSenders.get(record.log.transactionHash.toLowerCase())
-      assert(
-        sender !== undefined,
-        `Missing transaction sender for ${record.log.transactionHash}`,
-      )
-
-      const config = record.configuration.properties
-      return [
-        {
-          configurationId: record.configuration.id,
-          projectId: config.projectId,
-          bucketId: config.bucketId,
-          chain: config.chain,
-          timestamp,
-          blockNumber: record.log.blockNumber,
-          txHash: record.log.transactionHash,
-          logIndex: record.log.logIndex,
-          sender,
-          amount: record.amount,
-        },
-      ]
+      return [{ ...record, timestamp }]
     })
+    if (recordsInRange.length === 0) return []
+
+    const transactionSenders = await this.getTransactionSenders(
+      unique(
+        recordsInRange
+          .filter((record) => record.origin.type === 'transaction')
+          .map((record) => record.log.transactionHash.toLowerCase()),
+      ),
+    )
+
+    return recordsInRange.map((record) => {
+      const config = record.configuration.properties
+      return {
+        configurationId: record.configuration.id,
+        projectId: config.projectId,
+        bucketId: config.bucketId,
+        chain: config.chain,
+        timestamp: record.timestamp,
+        blockNumber: record.log.blockNumber,
+        txHash: record.log.transactionHash,
+        logIndex: record.log.logIndex,
+        sender: this.resolveSender(record, transactionSenders),
+        amount: record.amount,
+      }
+    })
+  }
+
+  private resolveSender(
+    record: RawRecord,
+    transactionSenders: Map<string, string>,
+  ): string {
+    if (record.origin.type === 'event') {
+      return record.origin.sender.toString()
+    }
+
+    const sender = transactionSenders.get(
+      record.log.transactionHash.toLowerCase(),
+    )
+    assert(
+      sender !== undefined,
+      `Missing transaction sender for ${record.log.transactionHash}`,
+    )
+    return sender
   }
 
   private async getTransactionSenders(
@@ -256,6 +273,15 @@ export class PrivacyAnonymitySetIndexer extends ManagedMultiIndexer<PrivacyAnony
     }
 
     return result
+  }
+
+  static idToConfigurationId(
+    config: PrivacyAnonymitySetIndexerConfigProperties,
+  ): string {
+    return createPrivacyAnonymitySetConfigurationId({
+      ...config,
+      address: config.address.toString(),
+    })
   }
 }
 
