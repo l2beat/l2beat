@@ -70,11 +70,15 @@ export const fluidkey: BaseProject = {
       value: 'Admin view key',
       sentiment: 'bad',
       description:
-        'Fluidkey holds a private, per-account viewing capability that lets its service derive and link the stealth addresses generated for that account. This centralized visibility does not provide spending authority by itself. When auto-earn is enabled, a separate Safe module lets authorized relayers deposit funds into the vault configuration selected by the Safe.',
+        'Fluidkey holds a private, per-account viewing capability that lets its service derive and link the stealth addresses generated for that account.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,
       PRIVACY_ATTRIBUTES.anyAmount,
+      {
+        ...PRIVACY_ATTRIBUTES.defi,
+        description: 'Interop with DeFi vaults through stealth Safes.',
+      },
     ],
     riskSummary: readProjectMarkdown('fluidkey', 'riskSummary'),
     upgradesAndGovernance: {
