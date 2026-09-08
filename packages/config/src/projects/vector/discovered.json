@@ -646,6 +646,9 @@
   },
   "usedBlockNumbers": { "ethereum": 25724173 },
   "permissionsConfigHash": "0x963797723609b2818a865e9cdb694617471c1fa5eaba41826d9596fdaab4ba33",
+  "modelledAgainst": {
+    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+  },
   "permissions": {
     "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": {
       "receivedPermissions": [
