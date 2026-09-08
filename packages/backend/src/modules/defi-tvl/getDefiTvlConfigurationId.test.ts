@@ -13,11 +13,14 @@ describe(getDefiTvlConfigurationId.name, () => {
     ],
   }
 
-  it('is stable across chain ordering', () => {
+  it('is stable across chain and property ordering', () => {
     const first = getDefiTvlConfigurationId(config)
     const second = getDefiTvlConfigurationId({
       ...config,
-      chains: [...config.chains].reverse(),
+      chains: [
+        { providerChain: 'Arbitrum', chain: 'arbitrum' },
+        { providerChain: 'Ethereum', chain: 'ethereum' },
+      ],
     })
 
     expect(first).toEqual(second)
@@ -35,5 +38,16 @@ describe(getDefiTvlConfigurationId.name, () => {
     })
 
     expect(first).not.toEqual(second)
+  })
+
+  it('does not change when the import boundary changes', () => {
+    const first = getDefiTvlConfigurationId(config)
+    const changedConfig = {
+      ...config,
+      sinceTimestamp: UnixTime(config.sinceTimestamp + UnixTime.DAY),
+    }
+    const second = getDefiTvlConfigurationId(changedConfig)
+
+    expect(first).toEqual(second)
   })
 })

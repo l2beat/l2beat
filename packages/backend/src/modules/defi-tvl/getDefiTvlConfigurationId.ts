@@ -1,11 +1,10 @@
 import type { ProjectDefiTvlChain } from '@l2beat/config'
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 
 interface DefiTvlConfigurationIdentity {
   projectId: ProjectId
   protocolSlug: string
-  sinceTimestamp: UnixTime
   chains: ProjectDefiTvlChain[]
 }
 
@@ -17,8 +16,13 @@ export function getDefiTvlConfigurationId(
     metric: 'tvl',
     projectId: config.projectId,
     protocolSlug: config.protocolSlug,
-    sinceTimestamp: config.sinceTimestamp,
-    chains: [...config.chains].sort((a, b) => a.chain.localeCompare(b.chain)),
+    chains: config.chains
+      .map(({ chain, providerChain }) => [chain, providerChain] as const)
+      .sort(
+        ([chainA, providerChainA], [chainB, providerChainB]) =>
+          chainA.localeCompare(chainB) ||
+          providerChainA.localeCompare(providerChainB),
+      ),
   }
 
   return createHash('sha1')

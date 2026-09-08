@@ -83,7 +83,7 @@ describe(mapDefiLlamaTvl.name, () => {
   })
 
   it('fails closed on stale current data', () => {
-    const stale = target - 7 * UnixTime.HOUR
+    const stale = target - 37 * UnixTime.HOUR
     const data = protocol({
       Ethereum: {
         current: 100,
@@ -94,6 +94,91 @@ describe(mapDefiLlamaTvl.name, () => {
     expect(() =>
       mapDefiLlamaTvl(data, config, config.sinceTimestamp, target),
     ).toThrow('Stale TVL for Ethereum')
+  })
+
+  it('accepts the normal delay of daily source data', () => {
+    const sourceTimestamp = target - UnixTime.DAY
+    const data = protocol({
+      Ethereum: {
+        current: 100,
+        history: [{ date: sourceTimestamp, totalLiquidityUSD: 95 }],
+      },
+    })
+
+    expect(
+      mapDefiLlamaTvl(data, config, config.sinceTimestamp, target),
+    ).toEqual([record(target, sourceTimestamp, 100)])
+  })
+
+  it('fails closed on a future source timestamp', () => {
+    const future = target + 4 * UnixTime.HOUR
+    const data = protocol({
+      Ethereum: {
+        current: 100,
+        history: [{ date: future, totalLiquidityUSD: 100 }],
+      },
+    })
+
+    expect(() =>
+      mapDefiLlamaTvl(data, config, config.sinceTimestamp, target),
+    ).toThrow('Future TVL timestamp for Ethereum')
+  })
+
+  it('fails closed on a negative current value', () => {
+    const data = protocol({
+      Ethereum: {
+        current: -1,
+        history: [{ date: target, totalLiquidityUSD: 100 }],
+      },
+    })
+
+    expect(() =>
+      mapDefiLlamaTvl(data, config, config.sinceTimestamp, target),
+    ).toThrow('Negative current TVL for Ethereum')
+  })
+
+  it('fails closed on an invalid historical value', () => {
+    const dailyTimestamp = UnixTime.toStartOf(target, 'day')
+    const data = protocol({
+      Ethereum: {
+        current: 100,
+        history: [
+          { date: dailyTimestamp, totalLiquidityUSD: -1 },
+          { date: target, totalLiquidityUSD: 100 },
+        ],
+      },
+    })
+
+    expect(() =>
+      mapDefiLlamaTvl(data, config, config.sinceTimestamp, target),
+    ).toThrow('Invalid historical TVL for Ethereum')
+  })
+
+  it('fails closed when history is missing', () => {
+    const data = protocol({
+      Ethereum: {
+        current: 100,
+        history: [],
+      },
+    })
+
+    expect(() =>
+      mapDefiLlamaTvl(data, config, config.sinceTimestamp, target),
+    ).toThrow('Missing TVL history for Ethereum')
+  })
+
+  it('keeps the canonical daily point at midnight', () => {
+    const midnight = UnixTime.toStartOf(target, 'day')
+    const data = protocol({
+      Ethereum: {
+        current: 130,
+        history: [{ date: midnight, totalLiquidityUSD: 120 }],
+      },
+    })
+
+    expect(
+      mapDefiLlamaTvl(data, config, config.sinceTimestamp, midnight),
+    ).toEqual([record(midnight, midnight, 120)])
   })
 
   function record(
