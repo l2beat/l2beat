@@ -1,7 +1,7 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1769601454,
-  "configHash": "0x2865e6fc431fd122d77f3996900099c797a9a225aaa9f45f543df3469ca3060a",
+  "timestamp": 1788865965,
+  "configHash": "0x33be799782be972f510760041942a5faf62b28fea78fe6178d6a84f18598a852",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000FacE7",
@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
@@ -55,6 +56,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "critical": true,
       "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1767733343,
       "sinceBlock": 24178194,
@@ -76,8 +78,8 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen.",
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "description": "Verifiers that are routed to by their selector and not frozen."
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
@@ -98,6 +100,7 @@
       ],
       "proxyType": "immutable",
       "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getProposalsLength",
         "anchorL2BlockNumber",
@@ -110,15 +113,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd",
-        "anchorL2BlockNumber": 6852240,
-        "anchorProposalId": 48,
-        "anchorRoot": "0x86e4bb52ec6d316991aab6535251b3c3078d6d00ca8dbc1dd29f0ef5bd82acbd",
+        "anchorL2BlockNumber": 8457840,
+        "anchorProposalId": 941,
+        "anchorRoot": "0x7847e967a6c69258e25c119fcefb12ddc14778b22c9ae3f68115ca044ee70fe9",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 77,
+        "getProposalsLength": 970,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1767945143,
@@ -173,7 +176,7 @@
           "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 330,
+        "nonce": 342,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -201,6 +204,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
@@ -213,7 +217,7 @@
         "name": "Ethscriptions",
         "prover": "ethscr:0x3300000000000000000000000000000000000003",
         "symbol": "ETHSCRIPTIONS",
-        "totalSupply": 6311764
+        "totalSupply": 16251114
       },
       "implementationNames": {
         "ethscr:0x3300000000000000000000000000000000000001": "Proxy",
@@ -230,6 +234,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
+      "critical": true,
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
@@ -254,6 +259,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
@@ -264,7 +270,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634477"
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201302635254"
       },
       "implementationNames": {
         "ethscr:0x4200000000000000000000000000000000000016": "Proxy",
@@ -280,6 +286,7 @@
       ],
       "proxyType": "immutable",
       "description": "ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.",
+      "critical": true,
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
@@ -589,7 +596,7 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24333185, "ethscriptions": 6903865 },
+  "usedBlockNumbers": { "ethereum": 25932271, "ethscriptions": 8509241 },
   "permissionsConfigHash": "0x3b5a46e70ac43b6160cf9a3148b01ecf98c18dd31e09e0d359d6d9911b59084a",
   "permissions": {
     "eth:0x615452db5467849689E98a8C5C242A96cF768a94": {
