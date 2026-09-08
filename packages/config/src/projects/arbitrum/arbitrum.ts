@@ -146,9 +146,11 @@ const delayBuffer = discovery.getContractValue<{
   replenishRateInBasis: number
   prevSequencedBlockNumber: number
 }>('SequencerInbox', 'buffer')
+// Mirrors SequencerInbox.delayBufferableBlocks: the buffer saturates below at
+// the threshold, so a fully consumed buffer still allows threshold-long delays.
 const currentForceInclusionDelayBlocks = Math.min(
   maxTimeVariation.delayBlocks,
-  delayBuffer.bufferBlocks,
+  Math.max(delayBuffer.threshold, delayBuffer.bufferBlocks),
 )
 const inboxMaxDataSize = discovery.getContractValue<number>(
   'Inbox',
