@@ -1018,7 +1018,7 @@ export interface ProjectPrivacyInfo {
    * PoC: per-adversary privacy assessment. Intended to replace `privacy`
    * and `noteDiscovery` once it covers all privacy projects.
    */
-  adversaries?: PrivacyAdversaryAssessments
+  adversaries?: ProjectPrivacyAdversaries
   /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
    * ProjectZkCatalogInfo.quantumResistant
@@ -1084,7 +1084,7 @@ export interface PrivacyAttribute {
  */
 export type PrivacyAdversaryId =
   | 'publicObserver'
-  | 'dragnetAnalyst'
+  | 'chainAnalyst'
   | 'networkObserver'
   | 'privilegedInsider'
   | 'futureAdversary'
@@ -1105,41 +1105,60 @@ export type PrivacyLeakField =
   | 'amount'
   | 'asset'
   | 'linkage'
-  | 'membership'
+  | 'identity'
 
 export interface PrivacyLeakFieldInfo {
   id: PrivacyLeakField
   label: string
+  /** Noun used in derived cell values, e.g. "Link" in "Link at risk". */
+  subject: string
   description: string
 }
 
 /**
  * hidden: hidden by construction.
- * hygiene: hidden only if the user avoids a specific footgun (named in `note`).
+ * atRisk: hidden only under a condition named in `note`, e.g. the user avoids
+ *   a footgun, runs their own node, or a counterparty never shared a key.
  * leaked: visible to this adversary by design.
  * unverifiable: cannot be derived from onchain state or published source.
- * n/a: the field does not exist for this segment.
  */
-export type PrivacyLeakVerdict =
-  | 'hidden'
-  | 'hygiene'
-  | 'leaked'
-  | 'unverifiable'
-  | 'n/a'
+export type PrivacyLeakVerdict = 'hidden' | 'atRisk' | 'leaked' | 'unverifiable'
 
 export type PrivacyLeak =
   | PrivacyLeakVerdict
   | { verdict: PrivacyLeakVerdict; note: string }
 
-export type PrivacyLeakMap = Partial<Record<PrivacyLeakField, PrivacyLeak>>
+/** Complete: every field has a verdict. */
+export type PrivacyLeakMap = Record<PrivacyLeakField, PrivacyLeak>
 
-export interface PrivacyAdversaryAssessment extends PrivacySummaryValue {
+export type PrivacyAdversarySentiment = 'good' | 'warning' | 'bad'
+
+export interface PrivacyAdversaryAssessment {
+  /**
+   * The one judgment per cell. Answers "can a careful user defeat this
+   * adversary using only the protocol and the supported options of its
+   * reference client?": good = yes, warning = only outside supported options
+   * or by accepting a leak to another adversary, bad = no. The cell value is
+   * derived from it and from the project's `protects` field.
+   */
+  sentiment: PrivacyAdversarySentiment
+  /** The condition behind the sentiment, in a few words. Shown as second line. */
+  condition: string
+  description: string
+  /**
+   * Overrides the project's `protects` field as the subject of the derived
+   * value, for cells where the promise holds but another field leaks.
+   */
+  subject?: PrivacyLeakField
   /**
    * Entry and exit: the Ethereum transactions that put funds under the
    * protocol and take them out again.
    */
-  boundary?: PrivacyLeakMap
-  /** Actions taken while shielded (private transfers, in-pool DeFi). */
+  boundary: PrivacyLeakMap
+  /**
+   * Actions taken while shielded (private transfers, in-pool DeFi). Present
+   * for all adversaries of a project or for none.
+   */
   interior?: PrivacyLeakMap
   /** Pointers to the onchain state or source code backing the verdicts. */
   sources?: PrivacySource[]
@@ -1150,10 +1169,11 @@ export interface PrivacySource {
   url: string
 }
 
-export type PrivacyAdversaryAssessments = Record<
-  PrivacyAdversaryId,
-  PrivacyAdversaryAssessment
->
+export interface ProjectPrivacyAdversaries {
+  /** The field the protocol promises to protect. Cell values are derived from it. */
+  protects: PrivacyLeakField
+  cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+}
 
 // #endregion
 

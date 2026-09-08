@@ -15,6 +15,7 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
+import { PRIVACY_LEAK_FIELDS } from '../common/privacyAdversaries'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -401,6 +402,25 @@ describe('getProjects', () => {
           project.zkCatalogInfo?.trustedSetups.length ?? 0,
         ).toBeLessThanOrEqual(1)
       })
+
+      const adversaries = project.privacyInfo.adversaries
+      if (adversaries) {
+        const baseline = adversaries.cells.publicObserver
+        for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
+          it(`${project.id} ${adversaryId} leak maps are complete and match the baseline segments`, () => {
+            expect(cell.interior !== undefined).toEqual(
+              baseline.interior !== undefined,
+            )
+            for (const segment of ['boundary', 'interior'] as const) {
+              const map = cell[segment]
+              if (!map) continue
+              expect(Object.keys(map).sort()).toEqual(
+                Object.keys(PRIVACY_LEAK_FIELDS).sort(),
+              )
+            }
+          })
+        }
+      }
     }
   })
 

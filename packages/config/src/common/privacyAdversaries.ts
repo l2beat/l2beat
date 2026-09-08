@@ -1,11 +1,20 @@
 import type {
   PrivacyAdversary,
+  PrivacyAdversaryAssessment,
   PrivacyAdversaryId,
+  PrivacyAdversarySentiment,
   PrivacyLeakField,
   PrivacyLeakFieldInfo,
 } from '../types'
 
 /**
+ * Each cell carries one judgment, its sentiment (see PrivacyAdversaryAssessment),
+ * and its value is derived: the subject the protocol promises to protect
+ * (`protects`, or the cell's `subject` override) plus the state that matches
+ * the sentiment. Default-path footguns never affect the sentiment; they are
+ * `atRisk` verdicts in the leak maps, and "at risk" means the same thing at
+ * field and cell level: hidden only under the condition in the note.
+ *
  * Ordered along the "spine": the first, second and fifth adversary see the
  * same public data with increasing time and effort, so protection against a
  * later one implies protection against an earlier one. The network observer
@@ -20,11 +29,11 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
         'Anyone with a block explorer, today. Sees every transaction, event and storage slot, but does no correlation beyond following links.',
       examples: 'A curious counterparty, an employer, a journalist.',
     },
-    dragnetAnalyst: {
-      id: 'dragnetAnalyst',
-      label: 'Dragnet analyst',
+    chainAnalyst: {
+      id: 'chainAnalyst',
+      label: 'Chain analyst',
       description:
-        'Records the whole chain forever and correlates it statistically (timing, amounts, gas and wallet fingerprints, address clustering) and with offchain data such as exchange KYC. Cannot coerce anyone.',
+        'Keeps a copy of the whole chain forever and correlates it: timing, amounts, gas and wallet fingerprints, address clusters, and offchain data such as exchange KYC. Cannot coerce anyone.',
       examples:
         'Chain analytics firms, tax authorities, data brokers, anyone who buys their data later.',
     },
@@ -60,34 +69,56 @@ export const PRIVACY_LEAK_FIELDS: Record<
   sender: {
     id: 'sender',
     label: 'Sender',
+    subject: 'Sender',
     description:
       'The Ethereum address that funds entered from, or that initiated a transfer.',
   },
   recipient: {
     id: 'recipient',
     label: 'Recipient',
+    subject: 'Recipient',
     description:
       'The Ethereum address that funds exit to, or that receives a transfer.',
   },
   amount: {
     id: 'amount',
     label: 'Amount',
+    subject: 'Amounts',
     description: 'The value moved.',
   },
   asset: {
     id: 'asset',
     label: 'Asset',
+    subject: 'Asset',
     description: 'Which token is moved.',
   },
   linkage: {
     id: 'linkage',
     label: 'Linkage',
+    subject: 'Link',
     description:
       'Whether the entry and exit of the same funds, or sender and recipient of the same transfer, can be tied together.',
   },
-  membership: {
-    id: 'membership',
-    label: 'Membership',
-    description: 'The fact that an address used the protocol at all.',
+  identity: {
+    id: 'identity',
+    label: 'Identity',
+    subject: 'Identity',
+    description:
+      'The person behind an address: IP address, API key, exchange KYC record.',
   },
+}
+
+const SENTIMENT_STATE: Record<PrivacyAdversarySentiment, string> = {
+  good: 'hidden',
+  warning: 'at risk',
+  bad: 'exposed',
+}
+
+/** "Link at risk", "Identity exposed": the derived table value of a cell. */
+export function getPrivacyAdversaryValue(
+  protects: PrivacyLeakField,
+  cell: PrivacyAdversaryAssessment,
+): string {
+  const subject = PRIVACY_LEAK_FIELDS[cell.subject ?? protects].subject
+  return `${subject} ${SENTIMENT_STATE[cell.sentiment]}`
 }
