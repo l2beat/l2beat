@@ -174,7 +174,7 @@ describe('model-permissions all', () => {
       expect(run('all')).not.toInclude(staleWarning)
       const module = read('z')
       expect(module.permissionsConfigHash).not.toEqual(Hash256.ZERO)
-      expect(module.modelledAgainst).toEqual({})
+      expect('modelledAgainst' in module).toEqual(false)
       expect(read('a').modelledAgainst).toEqual({
         z: module.permissionsConfigHash!,
       })
