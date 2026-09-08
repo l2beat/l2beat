@@ -30,6 +30,7 @@ export const STATIC_PAGE_PATHS = [
   '/data-availability/liveness',
   '/data-availability/archived',
   '/privacy/summary',
+  '/audits/summary',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -54,6 +55,9 @@ export async function getPagePaths(): Promise<PagePath[]> {
   }
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
+  }
+  for (const entry of getCollection('audits')) {
+    paths.push(`/audits/projects/${entry.data.slug}`)
   }
   paths.push(...(await getDynamicPagePaths()))
   return paths

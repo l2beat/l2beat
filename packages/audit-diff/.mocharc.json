@@ -1,0 +1,6 @@
+{
+  "spec": "src/**/*.test.ts",
+  "node-option": ["import=tsx"],
+  "watchExtensions": "ts",
+  "extension": "ts"
+}

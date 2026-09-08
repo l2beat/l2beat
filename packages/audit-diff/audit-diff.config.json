@@ -1,0 +1,12 @@
+{
+  "datasetRepoUrl": "https://github.com/sergeyshemyakov/audit-dataset/blob/main",
+  "projects": {
+    "tornado-cash": {
+      "aliases": {
+        "Tornado": "Mixer",
+        "TornadoCash_eth": "ETHMixer",
+        "ERC20Tornado": "ERC20Mixer"
+      }
+    }
+  }
+}

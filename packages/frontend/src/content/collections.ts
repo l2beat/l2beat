@@ -1,3 +1,4 @@
+import { auditsCollection } from './audits'
 import { authorsCollection } from './authors'
 import { changelogCollection } from './changelog'
 import { delegatedProjectsCollection } from './delegated-projects'
@@ -11,6 +12,7 @@ import { pagesCollection } from './pages'
 import { partnersCollection } from './partners'
 
 export const collections = {
+  audits: auditsCollection,
   'governance-publications': governancePublicationsCollection,
   'delegated-projects': delegatedProjectsCollection,
   events: eventsCollection,

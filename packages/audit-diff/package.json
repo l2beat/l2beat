@@ -1,0 +1,34 @@
+{
+  "name": "@l2beat/audit-diff",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Compares deployed smart contract sources with audited sources from the audit-dataset and produces coverage reports",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "build": "pnpm run clean && tsc -p tsconfig.build.json",
+    "generate": "tsx src/cli.ts generate",
+    "format:fix": "biome format --write .",
+    "format": "biome format .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@l2beat/validate": "workspace:*",
+    "@mradomski/fast-solidity-parser": "0.1.6",
+    "diff": "^7.0.0"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/diff": "^7.0.2",
+    "tsx": "^4.9.3"
+  }
+}

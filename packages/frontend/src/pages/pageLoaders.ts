@@ -84,6 +84,10 @@ export const pageLoaders = {
     (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
+  AuditsSummaryPage: async () =>
+    (await import('./audits/summary/AuditsSummaryPage')).AuditsSummaryPage,
+  AuditsProjectPage: async () =>
+    (await import('./audits/project/AuditsProjectPage')).AuditsProjectPage,
   DefiSummaryPage: async () =>
     (await import('./defi/summary/DefiSummaryPage')).DefiSummaryPage,
   DefiProjectPage: async () =>
