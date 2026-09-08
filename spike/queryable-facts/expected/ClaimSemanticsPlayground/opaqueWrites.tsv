@@ -1,0 +1,2 @@
+# opaqueWrites: reviewed rows for ClaimSemanticsPlayground.sol; regenerate with 'pnpm semantic --update', then check the diff
+ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)	delegatecall	target.delegatecall(data)	73	ClaimSemanticsPlayground.sol:ClaimSemanticsPlayground.ownerDelegate(address,bytes)@1935:25

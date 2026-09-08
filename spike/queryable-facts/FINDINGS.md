@@ -304,3 +304,100 @@ What it cannot do is make the claim vocabulary right by itself: `writeClaims` st
 "conditionally guarded" for `conditionalGuard` until someone lands a decoy rule in the library. The
 cost side: a high-effort question is a few hundred thousand mostly-cached input tokens and about two
 minutes; a follow-up on the same thread is seconds.
+
+## Update: the review, the tiers, and the `qf` commands
+
+A second reader (another frontier model, given the same questions and the branch) reported three
+defects; all three reproduced, and a fourth of the same class turned up while checking them.
+
+| Case (`contracts/ReviewCases.sol`) | Before | After |
+| --- | --- | --- |
+| `value = 1; if (stop) return; revert();` | "dead write, the function always reverts", **sound** | no-check, and a writer |
+| `value = v; if (skip) return; require(msg.sender == owner);` | "guarded: msg.sender is always checked against owner" | check-after-return: the check is straight-line but the `return` at line N can leave first |
+| `require(msg.sender != owner); value = v;` | "guarded … against owner" | always-checked, with the condition quoted: `msg.sender != owner` |
+| `function() internal f = _write; f();` | not a writer at all; "no unhandled constructs" | a writer, through the resolved pointer |
+| `_run(_write)` with `f()` inside `_run` | not a writer | a writer: the argument binds the callee's parameter |
+| `require(msg.sender == owner); if (skip) return; value = v;` (control) | guarded | always-checked, unchanged |
+
+Two root causes. `unconditional(S)` ("no branch above S") was used where "S is reached on every
+completing execution" was meant, and an earlier `return` breaks that; the fix is `alwaysExecuted(S) :-
+unconditional(S), !exitBefore(S)`, used by `alwaysReverts`, by the always-checked findings and by the
+call chain that carries a check from a callee. And the concept layer faithfully recorded pointer calls
+as `callSite(…, "functionPointer", …)`, which the call graph then neither followed nor reported: the
+extractor's "no unhandled constructs" said nothing about the analysis. Now a pointer call runs the
+functions the variable was ever given (declaration, assignment, or the argument that binds a
+parameter), and a pointer with no visible target is an unknown effect, like delegatecall.
+
+The lesson the reader put precisely: a Soufflé proof shows a tuple follows from the rules, not that
+the rules model Solidity. The dead-write row had a valid proof and a wrong conclusion. Parity with the
+old extractor could not catch it either, since both agreed. So the branch now has a second oracle,
+`expected/<fixture>/*.tsv`: rows of `storageWriters`, `findings`, `opaqueWrites` and `unhandled` that a
+person checked against the source, compared by `pnpm semantic`. `pnpm semantic --update` rewrites them
+from the current output, and the diff is what gets reviewed.
+
+### From claims to findings, and the word "heuristic"
+
+`writeClaims` bundled two statements of different standing in one row: "E may write V" (exact, given
+the model) and "the write is guarded by X" (a judgment). Stamping the row `heuristic` made the write
+look doubtful, which it never was. The table is gone. `storageWriters` stays as the may-analysis it is,
+and `findings(C, E, V, Kind, Detail, Tier, Line)` says what was found, in the words of the code, with a
+tier: structural, may, guaranteed, heuristic, unknown (README, "Layers 2–6"). The verdict words
+("guarded", "UNGUARDED", "conditionally guarded") are gone too; a finding says "sender check
+`msg.sender == owner` runs only inside `if (enforce)` with no else; `enforce` is a parameter of this
+function, so the caller decides whether the check runs", and whether that authorises anyone is the
+reader's call, with the operator in view. The decoy question that started the whole thread is now a
+structural finding produced by the library (`callerSelectable`), not a rule an agent has to rediscover.
+
+Two recogniser gaps fixed on the way, both common in the wild: OpenZeppelin's `_msgSender()` (a getter
+returning `msg.sender`; 8 of the 9 top-level zora files use it) and AccessControl's
+`_checkRole(role, _msgSender())` → `if (!hasRole(role, account)) revert` (the sender arrives as a
+parameter). The principal follows the same idea one hop: `owner()` returning `_owner`. Guard coverage
+is now resolved through virtual dispatch per deployable contract, so a base whose `_auth()` hook a
+derived contract overrides away gets no-check in the derived contract and always-checked in a sibling
+that keeps it (the `Locked` / `Sealed` / `Unlocked` case of the fixture).
+
+On the nine top-level zora flattened files: 105 always-checked (24 of them through `_msgSender()`), 55
+no-check, 8 some-paths (all in Safe's `checkNSignatures`, where the sender test is one arm of a
+signature-type branch), 3 never-persists (`GnosisSafe.requiredTxGas`, which reverts by design), 35
+unknown effects (delegatecalls in assembly, `sstore` to computed slots). The "reaches inline assembly"
+caveat, which produced 290 rows when raised for every block, is now raised only for blocks that store to
+storage or run foreign code; blocks that compute (`getChainId`, immutable-args reads, signature
+splitting) cap nothing and say nothing.
+
+Known limits, unchanged in kind: coverage is decided by straight-line position, not a control-flow
+graph, so `if (a) require(owner) else require(guardian)` is "some paths" although every path is
+checked; checks on `tx.origin` or on a mapping indexed by the sender inside a called function are
+recognised only when the condition mentions the sender; a modifier argument carrying the sender is not
+followed. The CFG layer (L2B-14860) is what turns the first of these from heuristic into guaranteed.
+
+### The `qf` commands: the library gets a front door
+
+The recorded question about `conditionalGuard` cost 12 commands and 413k cumulative input tokens, and
+only two of the commands ran Soufflé. The rest read the README, the report, most of the 1,500-line
+program in slices, and a dozen CSVs into context, because the briefing taught the schema in prose and
+the CSVs have no headers. That is schema discovery, repeated per question.
+
+Every run folder now gets `./qf`: writers, function, guards, gaps, rows, source, explain, query (README,
+"The qf commands"). It is a filter and a formatter over the derived relations, nothing else; every row it
+prints is an atom the explorer can link and the agent can quote. The briefing shrank to the command
+list, the tier legend and the answer format, and says not to read `program.dl` or `derived/*.csv`.
+`qf explain` stops at concept relations by default (`--deep` goes to the AST rows), and `qf query` is the
+old scratch workflow, kept for the questions no relation answers yet.
+
+Same contract, same question, same model and effort (`gpt-5.6-sol`, high):
+
+| | Schema briefing (before) | `qf` commands (now) |
+| --- | --- | --- |
+| commands | 12 (9 reading files, 2 Soufflé runs) | 3 (`qf guards`, `qf source`, `qf writers`) |
+| wall clock | 113 s | 38 s |
+| input tokens, cumulative | 413,455 (380,928 cached) | 47,174 (36,736 cached) |
+| output tokens | 4,531 | 910 |
+| verdict | correct, via a rule it wrote | correct, citing the `findings` and `storageWriters` rows |
+
+The answer's citations resolve: the `findings` row and the `storageWriters` row are in the run, and the
+report links them. The rule the agent had to invent last time is now the library's `callerSelectable`.
+Transcript: `out/runs/ClaimSemanticsPlayground-20260907-105631/ask/01-20260907-105710.md`.
+
+What is still open, in order: a benchmark of a few dozen questions with known answers across the
+fixtures and two zora contracts, run three ways (source only, `qf` plus source, `qf` only), scored on
+correctness, missed writers, unsupported claims, latency and tokens; and the CFG layer.

@@ -9,18 +9,20 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
+  statSync,
   writeFileSync,
 } from 'fs'
 import type { ServerResponse } from 'http'
 import { homedir } from 'os'
 import { join } from 'path'
+import { installQf } from '../../src/pipeline'
 import type {
   AskConfig,
   AskEvent,
   AskRequest,
   ModelChoice,
 } from '../shared/types'
-import { timestamp } from './run'
+import { ROOT, timestamp } from './run'
 
 const CODEX = process.env.CODEX ?? 'codex'
 const DEFAULT_MODEL = process.env.CODEX_MODEL ?? 'gpt-5.6-sol'
@@ -113,50 +115,45 @@ export function askConfig(): AskConfig {
   }
 }
 
-let souffleCache: string | undefined
-/** Absolute path of the Soufflé binary, so the agent's sandboxed shell finds the same one we use. */
-function souffleBinary(): string {
-  if (souffleCache) return souffleCache
-  const wanted = process.env.SOUFFLE ?? 'souffle'
-  const found = spawnSync(
-    'sh',
-    ['-c', `command -v ${JSON.stringify(wanted)}`],
-    {
-      encoding: 'utf8',
-    },
-  )
-  souffleCache =
-    found.status === 0 && found.stdout.trim() ? found.stdout.trim() : wanted
-  return souffleCache
+const QF_SCRIPT = join(ROOT, 'src', 'qf.mjs')
+/** Runs made before the qf commands existed get them on first use; newer scripts replace older copies. */
+function ensureQf(runDir: string): void {
+  const target = join(runDir, 'qf.mjs')
+  const fresh =
+    existsSync(target) &&
+    existsSync(join(runDir, 'qf')) &&
+    statSync(target).mtimeMs >= statSync(QF_SCRIPT).mtimeMs
+  if (!fresh) installQf(runDir, QF_SCRIPT)
 }
 
 /** What the agent is told before the first question of a conversation. */
-function briefing(unit: string, souffle: string): string {
-  return `You are answering a researcher's question about one Solidity contract, using the output of a static-analysis pipeline. Your working directory is one run of that pipeline; README.txt lists every file. Write only under scratch/ (create it if you need it); never edit the other files.
+function briefing(unit: string): string {
+  return `You are answering a researcher's question about one Solidity contract, from inside one run of a static-analysis pipeline: your working directory. source.sol is the flattened source exactly as compiled (unit name \`${unit}\`); line numbers refer to it. Everything the pipeline knows is reachable through the ./qf commands, which print rows as Datalog atoms you can quote.
 
-## What is in this folder
-- source.sol: the flattened Solidity source exactly as compiled (unit name \`${unit}\`). Line numbers refer to it.
-- program.dl: the whole Soufflé Datalog program that ran. Every relation is declared as \`.decl name(Col: type, ...)\` with a comment above it saying what it means; read that comment before interpreting a CSV. Layer 1 (rules/concepts.dl, sections 1a-1j) derives concepts from syntax: contract, function, param, stateVariable, storageSlot, stmt, condition, refs, callSite, argBinding, writeSite, readsDirect, assembly, ... Layers 2-5 (rules/lib.dl) derive the analysis: entryPoint, calls, transitivelyCalls, writes, writesIn, aliases, opaqueWrite, within, stmtOf, aborts, alwaysReverts, senderCheck, checkPrincipal, weakCheck, alwaysChecksSender, sometimesChecksSender, gatedWrite, ungatedSite, writeClaim. rules/report.dl exports storageWriters, writeClaims, opaqueWrites.
-- derived/<relation>.csv: every derived relation, tab-separated, no header, columns in .decl order (an empty relation is an empty file).
-- facts/*.facts: layer 0, solc's AST written down as facts (node, loc, child, attr, num, ...). Rarely needed.
-- report.md: the rendered report (storage writers per variable, write claims per entry point, entry points).
+## Commands (use these; do not read program.dl or derived/*.csv directly)
+- ./qf writers [<variable>]        who may write a storage variable, how, and where
+- ./qf function <name>             one function: signature, modifiers, callers, callees, writes, findings
+- ./qf guards <entry point>        sender-check findings for each variable it may write, the checks behind them, unknown effects on the way
+- ./qf gaps [<entry point>]        effects the analysis could not follow (delegatecall, unresolved sstore, function pointers)
+- ./qf source <function>|<a>-<b>   numbered source lines
+- ./qf rows <relation> [<text>]    rows of any derived relation containing <text> (./qf help lists the answer relations)
+- ./qf explain '<atom>'            why a tuple holds, down to the AST facts
+- ./qf query <file.dl>             only when no relation states what you need: write rules to scratch/extra.dl (with .decl and .output), run this, and quote the rules in the answer
+Names: a function by \`Contract.name(types)\`, \`Contract.name\` or \`name\`; a variable by \`Contract.name\` or \`name\`.
 
-## Identifiers
-Ids are readable strings. Contract: \`${unit}:<Name>\`. Function (modifiers and constructors alike): \`${unit}:<Contract>.<name>(<param types>)\`, e.g. \`${unit}:Foo.constructor(address,uint256)\`; in storageWriters the deployment pseudo entry point is the bare word \`constructor\`. State variable: \`${unit}:<Contract>.<name>\`. Parameter or local: \`<function>/<name>@<byte offset>\`. Site (statement, call, write): \`<function>@<byte offset>:<length>\`. derived/sourceLoc.csv maps any id to (file, start line, end line, offset, length); derived/located.csv maps an id to its AST node id.
+## Reading findings
+The Tier column says what kind of statement a finding is: structural (read off the syntax tree) · may (over-approximation; every "writer" is this) · guaranteed (holds on every completing execution, under the model: structured control flow, internal calls resolved, no unknown effect on the path) · heuristic (path coverage from straight-line position; "no check" relative to what the rules recognise as a check) · unknown (an effect the rules cannot follow). Findings quote the condition as written: "compares with owner" says what the sender is compared against, not that the comparison grants access (a \`!=\` is visible). An unknown effect (variable \`*\`) caps every universal statement about that entry point.
 
 ## How to work
-1. Start from report.md and the headline relations (writeClaims, storageWriters, writes, entryPoint), then follow the chain down: writeSite -> stmt / condition / refs -> source lines. grep, cut and awk on the tab-separated CSVs are enough.
-2. The claims in writeClaims are syntactic heuristics (Trust column: "sound" or "heuristic"). Do not repeat them as truth: check each against the source and say when a claim is too kind or too harsh, and why.
-3. If the question needs a fact no relation states, write a Datalog query: put new rules in scratch/extra.dl (declare each new relation with .decl and add .output for it), then run
-     cat program.dl scratch/extra.dl > scratch/q.dl && ${souffle} --no-preprocessor -F facts -D scratch/out scratch/q.dl
-   and read scratch/out/<relation>.csv. Quote the rules you added in the answer.
-4. To see why a tuple holds: printf 'setdepth 30\\nexplain writeClaims("...", ..., 25)\\nexit\\n' | ${souffle} --no-preprocessor -t explain -F facts -D scratch/out program.dl  (strings in double quotes, numbers bare). It takes seconds; use it sparingly.
-5. Be concise: a researcher should be able to verify the answer in a minute.
+1. Start with ./qf guards or ./qf writers for the functions or variables in the question, then ./qf source for the lines they point at. Two or three commands usually suffice.
+2. Repeat guaranteed and structural findings as facts and cite them; treat heuristic findings as leads to verify in the source; never make a universal claim across an unknown effect.
+3. Write Datalog only if the question needs a relation that does not exist.
+4. Be concise: a researcher should be able to verify the answer in a minute.
 
 ## Answer format (Markdown)
 - One or two sentences of verdict first.
-- Then **Evidence**: bullets, each citing a derived tuple, a source line, or both. Write tuples as Datalog atoms in backticks copied from the CSV rows, e.g. \`writeSite("<W>", "<S>", "<F>", "<V>", "=")\`: strings in double quotes, numbers bare, all columns in .decl order, ids complete (with the \`${unit}:\` prefix). Write source lines as \`L25\` or \`L24-L27\`. The explorer turns these into links, so exactness matters.
-- Then, if relevant, **What the rules do not capture**: what you concluded from reading the code that no relation states, and the rule that would state it.
+- Then **Evidence**: bullets, each citing a source line (\`L26\`, \`L24-L27\`) and/or an atom copied verbatim from qf output in backticks, e.g. \`findings("...", "...", "...", "caller-selectable", "...", "structural", 26)\`.
+- Then, if relevant, **What the rules do not capture**: what you concluded from the code that no finding states, and the rule that would state it.
 - No preamble, no restating the question, no closing summary.`
 }
 
@@ -224,7 +221,7 @@ export function streamAsk(
         unit?: string
       }
     ).unit ?? 'source.sol'
-  const souffle = souffleBinary()
+  ensureQf(runDir)
   const common = [
     '--json',
     '-m',
@@ -242,7 +239,7 @@ export function streamAsk(
     : ['exec', ...common, '--skip-git-repo-check', '--color', 'never', '-']
   const prompt = req.threadId
     ? `## Follow-up question\n\n${question}`
-    : `${briefing(unit, souffle)}\n\n## Question\n\n${question}`
+    : `${briefing(unit)}\n\n## Question\n\n${question}`
   const shownCommand = `${CODEX} ${args
     .map((a) => (/[\s"]/.test(a) ? `'${a}'` : a))
     .join(' ')}  (cwd: ${runDir})`

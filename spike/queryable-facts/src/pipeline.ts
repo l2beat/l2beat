@@ -4,13 +4,16 @@
 
 import { spawnSync } from 'child_process'
 import {
+  chmodSync,
+  copyFileSync,
   existsSync,
   mkdirSync,
   readdirSync,
   readFileSync,
+  realpathSync,
   writeFileSync,
 } from 'fs'
-import { join } from 'path'
+import { dirname, join } from 'path'
 import { type Backend, type CompileResult, compile } from './compile'
 import { emitFacts, type Facts } from './emit'
 import { renderReport } from './report'
@@ -24,6 +27,8 @@ export interface PipelineOptions {
   outDir: string
   /** Folder with schema.dl / concepts.dl / lib.dl / report.dl. */
   rulesDir: string
+  /** The `qf` query script copied into every run folder (default: src/qf.mjs next to rulesDir). */
+  qfScript?: string
   /** Where solc binaries and the release list are cached. */
   cacheDir: string
   backend?: Backend
@@ -110,6 +115,30 @@ export function buildProgram(files: RuleFile[], outputAll: boolean): string {
     }
   }
   return parts.join('\n')
+}
+
+/**
+ * Puts the `qf` commands into a run folder: the script itself and a `qf` wrapper that runs it with
+ * the node binary this process runs on (resolved through version-manager symlinks, so it stays
+ * valid in a later shell). An AI or a researcher in the folder then has `./qf help`.
+ */
+export function installQf(outDir: string, qfScript: string): void {
+  copyFileSync(qfScript, join(outDir, 'qf.mjs'))
+  let node = process.execPath
+  try {
+    node = realpathSync(process.execPath)
+  } catch {
+    // keep the unresolved path
+  }
+  const wrapper = `#!/usr/bin/env bash
+# qf — query this run (see ./qf help). The commands live in qf.mjs next to this file.
+here="$(cd "$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
+node_bin=${JSON.stringify(node)}
+if [ ! -x "$node_bin" ]; then node_bin="$(command -v node)"; fi
+exec "$node_bin" "$here/qf.mjs" "$@"
+`
+  writeFileSync(join(outDir, 'qf'), wrapper)
+  chmodSync(join(outDir, 'qf'), 0o755)
 }
 
 export function souffleVersion(bin: string): string {
@@ -225,10 +254,14 @@ export async function runPipeline(
     derived.set(file.replace(/\.csv$/, ''), readTsv(join(derivedDir, file)))
   }
 
-  // 4. report
+  // 4. report, and the qf commands next to it
   const t4 = performance.now()
   const report = renderReport({ unit, derivedDir })
   writeFileSync(join(outDir, 'report.md'), report)
+  installQf(
+    outDir,
+    opts.qfScript ?? join(dirname(opts.rulesDir), 'src', 'qf.mjs'),
+  )
   const reportMs = performance.now() - t4
 
   return {

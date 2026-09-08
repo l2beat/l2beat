@@ -28,13 +28,14 @@ export function Step7Report() {
           <h2>📊 Step 7 · Read the report, then ask</h2>
           <p className="lead">
             The report is <code>report.md</code>, rendered from the derived
-            relations of step 6 in the shape of the storage-writers analyzer:
-            who writes each storage variable, what the rules claim about each
-            write, the entry points. Every id in it is a link into the source.
-            Next to it an AI agent answers questions the rules were never asked,
-            working in this run's folder with the same facts, program and CSVs,
-            and citing tuples that link back into steps 3–6, so an answer can be
-            checked the same way you just checked the rules.
+            relations of step 6: who may write each storage variable, the
+            effects the rules could not follow, and one finding per entry point
+            and variable with its tier (structural, may, guaranteed, heuristic,
+            unknown). Every id in it is a link into the source. Next to it an AI
+            agent answers questions about this run through the <code>./qf</code>{' '}
+            commands in the run folder (writers, function, guards, gaps,
+            explain, query), citing tuples that link back into steps 3–6, so an
+            answer can be checked the same way you just checked the rules.
           </p>
           <div className="row small muted">
             <span className="mono">{run.runDir}/report.md</span>

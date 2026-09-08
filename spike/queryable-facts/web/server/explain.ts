@@ -30,6 +30,26 @@ export function formatAtom(
   return `${relation}(${args.join(', ')})`
 }
 
+/**
+ * Soufflé's explain mode prints JSON with escapes JSON does not have (`\;` for a semicolon in a
+ * string): keep the valid escapes, drop the backslash from the others.
+ */
+function fixSouffleJson(text: string): string {
+  let out = ''
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i]
+    if (c !== '\\') {
+      out += c
+      continue
+    }
+    const next = text[i + 1] ?? ''
+    if ('"\\/bfnrtu'.includes(next)) out += c + next
+    else out += next
+    i++
+  }
+  return out
+}
+
 /** Extracts the first balanced `{...}` JSON object from Soufflé's chatty stdout. */
 function firstJsonObject(text: string): string | undefined {
   const start = text.indexOf('{')
@@ -139,7 +159,10 @@ export function explainTuple(
   const json = firstJsonObject(run.stdout)
   if (!json)
     throw new Error(`no proof in Soufflé output:\n${run.stdout.slice(0, 2000)}`)
-  const parsed = JSON.parse(json) as { proof: RawProof; rules?: RawRule[] }
+  const parsed = JSON.parse(fixSouffleJson(json)) as {
+    proof: RawProof
+    rules?: RawRule[]
+  }
   return {
     atom,
     proof: convert(parsed.proof, parsed.rules ?? []),

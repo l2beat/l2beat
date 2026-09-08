@@ -1,0 +1,3 @@
+# opaqueWrites: reviewed rows for StorageWriters.sol; regenerate with 'pnpm semantic --update', then check the diff
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)	assembly	h	106	StorageWriters.sol:StorageWriters.asmMappingWrite(address,uint256)@2721:16
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)	delegatecall	target.delegatecall(data)	111	StorageWriters.sol:StorageWriters.doDelegate(address,bytes)@2849:25

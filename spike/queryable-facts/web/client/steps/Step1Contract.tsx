@@ -19,7 +19,7 @@ export function PipelineFlow({
     ['⚙️', 'Compile', 'solc → AST + storage layout'],
     ['🧱', 'Tree as facts', 'the AST written down as rows, mechanically'],
     ['🔎', 'Concepts', 'rules: function, statement, call, write…'],
-    ['📜', 'Rules', 'rules: call graph, writes, guards, claims'],
+    ['📜', 'Rules', 'rules: call graph, writes, sender checks, findings'],
     ['🔁', 'Derive', 'Soufflé computes the unique model'],
   ]
   return (

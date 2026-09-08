@@ -1,5 +1,6 @@
-// Renders Soufflé's output relations the way the storage-writers analyzer prints its
-// report, so the two can be diffed by eye, plus the claim table for the playground contract.
+// Renders Soufflé's output relations as report.md: the storage-writers table (in the shape of the
+// Python analyzer's, so the two can be diffed), the unknown effects per contract, and the findings
+// per entry point with their tier.
 
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
@@ -12,9 +13,13 @@ function readTsv(path: string): string[][] {
     .map((line) => line.split('\t'))
 }
 
+function cell(text: string): string {
+  return text.replace(/\|/g, '\\|')
+}
+
 function code(items: string[]): string {
   if (items.length === 0) return '—'
-  return items.map((i) => `\`${i.replace(/\|/g, '\\|')}\``).join(', ')
+  return items.map((i) => `\`${cell(i)}\``).join(', ')
 }
 
 export interface ReportInput {
@@ -23,18 +28,40 @@ export interface ReportInput {
   derivedDir: string
 }
 
+export const TIER_LEGEND =
+  'structural (read off the syntax tree) · may (over-approximation: paths that can never run are included) · ' +
+  'guaranteed (every completing execution, under the model: structured control flow, internal calls resolved, ' +
+  'no unknown effect on the path) · heuristic (pattern-based: path coverage from straight-line position, ' +
+  '"no check" relative to what the rules recognise) · unknown (an effect the analysis cannot follow)'
+
 export function renderReport({ unit, derivedDir }: ReportInput): string {
   const label = (id: string): string =>
     id.startsWith(`${unit}:`) ? id.slice(unit.length + 1) : id
   const derived = (name: string) => readTsv(join(derivedDir, `${name}.csv`))
-  const fact = derived
+  const entryLabel = (C: string, E: string): string =>
+    E === 'constructor' ? `${label(C)}.constructor()` : label(E)
 
   const typeOf = new Map<string, string>()
-  for (const [V, , , type] of fact('stateVariable'))
+  for (const [V, , , type] of derived('stateVariable'))
     typeOf.set(V ?? '', type ?? '?')
   const selectorOf = new Map<string, string>()
-  for (const [F, , , , , , , sel] of fact('function'))
+  for (const [F, , , , , , , sel] of derived('function'))
     selectorOf.set(F ?? '', sel ?? '')
+  const lineOf = new Map<string, number>()
+  for (const [id = '', , line = '0'] of derived('sourceLoc'))
+    lineOf.set(id, Number(line))
+  const principals = new Map<string, string[]>()
+  for (const [X = '', P = ''] of derived('checkPrincipal')) {
+    const list = principals.get(X) ?? []
+    list.push(label(P))
+    principals.set(X, list)
+  }
+  const targets = new Map<string, string[]>()
+  for (const [K = '', V = ''] of derived('possibleTargets')) {
+    const list = targets.get(K) ?? []
+    list.push(label(V))
+    targets.set(K, list)
+  }
 
   // storageWriters(C, V, Slot, E)
   const writers = new Map<string, Map<string, Set<string>>>()
@@ -48,37 +75,67 @@ export function renderReport({ unit, derivedDir }: ReportInput): string {
   // storageSlot(C, V, Slot, Offset) — every storage variable of every deployable contract
   const deployable = new Set(derived('deployable').map((r) => r[0] ?? ''))
   const slots = new Map<string, Array<{ V: string; slot: number }>>()
-  for (const [C = '', V = '', slot = '0'] of fact('storageSlot')) {
+  for (const [C = '', V = '', slot = '0'] of derived('storageSlot')) {
     if (!deployable.has(C)) continue
     let list = slots.get(C)
     if (!list) slots.set(C, (list = []))
     list.push({ V, slot: Number(slot) })
   }
-  // opaqueWrites(C, E, F, Kind, Detail, Line)
-  const opaque = derived('opaqueWrites')
-  const targets = new Map<string, string[]>()
-  for (const [K = '', V = ''] of derived('possibleTargets')) {
-    const list = targets.get(K) ?? []
-    list.push(label(V))
-    targets.set(K, list)
-  }
-
   for (const C of deployable) if (!slots.has(C)) slots.set(C, [])
 
-  const lines: string[] = ['# Storage writers (Soufflé)', '']
+  // finding(C, E, V, Kind, Detail, Tier, Evidence)
+  interface Finding {
+    C: string
+    E: string
+    V: string
+    kind: string
+    detail: string
+    tier: string
+    evidence: string
+  }
+  const findings: Finding[] = derived('finding').map(
+    ([
+      C = '',
+      E = '',
+      V = '',
+      kind = '',
+      detail = '',
+      tier = '',
+      evidence = '',
+    ]) => ({
+      C,
+      E,
+      V,
+      kind,
+      detail,
+      tier,
+      evidence,
+    }),
+  )
+  const unknownFindings = findings.filter((f) => f.tier === 'unknown')
+  // assembly(A, F, HasYul): which function an assembly block sits in, for the grouped caveat rows
+  const assemblyIn = new Map<string, string>()
+  for (const [A = '', F = ''] of derived('assembly')) assemblyIn.set(A, F)
+
+  const lines: string[] = [
+    '# Storage writers (may write)',
+    '',
+    '_Entry points that may change each variable, through any chain of internal calls, modifiers and',
+    'library calls (over-approximate by design: a path that can never run still counts). Effects the',
+    'rules cannot follow are listed under each contract as unknown effects; they may touch any slot._',
+    '',
+  ]
   for (const C of [...slots.keys()].sort()) {
     const vars = (slots.get(C) ?? []).sort((a, b) => a.slot - b.slot)
     lines.push(`## ${label(C)} (${vars.length} storage vars)`, '')
     lines.push(
-      '| Variable | Slot | Type | Writers |',
+      '| Variable | Slot | Type | May be written by |',
       '| --- | --- | --- | --- |',
     )
     for (const { V, slot } of vars) {
       const set = writers.get(C)?.get(V) ?? new Set<string>()
       const list = [...set]
-        .map((E) =>
-          E === 'constructor' ? `${label(C)}.constructor()` : label(E),
-        )
+        .map((E) => entryLabel(C, E))
         .sort((a, b) => {
           const ca = a.endsWith('.constructor()') ? 0 : 1
           const cb = b.endsWith('.constructor()') ? 0 : 1
@@ -88,79 +145,79 @@ export function renderReport({ unit, derivedDir }: ReportInput): string {
         `| \`${label(V)}\` | ${slot} | \`${typeOf.get(V) ?? '?'}\` | ${list.length > 0 ? code(list) : '_no writers_'} |`,
       )
     }
-    const mine = opaque.filter((r) => r[0] === C)
+    const mine = unknownFindings
+      .filter((f) => f.C === C)
+      .sort(
+        (a, b) =>
+          (lineOf.get(a.E) ?? 0) - (lineOf.get(b.E) ?? 0) ||
+          a.E.localeCompare(b.E) ||
+          (lineOf.get(a.evidence) ?? 0) - (lineOf.get(b.evidence) ?? 0),
+      )
     if (mine.length > 0) {
-      lines.push('', `### Unnamed/opaque writes in ${label(C)}`, '')
+      lines.push('', `### Unknown effects in ${label(C)}`, '')
       lines.push(
-        '| Function | Detail | Location | Possible targets |',
+        '| Entry point | What | Line | Possible targets |',
         '| --- | --- | --- | --- |',
       )
-      for (const [
-        ,
-        E = '',
-        F = '',
-        kind = '',
-        detail = '',
-        line = '',
-        K = '',
-      ] of mine.sort()) {
-        const entry =
-          E === 'constructor' ? `${label(C)}.constructor()` : label(E)
-        const what =
-          kind === 'assembly' && detail.startsWith('assembly without')
-            ? detail
-            : kind === 'assembly'
-              ? `sstore to an unresolved slot (${detail})`
-              : kind === 'storageRef'
-                ? `write through a storage reference that resolves to no variable (${label(detail)})`
-                : `${kind} may write arbitrary storage`
+      for (const f of mine.filter((f) => f.kind !== 'assembly')) {
         lines.push(
-          `| \`${entry}\` | ${what} | \`${label(F)}:${line}\` | ${code(targets.get(K) ?? [])} |`,
+          `| \`${entryLabel(C, f.E)}\` | ${cell(f.detail)} | ${lineOf.get(f.evidence) ?? ''} | ${code(targets.get(f.evidence) ?? [])} |`,
+        )
+      }
+      // one row per entry point for the assembly caveat, listing the blocks it reaches
+      const asmByEntry = new Map<string, string[]>()
+      for (const f of mine.filter((f) => f.kind === 'assembly')) {
+        const list = asmByEntry.get(f.E) ?? []
+        list.push(
+          `\`${label(assemblyIn.get(f.evidence) ?? f.evidence)}\` L${lineOf.get(f.evidence) ?? '?'}`,
+        )
+        asmByEntry.set(f.E, list)
+      }
+      for (const [E, blocks] of asmByEntry) {
+        lines.push(
+          `| \`${entryLabel(C, E)}\` | reaches inline assembly that writes storage, in ${blocks.join(', ')}: its slots were named, but nothing universal is guaranteed past it | | — |`,
         )
       }
     }
     lines.push('')
   }
 
-  // writeClaims(C, E, V, Claim, Trust, Line)
-  const lineOf = new Map<string, number>()
-  for (const [id = '', , line = '0'] of fact('sourceLoc'))
-    lineOf.set(id, Number(line))
-  const claims = derived('writeClaims')
-  if (claims.length > 0) {
+  const rest = findings.filter((f) => f.tier !== 'unknown')
+  if (rest.length > 0) {
     lines.push(
-      '# Write claims per entry point (syntactic v1 of `guardedBy`)',
+      '# Findings per entry point',
+      '',
+      '_What the rules found on the way from each entry point to each variable it may write. The',
+      'condition is quoted as written, so a `!=` is visible: naming what the sender is compared with is',
+      'not a statement that the comparison grants access._',
+      '',
+      `_Tiers: ${TIER_LEGEND}._`,
       '',
     )
     lines.push(
-      '| Contract | Entry point | Variable | Claim | Trust | Line |',
+      '| Entry point | Variable | Finding | Tier | Compares with | Line |',
       '| --- | --- | --- | --- | --- | --- |',
     )
-    const sorted = claims.sort((a, b) => {
-      const la = lineOf.get(a[1] ?? '') ?? 0
-      const lb = lineOf.get(b[1] ?? '') ?? 0
-      return (
-        la - lb ||
-        (a[2] ?? '').localeCompare(b[2] ?? '') ||
-        (a[3] ?? '').localeCompare(b[3] ?? '')
-      )
-    })
-    for (const [
-      C = '',
-      E = '',
-      V = '',
-      claim = '',
-      trust = '',
-      line = '',
-    ] of sorted) {
+    const sorted = rest.sort(
+      (a, b) =>
+        (lineOf.get(a.E) ?? 0) - (lineOf.get(b.E) ?? 0) ||
+        a.E.localeCompare(b.E) ||
+        a.V.localeCompare(b.V) ||
+        (lineOf.get(a.evidence) ?? 0) - (lineOf.get(b.evidence) ?? 0) ||
+        a.kind.localeCompare(b.kind),
+    )
+    for (const f of sorted) {
+      const line = f.evidence === '' ? '' : String(lineOf.get(f.evidence) ?? '')
+      const variable =
+        f.V === '*' ? '_any (unknown effect)_' : `\`${label(f.V)}\``
       lines.push(
-        `| ${label(C)} | \`${label(E)}\` | \`${label(V)}\` | ${claim.replace(/\|/g, '\\|')} | ${trust} | ${line === '0' ? '' : line} |`,
+        `| \`${entryLabel(f.C, f.E)}\` | ${variable} | ${cell(f.detail)} | ${f.tier} | ${code(principals.get(f.evidence) ?? [])} | ${line} |`,
       )
     }
     lines.push('')
   }
 
-  // entryPoints(C, F)
+  // entryPoint(C, F)
   const entries = derived('entryPoint')
   if (entries.length > 0) {
     lines.push('# Entry points', '')
@@ -173,11 +230,22 @@ export function renderReport({ unit, derivedDir }: ReportInput): string {
     lines.push('')
   }
 
-  const unhandled = fact('unhandled')
+  const unhandled = derived('unhandled')
+  const unknownSites = new Set(
+    unknownFindings
+      .filter((f) => f.kind === 'unknown-effect')
+      .map((f) => f.evidence),
+  ).size
   lines.push(
-    unhandled.length === 0
-      ? '_Extractor coverage: no unhandled AST constructs._'
-      : `_Extractor coverage: ${unhandled.length} unhandled construct(s) — see facts/unhandled.facts._`,
+    `_Coverage — analysis: ${
+      unknownSites === 0
+        ? 'every call and write on the way from an entry point was followed'
+        : `${unknownSites} unknown effect${unknownSites === 1 ? '' : 's'} the rules could not follow (listed above)`
+    }. Extractor: ${
+      unhandled.length === 0
+        ? 'no unhandled AST constructs'
+        : `${unhandled.length} unhandled construct(s) — see derived/unhandled.csv`
+    }._`,
   )
   return `${lines.join('\n')}\n`
 }

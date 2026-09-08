@@ -124,12 +124,13 @@ export function Ask() {
         <p className="small" style={{ color: '#3a3f47' }}>
           The agent is the <code>codex</code> CLI, started in{' '}
           <code>{run.runDir}</code> with the files you just walked through, in a
-          sandbox that can write only there. It reads the same CSVs, runs
-          Soufflé when it needs a rule that does not exist yet, and is asked to
-          cite tuples and source lines. Citations are links: click a relation
-          name to see that row in step 6 (or 4, or 3), an id to light it up in
-          the source, <code>L25</code> to jump there. A cited tuple this run
-          does not contain is{' '}
+          sandbox that can write only there. It works through the{' '}
+          <code>./qf</code> commands (writers, guards, function, gaps, explain),
+          writes Datalog only when no relation states what it needs, and is
+          asked to cite tuples and source lines. Citations are links: click a
+          relation name to see that row in step 6 (or 4, or 3), an id to light
+          it up in the source, <code>L25</code> to jump there. A cited tuple
+          this run does not contain is{' '}
           <code className="cite unknown">marked like this</code>.
         </p>
         {codexError && (
@@ -223,21 +224,24 @@ export function Ask() {
   )
 }
 
-/** Questions worth asking about any run, plus one about a claim this run actually made. */
+/** Questions worth asking about any run, plus one about a finding this run actually made. */
 function suggestions(index: RunIndex): string[] {
-  const claims = index.derived.get('writeClaims') ?? []
+  const findings = index.derived.get('findings') ?? []
   const out: string[] = []
-  const conditional = claims.find((r) =>
-    r[3]?.startsWith('conditionally guarded'),
+  const partial = findings.find(
+    (r) =>
+      r[3] === 'caller-selectable' ||
+      r[3] === 'check-after-return' ||
+      r[3] === 'some-paths',
   )
-  if (conditional)
+  if (partial)
     out.push(
-      `Is ${index.shortLabel(conditional[1] ?? '')} really guarded? Who decides whether its msg.sender check runs, and can anyone change ${index.shortLabel(conditional[2] ?? '')}?`,
+      `Is ${index.shortLabel(partial[1] ?? '')} really guarded? Who decides whether its sender check runs, and can anyone change ${index.shortLabel(partial[2] ?? '')}?`,
     )
   out.push(
     'Which storage variables can be changed after deployment, and by whom?',
-    'Which entry points let an arbitrary caller modify storage? Check the claims against the code.',
-    'Which write claims in the report are too kind or too harsh once you read the code?',
+    'Which entry points let an arbitrary caller modify storage? Check the findings against the code.',
+    'Which findings in the report are too kind or too harsh once you read the code?',
   )
   return out
 }

@@ -872,3 +872,49 @@ located(cat(Ctx, "@", to_string(St), ":unhandled"), N) :- unhandledAt(Ctx, _, N)
 .decl sourceLoc(Id: symbol, File: symbol, StartLine: number, EndLine: number, Start: number, Length: number)
 .output sourceLoc
 sourceLoc(Id, File, L1, L2, St, Len) :- located(Id, N), loc(N, _, St, Len, L1, L2), unit(_, File, _).
+
+// ---------------------------------------------------------------------------
+// 1j. Small concepts the guard layer reads: what a condition names, getters that stand in for
+// msg.sender or a state variable, and which functions a function-typed variable can hold.
+// ---------------------------------------------------------------------------
+
+// The condition of X mentions parameter P (named Name) of the enclosing function.
+.decl refsParam(X: symbol, P: symbol, Name: symbol)
+.output refsParam
+refsParam(X, P, Name) :- condDesc(XN, D), node(D, "Identifier"), refOf(D, PN), fnParam(_, _, PN), name(PN, P), attr(PN, "name", Name), siteId(XN, X).
+
+// An if-statement with an else branch.
+.decl hasElse(S: symbol)
+.output hasElse
+hasElse(S) :- isStmt(SN), node(SN, "IfStatement"), hasChild(SN, "falseBody"), siteId(SN, S).
+
+// F has a `return` that hands back a global (`return msg.sender;`) or a state variable
+// (`return _owner;`) directly: the getters that conditions call instead of naming the thing itself.
+.decl returnsGlobal(F: symbol, Global: symbol)
+.output returnsGlobal
+returnsGlobal(F, G) :- returnPart(Ret, _, E), stmtNode(Ret, FN, _, _), node(E, "MemberAccess"), child(E, "expression", 0, B), builtinIdent(B),
+                       attr(B, "name", BN), attr(E, "memberName", M), G = cat(BN, ".", M), globalRef(G), functionName(FN, F).
+.decl returnsStateVar(F: symbol, V: symbol)
+.output returnsStateVar
+returnsStateVar(F, V) :- returnPart(Ret, _, E), stmtNode(Ret, FN, _, _), node(E, "Identifier"), refOf(E, D), isStateVar(D), name(D, V), functionName(FN, F).
+
+// Function-typed variable Var (local, parameter or state variable) is given function G: at its
+// declaration, by assignment, or as the call argument that binds a callee's parameter.
+.decl fnAssigned(Var: symbol, G: symbol)
+.output fnAssigned
+fnAssigned(Var, G) :- isStmt(St), node(St, "VariableDeclarationStatement"), child(St, "declarations", _, DN), child(St, "initialValue", 0, E),
+                      node(E, "Identifier"), refOf(E, D), node(D, "FunctionDefinition"), name(DN, Var), functionName(D, G).
+fnAssigned(Var, G) :- inFn(A, _), node(A, "Assignment"), child(A, "leftHandSide", 0, L), node(L, "Identifier"), refOf(L, DN), name(DN, Var),
+                      child(A, "rightHandSide", 0, E), node(E, "Identifier"), refOf(E, D), node(D, "FunctionDefinition"), functionName(D, G).
+fnAssigned(P, G) :- callArg(KN, I, E), node(E, "Identifier"), refOf(E, D), node(D, "FunctionDefinition"), functionName(D, G),
+                    calleeDecl(KN, CD), fnParam(CD, I, PN), name(PN, P).
+
+// Argument I of call K, as written: a global (`msg.sender`) or a call to function G. The guard layer
+// follows these one hop, to see `_checkRole(role, _msgSender())` check the sender under another name.
+.decl argGlobal(K: symbol, I: number, Global: symbol)
+.output argGlobal
+argGlobal(K, I, G) :- callArg(KN, I, A), node(A, "MemberAccess"), child(A, "expression", 0, B), builtinIdent(B),
+                      attr(B, "name", BN), attr(A, "memberName", M), G = cat(BN, ".", M), globalRef(G), siteId(KN, K).
+.decl argCall(K: symbol, I: number, G: symbol)
+.output argCall
+argCall(K, I, G) :- callArg(KN, I, A), node(A, "FunctionCall"), callKind(A, Kind, G), (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"), siteId(KN, K).

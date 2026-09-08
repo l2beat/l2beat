@@ -12,7 +12,8 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "dev": "vite --config web/vite.config.ts",
-    "parity": "tsx src/parity.ts --fixtures"
+    "parity": "tsx src/parity.ts --fixtures",
+    "semantic": "tsx src/semantic.ts"
   },
   "dependencies": {
     "@ethereum-sourcify/compilers": "^1.1.1",

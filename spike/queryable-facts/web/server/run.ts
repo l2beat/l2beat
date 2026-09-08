@@ -98,18 +98,23 @@ const RUN_README = `This folder is one run of the queryable-facts pipeline (spik
                      Every row is something solc said; nothing here interprets Solidity.
   program.dl         the Soufflé program that ran: rules/schema.dl (layer 0 declarations) + rules/concepts.dl
                      (layer 1: syntax → concepts such as function, stmt, callSite, writeSite) + rules/lib.dl
-                     (layers 2-5: call graph, writes, guards, claims) + rules/report.dl (+ .output for all)
+                     (layers 2-6: call graph, writes, sender checks, findings) + rules/report.dl (+ .output for all)
   derived/<rel>.csv  every relation Soufflé derived (tab-separated), concept relations included
-  report.md          the storage-writers style report rendered from the derived relations
+  report.md          the report rendered from the derived relations: may-writers per variable, unknown effects,
+                     findings per entry point with their tier (structural / may / guaranteed / heuristic / unknown)
+  qf, qf.mjs         the query commands: ./qf help, writers, function, guards, gaps, rows, source, explain, query.
+                     They only filter and format derived relations; the logic is in program.dl.
   run.json           metadata: solc version, timings, counts
   ask/<n>-*.md       one transcript per question asked in the explorer's step 7: the question, the model,
                      every command the agent ran (sandboxed to this folder) and its answer
   scratch/           whatever the agent wrote while answering (extra Datalog rules, Soufflé outputs)
 
+Start with:                     ./qf help
+Who may write a variable:       ./qf writers <variable>
+What guards an entry point:     ./qf guards <function>
+Why a tuple holds:              ./qf explain 'findings("...", ..., 26)'   (any derived relation, down to node/child/attr)
+Extra rules against this run:   ./qf query scratch/extra.dl
 To re-run Soufflé by hand:      souffle --no-preprocessor -F facts -D derived program.dl
-To ask why a tuple holds:       souffle --no-preprocessor -t explain -F facts -D derived program.dl
-                                then type: explain writeSite("<W>", "<S>", "<F>", "<V>", "=")
-                                (any derived relation works, down to the raw node/child/attr rows)
 `
 
 export async function runForExplorer(

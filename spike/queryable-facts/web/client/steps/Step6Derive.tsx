@@ -8,12 +8,12 @@ import { type Highlight, SourceView } from '../components/SourceView'
 import { Callout, ms, Panel } from '../components/ui'
 import { useRun } from '../lib/context'
 
-const HEADLINE = ['storageWriters', 'writeClaims', 'opaqueWrites', 'writes']
+const HEADLINE = ['storageWriters', 'findings', 'opaqueWrites', 'writes']
 
 export function Step6Derive() {
   const { index, nav, setNav } = useRun()
   const run = index.run
-  const relation = nav.derivedRelation ?? 'writeClaims'
+  const relation = nav.derivedRelation ?? 'findings'
   const info = index.relations.get(relation)
   const rows = index.derived.get(relation) ?? []
   const [proof, setProof] = useState<
