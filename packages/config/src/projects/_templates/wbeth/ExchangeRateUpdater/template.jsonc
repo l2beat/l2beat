@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ExchangeRateUpdater",
+  "category": "core",
+  "canActIndependently": false,
+  "description": "Rate-limited relay that is the token's registered oracle. Whitelisted callers write the wBETH exchange rate through it, and each caller has an allowance that caps the cumulative absolute change it may push; the allowance refills linearly over the caller's interval. This is the only bound on the exchange rate anywhere in the system, and it can be bypassed by the token owner repointing the oracle.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "whitelist or remove callers and set each caller's allowance and refill interval, with no delay."
+        }
+      ]
+    },
+    "callers": {
+      "handler": {
+        "type": "event",
+        "select": "caller",
+        "add": { "event": "CallerConfigured" },
+        "remove": { "event": "CallerRemoved" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to push a new exchange rate through this contract.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the wBETH exchange rate, up or down, by at most its allowance per refill interval."
+        }
+      ]
+    },
+    "callerLimits": {
+      "handler": {
+        "type": "event",
+        "select": ["caller", "amount", "interval"],
+        "add": { "event": "CallerConfigured" },
+        "remove": { "event": "CallerRemoved" }
+      },
+      "description": "Per-caller cap on the cumulative absolute rate change (1e18 scale) and the number of seconds over which that allowance refills."
+    },
+    "tokenContract": {
+      "description": "The token whose exchange rate this contract writes."
+    }
+  }
+}
