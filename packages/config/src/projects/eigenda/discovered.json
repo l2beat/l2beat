@@ -1955,6 +1955,9 @@
   },
   "usedBlockNumbers": { "ethereum": 25846657 },
   "permissionsConfigHash": "0x1c0553d084399c999281f175e13f7d769588de56db13fcd20ba920bf47072fe6",
+  "modelledAgainst": {
+    "shared-eigenlayer": "0x7b8d163165f154ee1f29ea8a5c81acad654ad24cd5952a5cdb64863bfd1d44c3"
+  },
   "permissions": {
     "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": {
       "receivedPermissions": [

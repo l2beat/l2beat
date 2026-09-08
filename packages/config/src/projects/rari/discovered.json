@@ -1956,6 +1956,10 @@
   },
   "usedBlockNumbers": { "arbitrum": 478620683 },
   "permissionsConfigHash": "0x9676b72efef10c4fd62a2c82e7267d3207f3c51ca25d13021f95fc9d0bcbd468",
+  "modelledAgainst": {
+    "blobstream": "0x7ad6b67fdb402e712f4d84a19d277949cd27ca8f45cde13be7353f33164ec1a9",
+    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+  },
   "permissions": {
     "arb1:0x003e70B041abb993006C03E56c8515622a02928C": {
       "directlyReceivedPermissions": [

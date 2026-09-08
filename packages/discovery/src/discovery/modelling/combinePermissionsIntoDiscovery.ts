@@ -25,6 +25,7 @@ export function combinePermissionsIntoDiscovery(
   clusterEntries: EntryParameters[],
 ) {
   discovery.permissionsConfigHash = permissionsOutput.permissionsConfigHash
+  discovery.modelledAgainst = permissionsOutput.modelledAgainst
 
   const allAddresses = new Set(
     clusterEntries.map((e) => e.address.toLowerCase()),
