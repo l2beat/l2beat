@@ -185,7 +185,7 @@ function toInteropProjectIconListItems(
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
-function getChainDisplayInfo(
+export function getChainDisplayInfo(
   chainId: string,
   projects: Project<'chainConfig'>[],
 ) {
