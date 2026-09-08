@@ -569,20 +569,20 @@ export const aztecnetwork: ScalingProject = {
           sentiment: 'good',
           description: `Escape hatch: ${escapeHatchBondString} bond to enter a set from which one proposer is periodically selected every ${escapeHatchFrequencyString} to bypass the regular committee, include transactions, and prove the resulting checkpoints. ${escapeHatchWithdrawalTaxString} proposal tax. Private transactions: allow users to cheaply resist censorship based on transaction content while the chain is live.`,
         },
+        inclusionDelayChart: {
+          type: 'committeelike',
+          validatorCount: activeSequencerCount,
+          committeeSize: targetCommitteeSize,
+          epochSlots,
+          slotSeconds: slotDuration,
+          blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
+          target: 0.99,
+          maxCensorFraction: 0.5,
+          stakeDistribution,
+        },
+        inclusionDelayChartDescription:
+          'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       },
-      inclusionDelayChart: {
-        type: 'committeelike',
-        validatorCount: activeSequencerCount,
-        committeeSize: targetCommitteeSize,
-        epochSlots,
-        slotSeconds: slotDuration,
-        blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
-        target: 0.99,
-        maxCensorFraction: 0.5,
-        stakeDistribution,
-      },
-      inclusionDelayChartDescription:
-        'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       censorshipResistance: readProjectMarkdown(
         'aztecnetwork',
         'censorshipResistance',

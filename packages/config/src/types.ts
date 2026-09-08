@@ -63,30 +63,12 @@ export interface ProjectTechnologyChoice {
   isUnderReview?: boolean
 }
 
-/**
- * The sequencing section carries fields no other technology choice has.
- * The union ties the inclusion-delay chart to sequencer sets: the chart
- * models validator-set censorship, so a centralized spec cannot carry one.
- */
-export type ProjectSequencingTechnologyChoice = ProjectTechnologyChoice & {
+/** The sequencing section carries fields no other technology choice has. */
+export interface ProjectSequencingTechnologyChoice
+  extends ProjectTechnologyChoice {
+  sequencingSpec?: ProjectSequencingSpec
   censorshipResistance?: string
-} & (
-    | {
-        sequencingSpec?: never
-        inclusionDelayChart?: never
-        inclusionDelayChartDescription?: never
-      }
-    | {
-        sequencingSpec: ProjectSequencerSetSpec
-        inclusionDelayChart?: ProjectInclusionDelayChart
-        inclusionDelayChartDescription?: string
-      }
-    | {
-        sequencingSpec: ProjectCentralizedSequencingSpec
-        inclusionDelayChart?: never
-        inclusionDelayChartDescription?: never
-      }
-  )
+}
 
 export type ProjectSequencingSpec =
   | ProjectSequencerSetSpec
@@ -103,6 +85,12 @@ export interface ProjectSequencerSetSpec {
   rateLimit?: TableReadyValue
   deterministicCrGadget?: TableReadyValue
   additionalCrGadgets?: TableReadyValue
+  /**
+   * The chart models validator-set censorship, so only a sequencer set
+   * carries one. A centralized spec has no chart.
+   */
+  inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
 }
 
 export interface ProjectCentralizedSequencingSpec {

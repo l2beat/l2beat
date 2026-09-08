@@ -315,18 +315,18 @@ export const polygonpos: ScalingProject = {
         rateLimit: { value: 'No (permissioned)' },
         deterministicCrGadget: SEQUENCING_SPEC.NO_DETERMINISTIC_CR_GADGET(),
         additionalCrGadgets: { value: 'No', sentiment: 'bad' },
+        inclusionDelayChart: {
+          type: 'spanlike',
+          validatorCount: currentValidatorSetSize,
+          spanBlocks: polygonSpanBlocks,
+          blockSeconds: polygonBlockSeconds,
+          target: 0.99,
+          maxCensorFraction: 0.33,
+          stakeDistribution,
+        },
+        inclusionDelayChartDescription:
+          'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
       },
-      inclusionDelayChart: {
-        type: 'spanlike',
-        validatorCount: currentValidatorSetSize,
-        spanBlocks: polygonSpanBlocks,
-        blockSeconds: polygonBlockSeconds,
-        target: 0.99,
-        maxCensorFraction: 0.33,
-        stakeDistribution,
-      },
-      inclusionDelayChartDescription:
-        'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
       censorshipResistance: readProjectMarkdown(
         'polygon-pos',
         'censorshipResistance',

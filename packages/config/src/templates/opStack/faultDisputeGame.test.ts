@@ -3,7 +3,7 @@ import {
   getOpStackBondScalingFactor,
   getOpStackFullDisputeGameBondCostEther,
   getOpStackMaxCumulativeClockExtension,
-} from './opStack'
+} from './faultDisputeGame'
 
 describe(getOpStackBondScalingFactor.name, () => {
   it('derives the deployed OP fault-proof bond multiplier', () => {

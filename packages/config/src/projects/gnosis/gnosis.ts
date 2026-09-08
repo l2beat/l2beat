@@ -308,17 +308,17 @@ export const gnosis: ScalingProject = {
           value: 'Shutter encrypted mempool beta',
           sentiment: 'warning',
         },
+        inclusionDelayChart: {
+          type: 'ethereumlike',
+          validatorCount: stakeDistribution.validatorCount,
+          slotSeconds: gnosisSlotSeconds,
+          target: 0.99,
+          maxCensorFraction: 0.5,
+          stakeDistribution,
+        },
+        inclusionDelayChartDescription:
+          'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
       },
-      inclusionDelayChart: {
-        type: 'ethereumlike',
-        validatorCount: stakeDistribution.validatorCount,
-        slotSeconds: gnosisSlotSeconds,
-        target: 0.99,
-        maxCensorFraction: 0.5,
-        stakeDistribution,
-      },
-      inclusionDelayChartDescription:
-        'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
       censorshipResistance: readProjectMarkdown(
         'gnosis',
         'censorshipResistance',

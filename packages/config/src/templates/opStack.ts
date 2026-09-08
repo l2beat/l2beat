@@ -19,7 +19,6 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  SEQUENCING_SPEC,
   stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -48,7 +47,6 @@ import type {
   InteropConfig,
   Milestone,
   ProjectActivityConfig,
-  ProjectCentralizedSequencingSpec,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEcosystemInfo,
@@ -78,6 +76,22 @@ import {
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
+import {
+  type FraudProofType,
+  getFaultDisputeGameName,
+  getFraudProofType,
+  getOpStackBondScalingFactor,
+  getOpStackFullDisputeGameBondCostEther,
+  getOpStackMaxCumulativeClockExtension,
+  getOptimismPortal,
+  getOracleChallengePeriod,
+  getPermissionedGameBond,
+  getPermissionlessGameBond,
+} from './opStack/faultDisputeGame'
+import {
+  getOpStackCentralizedSequencing,
+  type OpStackCentralizedSequencingConfig,
+} from './opStack/sequencing'
 import {
   asArray,
   explorerReferences,
@@ -275,7 +289,11 @@ interface OpStackConfigCommon {
   securityCouncilReference?: string
   stage1PrincipleDescription?: string
   /** Manual altDA Stage 1 principle verdict (no automation). */
-  stage1Principle?: boolean | 'UnderReview'
+  stage1Principle?: boolean | 'UnderReview' /**
+   * Builds technology.sequencing for a chain run by a centralized sequencer.
+   * Exit delay and economics are derived from the respected fraud-proof type.
+   */
+  centralizedSequencing?: OpStackCentralizedSequencingConfig
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -287,92 +305,6 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   stackedRiskView?: ProjectScalingRiskView
   hostChain: string
-}
-
-/** The subset of HARDCODED.<CHAIN> a centralized OP Stack sequencing spec needs. */
-export interface OpStackCentralizedSequencingHardcoded {
-  L2_BLOCK_TIME_SECONDS: number
-  FLASHBLOCK_INTERVAL_MILLISECONDS: number
-  SEQUENCING_WINDOW_BLOCKS: number
-  MAX_DEPOSIT_CALLDATA_BYTES: number
-}
-
-export function getOpStackCentralizedSequencingSpec({
-  discovery,
-  hardcoded,
-  trustedPreconfirmationDescription,
-  sequencer,
-  exitDelay,
-  exitEconomics,
-}: {
-  discovery: ProjectDiscovery
-  hardcoded: OpStackCentralizedSequencingHardcoded
-  trustedPreconfirmationDescription: string
-  sequencer: TableReadyValue
-  exitDelay: TableReadyValue
-  exitEconomics: TableReadyValue
-}): ProjectCentralizedSequencingSpec {
-  const {
-    L2_BLOCK_TIME_SECONDS: l2BlockTimeSeconds,
-    FLASHBLOCK_INTERVAL_MILLISECONDS: flashblockIntervalMilliseconds,
-    SEQUENCING_WINDOW_BLOCKS: sequencingWindowBlocks,
-    MAX_DEPOSIT_CALLDATA_BYTES: maxDepositCalldataBytes,
-  } = hardcoded
-  const sequencingWindowSeconds =
-    sequencingWindowBlocks * HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
-  const depositResourceLimit = discovery.getContractValue<{
-    maxResourceLimit: number
-  }>('SystemConfig', 'resourceConfig').maxResourceLimit
-  const minimumDepositGasWithoutData = discovery.getContractValue<number>(
-    'OptimismPortal2',
-    'minimumGasLimitZeroBytes',
-  )
-  const minimumDepositGasWithOneByte = discovery.getContractValue<number>(
-    'OptimismPortal2',
-    'minimumGasLimitOneByte',
-  )
-  const minimumDepositGasPerByte =
-    minimumDepositGasWithOneByte - minimumDepositGasWithoutData
-
-  return {
-    type: 'centralized',
-    trustedPreconfirmation: {
-      value: `${flashblockIntervalMilliseconds} ms`,
-      secondLine: `${l2BlockTimeSeconds} s L2 block time`,
-      description: trustedPreconfirmationDescription,
-      orderHint: flashblockIntervalMilliseconds / 1_000,
-    },
-    trustedOrdering: {
-      value: 'Dynamic priority auction',
-      secondLine: 'Fee order per Flashblock',
-      description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
-    },
-    sequencer,
-    realtimeCensorshipResistance:
-      SEQUENCING_SPEC.NO_REALTIME_CENSORSHIP_RESISTANCE(),
-    forcedInclusion: {
-      value: 'Automatic derivation',
-      secondLine: '1 L1 tx: portal deposit',
-      sentiment: 'good',
-      description:
-        'The user submits one Ethereum transaction to the OptimismPortal which is automatically derived by conforming nodes.',
-    },
-    inclusionDelay: {
-      value: formatSeconds(sequencingWindowSeconds, { fullUnit: true }),
-      secondLine: `${sequencingWindowBlocks.toLocaleString('en-US')} L1 blocks`,
-      sentiment: 'good',
-      description:
-        'The static sequencing window is measured in Ethereum blocks.',
-      orderHint: sequencingWindowBlocks,
-    },
-    inclusionMechanics: {
-      value: '1 L1 Tx',
-      secondLine: 'Address alias',
-      description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
-    },
-    exitDelay,
-    exitEconomics,
-  }
 }
 
 function opStackCommon(
@@ -1420,40 +1352,6 @@ function getStateValidation(
   }
 }
 
-export function getOpStackBondScalingFactor(gameMaxDepth: number): number {
-  return (
-    (HARDCODED.OPTIMISM.FAULT_PROOF_HIGH_GAS_CHARGED /
-      HARDCODED.OPTIMISM.FAULT_PROOF_BASE_GAS_CHARGED) **
-    (1 / gameMaxDepth)
-  )
-}
-
-/** Total ETH bonded along a full-depth path: one bond per depth from 0 through gameMaxDepth. */
-export function getOpStackFullDisputeGameBondCostEther(
-  initialBondWei: number,
-  gameMaxDepth: number,
-): number {
-  const factor = getOpStackBondScalingFactor(gameMaxDepth)
-  const initialBondEther = Number(initialBondWei) / 1e18
-  return (initialBondEther * (factor ** (gameMaxDepth + 1) - 1)) / (factor - 1)
-}
-
-/**
- * Maximum time added by clock extensions along a full-depth dispute-game path.
- *
- * FaultDisputeGame applies one extension to every claim from depth 1 through
- * MAX_GAME_DEPTH - 1. The split-boundary claim gets one extra clock extension,
- * while the final preimage-boundary claim also gets the oracle challenge
- * period.
- */
-export function getOpStackMaxCumulativeClockExtension(
-  gameMaxDepth: number,
-  gameClockExtension: number,
-  oracleChallengePeriod: number,
-): number {
-  return gameClockExtension * gameMaxDepth + oracleChallengePeriod
-}
-
 export function describeOPFP({
   disputeGameBonds,
   maxClockDuration,
@@ -1953,7 +1851,14 @@ function getTechnology(
         ],
       },
     ],
-    sequencing: templateVars.nonTemplateTechnology?.sequencing,
+    sequencing:
+      templateVars.nonTemplateTechnology?.sequencing ??
+      (templateVars.centralizedSequencing
+        ? getOpStackCentralizedSequencing(
+            templateVars,
+            templateVars.centralizedSequencing,
+          )
+        : undefined),
   }
 }
 
@@ -2618,84 +2523,6 @@ function ifPostsToEthereum<T>(
   }
 }
 
-// The active permissionless game's init bond. Pre-Karst it is initBonds[0] (game
-// type 0). After Karst the respected game is CANNON_KONA (type 8) and initBonds[0]
-// is zeroed, so the bond lives in the per-type initBondGame8 field.
-function getPermissionlessGameBond(templateVars: OpStackConfigCommon): number {
-  const portal = getOptimismPortal(templateVars)
-  const respectedGameType =
-    templateVars.discovery.getContractValueOrUndefined<number>(
-      portal.name ?? portal.address,
-      'respectedGameType',
-    )
-  if (respectedGameType === 8) {
-    return templateVars.discovery.getContractValue<number>(
-      'DisputeGameFactory',
-      'initBondGame8',
-    )
-  }
-  return templateVars.discovery.getContractValue<number[]>(
-    'DisputeGameFactory',
-    'initBonds',
-  )[0]
-}
-
-// The permissioned game's init bond. v7 DisputeGameFactory_v2 exposes it per-type
-// as initBondGame1; older factories expose the legacy initBonds array.
-function getPermissionedGameBond(templateVars: OpStackConfigCommon): number {
-  const perType = templateVars.discovery.getContractValueOrUndefined<number>(
-    'DisputeGameFactory',
-    'initBondGame1',
-  )
-  if (perType !== undefined) return perType
-  return templateVars.discovery.getContractValue<number[]>(
-    'DisputeGameFactory',
-    'initBonds',
-  )[1]
-}
-
-function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
-  if (templateVars.portal !== undefined) {
-    return templateVars.portal
-  }
-
-  try {
-    return templateVars.discovery.getContract('OptimismPortal')
-  } catch {
-    return templateVars.discovery.getContract('OptimismPortal2')
-  }
-}
-
-// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2
-function getFaultDisputeGameName(templateVars: OpStackConfigCommon): string {
-  if (templateVars.discovery.hasContract('FaultDisputeGame')) {
-    return 'FaultDisputeGame'
-  }
-  return 'FaultDisputeGameV2'
-}
-
-// V2 dispute games don't discover PreimageOracle (VM address is zero
-// in the implementation). The standard challenge period is 86400s.
-function getOracleChallengePeriod(templateVars: OpStackConfigCommon): number {
-  if (templateVars.discovery.hasContract('PreimageOracle')) {
-    return templateVars.discovery.getContractValue<number>(
-      'PreimageOracle',
-      'challengePeriod',
-    )
-  }
-  // V2: PreimageOracle not discovered (VM is zero in implementation).
-  // Read from AnchorStateRegistry's chained handler instead.
-  if (templateVars.discovery.hasContract('AnchorStateRegistry')) {
-    const fromAnchor =
-      templateVars.discovery.getContractValueOrUndefined<number>(
-        'AnchorStateRegistry',
-        'challengePeriodFromOracle',
-      )
-    if (typeof fromAnchor === 'number') return fromAnchor
-  }
-  return 86400
-}
-
 function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
   const fraudProofType = getFraudProofType(templateVars)
 
@@ -2807,62 +2634,6 @@ function getExecutionDelay(
     default:
       return undefined
   }
-}
-
-type FraudProofType =
-  | 'None'
-  | 'Permissioned'
-  | 'Permissionless'
-  | 'Kailua'
-  | 'KailuaSoon'
-  | 'OpSuccinct'
-  | 'OpSuccinctFDP'
-  | 'AggregateProof'
-
-function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
-  const portal = getOptimismPortal(templateVars)
-
-  // Legacy OptimismPortal doesn't have dispute games
-  if (portal.name === 'OptimismPortal') {
-    if (templateVars.discovery.hasContract('OPSuccinctL2OutputOracle')) {
-      return 'OpSuccinct'
-    }
-    return 'None'
-  }
-
-  // OptimismPortal2 uses dispute games - check respectedGameType
-  const respectedGameType = templateVars.discovery.getContractValue<number>(
-    portal.name ?? portal.address,
-    'respectedGameType',
-  )
-
-  if (respectedGameType === 0) {
-    return 'Permissionless'
-  }
-  // 8 = CANNON_KONA (Karst): permissionless fault proof, same trust model as
-  // type 0 (kona-client Rust program instead of op-program).
-  if (respectedGameType === 8) {
-    return 'Permissionless'
-  }
-  if (respectedGameType === 1) {
-    return 'Permissioned'
-  }
-  if (respectedGameType === 6) {
-    return 'OpSuccinct'
-  }
-  if (respectedGameType === 1337) {
-    return 'Kailua'
-  }
-  if (respectedGameType === 2000) {
-    return 'KailuaSoon'
-  }
-  if (respectedGameType === 42) {
-    return 'OpSuccinctFDP'
-  }
-  if (respectedGameType === 621) {
-    return 'AggregateProof'
-  }
-  throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
 function isPartOfSuperchainOnchain(templateVars: OpStackConfigCommon): boolean {

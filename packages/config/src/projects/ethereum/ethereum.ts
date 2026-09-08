@@ -110,17 +110,17 @@ export const ethereum: BaseProject = {
           description:
             'A proposer can build locally to include public-mempool transactions instead of accepting an external builder bid. This bypasses censoring builders and relays, but users cannot compel the proposer to use the fallback. Combining a highly decentralized operator set with per-slot proposer rotation results in short inclusion delays under selective censorship.',
         },
+        inclusionDelayChart: {
+          type: 'ethereumlike',
+          validatorCount: stakeDistribution.validatorCount,
+          slotSeconds: ethereumBlockTimeSeconds,
+          target: 0.99,
+          maxCensorFraction: 0.5,
+          stakeDistribution,
+        },
+        inclusionDelayChartDescription:
+          'The chart models live-chain selective censorship as independent stake-weighted proposer opportunities. It assumes an honest proposer can include the transaction, whether through an external builder or local block production. It excludes validator and builder concentration, finality, validator-set changes, inactivity leaks, and a full halt.',
       },
-      inclusionDelayChart: {
-        type: 'ethereumlike',
-        validatorCount: stakeDistribution.validatorCount,
-        slotSeconds: ethereumBlockTimeSeconds,
-        target: 0.99,
-        maxCensorFraction: 0.5,
-        stakeDistribution,
-      },
-      inclusionDelayChartDescription:
-        'The chart models live-chain selective censorship as independent stake-weighted proposer opportunities. It assumes an honest proposer can include the transaction, whether through an external builder or local block production. It excludes validator and builder concentration, finality, validator-set changes, inactivity leaks, and a full halt.',
       censorshipResistance: readProjectMarkdown(
         'ethereum',
         'censorshipResistance',
