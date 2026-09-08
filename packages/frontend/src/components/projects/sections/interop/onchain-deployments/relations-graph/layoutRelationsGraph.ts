@@ -1,5 +1,9 @@
-export interface LayoutNode {
+export interface RelationNode {
   id: string
+  volume?: number | null
+}
+
+export interface LayoutNode extends RelationNode {
   volume: number | null
   width: number
   height: number
@@ -43,12 +47,7 @@ export function layoutRelationsGraph(
   edges: LayoutEdge[],
   unconnected: LayoutNode[] = [],
 ): RelationsLayout {
-  const layers = assignLayers(nodes, edges)
-  const layerOf = new Map(
-    layers.flatMap((layer, index) => layer.map((node) => [node.id, index])),
-  )
-  const primaryParent = getPrimaryParents(edges, layerOf)
-  const orderedLayers = orderLayers(layers, primaryParent)
+  const { layers, primaryParent } = analyzeLayers(nodes, edges)
 
   const widestLayer = Math.max(0, ...layers.map(rowWidth))
   const width = Math.min(
@@ -74,7 +73,7 @@ export function layoutRelationsGraph(
     }
   }
 
-  for (const layer of orderedLayers) {
+  for (const layer of layers) {
     placeRows(
       packRows(layer, usableWidth, (node) => primaryParent.get(node.id)),
     )
@@ -95,16 +94,36 @@ export function layoutRelationsGraph(
   }
 }
 
+/** Nodes by backing depth, each layer in display order, without wrapping. */
+export function orderRelationLayers<T extends RelationNode>(
+  nodes: T[],
+  edges: LayoutEdge[],
+): T[][] {
+  return analyzeLayers(nodes, edges).layers
+}
+
+function analyzeLayers<T extends RelationNode>(
+  nodes: T[],
+  edges: LayoutEdge[],
+) {
+  const layers = assignLayers(nodes, edges)
+  const layerOf = new Map(
+    layers.flatMap((layer, index) => layer.map((node) => [node.id, index])),
+  )
+  const primaryParent = getPrimaryParents(edges, layerOf)
+  return { layers: orderLayers(layers, primaryParent), primaryParent }
+}
+
 /** Busiest first; unmeasured volume sorts after zero. */
-function byVolumeThenId(a: LayoutNode, b: LayoutNode): number {
+function byVolumeThenId(a: RelationNode, b: RelationNode): number {
   return (b.volume ?? -1) - (a.volume ?? -1) || a.id.localeCompare(b.id)
 }
 
 /** Longest backing path from an unbacked node is the node's layer. */
-function assignLayers(
-  nodes: LayoutNode[],
+function assignLayers<T extends RelationNode>(
+  nodes: T[],
   edges: LayoutEdge[],
-): LayoutNode[][] {
+): T[][] {
   const ids = new Set(nodes.map((node) => node.id))
   const outgoing = new Map<string, string[]>()
   const remaining = new Map(nodes.map((node) => [node.id, 0]))
@@ -127,7 +146,7 @@ function assignLayers(
   }
   // Nodes on a cycle never reach the queue; keep them drawable in layer 0.
 
-  const layers: LayoutNode[][] = []
+  const layers: T[][] = []
   for (const node of nodes) {
     const index = layer.get(node.id) ?? 0
     layers[index] = [...(layers[index] ?? []), node]
@@ -152,12 +171,12 @@ function getPrimaryParents(
 }
 
 /** Order roots by volume, then each layer by parent order and sibling volume. */
-function orderLayers(
-  layers: LayoutNode[][],
+function orderLayers<T extends RelationNode>(
+  layers: T[][],
   primaryParent: ReadonlyMap<string, string>,
-): LayoutNode[][] {
+): T[][] {
   const order = new Map<string, number>()
-  const parentOrder = (node: LayoutNode) => {
+  const parentOrder = (node: RelationNode) => {
     const parent = primaryParent.get(node.id)
     return parent === undefined ? -1 : (order.get(parent) ?? -1)
   }

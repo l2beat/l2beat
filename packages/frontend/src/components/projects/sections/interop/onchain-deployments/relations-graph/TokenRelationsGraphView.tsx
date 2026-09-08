@@ -20,8 +20,13 @@ import { RelationsDiagram } from './RelationsDiagram'
 
 export function TokenRelationsGraphView({
   graph,
+  diagramClassName = 'h-[380px] md:h-[520px]',
+  embedded = false,
 }: {
   graph: InteropTokenRelationsGraph
+  diagramClassName?: string
+  /** Inside a dialog already: no expand button, details inline instead of a drawer. */
+  embedded?: boolean
 }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>()
   const [hideUnconnected, setHideUnconnected] = useState(true)
@@ -91,11 +96,13 @@ export function TokenRelationsGraphView({
 
       {!isExpanded &&
         diagram(
-          'h-[380px] md:h-[520px]',
-          isMobile ? undefined : () => setIsExpanded(true),
+          diagramClassName,
+          isMobile || embedded ? undefined : () => setIsExpanded(true),
         )}
 
-      {isMobile && (
+      {isMobile && embedded && details && <div className="mt-3">{details}</div>}
+
+      {isMobile && !embedded && (
         <Drawer
           open={selectedNode !== undefined}
           onOpenChange={(open) => !open && setSelectedNodeId(undefined)}

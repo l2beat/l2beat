@@ -1,5 +1,6 @@
 import type { AbstractTokenSummary, TokenRelationRoute } from '@l2beat/database'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
+import { groupBy } from '~/utils/groupBy'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import {
   buildTokenRelationsGraph,
@@ -166,16 +167,4 @@ function countBridges(
     }
   }
   return projectIds.size
-}
-
-function groupBy<T, K>(items: T[], keyOf: (item: T) => K | undefined) {
-  const groups = new Map<K, T[]>()
-  for (const item of items) {
-    const key = keyOf(item)
-    if (key === undefined) continue
-    const group = groups.get(key)
-    if (group) group.push(item)
-    else groups.set(key, [item])
-  }
-  return groups
 }
