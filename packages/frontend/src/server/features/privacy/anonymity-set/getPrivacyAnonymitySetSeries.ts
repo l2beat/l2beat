@@ -66,7 +66,7 @@ export function getPrivacyAnonymitySetSeries(
 
 function formatTokenAmount(amount: string, decimals: number): string {
   const padded = amount.padStart(decimals + 1, '0')
-  const whole = padded.slice(0, -decimals) || '0'
+  const whole = decimals === 0 ? padded : padded.slice(0, -decimals) || '0'
   const fraction = decimals === 0 ? '' : padded.slice(-decimals)
   const trimmedFraction = fraction.replace(/0+$/, '')
 
