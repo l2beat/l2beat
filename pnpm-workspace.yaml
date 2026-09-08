@@ -20,3 +20,7 @@ allowBuilds:
   prisma: true
   sharp: true
   sqlite3: true
+
+# Keep pnpm 12 from recording packageManagerDependencies as a second YAML
+# document in pnpm-lock.yaml; turbo prune cannot parse multi-document YAML.
+pmOnFail: ignore
