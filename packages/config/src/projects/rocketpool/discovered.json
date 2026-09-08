@@ -91,21 +91,7 @@
     {
       "address": "eth:0x0cCF14983364A7735d369879603930Afe10df21e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
-          "description": "can hand the bootstrap role to another address through a two-step transfer, and still holds the ungated powers listed on the penalty-cap and one-shot upgrade contracts.",
-          "role": ".getGuardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE64AC47b6e2FEcfCDEA35147Fe61af9894A06ba6",
-          "description": "can raise or lower the ceiling on legacy validator penalties, immediately and with no upper bound in the code.",
-          "role": ".guardian"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketAuctionManager",
@@ -429,15 +415,7 @@
     {
       "address": "eth:0x2354628919e1D53D2a69cF700Cc53C4093977B94",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketNetworkPrices",
@@ -484,34 +462,6 @@
       ],
       "proxyType": "immutable",
       "description": "Voting machine for token-holder governance. Voting power is proven optimistically: a proposer posts a bond and a claimed voting-power tree, which anyone can challenge within a challenge window by posting their own bond, and an unanswered challenge defeats the proposal and forfeits the proposer's bond. Voting runs in two phases; a proposal needs 15% support to pass and can be blocked by 20% of voting power voting against it outright. A passed proposal has 28d to execute.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
-          "description": "can change any protocol setting kept here and can split the token issuance between claimant groups. It cannot repoint a registered name, so it cannot change which code runs.",
-          "role": ".rocketDAOProtocolProposals",
-          "via": [
-            { "address": "eth:0xcf7F6E23cD8189B7F56b14F66e11241C8ac0F03b" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xfB2F2Ab63DCf412ced6cdE5f4f809215ed0c81aa",
-          "description": "can pay out the treasury balance, as a one-off transfer or as a recurring payment stream to a named recipient.",
-          "role": ".governanceProposals",
-          "via": [
-            { "address": "eth:0xcf7F6E23cD8189B7F56b14F66e11241C8ac0F03b" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xcf7F6E23cD8189B7F56b14F66e11241C8ac0F03b",
-          "description": "a proposal that passes there is executed against this contract.",
-          "role": ".tokenHolderVote"
-        }
-      ],
       "ignoreInWatchMode": ["getTotal"],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1728693479,
@@ -544,14 +494,6 @@
       ],
       "proxyType": "immutable",
       "description": "Proposal front end for the security council, limited to an explicit allowlist of settings. Every write checks a per-setting allow flag in the registry and reverts if it is not set, so the council can only touch keys that token-holder governance has opened to it; which keys are open is registry state, read from the chain at discovery time as one flag per setting. A numeric setting on the list is additionally capped by the executing code. A proposal here becomes executable the moment it reaches quorum, with no delay of its own.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
-          "description": "can change the protocol settings kept here whose allow flag is set, a list that token-holder governance controls and that discovery reads from the chain. A change takes effect as soon as the council reaches quorum.",
-          "role": ".rocketDAOSecurityProposals"
-        }
-      ],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770608123,
       "sinceBlock": 24416560,
@@ -975,14 +917,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x84aE6D61Df5c6ba7196b5C76Bcb112B8a689aD37",
-          "description": "a security council seat: can veto a pending contract upgrade while it waits out its delay, and can instantly flip the protocol settings that governance has allowlisted.",
-          "role": ".members"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xAc69b72672aBb00Ab51837F74a4F28B45296b09E",
       "sinceTimestamp": 1751870639,
@@ -1030,15 +964,7 @@
     {
       "address": "eth:0x751683968FD078341C48B90bC657d6bAbc2339F7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketMinipoolFactory",
@@ -1069,40 +995,6 @@
       ],
       "proxyType": "immutable",
       "description": "Membership register for the security council. Seats currently filled: 1. Each seat carries one vote and a proposal passes once votes for it reach 0.51. Members post no bond. Membership is set by RPL governance, not by the council itself.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
-          "description": "can change the protocol settings kept here whose allow flag is set, a list that token-holder governance controls and that discovery reads from the chain. A change takes effect as soon as the council reaches quorum.",
-          "role": ".rocketDAOSecurityProposals",
-          "via": [
-            { "address": "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
-          "description": "can cancel a pending change while it is still inside its waiting period; a cancelled change can never be applied.",
-          "role": ".councilVeto",
-          "via": [
-            { "address": "eth:0x950BaF0358164339114914169BF16754789B5Dc4" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e",
-          "description": "only its members can propose and pass a setting change here.",
-          "role": ".securityCouncil"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x950BaF0358164339114914169BF16754789B5Dc4",
-          "description": "only its members can propose and pass a veto here.",
-          "role": ".securityCouncil"
-        }
-      ],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1717465979,
       "sinceBlock": 20015296,
@@ -1162,28 +1054,12 @@
     {
       "address": "eth:0x8d074ad69b55dD57dA2708306f1c200ae1803359",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8fB569C14b372430f9aF8B235940187b449d0dec",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketUpgradeOneDotFourDissolveHotfix",
@@ -1214,15 +1090,6 @@
       ],
       "proxyType": "immutable",
       "description": "The only path that changes which code the protocol runs. A passed oracle-set proposal records a pending change here rather than applying it; the change becomes applicable after 7d and, until then, the security council can cancel it. Once the delay has run and the change was not cancelled, any oracle-set member applies it. A fixed list of names is refused outright: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract. Registering an entirely new name is allowed and grants that address write access to the registry, which is how the exclusion list is worked around. The bootstrap account had an immediate path here; it is permanently closed.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
-          "delay": 604800,
-          "description": "can repoint any upgradeable name in this registry to a new address, which replaces the code every other contract calls. The change is scheduled by a passed oracle-set proposal, waits 7d, and can be cancelled by the security council in that window. A fixed list of names is refused by the code: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract.",
-          "role": ".rocketDAONodeTrustedUpgrade"
-        }
-      ],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770608147,
       "sinceBlock": 24416562,
@@ -1283,14 +1150,6 @@
       ],
       "proxyType": "immutable",
       "description": "Veto lever over pending contract changes. A council member proposes a veto against a change that is still inside its waiting period; the veto passes at 33% of the council's seats and takes effect as soon as it reaches that threshold, so it always lands inside the window. A vetoed change can never be applied. This contract can only cancel changes; it cannot make one.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
-          "description": "can cancel a pending change while it is still inside its waiting period; a cancelled change can never be applied.",
-          "role": ".councilVeto"
-        }
-      ],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770608075,
       "sinceBlock": 24416556,
@@ -1362,15 +1221,7 @@
     {
       "address": "eth:0x9c69e7FCe961FD837F99c808aD75ED39a2c549Cb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketNetworkRevenues",
@@ -1436,15 +1287,7 @@
     {
       "address": "eth:0x9f56F3aEed0E79f0e7612119ACa0bab15477cEC6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketMegapoolPenalties",
@@ -1689,15 +1532,7 @@
     {
       "address": "eth:0xB3A533098485bede3Cb7fA8711AF84FE0bb1e0aD",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketPoolTokenFixedSupply",
@@ -1770,68 +1605,6 @@
       ],
       "proxyType": "immutable",
       "description": "Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: 10. Each seat carries one vote and a proposal passes once votes for it reach 5.1. Membership is bonded: joining locks 1,750 collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1D9F14C6Bfd8358b589964baD8665AdD248E9473",
-          "description": "can write the total ETH balance and the liquid staking token supply this contract reports, once submissions from its members reach 51% of the set. Those two numbers are the redemption price, and a single report can move it by at most 2%.",
-          "role": ".oracleSet"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x25E54Bf48369b8FB25bB79d3a3Ff7F3BA448E382",
-          "description": "can write the collateral-token price this contract reports, once submissions from its members reach the network consensus share.",
-          "role": ".oracleSet"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa2afC3C2d8ea4eBdbE925cADe17c29517630e6aB",
-          "description": "can charge an ETH penalty against one node operator, once submissions from its members reach 51% of the set, capped at 612 ETH per penalty and at the same figure across a rolling window fixed in the contract's code.",
-          "role": ".oracleSet"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa52451b9d25EEf02BE42B3A8161A18f947F8A6a5",
-          "description": "can mark a legacy validator contract withdrawable, and can scrub one whose withdrawal credentials do not match before it is funded.",
-          "role": ".oracleSet"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xCba5951fc706Fc783b7C142DaE8576Ebe29c41FD",
-          "description": "can write the Merkle root that assigns each reward period, once submissions from its members reach the network consensus share.",
-          "role": ".oracleSet"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDe8Ab526b19FCA2D5a57c4A78b698041717BE591",
-          "description": "can cancel a pending bond reduction inside the governed window.",
-          "role": ".oracleSet"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeD0493DE30e82bE7C16C8925C7204CE9D1136B3a",
-          "description": "can vote a penalty rate against a legacy validator contract; how much of the rewards that actually diverts is bounded by the separate penalty-cap contract.",
-          "role": ".oracleSet"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
-          "delay": 604800,
-          "description": "can repoint any upgradeable name in this registry to a new address, which replaces the code every other contract calls. The change is scheduled by a passed oracle-set proposal, waits 7d, and can be cancelled by the security council in that window. A fixed list of names is refused by the code: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract.",
-          "role": ".rocketDAONodeTrustedUpgrade",
-          "via": [
-            { "address": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
-          "description": "a passed proposal of this body is the only input this contract accepts, and one of its members applies the change once the waiting period has run.",
-          "role": ".oracleSet"
-        }
-      ],
       "deployerAddress": "eth:0x0cCF14983364A7735d369879603930Afe10df21e",
       "sinceTimestamp": 1632980313,
       "sinceBlock": 13325269,
@@ -1934,15 +1707,7 @@
     {
       "address": "eth:0xc5D291607600044348E5014404cc18394BD1D57d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketUpgradeOneDotOne",
@@ -2226,20 +1991,6 @@
       ],
       "proxyType": "immutable",
       "description": "Executes what token-holder governance has voted for: setting any protocol parameter, splitting the reward inflation between claimant groups, spending the treasury as a one-off or as a recurring payment stream, and seating, removing, or replacing security-council members. It has no upgrade entry point, so token holders cannot change which code the protocol runs.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
-          "description": "can change any protocol setting kept here and can split the token issuance between claimant groups. It cannot repoint a registered name, so it cannot change which code runs.",
-          "role": ".rocketDAOProtocolProposals"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xfB2F2Ab63DCf412ced6cdE5f4f809215ed0c81aa",
-          "description": "can pay out the treasury balance, as a one-off transfer or as a recurring payment stream to a named recipient.",
-          "role": ".governanceProposals"
-        }
-      ],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770607907,
       "sinceBlock": 24416542,
@@ -2398,15 +2149,7 @@
     {
       "address": "eth:0xD7F94c53691AFB5A616C6af96e7075c1FFA1D8eE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketDAONodeTrustedSettingsMembers",
@@ -2472,15 +2215,7 @@
     {
       "address": "eth:0xDf590A63B91E8278a9102BEe9aAfd444F8A4b780",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
-          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
-          "role": ".members"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RocketNodeDistributorFactory",
@@ -4657,5 +4392,310 @@
     "rocketpool/RocketVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25928261 },
-  "permissionsConfigHash": "0x571a81a805a23530ed9f36338f6a9e7a4a4801e1ee566a5f30cb522e994ba858"
+  "permissionsConfigHash": "0x2c73c9a8790f46f8982721c4c19f3a42ef311b3d815d93b4a041f8b1a4dd0788",
+  "permissions": {
+    "eth:0x0cCF14983364A7735d369879603930Afe10df21e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
+          "description": "can hand the bootstrap role to another address through a two-step transfer, and still holds the ungated powers listed on the penalty-cap and one-shot upgrade contracts.",
+          "role": ".getGuardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE64AC47b6e2FEcfCDEA35147Fe61af9894A06ba6",
+          "description": "can raise or lower the ceiling on legacy validator penalties, immediately and with no upper bound in the code.",
+          "role": ".guardian"
+        }
+      ]
+    },
+    "eth:0x2354628919e1D53D2a69cF700Cc53C4093977B94": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0x2D627A50Dc1C4EDa73E42858E8460b0eCF300b25": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
+          "description": "can change any protocol setting kept here and can split the token issuance between claimant groups. It cannot repoint a registered name, so it cannot change which code runs.",
+          "role": ".rocketDAOProtocolProposals",
+          "via": [
+            { "address": "eth:0xcf7F6E23cD8189B7F56b14F66e11241C8ac0F03b" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xfB2F2Ab63DCf412ced6cdE5f4f809215ed0c81aa",
+          "description": "can pay out the treasury balance, as a one-off transfer or as a recurring payment stream to a named recipient.",
+          "role": ".governanceProposals",
+          "via": [
+            { "address": "eth:0xcf7F6E23cD8189B7F56b14F66e11241C8ac0F03b" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xcf7F6E23cD8189B7F56b14F66e11241C8ac0F03b",
+          "description": "a proposal that passes there is executed against this contract.",
+          "role": ".tokenHolderVote"
+        }
+      ]
+    },
+    "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
+          "description": "can change the protocol settings kept here whose allow flag is set, a list that token-holder governance controls and that discovery reads from the chain. A change takes effect as soon as the council reaches quorum.",
+          "role": ".rocketDAOSecurityProposals"
+        }
+      ]
+    },
+    "eth:0x6C565aF34f15dE064b56afEdF7B0F59C15bB20FE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x84aE6D61Df5c6ba7196b5C76Bcb112B8a689aD37",
+          "description": "a security council seat: can veto a pending contract upgrade while it waits out its delay, and can instantly flip the protocol settings that governance has allowlisted.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0x751683968FD078341C48B90bC657d6bAbc2339F7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0x84aE6D61Df5c6ba7196b5C76Bcb112B8a689aD37": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
+          "description": "can change the protocol settings kept here whose allow flag is set, a list that token-holder governance controls and that discovery reads from the chain. A change takes effect as soon as the council reaches quorum.",
+          "role": ".rocketDAOSecurityProposals",
+          "via": [
+            { "address": "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
+          "description": "can cancel a pending change while it is still inside its waiting period; a cancelled change can never be applied.",
+          "role": ".councilVeto",
+          "via": [
+            { "address": "eth:0x950BaF0358164339114914169BF16754789B5Dc4" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e",
+          "description": "only its members can propose and pass a setting change here.",
+          "role": ".securityCouncil"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x950BaF0358164339114914169BF16754789B5Dc4",
+          "description": "only its members can propose and pass a veto here.",
+          "role": ".securityCouncil"
+        }
+      ]
+    },
+    "eth:0x8d074ad69b55dD57dA2708306f1c200ae1803359": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0x8fB569C14b372430f9aF8B235940187b449d0dec": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
+          "delay": 604800,
+          "description": "can repoint any upgradeable name in this registry to a new address, which replaces the code every other contract calls. The change is scheduled by a passed oracle-set proposal, waits 7d, and can be cancelled by the security council in that window. A fixed list of names is refused by the code: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract.",
+          "role": ".rocketDAONodeTrustedUpgrade"
+        }
+      ]
+    },
+    "eth:0x950BaF0358164339114914169BF16754789B5Dc4": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
+          "description": "can cancel a pending change while it is still inside its waiting period; a cancelled change can never be applied.",
+          "role": ".councilVeto"
+        }
+      ]
+    },
+    "eth:0x9c69e7FCe961FD837F99c808aD75ED39a2c549Cb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0x9f56F3aEed0E79f0e7612119ACa0bab15477cEC6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0xB3A533098485bede3Cb7fA8711AF84FE0bb1e0aD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0xD7F94c53691AFB5A616C6af96e7075c1FFA1D8eE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0xDf590A63B91E8278a9102BEe9aAfd444F8A4b780": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1D9F14C6Bfd8358b589964baD8665AdD248E9473",
+          "description": "can write the total ETH balance and the liquid staking token supply this contract reports, once submissions from its members reach 51% of the set. Those two numbers are the redemption price, and a single report can move it by at most 2%.",
+          "role": ".oracleSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x25E54Bf48369b8FB25bB79d3a3Ff7F3BA448E382",
+          "description": "can write the collateral-token price this contract reports, once submissions from its members reach the network consensus share.",
+          "role": ".oracleSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa2afC3C2d8ea4eBdbE925cADe17c29517630e6aB",
+          "description": "can charge an ETH penalty against one node operator, once submissions from its members reach 51% of the set, capped at 612 ETH per penalty and at the same figure across a rolling window fixed in the contract's code.",
+          "role": ".oracleSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa52451b9d25EEf02BE42B3A8161A18f947F8A6a5",
+          "description": "can mark a legacy validator contract withdrawable, and can scrub one whose withdrawal credentials do not match before it is funded.",
+          "role": ".oracleSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCba5951fc706Fc783b7C142DaE8576Ebe29c41FD",
+          "description": "can write the Merkle root that assigns each reward period, once submissions from its members reach the network consensus share.",
+          "role": ".oracleSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDe8Ab526b19FCA2D5a57c4A78b698041717BE591",
+          "description": "can cancel a pending bond reduction inside the governed window.",
+          "role": ".oracleSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeD0493DE30e82bE7C16C8925C7204CE9D1136B3a",
+          "description": "can vote a penalty rate against a legacy validator contract; how much of the rewards that actually diverts is bounded by the separate penalty-cap contract.",
+          "role": ".oracleSet"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
+          "delay": 604800,
+          "description": "can repoint any upgradeable name in this registry to a new address, which replaces the code every other contract calls. The change is scheduled by a passed oracle-set proposal, waits 7d, and can be cancelled by the security council in that window. A fixed list of names is refused by the code: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract.",
+          "role": ".rocketDAONodeTrustedUpgrade",
+          "via": [
+            { "address": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10",
+          "description": "a passed proposal of this body is the only input this contract accepts, and one of its members applies the change once the waiting period has run.",
+          "role": ".oracleSet"
+        }
+      ]
+    },
+    "eth:0xc5D291607600044348E5014404cc18394BD1D57d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
+          "description": "one seat of the oracle set: reports the network balances that price the staking token, the collateral token price, and the periodic rewards tree, and votes on operator penalties, member kicks, and contract upgrades.",
+          "role": ".members"
+        }
+      ]
+    },
+    "eth:0xcf7F6E23cD8189B7F56b14F66e11241C8ac0F03b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46",
+          "description": "can change any protocol setting kept here and can split the token issuance between claimant groups. It cannot repoint a registered name, so it cannot change which code runs.",
+          "role": ".rocketDAOProtocolProposals"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xfB2F2Ab63DCf412ced6cdE5f4f809215ed0c81aa",
+          "description": "can pay out the treasury balance, as a one-off transfer or as a recurring payment stream to a named recipient.",
+          "role": ".governanceProposals"
+        }
+      ]
+    }
+  }
 }
