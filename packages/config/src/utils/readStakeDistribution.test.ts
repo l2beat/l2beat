@@ -1,7 +1,7 @@
 import { expect } from 'earl'
-import { ProjectStakeDistributionSchema } from '../types'
+import { readStakeDistribution } from './readStakeDistribution'
 
-describe('stake distribution schema', () => {
+describe(readStakeDistribution.name, () => {
   const valid = {
     stakeToken: 'ETH',
     dateType: 'snapshot',
@@ -13,31 +13,29 @@ describe('stake distribution schema', () => {
   // stake-distribution.json is parsed when the project configs load.
   it('rejects a snapshot date that is not YYYY-MM-DD', () => {
     expect(() =>
-      ProjectStakeDistributionSchema.parse({
+      readStakeDistribution({
         ...valid,
         date: '2026-08-06T08:48:58.389Z',
       }),
     ).toThrow()
     expect(() =>
-      ProjectStakeDistributionSchema.parse({ ...valid, date: '2026-13-45' }),
+      readStakeDistribution({ ...valid, date: '2026-13-45' }),
     ).toThrow()
   })
 
   it('rejects rolled-over calendar dates', () => {
     expect(() =>
-      ProjectStakeDistributionSchema.parse({ ...valid, date: '2026-02-31' }),
+      readStakeDistribution({ ...valid, date: '2026-02-31' }),
     ).toThrow()
   })
 
   it('rejects non-positive totals and counts', () => {
+    expect(() => readStakeDistribution({ ...valid, totalStake: -1 })).toThrow()
     expect(() =>
-      ProjectStakeDistributionSchema.parse({ ...valid, totalStake: -1 }),
+      readStakeDistribution({ ...valid, validatorCount: 0.5 }),
     ).toThrow()
     expect(() =>
-      ProjectStakeDistributionSchema.parse({ ...valid, validatorCount: 0.5 }),
-    ).toThrow()
-    expect(() =>
-      ProjectStakeDistributionSchema.parse({
+      readStakeDistribution({
         ...valid,
         entities: [{ name: 'A', stake: -5 }],
       }),
@@ -46,11 +44,24 @@ describe('stake distribution schema', () => {
 
   it('rejects a fetched date that does not parse as a timestamp', () => {
     expect(() =>
-      ProjectStakeDistributionSchema.parse({
+      readStakeDistribution({
         ...valid,
         dateType: 'fetched',
         date: 'not a date',
       }),
     ).toThrow()
+  })
+
+  it('requires validatorCount only when asked', () => {
+    expect(readStakeDistribution(valid).validatorCount).toEqual(undefined)
+    expect(() =>
+      readStakeDistribution(valid, { requireValidatorCount: true }),
+    ).toThrow()
+    expect(
+      readStakeDistribution(
+        { ...valid, validatorCount: 3 },
+        { requireValidatorCount: true },
+      ).validatorCount,
+    ).toEqual(3)
   })
 })

@@ -185,14 +185,23 @@ const worstCaseStateFinalizationDelaySeconds =
 const worstCaseExitDelaySeconds =
   currentForceInclusionDelayBlocks * assumedBlockTime +
   worstCaseStateFinalizationDelaySeconds
-const worstCaseExitDelayDisplaySeconds =
-  Math.ceil(worstCaseExitDelaySeconds / 3_600) * 3_600
-const worstCaseStateFinalizationDisplaySeconds =
-  Math.ceil(worstCaseStateFinalizationDelaySeconds / 3_600) * 3_600
+// Worst-case figures round up to whole hours so the two-unit display never
+// under-reports the delay.
+const worstCaseExitDelayDisplaySeconds = ceilToFullHours(
+  worstCaseExitDelaySeconds,
+)
+const worstCaseStateFinalizationDisplaySeconds = ceilToFullHours(
+  worstCaseStateFinalizationDelaySeconds,
+)
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
-const delayBufferReplenishIntervalSeconds = 1_200
-const basisPointsDivisor = 10_000
+const delayBufferReplenishIntervalSeconds =
+  HARDCODED.ARBITRUM.DELAY_BUFFER_REPLENISH_DISPLAY_INTERVAL_SECONDS
+const basisPointsDivisor = HARDCODED.ARBITRUM.DELAY_BUFFER_BASIS_POINTS
+
+function ceilToFullHours(seconds: number): number {
+  return Math.ceil(seconds / 3_600) * 3_600
+}
 
 function formatWethAmount(amount: string): string {
   return `${Number(formatEther(amount)).toLocaleString('en-US')} WETH`

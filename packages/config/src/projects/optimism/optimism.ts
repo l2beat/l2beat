@@ -14,7 +14,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import {
   getOpStackBondScalingFactor,
-  getOpStackCentralizedSequencingCommon,
+  getOpStackCentralizedSequencingSpec,
   getOpStackDaTracking,
   getOpStackMaxCumulativeClockExtension,
   opStackL2,
@@ -27,9 +27,9 @@ const chainId = 10
 const l2BlockTimeSeconds = HARDCODED.OPTIMISM.L2_BLOCK_TIME_SECONDS
 const flashblockIntervalMilliseconds =
   HARDCODED.OPTIMISM.FLASHBLOCK_INTERVAL_MILLISECONDS
-const sequencingWindowSeconds = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS
-const sequencingWindowBlocks = HARDCODED.OPTIMISM.SEQUENCING_WINDOW_BLOCKS
-const maxDepositCalldataBytes = HARDCODED.OPTIMISM.MAX_DEPOSIT_CALLDATA_BYTES
+const sequencingWindowSeconds =
+  HARDCODED.OPTIMISM.SEQUENCING_WINDOW_BLOCKS *
+  HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 const proofMaturityDelaySeconds = discovery.getContractValue<number>(
   'OptimismPortal2',
   'proofMaturityDelaySeconds',
@@ -236,25 +236,18 @@ export const optimism: ScalingProject = opStackL2({
       name: 'Transactions are ordered by a centralized sequencer',
       description:
         'OP Mainnet uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Rollup nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
-      sequencingSpec: {
-        type: 'centralized',
-        ...getOpStackCentralizedSequencingCommon({
-          discovery,
-          l2BlockTimeSeconds,
-          flashblockIntervalMilliseconds,
-          sequencingWindowSeconds,
-          sequencingWindowBlocks,
-          maxDepositCalldataBytes,
-          trustedPreconfirmationDescription: `The centralized sequencer streams cumulative Flashblock preconfirmations every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and ${flashblockIntervalMilliseconds} ms is a target that can vary with execution load.`,
-          sequencer: {
-            value: 'Centralized',
-            secondLine: 'Raft HA',
-            sentiment: 'bad',
-            description:
-              'The OP Mainnet operator controls real-time ordering. They run redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
-            orderHint: 1,
-          },
-        }),
+      sequencingSpec: getOpStackCentralizedSequencingSpec({
+        discovery,
+        hardcoded: HARDCODED.OPTIMISM,
+        trustedPreconfirmationDescription: `The centralized sequencer streams cumulative Flashblock preconfirmations every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and ${flashblockIntervalMilliseconds} ms is a target that can vary with execution load.`,
+        sequencer: {
+          value: 'Centralized',
+          secondLine: 'Raft HA',
+          sentiment: 'bad',
+          description:
+            'The OP Mainnet operator controls real-time ordering. They run redundant sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. op-conductor explicitly assumes all nodes are honest and is not Byzantine fault tolerant, so the replicas do not create independent operators or censorship resistance.',
+          orderHint: 1,
+        },
         exitDelay: {
           value: formatSeconds(faultDisputeGameWorstCaseExitDelaySeconds, {
             fullUnit: true,
@@ -285,7 +278,7 @@ export const optimism: ScalingProject = opStackL2({
           secondLine: `Favors attacker ${faultDisputeGameBondScalingFactor.toFixed(2)}×`,
           description: `Self-proposing the state needed for an exit starts with a ${faultDisputeGameInitialBondEther.toLocaleString('en-US')} ETH bond. If challenged, the user must defend it with progressively larger bonds: each counterclaim costs ${faultDisputeGameBondScalingFactor.toFixed(2)} times the claim it counters, favoring the attacker in a capital-exhaustion attack.`,
         },
-      },
+      }),
       censorshipResistance:
         'The centralized sequencer provides no real-time censorship resistance. The Ethereum deposit path provides eventual censorship resistance, assuming the deposit is included on Ethereum.',
       references: [

@@ -1,5 +1,4 @@
 import {
-  assert,
   EthereumAddress,
   formatNumber,
   formatSeconds,
@@ -13,20 +12,20 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import { type BaseProject, ProjectStakeDistributionSchema } from '../../types'
+import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { readStakeDistribution } from '../../utils/readStakeDistribution'
 import stakeDistributionJson from './stake-distribution.json'
 
-const stakeDistribution = ProjectStakeDistributionSchema.parse(
-  stakeDistributionJson,
-)
-assert(
-  stakeDistribution.validatorCount !== undefined,
-  'Ethereum stake distribution must include validatorCount',
-)
+const stakeDistribution = readStakeDistribution(stakeDistributionJson, {
+  requireValidatorCount: true,
+})
 
 const chainId = 1
 const ethereumBlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+// Two justified epochs finalize a block.
+const ethereumFinalitySeconds =
+  ethereumBlockTimeSeconds * 2 * HARDCODED.ETHEREUM.SLOTS_PER_EPOCH
 const ethereumEpochSeconds =
   HARDCODED.ETHEREUM.SLOTS_PER_EPOCH * ethereumBlockTimeSeconds
 
@@ -177,8 +176,7 @@ export const ethereum: BaseProject = {
       name: 'Gasper',
       description: readProjectMarkdown('ethereum', 'daLayerConsensusAlgorithm'),
       blockTime: ethereumBlockTimeSeconds,
-      consensusFinality:
-        ethereumBlockTimeSeconds * 2 * HARDCODED.ETHEREUM.SLOTS_PER_EPOCH,
+      consensusFinality: ethereumFinalitySeconds,
       unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
     },
     throughput: [
@@ -210,7 +208,7 @@ export const ethereum: BaseProject = {
         sinceTimestamp: 1767747671, // 2026-01-07 01:01:11 UTC – epoch 419072
       },
     ],
-    finality: ethereumBlockTimeSeconds * 2 * HARDCODED.ETHEREUM.SLOTS_PER_EPOCH,
+    finality: ethereumFinalitySeconds,
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
       daLayer: EthereumDaLayerRisks.SelfVerify,

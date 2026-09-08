@@ -1,8 +1,7 @@
 import { expect } from 'earl'
-import { formatEther } from 'ethers/lib/utils'
 import {
   getOpStackBondScalingFactor,
-  getOpStackFullDisputeGameBondCost,
+  getOpStackFullDisputeGameBondCostEther,
   getOpStackMaxCumulativeClockExtension,
 } from './opStack'
 
@@ -12,18 +11,14 @@ describe(getOpStackBondScalingFactor.name, () => {
   })
 })
 
-describe(getOpStackFullDisputeGameBondCost.name, () => {
+describe(getOpStackFullDisputeGameBondCostEther.name, () => {
   it('includes bonded claims from depth 0 through the maximum depth', () => {
-    const fullPathCost = getOpStackFullDisputeGameBondCost(
-      '80000000000000000',
+    const fullPathCostEther = getOpStackFullDisputeGameBondCostEther(
+      0.08 * 1e18,
       73,
     )
 
-    expect(Number(formatEther(fullPathCost)).toFixed(2)).toEqual('691.23')
-  })
-
-  it('handles bonds that are small relative to the scale factor', () => {
-    expect(getOpStackFullDisputeGameBondCost(1_000, 73)).toEqual(8_600_000n)
+    expect(fullPathCostEther.toFixed(2)).toEqual('691.23')
   })
 })
 

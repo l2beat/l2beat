@@ -10,8 +10,3 @@ export function isDateOnly(value: string): boolean {
     !Number.isNaN(parsed) && new Date(parsed).toISOString().startsWith(value)
   )
 }
-
-/** True for any string Date.parse understands, e.g. an RFC 3339 timestamp. */
-export function isTimestamp(value: string): boolean {
-  return !Number.isNaN(Date.parse(value))
-}

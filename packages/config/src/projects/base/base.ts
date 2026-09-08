@@ -13,7 +13,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import {
-  getOpStackCentralizedSequencingCommon,
+  getOpStackCentralizedSequencingSpec,
   getOpStackDaTracking,
   getSP1Verifiers,
   opStackL2,
@@ -26,9 +26,9 @@ const chainId = 8453
 const l2BlockTimeSeconds = HARDCODED.BASE.L2_BLOCK_TIME_SECONDS
 const flashblockIntervalMilliseconds =
   HARDCODED.BASE.FLASHBLOCK_INTERVAL_MILLISECONDS
-const sequencingWindowBlocks = HARDCODED.BASE.SEQUENCING_WINDOW_BLOCKS
-const sequencingWindowSeconds = HARDCODED.BASE.SEQUENCING_WINDOW_SECONDS
-const maxDepositCalldataBytes = HARDCODED.BASE.MAX_DEPOSIT_CALLDATA_BYTES
+const sequencingWindowSeconds =
+  HARDCODED.BASE.SEQUENCING_WINDOW_BLOCKS *
+  HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 const proofMaturityDelaySeconds = discovery.getContractValue<number>(
   'OptimismPortal2',
   'proofMaturityDelaySeconds',
@@ -332,25 +332,18 @@ export const base: ScalingProject = opStackL2({
       name: 'Transactions are ordered by a centralized sequencer',
       description:
         'Base uses a single centralized sequencer for fast confirmations. Users can bypass it with one Ethereum transaction to the OptimismPortal. Base nodes derive the deposited transaction from Ethereum, including it after at most one sequencing window.',
-      sequencingSpec: {
-        type: 'centralized',
-        ...getOpStackCentralizedSequencingCommon({
-          discovery,
-          l2BlockTimeSeconds,
-          flashblockIntervalMilliseconds,
-          sequencingWindowSeconds,
-          sequencingWindowBlocks,
-          maxDepositCalldataBytes,
-          trustedPreconfirmationDescription: `The centralized builder streams cumulative Flashblock preconfirmations about every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and a preconfirmation can be absent or reorged.`,
-          sequencer: {
-            value: 'Centralized',
-            secondLine: '5-instance Raft HA',
-            sentiment: 'bad',
-            description:
-              'The Base operator controls real-time ordering. They document five sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. The replicas improve availability but do not create independent operators or censorship resistance.',
-            orderHint: 1,
-          },
-        }),
+      sequencingSpec: getOpStackCentralizedSequencingSpec({
+        discovery,
+        hardcoded: HARDCODED.BASE,
+        trustedPreconfirmationDescription: `The centralized builder streams cumulative Flashblock preconfirmations about every ${flashblockIntervalMilliseconds} ms while sealing regular L2 blocks every ${l2BlockTimeSeconds} seconds. Flashblocks are out of protocol: the promise has no protocol enforcement or slashing, and a preconfirmation can be absent or reorged.`,
+        sequencer: {
+          value: 'Centralized',
+          secondLine: '5-instance Raft HA',
+          sentiment: 'bad',
+          description:
+            'The Base operator controls real-time ordering. They document five sequencer instances coordinated by op-conductor using Raft leader election, with only the leader producing blocks. The replicas improve availability but do not create independent operators or censorship resistance.',
+          orderHint: 1,
+        },
         exitDelay: {
           value: formatSeconds(worstCaseExitDelaySeconds, {
             fullUnit: true,
@@ -375,7 +368,7 @@ export const base: ScalingProject = opStackL2({
           secondLine: 'ZK proof required',
           description: `Self-proposing the state needed for an exit requires a valid ZK proof and a ${aggregateVerifierInitialBondEther.toLocaleString('en-US')} ETH bond for one ${aggregateVerifierBlockInterval.toLocaleString('en-US')}-block checkpoint.`,
         },
-      },
+      }),
       censorshipResistance:
         'The centralized sequencer provides no real-time censorship resistance. The Ethereum deposit path provides eventual censorship resistance, assuming the deposit is included on Ethereum.',
       references: [

@@ -7,7 +7,6 @@ import {
   type CoingeckoId,
   EthereumAddress,
   isDateOnly,
-  isTimestamp,
   type KnownInteropBridgeType,
   type ProjectId,
   TokenId,
@@ -151,7 +150,9 @@ export const ProjectStakeDistributionSchema = v
   })
   .check(
     (d) =>
-      d.dateType === 'snapshot' ? isDateOnly(d.date) : isTimestamp(d.date),
+      d.dateType === 'snapshot'
+        ? isDateOnly(d.date)
+        : !Number.isNaN(Date.parse(d.date)),
     'date must be YYYY-MM-DD for snapshot or a parseable timestamp for fetched',
   )
   .check(

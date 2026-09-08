@@ -20,13 +20,11 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { ProjectStakeDistributionSchema } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { readStakeDistribution } from '../../utils/readStakeDistribution'
 import stakeDistributionJson from './stake-distribution.json'
 
-const stakeDistribution = ProjectStakeDistributionSchema.parse(
-  stakeDistributionJson,
-)
+const stakeDistribution = readStakeDistribution(stakeDistributionJson)
 
 const discovery = new ProjectDiscovery('polygon-pos')
 

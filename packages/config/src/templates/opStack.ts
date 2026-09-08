@@ -289,28 +289,37 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
   hostChain: string
 }
 
-export function getOpStackCentralizedSequencingCommon({
+/** The subset of HARDCODED.<CHAIN> a centralized OP Stack sequencing spec needs. */
+export interface OpStackCentralizedSequencingHardcoded {
+  L2_BLOCK_TIME_SECONDS: number
+  FLASHBLOCK_INTERVAL_MILLISECONDS: number
+  SEQUENCING_WINDOW_BLOCKS: number
+  MAX_DEPOSIT_CALLDATA_BYTES: number
+}
+
+export function getOpStackCentralizedSequencingSpec({
   discovery,
-  l2BlockTimeSeconds,
-  flashblockIntervalMilliseconds,
-  sequencingWindowSeconds,
-  sequencingWindowBlocks,
-  maxDepositCalldataBytes,
+  hardcoded,
   trustedPreconfirmationDescription,
   sequencer,
+  exitDelay,
+  exitEconomics,
 }: {
   discovery: ProjectDiscovery
-  l2BlockTimeSeconds: number
-  flashblockIntervalMilliseconds: number
-  sequencingWindowSeconds: number
-  sequencingWindowBlocks: number
-  maxDepositCalldataBytes: number
+  hardcoded: OpStackCentralizedSequencingHardcoded
   trustedPreconfirmationDescription: string
   sequencer: TableReadyValue
-}): Omit<
-  ProjectCentralizedSequencingSpec,
-  'type' | 'exitDelay' | 'exitEconomics'
-> {
+  exitDelay: TableReadyValue
+  exitEconomics: TableReadyValue
+}): ProjectCentralizedSequencingSpec {
+  const {
+    L2_BLOCK_TIME_SECONDS: l2BlockTimeSeconds,
+    FLASHBLOCK_INTERVAL_MILLISECONDS: flashblockIntervalMilliseconds,
+    SEQUENCING_WINDOW_BLOCKS: sequencingWindowBlocks,
+    MAX_DEPOSIT_CALLDATA_BYTES: maxDepositCalldataBytes,
+  } = hardcoded
+  const sequencingWindowSeconds =
+    sequencingWindowBlocks * HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
   const depositResourceLimit = discovery.getContractValue<{
     maxResourceLimit: number
   }>('SystemConfig', 'resourceConfig').maxResourceLimit
@@ -326,6 +335,7 @@ export function getOpStackCentralizedSequencingCommon({
     minimumDepositGasWithOneByte - minimumDepositGasWithoutData
 
   return {
+    type: 'centralized',
     trustedPreconfirmation: {
       value: `${flashblockIntervalMilliseconds} ms`,
       secondLine: `${l2BlockTimeSeconds} s L2 block time`,
@@ -360,6 +370,8 @@ export function getOpStackCentralizedSequencingCommon({
       secondLine: 'Address alias',
       description: `Forced inclusion creates an L1-originated deposit transaction rather than submitting the original signed L2 transaction. Its calldata is capped at ${maxDepositCalldataBytes.toLocaleString('en-US')} bytes, its minimum L2 gas limit is ${minimumDepositGasWithoutData.toLocaleString('en-US')} plus ${minimumDepositGasPerByte.toLocaleString('en-US')} gas per calldata byte, and deposits share a metered ${depositResourceLimit.toLocaleString('en-US')} gas resource limit per Ethereum block. L1 contract callers use an aliased address on L2.`,
     },
+    exitDelay,
+    exitEconomics,
   }
 }
 
@@ -1416,20 +1428,14 @@ export function getOpStackBondScalingFactor(gameMaxDepth: number): number {
   )
 }
 
-export function getOpStackFullDisputeGameBondCost(
-  initialBondWei: number | string,
+/** Total ETH bonded along a full-depth path: one bond per depth from 0 through gameMaxDepth. */
+export function getOpStackFullDisputeGameBondCostEther(
+  initialBondWei: number,
   gameMaxDepth: number,
-): bigint {
-  const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
-  const initialBond = Number(initialBondWei)
-  let cost = 0
-  const scaleFactor = 100_000
-
-  for (let depth = 0; depth <= gameMaxDepth; depth++) {
-    cost += (initialBond / scaleFactor) * exponentialBondsFactor ** depth
-  }
-
-  return BigInt(Math.round(cost)) * BigInt(scaleFactor)
+): number {
+  const factor = getOpStackBondScalingFactor(gameMaxDepth)
+  const initialBondEther = Number(initialBondWei) / 1e18
+  return (initialBondEther * (factor ** (gameMaxDepth + 1) - 1)) / (factor - 1)
 }
 
 /**
@@ -1473,10 +1479,8 @@ export function describeOPFP({
     oracleChallengePeriod,
   )
 
-  const permissionlessGameFullCost = getOpStackFullDisputeGameBondCost(
-    disputeGameBonds,
-    gameMaxDepth,
-  )
+  const permissionlessGameFullCostEther =
+    getOpStackFullDisputeGameBondCostEther(disputeGameBonds, gameMaxDepth)
 
   return {
     description: readMarkdown('templates/opStack/opfpDescription.md', {
@@ -1504,9 +1508,7 @@ export function describeOPFP({
         description: readMarkdown('templates/opStack/opfpChallenges.md', {
           exponentialBondsFactor: exponentialBondsFactor.toFixed(5),
           gameMaxDepth,
-          fullGameCost: Number.parseFloat(
-            formatEther(permissionlessGameFullCost),
-          ).toFixed(2),
+          fullGameCost: permissionlessGameFullCostEther.toFixed(2),
           maxClockDuration: formatSeconds(maxClockDuration),
           gameClockExtension: formatSeconds(gameClockExtension),
           doubleGameClockExtension: formatSeconds(gameClockExtension * 2),

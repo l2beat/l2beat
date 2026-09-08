@@ -3,8 +3,9 @@
 
 EDIT THIS FILE ONLY WHEN YOU KNOW WHAT YOU ARE DOING
 
-This is a file responsible for hardcoding the data into the config. 
-The data is hardcoded because it is not possible to fetch it from the blockchain, using current discovery methods.
+This file hardcodes protocol parameters that discovery cannot fetch from the
+blockchain: offchain node configuration, consensus-spec constants and
+contract literals without getters. Every entry should link to its source.
 
 Updating this file should be a conscious decision preceded by the research.
 
@@ -12,11 +13,7 @@ DO NOT UPDATE THIS FILE ONLY TO FIX THE TESTS
 UNDERSTAND WHAT YOU ARE DOING BEFORE YOU UPDATE THIS FILE
 */
 
-// This is the place to insert hardcoded values
-// which should be used inside project's hardcoded tests
 const ETHEREUM_BLOCK_TIME_SECONDS = 12
-const OP_MAINNET_SEQUENCING_WINDOW_BLOCKS = 3_600
-const BASE_SEQUENCING_WINDOW_BLOCKS = 3_600
 
 export const HARDCODED = {
   ETHEREUM: {
@@ -47,6 +44,12 @@ export const HARDCODED = {
     L2_BLOCK_TIME_MILLISECONDS: 250,
     // https://github.com/OffchainLabs/nitro/blob/master/timeboost/config.go
     TIMEBOOST_EXPRESS_LANE_ADVANTAGE_MILLISECONDS: 200,
+    // BASIS is a literal in the DelayBuffer library and has no getter.
+    // https://github.com/OffchainLabs/nitro-contracts/blob/main/src/bridge/DelayBuffer.sol
+    DELAY_BUFFER_BASIS_POINTS: 10_000,
+    // The buffer replenishes per elapsed L1 block. This is the interval over
+    // which L2BEAT expresses the replenish rate in descriptions.
+    DELAY_BUFFER_REPLENISH_DISPLAY_INTERVAL_SECONDS: 1_200,
   },
   OPTIMISM: {
     // block_time and seq_window_size can be independently verified by calling
@@ -57,9 +60,10 @@ export const HARDCODED = {
     // https://github.com/ethereum-optimism/optimism/blob/develop/op-deployer/pkg/deployer/state/deploy_config.go#L93
     // https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
     L2_BLOCK_TIME_SECONDS: 2,
-    SEQUENCING_WINDOW_BLOCKS: OP_MAINNET_SEQUENCING_WINDOW_BLOCKS,
-    SEQUENCING_WINDOW_SECONDS:
-      OP_MAINNET_SEQUENCING_WINDOW_BLOCKS * ETHEREUM_BLOCK_TIME_SECONDS,
+    SEQUENCING_WINDOW_BLOCKS: 3_600,
+    // Kept in seconds for the many OP Stack chains that assume the OP Mainnet
+    // default without their own configuration source.
+    SEQUENCING_WINDOW_SECONDS: 3_600 * ETHEREUM_BLOCK_TIME_SECONDS,
     // https://docs.optimism.io/op-stack/features/flashblocks
     FLASHBLOCK_INTERVAL_MILLISECONDS: 250,
     // This limit is a literal in OptimismPortal2.depositTransaction and has no getter.
@@ -77,9 +81,7 @@ export const HARDCODED = {
     // historical L1 state.
     // https://github.com/base/base/blob/5761d838af8ae52e4904a74af2f3d8b490f56fec/crates/common/chains/src/config.rs#L402-L409
     L2_BLOCK_TIME_SECONDS: 2,
-    SEQUENCING_WINDOW_BLOCKS: BASE_SEQUENCING_WINDOW_BLOCKS,
-    SEQUENCING_WINDOW_SECONDS:
-      BASE_SEQUENCING_WINDOW_BLOCKS * ETHEREUM_BLOCK_TIME_SECONDS,
+    SEQUENCING_WINDOW_BLOCKS: 3_600,
     // https://docs.base.org/base-chain/flashblocks/faq
     FLASHBLOCK_INTERVAL_MILLISECONDS: 200,
     // This limit is a literal in OptimismPortal2.depositTransaction and has no getter.

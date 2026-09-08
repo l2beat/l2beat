@@ -14,7 +14,7 @@ function OpenBlockProduction(description?: string): TableReadyValue {
   return {
     value: 'Open',
     sentiment: 'good',
-    ...(description !== undefined ? { description } : {}),
+    description,
   }
 }
 
@@ -22,7 +22,7 @@ function NoDeterministicCrGadget(description?: string): TableReadyValue {
   return {
     value: 'No',
     sentiment: 'warning',
-    ...(description !== undefined ? { description } : {}),
+    description,
   }
 }
 

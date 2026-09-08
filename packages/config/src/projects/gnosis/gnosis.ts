@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatNumber,
@@ -20,17 +19,13 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { ProjectStakeDistributionSchema } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { readStakeDistribution } from '../../utils/readStakeDistribution'
 import stakeDistributionJson from './stake-distribution.json'
 
-const stakeDistribution = ProjectStakeDistributionSchema.parse(
-  stakeDistributionJson,
-)
-assert(
-  stakeDistribution.validatorCount !== undefined,
-  'Gnosis stake distribution must include validatorCount',
-)
+const stakeDistribution = readStakeDistribution(stakeDistributionJson, {
+  requireValidatorCount: true,
+})
 
 const discovery = new ProjectDiscovery('gnosis')
 
