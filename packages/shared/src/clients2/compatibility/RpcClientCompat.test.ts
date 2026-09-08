@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { EthRpcClient, RpcBlock } from '../EthRpcClient'
 import { RpcClientCompat } from './RpcClientCompat'
@@ -22,6 +23,29 @@ describe(RpcClientCompat.name, () => {
 
       expect(timestamp).toEqual(1_000)
       expect(getBlockByNumber).toHaveBeenOnlyCalledWith(100n, false)
+    })
+  })
+
+  describe(RpcClientCompat.prototype.getLogs.name, () => {
+    it('treats multiple event signatures as topic zero alternatives', async () => {
+      const getLogs = mockFn<EthRpcClient['getLogs']>().resolvesTo([])
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getLogs }),
+        'ethereum',
+      )
+      const addresses = [
+        EthereumAddress('0x1111111111111111111111111111111111111111'),
+      ]
+      const topics = [`0x${'aa'.repeat(32)}`, `0x${'bb'.repeat(32)}`]
+
+      await client.getLogs(100, 200, addresses, topics)
+
+      expect(getLogs).toHaveBeenOnlyCalledWith({
+        fromBlock: 100n,
+        toBlock: 200n,
+        address: addresses,
+        topics: [topics],
+      })
     })
   })
 

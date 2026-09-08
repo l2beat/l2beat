@@ -237,7 +237,7 @@ export class RpcClientCompat implements IRpcClient {
         fromBlock: BigInt(from),
         toBlock: BigInt(to),
         address: addresses as EthereumAddress[] | undefined,
-        topics: topics,
+        topics: topics ? [topics] : undefined,
       })
       return logs.map(toEVMLog)
     } catch (e) {
