@@ -1,0 +1,1450 @@
+{
+  "name": "fluidkey",
+  "timestamp": 1788853601,
+  "configHash": "0xf0d6956b629bc8d352b676a61e22cbf7f6036cb5f5fa28ecd4a0fcb6c4b21587",
+  "entries": [
+    {
+      "address": "arb1:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FluidkeyEarnModule",
+      "address": "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
+      ],
+      "proxyType": "immutable",
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "deployerAddress": "arb1:0x620d7E459cfFcdC56a874536dC19147De801a4A1",
+      "sinceTimestamp": 1744120221,
+      "sinceBlock": 324233428,
+      "values": {
+        "$immutable": true,
+        "authorizedRelayers": [
+          "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D"
+        ],
+        "NATIVE_TOKEN": "arb1:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "arb1:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "wrappedNative": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the earn module." },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers."
+        }
+      },
+      "implementationNames": {
+        "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
+      }
+    },
+    {
+      "address": "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Fluidkey Earn Owner",
+      "address": "arb1:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x417B4Adc279743FC49F047C323FC668db9E600D8",
+      "sinceTimestamp": 1744106243,
+      "sinceBlock": 324177621,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "arb1:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+          "arb1:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+          "arb1:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x2e9821d1e1d6386099dffc1b803152a480466b94ec6c4491e32d9dce6a2e7dd7",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "arb1:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "SafeProxy",
+        "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "arb1:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FluidkeyEarnModule",
+      "address": "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
+      ],
+      "proxyType": "immutable",
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "deployerAddress": "base:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28",
+      "sinceTimestamp": 1744118755,
+      "sinceBlock": 28664704,
+      "values": {
+        "$immutable": true,
+        "authorizedRelayers": [
+          "base:0x53d92eCe145696ff27A7d1F8746632C3deBB151D"
+        ],
+        "NATIVE_TOKEN": "base:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "wrappedNative": "base:0x4200000000000000000000000000000000000006"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the earn module." },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers."
+        }
+      },
+      "implementationNames": {
+        "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
+      }
+    },
+    {
+      "address": "base:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Fluidkey Earn Owner",
+      "address": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x049f14edBD5E63d9CBfF4AE805cCCCdABa1c202f",
+      "sinceTimestamp": 1739547867,
+      "sinceBlock": 26379260,
+      "values": {
+        "$immutable": false,
+        "$implementation": "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "base:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+          "base:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+          "base:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x9000e8c5edb021e260d21c6b0fc4bffd03b8faa423ea0f58bdfa795abbbfe08b",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 12,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "SafeProxy",
+        "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "base:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x269fDaBd799179189C98D960C58C3793CcedDB85",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FluidkeyEarnModule",
+      "address": "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
+      ],
+      "proxyType": "immutable",
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "deployerAddress": "eth:0x629F72215a9914F6d3D061F306E923F5DD9dFc60",
+      "sinceTimestamp": 1746622427,
+      "sinceBlock": 22431884,
+      "values": {
+        "$immutable": true,
+        "authorizedRelayers": [
+          "eth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D"
+        ],
+        "NATIVE_TOKEN": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "wrappedNative": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the earn module." },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers."
+        }
+      },
+      "implementationNames": {
+        "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
+      }
+    },
+    {
+      "address": "eth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5a655820821bf7af7B23566b34ce0CcBd9c9a37f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x74C19105f358BAb85f8E9FDA9202A1326A714d89",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OffchainResolver",
+      "address": "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x04f4a6fa707d0ac615fc02603f8514c54d1f605e28459b11249433b2ef8b5475"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable ENS CCIP-Read resolver used by Fluidkey. Every query redirects to a configurable gateway and accepts the returned ENS record if it is unexpired and signed by an accepted signer. It does not verify that a returned payment address was derived for the named recipient.",
+      "deployerAddress": "eth:0x2748BDB378aaE458f322D17e0a0851c921D466E3",
+      "sinceTimestamp": 1705920251,
+      "sinceBlock": 19061764,
+      "values": {
+        "$immutable": true,
+        "ENV": 0,
+        "owner": "eth:0xdcC34c0da55cEF7AeD38Bb749AD97DAC12A9936C",
+        "signers": ["eth:0x269fDaBd799179189C98D960C58C3793CcedDB85"],
+        "url": "https://a6jug47b4o4ogptizddm3kxuua0biayl.lambda-url.eu-west-1.on.aws/{sender}/{data}.json"
+      },
+      "fieldMeta": {
+        "url": {
+          "description": "URL used for offchain ENS resolution. The owner can replace it immediately."
+        },
+        "owner": { "description": "Owner of the resolver." },
+        "signers": {
+          "description": "Addresses whose signatures authenticate offchain ENS answers."
+        }
+      },
+      "implementationNames": {
+        "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c": "OffchainResolver"
+      }
+    },
+    {
+      "name": "Fluidkey Earn Owner",
+      "address": "eth:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2748BDB378aaE458f322D17e0a0851c921D466E3",
+      "sinceTimestamp": 1744107455,
+      "sinceBlock": 22223530,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+          "eth:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+          "eth:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x87143dd9ce0dd336487a841fcd0a3cc28b3189f9f4f6dbf421d5aad82ad7efb8",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Fluidkey Resolver Multisig",
+      "address": "eth:0xdcC34c0da55cEF7AeD38Bb749AD97DAC12A9936C",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x905296ED6411D92165349b468ca838D83fE96AE4",
+      "sinceTimestamp": 1704385499,
+      "sinceBlock": 18935135,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+          "eth:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+          "eth:0x5a655820821bf7af7B23566b34ce0CcBd9c9a37f",
+          "eth:0x74C19105f358BAb85f8E9FDA9202A1326A714d89",
+          "eth:0xFE972D3976F7cc5ba1C9b471D48362B82C6c5fDd"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x55f91d454adb00ac72ea3006610e600d01c850f986ded2fc0c1de7dcda847571",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xdcC34c0da55cEF7AeD38Bb749AD97DAC12A9936C": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xFE972D3976F7cc5ba1C9b471D48362B82C6c5fDd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FluidkeyEarnModule",
+      "address": "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
+      ],
+      "proxyType": "immutable",
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "deployerAddress": "gno:0xC4E7263Dd870A29f1cFe438D1A7DB48547B16888",
+      "sinceTimestamp": 1744120285,
+      "sinceBlock": 39454362,
+      "values": {
+        "$immutable": true,
+        "authorizedRelayers": [
+          "gno:0x53d92eCe145696ff27A7d1F8746632C3deBB151D"
+        ],
+        "NATIVE_TOKEN": "gno:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "wrappedNative": "gno:0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the earn module." },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers."
+        }
+      },
+      "implementationNames": {
+        "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
+      }
+    },
+    {
+      "address": "gno:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Fluidkey Earn Owner",
+      "address": "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "gno:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28",
+      "sinceTimestamp": 1739556545,
+      "sinceBlock": 38562127,
+      "values": {
+        "$immutable": false,
+        "$implementation": "gno:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "gno:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+          "gno:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+          "gno:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x9ad637ff812eee427f48b1fb52071abfe7db2195543fae3fa3d1b8acfe178b94",
+        "getChainId": 100,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "SafeProxy",
+        "gno:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "gno:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FluidkeyEarnModule",
+      "address": "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
+      ],
+      "proxyType": "immutable",
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "deployerAddress": "matic:0x417B4Adc279743FC49F047C323FC668db9E600D8",
+      "sinceTimestamp": 1744120344,
+      "sinceBlock": 70050110,
+      "values": {
+        "$immutable": true,
+        "authorizedRelayers": [
+          "matic:0x53d92eCe145696ff27A7d1F8746632C3deBB151D"
+        ],
+        "NATIVE_TOKEN": "matic:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "wrappedNative": "matic:0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the earn module." },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers."
+        }
+      },
+      "implementationNames": {
+        "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
+      }
+    },
+    {
+      "address": "matic:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Fluidkey Earn Owner",
+      "address": "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "matic:0x417B4Adc279743FC49F047C323FC668db9E600D8",
+      "sinceTimestamp": 1744106155,
+      "sinceBlock": 70043437,
+      "values": {
+        "$immutable": false,
+        "$implementation": "matic:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "matic:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+          "matic:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+          "matic:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xd5b59c1cbad662b113a3c8cc8ae6e702e9072329d1181ea341085d91a2136df1",
+        "getChainId": 137,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "SafeProxy",
+        "matic:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "matic:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FluidkeyEarnModule",
+      "address": "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x94cee9ecba5cf2c5b578318c1fb6784dee42cb945c815c33199925cf1661ecfd"
+      ],
+      "proxyType": "immutable",
+      "description": "Safe module used for Fluidkey auto-earn. Authorized relayers can deposit tokens into the vault selected by the Safe's configuration hash, with vault shares credited to that Safe. The module owner publishes configurations, but selecting a different hash requires a call from the Safe.",
+      "deployerAddress": "oeth:0x417B4Adc279743FC49F047C323FC668db9E600D8",
+      "sinceTimestamp": 1744119147,
+      "sinceBlock": 134260185,
+      "values": {
+        "$immutable": true,
+        "authorizedRelayers": [
+          "oeth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D"
+        ],
+        "NATIVE_TOKEN": "oeth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+        "wrappedNative": "oeth:0x4200000000000000000000000000000000000006"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Owner of the earn module." },
+        "authorizedRelayers": {
+          "description": "Addresses authorized to initiate auto-earn deposits and manage other relayers."
+        }
+      },
+      "implementationNames": {
+        "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": "FluidkeyEarnModule"
+      }
+    },
+    {
+      "address": "oeth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Fluidkey Earn Owner",
+      "address": "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0x620d7E459cfFcdC56a874536dC19147De801a4A1",
+      "sinceTimestamp": 1744105499,
+      "sinceBlock": 134253361,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "oeth:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+          "oeth:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+          "oeth:0x3066e11cd9a68AbFd2C3798b4617aA44E9Dc08c1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xcc3f1281123caf865f7068c949e13bcc62d792c8ce569094afdc52d3c683131e",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": "SafeProxy",
+        "oeth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "oeth:0xa13EFDd0d500cB9DA8140842cf624f1D5e273E10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0xB9e7de28c2e6C8F3C29Fc0e061485A34C5864614",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
+      "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
+      "error CannotRemoveSelf()",
+      "error ConfigNotFound(address token)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmptyConfigList()",
+      "error InvalidConfigHash()",
+      "error LinkedList_AlreadyInitialized()",
+      "error LinkedList_EntryAlreadyInList(address entry)",
+      "error LinkedList_InvalidEntry(address entry)",
+      "error LinkedList_InvalidPage()",
+      "error ModuleAlreadyInitialized(address account)",
+      "error ModuleNotInitialized(address account)",
+      "error NotAuthorized(address relayer)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SignatureAlreadyUsed()",
+      "error TooManyTokens()",
+      "event AddAuthorizedRelayer(address indexed relayer)",
+      "event AutoEarnExecuted(address indexed smartAccount, address indexed token, uint256 amountIn)",
+      "event ConfigHashChanged(address indexed account, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConfigSet(uint256 indexed configHash, uint256 indexed chainId, address token)",
+      "event ModuleInitialized(address indexed account)",
+      "event ModuleUninitialized(address indexed account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveAuthorizedRelayer(address indexed relayer)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function accountConfig(address) view returns (uint256)",
+      "function addAuthorizedRelayer(address newRelayer)",
+      "function authorizedRelayers(address) view returns (bool)",
+      "function autoEarn(address token, uint256 amountToSave, address safe, uint256 nonce, bytes signature)",
+      "function autoEarn(address token, uint256 amountToSave, address safe)",
+      "function changeConfigHash(uint256 newConfigHash)",
+      "function config(uint256, uint256, address) view returns (address)",
+      "function executedHashes(bytes32) view returns (bool)",
+      "function getAllConfigs(address account) view returns (tuple(address token, address vault)[])",
+      "function getTokens(uint256 configHash_, uint256 chainId_) view returns (address[] tokensArray)",
+      "function isInitialized(address smartAccount) view returns (bool)",
+      "function onInstall(bytes data)",
+      "function onUninstall()",
+      "function owner() view returns (address)",
+      "function removeAuthorizedRelayer(address relayer)",
+      "function renounceOwnership()",
+      "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
+      "function transferOwnership(address newOwner)",
+      "function wrappedNative() view returns (address)"
+    ],
+    "arb1:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
+      "constructor(address _singleton)"
+    ],
+    "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
+      "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
+      "error CannotRemoveSelf()",
+      "error ConfigNotFound(address token)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmptyConfigList()",
+      "error InvalidConfigHash()",
+      "error LinkedList_AlreadyInitialized()",
+      "error LinkedList_EntryAlreadyInList(address entry)",
+      "error LinkedList_InvalidEntry(address entry)",
+      "error LinkedList_InvalidPage()",
+      "error ModuleAlreadyInitialized(address account)",
+      "error ModuleNotInitialized(address account)",
+      "error NotAuthorized(address relayer)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SignatureAlreadyUsed()",
+      "error TooManyTokens()",
+      "event AddAuthorizedRelayer(address indexed relayer)",
+      "event AutoEarnExecuted(address indexed smartAccount, address indexed token, uint256 amountIn)",
+      "event ConfigHashChanged(address indexed account, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConfigSet(uint256 indexed configHash, uint256 indexed chainId, address token)",
+      "event ModuleInitialized(address indexed account)",
+      "event ModuleUninitialized(address indexed account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveAuthorizedRelayer(address indexed relayer)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function accountConfig(address) view returns (uint256)",
+      "function addAuthorizedRelayer(address newRelayer)",
+      "function authorizedRelayers(address) view returns (bool)",
+      "function autoEarn(address token, uint256 amountToSave, address safe, uint256 nonce, bytes signature)",
+      "function autoEarn(address token, uint256 amountToSave, address safe)",
+      "function changeConfigHash(uint256 newConfigHash)",
+      "function config(uint256, uint256, address) view returns (address)",
+      "function executedHashes(bytes32) view returns (bool)",
+      "function getAllConfigs(address account) view returns (tuple(address token, address vault)[])",
+      "function getTokens(uint256 configHash_, uint256 chainId_) view returns (address[] tokensArray)",
+      "function isInitialized(address smartAccount) view returns (bool)",
+      "function onInstall(bytes data)",
+      "function onUninstall()",
+      "function owner() view returns (address)",
+      "function removeAuthorizedRelayer(address relayer)",
+      "function renounceOwnership()",
+      "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
+      "function transferOwnership(address newOwner)",
+      "function wrappedNative() view returns (address)"
+    ],
+    "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
+      "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
+      "error CannotRemoveSelf()",
+      "error ConfigNotFound(address token)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmptyConfigList()",
+      "error InvalidConfigHash()",
+      "error LinkedList_AlreadyInitialized()",
+      "error LinkedList_EntryAlreadyInList(address entry)",
+      "error LinkedList_InvalidEntry(address entry)",
+      "error LinkedList_InvalidPage()",
+      "error ModuleAlreadyInitialized(address account)",
+      "error ModuleNotInitialized(address account)",
+      "error NotAuthorized(address relayer)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SignatureAlreadyUsed()",
+      "error TooManyTokens()",
+      "event AddAuthorizedRelayer(address indexed relayer)",
+      "event AutoEarnExecuted(address indexed smartAccount, address indexed token, uint256 amountIn)",
+      "event ConfigHashChanged(address indexed account, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConfigSet(uint256 indexed configHash, uint256 indexed chainId, address token)",
+      "event ModuleInitialized(address indexed account)",
+      "event ModuleUninitialized(address indexed account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveAuthorizedRelayer(address indexed relayer)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function accountConfig(address) view returns (uint256)",
+      "function addAuthorizedRelayer(address newRelayer)",
+      "function authorizedRelayers(address) view returns (bool)",
+      "function autoEarn(address token, uint256 amountToSave, address safe, uint256 nonce, bytes signature)",
+      "function autoEarn(address token, uint256 amountToSave, address safe)",
+      "function changeConfigHash(uint256 newConfigHash)",
+      "function config(uint256, uint256, address) view returns (address)",
+      "function executedHashes(bytes32) view returns (bool)",
+      "function getAllConfigs(address account) view returns (tuple(address token, address vault)[])",
+      "function getTokens(uint256 configHash_, uint256 chainId_) view returns (address[] tokensArray)",
+      "function isInitialized(address smartAccount) view returns (bool)",
+      "function onInstall(bytes data)",
+      "function onUninstall()",
+      "function owner() view returns (address)",
+      "function removeAuthorizedRelayer(address relayer)",
+      "function renounceOwnership()",
+      "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
+      "function transferOwnership(address newOwner)",
+      "function wrappedNative() view returns (address)"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c": [
+      "constructor(string _url, address[] _signers, uint256 _env)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callbackFunction, bytes extraData)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event NewSigners(address[] signers)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemovedSigner(address signers)",
+      "function ENV() view returns (uint256)",
+      "function makeSignatureHash(address target, uint64 expires, bytes request, bytes result) pure returns (bytes32)",
+      "function owner() view returns (address)",
+      "function removeSigner(address _signer)",
+      "function renounceOwnership()",
+      "function resolve(bytes name, bytes data) view returns (bytes)",
+      "function resolveWithProof(bytes response, bytes extraData) view returns (bytes)",
+      "function setSigners(address[] _signers)",
+      "function setUrl(string _url)",
+      "function signers(address) view returns (bool)",
+      "function supportsInterface(bytes4 interfaceID) pure returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function url() view returns (string)"
+    ],
+    "eth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xdcC34c0da55cEF7AeD38Bb749AD97DAC12A9936C": [
+      "constructor(address _singleton)"
+    ],
+    "gno:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
+      "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
+      "error CannotRemoveSelf()",
+      "error ConfigNotFound(address token)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmptyConfigList()",
+      "error InvalidConfigHash()",
+      "error LinkedList_AlreadyInitialized()",
+      "error LinkedList_EntryAlreadyInList(address entry)",
+      "error LinkedList_InvalidEntry(address entry)",
+      "error LinkedList_InvalidPage()",
+      "error ModuleAlreadyInitialized(address account)",
+      "error ModuleNotInitialized(address account)",
+      "error NotAuthorized(address relayer)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SignatureAlreadyUsed()",
+      "error TooManyTokens()",
+      "event AddAuthorizedRelayer(address indexed relayer)",
+      "event AutoEarnExecuted(address indexed smartAccount, address indexed token, uint256 amountIn)",
+      "event ConfigHashChanged(address indexed account, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConfigSet(uint256 indexed configHash, uint256 indexed chainId, address token)",
+      "event ModuleInitialized(address indexed account)",
+      "event ModuleUninitialized(address indexed account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveAuthorizedRelayer(address indexed relayer)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function accountConfig(address) view returns (uint256)",
+      "function addAuthorizedRelayer(address newRelayer)",
+      "function authorizedRelayers(address) view returns (bool)",
+      "function autoEarn(address token, uint256 amountToSave, address safe, uint256 nonce, bytes signature)",
+      "function autoEarn(address token, uint256 amountToSave, address safe)",
+      "function changeConfigHash(uint256 newConfigHash)",
+      "function config(uint256, uint256, address) view returns (address)",
+      "function executedHashes(bytes32) view returns (bool)",
+      "function getAllConfigs(address account) view returns (tuple(address token, address vault)[])",
+      "function getTokens(uint256 configHash_, uint256 chainId_) view returns (address[] tokensArray)",
+      "function isInitialized(address smartAccount) view returns (bool)",
+      "function onInstall(bytes data)",
+      "function onUninstall()",
+      "function owner() view returns (address)",
+      "function removeAuthorizedRelayer(address relayer)",
+      "function renounceOwnership()",
+      "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
+      "function transferOwnership(address newOwner)",
+      "function wrappedNative() view returns (address)"
+    ],
+    "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
+      "constructor(address _singleton)"
+    ],
+    "matic:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
+      "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
+      "error CannotRemoveSelf()",
+      "error ConfigNotFound(address token)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmptyConfigList()",
+      "error InvalidConfigHash()",
+      "error LinkedList_AlreadyInitialized()",
+      "error LinkedList_EntryAlreadyInList(address entry)",
+      "error LinkedList_InvalidEntry(address entry)",
+      "error LinkedList_InvalidPage()",
+      "error ModuleAlreadyInitialized(address account)",
+      "error ModuleNotInitialized(address account)",
+      "error NotAuthorized(address relayer)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SignatureAlreadyUsed()",
+      "error TooManyTokens()",
+      "event AddAuthorizedRelayer(address indexed relayer)",
+      "event AutoEarnExecuted(address indexed smartAccount, address indexed token, uint256 amountIn)",
+      "event ConfigHashChanged(address indexed account, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConfigSet(uint256 indexed configHash, uint256 indexed chainId, address token)",
+      "event ModuleInitialized(address indexed account)",
+      "event ModuleUninitialized(address indexed account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveAuthorizedRelayer(address indexed relayer)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function accountConfig(address) view returns (uint256)",
+      "function addAuthorizedRelayer(address newRelayer)",
+      "function authorizedRelayers(address) view returns (bool)",
+      "function autoEarn(address token, uint256 amountToSave, address safe, uint256 nonce, bytes signature)",
+      "function autoEarn(address token, uint256 amountToSave, address safe)",
+      "function changeConfigHash(uint256 newConfigHash)",
+      "function config(uint256, uint256, address) view returns (address)",
+      "function executedHashes(bytes32) view returns (bool)",
+      "function getAllConfigs(address account) view returns (tuple(address token, address vault)[])",
+      "function getTokens(uint256 configHash_, uint256 chainId_) view returns (address[] tokensArray)",
+      "function isInitialized(address smartAccount) view returns (bool)",
+      "function onInstall(bytes data)",
+      "function onUninstall()",
+      "function owner() view returns (address)",
+      "function removeAuthorizedRelayer(address relayer)",
+      "function renounceOwnership()",
+      "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
+      "function transferOwnership(address newOwner)",
+      "function wrappedNative() view returns (address)"
+    ],
+    "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9": [
+      "constructor(address _authorizedRelayer, address _wrappedNative, address _owner)",
+      "error CannotRemoveSelf()",
+      "error ConfigNotFound(address token)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmptyConfigList()",
+      "error InvalidConfigHash()",
+      "error LinkedList_AlreadyInitialized()",
+      "error LinkedList_EntryAlreadyInList(address entry)",
+      "error LinkedList_InvalidEntry(address entry)",
+      "error LinkedList_InvalidPage()",
+      "error ModuleAlreadyInitialized(address account)",
+      "error ModuleNotInitialized(address account)",
+      "error NotAuthorized(address relayer)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SignatureAlreadyUsed()",
+      "error TooManyTokens()",
+      "event AddAuthorizedRelayer(address indexed relayer)",
+      "event AutoEarnExecuted(address indexed smartAccount, address indexed token, uint256 amountIn)",
+      "event ConfigHashChanged(address indexed account, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConfigSet(uint256 indexed configHash, uint256 indexed chainId, address token)",
+      "event ModuleInitialized(address indexed account)",
+      "event ModuleUninitialized(address indexed account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveAuthorizedRelayer(address indexed relayer)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function accountConfig(address) view returns (uint256)",
+      "function addAuthorizedRelayer(address newRelayer)",
+      "function authorizedRelayers(address) view returns (bool)",
+      "function autoEarn(address token, uint256 amountToSave, address safe, uint256 nonce, bytes signature)",
+      "function autoEarn(address token, uint256 amountToSave, address safe)",
+      "function changeConfigHash(uint256 newConfigHash)",
+      "function config(uint256, uint256, address) view returns (address)",
+      "function executedHashes(bytes32) view returns (bool)",
+      "function getAllConfigs(address account) view returns (tuple(address token, address vault)[])",
+      "function getTokens(uint256 configHash_, uint256 chainId_) view returns (address[] tokensArray)",
+      "function isInitialized(address smartAccount) view returns (bool)",
+      "function onInstall(bytes data)",
+      "function onUninstall()",
+      "function owner() view returns (address)",
+      "function removeAuthorizedRelayer(address relayer)",
+      "function renounceOwnership()",
+      "function setConfig(tuple(uint256 chainId, address token, address vault)[] newConfigs)",
+      "function transferOwnership(address newOwner)",
+      "function wrappedNative() view returns (address)"
+    ],
+    "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": [
+      "constructor(address _singleton)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": {
+    "arbitrum": 502954163,
+    "base": 51032127,
+    "ethereum": 25931246,
+    "gnosis": 48141225,
+    "optimism": 156627412,
+    "polygonpos": 93432378
+  },
+  "permissionsConfigHash": "0x92f44f52a834701d554c4d69e547af48bd33b5277079a09480f02179fb7d0746",
+  "permissions": {
+    "arb1:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers.",
+          "role": ".authorizedRelayers"
+        }
+      ]
+    },
+    "arb1:0x9E3eba321427941868cB4123De97DAB145C9e7CD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "base:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers.",
+          "role": ".authorizedRelayers"
+        }
+      ]
+    },
+    "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x269fDaBd799179189C98D960C58C3793CcedDB85": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c",
+          "description": "sign arbitrary offchain ENS answers, including payment addresses accepted by the resolver.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "eth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers.",
+          "role": ".authorizedRelayers"
+        }
+      ]
+    },
+    "eth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xdcC34c0da55cEF7AeD38Bb749AD97DAC12A9936C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9AcF316290AaA62edafdDDaC48B124032C36EB3c",
+          "description": "change the accepted signers and gateway URL immediately, or transfer resolver ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "gno:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers.",
+          "role": ".authorizedRelayers"
+        }
+      ]
+    },
+    "gno:0x9E3eba321427941868cB4123De97DAB145C9e7CD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "matic:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers.",
+          "role": ".authorizedRelayers"
+        }
+      ]
+    },
+    "matic:0x9E3eba321427941868cB4123De97DAB145C9e7CD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "oeth:0x53d92eCe145696ff27A7d1F8746632C3deBB151D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "initiate deposits from enabled Safes into their selected vault configurations, and add or remove authorized relayers.",
+          "role": ".authorizedRelayers"
+        }
+      ]
+    },
+    "oeth:0x9E3eba321427941868cB4123De97DAB145C9e7CD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x3BDb857AFe9b51d8916D80240d2ADe40D4d3f2f9",
+          "description": "publish vault configurations, manage authorized relayers, and initiate deposits into the configurations selected by enabled Safes. Changing a Safe's selected configuration hash requires a call from that Safe.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
+}
