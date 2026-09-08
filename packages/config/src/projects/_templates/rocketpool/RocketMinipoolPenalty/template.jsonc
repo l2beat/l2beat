@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolPenalty",
+  "category": "core",
+  "description": "Cap on how much of a legacy validator contract's rewards the oracle set's penalty vote can divert. The cap lives in this contract's own storage rather than in the registry, deliberately putting it out of the oracle set's reach, and the registry refuses to repoint this name. Only the bootstrap account can change it, with no delay and no upper bound in the code. The effective penalty for a validator contract is the smaller of the cap and the voted rate, so a cap of zero disables legacy penalties entirely. The cap currently reads {{ maxPenaltyRate }}%.",
+  "fields": {
+    "maxPenaltyRate": {
+      "handler": {
+        "type": "call",
+        "method": "function getMaxPenaltyRate() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"],
+      "severity": "HIGH",
+      "description": "Upper bound on the share of a legacy validator contract's rewards that a voted penalty can take."
+    },
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "guardian": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getGuardian() view returns (address)",
+        "args": []
+      },
+      "severity": "HIGH",
+      "description": "Bootstrap account, read from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can raise or lower the ceiling on legacy validator penalties, immediately and with no upper bound in the code."
+        }
+      ]
+    }
+  }
+}

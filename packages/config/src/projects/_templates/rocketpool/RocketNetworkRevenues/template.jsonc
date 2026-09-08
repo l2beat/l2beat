@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkRevenues",
+  "category": "core",
+  "description": "Time-weighted record of how staking revenue is split between node operators, the depositors, and the governance voter share. Only a registered pooled validator contract or the security-council proposal contract can write here, and the council's write is bounded by the guardrails checked in that contract.",
+  "ignoreInWatchMode": ["getCurrentNodeShare", "getCurrentVoterShare"]
+}

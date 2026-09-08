@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkPrices",
+  "category": "core",
+  "description": "Price oracle for the collateral token. Members of the oracle set submit a price for a block and it is written once submissions reach the network consensus share; anyone can finalise a report that already has that share. The price governs how much collateral a node operator must hold and what its stake is worth in auctions; it does not enter the liquid staking token's redemption price. Reporting can be switched off by a governed setting.",
+  "ignoreInWatchMode": ["getRPLPrice", "getPricesBlock"],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can write the collateral-token price this contract reports, once submissions from its members reach the network consensus share."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrustedUpgrade",
+  "category": "gov",
+  "description": "The only path that changes which code the protocol runs. A passed oracle-set proposal records a pending change here rather than applying it; the change becomes applicable after {{ upgradeDelay }} and, until then, the security council can cancel it. Once the delay has run and the change was not cancelled, any oracle-set member applies it. A fixed list of names is refused outright: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract. Registering an entirely new name is allowed and grants that address write access to the registry, which is how the exclusion list is worked around. The bootstrap account had an immediate path here; it is permanently closed.",
+  "ignoreMethods": [
+    "getUpgradeABI",
+    "getName",
+    "getType",
+    "getEnd",
+    "getExecuted",
+    "getVetoed",
+    "getUpgradeAddress",
+    "getState"
+  ],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "securitySettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsSecurity")
+          "0x87336d3db0f2d2ad242d7fb1fed28c752c24fa617f404ed98ee246f9b27671b3"
+        ]
+      }
+    },
+    "upgradeDelay": {
+      "handler": {
+        "type": "call",
+        "address": "{{ securitySettings }}",
+        "method": "function getUpgradeDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "severity": "HIGH",
+      "description": "Waiting period between an approved change and the moment any oracle-set member can apply it."
+    },
+    "pendingUpgradeNames": {
+      "handler": {
+        "type": "array",
+        "method": "getName",
+        "length": "{{ getTotal }}",
+        "startIndex": 1
+      },
+      "description": "Names targeted by every change recorded here, oldest first."
+    },
+    "pendingUpgradeAddresses": {
+      "handler": {
+        "type": "array",
+        "method": "getUpgradeAddress",
+        "length": "{{ getTotal }}",
+        "startIndex": 1
+      },
+      "description": "Addresses each recorded change points its name at."
+    },
+    "pendingUpgradeExecuted": {
+      "handler": {
+        "type": "array",
+        "method": "getExecuted",
+        "length": "{{ getTotal }}",
+        "startIndex": 1
+      }
+    },
+    "pendingUpgradeVetoed": {
+      "handler": {
+        "type": "array",
+        "method": "getVetoed",
+        "length": "{{ getTotal }}",
+        "startIndex": 1
+      }
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "a passed proposal of this body is the only input this contract accepts, and one of its members applies the change once the waiting period has run."
+        }
+      ]
+    },
+    "councilVeto": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOSecurityUpgrade")
+          "0x43656778aa233312cea1568285c59e8a8d1a86a2bde8cce9acd630c1b0a6eba6"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Veto contract of the security council, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can cancel a pending change while it is still inside its waiting period; a cancelled change can never be applied."
+        }
+      ]
+    }
+  }
+}

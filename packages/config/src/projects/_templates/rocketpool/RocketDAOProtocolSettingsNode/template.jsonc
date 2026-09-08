@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsNode",
+  "category": "gov",
+  "description": "Parameters for node operators: whether registration and node deposits are enabled, bond sizes, the minimum collateral stake, the unstaking waiting period, and the cap on stake that counts toward voting power. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}
