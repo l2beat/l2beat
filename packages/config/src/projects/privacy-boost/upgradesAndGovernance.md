@@ -1,4 +1,3 @@
-Privacy Boost is controlled by the {{adminMultisigStats}} admin multisig that can upgrade core smart contracts,
-replace the epoch, deposit and forced withdrawal verifiers,
-register or replace verifying keys for individual circuit shapes, set the withdrawal fee up to 10%,
-and change the treasury and operator addresses.
+Privacy Boost is controlled by the {{adminMultisigStats}} admin multisig, which can upgrade the pool, registries and AuditGateway without delay. It can replace all five proof verifiers and register or replace their verification keys, set withdrawal and portal sweep fees up to 10% each, configure portal minimum sweeps, and change the treasury, operator and gateway route manager.
+
+The external-call gateway owner manages target/selector policies, selects its guardian, and can pause or unpause execution. The guardian can pause and remove policies. Stranded gateway tokens can only be swept back to the pool while paused.

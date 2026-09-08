@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Poseidon2 hashing helper used by AuthRegistry to compute account IDs, authorization leaves, spend approval commitments and Merkle tree nodes."
+}

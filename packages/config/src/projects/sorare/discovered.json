@@ -850,8 +850,36 @@
     "starkex/StarkExchange_Frozen": "0x0136ed1863558a0fd0cd5283912fcd12ca49a1e78ee7595141def29b8e331ac1"
   },
   "usedBlockNumbers": { "ethereum": 25249836 },
-  "permissionsConfigHash": "0x7be682060fca143a3fbda915ba31730bac298f3d2c7dbc2d1d7c8136742dd9e2",
+  "permissionsConfigHash": "0xf0dad0b6131a85c722ecb0b124c16f597d8bc6a95ab605b518b3c1c2e030552c",
   "permissions": {
+    "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.",
+          "role": ".governanceAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.",
+          "role": ".appRoleAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.",
+          "role": ".appGovernorAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "delay": 691200,
+          "role": ".$admin"
+        }
+      ]
+    },
     "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6": {
       "receivedPermissions": [
         {

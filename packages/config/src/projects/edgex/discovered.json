@@ -912,7 +912,7 @@
     "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47"
   },
   "usedBlockNumbers": { "ethereum": 25774399 },
-  "permissionsConfigHash": "0xf3224eece7f1cad9b47318f2ca993c86fe800e143450a669ee19bece420fbab1",
+  "permissionsConfigHash": "0x8d9eb662cb942acae414aaf76b4efe1248db408871fcb51396177f1850216d20",
   "permissions": {
     "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e": {
       "receivedPermissions": [
@@ -925,6 +925,34 @@
         }
       ],
       "eoaWithUpgradePermissions": true
+    },
+    "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.",
+          "role": ".governanceAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.",
+          "role": ".appRoleAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.",
+          "role": ".appGovernorAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "delay": 691200,
+          "role": ".$admin"
+        }
+      ]
     },
     "eth:0x38ACC82ED19e303841e222d7e933846001F969F8": {
       "receivedPermissions": [

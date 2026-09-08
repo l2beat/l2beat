@@ -120,7 +120,7 @@ export const kinto: ScalingProject = orbitStackL2({
       },
     ],
     apis: [
-      { type: 'rpc', url: 'https://rpc.kinto-rpc.com', callsPerMinute: 600 },
+      { type: 'rpc', url: 'https://rpc.kinto-rpc.com', callsPerMinute: 120 },
       { type: 'blockscout', url: 'https://explorer.kinto.xyz/api' },
     ],
   },

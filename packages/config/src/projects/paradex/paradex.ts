@@ -127,7 +127,7 @@ export const paradex: ScalingProject = {
     apis: [
       {
         type: 'starknet',
-        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_9',
+        url: 'https://rpc.api.prod.paradex.trade/rpc/v0_9',
         callsPerMinute: 120,
       },
     ],

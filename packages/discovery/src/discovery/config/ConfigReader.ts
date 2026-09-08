@@ -271,7 +271,7 @@ export class ConfigReader {
   }
 }
 
-function getReferencedProjects(discovery: DiscoveryOutput): string[] {
+export function getReferencedProjects(discovery: DiscoveryOutput): string[] {
   return uniq(
     discovery.entries
       .map((e) => e.targetProject)

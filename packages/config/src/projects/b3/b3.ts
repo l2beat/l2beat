@@ -46,7 +46,7 @@ export const b3: ScalingProject = opStackL3({
       {
         type: 'rpc',
         url: 'https://mainnet-rpc.b3.fun/http',
-        callsPerMinute: 800,
+        callsPerMinute: 600,
       },
       { type: 'blockscout', url: 'https://explorer.b3.fun/api/v2/' },
     ],

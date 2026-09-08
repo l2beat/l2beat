@@ -964,8 +964,9 @@ export type ProjectDefiCategory =
   | 'DEX'
   | 'Liquid Staking'
   | 'Oracle'
-  | 'Prediction market'
   | 'Stablecoin'
+  | 'Liquid Staking'
+  | 'Prediction market'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */

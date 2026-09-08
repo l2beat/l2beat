@@ -1051,7 +1051,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25372090 },
-  "permissionsConfigHash": "0x47bc8c3c40741d25b4375a26055645504556056f8e3b6f4bc0e7cc6d57e171c6",
+  "permissionsConfigHash": "0x8deadba9697e3be6e2e0ab9051ee6bd1dc67dd94d1f2ee16433ffdbdaad6c9c9",
   "permissions": {
     "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF": {
       "receivedPermissions": [

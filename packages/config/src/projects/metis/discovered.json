@@ -2531,7 +2531,7 @@
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060"
   },
   "usedBlockNumbers": { "ethereum": 24183445, "metis": 21929673 },
-  "permissionsConfigHash": "0xafc753cc81faab912b675b49578495b536112e27cc9293eb3a75913d79593abb",
+  "permissionsConfigHash": "0x15e40c87557873dc57873bcf260a1321d2c92043c0dbb5ea3e5040c9c1a802fa",
   "permissions": {
     "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": {
       "receivedPermissions": [

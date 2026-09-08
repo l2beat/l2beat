@@ -47,7 +47,7 @@ export const everclear: ScalingProject = orbitStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.everclear.raas.gelato.cloud',
+        url: 'https://everclear.drpc.org',
         callsPerMinute: 300,
       },
       {

@@ -2,5 +2,6 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Permissionless EIP-4788 proof verifier that detects validators which remained active after a ValidatorExitBus exit request and reports their exit delay to the StakingRouter.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreRelatives": ["BEACON_ROOTS"]
 }
