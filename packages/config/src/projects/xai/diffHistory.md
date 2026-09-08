@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xf40ad1bc693f957d92d46374ff35b62d02a697c1
+
+# Diff at Mon, 07 Sep 2026 21:36:18 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1787669025
+- current timestamp: 1788816912
+
+## Description
+
+SafeL2 owning the ProxyAdmin of the Sentry contracts: member added; threshold lowered 4/6 → 3/7.
+
+XaiFundsReiceiverMultisig: 3 members removed; threshold 3/7 → 2/4.
+
+Team Secret removed from the listed DAC members: its key left the keyset on 2025-01-12; the current 3/5 keyset is Xai, Ex Populus, LayerZero, Alt Layer and Offchain Labs.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x754286508D57Fae1256bC288461E075552175CBa) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
+    contract XaiFundsReiceiverMultisig (arb1:0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) [GnosisSafe] {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      values.$members.1:
+-        "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f"
+      values.$members.2:
+-        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+      values.$members.5:
+-        "arb1:0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x0739ddbfaf861deec07ee961a14cf42b037da89d
 
 # Diff at Tue, 25 Aug 2026 14:44:53 GMT:

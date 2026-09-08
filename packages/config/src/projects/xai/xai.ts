@@ -137,11 +137,6 @@ export const xai: ScalingProject = orbitStackL3({
         },
         {
           external: true,
-          name: 'Team Secret',
-          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
-        },
-        {
-          external: true,
           name: 'Offchain Labs',
           href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
         },
