@@ -1008,7 +1008,9 @@ export class InteropTransferRepository extends BaseRepository {
       timeRange,
       sql`"srcAbstractTokenId" = ${abstractTokenId} OR "dstAbstractTokenId" = ${abstractTokenId}`,
     )
-    return rows.filter((row) => row.abstractTokenId === abstractTokenId)
+    return rows
+      .filter((row) => row.abstractTokenId === abstractTokenId)
+      .map(({ abstractTokenId: _, ...stats }) => stats)
   }
 
   private async queryDeployedTokenPairStats(

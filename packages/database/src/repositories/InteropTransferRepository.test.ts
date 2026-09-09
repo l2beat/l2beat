@@ -1698,6 +1698,38 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         expect(stats?.transferCount).toEqual(2)
       })
+
+      it('lists every abstract token involved, with only its own sides', async () => {
+        await repository.insertMany([
+          usdcTransfer('bridge', ethereumUsdc, arbitrumUsdc),
+          usdcTransfer('swapOut', ethereumUsdc, ethereumWeth, {
+            dstAbstractTokenId: 'weth',
+          }),
+          usdcTransfer('unassignedSide', ethereumWeth, arbitrumUsdc, {
+            srcAbstractTokenId: undefined,
+          }),
+        ])
+
+        const stats = {
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          totalDurationSum: 10,
+          volume: 100,
+        }
+        expect(
+          await repository.getAllDeployedTokenPairStats(range),
+        ).toEqualUnsorted([
+          {
+            abstractTokenId: usdc,
+            src: ethereumUsdc,
+            dst: arbitrumUsdc,
+            ...stats,
+          },
+          { abstractTokenId: usdc, src: ethereumUsdc, ...stats },
+          { abstractTokenId: 'weth', dst: ethereumWeth, ...stats },
+          { abstractTokenId: usdc, dst: arbitrumUsdc, ...stats },
+        ])
+      })
     },
   )
 
