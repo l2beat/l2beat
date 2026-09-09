@@ -4,8 +4,8 @@ import { cn } from '~/utils/cn'
 /** A sky wash, a sun and two hills. */
 export function GardenBackground() {
   return (
-    <PageBackdrop>
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#eaf4e6]/80 to-transparent dark:from-[#141b10]/60" />
+    <PageBackdrop name="garden">
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-garden-canvas to-transparent" />
       <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75" />
       <svg
         className="absolute bottom-0 left-0 h-36 w-full"
