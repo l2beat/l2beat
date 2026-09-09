@@ -23,6 +23,9 @@
   "names": {
     "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715": "Interfold",
     "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7": "CiphernodeRegistry",
+    "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F": "BondingRegistry",
+    "eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712": "RandomnessProvider",
+    "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A": "NodeReleaseRegistry",
     "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": "InterfoldDAO",
     "eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018": "InterfoldSafeA",
     "eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593": "InterfoldSafeB",
@@ -976,6 +979,9 @@
       "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
     },
     "eth:0x34aA3F359A9D614239015126635CE7732c18fDF3": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    },
+    "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": {
       "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
     },
     "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": {

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Permissionless factory that deterministically deploys CCIP burn/mint or lock/release token pools, configures their remote peers and rate limits, and transfers pool ownership to the caller. When it also deploys the token, it registers the pool in the TokenAdminRegistry and starts transferring token ownership and registry administration to the caller.",
+  "fields": {
+    "constructorArgs": {
+      "description": "Immutable TokenAdminRegistry, registry module, RMN proxy, and Router used for every local deployment.",
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "tokenAdminRegistry": {
+      "description": "TokenAdminRegistry in which newly created token-and-pool pairs are registered.",
+      "copy": "constructorArgs",
+      "edit": ["get", "tokenAdminRegistry"]
+    },
+    "tokenAdminModule": {
+      "description": "Registry module used to claim administration of a newly deployed token before setting its pool.",
+      "copy": "constructorArgs",
+      "edit": ["get", "tokenAdminModule"]
+    },
+    "rmnProxy": {
+      "description": "RMN proxy embedded in every pool deployed by this factory.",
+      "copy": "constructorArgs",
+      "edit": ["get", "rmnProxy"]
+    },
+    "ccipRouter": {
+      "description": "Router embedded in every pool deployed by this factory.",
+      "copy": "constructorArgs",
+      "edit": ["get", "ccipRouter"]
+    }
+  }
+}

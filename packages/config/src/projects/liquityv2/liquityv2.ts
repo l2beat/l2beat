@@ -114,9 +114,8 @@ export const liquityv2: BaseProject = {
         "The rETH branch values its collateral partly from the rETH-to-ETH exchange rate reported by Rocket Pool's rETH token. A wrong rate misprices the branch, and a failing one shuts it down.",
     },
     {
-      type: 'not-tracked',
-      name: 'Lido wstETH',
-      icon: 'wsteth',
+      type: 'tracked',
+      projectId: ProjectId('lido'),
       description:
         "The wstETH branch values its collateral from Lido's wstETH-to-stETH exchange rate reported by the wstETH token. A wrong rate misprices the branch, and a failing one shuts it down.",
     },

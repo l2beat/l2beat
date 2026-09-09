@@ -3,15 +3,13 @@ import type { Database, InteropEventContext } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
+import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { createInteropEventType, findChain, type InteropEvent } from '../types'
-import type { GetRequestsResponse, RelayApiClient } from './RelayApiClient'
+import type { RelayApiClient } from './RelayApiClient'
 import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
-
-type RelayMetadata = GetRequestsResponse['requests'][number]['data']['metadata']
-type RelayCurrency = NonNullable<RelayMetadata>['currencyIn']
 
 export interface RelayIndexerConfig {
   batchSize: number
@@ -84,7 +82,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         parents: [parent],
         indexerService,
         minHeight: 1,
-        name: 'relay_indexer',
+        name: INDEXER_NAMES.INTEROP_RELAY,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
       logger,
@@ -136,7 +134,7 @@ export class RelayIndexer extends ManagedChildIndexer {
 
     if (res.continuation) {
       throw new Error(
-        `Window ${from}-${syncedTo} incomplete after ${res.requests.length} requests. Check the client warning for the reason and lower INTEROP_RELAY_BATCH_SIZE if the window is too dense`,
+        `Window ${from}-${syncedTo} exceeds INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE=${this.relayConfig.maxRequestsPerUpdate}. Fetched ${res.requests.length} requests but a continuation remains`,
       )
     }
 
@@ -148,10 +146,10 @@ export class RelayIndexer extends ManagedChildIndexer {
       const updateTime = UnixTime.fromDate(new Date(item.updatedAt))
       const createTime = UnixTime.fromDate(new Date(item.createdAt))
 
-      const srcTx = item.data.inTxs?.[0]
+      const srcTx = item.sourceTx
       const srcChain = this.getChainName(srcTx?.chainId)
 
-      const dstTx = item.data.outTxs?.[0]
+      const dstTx = item.destinationTx
       const dstChain = this.getChainName(dstTx?.chainId)
 
       if (srcChain === dstChain) {
@@ -173,7 +171,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         }
       }
       if (srcTx && srcTx.hash && srcTx.hash.length === 66) {
-        const srcToken = getRelaySourceCurrency(item.data.metadata)
+        const srcToken = item.sourceCurrency
         let address = Address32.fromOrUndefined(srcToken?.currency?.address)
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
@@ -190,7 +188,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         events.push({ ...event, plugin: 'relay' })
       }
       if (dstTx && dstTx.hash && dstTx.hash.length === 66) {
-        const dstToken = getRelayDestinationCurrency(item.data.metadata)
+        const dstToken = item.destinationCurrency
         let address = Address32.fromOrUndefined(dstToken?.currency?.address)
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
@@ -241,18 +239,4 @@ export class RelayIndexer extends ManagedChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
-}
-
-export function getRelaySourceCurrency(
-  metadata: RelayMetadata,
-): RelayCurrency | undefined {
-  const routeInput = metadata?.route?.origin?.inputCurrency
-  return routeInput?.amount !== undefined ? routeInput : metadata?.currencyIn
-}
-
-export function getRelayDestinationCurrency(
-  metadata: RelayMetadata,
-): RelayCurrency | undefined {
-  const routeOutput = metadata?.route?.destination?.outputCurrency
-  return routeOutput?.amount !== undefined ? routeOutput : metadata?.currencyOut
 }

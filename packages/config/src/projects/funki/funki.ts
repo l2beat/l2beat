@@ -58,6 +58,8 @@ export const funki: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Funki',
+    warning:
+      'The fault proof system is deployed but is not functional. The dispute game commits to the placeholder absolute prestate from the OP Stack deployment template rather than to a reproducible op-program build for this chain. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'funki',
     architectureImage: 'opstack-rollup-superchain-opfp-preu16',
     description:

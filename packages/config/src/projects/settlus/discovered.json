@@ -1,6 +1,6 @@
 {
   "name": "settlus",
-  "timestamp": 1784283126,
+  "timestamp": 1788792449,
   "configHash": "0xc83c14a3494535c9c935f5261524f563c27d7c200217e0093c3f791a586348d3",
   "entries": [
     {
@@ -186,8 +186,8 @@
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "opStackDA": {
-          "isSequencerSendingBlobTx": false,
-          "isUsingCelestia": true,
+          "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -565,7 +565,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 36,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -623,13 +623,13 @@
         ],
         "$upgradeCount": 2,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0x349666d66788114adc3e6bA654eA2445FF762A9b",
+        "anchorGame": "eth:0xee972F1210a1F2D8bd8bc69E0a59e03E8B227Ef1",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x5433b6a9e6d3d9a292ba4956b65e650218922a419c88605ce41d2dd8edbd3be9",
-          43498732
+          "0x0a0e28b0ffa515522466de69f538db575e0ef937db4d05f4d6639a80aee06c3b",
+          48012507
         ],
         "getStartingAnchorRoot": {
           "root": "0xc424cd12a1242e670af134a4a3ac7f1fb0f3e6ce6dbaba109618d9293040f07c",
@@ -777,7 +777,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 62,
+        "nonce": 66,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -987,7 +987,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 54,
+        "nonce": 55,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1084,7 +1084,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 60,
+        "nonce": 64,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1283,7 +1283,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 8152,
+        "gameCount": 8984,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1298,7 +1298,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb90863e956115f7618a95bb968ecef2e72e99cdba80f3f1ce63c69d437fdd9f5d5ad294f677a1b7db08b00000000000000000000000000000000000000000000000000000000000014fb1bc6df949b8edc8ee61adb99d578a7a6e6ff7310a4fb12d15eb85dc9284a7df0adbc8b696edbbf1d",
-        "permissionedGamesTotal": 8152,
+        "permissionedGamesTotal": 8984,
         "proposerFromDGF": "eth:0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310",
         "proxyAdmin": "eth:0xd35FeF329Bb6569baa373BDa702F3dfF59D57321",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -2491,8 +2491,8 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25551727 },
-  "permissionsConfigHash": "0xb3c49bdf9cc64411de5c4dec75dd88be977fe8847f08ebe5d805c6756c82c6e3",
+  "usedBlockNumbers": { "ethereum": 25926168 },
+  "permissionsConfigHash": "0x7e8308171f5773b408cfd3fd67d0e38e4bac742837838ec8817c95b8c71b8707",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [

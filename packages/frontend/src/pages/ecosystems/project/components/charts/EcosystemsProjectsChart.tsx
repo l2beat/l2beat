@@ -85,7 +85,6 @@ export function EcosystemsProjectsChart({
             fill="url(#fill)"
             fillOpacity={1}
             stroke="var(--ecosystem-primary)"
-            strokeWidth={2}
             type="stepAfter"
             isAnimationActive={false}
           />

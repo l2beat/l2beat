@@ -519,18 +519,26 @@ describe(UpdateNotifier.name, () => {
       )
 
       const reminders = {
-        ['project-a']: { severityCounts: { low: 1, high: 2, unknown: 4 } },
-        ['project-b']: { severityCounts: { low: 0, high: 0, unknown: 12 } },
-        ['project-c']: { severityCounts: { low: 0, high: 3, unknown: 0 } },
-        ['project-d']: { severityCounts: { low: 0, high: 3, unknown: 4 } },
+        ['project-a']: {
+          severityCounts: { low: 1, medium: 0, high: 2, unknown: 4 },
+        },
+        ['project-b']: {
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 12 },
+        },
+        ['project-c']: {
+          severityCounts: { low: 0, medium: 0, high: 3, unknown: 0 },
+        },
+        ['project-d']: {
+          severityCounts: { low: 0, medium: 0, high: 3, unknown: 4 },
+        },
       }
       const timestamp = UnixTime.toStartOf(TIMESTAMP, 'day') + 6 * UnixTime.HOUR
-      const headers = ['Project', 'High', 'Low', '???']
+      const headers = ['Project', 'High', 'Mid', 'Low', '???']
       const rows = [
-        ['project-d', '3', '', '4'],
-        ['project-c', '3', '', ''],
-        ['project-a', '2', '1', '4'],
-        ['project-b', '', '', '12'],
+        ['project-d', '3', '', '', '4'],
+        ['project-c', '3', '', '', ''],
+        ['project-a', '2', '', '1', '4'],
+        ['project-b', '', '', '', '12'],
       ]
       const table = formatAsAsciiTable(headers, rows)
       const templatizationStatus = await generateTemplatizedStatus()
@@ -551,7 +559,7 @@ describe(UpdateNotifier.name, () => {
 
     it('truncates daily reminder', async () => {
       const randomReminder = (): DailyReminderChainEntry => ({
-        severityCounts: { low: 0, high: 0, unknown: 0 },
+        severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({

@@ -1,0 +1,14 @@
+{
+  "USDCTokenPool": {
+    "hash": "0xb138ae1cbb0ac5d604b52c29ca224076bf2b708f06caf28c92af053b7d66d91a",
+    "address": "eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1",
+    "chain": "ethereum",
+    "blockNumber": 25873614
+  },
+  "USDCTokenPoolCCTPV2": {
+    "hash": "0x34fad1d554901d5e89aa1463ac78e5b3a3c4eb2f2c0f68285ec9e1a7ca6c713f",
+    "address": "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574",
+    "chain": "ethereum",
+    "blockNumber": 25873614
+  }
+}

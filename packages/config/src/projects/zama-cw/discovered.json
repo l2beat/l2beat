@@ -6315,7 +6315,7 @@
     "zama/ZamaProtocolConfig": "0xfb7d7b44691fe08077e0599f81136c1579f4123d76ccfb12fc11e8dffa8949c8"
   },
   "usedBlockNumbers": { "ethereum": 25846595, "zama": 2754431 },
-  "permissionsConfigHash": "0x9861a7101e638b3331670d08515df7552c9aed6ec3861b713690fca54d232f1c",
+  "permissionsConfigHash": "0x721688b725a66d93b5934d7a8558e6efe259644c3a0de64b155b5c83330f0082",
   "permissions": {
     "eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D": {
       "receivedPermissions": [

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNetworkFees",
+  "category": "core",
+  "description": "Derives the commission a new validator is created with from how full the deposit pool is relative to a governed demand range, between a governed minimum and maximum. It is pure arithmetic over governed settings; nobody sets the number directly.",
+  "ignoreInWatchMode": ["getNodeDemand", "getNodeFee"]
+}

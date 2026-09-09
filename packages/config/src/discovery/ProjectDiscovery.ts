@@ -24,6 +24,7 @@ import {
 import { utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
 import isString from 'lodash/isString'
+import uniqBy from 'lodash/uniqBy'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import type {
   ProjectContract,
@@ -94,10 +95,20 @@ export class ProjectDiscovery {
     // the Ethereum deployment must not inherit the Arbitrum one.
     // Cross-chain permissions are still not modelled, so a cluster reaching the
     // project only through L1<>L2 aliasing counts as unlinked as well.
-    this.reachableEntries = getReachableEntries(
-      this.discoveries.flatMap((discovery) => discovery.entries),
-      entrypoints,
-      this.options?.reachableEntries?.maxDepth,
+    // Deduped after reachability, not before, so every copy still contributes
+    // its edges. An address can be an entry of two projects at once: EOAs are
+    // deliberately not entrypoints, so each project that reaches a multisig
+    // signer discovers it in full. Permissions are attached from one map onto
+    // the whole cluster, so without this both copies carry them and the
+    // address renders twice. The base project's copy wins, which is the rule
+    // `resolveEntryOwnership` already applies in the discovery UI.
+    this.reachableEntries = uniqBy(
+      getReachableEntries(
+        this.discoveries.flatMap((discovery) => discovery.entries),
+        entrypoints,
+        this.options?.reachableEntries?.maxDepth,
+      ),
+      (entry) => entry.address,
     )
     assert(
       (this.discoveries.at(0)?.entries ?? []).every((entry) =>

@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NodeReleaseRegistry",
+  "category": "core",
+  "description": "Registry of ciphernode software releases. Operators self-attest the release they run; staying eligible for new E3 committees requires an attestation matching the exact governance-set protocol version and at least the required node generation. Raising the requirement instantly invalidates every operator's cached eligibility until they re-attest.",
+  "fields": {
+    "owner": {
+      "description": "Account controlling the required node release.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "raise the required ciphernode protocol version and node generation, which instantly invalidates every operator's cached eligibility until they attest the new release. The requirement can only increase, and only while new E3 requests are paused and no E3s or committees are active."
+        }
+      ]
+    },
+    "requiredProtocolVersion": {
+      "description": "Exact ciphernode protocol version operators must attest to remain eligible.",
+      "type": "RISK_PARAMETER"
+    },
+    "requiredNodeGeneration": {
+      "description": "Minimum ciphernode software generation operators must attest to remain eligible.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

@@ -22,6 +22,7 @@ import {
   type TrustedSetupsByProofSystem,
 } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import {
   type ContractUtils,
   getContractUtils,
@@ -113,6 +114,7 @@ export interface TvsData {
   warnings: WarningWithSentiment[]
   breakdown: SevenDayTvsBreakdown['projects'][string]['breakdown'] | undefined
   change: SevenDayTvsBreakdown['projects'][string]['change'] | undefined
+  changePeriod: PercentageChangePeriod | undefined
   additionalTrustAssumptionsPercentage: number | undefined
   syncWarning: string | undefined
 }
@@ -316,6 +318,7 @@ function getTvsData(
     warnings: project.tvsInfo?.warnings ?? [],
     breakdown: projectTvs?.breakdown,
     change: projectTvs?.change,
+    changePeriod: projectTvs?.changePeriod,
     additionalTrustAssumptionsPercentage:
       projectTvs?.additionalTrustAssumptionsPercentage,
     syncWarning: getTvsSyncWarning(projectTvs?.syncState),

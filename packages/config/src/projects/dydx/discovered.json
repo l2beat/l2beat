@@ -2652,7 +2652,7 @@
     "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47"
   },
   "usedBlockNumbers": { "ethereum": 21343041 },
-  "permissionsConfigHash": "0x28028f4a468312ec5978cc440b78d4461d933bc30e6477be6ef3f0a14d862cb6",
+  "permissionsConfigHash": "0xfb42c8220bf3dbc80b5563758f1872fee4ce2d8c111ea6e1905de00cd54ad136",
   "permissions": {
     "eth:0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d": {
       "receivedPermissions": [

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketNodeDeposit",
+  "category": "core",
+  "description": "Takes a node operator's own ETH bond and creates the validator that the pooled deposit is matched against. The bond size is fixed by governed settings, and the operator's ETH and the pooled ETH are held by the validator contract, not by the operator.",
+  "ignoreMethods": ["getBondRequirement"]
+}

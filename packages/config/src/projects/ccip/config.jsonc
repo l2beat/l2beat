@@ -2,7 +2,8 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "ccip",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 300,
+  // The v2 CommitteeVerifier and USDC security stack extend the existing RMN and OCR permission graph.
+  "maxAddresses": 500,
   "initialAddresses": [
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
@@ -11,7 +12,16 @@
     "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
     "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B",
     "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e",
-    "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40"
+    "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40",
+    // Shared v2 ramps must be explicit because Router route values are intentionally not traversed.
+    "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7",
+    "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3",
+    // Track the local Executor endpoint explicitly; OnRamp destination configs mix local and remote-chain addresses.
+    "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3",
+    "eth:0x17D8a409fE2ceF2d3808bcB61F14aBEFfc28876e",
+    // TokenAdminRegistry pool values are not traversed; include only the specialized USDC graph and one standard v2 pool.
+    "eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D",
+    "eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465"
   ],
   "types": {
     "CCIPChainName": {
@@ -112,9 +122,37 @@
     }
   },
   "names": {
-    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": "Router",
+    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": "MainRouter",
+    "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": "DeprecatedRouter",
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": "GHOEthereumTokenPool",
     "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa": "EthereumOnRamp_v1_6",
+    "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7": "EthereumOnRamp_v2_0",
+    "eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3": "EthereumOffRamp_v2_0",
+    "eth:0x6608d995bBDE874De5292bFD289643c88D176ED3": "ExecutorProxy",
+    "eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b": "Executor",
+    "eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b": "VersionedVerifierResolver",
+    "eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F": "CommitteeVerifier",
+    "eth:0x17D8a409fE2ceF2d3808bcB61F14aBEFfc28876e": "TokenPoolFactory",
+    "eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D": "USDCTokenPoolProxy",
+    "eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465": "ReUSDTokenPool",
+    "eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1": "USDCTokenPoolCCTPV1",
+    "eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574": "USDCTokenPoolCCTPV2",
+    "eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2": "CCTPThroughCCVTokenPool",
+    "eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D": "SiloedUSDCTokenPool",
+    "eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12": "USDCCCTPVerifierResolver",
+    "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": "CCTPVerifier_v2_0",
+    "eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af": "CCTPVerifier_v2_1",
+    "eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD": "CCTPMessageTransmitterProxy_v2_0",
+    "eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC": "CCTPMessageTransmitterProxy_v1_6",
+    "eth:0x966A3BE75103C680b6A4248689630c788659d2A5": "BobUSDCERC20LockBox",
+    "eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D": "BitlayerUSDCERC20LockBox",
+    "eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459": "JovayUSDCERC20LockBox",
+    "eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6": "ZeroGUSDCERC20LockBox",
+    "eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88": "WemixUSDCERC20LockBox",
+    "eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4": "ADIUSDCERC20LockBox",
+    "eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67": "RoninUSDCERC20LockBox",
+    "eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b": "PharosUSDCERC20LockBox",
+    "eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D": "NeoxUSDCERC20LockBox",
     "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40": "CCIPHome",
     "eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83": "CapabilitiesRegistry",
     "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5": "EthereumOffRamp_v1_6",
@@ -152,141 +190,130 @@
     "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "AaveRiskCouncil"
   },
   "overrides": {
-    "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40": {
-      "description": "Home-chain registry for CCIP v1.6 DON configurations. Stores the active and candidate OCR3 configs (commit and execution plugins) per DON and computes the config digest that remote OnRamps/OffRamps must accept on every report. The source of truth for OCR reconfigurations: remote chains receive only the resulting digest, so the operator set, offchainConfig and DON id behind a digest are only legible here. The per-DON OCR config digests (keyed by a stable CapabilitiesRegistry donId) are already mirrored on the lane OnRamps/OffRamps, so this entry additionally tracks the chain-selector-keyed chain configuration that only CCIPHome holds.",
+    // These two contracts are not source-verified. Only fields read through their deployed runtime interface are included.
+    "eth:0xa22606F055146f0eac2FBEd49253E779b781355D": {
       "fields": {
-        "chainConfigurations": {
-          "description": "Per-destination-chain home configuration that gets propagated to the lane contracts, keyed by CCIP chain name: the set of DON node p2pIds authorized to serve the chain (readers), the fChain fault-tolerance threshold, and the decoded chain-family config (gas/fee parameters). Replayed from ChainConfigSet events, latest config per chain wins.",
+        "typeAndVersion": {
+          "handler": {
+            "type": "call",
+            "method": "function typeAndVersion() view returns (string)",
+            "args": []
+          }
+        },
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
+        },
+        "versionTag": {
+          "handler": {
+            "type": "call",
+            "method": "function versionTag() view returns (bytes4)",
+            "args": []
+          }
+        },
+        "getAllowedFinalityConfig": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllowedFinalityConfig() view returns (bytes4)",
+            "args": []
+          },
+          "edit": ["format", "CCIPAllowedFinality"]
+        },
+        "getStaticConfig": {
+          "handler": {
+            "type": "call",
+            "method": "function getStaticConfig() view returns (address tokenMessenger, address messageTransmitterProxy, address usdcToken, uint32 localDomainIdentifier)",
+            "args": []
+          }
+        },
+        "getDynamicConfig": {
+          "handler": {
+            "type": "call",
+            "method": "function getDynamicConfig() view returns ((address feeAggregator, address allowlistAdmin, uint16 fastFinalityBps) dynamicConfig)",
+            "args": []
+          }
+        },
+        "getStorageLocations": {
+          "handler": {
+            "type": "call",
+            "method": "function getStorageLocations() view returns (string[])",
+            "args": []
+          }
+        },
+        "remoteChainSelectors": {
           "handler": {
             "type": "event",
-            "groupBy": "chainSelector",
-            "select": "chainConfig",
-            "set": {
-              "event": "event ChainConfigSet(uint64 chainSelector, (bytes32[] readers, uint8 fChain, bytes config) chainConfig)"
+            "select": "remoteChainSelector",
+            "add": {
+              "event": "event RemoteChainConfigSet(uint64 indexed remoteChainSelector, address router, bool allowlistEnabled)"
             }
+          }
+        },
+        "remoteChainConfigs": {
+          "handler": {
+            "type": "array",
+            "method": "function getRemoteChainConfig(uint64 remoteChainSelector) view returns ((address router, uint64 remoteChainSelector, bool allowlistEnabled, uint16 feeUSDCents, uint32 gasForVerification, uint16 payloadSizeBytes) remoteChainConfig, address[] allowedSendersList)",
+            "indices": "{{ remoteChainSelectors }}"
           },
           "edit": [
             "pipe",
             [
-              "map_values",
+              "map",
               [
                 "pipe",
-                ["shape", "readers", "fChain", "config"],
-                ["set", "config", ["format", "BytesToString"]]
-              ]
-            ],
-            ["map_keys", ["format", "CCIPChainName"]]
-          ]
-        },
-        "executionConfigs": {
-          "description": "Latest execution-plugin (pluginType=1) OCR config set in CCIPHome per destination chain, keyed by chain name, replayed from ConfigSet events (latest set per chain; a staged candidate appears before it is promoted). Surfaces the inputs the configDigest commits to: the global version counter, plus FRoleDON, offchainConfigVersion, rmnHomeAddress (the home-chain RMN config contract, the same for every chain), the DON oracle identities and the decoded offchainConfig (the libOCR OCR3 protobuf: scheduling/timing params, the transmission schedule, p2p peer ids, and the reportingPluginConfig where per-lane params like the CCTP source pools live). Each node's p2pId/signerKey/transmitterKey stays index-aligned with its offchain public key, peer id and shared-secret encryption; these complete oracle tuples are sorted by p2pId so a pure reordering produces no diff. configDigest is the digest the chain's OffRamp must accept on execution reports.",
-          "handler": {
-            "type": "event",
-            "groupBy": "config.1",
-            "select": ["configDigest", "version", "config"],
-            "ignoreRelative": true,
-            "set": {
-              "event": "event ConfigSet(bytes32 indexed configDigest, uint32 version, (uint8 pluginType, uint64 chainSelector, uint8 FRoleDON, uint64 offchainConfigVersion, bytes offrampAddress, bytes rmnHomeAddress, (bytes32 p2pId, bytes signerKey, bytes transmitterKey)[] nodes, bytes offchainConfig) config)",
-              "where": ["=", ["get", "config", 0], 1]
-            }
-          },
-          "edit": [
-            "pipe",
-            [
-              "map_values",
-              [
-                "set",
-                "config",
+                ["shape", "remoteChainConfig", "allowedSendersList"],
                 [
-                  "pipe",
-                  [
-                    "shape",
-                    "pluginType",
-                    "chainSelector",
-                    "FRoleDON",
-                    "offchainConfigVersion",
-                    "offrampAddress",
-                    "rmnHomeAddress",
-                    "nodes",
-                    "offchainConfig"
-                  ],
-                  [
-                    "pick",
-                    "FRoleDON",
-                    "offchainConfigVersion",
-                    "rmnHomeAddress",
-                    "nodes",
-                    "offchainConfig"
-                  ],
-                  [
-                    "set",
-                    "nodes",
-                    ["map", ["shape", "p2pId", "signerKey", "transmitterKey"]]
-                  ],
-                  ["format", "CCIPOcr3Config"]
-                ]
+                  "set",
+                  ["remoteChainConfig", "remoteChainSelector"],
+                  ["format", "CCIPChainName"]
+                ],
+                ["set", "allowedSendersList", ["sort"]]
               ]
             ],
-            ["map_keys", ["format", "CCIPChainName"]]
-          ]
-        },
-        "commitConfigs": {
-          "description": "Latest commit-plugin (pluginType=0) OCR config set in CCIPHome per destination chain, keyed by chain name. Same shape as executionConfigs but for the commit (signing-committee) plugin.",
-          "handler": {
-            "type": "event",
-            "groupBy": "config.1",
-            "select": ["configDigest", "version", "config"],
-            "ignoreRelative": true,
-            "set": {
-              "event": "event ConfigSet(bytes32 indexed configDigest, uint32 version, (uint8 pluginType, uint64 chainSelector, uint8 FRoleDON, uint64 offchainConfigVersion, bytes offrampAddress, bytes rmnHomeAddress, (bytes32 p2pId, bytes signerKey, bytes transmitterKey)[] nodes, bytes offchainConfig) config)",
-              "where": ["=", ["get", "config", 0], 0]
-            }
-          },
-          "edit": [
-            "pipe",
-            [
-              "map_values",
-              [
-                "set",
-                "config",
-                [
-                  "pipe",
-                  [
-                    "shape",
-                    "pluginType",
-                    "chainSelector",
-                    "FRoleDON",
-                    "offchainConfigVersion",
-                    "offrampAddress",
-                    "rmnHomeAddress",
-                    "nodes",
-                    "offchainConfig"
-                  ],
-                  [
-                    "pick",
-                    "FRoleDON",
-                    "offchainConfigVersion",
-                    "rmnHomeAddress",
-                    "nodes",
-                    "offchainConfig"
-                  ],
-                  [
-                    "set",
-                    "nodes",
-                    ["map", ["shape", "p2pId", "signerKey", "transmitterKey"]]
-                  ],
-                  ["format", "CCIPOcr3Config"]
-                ]
-              ]
-            ],
-            ["map_keys", ["format", "CCIPChainName"]]
+            ["sort", ["get", "remoteChainConfig", "remoteChainSelector"]]
           ]
         }
       }
     },
+    "eth:0x65E0c4AB4Da5d22E824879DEB43123D23217DEdD": {
+      "fields": {
+        "typeAndVersion": {
+          "handler": {
+            "type": "call",
+            "method": "function typeAndVersion() view returns (string)",
+            "args": []
+          }
+        },
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
+        },
+        "i_cctpTransmitter": {
+          "handler": {
+            "type": "call",
+            "method": "function i_cctpTransmitter() view returns (address)",
+            "args": []
+          }
+        },
+        "getAllAuthorizedCallers": {
+          "handler": {
+            "type": "call",
+            "method": "function getAllAuthorizedCallers() view returns (address[])",
+            "args": []
+          },
+          "edit": ["sort"]
+        }
+      }
+    },
     "eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83": {
-      "description": "Keystone CapabilitiesRegistry for CCIP: the onchain registry of node operators, nodes, capabilities and DONs. It assigns the donIds and DON membership that CCIPHome's OCR configs reference, so a new DON registration here is what re-points a lane's accepted digest. getNodes and getDONs are ignored because they return large, frequently-rotating arrays; the node operator set, capabilities and DON counter are tracked instead.",
-      "ignoreRelatives": true,
+      "description": "Keystone CapabilitiesRegistry used by CCIP to manage node operators, nodes, capabilities, and DONs. When a DON includes the registered CCIP capability, updating it forwards the DON membership and configuration to CCIPHome, where the payload can set, revoke, or promote an OCR configuration.",
+      // These unbounded, frequently rotating arrays duplicate CCIP membership and configuration data already surfaced through CCIPHome.
       "ignoreMethods": ["getNodes", "getDONs"]
     },
     "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": {
@@ -419,8 +446,45 @@
         }
       }
     },
+    "eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465": {
+      // The token remains exposed through getToken, but its implementation is outside the CCIP contract graph.
+      "ignoreRelatives": ["getToken"],
+      "fields": {
+        "outboundRequiredCCVsToInk": {
+          "description": "Token-specific CCVs returned by this pool for a one reUSD full-finality transfer to Ink. An empty list makes the v2 OnRamp use the route's default CCVs; any mandatory route CCVs are applied separately.",
+          "handler": {
+            "type": "call",
+            "method": "function getRequiredCCVs(address localToken, uint64 remoteChainSelector, uint256 sourceDenominatedAmount, bytes4 requestedFinalityConfig, bytes extraData, uint8 direction) view returns (address[] requiredCCVs)",
+            "args": [
+              "0x5086bf358635B81D8C47C66d1C8b9E567Db70c72",
+              "3461204551265785888",
+              "1000000000000000000",
+              "0x00000000",
+              "0x",
+              0
+            ]
+          }
+        },
+        "inboundRequiredCCVsFromInk": {
+          "description": "Token-specific CCVs returned by this pool for a one reUSD full-finality transfer from Ink. An empty list makes the v2 OffRamp use the route's default CCVs; any mandatory route CCVs are applied separately.",
+          "handler": {
+            "type": "call",
+            "method": "function getRequiredCCVs(address localToken, uint64 remoteChainSelector, uint256 sourceDenominatedAmount, bytes4 requestedFinalityConfig, bytes extraData, uint8 direction) view returns (address[] requiredCCVs)",
+            "args": [
+              "0x5086bf358635B81D8C47C66d1C8b9E567Db70c72",
+              "3461204551265785888",
+              "1000000000000000000",
+              "0x00000000",
+              "0x",
+              1
+            ]
+          }
+        }
+      }
+    },
     "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
       "description": "Deprecated router used by BSC.",
+      // The shared v2.0 OffRamp is an explicit entrypoint; do not crawl it once per route.
       "ignoreRelatives": ["getOffRamps"]
     }
   }

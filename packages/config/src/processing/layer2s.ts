@@ -102,6 +102,7 @@ import { optopia } from '../projects/optopia/optopia'
 import { orderly } from '../projects/orderly/orderly'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
+import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
 import { pepeunchained2 } from '../projects/pepeunchained2/pepeunchained2'
@@ -266,6 +267,7 @@ export const layer2s: ScalingProject[] = [
   orderly,
   paradex,
   parallel,
+  payy,
   penchain,
   pepeunchained,
   pepeunchained2,

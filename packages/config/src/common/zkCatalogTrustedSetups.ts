@@ -132,14 +132,23 @@ export const TRUSTED_SETUPS = {
       'Trusted setup for two Groth16 Privacy Pools circuits. It was built on top of 80 phase 1 contributions, with 513 phase 2 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyPools.md'),
   },
-  PrivacyBoost: {
-    id: 'PrivacyBoost',
+  PrivacyBoostv1: {
+    id: 'PrivacyBoostv1',
     name: 'Privacy Boost',
     risk: 'red',
     participantCount: 23,
     shortDescription:
       'Circuit-specific trusted setup for the 18 Groth16 Privacy Boost circuits. It was built on top of 80 Perpetual Powers of Tau phase 1 contributions, with a publicly announced phase 2 that drew 23 to 25 participants depending on the circuit. The proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/PrivacyBoost.md'),
+  },
+  PrivacyBoostv2: {
+    id: 'PrivacyBoostv2',
+    name: 'Privacy Boost September 2026',
+    risk: 'red',
+    shortDescription:
+      'Circuit-specific trusted setup for the deployed verifiers. L2BEAT has not verified the ceremony files.',
+    longDescription:
+      'The deployed protocol uses 21 circuit configurations across five verifier families. Circuit and ceremony configuration sources are public, but L2BEAT has not identified the exact source revision and ceremony artifacts used to generate the deployed verification keys. Reproduction is blocked until these inputs are available. The participant count and contribution history for the deployed keys remain unverified.',
   },
   Railgun: {
     id: 'Railgun',

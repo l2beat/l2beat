@@ -6118,6 +6118,82 @@
       ]
     }
   },
+  "lifi-intents-v2": {
+    "description": "LI.FI Intents V2 deployment (2026-08) Arbitrum to Base fill with PolymerOracleMapped proof",
+    "tags": ["lifi-intents"],
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x629636648b171f9d0d7b29d6e517eb78a85754fd2238196e40be032c3c4758cb"
+      },
+      {
+        "chain": "base",
+        "tx": "0x6a89a024cc97eaab7d94b230056a4c92d0d3c73060cbf537877ecce9a595f280"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x12075a2d4bd3bd74996bfed0ea1e7a1d933a57a55515ced69a19fe9fca73e4ca"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "lifi-intents.OutputRequested",
+          "ctx": { "chain": "arbitrum" },
+          "args": {
+            "orderId": "0x0ebe1ff35f2c6f3a4f1a3e44be0b4e26481864228d79774dfa5ca7dffb97bcb0",
+            "destinationChainId": 8453
+          }
+        },
+        {
+          "type": "lifi-intents.OutputFilled",
+          "ctx": { "chain": "base" },
+          "args": {
+            "orderId": "0x0ebe1ff35f2c6f3a4f1a3e44be0b4e26481864228d79774dfa5ca7dffb97bcb0",
+            "payloadHash": "0xad91bfa90f681d58bdad453a8019fba3dc457c8232df8ff510d22da0ea5c1c7d"
+          }
+        },
+        {
+          "type": "lifi-intents.OutputPayload",
+          "ctx": { "chain": "base" },
+          "args": {
+            "payloadHash": "0xad91bfa90f681d58bdad453a8019fba3dc457c8232df8ff510d22da0ea5c1c7d"
+          }
+        },
+        {
+          "type": "lifi-intents.OutputProven",
+          "ctx": { "chain": "arbitrum" },
+          "args": {
+            "payloadHash": "0xad91bfa90f681d58bdad453a8019fba3dc457c8232df8ff510d22da0ea5c1c7d"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "lifi-intents.Message",
+          "app": "lifi-intents",
+          "src": { "ctx": { "chain": "arbitrum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        },
+        {
+          "type": "lifi-intents.SettlementMessage",
+          "app": "lifi-intents",
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "arbitrum" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "lifi-intents.Transfer",
+          "src": { "event": { "ctx": { "chain": "arbitrum" } } },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "1100000"
+          }
+        }
+      ]
+    }
+  },
   "gasziponesided": {
     "loadConfigs": ["gaszip"],
     "txs": [

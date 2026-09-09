@@ -7,7 +7,7 @@ import { Http, MockHttp } from './Http'
 describe(EthRpcClient.name, () => {
   it('correctly calls an endpoint', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(
       200,
       JSON.stringify({ jsonrpc: '2.0', id: 1337, result: '0x1234' }),
@@ -27,7 +27,7 @@ describe(EthRpcClient.name, () => {
 
   it('handles a http error response', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(503, 'Oops, our server is down')
     await expect(client.getBlockNumber()).toBeRejectedWith(
       'RPC call failed. HTTP status: 503, body: Oops, our server is down',
@@ -36,7 +36,7 @@ describe(EthRpcClient.name, () => {
 
   it('handles a jsonrpc error response', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(
       200,
       JSON.stringify({
@@ -52,7 +52,7 @@ describe(EthRpcClient.name, () => {
 
   it('eth_call success', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(
       200,
       JSON.stringify({ jsonrpc: '2.0', id: 1337, result: '0x1234' }),
@@ -66,7 +66,7 @@ describe(EthRpcClient.name, () => {
 
   it('eth_call revert #1', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(
       200,
       JSON.stringify({
@@ -84,7 +84,7 @@ describe(EthRpcClient.name, () => {
 
   it('eth_call revert #2', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(400, 'invalid opcode: INVALID')
     const result = await client.call(
       { to: EthereumAddress.random(), input: '0xdeadbeef' },
@@ -95,7 +95,7 @@ describe(EthRpcClient.name, () => {
 
   it('eth_call fail', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(503, 'Oops, our server is down')
     expect(
       client.call(
@@ -107,7 +107,7 @@ describe(EthRpcClient.name, () => {
 
   it('accepts custom envelope tx with calls and missing top-level input/value', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(
       200,
       JSON.stringify({
@@ -158,7 +158,7 @@ describe(EthRpcClient.name, () => {
 
   it('treats calls: null as missing in transaction response', async () => {
     const http = new MockHttp()
-    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(
       200,
       JSON.stringify({
@@ -193,7 +193,6 @@ describe(EthRpcClient.name, () => {
     const client = new EthRpcClient(
       http,
       'https://rpc.url',
-      '',
       () => 1337,
       undefined,
       rpcMetrics,
@@ -221,7 +220,7 @@ for (const url of URLS) {
     const MULTICALL3 = EthereumAddress(
       '0xcA11bde05977b3631167028862bE2a173976CA11',
     )
-    const client = new EthRpcClient(new Http(), url, '')
+    const client = new EthRpcClient(new Http(), url)
 
     it(EthRpcClient.prototype.getChainId.name, async () => {
       const chainId = await client.getChainId()

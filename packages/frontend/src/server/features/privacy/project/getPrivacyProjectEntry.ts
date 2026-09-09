@@ -142,14 +142,14 @@ export async function getPrivacyProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (details.display.detailedDescription) {
+  if (details.detailedDescription) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Protocol description',
         description: undefined,
-        detailedDescription: details.display.detailedDescription,
+        detailedDescription: details.detailedDescription,
       },
     })
   }
@@ -169,27 +169,27 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  const chartProject = {
+    id: details.id,
+    name: details.name,
+    shortName: details.shortName,
+    iconUrl: icon,
+  }
+
+  if (details.hasTvl) {
+    sections.push({
+      type: 'TvsValueSection',
+      props: {
+        id: 'privacy-tvl',
+        title: 'Value Locked',
+        defaultRange: defaultChartRange,
+        rangeControls: 'privacy',
+        project: chartProject,
+      },
+    })
+  }
+
   if (hasTrackedAssets) {
-    const chartProject = {
-      id: details.id,
-      name: details.name,
-      shortName: details.shortName,
-      iconUrl: icon,
-    }
-
-    if (details.hasTvl) {
-      sections.push({
-        type: 'TvsValueSection',
-        props: {
-          id: 'privacy-tvl',
-          title: 'Value Locked',
-          defaultRange: defaultChartRange,
-          rangeControls: 'privacy',
-          project: chartProject,
-        },
-      })
-    }
-
     sections.push({
       type: 'PrivacyFlowsSection',
       props: {
@@ -350,16 +350,15 @@ async function getTotalValueLockedUsd(
   helpers: SsrHelpers,
   range: ChartRange,
 ): Promise<number | undefined> {
-  if (details.assets.length === 0) {
-    return undefined
-  }
-
-  const flowsPrefetch = helpers.queryClient.prefetchQuery(
-    helpers.trpc.privacy.flowsChart.queryOptions({
-      projectIds: [details.id],
-      range,
-    }),
-  )
+  const flowsPrefetch =
+    details.assets.length > 0
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.privacy.flowsChart.queryOptions({
+            projectIds: [details.id],
+            range,
+          }),
+        )
+      : undefined
 
   if (!details.hasTvl) {
     await flowsPrefetch

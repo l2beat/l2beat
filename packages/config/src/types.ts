@@ -428,6 +428,7 @@ export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
   | ChainBasicApi<'lighter'>
+  | ChainBasicApi<'payy'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
   | ChainBasicApi<'aztec-rpc'>
@@ -1021,9 +1022,11 @@ export interface TrustedSetup {
 
 export type ProjectDefiCategory =
   | 'DEX'
+  | 'Liquid Staking'
   | 'Oracle'
-  | 'Prediction market'
   | 'Stablecoin'
+  | 'Liquid Staking'
+  | 'Prediction market'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
@@ -1061,6 +1064,11 @@ export interface ProjectPrivacyInfo {
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
   summaryTrackedItemName?: string
+  /**
+   * Privacy-specific detailed description shown on the privacy project page.
+   * Falls back to display.detailedDescription when not set.
+   */
+  detailedDescription?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
