@@ -15,7 +15,7 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
-import { PRIVACY_LEAK_FIELDS } from '../common/privacyAdversaries'
+import { PRIVACY_FIELDS } from '../common/privacyAdversaries'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -415,10 +415,22 @@ describe('getProjects', () => {
               const map = cell[segment]
               if (!map) continue
               expect(Object.keys(map).sort()).toEqual(
-                Object.keys(PRIVACY_LEAK_FIELDS).sort(),
+                Object.keys(PRIVACY_FIELDS).sort(),
               )
             }
           })
+
+          const contractNames = new Set(
+            Object.values(project.contracts?.addresses ?? {})
+              .flat()
+              .map((c) => c.name),
+          )
+          for (const source of cell.sources ?? []) {
+            if (!('contract' in source)) continue
+            it(`${project.id} ${adversaryId} source contract ${source.contract} exists`, () => {
+              expect(contractNames.has(source.contract)).toEqual(true)
+            })
+          }
         }
       }
     }

@@ -1,8 +1,8 @@
 import type {
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
-  PrivacyLeak,
-  PrivacyLeakVerdict,
+  PrivacyFieldExposure,
+  PrivacyExposure,
 } from '@l2beat/config'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
@@ -40,20 +40,20 @@ export const PRIVACY_ADVERSARY_SHORT_LABEL: Record<PrivacyAdversaryId, string> =
     futureAdversary: 'Future',
   }
 
-export const PRIVACY_LEAK_VERDICT_LABEL: Record<PrivacyLeakVerdict, string> = {
+export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   private: 'private',
   atRisk: 'at risk',
-  leaked: 'leaked',
+  exposed: 'exposed',
   unverifiable: 'unverifiable',
 }
 
-export const PRIVACY_LEAK_VERDICT_CLASS_NAME: Record<
-  PrivacyLeakVerdict,
+export const PRIVACY_EXPOSURE_CLASS_NAME: Record<
+  PrivacyExposure,
   string
 > = {
   private: 'text-[#17452A] bg-[#C8F2D7] border-[#4FB875]',
   atRisk: 'text-[#5C3B00] bg-[#FFE8A3] border-[#D9A31A]',
-  leaked: 'text-[#5D1111] bg-[#FFC9C9] border-[#E06565]',
+  exposed: 'text-[#5D1111] bg-[#FFC9C9] border-[#E06565]',
   unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
 }
 
@@ -62,11 +62,11 @@ export const PRIVACY_SEGMENT_LABEL = {
   interior: 'Inside',
 } as const
 
-export function getLeakVerdict(leak: PrivacyLeak): PrivacyLeakVerdict {
+export function getExposure(leak: PrivacyFieldExposure): PrivacyExposure {
   return typeof leak === 'string' ? leak : leak.verdict
 }
 
-export function getLeakNote(leak: PrivacyLeak): string | undefined {
+export function getExposureNote(leak: PrivacyFieldExposure): string | undefined {
   return typeof leak === 'string' ? undefined : leak.note
 }
 

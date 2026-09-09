@@ -14,16 +14,18 @@ export const umbraAdversaries = definePrivacyAdversaries({
     publicObserver: {
       condition: 'sender and amount public',
       sentiment: 'good',
-      description:
-        'Every payment is a public Announcement with sender, amount, asset and the fresh stealth address in cleartext. What is hidden is who controls the stealth address: the ephemeral public key and the one-time-pad ciphertext are unlinkable to any registered key without the recipient viewing key. There is no interior; the stealth address is a plain EOA. When it spends, the destination is public, so recipient privacy survives only if the destination is not otherwise linked to the recipient. Registering stealth keys reveals membership.',
+      exposure:
+        'Everyone sees who paid, how much, and the fresh address that received it. Hidden is who owns that address, until it spends to somewhere tied to you.',
+      advice:
+        'Withdraw to an address that is not tied to you: not registered with Umbra, not reused, not carrying an ENS name.',
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
           note: 'Hidden at entry. At exit the destination is public, so withdrawing to a registered, reused or ENS-labelled address reveals the recipient.',
         },
-        amount: 'leaked',
-        asset: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Sender to stealth address and stealth address to destination are both public; only the identity behind the destination can stay unknown.',
@@ -31,30 +33,29 @@ export const umbraAdversaries = definePrivacyAdversaries({
         identity: 'private',
       },
       sources: [
-        {
-          title: 'Umbra.sendEth / Announcement',
-          url: 'https://etherscan.io/address/0xFb2dc580Eed955B528407b4d36FfaFe3da685401#code',
-        },
+        { contract: 'Umbra' },
         {
           title: 'Stealth derivation (umbra-js)',
-          url: `${REPO}/umbra-js/src/classes/Umbra.ts`,
+          url: 'https://github.com/ScopeLift/umbra-protocol/blob/master/umbra-js/src/classes/Umbra.ts',
         },
       ],
     },
     chainAnalyst: {
       condition: 'fresh destination and patience needed',
       sentiment: 'warning',
-      description:
-        'There is no anonymity set: one Announcement funds one stealth address that is spent once. In a sample of recent ETH payments the median time to first spend was under two minutes and most were full sweeps, so entry and exit pair trivially by amount and time and the question reduces to who owns the destination. The recipient stays hidden only by withdrawing to a fresh address that is never registered, reused or otherwise tied to them, ideally after a delay. Destination reuse, withdrawing to a registrant, returning funds to the sender and unique priority-fee settings answered the question for about half of all mainnet payments in a published study.',
+      exposure:
+        'Each payment lands in one address that is usually spent within minutes, so an analyst pairs payment and spend easily. About half of all recipients were identified in a published study through reused or registered destinations.',
+      advice:
+        'Wait before spending, and sweep to a fresh address you have never used and never register.',
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
           note: 'Survives only with a fresh, never-registered destination, a delay, and no collector pattern.',
         },
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
         identity: {
           verdict: 'atRisk',
           note: 'Exchange KYC on the sender or on the destination.',
@@ -71,16 +72,18 @@ export const umbraAdversaries = definePrivacyAdversaries({
     networkObserver: {
       condition: 'own build and node needed',
       sentiment: 'warning',
-      description:
-        'The protocol itself needs nothing offchain: discovery is local ECDH over Announcement events and works against a self-hosted node with no third party. The hosted frontend does not offer that path. Its default scan first asks the Umbra indexer for the registration block of the connected wallet, so the indexer learns which wallet is an Umbra recipient and when it scans, and after matching it queries the balances of exactly the matched stealth addresses in one multicall through the wallet RPC provider. Avoiding both requires building the frontend from source with the indexer disabled and a self-hosted node. Token exits go through a closed-source relayer that learns stealth address, destination and IP; the only alternative is funding the stealth address with gas, which leaks to the public observer instead. ETH exits need no relayer.',
+      exposure:
+        "The protocol needs nothing but a node. The hosted app, however, tells the Umbra indexer which wallet is scanning and asks your wallet's node for exactly your stealth addresses, linking them. Token withdrawals go through a closed relayer that sees the destination and your IP.",
+      advice:
+        'Build the app from source with the indexer disabled and point your wallet at your own node. For tokens, either accept the relayer or fund the gas yourself, which is public.',
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
           note: 'Wallet RPC sees the wallet-to-stealth multicall unless the wallet uses a self-hosted node; the relayer sees stealth-to-destination for tokens.',
         },
-        amount: 'leaked',
-        asset: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Hidden for ETH with own build and node; for tokens either the relayer or the public observer learns the link.',
@@ -93,70 +96,54 @@ export const umbraAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Registration lookup sends wallet address',
-          url: `${REPO}/umbra-js/src/utils/utils.ts`,
+          url: 'https://github.com/ScopeLift/umbra-protocol/blob/master/umbra-js/src/utils/utils.ts',
         },
         {
-          title: 'Balance multicall of matched stealth addresses',
-          url: `${REPO}/frontend/src/components/AccountReceiveTable.vue`,
-        },
-        {
-          title: 'Direct log scan (fetchAllAnnouncementFromLogs)',
-          url: `${REPO}/umbra-js/src/classes/Umbra.ts`,
+          title: 'Balance multicall of matched addresses',
+          url: 'https://github.com/ScopeLift/umbra-protocol/blob/master/frontend/src/components/AccountReceiveTable.vue',
         },
         {
           title: 'Relayer API client',
-          url: `${REPO}/frontend/src/utils/umbra-api.ts`,
+          url: 'https://github.com/ScopeLift/umbra-protocol/blob/master/frontend/src/utils/umbra-api.ts',
         },
       ],
     },
     privilegedInsider: {
       condition: 'owner can only stop new payments',
       sentiment: 'good',
-      description:
-        'The contracts are immutable and have no view key, decryption key, pause or upgrade path. The owner, a single EOA, can set an unbounded toll on new payments, which halts entries but cannot touch funds already at stealth addresses or block token withdrawals. Exclusion beyond that is client-side only: the frontend filters sanctioned addresses through a Chainalysis oracle and hardcoded lists, and the relayer operator can refuse to relay, leaving the user a direct withdrawal that needs gas at the stealth address.',
+      exposure:
+        'The contracts are immutable and nobody holds a view key. The owner can only raise the fee on new payments; funds already received are unaffected.',
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: 'atRisk',
-        amount: 'leaked',
-        asset: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: 'atRisk',
         identity: 'private',
       },
-      sources: [
-        {
-          title: 'Umbra owner / setToll',
-          url: 'https://etherscan.io/address/0xFb2dc580Eed955B528407b4d36FfaFe3da685401#readContract',
-        },
-        {
-          title: 'Client-side sanction filter',
-          url: `${REPO}/umbra-js/src/utils/utils.ts`,
-        },
-      ],
+      sources: [{ contract: 'Umbra' }, { section: 'permissions' }],
     },
     futureAdversary: {
       condition: 'key exchange breaks',
       sentiment: 'bad',
-      description:
-        'Recipient privacy rests entirely on secp256k1 ECDH: the ciphertext is the random scalar XORed with a hash of the shared secret, and the stealth key is that scalar times the spending key. A quantum adversary recovers every registered viewing key from the public registry, or the ephemeral key from the announcement itself, and can then run the recipient scan over all announcements since 2021. Every stealth payment to a recipient whose public key is known becomes linked retroactively. Nothing else is encrypted, so no other field changes.',
+      exposure:
+        'Recipient privacy rests on elliptic-curve key exchange with keys published in the registry. A quantum computer links every payment since 2021 to its registered recipient.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
         identity: {
           verdict: 'atRisk',
           note: 'Inherits everything the chain analyst learns.',
         },
       },
       sources: [
+        { contract: 'StealthKeyRegistry' },
         {
           title: 'Shared secret derivation',
-          url: `${REPO}/umbra-js/src/utils/sharedSecret.ts`,
-        },
-        {
-          title: 'StealthKeyRegistry (public viewing keys)',
-          url: 'https://etherscan.io/address/0x31fe56609C65Cd0C510E7125f051D440424D38f3#code',
+          url: 'https://github.com/ScopeLift/umbra-protocol/blob/master/umbra-js/src/utils/sharedSecret.ts',
         },
       ],
     },

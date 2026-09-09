@@ -17,16 +17,18 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       condition: 'sender, recipient, amount public',
-      description:
-        'Deposits and withdrawals are plain transactions with depositor, recipient, amount and asset in cleartext; deposits are arbitrary amounts and a note can be withdrawn in parts, leaving a change note whose remaining value is hidden. The one thing hidden is which approved deposit a withdrawal spends: only Poseidon hashes appear onchain and the Groth16 proof reveals nothing else. The approved set is itself public on IPFS, so everyone can see which deposits are excluded. Ragequitting publishes the deposit behind a note and, for a change note, the withdrawal that created it.',
+      exposure:
+        'Deposits and withdrawals show address, amount and asset, and the list of approved deposits is public. Hidden is which approved deposit a withdrawal spends.',
+      advice:
+        'Withdraw through a relayer, and never ragequit a change note: that reveals the withdrawal it came from.',
       boundary: {
         sender: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'Self-processed withdrawals put a user-controlled gas payer next to the recipient; they are rare in practice.',
         },
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'private',
           note: 'Ragequitting a change note reveals the withdrawal that created it.',
@@ -34,23 +36,25 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         identity: 'private',
       },
       sources: [
-        { title: 'Entrypoint deposit / relay', url: `${ENTRYPOINT}#code` },
+        { contract: 'PrivacyPoolsEntrypoint' },
         {
-          title: 'withdraw.circom',
-          url: `${CORE}/packages/circuits/circuits/withdraw.circom`,
+          title: 'Withdrawal circuit',
+          url: 'https://github.com/0xbow-io/privacy-pools-core/blob/main/packages/circuits/circuits/withdraw.circom',
         },
       ],
     },
     chainAnalyst: {
       sentiment: 'warning',
       condition: 'active pool, common amount, patience',
-      description:
-        'Amounts are arbitrary and the vetting fee turns round deposits into recognisable 0.995 multiples, so exact-amount matching of a full exit against a single deposit is easy; about a quarter of ETH deposits have a unique amount. Change notes with hidden remaining value and the few-thousand-note ETH pool give a careful user real cover, but no delay is enforced, the approved set at each block is public and bounds the candidate deposits, three relayers carry most withdrawals, and eleven of the fourteen pools are near-empty so a withdrawal there matches a handful of deposits by amount alone.',
+      exposure:
+        'Amounts are arbitrary and full exits often match one deposit exactly, so an analyst links many users by amount and timing. Only the ETH, USDC and USDT pools have enough activity to hide in.',
+      advice:
+        'Use an active pool, withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Use the ETH, USDC or USDT pool, withdraw common amounts rather than a full exit, wait, never ragequit a change note.',
@@ -74,13 +78,13 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       condition: 'raw SDK and Tor needed',
-      description:
+      exposure:
         "The SDK syncs by downloading every deposit, withdrawal and ragequit event of every pool and matches notes locally, so the RPC learns nothing about the user. The reference website, however, sends the labels of all the user's own deposits to the association set provider API on every account load, so the ASP learns IP and deposit set, and it then sends the recipient to one of two hardcoded relayers from the same IP. Anyone seeing both requests recovers the link. Neither request is needed by the protocol: the approved set is public on IPFS and relaying is permissionless, but the website offers no way to avoid them. Error reports also send wallet address and recipient to Sentry.",
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Whoever sees both the ASP label lookup and the relayer request from one IP links deposit to withdrawal; avoidable only with the raw SDK, IPFS leaves and own relaying.',
@@ -92,26 +96,29 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'ASP lookup by label (X-Labels header)',
-          url: `${SITE}/src/utils/aspClient.ts`,
+          title: 'ASP lookup by label',
+          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/utils/aspClient.ts',
         },
-        { title: 'Relayer request', url: `${SITE}/src/utils/relayerClient.ts` },
         {
-          title: 'SDK full-range event sync',
-          url: `${CORE}/packages/sdk/src/core/data.service.ts`,
+          title: 'Relayer request',
+          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/utils/relayerClient.ts',
+        },
+        {
+          title: 'SDK event sync',
+          url: 'https://github.com/0xbow-io/privacy-pools-core/blob/main/packages/sdk/src/core/data.service.ts',
         },
       ],
     },
     privilegedInsider: {
       sentiment: 'bad',
       condition: 'ASP decides who exits privately',
-      description:
-        'Private withdrawals must prove membership in the latest association set root, which a 2-of-4 multisig or a single EOA posts about hourly with no delay. Declining a deposit, or dropping an approved one from later roots, leaves the depositor only a public ragequit; about one in six ETH deposits is currently outside the set. Posting a root that contains only a target deposit deanonymizes the next withdrawal proven against it, and the website does not check the set size. The same multisig can upgrade the Entrypoint, remove pools and set fees instantly. No role can decrypt anything, and past private withdrawals stay unlinkable, because there are no keys and no encrypted data.',
+      exposure:
+        'Withdrawing privately requires your deposit to be in the current approved list, which a 2-of-4 multisig or a single key publishes hourly with no delay. They can leave you only a public exit, and can single out one deposit by publishing a list with just that one in it.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'The ASP postman can deanonymize a targeted withdrawal by posting a partitioned root; detectable afterwards, not preventable.',
@@ -122,23 +129,20 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         },
       },
       sources: [
-        { title: 'Entrypoint roles and updateRoot', url: `${ENTRYPOINT}#code` },
-        {
-          title: 'Privacy Pools Multisig (2 of 4)',
-          url: 'https://etherscan.io/address/0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159',
-        },
+        { contract: 'PrivacyPoolsEntrypoint' },
+        { section: 'permissions' },
       ],
     },
     futureAdversary: {
       sentiment: 'good',
       condition: 'seed-phrase account, not wallet-derived',
-      description:
+      exposure:
         "Nothing encrypted is written onchain. Commitments and nullifiers are Poseidon hashes of random secrets, and the Groth16 proofs are perfectly zero-knowledge, so a quantum computer recovers nothing from the chain and a compromised trusted setup only enables forged withdrawals. The exception is the website's default account creation, which derives the seed from a deterministic wallet signature over a fixed message: a quantum adversary who recovers the wallet key from any of its signatures recomputes every note of that account. Users who wrote down a seed phrase are unaffected.",
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: "Hidden for seed-phrase accounts; wallet-derived accounts reduce to the wallet's secp256k1 key.",
@@ -150,13 +154,14 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Poseidon commitment circuit',
-          url: `${CORE}/packages/circuits/circuits/commitment.circom`,
+          title: 'Commitment circuit (Poseidon)',
+          url: 'https://github.com/0xbow-io/privacy-pools-core/blob/main/packages/circuits/circuits/commitment.circom',
         },
         {
           title: 'Wallet-signature seed derivation',
-          url: `${SITE}/src/utils/walletSeed.ts`,
+          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/utils/walletSeed.ts',
         },
+        { section: 'trusted-setups' },
       ],
     },
   },

@@ -20,16 +20,16 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       condition: 'exit through the relay, never forced',
-      description:
+      exposure:
         "Deposits publish depositor, token and amount, and withdrawals publish recipient, token and amount inside the relay's epoch transactions. Interior transfers publish only Poseidon commitments, nullifiers and ciphertexts, so counterparties and amounts are hidden and the deposit-to-withdrawal link is hidden cryptographically. Every epoch carries exactly one transfer, so each private transfer is an individually timestamped transaction with a visible input and output count. The forced withdrawal path reveals the account owner and the exact notes spent, and DeFi through the gateway is an atomic unshield, call and reshield with public amounts.",
       boundary: {
         sender: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'The forced exit path additionally names the account owner through the public auth registry.',
         },
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'private',
           note: 'Leaked on the forced path, whose input commitments are identifiable leaves.',
@@ -53,24 +53,19 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
         },
         identity: 'private',
       },
-      sources: [
-        {
-          title: 'PrivacyBoost pool (submitEpoch, requestDeposit)',
-          url: `${POOL}#code`,
-        },
-      ],
+      sources: [{ contract: 'PrivacyBoost' }],
     },
     chainAnalyst: {
       sentiment: 'bad',
       condition: 'a few dozen real users, exact exit amounts',
-      description:
-        'More than 99% of all deposits and withdrawals are a heartbeat by one operator address cycling 0.001 WETH every ten minutes, which an analyst filters out for free. What remains is fewer than forty real depositors and about twenty exit addresses. Exits are always 0.996 times the gross note, most deposits become a single note spent whole, holds last minutes, and most real recipients withdrew to the address they deposited from. Each user transfer is the one non-heartbeat epoch near its timestamp. Linkage is recoverable for essentially every real user.',
+      exposure:
+        'Almost all activity is one operator address cycling 0.001 WETH every ten minutes, which is easy to filter out. What remains is a few dozen real users whose exits are always 0.996 times their deposit, minutes later.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
         identity: {
           verdict: 'atRisk',
           note: 'Exchange KYC on the depositing EOA, which is also bound to an account id onchain.',
@@ -100,34 +95,37 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       condition: 'single operator endpoint, no attestation check',
-      description:
-        'Only deposits touch an RPC. Every transfer, withdrawal, balance read and history query is an HTTPS request to one operator server behind Cloudflare. Login sends the wallet address, app id, master public key and the nullifying key; transfer requests are plaintext witnesses. The client encrypts requests to server keys fetched from the same server and, contrary to the documentation, performs no attestation verification, so nothing distinguishes the enclave from an ordinary server. There is one relay, allowlisted by the operator, and no alternative indexer or prover exists.',
+      exposure:
+        'Every transfer, withdrawal and balance check goes to one operator server in plain text, including your wallet address and the key that identifies your notes. The app does not verify that the server is the enclave it claims to be.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: "The server receives every withdrawal request with its destination and the user's nullifying key.",
         },
         identity: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'IP, wallet address and app identity on every login.',
         },
       },
       interior: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
-        identity: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
+        identity: 'exposed',
       },
       sources: [
-        { title: 'SDK (JS wrapper around closed Rust core)', url: SDK },
         {
-          title: 'Server info endpoint (bare TEE public key)',
+          title: 'SDK (closed Rust core)',
+          url: 'https://www.npmjs.com/package/@sunnyside-io/privacy-boost',
+        },
+        {
+          title: 'Server info endpoint',
           url: 'https://optimism.privacyboost.io/api/v1/info',
         },
       ],
@@ -135,61 +133,51 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       condition: 'operator holds the plaintext ledger',
-      description:
+      exposure:
         "The TEE operator runs the indexer and prover and holds the plaintext of every transfer and the key that decrypts every onchain ciphertext. The enclave code is unpublished, no measurement is published and the client verifies nothing, so this rests on trust in the operator and in the cloud vendor's attestation and key release. A 2-of-3 admin multisig with the same signers as the operator can upgrade all four proxies with no delay and appoint auditors who may query any account's balances and history without consent; no auditor has been appointed and the audit logger has never transacted. Exit without the operator is a three-day forced withdrawal with no published tooling.",
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
-        identity: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
+        identity: 'exposed',
       },
       interior: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
-        identity: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
+        identity: 'exposed',
       },
-      sources: [
-        {
-          title: 'AuditGateway (auditors, audit logger)',
-          url: `${AUDIT}#code`,
-        },
-        {
-          title: 'AdminMultisig (2 of 3)',
-          url: 'https://optimistic.etherscan.io/address/0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC',
-        },
-      ],
+      sources: [{ contract: 'AuditGateway' }, { section: 'permissions' }],
     },
     futureAdversary: {
       sentiment: 'bad',
       condition: 'every ciphertext wrapped to a public static key',
-      description:
+      exposure:
         "Every note ciphertext on chain is AES-GCM under a key that is wrapped twice by secp256k1 ECDH: once to the recipient and once to the TEE's long-lived public key, which the server publishes. A quantum adversary therefore needs no recipient key or address book: from the published ephemeral points and the public TEE key it unwraps every note ever written, revealing sender, recipient, token and amount for the whole history. The same total decryption follows classically from a leak of the TEE private key, which has no forward secrecy. Poseidon commitments and the Groth16 proofs are unaffected.",
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
         identity: 'atRisk',
       },
       interior: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
         identity: 'atRisk',
       },
       sources: [
         {
-          title:
-            'Ciphertext layout (teeWrapKey, receiverWrapKey) in pool source',
-          url: `${POOL}#code`,
+          contract: 'PrivacyBoost',
+          title: 'Ciphertext layout in the pool contract',
         },
       ],
     },

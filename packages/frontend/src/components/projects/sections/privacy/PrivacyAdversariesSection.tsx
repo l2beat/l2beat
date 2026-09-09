@@ -1,8 +1,9 @@
 import type {
   PrivacyAdversary,
   PrivacyAdversaryCell,
-  PrivacyLeakFieldInfo,
-  PrivacyLeakMap,
+  PrivacyExposureMap,
+  PrivacyFieldInfo,
+  PrivacySource,
   ProjectPrivacyAdversaries,
 } from '@l2beat/config'
 import {
@@ -18,12 +19,12 @@ import {
 import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import {
-  getLeakNote,
-  getLeakVerdict,
+  getExposure,
+  getExposureNote,
   getPrivacyAdversaryAnchor,
   PRIVACY_ADVERSARIES_TOOLTIP,
-  PRIVACY_LEAK_VERDICT_CLASS_NAME,
-  PRIVACY_LEAK_VERDICT_LABEL,
+  PRIVACY_EXPOSURE_CLASS_NAME,
+  PRIVACY_EXPOSURE_LABEL,
   PRIVACY_SEGMENT_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
@@ -37,6 +38,28 @@ export interface PrivacyAdversariesSectionProps extends ProjectSectionProps {
 }
 
 type Segment = keyof typeof PRIVACY_SEGMENT_LABEL
+
+const SECTION_TITLE = {
+  permissions: 'Permissions',
+  verifiers: 'Verifier IDs',
+  'trusted-setups': 'Trusted setup',
+  'upgrades-and-governance': 'Upgrades & Governance',
+} as const
+
+/** Contract and section sources point at anchors on this page. */
+function resolveSource(source: PrivacySource): { title: string; href: string } {
+  if ('url' in source) return { title: source.title, href: source.url }
+  if ('contract' in source) {
+    return {
+      title: source.title ?? source.contract,
+      href: `#${source.contract}`,
+    }
+  }
+  return {
+    title: source.title ?? SECTION_TITLE[source.section],
+    href: `#${source.section}`,
+  }
+}
 
 export function PrivacyAdversariesSection({
   adversaries,
@@ -80,7 +103,7 @@ function AdversaryBlock({
   cell: PrivacyAdversaryCell
   /** The public observer cell; undefined when rendering the baseline itself. */
   baseline: PrivacyAdversaryCell | undefined
-  fields: PrivacyLeakFieldInfo[]
+  fields: PrivacyFieldInfo[]
 }) {
   const segments = (['boundary', 'interior'] as const).filter(
     (segment) => cell[segment] !== undefined,
@@ -115,12 +138,16 @@ function AdversaryBlock({
           {cell.condition}
         </span>
       </div>
-      <p className="text-paragraph-15 md:text-paragraph-16">
-        {cell.description}
-      </p>
+      <p className="text-paragraph-15 md:text-paragraph-16">{cell.exposure}</p>
+      {cell.advice && (
+        <p className="text-paragraph-15 md:text-paragraph-16">
+          <span className="font-medium">How to keep it private: </span>
+          {cell.advice}
+        </p>
+      )}
       {baseline ? (
         <>
-          <LeakDiff cell={cell} baseline={baseline} fields={fields} />
+          <ExposureDiff cell={cell} baseline={baseline} fields={fields} />
           <Collapsible>
             <CollapsibleTrigger className="group/trigger inline-flex items-center gap-1 text-left font-medium text-paragraph-13 text-secondary underline-offset-2 hover:underline">
               <ChevronIcon className="size-3 transition-transform group-data-[state=open]/Collapsible:rotate-180" />
@@ -129,7 +156,7 @@ function AdversaryBlock({
             <CollapsibleContent>
               <div className="mt-2 flex flex-col gap-3">
                 {segments.map((segment) => (
-                  <LeakChips
+                  <ExposureChips
                     key={segment}
                     title={PRIVACY_SEGMENT_LABEL[segment]}
                     map={cell[segment]}
@@ -143,7 +170,7 @@ function AdversaryBlock({
       ) : (
         <div className="flex flex-col gap-3">
           {segments.map((segment) => (
-            <LeakChips
+            <ExposureChips
               key={segment}
               title={PRIVACY_SEGMENT_LABEL[segment]}
               map={cell[segment]}
@@ -155,11 +182,14 @@ function AdversaryBlock({
       {cell.sources && cell.sources.length > 0 && (
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-paragraph-13">
           <span className="text-secondary">Sources:</span>
-          {cell.sources.map((source) => (
-            <CustomLink key={source.url} href={source.url}>
-              {source.title}
-            </CustomLink>
-          ))}
+          {cell.sources.map((source) => {
+            const link = resolveSource(source)
+            return (
+              <CustomLink key={link.href} href={link.href}>
+                {link.title}
+              </CustomLink>
+            )
+          })}
         </div>
       )}
     </div>
@@ -167,14 +197,14 @@ function AdversaryBlock({
 }
 
 /** Only the fields whose verdict differs from the public observer. */
-function LeakDiff({
+function ExposureDiff({
   cell,
   baseline,
   fields,
 }: {
   cell: PrivacyAdversaryCell
   baseline: PrivacyAdversaryCell
-  fields: PrivacyLeakFieldInfo[]
+  fields: PrivacyFieldInfo[]
 }) {
   const segments: Segment[] = ['boundary', 'interior']
   const diffs = segments.flatMap((segment) => {
@@ -182,8 +212,7 @@ function LeakDiff({
     const base = baseline[segment]
     if (!map || !base) return []
     const changed = fields.filter(
-      (field) =>
-        getLeakVerdict(map[field.id]) !== getLeakVerdict(base[field.id]),
+      (field) => getExposure(map[field.id]) !== getExposure(base[field.id]),
     )
     return changed.length === 0 ? [] : [{ segment, map, changed }]
   })
@@ -202,7 +231,7 @@ function LeakDiff({
         Compared with a public observer
       </span>
       {diffs.map(({ segment, map, changed }) => (
-        <LeakChips
+        <ExposureChips
           key={segment}
           title={PRIVACY_SEGMENT_LABEL[segment]}
           map={map}
@@ -213,14 +242,14 @@ function LeakDiff({
   )
 }
 
-function LeakChips({
+function ExposureChips({
   title,
   map,
   fields,
 }: {
   title: string
-  map: PrivacyLeakMap | undefined
-  fields: PrivacyLeakFieldInfo[]
+  map: PrivacyExposureMap | undefined
+  fields: PrivacyFieldInfo[]
 }) {
   if (!map) return null
   return (
@@ -228,18 +257,18 @@ function LeakChips({
       <span className="mr-1 text-paragraph-12 text-secondary">{title}</span>
       {fields.map((field) => {
         const leak = map[field.id]
-        const verdict = getLeakVerdict(leak)
-        const note = getLeakNote(leak)
+        const verdict = getExposure(leak)
+        const note = getExposureNote(leak)
         const chip = (
           <span
             className={cn(
               'inline-flex select-none items-center gap-1 rounded border px-1.5 py-0.5 font-medium text-xs',
-              PRIVACY_LEAK_VERDICT_CLASS_NAME[verdict],
+              PRIVACY_EXPOSURE_CLASS_NAME[verdict],
             )}
           >
             {field.label}
             <span className="font-normal opacity-80">
-              {PRIVACY_LEAK_VERDICT_LABEL[verdict]}
+              {PRIVACY_EXPOSURE_LABEL[verdict]}
             </span>
           </span>
         )

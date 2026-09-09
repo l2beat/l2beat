@@ -17,16 +17,18 @@ export const railgunAdversaries = definePrivacyAdversaries({
     publicObserver: {
       condition: 'interior fully encrypted',
       sentiment: 'good',
-      description:
-        'Shielding reveals the sender, amount and token in cleartext; unshielding reveals the recipient, amount and token. Inside the pool, private transfers publish only Poseidon commitments, nullifiers and AES-GCM ciphertexts, so sender, recipient, amount and asset of interior transfers are hidden. DeFi through RelayAdapt is an atomic unshield, call and reshield bundle, so input and output tokens and amounts are public and only the owner is hidden. The link between a shield and an unshield is hidden cryptographically.',
+      exposure:
+        'Shielding and unshielding show your address, token and amount. Everything inside the pool is encrypted, and nobody can see which shield funds which unshield.',
+      advice:
+        'Unshield through a broadcaster; paying the gas yourself puts your wallet next to the recipient in public. DeFi through the pool shows tokens and amounts, only your identity stays hidden.',
       boundary: {
         sender: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'At exit the gas payer is the broadcaster; self-broadcasting exposes the user EOA.',
         },
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: 'private',
         identity: 'private',
       },
@@ -45,23 +47,25 @@ export const railgunAdversaries = definePrivacyAdversaries({
         identity: 'private',
       },
       sources: [
-        { title: 'RailgunSmartWallet shield / transact', url: `${PROXY}#code` },
+        { contract: 'RailgunSmartWallet' },
         {
           title: 'Note ciphertext format',
-          url: `${ENGINE}/note/transact-note.ts`,
+          url: 'https://github.com/Railgun-Community/engine/blob/main/src/note/transact-note.ts',
         },
       ],
     },
     chainAnalyst: {
       condition: 'token and timing narrow it',
       sentiment: 'warning',
-      description:
-        'Join-split notes, internal transfers, DeFi round trips and broadcaster fee notes break the one-to-one correspondence of a mixer, and the pool is active with hundreds of shielding addresses a month. The candidate set for an unshield is nevertheless hard-limited by token type and tree number, and there is no enforced delay beyond the one-hour proof-of-innocence pending period. Round exit amounts are common. Published work links roughly a sixth of Ethereum withdrawals uniquely through timing, address reuse, amount fingerprints and knapsack sums, and non-heuristic pruning alone halves the anonymity set on average.',
+      exposure:
+        'An analyst narrows the shields behind an unshield by token, timing and amount; published work links about one in six Ethereum withdrawals uniquely. Activity inside the pool stays hidden.',
+      advice:
+        'Keep funds shielded for a while, avoid round amounts and amounts that match a single shield, use a broadcaster, and do not reuse exit addresses.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Wait, avoid round and matching amounts, use a broadcaster, do not reuse exit addresses.',
@@ -93,13 +97,15 @@ export const railgunAdversaries = definePrivacyAdversaries({
     networkObserver: {
       condition: 'own node and POI list needed',
       sentiment: 'good',
-      description:
-        'Note discovery is local trial decryption of every commitment, so neither the indexer nor the RPC learns which notes belong to the user. The broadcaster decrypts the full transaction including the unshield destination, but that destination is public onchain a block later, and the broadcaster is reached over Waku, so it sees neither the sender address nor the IP. Two default-path leaks remain and both are avoidable in supported configuration: the wallet SDK estimates gas by sending the real calldata with a dummy proof to the configured RPC, which a self-hosted node fixes, and proof-of-innocence nodes receive the blinded commitments in batches, which a self-hosted list avoids. Self-broadcasting is not an escape: it puts the user EOA as gas payer next to the unshield in a public transaction. Broadcasting is permissionless with dozens of broadcasters active.',
+      exposure:
+        'Your wallet finds notes by trying to decrypt every note locally, so nodes learn nothing about which are yours. The broadcaster sees your unshield destination, public a block later anyway, but not your address or IP.',
+      advice:
+        'Point the wallet at your own node: by default it sends the pending transaction to the configured node for a gas estimate. Use a self-hosted proof-of-innocence list, or the default nodes learn which notes belong to one wallet.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: 'private',
         identity: {
           verdict: 'atRisk',
@@ -120,25 +126,30 @@ export const railgunAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Gas estimation with dummy proof',
-          url: `${WALLET}/services/transactions/tx-gas-details.ts`,
+          url: 'https://github.com/Railgun-Community/wallet/blob/main/src/services/transactions/tx-gas-details.ts',
         },
         {
           title: 'Broadcaster decrypts request',
           url: 'https://github.com/Railgun-Community/ppoi-safe-broadcaster-example/blob/main/src/server/waku-broadcaster/methods/transact-method.ts',
         },
-        { title: 'POI node interface', url: `${ENGINE}/poi/poi.ts` },
+        {
+          title: 'POI node interface',
+          url: 'https://github.com/Railgun-Community/engine/blob/main/src/poi/poi.ts',
+        },
       ],
     },
     privilegedInsider: {
       condition: 'no view keys, 7-day upgrade delay',
       sentiment: 'good',
-      description:
-        'The protocol has no view or decryption key, so no role can read past activity. The RAIL DAO can upgrade or pause the proxy through the Delegator after a seven-day execution delay, which could deanonymize future activity but not decrypt existing ciphertexts. It can also block new shields of a token and raise fees to 50%. Exclusion otherwise happens offchain: broadcasters can refuse transactions and by default require proof of innocence against a Chainalysis sanctions list, which partitions notes into listed and unlisted. The contract enforces none of this, so a self-broadcasting user cannot be excluded.',
+      exposure:
+        'There is no view key, so nobody can read past activity. The DAO can upgrade the contracts after a seven-day delay, which could weaken privacy for future activity but not decrypt the past. Broadcasters may refuse transactions that fail a sanctions screening.',
+      advice:
+        'Watch governance proposals; you have seven days to unshield before an upgrade takes effect.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: 'private',
         identity: 'private',
       },
@@ -151,10 +162,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
         identity: 'private',
       },
       sources: [
-        {
-          title: 'Voting execution delay',
-          url: 'https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC#readContract',
-        },
+        { section: 'permissions', title: 'Governance roles' },
         {
           title: 'POI required lists',
           url: 'https://github.com/Railgun-Community/shared-models/blob/main/src/models/poi.ts',
@@ -164,13 +172,15 @@ export const railgunAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       condition: 'notes of shared addresses decrypt',
       sentiment: 'warning',
-      description:
-        'Note encryption is AES-256-GCM under a key agreed by ECDH on Ed25519, and shield bundles are encrypted to the receiver viewing key the same way. A quantum adversary breaks the key agreement but still needs a candidate viewing key, which every published 0zk address contains. For any address ever shared, including all broadcaster addresses, every incoming shield, transfer and fee note decrypts, revealing amounts, tokens and counterparties, and the graph expands transitively as more keys are learned. Poseidon commitments, nullifiers and the Groth16 proofs remain unaffected. The trusted setup only concerns soundness.',
+      exposure:
+        'Notes are encrypted with elliptic-curve key exchange. A future quantum computer decrypts every note sent to any address that was ever shared, including all broadcaster fee notes, revealing amounts, tokens and counterparties.',
+      advice:
+        'Treat your 0zk address like a secret: do not publish it, and use a fresh one per counterparty where you can.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Leaked for wallets whose 0zk address was ever shared: shield decryption ties the shielding EOA to the 0zk identity and its later notes.',
@@ -194,11 +204,11 @@ export const railgunAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Shared key derivation (Ed25519 ECDH)',
-          url: `${ENGINE}/utils/keys-utils.ts`,
+          url: 'https://github.com/Railgun-Community/engine/blob/main/src/utils/keys-utils.ts',
         },
         {
           title: 'AES-GCM note encryption',
-          url: `${ENGINE}/utils/encryption/aes.ts`,
+          url: 'https://github.com/Railgun-Community/engine/blob/main/src/utils/encryption/aes.ts',
         },
       ],
     },

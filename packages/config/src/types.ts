@@ -1089,7 +1089,7 @@ export interface PrivacyAdversary {
 }
 
 /** What can be learned about a single user action. */
-export type PrivacyLeakField =
+export type PrivacyField =
   | 'sender'
   | 'recipient'
   | 'amount'
@@ -1097,8 +1097,8 @@ export type PrivacyLeakField =
   | 'linkage'
   | 'identity'
 
-export interface PrivacyLeakFieldInfo {
-  id: PrivacyLeakField
+export interface PrivacyFieldInfo {
+  id: PrivacyField
   label: string
   /** Noun used in derived cell values, e.g. "Link" in "Link at risk". */
   subject: string
@@ -1109,21 +1109,17 @@ export interface PrivacyLeakFieldInfo {
  * private: private by construction.
  * atRisk: private only under a condition named in `note`, e.g. the user avoids
  *   a footgun, runs their own node, or a counterparty never shared a key.
- * leaked: visible to this adversary by design.
+ * exposed: visible to this adversary by design.
  * unverifiable: cannot be derived from onchain state or published source.
  */
-export type PrivacyLeakVerdict =
-  | 'private'
-  | 'atRisk'
-  | 'leaked'
-  | 'unverifiable'
+export type PrivacyExposure = 'private' | 'atRisk' | 'exposed' | 'unverifiable'
 
-export type PrivacyLeak =
-  | PrivacyLeakVerdict
-  | { verdict: PrivacyLeakVerdict; note: string }
+export type PrivacyFieldExposure =
+  | PrivacyExposure
+  | { verdict: PrivacyExposure; note: string }
 
 /** Complete: every field has a verdict. */
-export type PrivacyLeakMap = Record<PrivacyLeakField, PrivacyLeak>
+export type PrivacyExposureMap = Record<PrivacyField, PrivacyFieldExposure>
 
 export type PrivacyAdversarySentiment = 'good' | 'warning' | 'bad'
 
@@ -1138,35 +1134,57 @@ export interface PrivacyAdversaryAssessment {
   sentiment: PrivacyAdversarySentiment
   /** The condition behind the sentiment, in a few words. Shown as second line. */
   condition: string
-  description: string
+  /**
+   * What is private and what is exposed to this adversary, in one or two
+   * plain sentences. No jargon: a user should learn something.
+   */
+  exposure: string
+  /**
+   * How a user keeps it private, when that is conditional (the cell is at
+   * risk, or a field is). Omit when nothing the user does changes the result.
+   */
+  advice?: string
   /**
    * Overrides `promise.protects` as the subject of the derived value, for
    * cells where the promise holds but another field leaks.
    */
-  subject?: PrivacyLeakField
+  subject?: PrivacyField
   /**
    * Entry and exit: the Ethereum transactions that put funds under the
    * protocol and take them out again.
    */
-  boundary: PrivacyLeakMap
+  boundary: PrivacyExposureMap
   /**
    * Actions taken while shielded (private transfers, in-pool DeFi). Present
    * for all adversaries of a project or for none.
    */
-  interior?: PrivacyLeakMap
+  interior?: PrivacyExposureMap
   /** Pointers to the onchain state or source code backing the verdicts. */
   sources?: PrivacySource[]
 }
 
-export interface PrivacySource {
-  title: string
-  url: string
-}
+/**
+ * Where a claim can be checked. A url for code and papers; a contract name
+ * (as in discovery) links to that entry in the Contracts section; a section
+ * id links to another section of the project page. Contract names are
+ * validated against the project's contracts in tests.
+ */
+export type PrivacySource =
+  | { title: string; url: string }
+  | { contract: string; title?: string }
+  | {
+      section:
+        | 'permissions'
+        | 'verifiers'
+        | 'trusted-setups'
+        | 'upgrades-and-governance'
+      title?: string
+    }
 
 /** What a project author writes. definePrivacyAdversaries derives the rest. */
 export interface PrivacyPromise {
   /** The field the protocol promises to protect. Cell values are derived from it. */
-  protects: PrivacyLeakField
+  protects: PrivacyField
   /**
    * The same promise in one plain sentence, e.g. "Hides which deposit funds
    * which withdrawal. Everything else is public." Shown on hover / in intros.
@@ -1192,7 +1210,7 @@ export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
 export interface ProjectPrivacyAdversaries {
   promise: PrivacyPromise
   adversaries: PrivacyAdversary[]
-  fields: PrivacyLeakFieldInfo[]
+  fields: PrivacyFieldInfo[]
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
 }
 

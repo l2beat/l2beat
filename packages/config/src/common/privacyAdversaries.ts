@@ -5,8 +5,8 @@ import type {
   PrivacyAdversaryCell,
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
-  PrivacyLeakField,
-  PrivacyLeakFieldInfo,
+  PrivacyField,
+  PrivacyFieldInfo,
   ProjectPrivacyAdversaries,
 } from '../types'
 
@@ -65,10 +65,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
     },
   }
 
-export const PRIVACY_LEAK_FIELDS: Record<
-  PrivacyLeakField,
-  PrivacyLeakFieldInfo
-> = {
+export const PRIVACY_FIELDS: Record<PrivacyField, PrivacyFieldInfo> = {
   sender: {
     id: 'sender',
     label: 'Sender',
@@ -119,10 +116,10 @@ const SENTIMENT_STATE: Record<PrivacyAdversarySentiment, string> = {
 
 /** "Link private", "Identity exposed": the derived table value of a cell. */
 export function getPrivacyAdversaryValue(
-  protects: PrivacyLeakField,
+  protects: PrivacyField,
   cell: PrivacyAdversaryAssessment,
 ): string {
-  const subject = PRIVACY_LEAK_FIELDS[cell.subject ?? protects].subject
+  const subject = PRIVACY_FIELDS[cell.subject ?? protects].subject
   return `${subject} ${SENTIMENT_STATE[cell.sentiment]}`
 }
 
@@ -134,7 +131,7 @@ export const PRIVACY_ADVERSARY_ORDER: PrivacyAdversaryId[] = [
   'futureAdversary',
 ]
 
-export const PRIVACY_LEAK_FIELD_ORDER: PrivacyLeakField[] = [
+export const PRIVACY_FIELD_ORDER: PrivacyField[] = [
   'sender',
   'recipient',
   'amount',
@@ -166,7 +163,7 @@ export function definePrivacyAdversaries(
   return {
     promise: config.promise,
     adversaries: PRIVACY_ADVERSARY_ORDER.map((id) => PRIVACY_ADVERSARIES[id]),
-    fields: PRIVACY_LEAK_FIELD_ORDER.map((id) => PRIVACY_LEAK_FIELDS[id]),
+    fields: PRIVACY_FIELD_ORDER.map((id) => PRIVACY_FIELDS[id]),
     cells,
   }
 }

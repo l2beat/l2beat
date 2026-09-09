@@ -18,13 +18,15 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       condition: 'spend one address at a time',
-      description:
-        'Nothing of the stealth scheme is onchain: no announcement, no registry, no escrow. A payment is a plain transfer to a fresh EOA that the Cloaked server generated for the recipient, so sender, amount and asset are public and the receiving address is a pseudonym nobody can tie to an account. Exits are EIP-7702 transactions submitted by two Cloaked relayer EOAs with fees paid to a Cloaked Safe, so every spend is publicly attributable to Cloaked, but not to a user. The one public leak is consolidation: about a quarter of relayer transactions bundle several stealth addresses, proving common ownership. The optional Privacy Pools hop is assessed under Privacy Pools.',
+      exposure:
+        'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh address that Cloaked generated for you. Everyone sees sender and amount; nobody can tell who owns the address.',
+      advice:
+        'Spend one address at a time. Bundling several addresses in one exit, an app option, publicly marks them as one owner.',
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: 'private',
-        amount: 'leaked',
-        asset: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Bundling several stealth addresses in one exit links them as one owner; a change output to a fresh Cloaked address links the pair.',
@@ -32,26 +34,31 @@ export const cloakedAdversaries = definePrivacyAdversaries({
         identity: 'private',
       },
       sources: [
-        { title: 'Stealth derivation (clkd-stealth)', url: STEALTH },
         {
-          title: 'OffchainResolver (only onchain component)',
-          url: `${RESOLVER}#code`,
+          contract: 'OffchainResolver',
+          title: 'ENS resolver (only onchain component)',
+        },
+        {
+          title: 'Stealth derivation (clkd-stealth)',
+          url: 'https://github.com/cloakedxyz/clkd-stealth',
         },
       ],
     },
     chainAnalyst: {
       sentiment: 'warning',
       condition: 'no consolidation, delayed spends',
-      description:
-        'Each stealth address receives once and is spent minutes later, the median in a sample being seven minutes, so entry and exit pair trivially per address and the question is who owns the cluster. Consolidation bundles and change outputs to fresh Cloaked addresses let an analyst rebuild account clusters without any key, and the constant relayer and fee addresses isolate the whole Cloaked population, including its share of Privacy Pools deposits and withdrawals, which shrinks the effective anonymity set of a Cloaked pool withdrawal if same-client behaviour is assumed. Most pool withdrawals cash out to external addresses with exact public amounts.',
+      exposure:
+        'Each address receives once and is spent within minutes, and change goes to another Cloaked address, so an analyst rebuilds address clusters without any key. All exits are visibly relayed by Cloaked.',
+      advice:
+        'Avoid consolidating addresses, wait before spending, and send to destinations not tied to you.',
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
           note: 'Hidden unless the exit destination is reused or KYC-linked, or the address is bundled with others.',
         },
-        amount: 'leaked',
-        asset: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Change-graph clustering and consolidation reveal which addresses belong together.',
@@ -71,24 +78,27 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'bad',
       condition: 'everything through Cloaked servers',
-      description:
+      exposure:
         "The app has no local scanning, no user RPC and no user-side broadcast. Address generation, balance indexing, quotes, signed intents and broadcasts all go through the Cloaked API with the IP and a stable per-account identifier, and the two relayers are the only submission path. A payer who resolves a Cloaked ENS name performs the offchain lookup against the same API, so the payer's IP reaches Cloaked about an hour before the payment lands. There is no supported way to use a different relayer or node; leaving requires exporting keys with the recovery tool.",
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'The server generates the address for a known account and indexes it.',
         },
-        amount: 'leaked',
-        asset: 'leaked',
-        linkage: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
+        linkage: 'exposed',
         identity: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'IP and account identifier on every request; payer IP on ENS lookups.',
         },
       },
       sources: [
-        { title: 'Server-bound keys (deriveServerBoundKeys)', url: STEALTH },
+        {
+          title: 'Server-bound keys (clkd-stealth)',
+          url: 'https://github.com/cloakedxyz/clkd-stealth',
+        },
         {
           title: 'Recovery tool (exit path)',
           url: 'https://github.com/cloakedxyz/clkd-recovery',
@@ -98,19 +108,19 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'bad',
       condition: 'Cloaked knows every address',
-      description:
-        'The "admin view key" is architectural rather than a protocol key. The server stores the account\'s spending public key and a hardened child of the viewing key, which is exactly what it needs to generate every stealth address deterministically, past and future, on every chain, and to regenerate the set from a database dump. Keys derive from a wallet signature plus PIN or a passkey and cannot be rotated. For the Privacy Pools hop the server receives the deposit precommitment and the full withdrawal calldata, and its documentation states that it retains the association. Spending authority stays with the client, conditional on the closed web app behaving like the published SDK.',
+      exposure:
+        'Cloaked generates every address for your account and stores the keys needed to regenerate them all, past and future, so it knows all your addresses. It cannot spend your funds. For the pool option it also records which deposit became which withdrawal.',
       boundary: {
-        sender: 'leaked',
-        recipient: 'leaked',
-        amount: 'leaked',
-        asset: 'leaked',
+        sender: 'exposed',
+        recipient: 'exposed',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'Including deposit-to-withdrawal links of the Privacy Pools hop, which the server records.',
         },
         identity: {
-          verdict: 'leaked',
+          verdict: 'exposed',
           note: 'Same operator as the network observer; a database leak hands the same to anyone.',
         },
       },
@@ -119,22 +129,25 @@ export const cloakedAdversaries = definePrivacyAdversaries({
           title: 'Account creation stores keys (OpenAPI)',
           url: 'https://api.clkd.xyz/openapi.json',
         },
-        { title: 'Server-bound keys (deriveServerBoundKeys)', url: STEALTH },
+        {
+          title: 'Server-bound keys (clkd-stealth)',
+          url: 'https://github.com/cloakedxyz/clkd-stealth',
+        },
       ],
     },
     futureAdversary: {
       sentiment: 'warning',
       condition: 'passkey account, not wallet plus PIN',
-      description:
+      exposure:
         "Nothing linkable is onchain. Stealth keys are derived by ECDH on secp256k1, but no public key, ephemeral point or ciphertext is ever published, so a quantum computer recovering stealth private keys from spend signatures cannot relate two addresses of one account. This is strictly better than announcement-based schemes. The exception is accounts registered with a wallet signature and a four-digit PIN: a quantum adversary recovering that wallet's key from any public signature can rederive the account keys and the Privacy Pools seed, exposing the whole history. Passkey-derived keys are symmetric and unaffected.",
       boundary: {
-        sender: 'leaked',
+        sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
           note: "Hidden for passkey accounts; wallet-plus-PIN accounts reduce to the wallet's secp256k1 key.",
         },
-        amount: 'leaked',
-        asset: 'leaked',
+        amount: 'exposed',
+        asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
           note: 'Same condition; consolidation links remain public regardless.',
@@ -145,7 +158,10 @@ export const cloakedAdversaries = definePrivacyAdversaries({
         },
       },
       sources: [
-        { title: 'Key derivation from wallet signature or PRF', url: STEALTH },
+        {
+          title: 'Key derivation (clkd-stealth)',
+          url: 'https://github.com/cloakedxyz/clkd-stealth',
+        },
       ],
     },
   },
