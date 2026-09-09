@@ -21,7 +21,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposure:
         'Deposits and withdrawals show address, token and amount. Transfers inside are encrypted, but the first payment to any new recipient writes their address in the clear, and the fee refund reveals which token you pay fees in.',
       advice:
-        'Pay fees in STRK, and expect that anyone can see whom you have ever paid for the first time.',
+        'Pay fees in STRK, and treat the first payment to any new recipient as public.',
       boundary: {
         sender: {
           verdict: 'exposed',
@@ -93,7 +93,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposure:
         "The wallet sends your private viewing key and every action in the clear to the operator's prover, and the viewing key again to the note discovery service. The operator sees everything you do.",
       advice:
-        'Running your own prover and discovery service is possible but not offered by any wallet.',
+        'Run your own prover and discovery service; both are open source, though no wallet offers this as a setting yet.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -135,7 +135,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'mandatory auditor key escrow',
       exposure:
-        "Every user's viewing key is encrypted to a single auditor public key stored in the contract, and every withdrawal and open note carries the initiator address encrypted to the same key; the proof enforces it. Whoever holds that key traces the entire history retroactively. Its custody, described as a TEE run by Financial Privacy Inc. behind a 3-of-4 StarkWare and FPI multisig, is not verifiable onchain. Every deposit also needs a fresh screener signature backed by Elliptic verdicts, so entry can be denied per address. The permissioned sequencer is the only party that verifies client proofs, and a 7-of-12 multisig can replace the contract class with no delay.",
+        "Every user's viewing key is encrypted to a single auditor key held by the operators, who can read the entire history at any time. Every deposit also needs a screener's signature.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -170,7 +170,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'auditor escrow is elliptic-curve ECDH',
       exposure:
-        "All confidentiality keys are agreed by ECDH on the Stark curve, and the auditor public key, every user's viewing public key and every escrow ciphertext are onchain. A quantum adversary recovers the auditor private key, or each user's viewing key directly, and replays the auditor's full tracing over the entire history: senders, recipients, amounts, tokens and the deposit-to-withdrawal graph. The STARK proofs are hash-based and their soundness survives, but that protects funds, not privacy. The quantumResistant flag in our config describes the proof system, not the encryption.",
+        'The auditor escrow uses elliptic-curve encryption and sits onchain. A quantum computer recovers the auditor key and with it every transfer, amount and recipient ever made.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

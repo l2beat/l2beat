@@ -17,7 +17,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       exposure:
         'Everyone can see who deposited, who withdrew and how much, since each pool has a fixed amount. What nobody can see is which deposit paid for which withdrawal.',
       advice:
-        'Withdraw through a relayer. If you pay the withdrawal gas yourself, the paying wallet is publicly tied to the receiving one.',
+        'Withdraw through a relayer, so that no wallet of yours pays the gas and appears next to the receiving address.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -40,7 +40,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       exposure:
         'The deposit-to-withdrawal link is hidden by cryptography, but an analyst recovers it for most users from timing, repeated amounts, reused addresses and wallet fingerprints. Only the ETH pools have enough activity to hide in; the other pools are nearly empty.',
       advice:
-        'Use the ETH pools, wait days or weeks before withdrawing, withdraw to a fresh address that never touches your other wallets, and do not split a large sum into many deposits.',
+        'Use the ETH pools, wait days or weeks before withdrawing, withdraw to a fresh address that never touches your other wallets, and deposit a large sum as one note.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -48,7 +48,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Wait long, use active pools only, avoid address reuse and multi-note patterns, never fund the recipient from a linked address.',
+          note: 'Wait long, use active pools only, use each address once, deposit as one note, and let a relayer pay the withdrawal gas.',
         },
         identity: {
           verdict: 'atRisk',
@@ -71,8 +71,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposure:
         'Your note never leaves your device: the app downloads all deposits and searches locally, so a node operator learns only which pool you looked at. The relayer sees your withdrawal, which is public a minute later anyway, plus your IP address.',
-      advice:
-        'Use Tor when you withdraw and sync from your own node. Paying the gas yourself does not help: it publicly ties the paying wallet to the recipient.',
+      advice: 'Use Tor when you withdraw and sync from your own node.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -122,7 +121,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       exposure:
         'The proofs stay secret forever. Whether the deposit-to-withdrawal link survives a quantum computer is an open question about the hash Tornado uses; users who backed up notes onchain are exposed outright.',
       advice:
-        'Do not use the onchain note backup; keep the note only on your device.',
+        'Keep the note only on your device and skip the onchain backup option.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

@@ -156,6 +156,7 @@ export const payyAdversaries = definePrivacyAdversaries({
       },
       sources: [
         { contract: 'RollupV1' },
+        { section: 'permissions', title: 'Payy multisig and roles' },
         {
           title: 'Database schema',
           url: 'https://github.com/polybase/payy/blob/main/pkg/database/src/schema.rs',

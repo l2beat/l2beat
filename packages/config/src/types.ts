@@ -1142,6 +1142,8 @@ export interface PrivacyAdversaryAssessment {
   /**
    * How a user keeps it private, when that is conditional (the cell is at
    * risk, or a field is). Omit when nothing the user does changes the result.
+   * Positive instructions only (say what to do), and only what this adversary
+   * adds over the public observer: advice is not repeated across cells.
    */
   advice?: string
   /**

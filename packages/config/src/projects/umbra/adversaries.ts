@@ -17,7 +17,7 @@ export const umbraAdversaries = definePrivacyAdversaries({
       exposure:
         'Everyone sees who paid, how much, and the fresh address that received it. Hidden is who owns that address, until it spends to somewhere tied to you.',
       advice:
-        'Withdraw to an address that is not tied to you: not registered with Umbra, not reused, not carrying an ENS name.',
+        'Withdraw to a fresh, unregistered address without an ENS name, and use it once.',
       boundary: {
         sender: 'exposed',
         recipient: {
@@ -45,13 +45,12 @@ export const umbraAdversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposure:
         'Each payment lands in one address that is usually spent within minutes, so an analyst pairs payment and spend easily. About half of all recipients were identified in a published study through reused or registered destinations.',
-      advice:
-        'Wait before spending, and sweep to a fresh address you have never used and never register.',
+      advice: 'Wait before spending.',
       boundary: {
         sender: 'exposed',
         recipient: {
           verdict: 'atRisk',
-          note: 'Survives only with a fresh, never-registered destination, a delay, and no collector pattern.',
+          note: 'Survives with a fresh, unregistered destination used once, and a delay before spending.',
         },
         amount: 'exposed',
         asset: 'exposed',
@@ -75,7 +74,7 @@ export const umbraAdversaries = definePrivacyAdversaries({
       exposure:
         "The protocol needs nothing but a node. The hosted app, however, tells the Umbra indexer which wallet is scanning and asks your wallet's node for exactly your stealth addresses, linking them. Token withdrawals go through a closed relayer that sees the destination and your IP.",
       advice:
-        'Build the app from source with the indexer disabled and point your wallet at your own node. For tokens, either accept the relayer or fund the gas yourself, which is public.',
+        'Build the app from source with the indexer disabled and point your wallet at your own node. Receive ETH rather than tokens where you can; token exits need either the relayer or a public gas top-up.',
       boundary: {
         sender: 'exposed',
         recipient: {
@@ -90,7 +89,7 @@ export const umbraAdversaries = definePrivacyAdversaries({
         },
         identity: {
           verdict: 'atRisk',
-          note: 'Hosted frontend sends the scanning wallet address and IP to the indexer on every default scan; avoidable only by building from source with the indexer disabled.',
+          note: 'Hosted frontend sends the scanning wallet address and IP to the indexer on every default scan; a build from source with the indexer disabled keeps them local.',
         },
       },
       sources: [

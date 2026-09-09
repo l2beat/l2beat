@@ -21,7 +21,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       exposure:
         'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh address that Cloaked generated for you. Everyone sees sender and amount; nobody can tell who owns the address.',
       advice:
-        'Spend one address at a time. Bundling several addresses in one exit, an app option, publicly marks them as one owner.',
+        'Spend one address at a time; every address you bundle into one exit is publicly marked as yours.',
       boundary: {
         sender: 'exposed',
         recipient: 'private',
@@ -50,7 +50,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       exposure:
         'Each address receives once and is spent within minutes, and change goes to another Cloaked address, so an analyst rebuilds address clusters without any key. All exits are visibly relayed by Cloaked.',
       advice:
-        'Avoid consolidating addresses, wait before spending, and send to destinations not tied to you.',
+        'Wait before spending, and send to destinations that have no link to you.',
       boundary: {
         sender: 'exposed',
         recipient: {
@@ -79,7 +79,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'everything through Cloaked servers',
       exposure:
-        "The app has no local scanning, no user RPC and no user-side broadcast. Address generation, balance indexing, quotes, signed intents and broadcasts all go through the Cloaked API with the IP and a stable per-account identifier, and the two relayers are the only submission path. A payer who resolves a Cloaked ENS name performs the offchain lookup against the same API, so the payer's IP reaches Cloaked about an hour before the payment lands. There is no supported way to use a different relayer or node; leaving requires exporting keys with the recovery tool.",
+        "Address generation, balances, quotes and broadcasts all go through Cloaked's servers with your IP and a fixed account identifier. Even a payer looking up your name hits Cloaked's server.",
       boundary: {
         sender: 'exposed',
         recipient: {
@@ -139,7 +139,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       condition: 'passkey account, not wallet plus PIN',
       exposure:
-        "Nothing linkable is onchain. Stealth keys are derived by ECDH on secp256k1, but no public key, ephemeral point or ciphertext is ever published, so a quantum computer recovering stealth private keys from spend signatures cannot relate two addresses of one account. This is strictly better than announcement-based schemes. The exception is accounts registered with a wallet signature and a four-digit PIN: a quantum adversary recovering that wallet's key from any public signature can rederive the account keys and the Privacy Pools seed, exposing the whole history. Passkey-derived keys are symmetric and unaffected.",
+        "No key material is published onchain, so a quantum computer cannot link your addresses, unless your account was created from a wallet signature plus PIN, which reduces to that wallet's key.",
+      advice:
+        'Create your account with a passkey, not with a wallet signature.',
       boundary: {
         sender: 'exposed',
         recipient: {

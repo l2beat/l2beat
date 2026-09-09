@@ -42,7 +42,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       exposure:
         "Since all wraps and unwraps are public, an account's balance is bounded by what went in and out, and exact for the half of users who never transferred.",
       advice:
-        'Transfer often and keep funds wrapped; an account that only wraps and unwraps hides nothing.',
+        'Keep funds wrapped and transfer often; only an account with confidential transfers between wrap and unwrap has a hidden balance.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

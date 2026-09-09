@@ -20,7 +20,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
       exposure:
         'Shielding and unshielding show your address, token and amount. Everything inside the pool is encrypted, and nobody can see which shield funds which unshield.',
       advice:
-        'Unshield through a broadcaster; paying the gas yourself puts your wallet next to the recipient in public. DeFi through the pool shows tokens and amounts, only your identity stays hidden.',
+        'Unshield through a broadcaster, so that no wallet of yours pays the gas next to the recipient. Expect DeFi through the pool to show tokens and amounts; only your identity stays hidden.',
       boundary: {
         sender: {
           verdict: 'exposed',
@@ -60,7 +60,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
       exposure:
         'An analyst narrows the shields behind an unshield by token, timing and amount; published work links about one in six Ethereum withdrawals uniquely. Activity inside the pool stays hidden.',
       advice:
-        'Keep funds shielded for a while, avoid round amounts and amounts that match a single shield, use a broadcaster, and do not reuse exit addresses.',
+        'Keep funds shielded for a while, unshield uneven amounts that differ from any single shield, and use a fresh exit address every time.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -68,7 +68,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Wait, avoid round and matching amounts, use a broadcaster, do not reuse exit addresses.',
+          note: 'Wait, unshield uneven amounts, use a broadcaster, and use a fresh exit address each time.',
         },
         identity: {
           verdict: 'atRisk',
@@ -109,7 +109,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
         linkage: 'private',
         identity: {
           verdict: 'atRisk',
-          note: 'Configured RPC sees IP and the pending unshield destination during gas estimation; default sync indexer and Waku fleet see the IP of a Railgun wallet. A self-hosted node avoids both.',
+          note: 'Configured RPC sees IP and the pending unshield destination during gas estimation; default sync indexer and Waku fleet see the IP of a Railgun wallet. Use a self-hosted node for both.',
         },
       },
       interior: {
@@ -120,7 +120,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
         linkage: 'private',
         identity: {
           verdict: 'atRisk',
-          note: 'POI nodes receive the blinded commitments of a wallet in batches and its submissions per spend, tying an IP to a note cluster and to transaction ids; a self-hosted list avoids it.',
+          note: 'POI nodes receive the blinded commitments of a wallet in batches and its submissions per spend, tying an IP to a note cluster and to transaction ids. Use a self-hosted list.',
         },
       },
       sources: [
@@ -175,7 +175,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
       exposure:
         'Notes are encrypted with elliptic-curve key exchange. A future quantum computer decrypts every note sent to any address that was ever shared, including all broadcaster fee notes, revealing amounts, tokens and counterparties.',
       advice:
-        'Treat your 0zk address like a secret: do not publish it, and use a fresh one per counterparty where you can.',
+        'Treat your 0zk address like a secret: share it privately with each counterparty, and use a fresh one per counterparty where you can.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

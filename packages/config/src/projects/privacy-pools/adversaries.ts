@@ -20,7 +20,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposure:
         'Deposits and withdrawals show address, amount and asset, and the list of approved deposits is public. Hidden is which approved deposit a withdrawal spends.',
       advice:
-        'Withdraw through a relayer, and never ragequit a change note: that reveals the withdrawal it came from.',
+        'Withdraw through a relayer. If you need to ragequit, do it with an untouched deposit; ragequitting a change note reveals the withdrawal it came from.',
       boundary: {
         sender: {
           verdict: 'exposed',
@@ -57,7 +57,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Use the ETH, USDC or USDT pool, withdraw common amounts rather than a full exit, wait, never ragequit a change note.',
+          note: 'Use the ETH, USDC or USDT pool, withdraw common amounts rather than a full exit, wait, and ragequit only untouched deposits.',
         },
         identity: {
           verdict: 'atRisk',
@@ -79,7 +79,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       condition: 'raw SDK and Tor needed',
       exposure:
-        "The SDK syncs by downloading every deposit, withdrawal and ragequit event of every pool and matches notes locally, so the RPC learns nothing about the user. The reference website, however, sends the labels of all the user's own deposits to the association set provider API on every account load, so the ASP learns IP and deposit set, and it then sends the recipient to one of two hardcoded relayers from the same IP. Anyone seeing both requests recovers the link. Neither request is needed by the protocol: the approved set is public on IPFS and relaying is permissionless, but the website offers no way to avoid them. Error reports also send wallet address and recipient to Sentry.",
+        'The website sends the labels of all your deposits to the approval service and your withdrawal to one of two relayers, from the same IP. Whoever sees both links your deposit to your withdrawal.',
+      advice:
+        'Use the raw SDK: it syncs from any node without contacting the service and can relay through any address. If you use the website, use Tor.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -87,7 +89,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Whoever sees both the ASP label lookup and the relayer request from one IP links deposit to withdrawal; avoidable only with the raw SDK, IPFS leaves and own relaying.',
+          note: 'Whoever sees both the ASP label lookup and the relayer request from one IP links deposit to withdrawal; the raw SDK with IPFS leaves and own relaying keeps both local.',
         },
         identity: {
           verdict: 'atRisk',
@@ -130,14 +132,19 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       },
       sources: [
         { contract: 'PrivacyPoolsEntrypoint' },
-        { section: 'permissions' },
+        {
+          section: 'permissions',
+          title: 'Privacy Pools Multisig and ASP postman',
+        },
       ],
     },
     futureAdversary: {
       sentiment: 'good',
       condition: 'seed-phrase account, not wallet-derived',
       exposure:
-        "Nothing encrypted is written onchain. Commitments and nullifiers are Poseidon hashes of random secrets, and the Groth16 proofs are perfectly zero-knowledge, so a quantum computer recovers nothing from the chain and a compromised trusted setup only enables forged withdrawals. The exception is the website's default account creation, which derives the seed from a deterministic wallet signature over a fixed message: a quantum adversary who recovers the wallet key from any of its signatures recomputes every note of that account. Users who wrote down a seed phrase are unaffected.",
+        "Nothing encrypted is written onchain and the commitments are plain hashes, so a quantum computer recovers nothing. The exception is accounts created from a wallet signature, which reduce to that wallet's key.",
+      advice:
+        'Create your account from a seed phrase, not from a wallet signature.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

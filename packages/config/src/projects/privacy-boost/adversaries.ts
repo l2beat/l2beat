@@ -21,7 +21,9 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       condition: 'exit through the relay, never forced',
       exposure:
-        "Deposits publish depositor, token and amount, and withdrawals publish recipient, token and amount inside the relay's epoch transactions. Interior transfers publish only Poseidon commitments, nullifiers and ciphertexts, so counterparties and amounts are hidden and the deposit-to-withdrawal link is hidden cryptographically. Every epoch carries exactly one transfer, so each private transfer is an individually timestamped transaction with a visible input and output count. The forced withdrawal path reveals the account owner and the exact notes spent, and DeFi through the gateway is an atomic unshield, call and reshield with public amounts.",
+        'Deposits and withdrawals show address, token and amount. Transfers inside publish only encrypted notes, and the link between deposit and withdrawal is hidden.',
+      advice:
+        "Exit through the operator's relay. A forced exit reveals your account and the exact notes you spend.",
       boundary: {
         sender: {
           verdict: 'exposed',
@@ -134,7 +136,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'operator holds the plaintext ledger',
       exposure:
-        "The TEE operator runs the indexer and prover and holds the plaintext of every transfer and the key that decrypts every onchain ciphertext. The enclave code is unpublished, no measurement is published and the client verifies nothing, so this rests on trust in the operator and in the cloud vendor's attestation and key release. A 2-of-3 admin multisig with the same signers as the operator can upgrade all four proxies with no delay and appoint auditors who may query any account's balances and history without consent; no auditor has been appointed and the audit logger has never transacted. Exit without the operator is a three-day forced withdrawal with no published tooling.",
+        'The operator runs the enclave that holds every transfer in plain text and the key that decrypts every onchain note, and the same people can upgrade all contracts with no delay. Appointed auditors could read any account; none has been appointed yet.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -151,13 +153,16 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
         linkage: 'exposed',
         identity: 'exposed',
       },
-      sources: [{ contract: 'AuditGateway' }, { section: 'permissions' }],
+      sources: [
+        { contract: 'AuditGateway' },
+        { section: 'permissions', title: 'Admin and operator multisigs' },
+      ],
     },
     futureAdversary: {
       sentiment: 'bad',
       condition: 'every ciphertext wrapped to a public static key',
       exposure:
-        "Every note ciphertext on chain is AES-GCM under a key that is wrapped twice by secp256k1 ECDH: once to the recipient and once to the TEE's long-lived public key, which the server publishes. A quantum adversary therefore needs no recipient key or address book: from the published ephemeral points and the public TEE key it unwraps every note ever written, revealing sender, recipient, token and amount for the whole history. The same total decryption follows classically from a leak of the TEE private key, which has no forward secrecy. Poseidon commitments and the Groth16 proofs are unaffected.",
+        "Every note onchain is encrypted to the enclave's public key, which never changes. A quantum computer, or a leak of that one key, decrypts the entire history.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
