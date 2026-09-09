@@ -868,8 +868,8 @@
   }
 }
 
-/* Fallback for browsers whose overscroll does not carry fixed elements along
-   (see PageBackdrop): the root background is what they reveal instead. */
+/* Rubber-band overscroll reveals the root background, and only ever one flat
+   colour of it, so both ends of a backdrop page get its sky. */
 html:has([data-backdrop="garden"]) {
   background-color: var(--garden-sky);
 }
