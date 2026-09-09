@@ -2,6 +2,7 @@ import { inflateRawSync } from 'zlib'
 import type { Chain } from '../../../config/types'
 import type { AlchemyClient } from '../../../third-party/AlchemyClient'
 import type { IAddressService } from './AddressService'
+import type { AddressAlias } from './addressAlias'
 import type { Decoder, Transaction } from './Decoder'
 import type { ISignatureService } from './SignatureService'
 
@@ -30,6 +31,7 @@ export interface AddressResult {
   chainId: number
   address: `0x${string}`
   name?: string
+  alias?: AddressAlias
   abi: SignatureResult[]
 }
 
@@ -85,6 +87,7 @@ export class ApiController {
       chainId,
       address,
       name: result.name,
+      alias: result.alias,
       abi: result.abi,
     }
   }

@@ -16,6 +16,8 @@ export {
   Chain,
 }
 
+export type AddressAlias = NonNullable<AddressResult['alias']>
+
 const baseUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://tools-api.l2beat.com'

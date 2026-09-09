@@ -128,6 +128,7 @@ interface State {
   signatures: Record<`0x${string}`, Signature[]>
   requestedSignatures: Record<`0x${string}`, boolean>
   names: Record<`${number}:0x${string}`, string>
+  aliases: Record<`${number}:0x${string}`, API.AddressAlias>
   requestedAddresses: Record<`${number}:0x${string}`, boolean>
   preimages: Record<`0x${string}`, string>
   requestedPreimages: Record<`0x${string}`, boolean>
@@ -140,6 +141,11 @@ interface Actions {
   removeSignature(signature: Signature): void
   requestAddress(chainId: number, address: `0x${string}`): void
   setName(chainId: number, address: `0x${string}`, name: string): void
+  setAlias(
+    chainId: number,
+    address: `0x${string}`,
+    alias: API.AddressAlias,
+  ): void
   requestPreimage(hash: `0x${string}`): void
   setPreimage(hash: `0x${string}`, preimage: string): void
   showTooltip(id: string): void
@@ -164,6 +170,7 @@ const useStore = create<State & Actions>((set) => ({
   signatures: {},
   requestedSignatures: {},
   names: {},
+  aliases: {},
   requestedAddresses: {},
   preimages: {},
   requestedPreimages: {},
@@ -223,6 +230,10 @@ const useStore = create<State & Actions>((set) => ({
   setName: (chainId, address, name) =>
     set((state) => ({
       names: { ...state.names, [`${chainId}:${address}`]: name },
+    })),
+  setAlias: (chainId, address, alias) =>
+    set((state) => ({
+      aliases: { ...state.aliases, [`${chainId}:${address}`]: alias },
     })),
   requestPreimage: (hash) =>
     set((state) => {
@@ -286,6 +297,7 @@ function APIChecker() {
       const address = right as `0x${string}`
       API.lookupAddress(chainId, address).then((res) => {
         if (res.name) store.setName(chainId, address, res.name)
+        if (res.alias) store.setAlias(chainId, address, res.alias)
         if (res.abi.length > 0) {
           store.addSignatures(
             res.abi.map((x) => ({
@@ -298,7 +310,7 @@ function APIChecker() {
         }
       })
     }
-  }, [requestedAddresses, store.addSignatures, store.setName])
+  }, [requestedAddresses, store.addSignatures, store.setName, store.setAlias])
 
   useEffect(() => {
     const preimagesToFetch: string[] = []
@@ -758,6 +770,10 @@ function DisplayAddress(props: {
   short?: boolean
 }) {
   const store = useStore()
+  const alias =
+    props.chainId && props.address
+      ? store.aliases[`${props.chainId}:${props.address}`]
+      : undefined
   const name =
     props.chainId && props.address
       ? store.names[`${props.chainId}:${props.address}`]
@@ -776,27 +792,58 @@ function DisplayAddress(props: {
   if (!props.address) return <span>?</span>
 
   return (
-    <ValueWithTooltip
-      items={[
-        { name: 'Copy', copy: props.address },
-        { name: 'Explorer', href: `${explorer}/address/${props.address}` },
-        { name: props.address, copy: props.address },
-      ]}
-    >
-      <span
-        className={clsx(
-          'font-mono',
-          props.address === ADDRESS_ZERO ? 'text-zinc-500' : 'text-blue-400',
-        )}
+    <>
+      <ValueWithTooltip
+        items={[
+          { name: 'Copy', copy: props.address },
+          { name: 'Explorer', href: `${explorer}/address/${props.address}` },
+          { name: props.address, copy: props.address },
+        ]}
       >
-        {props.short && (name ? name : props.address.slice(0, 6))}
-        {!props.short && (
-          <>
-            {name} {props.address}
-          </>
-        )}
-      </span>
-    </ValueWithTooltip>
+        <span
+          className={clsx(
+            'font-mono',
+            props.address === ADDRESS_ZERO ? 'text-zinc-500' : 'text-blue-400',
+          )}
+        >
+          {props.short &&
+            (name ??
+              (alias
+                ? `alias${alias.context === 'unknown' ? ' match' : ''}(${alias.name})`
+                : props.address.slice(0, 6)))}
+          {!props.short && (
+            <>
+              {name} {props.address}
+            </>
+          )}
+        </span>
+      </ValueWithTooltip>
+      {alias && !props.short && (
+        <span
+          className="block pl-4 text-sm text-zinc-400"
+          aria-label="L1 address alias"
+        >
+          ↳{' '}
+          {alias.context === 'l2'
+            ? 'L2 alias of'
+            : 'Matches OP / Arbitrum-style L2 alias of'}{' '}
+          <ValueWithTooltip
+            items={[
+              { name: 'Copy L1 address', copy: alias.address },
+              {
+                name: 'L1 explorer',
+                href: `${chains.find((chain) => chain.chainId === alias.chainId)?.explorerUrl ?? 'https://etherscan.io'}/address/${alias.address}`,
+              },
+            ]}
+          >
+            <span className="font-mono text-blue-400">
+              {alias.name} {alias.address}
+            </span>
+          </ValueWithTooltip>{' '}
+          · Ethereum
+        </span>
+      )}
+    </>
   )
 }
 
