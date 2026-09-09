@@ -2,12 +2,7 @@ import type { CSSProperties } from 'react'
 import { PageBackdrop } from '~/layouts/PageBackdrop'
 import { cn } from '~/utils/cn'
 
-/**
- * The scenery behind the submission page. Deliberately a different scene from
- * the one on the garden itself: an early-morning plot rather than a sunlit
- * meadow - drifting clouds, freshly tilled furrows, a row of young seedlings
- * and a trellis waiting for something to climb it.
- */
+/** An early-morning plot: clouds, furrows, seedlings and an empty trellis. */
 export function PlotBackground() {
   return (
     <PageBackdrop>
@@ -32,8 +27,6 @@ export function PlotBackground() {
         />
       ))}
 
-      {/* Sunk 14px below the soil line of the plot below, so it reads as
-          planted rather than floating when content scrolls past it. */}
       <Trellis className="absolute right-[9%] bottom-24 max-lg:hidden" />
 
       <div className="absolute inset-x-0 bottom-0 h-44">
@@ -42,7 +35,6 @@ export function PlotBackground() {
           viewBox="0 0 1200 176"
           preserveAspectRatio="none"
         >
-          {/* The plot: a straight, freshly turned bed rather than rolling hills. */}
           <path
             d="M0 66 C300 54 900 54 1200 66 L1200 176 L0 176 Z"
             className="fill-[#e7dcc6]/70 dark:fill-[#241f16]/75"
@@ -86,8 +78,7 @@ const POLLEN = [
   { left: '89%', bottom: '155px', duration: '13s', delay: '-9s' },
 ]
 
-// Uneven sizes so the row reads as a planted bed rather than a pattern. The
-// smallest ones drop out on mobile, where the row has much less space.
+// Uneven sizes, so the row reads as planted rather than as a pattern.
 const SEEDLINGS = [
   { size: 30, className: '' },
   { size: 20, className: 'max-md:hidden' },

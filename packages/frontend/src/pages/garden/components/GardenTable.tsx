@@ -106,7 +106,6 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   )
 }
 
-/** Links to the project page when it has one, otherwise renders plain. */
 function ProjectCell({ entry }: { entry: GardenEntry }) {
   const content = (
     <>

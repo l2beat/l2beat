@@ -4,28 +4,19 @@ import type {
   CropSentiment,
 } from '@l2beat/config/build/crops/canonicalCrops'
 
-// The words the garden puts on screen.
-//
-// Kept here rather than in @l2beat/config because this module is imported by
-// client components, and a value import of the config build breaks hydration:
-// tsc emits `exports.X = void 0` followed by an assignment, which
-// cjs-module-lexer cannot see, so the browser finds no named export. Types
-// from config are fine - they are erased.
+// Kept here rather than in @l2beat/config: client components import this, and
+// a value import of the config build breaks hydration (tsc emits
+// `exports.X = void 0` then assigns, which cjs-module-lexer cannot see).
 
 export interface CropDefinition {
   key: CropKey
-  /** The letters in the chip under each plant. */
+  /** The chip under the plant. */
   letter: string
   label: string
-  /**
-   * Shown above the findings wherever this crop is explained - the tooltip,
-   * the project page, and the criteria card. For a crop whose plant a reader
-   * could mistake for a promise, this is where we say what it is not.
-   */
+  /** A standing caveat, shown above the findings wherever the crop is explained. */
   note?: string
 }
 
-/** The four crops, in the order they are rendered everywhere. */
 export const CROP_COLUMNS: CropDefinition[] = [
   {
     key: 'censorshipResistance',
@@ -50,7 +41,6 @@ export const CROP_COLUMNS: CropDefinition[] = [
   },
 ]
 
-/** The colour/quality of a crop, independent of how thoroughly it was reviewed. */
 export const CROP_SENTIMENT_LABELS: Record<CropSentiment, string> = {
   good: 'Good',
   warning: 'Medium',
@@ -58,7 +48,6 @@ export const CROP_SENTIMENT_LABELS: Record<CropSentiment, string> = {
   neutral: 'Neutral',
 }
 
-/** The review state of a crop, independent of its sentiment/colour. */
 export const CROP_STATUS_LABELS: Record<ProjectCropStatus, string> = {
   reviewed: 'Reviewed',
   partiallyReviewed: 'Partially reviewed',

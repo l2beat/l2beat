@@ -8,7 +8,6 @@ export interface CropsAddressMatch {
 }
 
 export interface CropsAddressIndex {
-  /** Every reviewed project claiming a chain + address, or an empty list. */
   lookup(chain: string, address: EthereumAddress): CropsAddressMatch[]
 }
 
@@ -39,13 +38,9 @@ export interface IndexedProject {
 let index: CropsAddressIndex | undefined
 
 /**
- * Address -> reviewed project, built from the contracts and permissions in the
- * built config database. Scoped to projects that declare crops, so a wallet
- * asking about anything else gets a clean empty answer rather than a partial
- * one, and the index stays small enough to hold in memory.
- *
- * Mirrors getContractUtils: keyed by long chain name and checksummed address,
- * memoized for the process, and reading no discovery files at request time.
+ * Address -> reviewed project, from the contracts and permissions of every
+ * project with crops. Keyed by long chain name and checksummed address, and
+ * memoized for the process like getContractUtils.
  */
 export async function getCropsAddressIndex(): Promise<CropsAddressIndex> {
   if (index) {
@@ -81,9 +76,7 @@ export function buildCropsAddressIndex(
       matches = []
       byAddress.set(bare, matches)
     }
-    // A shared contract can belong to several projects, but a project claims
-    // an address once, under the first name it was met by - the contract's
-    // when it is both a contract and a permission holder.
+    // A shared contract belongs to several projects, but each claims it once.
     if (!matches.some((x) => x.projectId === match.projectId)) {
       matches.push(match)
     }
@@ -96,8 +89,6 @@ export function buildCropsAddressIndex(
       for (const contract of contracts) {
         const match = { projectId: project.id, targetName: contract.name }
         add(chain, contract.address, match)
-        // An implementation is reached through its proxy, so a wallet asking
-        // about either should get the same answer.
         for (const implementation of contract.upgradeability?.implementations ??
           []) {
           add(chain, implementation, match)

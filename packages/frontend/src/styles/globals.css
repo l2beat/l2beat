@@ -58,8 +58,7 @@
   --row-highlight: #ce66f466;
   --row-highlight-no-opacity: #e9bff8;
 
-  /* The Infinite Garden. `crop-*` colours a plant by how well the crop holds;
-     the `-ink` variants are the same hue darkened enough to read as text. */
+  /* The Infinite Garden. `-ink` is the same hue adjusted to read as text. */
   --crop-good: #1a9d4f;
   --crop-good-ink: #16863f;
   --crop-warning: #e0a52a;
@@ -144,7 +143,7 @@
   --row-highlight: #9521bf66;
   --row-highlight-no-opacity: #4b1d5f;
 
-  /* The Infinite Garden - see :root. Ink is lightened here, not darkened. */
+  /* The Infinite Garden - see :root. */
   --crop-good: #15ca60;
   --crop-good-ink: #3fe07f;
   --crop-warning: #ffc107;
@@ -857,11 +856,7 @@
   }
 }
 
-/*
- * The Infinite Garden. Plants grow in, then idle; the scenery behind the
- * garden pages drifts. Referenced by name from inline styles in CropBadge and
- * the background components, which stagger the delays per plant.
- */
+/* The Infinite Garden. Referenced from inline styles in CropBadge and the backgrounds. */
 @keyframes garden-grow {
   0% {
     transform: scaleY(0.02);

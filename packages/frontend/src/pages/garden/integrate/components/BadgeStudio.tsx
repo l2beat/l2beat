@@ -19,10 +19,7 @@ const THEMES: { value: BadgeTheme; label: string }[] = [
   { value: 'dark', label: 'Dark' },
 ]
 
-/**
- * The preview renders the very markup the copy button hands over, so a protocol
- * can never paste something that looks different from what convinced them.
- */
+/** The preview renders the very markup the copy button hands over. */
 export function BadgeStudio({ href }: { href: string }) {
   const [variant, setVariant] = useState<BadgeVariant>('full')
   const [theme, setTheme] = useState<BadgeTheme>('light')
@@ -57,16 +54,10 @@ export function BadgeStudio({ href }: { href: string }) {
       <div
         className={cn(
           'flex min-h-[140px] items-center justify-center p-6',
-          // The panel carries the badge's own background, so a light badge on
-          // a dark site (and the reverse) is an obvious mistake here rather
-          // than a live one.
           theme === 'dark' ? 'bg-[#0d0e10]' : 'bg-[#f3f5f7]',
         )}
       >
-        {/* Our own markup, assembled from literals in badge.ts - and it has
-            to be injected rather than rendered as JSX, because the point of the
-            preview is that it is byte-for-byte the string the copy button
-            hands over. */}
+        {/* Our own literals from badge.ts, injected so the preview is byte-for-byte the copied string. */}
         <div dangerouslySetInnerHTML={{ __html: preview }} />
       </div>
 

@@ -1,6 +1,5 @@
 import { cn } from '~/utils/cn'
 
-/** A two-leaf sprout, used on the submission calls to action. */
 export function SproutIcon({ className }: { className?: string }) {
   return (
     <svg

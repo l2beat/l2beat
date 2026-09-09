@@ -28,10 +28,7 @@ interface Props {
   description: string
   cta: string
   href: string
-  /**
-   * Text left, button right, on one row. For a banner that stands alone -
-   * stacked, a full-width card leaves a long empty gutter beside the button.
-   */
+  /** Text left, button right, for a banner that stands alone. */
   horizontal?: boolean
 }
 
@@ -51,8 +48,6 @@ export function CalloutCard({
         style.card,
       )}
     >
-      {/* Sits behind the text and off the corner, so the gradient reads as
-          light falling on the card rather than as a second background. */}
       <span
         aria-hidden
         className={cn(

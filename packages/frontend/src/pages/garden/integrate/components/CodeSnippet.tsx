@@ -17,25 +17,16 @@ const TOKEN_CLASS: Record<TokenKind, string> = {
 interface Props {
   language: CodeLanguage
   code: string
-  /** Small label in the header strip. Omit for a headerless block. */
   label?: string
-  /** Anything to sit in the header instead of a label - a request line, say. */
+  /** Replaces the label. */
   header?: React.ReactNode
-  /** Text the copy button hands over. No button when absent. */
+  /** No copy button when absent. */
   copy?: string
   copyText?: string
-  /** For one long line, like the schema, where indentation carries nothing. */
   wrap?: boolean
   className?: string
 }
 
-/**
- * One bordered block for every piece of code on this page, so a request, a
- * response and the badge markup all read as the same kind of object. The header
- * strip is where the label and the copy button live - floating the button over
- * the code puts it on top of the first line, which is the line most worth
- * reading.
- */
 export function CodeSnippet({
   language,
   code,
@@ -48,8 +39,6 @@ export function CodeSnippet({
 }: Props) {
   const tokens = tokenize(code, language)
   const hasHeader = header !== undefined || label !== undefined
-  // A header-only block - a request line with nothing under it - must not draw
-  // an empty `pre`, which reads as a rendering bug rather than as intent.
   const hasBody = code.length > 0
 
   return (
@@ -91,8 +80,7 @@ export function CodeSnippet({
           <code>
             {tokens.map((token, index) => (
               <span
-                // Tokens are positional and the list is regenerated wholesale
-                // on every change, so the index is the identity.
+                // Tokens are positional; the index is the identity.
                 key={index}
                 className={TOKEN_CLASS[token.kind]}
               >
@@ -106,7 +94,6 @@ export function CodeSnippet({
   )
 }
 
-/** The request line, for the header slot of an endpoint's snippet. */
 export function RequestHeader({ url }: { url: string }) {
   return (
     <span className="flex min-w-0 items-center gap-2.5">

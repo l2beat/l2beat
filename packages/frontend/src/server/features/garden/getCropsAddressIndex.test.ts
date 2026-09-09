@@ -40,7 +40,6 @@ const PROJECTS = [
     },
   },
   {
-    // A second project sharing the factory, as shared modules really do.
     id: 'someotherproject',
     contracts: {
       addresses: {
@@ -163,7 +162,6 @@ describe(parseCropsAddressWith.name, () => {
   })
 
   it('accepts an address whose mixed case is not a valid checksum', () => {
-    // Rejecting these would fail on input real wallets produce.
     expect(parse('eth:0x1f98431c8AD98523631AE4a59f267346ea31F984')).toEqual(
       expected,
     )

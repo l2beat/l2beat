@@ -5,15 +5,10 @@ export interface EndpointDoc {
   path: string
   summary: string
   description: string
-  /** Query parameters, if any. */
   params?: { name: string; description: string }[]
 }
 
-/**
- * The prose for each endpoint. The request and the response shown next to it
- * are not written here: they are produced from the live API when the page is
- * rendered, so the examples cannot drift from what the endpoints return.
- */
+/** The prose only; the request and response come from the live API at render time. */
 export const ENDPOINTS: EndpointDoc[] = [
   {
     key: 'lookup',
@@ -53,7 +48,6 @@ export const VERIFY_STEPS = [
   'For details on the rating per crop, the reasoning, what we did not look at - call `/api/garden/project/{id}`. Ratings might change as protocols change.',
 ]
 
-/** What a reviewed protocol may and may not say with the badge. */
 export const BADGE_RULES = [
   'Link the badge to the garden, so a visitor can read the evaluation rather than only see that one exists.',
   'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',

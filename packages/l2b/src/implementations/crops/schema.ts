@@ -23,10 +23,7 @@ export function computeSchemaUid(
   )
 }
 
-/**
- * The uid in @l2beat/config is hardcoded so the frontend does not need a crypto
- * library. This is what stops it from silently drifting from the schema string.
- */
+/** The uid in @l2beat/config is hardcoded; this stops it drifting from the schema. */
 export function assertSchemaUid(): void {
   const computed = computeSchemaUid()
   if (computed !== ATTESTATION_SCHEMA_UID) {

@@ -2,7 +2,7 @@ import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 
 export interface ParsedCropsAddress {
-  /** Long chain name, as the address index is keyed. */
+  /** Long chain name. */
   chain: string
   address: EthereumAddress
 }
@@ -37,10 +37,9 @@ export async function parseCropsAddress(
 }
 
 /**
- * Accepts what a wallet is likely to have on hand: an ERC-3770 short name
- * (`eth:0x…`), a long chain name (`ethereum:0x…`), or a chain id (`1:0x…`).
- * Returns undefined rather than throwing, so one bad entry in a batch does not
- * fail the whole request.
+ * Accepts an ERC-3770 short name (`eth:0x…`), a long chain name
+ * (`ethereum:0x…`) or a chain id (`1:0x…`). Returns undefined rather than
+ * throwing, so one bad entry in a batch does not fail the whole request.
  */
 export function parseCropsAddressWith(
   input: string,
@@ -56,8 +55,7 @@ export function parseCropsAddressWith(
 
   let address: EthereumAddress
   try {
-    // Lowercase first: a wallet may send a mixed-case address whose checksum
-    // does not validate, and we only need the canonical form to key the index.
+    // Wallets send mixed-case addresses whose checksum does not validate.
     address = EthereumAddress(addressPart.toLowerCase())
   } catch {
     return undefined
@@ -78,8 +76,6 @@ function resolveChain(
   if (chains.longNames.has(chainPart)) {
     return chainPart
   }
-  // Not a long name, so try it as an ERC-3770 short name. This both validates
-  // the short name and gives us the long one.
   try {
     return ChainSpecificAddress.longChain(
       ChainSpecificAddress(`${chainPart}:${address}`),

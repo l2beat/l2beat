@@ -6,7 +6,6 @@ import type {
 import { CropPlantSample } from '../../components/CropBadge'
 import { CROP_COLUMNS } from '../../crops'
 
-/** One of each plant a wallet might show, so the picture reads as a range. */
 const SAMPLE: Record<
   CropKey,
   { sentiment: CropSentiment; status: ProjectCropStatus }
@@ -17,12 +16,7 @@ const SAMPLE: Record<
   security: { sentiment: 'good', status: 'partiallyReviewed' },
 }
 
-/**
- * What the lookup endpoint is for, drawn rather than described: the moment a
- * wallet is asking a user to sign, with the four crops of the protocol they are
- * about to touch shown inline. Decorative - it is a picture of an integration,
- * not a component anyone should ship.
- */
+/** Decorative: a wallet confirmation with the crops shown inline. */
 export function WalletMock() {
   return (
     <div className="relative mx-auto w-full max-w-[320px]" aria-hidden>

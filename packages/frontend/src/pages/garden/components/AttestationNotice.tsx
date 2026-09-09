@@ -4,18 +4,11 @@ import { SproutIcon } from './SproutIcon'
 export interface GardenAttestation {
   revision: number
   reviewedAt: number
-  /** Every project the attestation names - the reviewed set, not the garden. */
+  /** The reviewed set, not the garden: a project with a red crop is attested but not planted. */
   projectCount: number
   explorerUrl: string
 }
 
-/**
- * The onchain counterpart of the table above it. One attestation names every
- * project we have reviewed, so this is a single link rather than one per row.
- * It speaks of reviews rather than of the garden on purpose: a reviewed
- * project with a red crop is attested but not planted, so the two counts can
- * differ.
- */
 export function AttestationNotice({
   attestation,
 }: {

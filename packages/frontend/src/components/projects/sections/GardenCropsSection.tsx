@@ -17,16 +17,9 @@ import type { ProjectSectionProps } from './types'
 
 export interface GardenCropsSectionProps extends ProjectSectionProps {
   crops: ResolvedCrops
-  /** Whether the review clears the bar for the garden - see `qualifiesForGarden`. */
   inGarden: boolean
 }
 
-/**
- * The project's CROPS review, shown when it has been through one. The reasoning
- * is laid out in full rather than hidden behind the plant tooltips the garden
- * table uses: on a project page the reader came for the detail, and a hover
- * target is a poor place to keep it.
- */
 export function GardenCropsSection({
   crops,
   inGarden,
@@ -35,10 +28,7 @@ export function GardenCropsSection({
   return (
     <ProjectSection
       {...sectionProps}
-      // The garden's own green marks a protocol that is actually in the
-      // garden. A protocol that has been reviewed and did not make it gets
-      // the plain section styling: the green is the badge, not the branding,
-      // and colouring a miss with it reads as a pass at a glance.
+      // The green marks a protocol that is in the garden; a miss stays plain.
       className={
         inGarden ? 'border border-garden-border bg-garden-tint' : undefined
       }
@@ -62,9 +52,6 @@ export function GardenCropsSection({
           ? 'The protocol makes it to the CROPS garden!'
           : "The protocol doesn't make it to the CROPS garden yet."}
       </p>
-      {/* Four crops, so a 2x2 tiling once there is room for it: each card is
-          then about half the section wide, which is what makes the crops read
-          as widgets rather than as rows of a list. */}
       <div className="mt-4 grid gap-2 md:grid-cols-2 md:gap-2.5">
         {CROP_COLUMNS.map((column, index) => (
           <CropCard
@@ -82,12 +69,6 @@ export function GardenCropsSection({
   )
 }
 
-/**
- * One crop as a widget: the plant and what it is called across the top, then
- * everything the evaluation rests on underneath. A card is only half the
- * section wide, so the findings stay a single column instead of splitting
- * good/missing side by side.
- */
 function CropCard({
   letter,
   label,
@@ -101,14 +82,11 @@ function CropCard({
   note: string | undefined
   evaluation: ResolvedCropEvaluation
   delay: number
-  /** Whether the section around the card is the garden green - see above. */
   onGreen: boolean
 }) {
   return (
-    // A card has to sit off whatever the section is: the primary surface
-    // reads as a card on the green, and would be invisible on itself. The
-    // transparent plant knocks its own interior out in the colour behind it,
-    // so a card off the primary surface also has to name its own.
+    // Off the green the card sits on the secondary surface, and the transparent
+    // plant needs to know that to knock its interior out - see `--crop-plant-bg`.
     <div
       className={cn(
         'flex flex-col rounded-lg p-3 md:p-3.5',
@@ -133,9 +111,6 @@ function CropCard({
           </p>
         </div>
       </div>
-      {/* The standing caveat sits with the crop it qualifies, above the
-          findings rather than among them - it is not a finding about this
-          protocol, and it does not belong in a list of them. */}
       <CropNote note={note} className="mt-2.5 text-paragraph-12 leading-snug" />
       <div className="text-paragraph-13">
         <CropFindings evaluation={evaluation} />

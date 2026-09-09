@@ -69,8 +69,6 @@ export const CropsAttest = command({
     const reader = createReader(rpcUrl)
     const ledger = CROP_ATTESTATIONS[network.name]
     const signer = args.execute ? createSigner(rpcUrl) : undefined
-    // A scan needs an attester to filter logs by; the committed ledger records
-    // one, and otherwise the signer we are about to publish with supplies it.
     const attester = signer?.account?.address ?? ledger?.attester
 
     const projectIds = await getAttestedProjectIds()
@@ -110,8 +108,7 @@ export const CropsAttest = command({
     const attestations = plan.payload
       ? [
           {
-            // Chains this attestation to the one it replaces, so the history is
-            // walkable onchain without our ledger.
+            // Chains it to the one it replaces, so the history is walkable onchain.
             refUID: (plan.revoke[0]?.uid as Hex | undefined) ?? ZERO_UID,
             data: encodePayload(plan.payload),
           },
@@ -160,8 +157,7 @@ export const CropsAttest = command({
     const revoked: RevokedCropAttestation[] = [...(ledger?.revoked ?? [])]
     const live: CropAttestation[] = plan.keeper ? [plan.keeper] : []
 
-    // Revoke before attesting: the invariant that matters is never having two
-    // live attestations for the set. A brief gap with none is fine.
+    // Revoke first: a brief gap with no live attestation beats two of them.
     if (plan.revoke.length > 0) {
       const txHash = await multiRevoke(signer, network, plan.revoke)
       const receipt = await reader.waitForTransactionReceipt({ hash: txHash })

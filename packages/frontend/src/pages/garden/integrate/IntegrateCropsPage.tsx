@@ -30,9 +30,7 @@ export interface IntegrateCropsPageProps extends AppLayoutProps {
 const CONSUMERS_ID = 'for-apps'
 const PROTOCOLS_ID = 'for-protocols'
 
-// Where the badge points. Literal rather than read from the environment: the
-// markup is pasted into other people's sites, and must link to production
-// from a staging preview too.
+// Pasted into other sites, so it must link to production even from a preview.
 const BADGE_HREF = `https://l2beat.com${GARDEN_PATH}`
 
 export function IntegrateCropsPage({
@@ -56,8 +54,6 @@ export function IntegrateCropsPage({
     </AppLayout>
   )
 }
-
-/* ------------------------------------------------------------------ split */
 
 function AudiencePicker() {
   return (
@@ -124,7 +120,6 @@ function AudienceCard({
   )
 }
 
-/** A still of the badge, for the card that leads to the badge studio. */
 function BadgeArt() {
   return (
     <div className="flex flex-col items-center gap-3">
@@ -153,8 +148,6 @@ function BadgeArt() {
     </div>
   )
 }
-
-/* -------------------------------------------------- for apps and wallets */
 
 function ConsumerSections({
   attestations,
@@ -297,8 +290,6 @@ function AttestationsSection({
   )
 }
 
-/* ------------------------------------------------ for reviewed protocols */
-
 function ProtocolSection() {
   return (
     <>
@@ -335,8 +326,6 @@ function ProtocolSection() {
   )
 }
 
-/* ------------------------------------------------------------- primitives */
-
 function SectionDivider({ id, label }: { id: string; label: string }) {
   return (
     <div id={id} className="mt-12 flex items-center gap-4 max-md:px-4 md:mt-16">
@@ -370,7 +359,7 @@ function Code({ children }: { children: ReactNode }) {
   )
 }
 
-/** Renders the `backticks` the content uses, and nothing else. */
+/** Renders the `backticks` the content uses. */
 function Markup({ text }: { text: string }) {
   return (
     <>

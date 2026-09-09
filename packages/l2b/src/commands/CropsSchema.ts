@@ -68,8 +68,7 @@ export const CropsSchema = command({
       return
     }
 
-    // Built before prompting, so a missing key fails immediately rather than
-    // after the operator has already confirmed.
+    // Before the prompt, so a missing key fails before the operator confirms.
     const signer = createSigner(rpcUrl)
     console.log(`\nattester ${signer.account?.address} on ${network.name}`)
     if (network.isTestnet) {

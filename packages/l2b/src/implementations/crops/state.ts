@@ -7,11 +7,7 @@ import {
   scanAttestedUids,
 } from './easClient'
 
-/**
- * Onchain state keyed by uid. The cheap path reads back only the uids the
- * committed ledger knows about; `--scan` walks the attester's Attested logs so
- * attestations made outside the ledger are found too.
- */
+/** By uid. `--scan` also walks the attester's logs for uids the ledger does not know. */
 export async function loadOnchainState(
   reader: PublicClient,
   network: AttestationNetworkConfig,

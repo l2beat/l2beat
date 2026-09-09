@@ -1,10 +1,7 @@
 import { PageBackdrop } from '~/layouts/PageBackdrop'
 import { cn } from '~/utils/cn'
 
-/**
- * A simple garden scenery behind the page content: a soft sky wash,
- * a sun glow, and two rolling hills pinned to the bottom.
- */
+/** A sky wash, a sun and two hills. */
 export function GardenBackground() {
   return (
     <PageBackdrop>

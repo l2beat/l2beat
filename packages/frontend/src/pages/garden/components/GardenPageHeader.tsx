@@ -1,10 +1,6 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 
-/**
- * The page title, on every viewport. `MainPageHeader` hides itself below
- * `lg`, where most pages carry their own header; the garden pages have none,
- * so they repeat the title in a plain heading there.
- */
+// `MainPageHeader` hides below `lg`, so the title is repeated in a plain heading there.
 export function GardenPageHeader({
   title,
   description,

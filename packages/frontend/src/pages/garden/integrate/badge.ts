@@ -1,16 +1,7 @@
 /**
- * The badge a reviewed protocol puts on its own site.
- *
- * Emitted as HTML with inline styles rather than as an SVG file, for two
- * reasons: text in an SVG has to be laid out at fixed pixel widths, which
- * breaks the moment a visitor's font substitutes; and an `<img>` badge would
- * make their page depend on ours being up. This markup carries its own colours
- * and spacing, needs no stylesheet, survives a paste into a CMS, and renders
- * the same offline as online.
- *
- * Built as indented lines so the preview and the copy-paste block are the same
- * markup - one joined tight, one joined with newlines. What a protocol copies
- * is exactly what they saw.
+ * The badge a reviewed protocol puts on its own site: inline-styled HTML, so
+ * it needs no stylesheet, no image from our domain and no fixed-width text.
+ * Built as lines so the preview and the copy-paste block are the same markup.
  */
 
 export type BadgeVariant = 'full' | 'compact' | 'mark'
@@ -19,7 +10,6 @@ export type BadgeTheme = 'light' | 'dark'
 export interface BadgeOptions {
   variant: BadgeVariant
   theme: BadgeTheme
-  /** Where the badge links. The protocol's garden page, ideally. */
   href: string
 }
 
@@ -48,7 +38,6 @@ const FONT =
 
 const TITLE = 'Reviewed under the CROPS framework by L2BEAT'
 
-/** The sprout mark, at the given size and colour. */
 function sprout(indent: string, size: number, color: string): string[] {
   return [
     `${indent}<svg width="${size}" height="${size}" viewBox="0 0 16 16" fill="none" style="flex:none;color:${color}" aria-hidden="true">`,
@@ -97,14 +86,14 @@ function badgeLines({ variant, theme, href }: BadgeOptions): string[] {
   ]
 }
 
-/** One line, for injecting into the live preview. */
+/** One line, for the live preview. */
 export function cropsBadgeHtml(options: BadgeOptions): string {
   return badgeLines(options)
     .map((line) => line.trim())
     .join('')
 }
 
-/** The same markup, indented, for the copy-paste block. */
+/** Indented, for the copy-paste block. */
 export function cropsBadgeSnippet(options: BadgeOptions): string {
   return badgeLines(options).join('\n')
 }

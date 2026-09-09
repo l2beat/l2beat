@@ -21,8 +21,6 @@ export async function getIntegrateCropsData(
         description:
           'Pull the CROPS evaluations from The Infinite Garden into your own app.',
         url,
-        // Shares the garden image on purpose: a missing one throws in
-        // production rather than falling back.
         openGraph: {
           image: '/meta-images/the-infinite-garden/opengraph-image.png',
         },
@@ -32,8 +30,6 @@ export async function getIntegrateCropsData(
       page: 'IntegrateCropsPage',
       props: {
         ...appLayoutProps,
-        // Read from config rather than retyped here, so the page cannot drift
-        // from what the CLI actually signs.
         attestations: getAttestationsMeta(),
         examples,
       },

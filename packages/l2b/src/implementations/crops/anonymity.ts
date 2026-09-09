@@ -1,9 +1,7 @@
 import type { AttestationNetworkConfig } from '@l2beat/config/build/crops/eas'
 
-// While the attestations live on a testnet, nothing we publish onchain may tie
-// them to L2BEAT. This makes that rule mechanical instead of something to
-// remember: the commands run it over the schema string and over the attested
-// set immediately before signing, and it is a no-op on mainnet.
+// While the attestations live on a testnet, nothing published onchain may tie
+// them to L2BEAT. The commands run this right before signing.
 
 const FORBIDDEN = ['l2beat', 'crops']
 
@@ -12,10 +10,6 @@ export function findIdentifyingStrings(text: string): string[] {
   return FORBIDDEN.filter((needle) => haystack.includes(needle))
 }
 
-/**
- * Checks what actually lands onchain - the schema and the string values, not
- * the hex blob they encode to - and only where the rule applies.
- */
 export function assertAnonymous(
   network: AttestationNetworkConfig,
   what: string,

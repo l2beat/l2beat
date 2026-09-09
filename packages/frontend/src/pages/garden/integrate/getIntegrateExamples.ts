@@ -12,9 +12,8 @@ import { getGardenLookupApiData } from '~/server/routers/PublicApiRouter/getGard
 import type { IntegrateEndpoint } from './content'
 
 export interface IntegrateExample {
-  /** The full url, ready to copy. */
   request: string
-  /** The body the url answers with, abbreviated where it repeats itself. */
+  /** Abbreviated where it repeats itself. */
   response: string
 }
 
@@ -23,11 +22,8 @@ export type IntegrateExamples = Record<IntegrateEndpoint, IntegrateExample>
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 /**
- * One request and response per endpoint, taken from the API itself rather
- * than typed into the docs, so what the page shows is what a consumer gets.
- * The sample is a protocol that is both attested and in the garden - the
- * case an integrator is building for - and, for the lookup, one of its
- * contracts.
+ * Taken from the API itself rather than typed into the docs, so the examples
+ * cannot drift. The sample is a protocol both attested and in the garden.
  */
 export async function getIntegrateExamples(): Promise<IntegrateExamples> {
   const projects = await getCropsProjects()
@@ -61,7 +57,6 @@ export async function getIntegrateExamples(): Promise<IntegrateExamples> {
   }
 }
 
-/** The first Ethereum contract of the project, or the zero address. */
 async function getSampleAddress(projectId: string): Promise<string> {
   const [project] = await ps.getProjects({
     ids: [ProjectId(projectId)],
@@ -71,21 +66,15 @@ async function getSampleAddress(projectId: string): Promise<string> {
   if (!contract) {
     return ZERO_ADDRESS
   }
-  // A ChainSpecificAddress is `shortName:0x...`; the query wants the 0x part.
   return contract.address.slice(contract.address.indexOf(':') + 1)
 }
 
-// Sentinels that no real value can equal, swapped for elisions once the
-// document is a string. Leading spaces keep them clear of any id or url.
+// Sentinels no real value can equal, swapped for elisions once stringified.
 const ELIDED_OBJECT = ' elided object'
 const ELIDED_ARRAY = ' elided array'
 const AND_MORE = ' and more'
 
-/**
- * The response as JSON, with the keys in `elide` collapsed to `{ … }` or
- * `[ … ]` and every list of prose cut to its first entry. Enough to show the
- * shape; the whole thing is one request away.
- */
+/** JSON with the keys in `elide` collapsed and every list of prose cut to its first entry. */
 function toExample(value: unknown, elide: string[]): string {
   const json = JSON.stringify(
     value,

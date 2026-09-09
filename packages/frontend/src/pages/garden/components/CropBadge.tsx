@@ -13,7 +13,6 @@ import { SentimentText } from '~/components/SentimentText'
 import { cn } from '~/utils/cn'
 import { CROP_SENTIMENT_LABELS, CROP_STATUS_LABELS } from '../crops'
 
-// The shape of the plant is driven by the sentiment (quality) of the crop.
 type PlantShape = 'flower' | 'bud' | 'wilt'
 
 const PLANT_SHAPE: Record<CropSentiment, PlantShape> = {
@@ -23,8 +22,7 @@ const PLANT_SHAPE: Record<CropSentiment, PlantShape> = {
   bad: 'wilt',
 }
 
-// The plant, and the lettered chip under it, take their colour from the
-// sentiment. The chip border is separate because a dashed border overrides it.
+// The chip border is separate because the dashed border overrides it.
 const PALETTE: Record<
   CropSentiment,
   { plant: string; chip: string; chipBorder: string }
@@ -51,19 +49,13 @@ const PALETTE: Record<
   },
 }
 
-// Partially/not reviewed crops always get a grey dashed border, regardless of
-// sentiment - the dash only signals the review state, not the colour.
+// The dash signals the review state, not the colour, so it is always grey.
 const CHIP_DASHED_BORDER = 'border-dashed border-crop-neutral'
 
 interface Props {
   letter: string
   label: string
-  /** Caveat shown above the findings - see `CropDefinition.note`. */
   note?: string
-  /**
-   * Already resolved on the server, so the plant never has to reimplement
-   * the defaults a config entry leaves implicit - see `resolveCropEvaluation`.
-   */
   evaluation: ResolvedCropEvaluation
   delay: number
 }
@@ -96,11 +88,7 @@ export function CropBadge({ letter, label, note, evaluation, delay }: Props) {
   )
 }
 
-/**
- * The plant and its lettered chip, with no tooltip around them. Used on its
- * own where the reasoning is already on the page in full, so hovering would
- * only repeat what the reader can see.
- */
+/** The plant and its chip without the tooltip, for where the findings are on the page. */
 export function CropPlantBadge({
   letter,
   label,
@@ -114,11 +102,9 @@ export function CropPlantBadge({
   status: ProjectCropStatus
   sentiment: CropSentiment
   delay: number
-  /** Smaller plant and chip, for a page that shows all four at once. */
   compact?: boolean
 }) {
-  // The dash marks an assessment that is not finished. `fullyTransparent` is
-  // finished - there was simply nothing to grade - so its ring stays solid.
+  // `fullyTransparent` is a finished assessment, so its ring stays solid.
   const isDashed = status === 'partiallyReviewed' || status === 'notReviewed'
   const palette = PALETTE[sentiment]
   return (
@@ -161,11 +147,7 @@ export function CropPlantBadge({
   )
 }
 
-/**
- * Everything the evaluation rests on, grouped the same way everywhere a crop
- * is explained - the garden tooltip and the project page - so the two
- * readings of a crop cannot drift apart.
- */
+/** Shared by the garden tooltip and the project page, so the two cannot drift. */
 export function CropFindings({
   evaluation,
 }: {
@@ -188,11 +170,6 @@ export function CropFindings({
   )
 }
 
-/**
- * The license behind a green Open source crop, worded to sit among the other
- * findings. It carries the OSI's own name for the license and links to their
- * page, because it is the one claim here a reader can go and check.
- */
 function CropLicenseText({ license }: { license: OsiLicense }) {
   return (
     <>
@@ -210,11 +187,7 @@ function CropLicenseText({ license }: { license: OsiLicense }) {
   )
 }
 
-/**
- * The standing caveat for a crop, ahead of anything we found about one
- * protocol. Muted because it is context rather than a finding, but never
- * hidden: a reader who only reads the plant should still meet it.
- */
+/** The standing caveat for a crop - see `CropDefinition.note`. */
 export function CropNote({
   note,
   className,
@@ -235,7 +208,7 @@ function CropSection({
 }: {
   title: string
   items: string[]
-  /** Rendered as the first bullet of this group, ahead of what it underpins. */
+  /** Rendered as the first bullet. */
   license?: OsiLicense | undefined
 }) {
   if (!license && items.length === 0) {
@@ -288,10 +261,7 @@ export function getCropStatusText(
   return CROP_SENTIMENT_LABELS[sentiment]
 }
 
-/**
- * The plant on its own, without the letter chip - for the legend, which
- * explains the shapes rather than a single crop.
- */
+/** The plant without the chip, for the legend. */
 export function CropPlantSample({
   status,
   sentiment,
@@ -482,10 +452,8 @@ function CropPlant({
 }
 
 /**
- * The whole flower, drawn as an outline instead of a solid shape: every part of
- * it is there, and you see straight through it. Used for a property a protocol
- * makes no claim to and hides nothing about, which is an answer rather than a
- * gap - so unlike the not-reviewed ghost, the plant is complete and unbroken.
+ * The whole flower as an unbroken outline: complete and see-through, for a
+ * property the protocol makes no claim to. The not-reviewed ghost is dashed.
  */
 function TransparentFlower({
   grow,
@@ -498,19 +466,15 @@ function TransparentFlower({
   leafR: CSSProperties
   bloom: CSSProperties
 }) {
-  // Outline only, and unbroken: the plant is whole and simply see-through,
-  // which is the opposite claim to the dashes on a crop nobody has assessed.
   const outline = {
     stroke: 'currentColor',
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
   } as const
 
-  // Every closed part of the plant inherits an opaque fill in the colour of the
-  // surface behind it, so that where parts overlap - petal on petal, leaf and
-  // bloom on stem - the outline underneath is covered and only the silhouette
-  // of the plant reads as a line. Consumers sitting on a tinted card override
-  // `--crop-plant-bg`; everyone else is on the plain surface.
+  // Closed parts are filled in the colour of the surface behind them, so where
+  // they overlap only the silhouette reads as a line. A tinted card overrides
+  // `--crop-plant-bg`.
   const knockout: CSSProperties = {
     fill: 'var(--crop-plant-bg, var(--surface-primary))',
   }
@@ -537,24 +501,12 @@ function TransparentFlower({
           style={leafR}
         />
         <g style={bloom}>
-          {/*
-            The four petals of the solid flower are circles at (17,5.2),
-            (12.4,9), (21.6,9) and (17,12.6) with r=3.2. Drawn as circles they
-            overlap, and outlined that would leave four arcs cutting across the
-            bloom - so this is the outline of their union instead: the four
-            major arcs, meeting at the outer intersections of each adjacent
-            pair. Same silhouette as the solid flower, one unbroken line.
-          */}
+          {/* The outline of the union of the solid flower's four petal circles. */}
           <path
             d="M13.96 6.21 A3.2 3.2 0 1 1 20.04 6.21 A3.2 3.2 0 1 1 20.11 11.83 A3.2 3.2 0 1 1 13.89 11.83 A3.2 3.2 0 1 1 13.96 6.21 Z"
             strokeWidth="1.3"
             {...outline}
           />
-          {/*
-            The eye, standing in for the yellow centre of a solid flower. It
-            sits wholly inside the petal union - which is also what plugs the
-            hole the four circles leave in the middle - so it goes on top.
-          */}
           <circle cx="17" cy="9" r="2.05" strokeWidth="1.2" {...outline} />
         </g>
       </g>

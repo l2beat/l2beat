@@ -1,7 +1,6 @@
 import { ProjectService } from '@l2beat/config'
 import { decodeAbiParameters, encodeAbiParameters, type Hex } from 'viem'
 
-/** The attested fields, in schema order. */
 export const ATTESTATION_PARAMS = [
   { name: 'projectIds', type: 'string[]' },
   { name: 'reviewedAt', type: 'uint64' },
@@ -9,13 +8,12 @@ export const ATTESTATION_PARAMS = [
 ] as const
 
 export interface CropPayload {
-  /** The whole reviewed set, sorted. Details for each id live in the API. */
+  /** Sorted. */
   projectIds: string[]
   reviewedAt: number
   revision: number
 }
 
-/** Every project that declares crops, by id, sorted. */
 export async function getAttestedProjectIds(
   ps = new ProjectService(),
 ): Promise<string[]> {
@@ -53,7 +51,6 @@ export function decodePayload(data: Hex): CropPayload {
   }
 }
 
-/** Whether an onchain set still says what the config says. Order-insensitive. */
 export function setMatches(a: string[], b: string[]): boolean {
   if (a.length !== b.length) {
     return false

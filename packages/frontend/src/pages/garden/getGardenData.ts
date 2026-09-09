@@ -18,31 +18,27 @@ import type { Manifest } from '~/utils/Manifest'
 
 export type GardenProjectType = 'l1' | 'l2' | 'l3' | 'privacy' | 'defi'
 
-// Editorial display order. A project with crops that is missing from this
-// list is appended alphabetically rather than dropped, so adding crops to a
-// project is always enough to get it on the page.
+// Editorial display order; anything else is appended alphabetically.
 const CURATED_ORDER = ['tornado-cash', 'aztecnetwork', 'umbra', 'uniswapv3']
 
 export interface GardenMetric {
-  /** A USD figure formatted as currency, or a plain count. */
   kind: 'usd' | 'count'
   label: string
   value: number
-  /** Ratio, e.g. 0.0124 for +1.24%. Omitted when no change is known. */
+  /** Ratio, e.g. 0.0124 for +1.24%. */
   change?: number
 }
 
 export interface GardenEntry {
   name: string
   slug: string
-  /** Detail page, when the project has one. Undefined projects stay unlinked. */
+  /** Undefined for a project without a page. */
   href: string | undefined
   subtitle: string
   iconUrl: string
   types: GardenProjectType[]
-  /** Resolved on the server: the plants render plain data, never config. */
   crops: ResolvedCrops
-  /** The headline figure. Undefined when we track nothing for the project. */
+  /** Undefined when we track nothing for the project. */
   metric: GardenMetric | undefined
 }
 
@@ -83,8 +79,6 @@ export async function getGardenData(
       crops: resolveProjectCrops(project.crops),
       metric: getMetric(project, tvsBreakdown, depositCounts),
     }))
-    // A red crop keeps a project out of the garden. It is still reviewed, and
-    // its project page still shows the evaluation - it is just not planted.
     .filter((entry) => qualifiesForGarden(entry.crops))
 
   return {
@@ -125,11 +119,7 @@ function compareByCuratedOrder(
   return a.name.localeCompare(b.name)
 }
 
-/**
- * All-time deposit count per privacy project, summed over every tracked
- * bucket. Only projects with recorded flows come back, so a missing key means
- * we track nothing for it.
- */
+/** All-time deposit count per privacy project. Only projects with recorded flows come back. */
 async function getTotalDepositCounts(
   projectIds: string[],
 ): Promise<Record<string, number>> {
@@ -148,12 +138,8 @@ async function getTotalDepositCounts(
   return counts
 }
 
-/**
- * Value secured where the TVS pipeline tracks the project. Otherwise, for a
- * privacy protocol whose flows we track, the number of deposits: stealth
- * address payments are forwarded straight to the recipient rather than
- * escrowed, so there is no balance to show.
- */
+// Value secured where tracked; otherwise the deposit count, for a privacy
+// protocol whose payments are forwarded rather than escrowed.
 function getMetric(
   project: GardenProject,
   tvsBreakdown: SevenDayTvsBreakdown,
@@ -209,7 +195,6 @@ function getTypes(project: GardenProject): GardenProjectType[] {
   return types
 }
 
-// A chain that is not itself a scaling project - it publishes data for others.
 function isBaseLayer(project: GardenProject): boolean {
   return !project.scalingInfo && project.daLayer !== undefined
 }

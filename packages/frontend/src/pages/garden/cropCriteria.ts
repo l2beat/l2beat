@@ -1,29 +1,16 @@
 import type { CropKey } from '@l2beat/config/build/crops/canonicalCrops'
 
-/**
- * Marks where `reference` is linked inside a minimum, so the authority is
- * named in the sentence that defers to it rather than tacked on underneath.
- */
+/** Marks where `reference` is linked inside a minimum. */
 export const REFERENCE_SLOT = '{{reference}}'
 
-/**
- * The bar for each crop, distilled from the evaluations already published in
- * the garden: every line here is a claim the plant tooltips actually make, not
- * a wish list. `minimums` is what a project has to clear for a healthy green
- * plant; `pullsDown` lists what has actually turned a crop yellow or wilted it.
- * Kept short on purpose - a bar nobody reads to the end is not a bar.
- */
+/** The bar for each crop, distilled from the evaluations already in the garden. */
 export interface CropCriteria {
   question: string
   /** Shown in the plant tooltip, not in the card body. */
   summary: string
   minimums: string[]
   pullsDown: string[]
-  /**
-   * The outside authority a criterion defers to, where there is one. Linked
-   * into the minimum carrying `REFERENCE_SLOT`, so a reader can check the bar
-   * rather than take our word for it.
-   */
+  /** Linked into the minimum carrying `REFERENCE_SLOT`. */
   reference?: { label: string; href: string }
 }
 

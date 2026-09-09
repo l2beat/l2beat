@@ -200,8 +200,6 @@ describe('crop attestations', () => {
     })
 
     it('trusts the chain over the ledger when the two disagree', () => {
-      // The ledger claims the current set; the chain says otherwise. Skipping
-      // the publish here would leave the wrong set live indefinitely.
       const plan = planAttestation({
         projectIds: IDS,
         ledger: [entry()],
@@ -223,8 +221,6 @@ describe('crop attestations', () => {
     })
 
     it('revokes under the schema an attestation was made with, not the current one', () => {
-      // The migration path: data written under an older schema cannot be
-      // decoded here, and EAS will only accept a revocation naming that schema.
       const plan = planAttestation({
         projectIds: IDS,
         ledger: [entry({ schema: OLD_SCHEMA })],
@@ -255,7 +251,6 @@ describe('crop attestations', () => {
       })
       expect(plan.kind).toEqual('changed')
       expect(plan.keeper?.uid).toEqual(uid)
-      // Nothing to publish - the keeper already says the right thing.
       expect(plan.payload).toEqual(undefined)
       expect(plan.revoke).toEqual([{ uid: stale, schema: OLD_SCHEMA }])
     })
@@ -269,7 +264,6 @@ describe('crop attestations', () => {
       })
       expect(plan.kind).toEqual('new')
       expect(plan.payload?.revision).toEqual(3)
-      // Nothing to revoke - it is already revoked.
       expect(plan.revoke).toEqual([])
     })
 

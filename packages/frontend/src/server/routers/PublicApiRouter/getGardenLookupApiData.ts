@@ -12,7 +12,6 @@ export interface GardenLookupMatch {
   slug: string
   name: string
   href: string | null
-  /** Discovery's name for whatever sits at this address. */
   contractName: string
   crops: CropsApiSummary
   attestation: { uid: string; revision: number } | null
@@ -20,7 +19,6 @@ export interface GardenLookupMatch {
 
 export interface GardenLookupResult {
   query: string
-  /** Empty when we have not reviewed anything at this address. */
   matches: GardenLookupMatch[]
   /** Set when the query could not be parsed as chain:address. */
   error?: string
@@ -49,8 +47,6 @@ export async function getGardenLookupApiData(queries: string[]) {
     const matches = index
       .lookup(parsed.chain, parsed.address)
       .flatMap((match): GardenLookupMatch[] => {
-        // The index and the project list are built from the same query, so
-        // this only guards against a stale index in a long-lived process.
         const project = projectById.get(match.projectId)
         if (!project) {
           return []

@@ -120,11 +120,7 @@ function CropCard({
   )
 }
 
-/**
- * A minimum, with the outside authority linked in place of `REFERENCE_SLOT`.
- * Without a slot the sentence renders as written, so only the criteria that
- * defer to someone carry a link.
- */
+/** A minimum, with `reference` linked in place of `REFERENCE_SLOT`. */
 function Minimum({
   text,
   reference,
