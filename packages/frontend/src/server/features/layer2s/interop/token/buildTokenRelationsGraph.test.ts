@@ -92,13 +92,53 @@ describe(buildTokenRelationsGraph.name, () => {
     expect(graph.edges).toEqual([])
   })
 
-  it('ignores manual relations and unknown bridge types', () => {
+  it('collapses deployments connected by manual burn-and-mint relations', () => {
     const graph = buildTokenRelationsGraph(
       [ethereum, arbitrum],
-      [
-        route(arbitrum, ethereum, 'manual', 'burnAndMint'),
-        route(arbitrum, ethereum, 'somebridge', 'unknown'),
-      ],
+      [route(arbitrum, ethereum, 'manual', 'burnAndMint')],
+    )
+
+    expect(graph.nodes).toEqual([
+      {
+        id: 'arbitrum|0xa1',
+        members: [arbitrum, ethereum],
+        sources: [
+          {
+            plugin: 'manual',
+            bridgeType: 'burnAndMint',
+            chains: ['arbitrum', 'ethereum'],
+          },
+        ],
+      },
+    ])
+    expect(graph.edges).toEqual([])
+  })
+
+  it('draws manual lock-and-mint edges from the locked side', () => {
+    const graph = buildTokenRelationsGraph(
+      [ethereum, arbitrum],
+      [route(arbitrum, ethereum, 'manual', 'lockAndMint', ethereum)],
+    )
+
+    expect(graph.edges).toEqual([
+      {
+        from: 'ethereum|0xe1',
+        to: 'arbitrum|0xa1',
+        sources: [
+          {
+            plugin: 'manual',
+            bridgeType: 'lockAndMint',
+            chains: ['arbitrum', 'ethereum'],
+          },
+        ],
+      },
+    ])
+  })
+
+  it('ignores unknown bridge types', () => {
+    const graph = buildTokenRelationsGraph(
+      [ethereum, arbitrum],
+      [route(arbitrum, ethereum, 'somebridge', 'unknown')],
     )
 
     expect(graph.nodes.map((node) => node.members)).toEqual([
