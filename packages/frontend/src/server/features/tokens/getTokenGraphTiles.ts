@@ -1,10 +1,8 @@
 import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
-import { groupBy } from '~/utils/groupBy'
 import { manifest } from '~/utils/Manifest'
 import { getActiveInteropAbstractTokens } from '../layer2s/interop/token/getInteropAbstractTokens'
 import { getPairStatsTimeRange } from '../layer2s/interop/token/getInteropTokenRelations'
@@ -12,6 +10,7 @@ import { getChainDisplayInfo } from '../layer2s/interop/token/getInteropTokenRel
 import { createInteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
 import { getAggregatedInteropSnapshotTimestamp } from '../layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../layer2s/interop/utils/getInteropChains'
+import { getRelationsGraphProjects } from '../layer2s/interop/utils/getRelationsGraphProjects'
 import {
   buildTokenGraphTiles,
   type TokenGraphTile,
@@ -42,8 +41,7 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     volumeByTokenId,
     tokensWithPage,
     pairStatsByTokenId,
-    projectsWithChains,
-    interopProjects,
+    [projectsWithChains, interopProjects],
   ] = await Promise.all([
     tokenDb.abstractToken.getAllSummaries(),
     tokenDb.deployedToken.getAllAssignments(),
@@ -51,12 +49,12 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     getVolumeByTokenId(),
     getActiveInteropAbstractTokens(),
     getPairStatsByTokenId(),
-    ps.getProjects({ select: ['chainConfig'] }),
-    ps.getProjects({ select: ['interopConfig'] }),
+    getRelationsGraphProjects(),
   ])
 
-  const deployments = assignments.filter(
-    (deployment) => !deployment.ignored && deployment.abstractTokenId !== null,
+  const deployments = assignments.flatMap(
+    ({ chain, address, abstractTokenId, ignored }) =>
+      !ignored && abstractTokenId ? [{ chain, address, abstractTokenId }] : [],
   )
   const chainInfo = new Map<string, TokenGraphTileChainInfo>(
     unique(deployments.map((deployment) => deployment.chain)).map((chain) => {
@@ -82,7 +80,7 @@ async function getPairStatsByTokenId() {
   const range = await getPairStatsTimeRange()
   if (!range) return undefined
   const rows = await getDb().interopTransfer.getAllDeployedTokenPairStats(range)
-  return groupBy(rows, (row) => row.abstractTokenId)
+  return Map.groupBy(rows, (row) => row.abstractTokenId)
 }
 
 async function getVolumeByTokenId(): Promise<Map<string, number>> {

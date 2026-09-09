@@ -1,5 +1,5 @@
 import { v } from '@l2beat/validate'
-import { getInteropTokenRelationsGraphById } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraphById'
+import { getCachedInteropTokenRelationsGraphById } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraphById'
 import {
   getTokenGraphTilesPage,
   TokenGraphTilesParams,
@@ -14,6 +14,6 @@ export const tokensRouter = router({
     .input(v.object({ tokenId: v.string() }))
     .query(
       async ({ input }) =>
-        (await getInteropTokenRelationsGraphById(input.tokenId)) ?? null,
+        (await getCachedInteropTokenRelationsGraphById(input.tokenId)) ?? null,
     ),
 })

@@ -5,7 +5,6 @@ import type {
   TokenGraphTileEdge,
   TokenGraphTileNode,
 } from '~/server/features/tokens/buildTokenGraphTiles'
-import { groupBy } from '~/utils/groupBy'
 
 export const VIEW_WIDTH = 320
 export const VIEW_HEIGHT = 132
@@ -16,6 +15,28 @@ export const SOURCE_RING_GAP = 3
 export const LINE_GAP = 0.5
 export const MAX_CLUSTER_ICONS = 5
 const MIN_GAP = 3
+
+/** Sizing by node count; scale is the desired one before width/height caps. */
+const LARGE_GRAPH = {
+  maxNodes: Number.POSITIVE_INFINITY,
+  scale: 1,
+  span: VIEW_HEIGHT - Y_PADDING * 2,
+  maxGap: 16,
+}
+const SIZE_BUCKETS = [
+  { maxNodes: 1, scale: 3, span: 82, maxGap: 40 },
+  { maxNodes: 3, scale: 2.3, span: 82, maxGap: 40 },
+  { maxNodes: 5, scale: 1.8, span: 84, maxGap: 30 },
+  { maxNodes: 8, scale: 1.45, span: 90, maxGap: 16 },
+  { maxNodes: 12, scale: 1.18, span: 96, maxGap: 16 },
+  LARGE_GRAPH,
+]
+
+function getSizeBucket(nodeCount: number) {
+  return (
+    SIZE_BUCKETS.find((bucket) => nodeCount <= bucket.maxNodes) ?? LARGE_GRAPH
+  )
+}
 
 export interface Mark {
   node: TokenGraphTileNode
@@ -85,7 +106,7 @@ function getRows({ nodes, edges }: TokenGraphTile['graph']) {
     edges,
   )
   const x = (node: TokenGraphTileNode) => layout.boxes.get(node.id)?.x ?? 0
-  return [...groupBy(nodes, (node) => layout.rowOf.get(node.id))]
+  return [...Map.groupBy(nodes, (node) => layout.rowOf.get(node.id) ?? 0)]
     .toSorted(([a], [b]) => a - b)
     .map(([, row]) => row.toSorted((a, b) => x(a) - x(b)))
 }
@@ -95,18 +116,7 @@ function getScale(
   rows: TokenGraphTileNode[][],
   sourceIds: ReadonlySet<string>,
 ): number {
-  const desired =
-    nodeCount <= 1
-      ? 3
-      : nodeCount <= 3
-        ? 2.3
-        : nodeCount <= 5
-          ? 1.8
-          : nodeCount <= 8
-            ? 1.45
-            : nodeCount <= 12
-              ? 1.18
-              : 1
+  const desired = getSizeBucket(nodeCount).scale
   const widthCaps = rows.map((row) => {
     const width = row.reduce(
       (sum, node) => sum + getHalfWidth(node, BASE_RADIUS) * 2,
@@ -139,11 +149,7 @@ function getRowHalfHeight(
 function getVerticalSpan(nodeCount: number, rowCount: number): number {
   if (rowCount <= 1) return 0
   if (rowCount === 2 && nodeCount <= 8) return 58
-  if (nodeCount <= 3) return 82
-  if (nodeCount <= 5) return 84
-  if (nodeCount <= 8) return 90
-  if (nodeCount <= 12) return 96
-  return VIEW_HEIGHT - Y_PADDING * 2
+  return getSizeBucket(nodeCount).span
 }
 
 function getRowCenters(halfHeights: number[], span: number): number[] {
@@ -173,7 +179,7 @@ function placeRow(halfWidths: number[], nodeCount: number): number[] {
   if (halfWidths.length === 0) return []
   const available = VIEW_WIDTH - X_PADDING * 2
   const total = halfWidths.reduce((sum, halfWidth) => sum + halfWidth * 2, 0)
-  const maxGap = nodeCount <= 3 ? 40 : nodeCount <= 5 ? 30 : 16
+  const maxGap = getSizeBucket(nodeCount).maxGap
   const gap =
     halfWidths.length > 1
       ? Math.max(
@@ -200,7 +206,7 @@ function buildPaths(
   edges: TokenGraphTileEdge[],
   marks: ReadonlyMap<string, Mark>,
 ): string[] {
-  const outgoing = groupBy(
+  const outgoing = Map.groupBy(
     edges.flatMap((edge) => {
       const target = marks.get(edge.to)
       return target ? [{ from: edge.from, target }] : []
@@ -216,7 +222,7 @@ function buildPaths(
     const startY = from.y + from.radius + LINE_GAP
 
     const targets = (outgoing.get(sourceId) ?? []).map((edge) => edge.target)
-    const groups: RowGroup[] = [...groupBy(targets, (target) => target.row)]
+    const groups: RowGroup[] = [...Map.groupBy(targets, (target) => target.row)]
       .toSorted(([a], [b]) => a - b)
       .map(([row, targets]) => {
         const targetY = Math.min(

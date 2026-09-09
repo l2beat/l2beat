@@ -3,7 +3,7 @@ import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
-import { getInteropChains } from '../utils/getInteropChains'
+import { getActiveInteropChainIds } from '../utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from '../utils/getLatestAggregatedInteropTransferWithTokens'
 
 export type InteropAbstractToken = Pick<
@@ -18,11 +18,7 @@ const interopAbstractTokensCache = new FrontendInMemoryCache(
 export function getActiveInteropAbstractTokens(): Promise<
   InteropAbstractToken[]
 > {
-  const activeInteropChainIds = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => chain.id)
-
-  return getInteropAbstractTokens(activeInteropChainIds)
+  return getInteropAbstractTokens(getActiveInteropChainIds())
 }
 
 export async function getInteropAbstractTokens(

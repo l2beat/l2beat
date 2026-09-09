@@ -5,7 +5,7 @@ import { getInteropTokenData } from '~/server/features/layer2s/interop/getIntero
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
 import { getInteropTokenRelationsGraphById } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraphById'
-import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
+import { getActiveInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -22,8 +22,7 @@ export async function getInteropTokenPageData(
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
-  const interopChains = getInteropChains()
-  const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
+  const activeInteropChains = getActiveInteropChains()
   const activeInteropChainIds = activeInteropChains.map((chain) => chain.id)
   const interopChainsWithIcons = mapInteropChainsToWithIcons(
     manifest,

@@ -8,7 +8,6 @@ import {
   CLUSTER_FOOTER_HEIGHT,
   CLUSTER_ROW_HEIGHT,
   getClusterColumns,
-  getRelationsNodeSize,
   getShownMemberCount,
   LIST_GAP,
   META_GAP,
@@ -18,13 +17,6 @@ import {
   TITLE_HEIGHT,
 } from './nodeSize'
 import { shortAddress, Volume } from './RelationsPrimitives'
-
-export function getNodeSize(node: InteropTokenRelationsNode): {
-  width: number
-  height: number
-} {
-  return getRelationsNodeSize(node.deployments.length)
-}
 
 function getShownMembers(node: InteropTokenRelationsNode) {
   return node.deployments.slice(0, getShownMemberCount(node.deployments.length))

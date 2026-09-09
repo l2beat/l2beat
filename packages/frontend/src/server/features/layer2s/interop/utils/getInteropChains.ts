@@ -17,8 +17,10 @@ export function getInteropChains(): InteropChainWithUpcoming[] {
   )
 }
 
+export function getActiveInteropChains(): InteropChainWithUpcoming[] {
+  return getInteropChains().filter((chain) => !chain.isUpcoming)
+}
+
 export function getActiveInteropChainIds(): string[] {
-  return getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => chain.id)
+  return getActiveInteropChains().map((chain) => chain.id)
 }

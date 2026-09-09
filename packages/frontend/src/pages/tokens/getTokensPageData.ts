@@ -1,16 +1,22 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getTokenGraphTilesPage } from '~/server/features/tokens/getTokenGraphTilesPage'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getTokensPageData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, firstPage] = await Promise.all([
+  const helpers = getSsrHelpers()
+  const [appLayoutProps] = await Promise.all([
     getAppLayoutProps(),
-    getTokenGraphTilesPage({}),
+    helpers.queryClient.prefetchInfiniteQuery(
+      helpers.trpc.tokens.tiles.infiniteQueryOptions(
+        {},
+        { getNextPageParam: (lastPage) => lastPage.nextCursor },
+      ),
+    ),
   ])
 
   return {
@@ -26,7 +32,7 @@ export async function getTokensPageData(
     },
     ssr: {
       page: 'TokensPage',
-      props: { ...appLayoutProps, firstPage },
+      props: { ...appLayoutProps, queryState: helpers.dehydrate() },
     },
   }
 }

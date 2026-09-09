@@ -1,12 +1,12 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import type { TokenGraphTile as Tile } from '~/server/features/tokens/buildTokenGraphTiles'
+import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { TokenGraphTileDiagram } from './TokenGraphTileDiagram'
 
-export function TokenGraphTile({
+export function TokenGraphTileCard({
   tile,
   onOpen,
 }: {
-  tile: Tile
+  tile: TokenGraphTile
   onOpen: () => void
 }) {
   return (

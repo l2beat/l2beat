@@ -4,7 +4,6 @@ import type {
   TokenRelationRoute,
 } from '@l2beat/database'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
-import { groupBy } from '~/utils/groupBy'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import {
   buildTokenRelationsGraph,
@@ -54,7 +53,7 @@ export interface TokenGraphTile {
 export interface TokenGraphTileDeployment {
   chain: string
   address: string
-  abstractTokenId: string | null
+  abstractTokenId: string
 }
 
 export interface TokenGraphTileChainInfo {
@@ -88,17 +87,12 @@ export function buildTokenGraphTiles({
   activeChainIds,
   pairStatsByTokenId,
 }: BuildTokenGraphTilesInput): TokenGraphTile[] {
-  const deploymentsByToken = groupBy(
-    deployments.filter((d) => d.abstractTokenId !== null),
-    (d) => d.abstractTokenId as string,
-  )
+  const deploymentsByToken = Map.groupBy(deployments, (d) => d.abstractTokenId)
   // Both endpoints must belong to the token, so bucketing by A loses nothing.
   const tokenOfDeployment = new Map(
-    deployments.flatMap((d) =>
-      d.abstractTokenId ? [[deploymentKey(d), d.abstractTokenId]] : [],
-    ),
+    deployments.map((d) => [deploymentKey(d), d.abstractTokenId]),
   )
-  const routesByToken = groupBy(routes, (route) =>
+  const routesByToken = Map.groupBy(routes, (route) =>
     tokenOfDeployment.get(
       deploymentKey({
         chain: route.tokenAChain,

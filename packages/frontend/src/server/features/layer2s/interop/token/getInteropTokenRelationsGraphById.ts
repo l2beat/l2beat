@@ -1,6 +1,6 @@
-import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getActiveInteropChainIds } from '../utils/getInteropChains'
+import { getRelationsGraphProjects } from '../utils/getRelationsGraphProjects'
 import { getInteropTokenOnchainDeployments } from './getInteropTokenOnchainDeployments'
 import { getInteropTokenRelations } from './getInteropTokenRelations'
 import {
@@ -12,7 +12,8 @@ const relationsGraphCache = new FrontendInMemoryCache(
   'getInteropTokenRelationsGraphById',
 )
 
-export function getInteropTokenRelationsGraphById(
+/** For callers without their own cache, like the tRPC procedure. */
+export function getCachedInteropTokenRelationsGraphById(
   tokenId: string,
 ): Promise<InteropTokenRelationsGraph | undefined> {
   return relationsGraphCache.get(
@@ -21,11 +22,11 @@ export function getInteropTokenRelationsGraphById(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => getInteropTokenRelationsGraphData(tokenId),
+    () => getInteropTokenRelationsGraphById(tokenId),
   )
 }
 
-async function getInteropTokenRelationsGraphData(
+export async function getInteropTokenRelationsGraphById(
   tokenId: string,
 ): Promise<InteropTokenRelationsGraph | undefined> {
   const deployments = await getInteropTokenOnchainDeployments(
@@ -34,10 +35,9 @@ async function getInteropTokenRelationsGraphData(
   )
   if (deployments.length === 0) return undefined
 
-  const [relations, projectsWithChains, interopProjects] = await Promise.all([
+  const [relations, [projectsWithChains, interopProjects]] = await Promise.all([
     getInteropTokenRelations(tokenId, deployments),
-    ps.getProjects({ select: ['chainConfig'] }),
-    ps.getProjects({ select: ['interopConfig'] }),
+    getRelationsGraphProjects(),
   ])
 
   return getInteropTokenRelationsGraph(

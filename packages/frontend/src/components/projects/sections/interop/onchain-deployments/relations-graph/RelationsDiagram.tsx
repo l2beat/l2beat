@@ -4,12 +4,13 @@ import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/inter
 import { cn } from '~/utils/cn'
 import { edgeKey, getActiveBacking } from './graphSelectors'
 import { layoutRelationsGraph } from './layoutRelationsGraph'
+import { getRelationsNodeSize } from './nodeSize'
 import {
   RelationsEdgeBadge,
   RelationsEdgeMarkers,
   RelationsEdgePath,
 } from './RelationsEdges'
-import { getNodeSize, RelationsNode } from './RelationsNode'
+import { RelationsNode } from './RelationsNode'
 import { useRelationsCamera } from './relationsCamera'
 import { routeRelationsEdges } from './routeRelationsEdges'
 import { useDragToPan } from './useDragToPan'
@@ -42,7 +43,7 @@ export function RelationsDiagram({
     const items = graph.nodes.map((node) => ({
       id: node.id,
       volume: node.volume,
-      ...getNodeSize(node),
+      ...getRelationsNodeSize(node.deployments.length),
     }))
     return layoutRelationsGraph(
       items.filter((item) => !unconnectedIds.has(item.id)),

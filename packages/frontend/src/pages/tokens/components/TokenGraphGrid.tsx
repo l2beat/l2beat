@@ -6,33 +6,28 @@ import {
   InfiniteScrollTrigger,
   useInfiniteScrollTrigger,
 } from '~/pages/interop/components/tokens/infiniteScroll'
-import type { TokenGraphTile as Tile } from '~/server/features/tokens/buildTokenGraphTiles'
-import type { TokenGraphTilesPage } from '~/server/features/tokens/getTokenGraphTilesPage'
+import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { useTRPC } from '~/trpc/React'
-import { TokenGraphTile } from './TokenGraphTile'
+import { TokenGraphTileCard } from './TokenGraphTileCard'
 
 export function TokenGraphGrid({
-  firstPage,
   onOpen,
 }: {
-  firstPage: TokenGraphTilesPage
-  onOpen: (tile: Tile) => void
+  onOpen: (tile: TokenGraphTile) => void
 }) {
   const trpc = useTRPC()
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
       trpc.tokens.tiles.infiniteQueryOptions(
         {},
-        {
-          getNextPageParam: (lastPage) => lastPage.nextCursor,
-          initialData: { pages: [firstPage], pageParams: [null] },
-        },
+        { getNextPageParam: (lastPage) => lastPage.nextCursor },
       ),
     )
   const tiles = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
     [data],
   )
+  const total = data?.pages[0]?.total ?? tiles.length
   const loadMoreRef = useInfiniteScrollTrigger({
     canLoadMore: !!hasNextPage && !isFetchingNextPage,
     loadMore: fetchNextPage,
@@ -46,7 +41,7 @@ export function TokenGraphGrid({
     <div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {tiles.map((tile) => (
-          <TokenGraphTile
+          <TokenGraphTileCard
             key={tile.id}
             tile={tile}
             onOpen={() => onOpen(tile)}
@@ -59,7 +54,7 @@ export function TokenGraphGrid({
       </div>
       {hasNextPage && <InfiniteScrollTrigger triggerRef={loadMoreRef} />}
       <p className="mt-4 text-center text-label-value-13 text-secondary">
-        Showing {tiles.length} of {firstPage.total} tokens with relations.
+        Showing {tiles.length} of {total} tokens with relations.
       </p>
     </div>
   )
