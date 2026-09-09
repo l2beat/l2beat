@@ -1,3 +1,104 @@
+---
+lockfileVersion: '9.0'
+
+importers:
+
+  .:
+    configDependencies: {}
+    packageManagerDependencies:
+      pnpm:
+        specifier: 12.3.4
+        version: 12.3.4
+
+packages:
+
+  '@pnpm/exe.darwin-arm64@12.3.4':
+    resolution: {integrity: sha512-PAyUol8T1+/+ViOiXAt51ECA+QnfXCqz6foL4bW+LsoX0NcVd5XVEM2mRQu+LV4oc7uRz9zf9U0P+XFfuQeDAw==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@pnpm/exe.darwin-x64@12.3.4':
+    resolution: {integrity: sha512-fxP9JCk0Cdye+ePuj+GJJLMUMTqHGWRdb1dtv4How876uQ2ehxvenpgiYAir/ceO9PsYUZkFTtyZdx+rRu5QOA==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@pnpm/exe.linux-arm64-musl@12.3.4':
+    resolution: {integrity: sha512-FBOt0/7ye6O6q4AllVV5QMviB6qE6fqkeczV/+MDWQsmo+QJrlfsh6X7CpH/tClVpBZEyIbjpUoT8bNhCYBxEg==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/exe.linux-arm64@12.3.4':
+    resolution: {integrity: sha512-t71AVA7LRqiKTyZ5xMYaZc2n5DfdpMbfokZuiIOXHBOM03ECnF0t4iYwaBDqJgVjlKYUOwaF/bRQajGNA4cJ4w==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.linux-x64-musl@12.3.4':
+    resolution: {integrity: sha512-RPmk7Jb/aYaFvL2iyDN/AtMY+hUEsue732WmXpcuQ9tBpMnGyA5py7Z3+e+qmQaJ0zY/4ni9jJiyPBQHujmv6w==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/exe.linux-x64@12.3.4':
+    resolution: {integrity: sha512-2ZqOlSPkfwX1h5cR+FPiWf8+F+2hZT/3TvhUK5sigHqwaQCIiq8R7CGxhndKs63JtcLi2a1Qpo+wX/EoyfjyJQ==}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.win32-arm64@12.3.4':
+    resolution: {integrity: sha512-ANyrHqyqco6SXBysUTRF74itDyyraea7IbFsKFdNXTjcFnfycTDx37EwuhdpPYFNSIh2JhUG4fByclsRfiHX7w==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@pnpm/exe.win32-x64@12.3.4':
+    resolution: {integrity: sha512-WH/KqBPY/hq2Tb7SgQltEZytimcjgKRaCRL/aM9CI0c67iKc5TVmHUhIiL3Ux9FB4bWn36i6XewUcScQI+zG8w==}
+    cpu: [x64]
+    os: [win32]
+
+  pnpm@12.3.4:
+    resolution: {integrity: sha512-lhqkH7B32joEpEHZ+OFevAyW2o73ELLrZ7+e58sGEOq9SPH9hfUc/+c4RnhfoPh8VqOocqHYk/hEZ0G1zORUVw==}
+    engines: {node: '>=18.*'}
+    hasBin: true
+
+snapshots:
+
+  '@pnpm/exe.darwin-arm64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.darwin-x64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-arm64-musl@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-arm64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-x64-musl@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-x64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.win32-arm64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.win32-x64@12.3.4':
+    optional: true
+
+  pnpm@12.3.4:
+    optionalDependencies:
+      '@pnpm/exe.darwin-arm64': 12.3.4
+      '@pnpm/exe.darwin-x64': 12.3.4
+      '@pnpm/exe.linux-arm64': 12.3.4
+      '@pnpm/exe.linux-arm64-musl': 12.3.4
+      '@pnpm/exe.linux-x64': 12.3.4
+      '@pnpm/exe.linux-x64-musl': 12.3.4
+      '@pnpm/exe.win32-arm64': 12.3.4
+      '@pnpm/exe.win32-x64': 12.3.4
+
+---
 lockfileVersion: '9.0'
 
 settings:
@@ -49,8 +150,8 @@ importers:
         specifier: ^4.9.3
         version: 4.19.2
       turbo:
-        specifier: ^2.9.6
-        version: 2.9.6
+        specifier: ^2.10.12
+        version: 2.10.12
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -111,7 +212,7 @@ importers:
         version: 8.18.1
       '@waku/sdk':
         specifier: 0.0.36
-        version: 0.0.36(@multiformats/multiaddr@12.5.1)
+        version: 0.0.36(@multiformats/multiaddr@12.5.1)(supports-color@8.1.1)
       basic-auth:
         specifier: ^2.0.1
         version: 2.0.1
@@ -1441,7 +1542,7 @@ importers:
         version: 5.7.2
       flowbite-react:
         specifier: ^0.10.1
-        version: 0.10.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(rollup@4.59.0)(tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@20.17.2)(typescript@5.6.3)))
+        version: 0.10.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@20.17.2)(typescript@5.6.3)))
       next:
         specifier: 15.0.5
         version: 15.0.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -4478,33 +4579,33 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@turbo/darwin-64@2.9.6':
-    resolution: {integrity: sha512-X/56SnVXIQZBLKwniGTwEQTGmtE5brSACnKMBWpY3YafuxVYefrC2acamfjgxP7BG5w3I+6jf0UrLoSzgPcSJg==}
+  '@turbo/darwin-64@2.10.12':
+    resolution: {integrity: sha512-9nKgKoF6ZOUsM+or0OtNf+TTJSfGvDNP7ZFv/ZGWVwOSCkumyctQiTeHwB4UNljHTnC41AqylgbunLDHoccNrA==}
     cpu: [x64]
     os: [darwin]
 
-  '@turbo/darwin-arm64@2.9.6':
-    resolution: {integrity: sha512-aalBeSl4agT/QtYGDyf/XLajedWzUC9Vg/pm/YO6QQ93vkQ91Vz5uK1ta5RbVRDozQSz4njxUNqRNmOXDzW+qw==}
+  '@turbo/darwin-arm64@2.10.12':
+    resolution: {integrity: sha512-H4Elb1jqTZVeIC9bbcNwjSzemZ6RegoTOVHeuV5Osirt2Z8UguTyisMEkvZjPVZgMeN9J4ERZBFad40tFnkb7w==}
     cpu: [arm64]
     os: [darwin]
 
-  '@turbo/linux-64@2.9.6':
-    resolution: {integrity: sha512-YKi05jnNHaD7vevgYwahpzGwbsNNTwzU2c7VZdmdFm7+cGDP4oREUWSsainiMfRqjRuolQxBwRn8wf1jmu+YZA==}
+  '@turbo/linux-64@2.10.12':
+    resolution: {integrity: sha512-lr7KIotukvjZwEXiFSYAeOH3BWzjFVBbSzTbv0fuGFsNukYyH0+g1hB5ecqnJkgkYU+KHEMG1edOhnjiKON1wQ==}
     cpu: [x64]
-    os: [linux]
+    os: [android, linux]
 
-  '@turbo/linux-arm64@2.9.6':
-    resolution: {integrity: sha512-02o/ZS69cOYEDczXvOB2xmyrtzjQ2hVFtWZK1iqxXUfzMmTjZK4UumrfNnjckSg+gqeBfnPRHa0NstA173Ik3g==}
+  '@turbo/linux-arm64@2.10.12':
+    resolution: {integrity: sha512-f0pZDTtvzB5SuNwuXBaKbZHUCMCukgc8nMlHEuvLmj91Fzec+MEbr3cAvGNor5htEDqZnO6Lxt9N/GPI/77oGA==}
     cpu: [arm64]
-    os: [linux]
+    os: [android, linux]
 
-  '@turbo/windows-64@2.9.6':
-    resolution: {integrity: sha512-wVdQjvnBI15wB6JrA+43CtUtagjIMmX6XYO758oZHAsCNSxqRlJtdyujih0D8OCnwCRWiGWGI63zAxR0hO6s9g==}
+  '@turbo/windows-64@2.10.12':
+    resolution: {integrity: sha512-SDOueJRjS/QcykWf2KCRtTLmIl5YMKsLbXkXQGhDwcTXvKXZiS5ih5lBl/gkwZIpYFjqA/rAlfMzlAFcVHNe0g==}
     cpu: [x64]
     os: [win32]
 
-  '@turbo/windows-arm64@2.9.6':
-    resolution: {integrity: sha512-1XUUyWW0W6FTSqGEhU8RHVqb2wP1SPkr7hIvBlMEwH9jr+sJQK5kqeosLJ/QaUv4ecSAd1ZhIrLoW7qslAzT4A==}
+  '@turbo/windows-arm64@2.10.12':
+    resolution: {integrity: sha512-0i0mVUa4kKk+/B3RwEwPMf9CB+T7ul56hn5FFHNA4VUNTOoLBEd6aNf3FaKfCatDNZ6cicCEf6if9QUTVyzzcA==}
     cpu: [arm64]
     os: [win32]
 
@@ -8780,8 +8881,8 @@ packages:
   turbo-stream@2.4.0:
     resolution: {integrity: sha512-FHncC10WpBd2eOmGwpmQsWLDoK4cqsA/UT/GqNoaKOQnT8uzhtCbg3EoUDMvqpOSAI0S26mr0rkjzbOO6S3v1g==}
 
-  turbo@2.9.6:
-    resolution: {integrity: sha512-+v2QJey7ZUeUiuigkU+uFfklvNUyPI2VO2vBpMYJA+a1hKFLFiKtUYlRHdb3P9CrAvMzi0upbjI4WT+zKtqkBg==}
+  turbo@2.10.12:
+    resolution: {integrity: sha512-AswgMPnpOoaVZHrrSBejETzEbuIA69OVGwfkHwfrY0A23VjWXBANzgq9+OymWOHAIArB7D1+1z498WY8fGg1Jw==}
     hasBin: true
 
   tw-animate-css@1.4.0:
@@ -11924,23 +12025,19 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-rc.2': {}
 
-  '@rollup/plugin-node-resolve@15.3.0(rollup@4.59.0)':
+  '@rollup/plugin-node-resolve@15.3.0':
     dependencies:
-      '@rollup/pluginutils': 5.1.3(rollup@4.59.0)
+      '@rollup/pluginutils': 5.1.3
       '@types/resolve': 1.20.2
       deepmerge: 4.3.1
       is-module: 1.0.0
       resolve: 1.22.8
-    optionalDependencies:
-      rollup: 4.59.0
 
-  '@rollup/pluginutils@5.1.3(rollup@4.59.0)':
+  '@rollup/pluginutils@5.1.3':
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 4.0.3
-    optionalDependencies:
-      rollup: 4.59.0
 
   '@rollup/rollup-android-arm-eabi@4.59.0':
     optional: true
@@ -12287,22 +12384,22 @@ snapshots:
   '@tsconfig/node16@1.0.4':
     optional: true
 
-  '@turbo/darwin-64@2.9.6':
+  '@turbo/darwin-64@2.10.12':
     optional: true
 
-  '@turbo/darwin-arm64@2.9.6':
+  '@turbo/darwin-arm64@2.10.12':
     optional: true
 
-  '@turbo/linux-64@2.9.6':
+  '@turbo/linux-64@2.10.12':
     optional: true
 
-  '@turbo/linux-arm64@2.9.6':
+  '@turbo/linux-arm64@2.10.12':
     optional: true
 
-  '@turbo/windows-64@2.9.6':
+  '@turbo/windows-64@2.10.12':
     optional: true
 
-  '@turbo/windows-arm64@2.9.6':
+  '@turbo/windows-arm64@2.10.12':
     optional: true
 
   '@types/accepts@1.3.7':
@@ -12756,14 +12853,14 @@ snapshots:
 
   '@vue/shared@3.1.5': {}
 
-  '@waku/core@0.0.40(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)':
+  '@waku/core@0.0.40(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)(supports-color@8.1.1)':
     dependencies:
       '@libp2p/ping': 2.0.35
       '@noble/hashes': 1.8.0
-      '@waku/enr': 0.0.33(@multiformats/multiaddr@12.5.1)
+      '@waku/enr': 0.0.33(@multiformats/multiaddr@12.5.1)(supports-color@8.1.1)
       '@waku/interfaces': 0.0.34
       '@waku/proto': 0.0.15
-      '@waku/utils': 0.0.27
+      '@waku/utils': 0.0.27(supports-color@8.1.1)
       debug: 4.4.0(supports-color@8.1.1)
       it-all: 3.0.11
       it-length-prefixed: 9.1.1
@@ -12776,13 +12873,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@waku/discovery@0.0.13(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)':
+  '@waku/discovery@0.0.13(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)(supports-color@8.1.1)':
     dependencies:
-      '@waku/core': 0.0.40(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)
-      '@waku/enr': 0.0.33(@multiformats/multiaddr@12.5.1)
+      '@waku/core': 0.0.40(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)(supports-color@8.1.1)
+      '@waku/enr': 0.0.33(@multiformats/multiaddr@12.5.1)(supports-color@8.1.1)
       '@waku/interfaces': 0.0.34
       '@waku/proto': 0.0.15
-      '@waku/utils': 0.0.27
+      '@waku/utils': 0.0.27(supports-color@8.1.1)
       debug: 4.4.0(supports-color@8.1.1)
       dns-over-http-resolver: 3.0.16
       hi-base32: 0.5.1
@@ -12792,13 +12889,13 @@ snapshots:
       - libp2p
       - supports-color
 
-  '@waku/enr@0.0.33(@multiformats/multiaddr@12.5.1)':
+  '@waku/enr@0.0.33(@multiformats/multiaddr@12.5.1)(supports-color@8.1.1)':
     dependencies:
       '@ethersproject/rlp': 5.7.0
       '@libp2p/crypto': 5.1.6
       '@libp2p/peer-id': 5.1.7
       '@noble/secp256k1': 1.7.2
-      '@waku/utils': 0.0.27
+      '@waku/utils': 0.0.27(supports-color@8.1.1)
       debug: 4.4.0(supports-color@8.1.1)
       js-sha3: 0.9.3
     optionalDependencies:
@@ -12812,7 +12909,7 @@ snapshots:
     dependencies:
       protons-runtime: 5.6.0
 
-  '@waku/sdk@0.0.36(@multiformats/multiaddr@12.5.1)':
+  '@waku/sdk@0.0.36(@multiformats/multiaddr@12.5.1)(supports-color@8.1.1)':
     dependencies:
       '@chainsafe/libp2p-noise': 16.1.3
       '@libp2p/bootstrap': 11.0.42
@@ -12822,12 +12919,12 @@ snapshots:
       '@libp2p/websockets': 9.2.16
       '@noble/hashes': 1.8.0
       '@types/lodash.debounce': 4.0.9
-      '@waku/core': 0.0.40(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)
-      '@waku/discovery': 0.0.13(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)
+      '@waku/core': 0.0.40(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)(supports-color@8.1.1)
+      '@waku/discovery': 0.0.13(@multiformats/multiaddr@12.5.1)(libp2p@2.8.11)(supports-color@8.1.1)
       '@waku/interfaces': 0.0.34
       '@waku/proto': 0.0.15
-      '@waku/sds': 0.0.8
-      '@waku/utils': 0.0.27
+      '@waku/sds': 0.0.8(supports-color@8.1.1)
+      '@waku/utils': 0.0.27(supports-color@8.1.1)
       libp2p: 2.8.11
       lodash.debounce: 4.0.8
     transitivePeerDependencies:
@@ -12836,18 +12933,18 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@waku/sds@0.0.8':
+  '@waku/sds@0.0.8(supports-color@8.1.1)':
     dependencies:
       '@libp2p/interface': 2.10.4
       '@noble/hashes': 1.8.0
       '@waku/proto': 0.0.15
-      '@waku/utils': 0.0.27
+      '@waku/utils': 0.0.27(supports-color@8.1.1)
       chai: 5.3.3
       lodash: 4.17.21
     transitivePeerDependencies:
       - supports-color
 
-  '@waku/utils@0.0.27':
+  '@waku/utils@0.0.27(supports-color@8.1.1)':
     dependencies:
       '@noble/hashes': 1.8.0
       '@waku/interfaces': 0.0.34
@@ -14448,35 +14545,31 @@ snapshots:
 
   flatbuffers@24.12.23: {}
 
-  flowbite-datepicker@1.3.0(rollup@4.59.0):
+  flowbite-datepicker@1.3.0:
     dependencies:
-      '@rollup/plugin-node-resolve': 15.3.0(rollup@4.59.0)
-      flowbite: 2.5.1(rollup@4.59.0)
+      '@rollup/plugin-node-resolve': 15.3.0
+      flowbite: 2.5.1
     transitivePeerDependencies:
       - rollup
 
-  flowbite-react@0.10.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(rollup@4.59.0)(tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@20.17.2)(typescript@5.6.3))):
+  flowbite-react@0.10.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@20.17.2)(typescript@5.6.3))):
     dependencies:
       '@floating-ui/core': 1.6.6
       '@floating-ui/react': 0.26.21(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       classnames: 2.5.1
       debounce: 2.1.0
-      flowbite: 2.5.1(rollup@4.59.0)
+      flowbite: 2.5.1
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       react-icons: 5.2.1(react@19.0.0)
       tailwind-merge: 2.4.0
       tailwindcss: 3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@20.17.2)(typescript@5.6.3))
-    transitivePeerDependencies:
-      - rollup
 
-  flowbite@2.5.1(rollup@4.59.0):
+  flowbite@2.5.1:
     dependencies:
       '@popperjs/core': 2.11.8
-      flowbite-datepicker: 1.3.0(rollup@4.59.0)
+      flowbite-datepicker: 1.3.0
       mini-svg-data-uri: 1.4.4
-    transitivePeerDependencies:
-      - rollup
 
   follow-redirects@1.16.0(debug@4.4.0(supports-color@8.1.1)):
     optionalDependencies:
@@ -17261,14 +17354,14 @@ snapshots:
 
   turbo-stream@2.4.0: {}
 
-  turbo@2.9.6:
+  turbo@2.10.12:
     optionalDependencies:
-      '@turbo/darwin-64': 2.9.6
-      '@turbo/darwin-arm64': 2.9.6
-      '@turbo/linux-64': 2.9.6
-      '@turbo/linux-arm64': 2.9.6
-      '@turbo/windows-64': 2.9.6
-      '@turbo/windows-arm64': 2.9.6
+      '@turbo/darwin-64': 2.10.12
+      '@turbo/darwin-arm64': 2.10.12
+      '@turbo/linux-64': 2.10.12
+      '@turbo/linux-arm64': 2.10.12
+      '@turbo/windows-64': 2.10.12
+      '@turbo/windows-arm64': 2.10.12
 
   tw-animate-css@1.4.0: {}
 

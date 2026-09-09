@@ -18,9 +18,11 @@ export const metal: ScalingProject = opStackL2({
   daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19527368 })],
   associatedTokens: ['MTL'],
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Metal',
+    warning:
+      'The fault proof system is deployed but is not functional. The permissioned dispute game commits to a placeholder absolute prestate (0xdead…) set by OP Stack Upgrade 19, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
     slug: 'metal',
     description:
       'Metal L2 is a general-purpose OP stack rollup by Metallicus focused on banking and compliance.',

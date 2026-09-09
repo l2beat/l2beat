@@ -4,5 +4,11 @@
     "address": "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35",
     "chain": "ethereum",
     "blockNumber": 25751894
+  },
+  "DeBridgeIntentManager_v2_3_0": {
+    "hash": "0x8bc472a2f0e9dd05e3781fa6f0e5b4bedc8e395196df151a26af1120fa398c8c",
+    "address": "eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677",
+    "chain": "ethereum",
+    "blockNumber": 25882373
   }
 }

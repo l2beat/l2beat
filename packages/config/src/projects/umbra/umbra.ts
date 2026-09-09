@@ -121,7 +121,7 @@ export const umbra: BaseProject = {
     },
     privacy: {
       value: 'Recipient privacy',
-      sentiment: 'good',
+      sentiment: 'warning',
       description:
         'There is no protocol-level compliance mechanism or privileged view key. Umbra hides who controls the receiving address, but the sender, amount, and stealth address remain public and privacy can be weakened by transaction patterns or poor withdrawal hygiene.',
     },

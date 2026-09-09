@@ -6,7 +6,7 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
-  entriesForDiff,
+  entriesForDiffPair,
   generateStructureHash,
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
@@ -72,12 +72,16 @@ export class UpdateMonitor {
     })
 
     const allProjects = this.configReader.readAllDiscoveredProjects()
-    const enabledProjects = shuffle(allProjects).filter(
+    const activeProjects = allProjects.filter(
+      (project) => !this.configReader.readConfig(project).archived,
+    )
+    const enabledProjects = shuffle(activeProjects).filter(
       (project) => !this.disabledProjects.includes(project),
     )
 
     this.logger.info('Processing projects', {
       total: allProjects.length,
+      archived: allProjects.length - activeProjects.length,
       enabled: enabledProjects.length,
       disabled: this.disabledProjects.length,
       disabledProjects: this.disabledProjects,
@@ -143,10 +147,7 @@ export class UpdateMonitor {
 
       const committed = this.configReader.readDiscovery(projectConfig.name)
 
-      const diff = diffDiscovery(
-        entriesForDiff(committed),
-        entriesForDiff(discovery),
-      )
+      const diff = diffDiscovery(...entriesForDiffPair(committed, discovery))
       const severityCounts = countSeverities(diff)
 
       if (diff.length > 0) {
@@ -228,8 +229,7 @@ export class UpdateMonitor {
       const sanitizedDiscovery = sanitizeDiscoveryOutput(discovery)
 
       const diff = diffDiscovery(
-        entriesForDiff(prevSanitizedDiscovery),
-        entriesForDiff(sanitizedDiscovery),
+        ...entriesForDiffPair(prevSanitizedDiscovery, sanitizedDiscovery),
         unverifiedEntries,
       )
 
@@ -370,7 +370,7 @@ export class UpdateMonitor {
 }
 
 function countSeverities(diffs: DiscoveryDiff[]) {
-  const result = { low: 0, high: 0, unknown: 0 }
+  const result = { low: 0, medium: 0, high: 0, unknown: 0 }
 
   for (const diff of diffs) {
     if (diff.diff === undefined) {
@@ -397,6 +397,9 @@ function countSeverities(diffs: DiscoveryDiff[]) {
       switch (severity) {
         case 'LOW':
           result.low++
+          break
+        case 'MEDIUM':
+          result.medium++
           break
         case 'HIGH':
           result.high++

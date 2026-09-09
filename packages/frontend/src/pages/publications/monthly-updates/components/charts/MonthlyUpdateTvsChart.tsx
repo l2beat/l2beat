@@ -103,7 +103,6 @@ export function MonthlyUpdateTvsChart({
             fill={`url(#${id})`}
             fillOpacity={1}
             stroke="var(--project-primary)"
-            strokeWidth={2}
             isAnimationActive={false}
           />
           <ChartCommonComponents

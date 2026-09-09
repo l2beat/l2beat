@@ -1,0 +1,215 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOSecurityProposals",
+  "category": "gov",
+  "description": "Proposal front end for the security council, limited to an explicit allowlist of settings. Every write checks a per-setting allow flag in the registry and reverts if it is not set, so the council can only touch keys that token-holder governance has opened to it; which keys are open is registry state, read from the chain at discovery time as one flag per setting. A numeric setting on the list is additionally capped by the executing code. A proposal here becomes executable the moment it reaches quorum, with no delay of its own.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "allowed_auction_auction_lot_bidding_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "auction", "auction.lot.bidding.enabled")
+          "0x33967fff731b2c1e9190f6c1ea37a14f2a265e4fae1c4221ba381b53b8d57e60"
+        ]
+      },
+      "description": "Allow flag for the auction setting \"auction.lot.bidding.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_auction_auction_lot_create_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "auction", "auction.lot.create.enabled")
+          "0x138973d6024091facfa7b7fd023cbadf119c7cfea8991cf12af7b56c97ff7084"
+        ]
+      },
+      "description": "Allow flag for the auction setting \"auction.lot.create.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_deposit_deposit_assign_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "deposit", "deposit.assign.enabled")
+          "0x6fe91fa4587d960cdfda70a72e426224d9568f1a23f6c93264ebcb5155822123"
+        ]
+      },
+      "description": "Allow flag for the deposit setting \"deposit.assign.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_deposit_deposit_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "deposit", "deposit.enabled")
+          "0xef291d137bf1d74dbc2398826cf322dacfc23ce32c041dd1a5dfb6ccae04af8d"
+        ]
+      },
+      "description": "Allow flag for the deposit setting \"deposit.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_minipool_minipool_bond_reduction_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "minipool", "minipool.bond.reduction.enabled")
+          "0xe63f139d4b55ed7c4d6a6c7098e80edb1fe79988dd5be84bb371e26d8ab082f7"
+        ]
+      },
+      "description": "Allow flag for the minipool setting \"minipool.bond.reduction.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_minipool_minipool_submit_withdrawable_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "minipool", "minipool.submit.withdrawable.enabled")
+          "0xef1baccd4b8bc938f165c84599926258dc665a68569b8644086002d1a4743237"
+        ]
+      },
+      "description": "Allow flag for the minipool setting \"minipool.submit.withdrawable.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_network_network_node_commission_share_security_council_adder": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "network", "network.node.commission.share.security.council.adder")
+          "0xddbc4110de90dbd4531da2f27d1a3235c449afb8e5a28f1ab4ff64ef43b8d11c"
+        ]
+      },
+      "description": "Allow flag for the network setting \"network.node.commission.share.security.council.adder\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_network_network_submit_balances_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "network", "network.submit.balances.enabled")
+          "0xeca50c3fbd83d6dcf5b37d50ab9bbe5de2d34b721dc65c8dd34d8e1121662496"
+        ]
+      },
+      "description": "Allow flag for the network setting \"network.submit.balances.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_network_network_submit_prices_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "network", "network.submit.prices.enabled")
+          "0xb498852028eefb77ed9cd4c44711b44e96b69659ce02da48a776d4585051d2d0"
+        ]
+      },
+      "description": "Allow flag for the network setting \"network.submit.prices.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_network_network_submit_rewards_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "network", "network.submit.rewards.enabled")
+          "0x49c92d5f871bae223d99b7e10a073696e5e6a1571a0bd47d60cdcbbae321b9e1"
+        ]
+      },
+      "description": "Allow flag for the network setting \"network.submit.rewards.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_node_node_deposit_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "node", "node.deposit.enabled")
+          "0x08a181e6f302a967a4daff50a8a508e9d129dfe41512252e648762b0da85ee83"
+        ]
+      },
+      "description": "Allow flag for the node setting \"node.deposit.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_node_node_registration_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "node", "node.registration.enabled")
+          "0x65718c7651fc9a7e746a8fab40a202f327b207085724a3954ec1d7adbadde5d2"
+        ]
+      },
+      "description": "Allow flag for the node setting \"node.registration.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_node_node_smoothing_pool_registration_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "node", "node.smoothing.pool.registration.enabled")
+          "0x1e2063365f10a6aadd17ab3a057fe15bdaee29b05f6feb03e92d2ac4756a6c04"
+        ]
+      },
+      "description": "Allow flag for the node setting \"node.smoothing.pool.registration.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "allowed_node_node_vacant_minipools_enabled": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getBool(bytes32) view returns (bool)",
+        "args": [
+          // keccak256("dao.security.allowed.setting", "node", "node.vacant.minipools.enabled")
+          "0x03e3ac27b32941641d9705105afba7fef76a3cdc9f327911795266b3197581ab"
+        ]
+      },
+      "description": "Allow flag for the node setting \"node.vacant.minipools.enabled\". When true the council may change that setting.",
+      "severity": "HIGH"
+    },
+    "securityCouncil": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOSecurity")
+          "0x72244aef95b32bf9d0fd65a6e3212550a59abd181a93cfc66753a7197c36df07"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the security council, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "only its members can propose and pass a setting change here."
+        }
+      ]
+    }
+  }
+}

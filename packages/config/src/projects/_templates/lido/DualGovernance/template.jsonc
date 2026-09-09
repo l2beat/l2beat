@@ -25,6 +25,7 @@
       "copy": "getProposers",
       "edit": ["map", ["get", "account"]],
       "permissions": [
+        { "type": "act" },
         {
           "type": "interact",
           "description": "submit proposals to the Dual Governance timelock."

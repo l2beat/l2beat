@@ -58,6 +58,10 @@ export const barretenberg: BaseProject = {
         projectId: ProjectId('aztecnetwork'),
         sinceTimestamp: UnixTime(1774821600), //  Monday, 30. March 2026 at 04:52, aztec launch according to Basti
       },
+      {
+        projectId: ProjectId('payy'),
+        sinceTimestamp: UnixTime(1771324355), // 2026-02-17T10:32:35Z, payy rollup deployment on Ethereum
+      },
     ],
     verifierHashes: [
       // {
@@ -81,6 +85,29 @@ export const barretenberg: BaseProject = {
       //     'verificationSteps-0x059ad02b',
       //   ),
       // },
+      {
+        hash: '0x0f8581a994b714ef6fcffeaea9777e69e6bc7c0140a039a23afc764d8e863328',
+        name: 'Payy aggregate verifier',
+        sourceLink:
+          'https://github.com/polybase/payy/tree/dcd5d96ee15664a59bc24ed0dc2bb78b73ac5e36/noir/agg_final',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x14DACD534ddc676601B27f41Eb541a7951524a2F',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-0x0f8581a9',
+        ),
+        description:
+          'UltraHonk verifier generated with Barretenberg from the final proof aggregation Noir circuit (agg_final) of Payy. The hash is the verification key hash hardcoded in the deployed verifier contract.',
+      },
       {
         hash: '0x2f0ca3e610369fc41f7fb8a69995a96428fbf69d7dffd2b576e63ba4d9511ee1',
         name: 'Barretenberg Aztec verifier v5',

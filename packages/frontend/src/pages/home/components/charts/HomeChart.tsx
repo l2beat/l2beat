@@ -120,9 +120,7 @@ export function HomeChart({
             </defs>
             <Area
               dataKey="value"
-              type="monotone"
               stroke={stroke}
-              strokeWidth={1.75}
               fill={`url(#${fillId})`}
               fillOpacity={1}
               dot={false}
@@ -138,9 +136,7 @@ export function HomeChart({
             {withEthereum && (
               <Area
                 dataKey="ethereum"
-                type="monotone"
                 stroke={STROKE_COLOR.ethereum}
-                strokeWidth={1.75}
                 fill={`url(#${ethereumFillId})`}
                 fillOpacity={1}
                 dot={false}

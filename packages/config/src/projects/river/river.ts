@@ -51,7 +51,7 @@ export const river: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.rpc.river.build',
-        callsPerMinute: 300,
+        callsPerMinute: 200,
       },
     ],
   },

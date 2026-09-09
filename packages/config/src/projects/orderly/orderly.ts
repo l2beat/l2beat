@@ -18,11 +18,13 @@ export const orderly: ScalingProject = opStackL2({
   additionalPurposes: ['Exchange'],
   discovery,
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
     name: 'Orderly Network',
+    warning:
+      'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     shortName: 'Orderly',
     slug: 'orderly',
     description:

@@ -65,7 +65,7 @@ export function combineStructureAndColor(
   structure: StructureOutput,
   color: ColorOutput,
 ): DiscoveryOutput {
-  const result = merge({}, structure, color)
+  const result = merge({}, structure, color, { modelledAgainst: {} })
   result.entries = result.entries.map((e) => sortEntry(e))
   return result
 }
@@ -86,6 +86,7 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     sourceHashes: e.sourceHashes,
     proxyType: e.proxyType,
     description: e.description,
+    critical: e.critical,
     ignoreInWatchMode: e.ignoreInWatchMode,
     deployerAddress: e.deployerAddress,
     sinceTimestamp: e.sinceTimestamp,

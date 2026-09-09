@@ -41,6 +41,7 @@
     "test": "./scripts/run_tests.sh",
     "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
+    "env:sync": "tsx ./scripts/env/sync.ts",
     "railgun-observe": "tsx scripts/railgunObserve.ts",
     "starkware-costs": "tsx scripts/starkwareCosts.ts",
     "discover-tokens": "tsx scripts/discover-tokens/index.ts",

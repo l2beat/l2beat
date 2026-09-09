@@ -66,6 +66,8 @@ export const cyber: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Cyber',
+    warning:
+      'The fault proof system is deployed but is not functional. The dispute game commits to the placeholder absolute prestate from the OP Stack deployment template rather than to a reproducible op-program build for this chain. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'cyber',
     architectureImage: 'opstack-rollup-superchain-opfp-preu16',
     description:
@@ -110,8 +112,8 @@ export const cyber: ScalingProject = opStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://cyber.alt.technology/',
-        callsPerMinute: 300,
+        url: 'https://rpc.cyber.co',
+        callsPerMinute: 200,
       },
       {
         type: 'routescan',

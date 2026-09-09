@@ -32,7 +32,6 @@ export class EthRpcClient {
   constructor(
     private http: Http,
     private url: string,
-    private metricsLabel: string,
     private nextId: () => string | number = randomId,
     private timeout?: number,
     private readonly rpcMetrics?: RpcMetricsRecorder,
@@ -221,7 +220,6 @@ export class EthRpcClient {
 
     try {
       const response = await this.http.fetch(this.url, {
-        metricsLabel: this.metricsLabel,
         method: 'POST',
         body: JSON.stringify({
           jsonrpc: '2.0',

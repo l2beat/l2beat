@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolActions",
+  "category": "gov",
+  "description": "Placeholder action contract for token-holder governance; it exposes no privileged action in this deployment."
+}

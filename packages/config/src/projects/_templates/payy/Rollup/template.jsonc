@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main contract of the Payy ZK rollup. It stores the state root, escrows USDC backing the notes on the rollup, processes deposits (mints) and withdrawals (burns), and accepts state updates that must include an aggregated ZK proof and signatures from more than 2/3 of the current validator set.",
+  "ignoreRelatives": ["usdc"],
+  "ignoreMethods": ["currentRootHash"],
+  "ignoreInWatchMode": ["blockHeight", "rootHash"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can manage provers, validators, ZK verifiers, supported tokens and burn substitutors, and can overwrite the current state root via setRoot()."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "provers": {
+      "description": "Addresses allowed to submit state updates via verifyRollup(). Tracked from ProverAdded/ProverRemoved events, which do not cover the prover registered at initialization.",
+      "handler": {
+        "type": "event",
+        "select": "prover",
+        "add": { "event": "ProverAdded" },
+        "remove": { "event": "ProverRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can submit state updates (new state roots) via verifyRollup(), providing an aggregated ZK proof and validator signatures."
+        }
+      ]
+    },
+    "zkVerifiers": {
+      "description": "Currently registered ZK verifier contracts by verification key hash. Each state update references one of these keys for proof verification.",
+      "handler": {
+        "type": "event",
+        "select": ["verificationKey", "zkVerifierAddress"],
+        "dedupBy": "verificationKey",
+        "add": { "event": "VerifierAdded" },
+        "remove": { "event": "VerifierRemoved" }
+      },
+      "severity": "HIGH"
+    },
+    "zkVerifierKeys": {
+      "description": "Verification key hashes accepted for state update proofs.",
+      "severity": "HIGH"
+    },
+    "getValidatorSets": {
+      "description": "All validator sets with their activation heights. The currently active set must sign each state update with more than 2/3 of its members.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can sign state updates as a validator. Signatures from more than 2/3 of the current validator set are required for each update."
+        }
+      ]
+    }
+  }
+}

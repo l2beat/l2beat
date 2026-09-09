@@ -216,23 +216,32 @@ export function createInteropModule({
     },
   )
 
-  const relayApiClient = new RelayApiClient(new HttpClient(), logger)
-  const relayRootIndexer = new RelayRootIndexer(
-    logger,
-    config.interop.relay.safeTimeOffset,
-  )
-  const relayIndexer = new RelayIndexer(
-    config.interop.config.chains,
-    configStore,
-    config.interop.capture.chains.map((c) => c.id),
-    config.interop.relay,
-    relayApiClient,
-    db,
-    eventStore,
-    relayRootIndexer,
-    indexerService,
-    logger,
-  )
+  let relayIndexers: { root: RelayRootIndexer; child: RelayIndexer } | undefined
+  if (config.interop.relay) {
+    const relayApiClient = new RelayApiClient(
+      new HttpClient(),
+      logger,
+      config.interop.relay.apiKey,
+      { callsPerMinute: config.interop.relay.callsPerMinute },
+    )
+    const relayRootIndexer = new RelayRootIndexer(
+      logger,
+      config.interop.relay.safeTimeOffset,
+    )
+    const relayIndexer = new RelayIndexer(
+      config.interop.config.chains,
+      configStore,
+      config.interop.capture.chains.map((c) => c.id),
+      config.interop.relay,
+      relayApiClient,
+      db,
+      eventStore,
+      relayRootIndexer,
+      indexerService,
+      logger,
+    )
+    relayIndexers = { root: relayRootIndexer, child: relayIndexer }
+  }
 
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
@@ -269,8 +278,10 @@ export function createInteropModule({
 
     if (config.interop && config.interop.matching) {
       matcher.start()
-      await relayRootIndexer.start()
-      await relayIndexer.start()
+    }
+    if (relayIndexers) {
+      await relayIndexers.root.start()
+      await relayIndexers.child.start()
     }
     if (config.interop && config.interop.compare.enabled) {
       for (const compareLoop of compareLoops) {

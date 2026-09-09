@@ -49,6 +49,7 @@ export interface PrivacyProjectDetails {
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   hasTvl: boolean
+  detailedDescription?: string
   noteDiscovery?: PrivacyNoteDiscovery
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
@@ -256,6 +257,9 @@ export async function getPrivacyProjectDetails(
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
     hasTvl: project.tvsConfig !== undefined,
+    detailedDescription:
+      project.privacyInfo.detailedDescription ??
+      project.display.detailedDescription,
     noteDiscovery: project.privacyInfo.noteDiscovery,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,

@@ -103,6 +103,39 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-ADS",
+      "priceId": "adshares",
+      "symbol": "ADS",
+      "name": "Adshares",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/868/large/rnO9DyJ.png?1696502001",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 11,
+            "sinceTimestamp": 1623867835
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcfcEcFe2bD2FED07A9145222E8a7ad9Cf1Ccd22A",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 11,
+            "sinceTimestamp": 1623784100
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-AEVO",
       "priceId": "aevo-exchange",
       "symbol": "AEVO",
@@ -8666,6 +8699,53 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "arbitrum-sUSDai",
+      "priceId": "susdai",
+      "symbol": "sUSDai",
+      "name": "Staked USDai",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55861/large/sUSDai_Token_Full_Glyph.png?1755229072",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1750982400
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "susdai",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "sinceTimestamp": 1750982400
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usdai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x0A1a1A107E45b7Ced86833863f482BC5f4ed82EF",
+              "chain": "arbitrum",
+              "escrowAddress": "0x0B2b2B2076d95dda7817e785989fE353fe955ef9",
+              "decimals": 18,
+              "sinceTimestamp": 1750982400
+            }
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "arbitrum-sUSDe-1",
       "priceId": "ethena-staked-usde",
@@ -9470,6 +9550,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-USDai",
+      "priceId": "usdai",
+      "symbol": "USDai",
+      "name": "USDai",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55857/large/USDai_Token_Full_Glyph.png?1755229050",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0A1a1A107E45b7Ced86833863f482BC5f4ed82EF",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1750982400
+      },
+      "category": "stablecoin",
+      "source": "native",
       "isAssociated": false
     },
     {

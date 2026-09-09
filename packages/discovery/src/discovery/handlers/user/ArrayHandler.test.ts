@@ -497,5 +497,48 @@ describe(ArrayHandler.name, () => {
         ignoreRelative: undefined,
       })
     })
+
+    it('resolves uint64 indices above the safe integer range', async () => {
+      const selectors = [1556008542357238666n, 17912061998839310979n]
+      const uint64Method =
+        'function configs(uint64 selector) view returns (uint64)'
+      const uint64ArrayFragment = getArrayFragment(
+        toFunctionFragment(uint64Method),
+      )
+      const calledSelectors: bigint[] = []
+      const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
+        async callMethod<T>(
+          passedAddress: ChainSpecificAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
+          expect(passedAddress).toEqual(address)
+          calledSelectors.push(data[0] as bigint)
+          return (data[0] as bigint).toString() as T
+        },
+      })
+
+      const handler = new ArrayHandler(
+        'configs',
+        { type: 'array', method: uint64Method, indices: '{{ selectors }}' },
+        [],
+      )
+      const result = await handler.execute(provider, address, {
+        selectors: {
+          field: 'selectors',
+          value: selectors.map((x) => x.toString()),
+        },
+      })
+
+      expect(result).toEqual({
+        field: 'configs',
+        fragment: uint64ArrayFragment,
+        value: selectors.map((x) => x.toString()),
+        ignoreRelative: undefined,
+      })
+      expect(calledSelectors).toEqual(selectors)
+    })
   })
 })

@@ -97,6 +97,42 @@ describe(ProjectDiscovery.name, () => {
   })
 
   describe(ProjectDiscovery.prototype.getEoaActors.name, () => {
+    it('renders a shared EOA once using the base project name and permissions', () => {
+      const giver = ChainSpecificAddress.from('eth', '0x111')
+      const holder = ChainSpecificAddress.from('eth', '0x222')
+      const reader = mockObject<ConfigReader>({
+        readConfig: (name) => mockConfig(name),
+        readDiscoveryWithReferences: () => [
+          {
+            ...discoveredJsonStub,
+            entries: [
+              { type: 'Contract', address: giver, name: 'Giver' },
+              { type: 'EOA', address: holder, name: 'OwnName' },
+            ],
+            permissions: {
+              [holder]: {
+                receivedPermissions: [{ permission: 'upgrade', from: giver }],
+              },
+            },
+          },
+          {
+            ...discoveredJsonStub,
+            name: 'shared',
+            entries: [{ type: 'EOA', address: holder, name: 'ModuleName' }],
+          },
+        ],
+      })
+
+      const actors = new ProjectDiscovery(
+        'ExampleProject',
+        reader,
+      ).getEoaActors()
+
+      expect(actors.raw).toHaveLength(1)
+      expect(actors.linkable).toHaveLength(1)
+      expect(actors.linkable[0]?.name).toEqual('OwnName')
+    })
+
     it('should return empty arrays when no EOAs have permissions', () => {
       const configReaderEmpty = mockObject<ConfigReader>({
         readConfig: (projectName: string) => mockConfig(projectName),

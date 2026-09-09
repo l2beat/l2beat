@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AddressSetStorage",
+  "category": "core",
+  "description": "Set of addresses with O(1) membership, index lookup, and removal, kept in the shared registry. Only registered contracts can write."
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "CCIP 2.0 burn/mint pool for tokens whose issuer supports burning from the pool and minting to recipients. It enforces configured routes, RMN status, finality, rate limits, and fees, and can use AdvancedPoolHooks for additional checks or verifier requirements.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure remote chains and pools, the Router and administrators, accepted finality, rate limits, transfer fees, and advanced hooks."
+        },
+        {
+          "type": "interact",
+          "description": "withdraw fee-token balances held by this pool to an arbitrary recipient."
+        }
+      ]
+    },
+    "getToken": {
+      "description": "Token burned by this pool for outbound transfers and minted for inbound transfers."
+    },
+    "getSupportedChains": {
+      "description": "Remote chains currently configured on this pool.",
+      "edit": ["pipe", ["map", ["format", "CCIPChainName"]], ["sort"]]
+    },
+    "getAllowedFinalityConfig": {
+      "description": "Finality modes accepted by this pool. Full finality is always accepted; the decoded fields additionally show support for the safe head, the minimum block depth, and any currently unassigned flags.",
+      "edit": ["format", "CCIPAllowedFinality"]
+    },
+    "getAdvancedPoolHooks": {
+      "description": "Optional hook that can add transfer checks or token-specific CCVs. If unset, the pool returns no token-specific CCVs and the ramps use the route's default CCVs; mandatory route CCVs are applied separately.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block transfers through preflight or postflight checks and require token-specific CCVs."
+        }
+      ]
+    },
+    "router": {
+      "copy": "getDynamicConfig",
+      "edit": ["get", "router"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "select the OnRamps and OffRamps authorized to invoke this pool for each configured remote chain."
+        }
+      ]
+    },
+    "rateLimitAdmin": {
+      "copy": "getDynamicConfig",
+      "edit": ["get", "rateLimitAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change this pool's inbound and outbound rate limits."
+        }
+      ]
+    },
+    "feeAdmin": {
+      "copy": "getDynamicConfig",
+      "edit": ["get", "feeAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw fee-token balances held by this pool to an arbitrary recipient."
+        }
+      ]
+    },
+    "getRmnProxy": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block this pool's transfers when RMN marks a remote chain or the global subject as cursed."
+        }
+      ]
+    }
+  }
+}
