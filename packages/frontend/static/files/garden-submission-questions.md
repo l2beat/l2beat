@@ -1,6 +1,7 @@
 # Submit your protocol — The Infinite Garden
 
 Answer what applies and publish as a forum post.
+
 ---
 
 ## 1. The basics
@@ -19,9 +20,9 @@ Answer what applies and publish as a forum post.
    fully permissionless / allowlist or KYC gate / an operator must approve
 7. Can anything be paused or frozen? If so, what, and by whom?
 8. With the team, the frontend and every relayer gone, can users still
-    withdraw? 
+   withdraw?
 9. Do users depend on relayers or operators? How many are active, can users
-    bypass them, and are there independent alternatives?
+   bypass them, and are there independent alternatives?
 
 ## 3. Open source
 

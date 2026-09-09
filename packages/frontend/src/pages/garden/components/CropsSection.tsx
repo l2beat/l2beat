@@ -1,3 +1,4 @@
+import type { ResolvedCropEvaluation } from '@l2beat/config/build/crops/canonicalCrops'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import {
@@ -5,7 +6,7 @@ import {
   type CropCriteria,
   REFERENCE_SLOT,
 } from '../cropCriteria'
-import { CROP_COLUMNS } from '../crops'
+import { CROP_COLUMNS, type CropDefinition } from '../crops'
 import { CropBadge } from './CropBadge'
 import { SectionHeading } from './SectionHeading'
 
@@ -14,29 +15,44 @@ export function CropsSection() {
     <section className="mt-8 md:mt-12">
       <SectionHeading
         title="The four crops"
-        description="Each crop is judged on its own and here is the criteria."
+        description="Each crop is judged on its own. Here are the criteria."
       />
       <div className="flex flex-col gap-4 md:gap-6">
-        {CROP_CRITERIA.map((criteria, index) => (
-          <CropCard key={criteria.key} criteria={criteria} index={index} />
+        {CROP_COLUMNS.map((column, index) => (
+          <CropCard
+            key={column.key}
+            column={column}
+            criteria={CROP_CRITERIA[column.key]}
+            index={index}
+          />
         ))}
       </div>
     </section>
   )
 }
 
+/** A healthy plant, with the crop's one-line summary behind its tooltip. */
+function sampleEvaluation(summary: string): ResolvedCropEvaluation {
+  return {
+    sentiment: 'good',
+    status: 'reviewed',
+    license: undefined,
+    points: [summary],
+    missing: [],
+    additionalConsiderations: [],
+    notReviewed: [],
+  }
+}
+
 function CropCard({
+  column,
   criteria,
   index,
 }: {
+  column: CropDefinition
   criteria: CropCriteria
   index: number
 }) {
-  const column = CROP_COLUMNS.find((it) => it.key === criteria.key)
-  if (!column) {
-    return null
-  }
-
   return (
     <PrimaryCard className="md:p-8">
       <div className="flex items-start gap-4 md:gap-5">
@@ -44,14 +60,14 @@ function CropCard({
           letter={column.letter}
           label={column.label}
           note={column.note}
-          evaluation={{ sentiment: 'good', points: [criteria.summary] }}
+          evaluation={sampleEvaluation(criteria.summary)}
           delay={index * 0.12}
         />
         <div>
           <h3 className="font-bold text-heading-20 md:text-heading-24">
             {column.label}
           </h3>
-          <p className="mt-1 font-medium text-[#4f7a3e] text-paragraph-14 md:text-paragraph-16 dark:text-[#8fbc76]">
+          <p className="mt-1 font-medium text-garden-accent text-paragraph-14 md:text-paragraph-16">
             {criteria.question}
           </p>
         </div>
@@ -92,7 +108,7 @@ function CropCard({
               >
                 <span
                   aria-hidden
-                  className="mt-[9px] h-[2px] w-2.5 shrink-0 rounded-full bg-[#e0a52a] dark:bg-[#ffc107]"
+                  className="mt-[9px] h-[2px] w-2.5 shrink-0 rounded-full bg-crop-warning"
                 />
                 {pullDown}
               </li>
@@ -104,11 +120,7 @@ function CropCard({
   )
 }
 
-/**
- * A minimum, with the outside authority linked in place of `REFERENCE_SLOT`.
- * Without a slot the sentence renders as written, so only the criteria that
- * defer to someone carry a link.
- */
+/** A minimum, with `reference` linked in place of `REFERENCE_SLOT`. */
 function Minimum({
   text,
   reference,
@@ -143,7 +155,7 @@ function CheckMark() {
       width={16}
       height={16}
       viewBox="0 0 16 16"
-      className="mt-0.5 shrink-0 text-[#1a9d4f] dark:text-[#15ca60]"
+      className="mt-0.5 shrink-0 text-crop-good"
       aria-hidden
     >
       <path

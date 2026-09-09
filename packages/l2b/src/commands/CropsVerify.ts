@@ -20,10 +20,7 @@ import {
 import { defaultRpcUrl } from '../implementations/crops/rpc'
 import { assertSchemaUid } from '../implementations/crops/schema'
 
-/**
- * Read-only. Proves that the committed ledger, the config and the chain still
- * agree, and exits non-zero when they do not so it can gate CI.
- */
+/** Read-only. Exits non-zero when ledger, config and chain disagree, so it can gate CI. */
 export const CropsVerify = command({
   name: 'crops-verify',
   description:
@@ -101,8 +98,6 @@ export const CropsVerify = command({
       }
     }
 
-    // More than one live attestation is not a drift, but a reader cannot tell
-    // which one speaks for us, so it has to be reported.
     if (ledger.live.length > 1) {
       problems.push(
         `${ledger.live.length} attestations are live at once - run \`l2b crops-attest --execute\` to revoke the extras`,

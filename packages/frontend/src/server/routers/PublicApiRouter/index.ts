@@ -19,8 +19,6 @@ import { getScalingTvsProjectBreakdownApiData } from './getScalingTvsProjectBrea
 const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
 const ActivityRangeSchema = v.enum(['30d', '90d', '180d', '1y', 'max'])
 
-// Enough for a wallet to ask about a whole transaction's worth of contracts
-// without turning the endpoint into a bulk export.
 const MAX_LOOKUP_ADDRESSES = 50
 
 export function createPublicApiRouter() {
@@ -139,8 +137,7 @@ export function createPublicApiRouter() {
     },
   )
 
-  // The garden endpoints are keyless on purpose: wallets and other interfaces
-  // should be able to show the CROPS evaluations without onboarding with us.
+  // The garden endpoints are keyless on purpose, so wallets need no onboarding.
   router.get('/api/garden/crops', async (_, res) => {
     res.json(await getGardenCropsApiData())
   })

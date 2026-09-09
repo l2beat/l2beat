@@ -1,9 +1,6 @@
 import { ProjectService } from '@l2beat/config'
-import { ATTESTATION_SCHEMA } from '@l2beat/config/build/crops/eas'
 import { decodeAbiParameters, encodeAbiParameters, type Hex } from 'viem'
-import { assertAnonymous } from './anonymity'
 
-/** The attested fields, in schema order. */
 export const ATTESTATION_PARAMS = [
   { name: 'projectIds', type: 'string[]' },
   { name: 'reviewedAt', type: 'uint64' },
@@ -11,13 +8,12 @@ export const ATTESTATION_PARAMS = [
 ] as const
 
 export interface CropPayload {
-  /** The whole reviewed set, sorted. Details for each id live in the API. */
+  /** Sorted. */
   projectIds: string[]
   reviewedAt: number
   revision: number
 }
 
-/** Every project that declares crops, by id, sorted. */
 export async function getAttestedProjectIds(
   ps = new ProjectService(),
 ): Promise<string[]> {
@@ -36,11 +32,6 @@ export function toPayload(
 }
 
 export function encodePayload(payload: CropPayload): Hex {
-  // The anonymity rule applies to what actually lands onchain, so check the
-  // schema and the string values rather than the hex blob they encode to.
-  assertAnonymous('The attestation schema', ATTESTATION_SCHEMA)
-  assertAnonymous('The attested set', payload.projectIds.join(' '))
-
   return encodeAbiParameters(ATTESTATION_PARAMS, [
     payload.projectIds,
     BigInt(payload.reviewedAt),
@@ -60,7 +51,6 @@ export function decodePayload(data: Hex): CropPayload {
   }
 }
 
-/** Whether an onchain set still says what the config says. Order-insensitive. */
 export function setMatches(a: string[], b: string[]): boolean {
   if (a.length !== b.length) {
     return false
@@ -77,8 +67,4 @@ export function diffSet(
     added: wanted.filter((x) => !current.includes(x)),
     removed: current.filter((x) => !wanted.includes(x)),
   }
-}
-
-export function describePayload(payload: CropPayload): string {
-  return `${payload.projectIds.length} projects rev=${payload.revision}`
 }

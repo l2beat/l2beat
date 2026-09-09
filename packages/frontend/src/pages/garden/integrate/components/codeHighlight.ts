@@ -1,8 +1,5 @@
-// A deliberately small, lenient highlighter for the two languages this page
-// shows. Lenient is the requirement, not a shortcut: the response examples
-// contain `...` and `…` where fields are elided, so a real JSON parser would
-// reject every one of them. This scans and never throws - anything it does not
-// recognise falls through as plain text.
+// A small, lenient highlighter: the examples contain `…` elisions a real JSON
+// parser would reject. Anything unrecognised falls through as plain text.
 
 export type CodeLanguage = 'json' | 'html' | 'text'
 
@@ -140,7 +137,6 @@ function tokenizeHtml(code: string): Token[] {
   return merge(out)
 }
 
-/** Reads a double-quoted run starting at `start`, honouring backslash escapes. */
 function readString(code: string, start: number): number {
   let i = start + 1
   while (i < code.length) {
@@ -154,7 +150,6 @@ function readString(code: string, start: number): number {
   return code.length
 }
 
-/** Fewer spans in the DOM, and a cleaner tree to read in devtools. */
 function merge(tokens: Token[]): Token[] {
   const out: Token[] = []
   for (const token of tokens) {

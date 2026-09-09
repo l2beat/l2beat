@@ -8,39 +8,33 @@ export type AttestPlanKind = 'unchanged' | 'new' | 'changed'
 
 export interface AttestPlan {
   kind: AttestPlanKind
-  /** The set config says we stand behind, sorted. */
+  /** Sorted. */
   projectIds: string[]
   /** The live attestation that already says exactly that, if there is one. */
   keeper: CropAttestation | undefined
-  /** Ids gained and lost against what the ledger currently covers. */
+  /** Against what the ledger currently covers. */
   added: string[]
   removed: string[]
-  /** Everything live onchain that this run should revoke. */
   revoke: Revocation[]
-  /** The attestation to publish. Absent when the keeper already says it. */
+  /** Absent when the keeper already says it. */
   payload: CropPayload | undefined
   reason: string
 }
 
 export interface PlanInput {
-  /** Project ids declaring crops in config, sorted. */
+  /** Sorted. */
   projectIds: string[]
-  /** What the committed ledger claims is live. */
   ledger: CropAttestation[]
-  /** Onchain state for every uid in the ledger, by uid. */
+  /** By uid. */
   onchain: Map<string, OnchainAttestation>
-  /** Timestamp stamped on a new attestation. */
   now: number
 }
 
 /**
- * The whole set is one attestation, so there is one decision to make rather
- * than one per project: is exactly one attestation live, under the current
- * schema, naming exactly the projects config names?
- *
- * Anything else is replaced, and every other live uid we know about is revoked
- * in the same run. Two live attestations would leave a reader no way to tell
- * which one speaks for us, which is worse than a brief gap with none.
+ * One decision: is exactly one attestation live, under the current schema,
+ * naming exactly the projects config names? Anything else is replaced, and
+ * every other live uid is revoked in the same run - two live attestations
+ * would leave a reader unable to tell which one speaks for us.
  */
 export function planAttestation(input: PlanInput): AttestPlan {
   const live = input.ledger.flatMap((entry) => {
@@ -48,8 +42,7 @@ export function planAttestation(input: PlanInput): AttestPlan {
     return onchain && onchain.revocationTime === 0 ? [{ entry, onchain }] : []
   })
 
-  // The ledger is a cache; the chain decides. Reading the set back out means a
-  // hand-edited ledger cannot make us skip a publish we actually owe.
+  // The ledger is a cache; the chain decides.
   const keeper = live.find(
     ({ onchain }) =>
       isCurrentSchema(onchain.schema) &&
@@ -97,12 +90,10 @@ function isCurrentSchema(schema: string): boolean {
   return schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase()
 }
 
-/** What the ledger says we cover today, across however many attestations. */
 function coveredIds(ledger: CropAttestation[]): string[] {
   return [...new Set(ledger.flatMap((x) => x.projectIds))].sort()
 }
 
-/** Monotonic across revocations, so a revision is never reused. */
 function nextRevision(ledger: CropAttestation[]): number {
   return Math.max(0, ...ledger.map((x) => x.revision)) + 1
 }

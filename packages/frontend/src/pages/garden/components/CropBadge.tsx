@@ -1,9 +1,8 @@
+import type { OsiLicense, ProjectCropStatus } from '@l2beat/config'
 import type {
-  OsiLicense,
-  ProjectCropEvaluation,
-  ProjectCropStatus,
-  Sentiment,
-} from '@l2beat/config'
+  CropSentiment,
+  ResolvedCropEvaluation,
+} from '@l2beat/config/build/crops/canonicalCrops'
 import type { CSSProperties, ReactNode } from 'react'
 import {
   Tooltip,
@@ -14,68 +13,54 @@ import { SentimentText } from '~/components/SentimentText'
 import { cn } from '~/utils/cn'
 import { CROP_SENTIMENT_LABELS, CROP_STATUS_LABELS } from '../crops'
 
-// The shape of the plant is driven by the sentiment (quality) of the crop.
 type PlantShape = 'flower' | 'bud' | 'wilt'
 
-const PLANT_SHAPE: Record<Sentiment, PlantShape> = {
+const PLANT_SHAPE: Record<CropSentiment, PlantShape> = {
   good: 'flower',
   neutral: 'flower',
-  UnderReview: 'bud',
   warning: 'bud',
   bad: 'wilt',
 }
 
-// The color of the plant, driven by the sentiment.
-const PLANT_COLOR: Record<Sentiment, string> = {
-  good: 'text-[#1a9d4f] dark:text-[#15ca60]',
-  neutral: 'text-[#bcbfc7] dark:text-[#5a5f68]',
-  UnderReview: 'text-[#e0a52a] dark:text-[#ffc107]',
-  warning: 'text-[#e0a52a] dark:text-[#ffc107]',
-  bad: 'text-[#ef4d4d] dark:text-[#ff5d5d]',
+// The chip border is separate because the dashed border overrides it.
+const PALETTE: Record<
+  CropSentiment,
+  { plant: string; chip: string; chipBorder: string }
+> = {
+  good: {
+    plant: 'text-crop-good',
+    chip: 'bg-crop-good/10 text-crop-good-ink',
+    chipBorder: 'border-crop-good/50',
+  },
+  warning: {
+    plant: 'text-crop-warning',
+    chip: 'bg-crop-warning/10 text-crop-warning-ink',
+    chipBorder: 'border-crop-warning/50',
+  },
+  bad: {
+    plant: 'text-crop-bad',
+    chip: 'bg-crop-bad/10 text-crop-bad-ink',
+    chipBorder: 'border-crop-bad/50',
+  },
+  neutral: {
+    plant: 'text-crop-neutral',
+    chip: 'bg-crop-neutral/10 text-crop-neutral-ink',
+    chipBorder: 'border-crop-neutral/50',
+  },
 }
 
-// The chip fill + text color, driven by the sentiment.
-const CHIP_FILL: Record<Sentiment, string> = {
-  good: 'bg-[#eef9f1] text-[#16863f] dark:bg-[#15ca60]/10 dark:text-[#3fe07f]',
-  neutral: 'bg-[#f7f8fa] text-[#aab0b8] dark:bg-white/5 dark:text-[#6b7079]',
-  UnderReview:
-    'bg-[#fdf7ea] text-[#b07d18] dark:bg-[#ffc107]/10 dark:text-[#ffcf3a]',
-  warning:
-    'bg-[#fdf7ea] text-[#b07d18] dark:bg-[#ffc107]/10 dark:text-[#ffcf3a]',
-  bad: 'bg-[#fdeeee] text-[#d83a3a] dark:bg-[#ff5d5d]/10 dark:text-[#ff8080]',
-}
-
-// The solid chip border, driven by the sentiment, used for reviewed crops.
-const CHIP_BORDER: Record<Sentiment, string> = {
-  good: 'border-[#b6e0c4] dark:border-[#15ca60]/50',
-  neutral: 'border-[#e0e2e8] dark:border-[#3a3f47]',
-  UnderReview: 'border-[#efd9a6] dark:border-[#ffc107]/50',
-  warning: 'border-[#efd9a6] dark:border-[#ffc107]/50',
-  bad: 'border-[#f4c7c7] dark:border-[#ff5d5d]/50',
-}
-
-// Partially/not reviewed crops always get a grey dashed border, regardless of
-// sentiment - the dash only signals the review state, not the color.
-const CHIP_DASHED_BORDER =
-  'border-dashed border-[#aab0b8] dark:border-[#5a5f68]'
+// The dash signals the review state, not the colour, so it is always grey.
+const CHIP_DASHED_BORDER = 'border-dashed border-crop-neutral'
 
 interface Props {
   letter: string
   label: string
-  /** Caveat shown above the findings - see `CropDefinition.note`. */
   note?: string
-  /**
-   * A resolved evaluation is assignable here: the license arrives already
-   * looked up, so the plant never has to reach into the OSI list itself.
-   */
-  evaluation: ProjectCropEvaluation & { license?: OsiLicense }
+  evaluation: ResolvedCropEvaluation
   delay: number
 }
 
 export function CropBadge({ letter, label, note, evaluation, delay }: Props) {
-  const status = resolveStatus(evaluation)
-  const sentiment = resolveSentiment(evaluation)
-
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -83,38 +68,27 @@ export function CropBadge({ letter, label, note, evaluation, delay }: Props) {
           <CropPlantBadge
             letter={letter}
             label={label}
-            status={status}
-            sentiment={sentiment}
+            status={evaluation.status}
+            sentiment={evaluation.sentiment}
             delay={delay}
           />
         </span>
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
-        <SentimentText sentiment={sentiment} className="font-medium text-base">
-          {`${label}: ${getCropStatusText(status, sentiment)}`}
+        <SentimentText
+          sentiment={evaluation.sentiment}
+          className="font-medium text-base"
+        >
+          {`${label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
         </SentimentText>
         <CropNote note={note} />
-        <CropSection
-          title="What's good"
-          items={evaluation.points}
-          license={evaluation.license}
-        />
-        <CropSection title="What is missing" items={evaluation.missing} />
-        <CropSection
-          title="Additional considerations"
-          items={evaluation.additionalConsiderations}
-        />
-        <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
+        <CropFindings evaluation={evaluation} />
       </TooltipContent>
     </Tooltip>
   )
 }
 
-/**
- * The plant and its lettered chip, with no tooltip around them. Used on its
- * own where the reasoning is already on the page in full, so hovering would
- * only repeat what the reader can see.
- */
+/** The plant and its chip without the tooltip, for where the findings are on the page. */
 export function CropPlantBadge({
   letter,
   label,
@@ -126,14 +100,13 @@ export function CropPlantBadge({
   letter: string
   label: string
   status: ProjectCropStatus
-  sentiment: Sentiment
+  sentiment: CropSentiment
   delay: number
-  /** Smaller plant and chip, for a page that shows all four at once. */
   compact?: boolean
 }) {
-  // The dash marks an assessment that is not finished. `fullyTransparent` is
-  // finished - there was simply nothing to grade - so its ring stays solid.
+  // `fullyTransparent` is a finished assessment, so its ring stays solid.
   const isDashed = status === 'partiallyReviewed' || status === 'notReviewed'
+  const palette = PALETTE[sentiment]
   return (
     <span
       className={cn(
@@ -146,7 +119,7 @@ export function CropPlantBadge({
         className={cn(
           'flex items-end',
           compact ? 'h-8' : 'h-10',
-          PLANT_COLOR[sentiment],
+          palette.plant,
         )}
       >
         <CropPlant
@@ -161,8 +134,8 @@ export function CropPlantBadge({
           'flex items-center justify-center rounded-full border-[1.5px] font-semibold',
           compact ? 'size-[21px]' : 'size-[26px]',
           letter.length > 1 || compact ? 'text-[10px]' : 'text-xs',
-          CHIP_FILL[sentiment],
-          isDashed ? CHIP_DASHED_BORDER : CHIP_BORDER[sentiment],
+          palette.chip,
+          isDashed ? CHIP_DASHED_BORDER : palette.chipBorder,
         )}
         style={{
           animation: `garden-pop .5s ease-out ${delay}s both`,
@@ -174,25 +147,29 @@ export function CropPlantBadge({
   )
 }
 
-/** Defaults `status` the way the config leaves it implicit. */
-export function resolveStatus(
-  evaluation: ProjectCropEvaluation,
-): ProjectCropStatus {
-  return evaluation.status ?? 'reviewed'
+/** Shared by the garden tooltip and the project page, so the two cannot drift. */
+export function CropFindings({
+  evaluation,
+}: {
+  evaluation: ResolvedCropEvaluation
+}) {
+  return (
+    <>
+      <CropSection
+        title="What's good"
+        items={evaluation.points}
+        license={evaluation.license}
+      />
+      <CropSection title="What is missing" items={evaluation.missing} />
+      <CropSection
+        title="Additional considerations"
+        items={evaluation.additionalConsiderations}
+      />
+      <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
+    </>
+  )
 }
 
-/** A not-reviewed crop has no color, so it always resolves to neutral. */
-export function resolveSentiment(evaluation: ProjectCropEvaluation): Sentiment {
-  return resolveStatus(evaluation) === 'notReviewed'
-    ? 'neutral'
-    : (evaluation.sentiment ?? 'neutral')
-}
-
-/**
- * The license behind a green Open source crop, worded to sit among the other
- * findings. It carries the OSI's own name for the license and links to their
- * page, because it is the one claim here a reader can go and check.
- */
 function CropLicenseText({ license }: { license: OsiLicense }) {
   return (
     <>
@@ -210,11 +187,7 @@ function CropLicenseText({ license }: { license: OsiLicense }) {
   )
 }
 
-/**
- * The standing caveat for a crop, ahead of anything we found about one
- * protocol. Muted because it is context rather than a finding, but never
- * hidden: a reader who only reads the plant should still meet it.
- */
+/** The standing caveat for a crop - see `CropDefinition.note`. */
 export function CropNote({
   note,
   className,
@@ -228,17 +201,17 @@ export function CropNote({
   return <p className={cn('mt-1.5 text-secondary', className)}>{note}</p>
 }
 
-export function CropSection({
+function CropSection({
   title,
   items,
   license,
 }: {
   title: string
-  items: string[] | undefined
-  /** Rendered as the first bullet of this group - see `CropBullets`. */
+  items: string[]
+  /** Rendered as the first bullet. */
   license?: OsiLicense | undefined
 }) {
-  if (!license && (items === undefined || items.length === 0)) {
+  if (!license && items.length === 0) {
     return null
   }
   return (
@@ -246,35 +219,17 @@ export function CropSection({
       <p className="mt-2.5 font-semibold text-[10px] text-secondary uppercase tracking-wider">
         {title}
       </p>
-      <CropBullets items={items} license={license} className="mt-1" />
+      <ul className="mt-1 flex flex-col gap-1">
+        {license && (
+          <CropBullet>
+            <CropLicenseText license={license} />
+          </CropBullet>
+        )}
+        {items.map((item) => (
+          <CropBullet key={item}>{item}</CropBullet>
+        ))}
+      </ul>
     </>
-  )
-}
-
-export function CropBullets({
-  items,
-  license,
-  className,
-}: {
-  items: string[] | undefined
-  /** Rendered as the first bullet, ahead of the findings it underpins. */
-  license?: OsiLicense | undefined
-  className?: string
-}) {
-  if (!license && (items === undefined || items.length === 0)) {
-    return null
-  }
-  return (
-    <ul className={cn('flex flex-col gap-1', className)}>
-      {license && (
-        <CropBullet>
-          <CropLicenseText license={license} />
-        </CropBullet>
-      )}
-      {items?.map((item) => (
-        <CropBullet key={item}>{item}</CropBullet>
-      ))}
-    </ul>
   )
 }
 
@@ -292,7 +247,7 @@ function CropBullet({ children }: { children: ReactNode }) {
 
 export function getCropStatusText(
   status: ProjectCropStatus,
-  sentiment: Sentiment,
+  sentiment: CropSentiment,
 ): string {
   if (status === 'notReviewed') {
     return CROP_STATUS_LABELS.notReviewed
@@ -306,21 +261,18 @@ export function getCropStatusText(
   return CROP_SENTIMENT_LABELS[sentiment]
 }
 
-/**
- * The plant on its own, without the letter chip - used by the legend on the
- * plant legend, which explains the shapes rather than a single crop.
- */
+/** The plant without the chip, for the legend. */
 export function CropPlantSample({
   status,
   sentiment,
   delay,
 }: {
   status: ProjectCropStatus
-  sentiment: Sentiment
+  sentiment: CropSentiment
   delay: number
 }) {
   return (
-    <span className={cn('flex h-10 items-end', PLANT_COLOR[sentiment])}>
+    <span className={cn('flex h-10 items-end', PALETTE[sentiment].plant)}>
       <CropPlant status={status} sentiment={sentiment} delay={delay} />
     </span>
   )
@@ -333,7 +285,7 @@ function CropPlant({
   compact,
 }: {
   status: ProjectCropStatus
-  sentiment: Sentiment
+  sentiment: CropSentiment
   delay: number
   compact?: boolean
 }) {
@@ -500,10 +452,8 @@ function CropPlant({
 }
 
 /**
- * The whole flower, drawn as an outline instead of a solid shape: every part of
- * it is there, and you see straight through it. Used for a property a protocol
- * makes no claim to and hides nothing about, which is an answer rather than a
- * gap - so unlike the not-reviewed ghost, the plant is complete and unbroken.
+ * The whole flower as an unbroken outline: complete and see-through, for a
+ * property the protocol makes no claim to. The not-reviewed ghost is dashed.
  */
 function TransparentFlower({
   grow,
@@ -516,19 +466,15 @@ function TransparentFlower({
   leafR: CSSProperties
   bloom: CSSProperties
 }) {
-  // Outline only, and unbroken: the plant is whole and simply see-through,
-  // which is the opposite claim to the dashes on a crop nobody has assessed.
   const outline = {
     stroke: 'currentColor',
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
   } as const
 
-  // Every closed part of the plant inherits an opaque fill in the color of the
-  // surface behind it, so that where parts overlap - petal on petal, leaf and
-  // bloom on stem - the outline underneath is covered and only the silhouette
-  // of the plant reads as a line. Consumers sitting on a tinted card override
-  // `--crop-plant-bg`; everyone else is on the plain surface.
+  // Closed parts are filled in the colour of the surface behind them, so where
+  // they overlap only the silhouette reads as a line. A tinted card overrides
+  // `--crop-plant-bg`.
   const knockout: CSSProperties = {
     fill: 'var(--crop-plant-bg, var(--surface-primary))',
   }
@@ -555,24 +501,12 @@ function TransparentFlower({
           style={leafR}
         />
         <g style={bloom}>
-          {/*
-            The four petals of the solid flower are circles at (17,5.2),
-            (12.4,9), (21.6,9) and (17,12.6) with r=3.2. Drawn as circles they
-            overlap, and outlined that would leave four arcs cutting across the
-            bloom - so this is the outline of their union instead: the four
-            major arcs, meeting at the outer intersections of each adjacent
-            pair. Same silhouette as the solid flower, one unbroken line.
-          */}
+          {/* The outline of the union of the solid flower's four petal circles. */}
           <path
             d="M13.96 6.21 A3.2 3.2 0 1 1 20.04 6.21 A3.2 3.2 0 1 1 20.11 11.83 A3.2 3.2 0 1 1 13.89 11.83 A3.2 3.2 0 1 1 13.96 6.21 Z"
             strokeWidth="1.3"
             {...outline}
           />
-          {/*
-            The eye, standing in for the yellow center of a solid flower. It
-            sits wholly inside the petal union - which is also what plugs the
-            hole the four circles leave in the middle - so it goes on top.
-          */}
           <circle cx="17" cy="9" r="2.05" strokeWidth="1.2" {...outline} />
         </g>
       </g>
@@ -619,25 +553,19 @@ function Soil({ status }: { status: ProjectCropStatus }) {
       <>
         <path
           d="M17 32.2 A12 3.2 0 0 0 17 38.6 Z"
-          className="fill-[#cfc4b0] dark:fill-[#2a251d]"
+          className="fill-garden-soil"
         />
         <path
           d="M17 32.2 A12 3.2 0 0 1 17 38.6"
           fill="none"
           strokeWidth="1.1"
           strokeDasharray="3 2.6"
-          className="stroke-[#bcbfc7] dark:stroke-[#5a5f68]"
+          className="stroke-crop-neutral"
         />
       </>
     )
   }
   return (
-    <ellipse
-      cx="17"
-      cy="35.4"
-      rx="12"
-      ry="3.2"
-      className="fill-[#cfc4b0] dark:fill-[#2a251d]"
-    />
+    <ellipse cx="17" cy="35.4" rx="12" ry="3.2" className="fill-garden-soil" />
   )
 }

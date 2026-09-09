@@ -22,24 +22,39 @@ import {
 import { ps } from '~/server/projects'
 import { getGardenProjectPath } from './getGardenProjectPath'
 
-const BASE_URL = 'https://l2beat.com'
+// API responses link to production whatever host served them.
+export const BASE_URL = 'https://l2beat.com'
 
-/** The current onchain claim: which project ids we stand behind, and when. */
-export function getAttestationsMeta() {
+export interface CropsAttestationsMeta {
+  network: string
+  chainId: number
+  isTestnet: boolean
+  eas: string
+  schemaUid: string
+  schema: string
+  attester: string | null
+  current: {
+    uid: string
+    revision: number
+    reviewedAt: number
+    projectIds: string[]
+    txHash: string
+    explorerUrl: string
+  } | null
+}
+
+export function getAttestationsMeta(): CropsAttestationsMeta {
   const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
   const ledger = getCropAttestationLedger(ATTESTATION_NETWORK)
   const current = getCurrentCropAttestation(ATTESTATION_NETWORK)
   return {
     network: network.name,
     chainId: network.chainId,
-    // Testnet attestations are a rehearsal, not a production claim. Consumers
-    // must be able to tell without reading our docs.
     isTestnet: network.isTestnet,
     eas: network.eas,
     schemaUid: ATTESTATION_SCHEMA_UID,
     schema: ATTESTATION_SCHEMA,
     attester: ledger?.attester ?? null,
-    // One attestation covers the whole set. Null before the first publish.
     current: current
       ? {
           uid: current.uid,
@@ -64,21 +79,13 @@ export interface CropsApiProject {
   id: string
   slug: string
   name: string
-  /** Absolute url of the project page. Null for projects without one. */
+  /** Null for projects without a page. */
   href: string | null
   crops: ResolvedCrops
-  /**
-   * Whether the review clears the bar for the garden. False while any crop is
-   * red, so a consumer showing the garden can apply the same rule we do.
-   */
+  /** False while any crop is red - see `qualifiesForGarden`. */
   inGarden: boolean
-  /** Whether the current onchain attestation names this project. */
   attested: boolean
-  /**
-   * The attestation covering this project. Shared by every attested project -
-   * one attestation names the whole set - so the uid is the same for all of
-   * them and only membership differs.
-   */
+  /** One attestation names the whole set, so this is the same for every attested project. */
   attestation: CropsApiAttestation | null
 }
 
@@ -112,8 +119,6 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
         crops,
         inGarden: qualifiesForGarden(crops),
         attested: isAttested,
-        // Null rather than omitted, so consumers do not have to distinguish
-        // "no field" from "reviewed but not attested yet".
         attestation: isAttested ? attestation : null,
       }
     })

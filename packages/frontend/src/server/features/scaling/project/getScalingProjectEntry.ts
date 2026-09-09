@@ -394,8 +394,7 @@ export async function getScalingProjectEntry(
 
   const projectWithIcon = withProjectIcon(project)
 
-  // First, where the review used to sit as a callout under the summary: the
-  // CROPS verdict is a reading of the whole protocol, not one of its parts.
+  // First: the CROPS verdict is a reading of the whole protocol.
   const gardenCrops = getProjectGardenCrops(project.crops)
   if (gardenCrops) {
     sections.push({

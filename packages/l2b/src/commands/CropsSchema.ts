@@ -45,9 +45,9 @@ export const CropsSchema = command({
     }
 
     assertSchemaUid()
-    assertAnonymous('The attestation schema', ATTESTATION_SCHEMA)
 
     const network = args.network
+    assertAnonymous(network, 'The attestation schema', ATTESTATION_SCHEMA)
     console.log(chalk.bold('schema  '), ATTESTATION_SCHEMA)
     console.log(chalk.bold('resolver'), ATTESTATION_SCHEMA_RESOLVER)
     console.log(chalk.bold('revocable'), ATTESTATION_SCHEMA_REVOCABLE)
@@ -68,8 +68,7 @@ export const CropsSchema = command({
       return
     }
 
-    // Built before prompting, so a missing key fails immediately rather than
-    // after the operator has already confirmed.
+    // Before the prompt, so a missing key fails before the operator confirms.
     const signer = createSigner(rpcUrl)
     console.log(`\nattester ${signer.account?.address} on ${network.name}`)
     if (network.isTestnet) {

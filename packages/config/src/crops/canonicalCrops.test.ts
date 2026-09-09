@@ -22,7 +22,6 @@ describe('canonicalCrops', () => {
     })
 
     it('makes a not-reviewed crop neutral, whatever the config says', () => {
-      // A crop we have not reviewed makes no claim about quality.
       const resolved = resolveCropEvaluation({
         sentiment: 'good',
         status: 'notReviewed',
@@ -52,8 +51,6 @@ describe('canonicalCrops', () => {
     })
 
     it('throws on a license the OSI has not approved', () => {
-      // Only reachable from JavaScript or a stale build - the type stops it in
-      // config - but a green crop with no license behind it must never render.
       expect(() =>
         resolveCropEvaluation({
           sentiment: 'good',
@@ -90,7 +87,6 @@ describe('canonicalCrops', () => {
     })
 
     it('keeps it out even when the red crop is only partially reviewed', () => {
-      // The rule is about the colour, not about how far the review got.
       const resolved = resolveProjectCrops(
         crops({ security: { sentiment: 'bad', status: 'partiallyReviewed' } }),
       )

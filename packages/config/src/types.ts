@@ -1131,15 +1131,11 @@ export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #region crops data
 
-// Re-exported so consumers of the package can read a resolved license without
-// deep-importing the generated OSI list.
 export type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
 
 /**
- * `fullyTransparent` is not a gap in the review: the protocol makes no claim
- * to the property and everything is in the open, which is a finished answer
- * rather than a pending one. It renders grey like `notReviewed` because there
- * is no quality to grade, not because nobody looked.
+ * `fullyTransparent` is a finished answer, not a gap: the protocol makes no
+ * claim to the property. It renders grey because there is nothing to grade.
  */
 export type ProjectCropStatus =
   | 'reviewed'
@@ -1147,10 +1143,16 @@ export type ProjectCropStatus =
   | 'notReviewed'
   | 'fullyTransparent'
 
+/** Narrower than `Sentiment`: "not graded" is a `status`, not a colour. */
+export type ProjectCropSentiment = Extract<
+  Sentiment,
+  'good' | 'warning' | 'bad'
+>
+
 export interface ProjectCropEvaluation {
-  /** Drives the color of the crop. Not needed when `status` is `notReviewed`. */
-  sentiment?: Sentiment
-  /** Review state. Defaults to `reviewed`. Only affects the dashed styling. */
+  /** Ignored when `status` is `notReviewed` or `fullyTransparent`. */
+  sentiment?: ProjectCropSentiment
+  /** Defaults to `reviewed`. */
   status?: ProjectCropStatus
   /** What the evaluation rests on - one finding per bullet. */
   points?: string[]
@@ -1164,11 +1166,8 @@ export interface ProjectCropEvaluation {
 
 export interface ProjectOpenSourceCropEvaluation extends ProjectCropEvaluation {
   /**
-   * SPDX id of the license the project ships under, which has to be one the
-   * OSI has approved - see `OSI_LICENSES`. Declared as an id rather than
-   * written out as a point, so the name and the link come from the OSI list
-   * and the prose cannot drift from the license we actually checked. Left out
-   * when the license has not been confirmed.
+   * SPDX id of an OSI-approved license - see `OSI_LICENSES`. The name and the
+   * link are rendered from the list, so the prose cannot drift from the id.
    */
   license?: OsiLicenseId
 }

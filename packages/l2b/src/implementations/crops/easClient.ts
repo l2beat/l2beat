@@ -56,11 +56,8 @@ export function createReader(rpcUrl: string): PublicClient {
   return createPublicClient({ transport: http(rpcUrl) })
 }
 
-/**
- * The signer. The key never comes from a flag - it would end up in shell
- * history - and while attesting on a testnet this should be a throwaway EOA
- * funded from a faucet, never an address associated with L2BEAT.
- */
+// The key never comes from a flag, which would land it in shell history. On a
+// testnet it should be a throwaway EOA with no link to L2BEAT.
 export function hasAttesterKey(): boolean {
   return !!process.env.L2B_CROPS_PRIVATE_KEY
 }
@@ -141,12 +138,7 @@ export interface NewAttestation {
   data: Hex
 }
 
-/**
- * EAS checks the schema a revocation request names against the attestation's
- * own schema, so a uid attested under an earlier schema can only be revoked by
- * naming that schema. Carrying it here is what makes a schema change a
- * migration we can run rather than a set of orphans onchain.
- */
+/** EAS only accepts a revocation naming the schema the uid was attested under. */
 export interface Revocation {
   uid: Hex
   schema: Hex
@@ -156,11 +148,8 @@ export const ZERO_UID = `0x${'0'.repeat(64)}` as Hex
 export const ZERO_ADDRESS =
   '0x0000000000000000000000000000000000000000' as Address
 
-/**
- * recipient is the zero address because the subject is a protocol rather than an
- * account, and expirationTime is zero because revocation is the only way an
- * attestation stops being valid.
- */
+// No recipient (the subject is a protocol, not an account) and no expiry
+// (revocation is the only way an attestation stops being valid).
 function multiAttestArgs(attestations: NewAttestation[]) {
   return [
     [
@@ -179,7 +168,7 @@ function multiAttestArgs(attestations: NewAttestation[]) {
   ] as const
 }
 
-/** One request per schema, since EAS groups revocations by schema. */
+// EAS groups revocations by schema.
 function multiRevokeArgs(revocations: Revocation[]) {
   const bySchema = new Map<Hex, Hex[]>()
   for (const revocation of revocations) {
@@ -195,7 +184,6 @@ function multiRevokeArgs(revocations: Revocation[]) {
   ] as const
 }
 
-/** One transaction for every project. */
 export async function multiAttest(
   signer: WalletClient,
   network: AttestationNetworkConfig,
@@ -254,21 +242,14 @@ export async function estimateGas(
   return total
 }
 
-/**
- * EAS emits one Attested event per attestation, in the order they were
- * submitted, so the receipt is enough to recover the new uids without a
- * follow-up query.
- */
+/** EAS emits one Attested event per attestation, in submission order. */
 export function readAttestedUids(logs: Log[]): Hex[] {
   return parseEventLogs({ abi: EAS_ABI, eventName: 'Attested', logs }).map(
     (log) => log.args.uid,
   )
 }
 
-/**
- * Full reconciliation without an external indexer: attester and schemaUID are
- * both indexed on Attested, so eth_getLogs is enough.
- */
+/** attester and schemaUID are both indexed on Attested, so eth_getLogs is enough. */
 export async function scanAttestedUids(
   reader: PublicClient,
   network: AttestationNetworkConfig,

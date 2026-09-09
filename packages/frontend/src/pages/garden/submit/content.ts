@@ -1,16 +1,14 @@
-/** What a project needs before a review is even possible. */
 export const GROUND_RULES = [
   'The protocol is live, with real users.',
   'It can be reviewed from public sources: verified contracts, published source, docs.',
   'There is someone who can answer our questions, unless the protocol is completely ownerless.',
 ]
 
-/** The submission process, start to finish. */
 export const PROCESS_STEPS = [
   {
     title: 'Send us the details',
     description:
-      'A few minutes of to fill in the template and create a forum post.',
+      'A few minutes to fill in the template and create a forum post.',
   },
   {
     title: 'We check that it fits',

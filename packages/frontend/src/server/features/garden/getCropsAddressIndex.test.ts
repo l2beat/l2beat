@@ -40,7 +40,6 @@ const PROJECTS = [
     },
   },
   {
-    // A second project sharing the factory, as shared modules really do.
     id: 'someotherproject',
     contracts: {
       addresses: {
@@ -57,29 +56,56 @@ describe(buildCropsAddressIndex.name, () => {
   const bare = (address: string) =>
     ChainSpecificAddress.address(ChainSpecificAddress(address))
 
-  it('resolves an immutable contract as an implementation', () => {
+  it('resolves a contract to its project', () => {
     expect(index.lookup('ethereum', bare(FACTORY))).toInclude({
       projectId: 'uniswapv3',
       targetName: 'UniswapV3Factory',
-      role: 'implementation',
     })
   })
 
-  it('resolves an upgradeable contract as a proxy', () => {
+  it('resolves a proxy', () => {
     expect(index.lookup('ethereum', bare(PROXY))).toEqual([
-      { projectId: 'uniswapv3', targetName: 'Router', role: 'proxy' },
+      { projectId: 'uniswapv3', targetName: 'Router' },
     ])
   })
 
-  it('resolves an address behind a proxy to the same project', () => {
+  it('resolves an implementation behind a proxy under the proxy name', () => {
     expect(index.lookup('ethereum', bare(IMPLEMENTATION))).toEqual([
-      { projectId: 'uniswapv3', targetName: 'Router', role: 'implementation' },
+      { projectId: 'uniswapv3', targetName: 'Router' },
     ])
   })
 
   it('resolves a permission holder', () => {
     expect(index.lookup('ethereum', bare(MULTISIG))).toEqual([
-      { projectId: 'uniswapv3', targetName: 'Governance', role: 'permission' },
+      { projectId: 'uniswapv3', targetName: 'Governance' },
+    ])
+  })
+
+  it('names a project once, even when it claims an address twice', () => {
+    const twice = buildCropsAddressIndex([
+      {
+        id: 'p',
+        contracts: {
+          addresses: {
+            ethereum: [
+              { address: ChainSpecificAddress(MULTISIG), name: 'GnosisSafe' },
+            ],
+          },
+        },
+        permissions: {
+          ethereum: {
+            actors: [
+              {
+                name: 'Governance',
+                accounts: [{ address: ChainSpecificAddress(MULTISIG) }],
+              },
+            ],
+          },
+        },
+      },
+    ])
+    expect(twice.lookup('ethereum', bare(MULTISIG))).toEqual([
+      { projectId: 'p', targetName: 'GnosisSafe' },
     ])
   })
 
@@ -136,7 +162,6 @@ describe(parseCropsAddressWith.name, () => {
   })
 
   it('accepts an address whose mixed case is not a valid checksum', () => {
-    // Rejecting these would fail on input real wallets produce.
     expect(parse('eth:0x1f98431c8AD98523631AE4a59f267346ea31F984')).toEqual(
       expected,
     )

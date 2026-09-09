@@ -9,16 +9,16 @@ const TONE: Record<
   { card: string; glow: string; chip: string; icon: string }
 > = {
   garden: {
-    card: 'border-[#cfe3c0] bg-gradient-to-br from-[#f1f9ea] via-surface-primary to-surface-primary dark:border-[#2c3a22] dark:from-[#18220f] dark:via-surface-primary dark:to-surface-primary',
-    glow: 'bg-[#8fd06a]/35 dark:bg-[#15ca60]/20',
-    chip: 'bg-[#e2f2d6] dark:bg-[#15ca60]/15',
-    icon: 'text-[#3f6d2c] dark:text-[#8fd06a]',
+    card: 'border-garden-border bg-gradient-to-br from-garden-tint via-surface-primary to-surface-primary',
+    glow: 'bg-crop-good/30 dark:bg-crop-good/20',
+    chip: 'bg-garden-accent/15',
+    icon: 'text-garden-accent',
   },
   brand: {
-    card: 'border-[#e2ccef] bg-gradient-to-br from-[#f7effc] via-surface-primary to-surface-primary dark:border-[#3a2547] dark:from-[#1d1226] dark:via-surface-primary dark:to-surface-primary',
-    glow: 'bg-[#c164e3]/30 dark:bg-[#db8bf7]/20',
-    chip: 'bg-[#f1d6ff] dark:bg-[#db8bf7]/15',
-    icon: 'text-[#7e41cc] dark:text-[#db8bf7]',
+    card: 'border-[#e2ccef] bg-gradient-to-br from-[#f7effc] via-surface-primary to-surface-primary dark:border-[#3a2547] dark:from-[#1d1226]',
+    glow: 'bg-purple-450/30 dark:bg-pink-200/20',
+    chip: 'bg-purple-300 dark:bg-pink-200/15',
+    icon: 'text-purple-100 dark:text-pink-200',
   },
 }
 
@@ -28,10 +28,7 @@ interface Props {
   description: string
   cta: string
   href: string
-  /**
-   * Text left, button right, on one row. For a banner that stands alone -
-   * stacked, a full-width card leaves a long empty gutter beside the button.
-   */
+  /** Text left, button right, for a banner that stands alone. */
   horizontal?: boolean
 }
 
@@ -51,8 +48,6 @@ export function CalloutCard({
         style.card,
       )}
     >
-      {/* Sits behind the text and off the corner, so the gradient reads as
-          light falling on the card rather than as a second background. */}
       <span
         aria-hidden
         className={cn(

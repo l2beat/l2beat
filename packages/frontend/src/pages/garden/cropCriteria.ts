@@ -1,36 +1,21 @@
-import type { ProjectCrops } from '@l2beat/config'
+import type { CropKey } from '@l2beat/config/build/crops/canonicalCrops'
 
-/**
- * Marks where `reference` is linked inside a minimum, so the authority is
- * named in the sentence that defers to it rather than tacked on underneath.
- */
+/** Marks where `reference` is linked inside a minimum. */
 export const REFERENCE_SLOT = '{{reference}}'
 
-/**
- * The bar for each crop, distilled from the evaluations already published in
- * the garden: every line here is a claim the plant tooltips actually make, not
- * a wish list. `minimums` is what a project has to clear for a healthy green
- * plant; `pullsDown` lists what has actually turned a crop yellow or wilted it.
- * Kept short on purpose - a bar nobody reads to the end is not a bar.
- */
+/** The bar for each crop, distilled from the evaluations already in the garden. */
 export interface CropCriteria {
-  key: keyof ProjectCrops
   question: string
   /** Shown in the plant tooltip, not in the card body. */
   summary: string
   minimums: string[]
   pullsDown: string[]
-  /**
-   * The outside authority a criterion defers to, where there is one. Linked
-   * into the minimum carrying `REFERENCE_SLOT`, so a reader can check the bar
-   * rather than take our word for it.
-   */
+  /** Linked into the minimum carrying `REFERENCE_SLOT`. */
   reference?: { label: string; href: string }
 }
 
-export const CROP_CRITERIA: CropCriteria[] = [
-  {
-    key: 'censorshipResistance',
+export const CROP_CRITERIA: Record<CropKey, CropCriteria> = {
+  censorshipResistance: {
     question: 'Can anyone use it, and can everyone leave?',
     summary:
       'Nobody - not the team, not an operator, not a governance vote - can stand between a user and their funds.',
@@ -46,8 +31,7 @@ export const CROP_CRITERIA: CropCriteria[] = [
       'A pause or a transaction filter a user cannot see coming - in the contracts, the RPC, or the node itself.',
     ],
   },
-  {
-    key: 'openSource',
+  openSource: {
     question: 'Can we read it, rebuild it, and run it ourselves?',
     summary:
       'Everything needed to participate is published, under a license that lets you use it.',
@@ -67,8 +51,7 @@ export const CROP_CRITERIA: CropCriteria[] = [
       href: 'https://opensource.org/licenses',
     },
   },
-  {
-    key: 'privacy',
+  privacy: {
     question: 'Does using it cost you your privacy?',
     summary:
       'Privacy enforced by cryptography rather than by policy, with no way to undo it after the fact.',
@@ -84,8 +67,7 @@ export const CROP_CRITERIA: CropCriteria[] = [
       'Privacy that depends on a relayer staying available, or that users can be pushed out of.',
     ],
   },
-  {
-    key: 'security',
+  security: {
     question: 'What has to go right for your funds to stay yours?',
     summary:
       'Less about the audit count than about who can move user funds, and how much warning there would be.',
@@ -101,4 +83,4 @@ export const CROP_CRITERIA: CropCriteria[] = [
       'Cryptography that is not quantum-resistant, exposing users to harvest-now-decrypt-later.',
     ],
   },
-]
+}

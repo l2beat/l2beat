@@ -1,5 +1,4 @@
 import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
-import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import {
@@ -40,40 +39,6 @@ const TYPE_TAG: Record<
     label: 'DeFi',
     className: 'text-[#5C1F45] bg-[#FFC7E8] border-[#D978B4]',
   },
-}
-
-/** Links to the project page when it has one, otherwise renders plain. */
-function ProjectCell({ entry }: { entry: GardenEntry }) {
-  const content = (
-    <>
-      <img
-        src={entry.iconUrl}
-        alt=""
-        width={34}
-        height={34}
-        className="size-[34px] rounded-lg"
-      />
-      <div className="flex flex-col leading-tight">
-        <span
-          className={cn(
-            'font-semibold text-primary text-sm',
-            entry.href && 'group-hover/project:underline',
-          )}
-        >
-          {entry.name}
-        </span>
-        <span className="text-secondary text-xs">{entry.subtitle}</span>
-      </div>
-    </>
-  )
-  if (!entry.href) {
-    return <div className="flex items-center gap-3">{content}</div>
-  }
-  return (
-    <a href={entry.href} className="group/project flex items-center gap-3">
-      {content}
-    </a>
-  )
 }
 
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
@@ -132,35 +97,68 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
               </div>
             </TableCell>
             <TableCell align="right">
-              {entry.tvs === undefined ? (
-                <span className="text-secondary">&mdash;</span>
-              ) : entry.tvs.kind === 'notApplicable' ? (
-                <NotApplicableBadge />
-              ) : (
-                <div className="inline-flex flex-col items-end gap-px">
-                  <span className="font-semibold text-[10px] text-secondary uppercase tracking-wider">
-                    {entry.tvs.label}
-                  </span>
-                  <span className="font-semibold text-primary text-sm tabular-nums">
-                    {entry.tvs.kind === 'usd'
-                      ? formatDollarValueNumber(entry.tvs.value)
-                      : formatInteger(entry.tvs.value)}
-                    {entry.tvs.change !== undefined && (
-                      <>
-                        {' '}
-                        <PercentChange
-                          value={entry.tvs.change}
-                          textClassName="text-xs"
-                        />
-                      </>
-                    )}
-                  </span>
-                </div>
-              )}
+              <MetricCell metric={entry.metric} />
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
+  )
+}
+
+function ProjectCell({ entry }: { entry: GardenEntry }) {
+  const content = (
+    <>
+      <img
+        src={entry.iconUrl}
+        alt=""
+        width={34}
+        height={34}
+        className="size-[34px] rounded-lg"
+      />
+      <div className="flex flex-col leading-tight">
+        <span
+          className={cn(
+            'font-semibold text-primary text-sm',
+            entry.href && 'group-hover/project:underline',
+          )}
+        >
+          {entry.name}
+        </span>
+        <span className="text-secondary text-xs">{entry.subtitle}</span>
+      </div>
+    </>
+  )
+  if (!entry.href) {
+    return <div className="flex items-center gap-3">{content}</div>
+  }
+  return (
+    <a href={entry.href} className="group/project flex items-center gap-3">
+      {content}
+    </a>
+  )
+}
+
+function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
+  if (!metric) {
+    return <span className="text-secondary">&mdash;</span>
+  }
+  return (
+    <div className="inline-flex flex-col items-end gap-px">
+      <span className="font-semibold text-[10px] text-secondary uppercase tracking-wider">
+        {metric.label}
+      </span>
+      <span className="font-semibold text-primary text-sm tabular-nums">
+        {metric.kind === 'usd'
+          ? formatDollarValueNumber(metric.value)
+          : formatInteger(metric.value)}
+        {metric.change !== undefined && (
+          <>
+            {' '}
+            <PercentChange value={metric.change} textClassName="text-xs" />
+          </>
+        )}
+      </span>
+    </div>
   )
 }

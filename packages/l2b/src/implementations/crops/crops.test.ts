@@ -1,11 +1,12 @@
 import type { CropAttestation } from '@l2beat/config/build/crops/attestations'
 import {
+  ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
 } from '@l2beat/config/build/crops/eas'
 import { expect } from 'earl'
 import type { Hex } from 'viem'
-import { findIdentifyingStrings } from './anonymity'
+import { assertAnonymous, findIdentifyingStrings } from './anonymity'
 import type { OnchainAttestation } from './easClient'
 import {
   decodePayload,
@@ -61,12 +62,6 @@ describe('crop attestations', () => {
       const b = encodePayload(toPayload([...IDS].reverse(), 1700000000, 1))
       expect(a).toEqual(b)
     })
-
-    it('refuses to encode a set that names us', () => {
-      expect(() => encodePayload(toPayload(['l2beat-test'], 1, 1))).toThrow(
-        /must not appear onchain/,
-      )
-    })
   })
 
   describe(setMatches.name, () => {
@@ -102,6 +97,18 @@ describe('crop attestations', () => {
     it('rejects anything naming us or the framework', () => {
       expect(findIdentifyingStrings('reviewed by L2BEAT')).toEqual(['l2beat'])
       expect(findIdentifyingStrings('CROPS framework')).toEqual(['crops'])
+    })
+
+    it('refuses to sign a set that names us on a testnet', () => {
+      expect(() =>
+        assertAnonymous(ATTESTATION_NETWORKS.sepolia, 'The set', 'l2beat-test'),
+      ).toThrow(/must not appear onchain/)
+    })
+
+    it('does not apply on mainnet', () => {
+      expect(() =>
+        assertAnonymous(ATTESTATION_NETWORKS.ethereum, 'The set', 'l2beat'),
+      ).not.toThrow()
     })
   })
 
@@ -193,8 +200,6 @@ describe('crop attestations', () => {
     })
 
     it('trusts the chain over the ledger when the two disagree', () => {
-      // The ledger claims the current set; the chain says otherwise. Skipping
-      // the publish here would leave the wrong set live indefinitely.
       const plan = planAttestation({
         projectIds: IDS,
         ledger: [entry()],
@@ -216,8 +221,6 @@ describe('crop attestations', () => {
     })
 
     it('revokes under the schema an attestation was made with, not the current one', () => {
-      // The migration path: data written under an older schema cannot be
-      // decoded here, and EAS will only accept a revocation naming that schema.
       const plan = planAttestation({
         projectIds: IDS,
         ledger: [entry({ schema: OLD_SCHEMA })],
@@ -248,7 +251,6 @@ describe('crop attestations', () => {
       })
       expect(plan.kind).toEqual('changed')
       expect(plan.keeper?.uid).toEqual(uid)
-      // Nothing to publish - the keeper already says the right thing.
       expect(plan.payload).toEqual(undefined)
       expect(plan.revoke).toEqual([{ uid: stale, schema: OLD_SCHEMA }])
     })
@@ -262,7 +264,6 @@ describe('crop attestations', () => {
       })
       expect(plan.kind).toEqual('new')
       expect(plan.payload?.revision).toEqual(3)
-      // Nothing to revoke - it is already revoked.
       expect(plan.revoke).toEqual([])
     })
 

@@ -1,10 +1,7 @@
 import type { ProjectPrivacyInfo, ProjectScalingInfo } from '@l2beat/config'
 
-/**
- * Only privacy and scaling projects have a detail page we can link to. A
- * defi-only project like Uniswap v3 has none, and the shared getProjectUrl
- * helper would resolve it to a /scaling/projects/ URL that 404s.
- */
+// Unlike getProjectUrl, returns undefined for a project with no page, such as
+// a defi-only one, instead of a /scaling/projects/ url that 404s.
 export function getGardenProjectPath(project: {
   slug: string
   privacyInfo?: ProjectPrivacyInfo | undefined

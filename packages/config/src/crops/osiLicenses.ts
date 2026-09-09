@@ -2,31 +2,19 @@
 // Regenerate with: pnpm --filter @l2beat/config crops:generate-licenses
 // Source: https://opensource.org/wp-json/wp/v2/license - the list behind https://opensource.org/licenses
 
-// Deliberately dependency-free: this module is deep-imported by the frontend
-// and by the l2b CLI. Keep it pure.
+// Deep-imported by the frontend and the l2b CLI; keep it dependency-free.
 
-/** An open source license, as approved and published by the OSI. */
 export interface OsiLicense {
-  /** SPDX identifier, spelled the way the OSI records it. */
   spdxId: string
   name: string
-  /** The license page on opensource.org. */
   url: string
-  /**
-   * How the OSI itself files the license: 'popular-strong-community' for the
-   * dozen in wide use, 'superseded' and 'voluntarily-retired' for the ones it
-   * no longer recommends, and so on. Approval is what the crop turns on - the
-   * category is context for the reader, not a second bar.
-   */
+  /** The OSI's own filing, e.g. 'popular-strong-community' or 'superseded'. Context only. */
   categories: readonly string[]
 }
 
 /**
- * Every license the OSI has approved, keyed by SPDX id. This is the whole
- * definition of "open source" a CROPS review uses: a project's `license` must
- * name a key here, and the Open source crop may only be green when it does - a
- * license we cannot find on this list is not open source for our purposes,
- * however permissive it looks.
+ * Every OSI-approved license, keyed by SPDX id. This is the whole definition
+ * of "open source" a CROPS review uses: a project's `license` must name a key here.
  */
 export const OSI_LICENSES = {
   '0BSD': {
@@ -751,13 +739,9 @@ export const OSI_LICENSES = {
   },
 } as const satisfies Record<string, OsiLicense>
 
-/** SPDX id of an OSI-approved license - what a project's `license` names. */
 export type OsiLicenseId = keyof typeof OSI_LICENSES
 
-/**
- * Throws on an id the OSI has not approved. Bad config fails loudly rather
- * than rendering a green Open source crop nothing backs.
- */
+/** Throws rather than render a green Open source crop nothing backs. */
 export function getOsiLicense(id: OsiLicenseId): OsiLicense {
   const license: OsiLicense | undefined = OSI_LICENSES[id]
   if (!license) {

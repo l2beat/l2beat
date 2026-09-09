@@ -1,10 +1,6 @@
 /**
- * Shared CROPS wording. Reuse these instead of re-writing the same snippet in
- * every project, so identical claims read identically everywhere.
- *
- * The license claim is not here: a project declares `license` on its Open
- * source crop and the sentence is generated from the OSI list, so the id and
- * the prose can never disagree.
+ * Shared CROPS wording, so identical claims read identically everywhere. The
+ * license claim is generated from the OSI list instead - see `license`.
  */
 export const CROPS_LEGOS = {
   passesWalkawayTest: (detail?: string) =>

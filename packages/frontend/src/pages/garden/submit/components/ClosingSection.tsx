@@ -12,7 +12,7 @@ export function ClosingSection() {
       <PrimaryCard className="relative overflow-hidden text-center md:p-10">
         <div
           aria-hidden
-          className="-bottom-24 pointer-events-none absolute inset-x-0 mx-auto size-72 rounded-full bg-radial from-[#7fae6a]/25 to-transparent blur-2xl"
+          className="-bottom-24 pointer-events-none absolute inset-x-0 mx-auto size-72 rounded-full bg-radial from-garden-accent/25 to-transparent blur-2xl"
         />
         <div className="relative mx-auto flex max-w-2xl flex-col items-center">
           <h2 className="text-balance font-bold text-heading-24 md:text-heading-32">
