@@ -9,8 +9,10 @@ import {
 } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
+import { getInteropChains } from '../utils/getInteropChains'
 
 export interface InteropTokenRelations {
   routes: TokenRelationRoute[]
@@ -40,10 +42,19 @@ async function getPairStats(tokenId: string) {
   // Aggregates outlive raw transfers, so an aggregates timestamp override can
   // point at a day the cleaner has already emptied.
   if (from < UnixTime.now() - INTEROP_TRANSFER_RETENTION) return undefined
-  return getDb().interopTransfer.getDeployedTokenPairStats(tokenId, {
-    from,
-    to: snapshotTimestamp,
-  })
+  const projects = await ps.getProjects({ select: ['interopConfig'] })
+  const chains = getInteropChains()
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => chain.id)
+  return getDb().interopTransfer.getDeployedTokenPairStats(
+    tokenId,
+    { from, to: snapshotTimestamp },
+    {
+      plugins: projects.flatMap((project) => project.interopConfig.plugins),
+      sourceChains: chains,
+      destinationChains: chains,
+    },
+  )
 }
 
 const MOCK_INTEROP_TOKEN_RELATIONS: InteropTokenRelations = {
