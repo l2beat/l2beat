@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
-/** Names the sky colour the root takes for overscroll - see globals.css. */
+/** Names the canvas colour the root takes for overscroll - see globals.css. */
 export type PageBackdropName = 'garden' | 'plot'
 
 /**

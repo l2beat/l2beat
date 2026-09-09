@@ -71,8 +71,8 @@
   --garden-border: #cfe3c0;
   --garden-tint: #f2f9ec;
   --garden-soil: #cfc4b0;
-  --garden-sky: #eaf4e6;
-  --plot-sky: #fdf1de;
+  --garden-canvas: #eaf4e6;
+  --plot-canvas: #fdf1de;
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
@@ -158,8 +158,8 @@
   --garden-border: #2c3a22;
   --garden-tint: #161f0e;
   --garden-soil: #2a251d;
-  --garden-sky: #141b10;
-  --plot-sky: #1e1b12;
+  --garden-canvas: #141b10;
+  --plot-canvas: #1e1b12;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
@@ -514,8 +514,8 @@
   --color-garden-border: var(--garden-border);
   --color-garden-tint: var(--garden-tint);
   --color-garden-soil: var(--garden-soil);
-  --color-garden-sky: var(--garden-sky);
-  --color-plot-sky: var(--plot-sky);
+  --color-garden-canvas: var(--garden-canvas);
+  --color-plot-canvas: var(--plot-canvas);
 
   --color-branding-primary: var(--project-primary, var(--ecosystem-primary));
   --color-branding-secondary: var(
@@ -863,12 +863,12 @@
 }
 
 /* Rubber-band overscroll reveals the root background, and only ever one flat
-   colour of it, so both ends of a backdrop page get its sky. */
+   colour of it, so both ends of a backdrop page get its canvas. */
 html:has([data-backdrop="garden"]) {
-  background-color: var(--garden-sky);
+  background-color: var(--garden-canvas);
 }
 html:has([data-backdrop="plot"]) {
-  background-color: var(--plot-sky);
+  background-color: var(--plot-canvas);
 }
 
 /* The Infinite Garden. Referenced from inline styles in CropBadge and the backgrounds. */

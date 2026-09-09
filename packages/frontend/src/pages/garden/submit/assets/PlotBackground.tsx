@@ -6,7 +6,7 @@ import { cn } from '~/utils/cn'
 export function PlotBackground() {
   return (
     <PageBackdrop name="plot">
-      <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-plot-sky via-[#f4f6e6]/40 to-transparent dark:via-[#161c12]/40" />
+      <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-plot-canvas via-[#f4f6e6]/40 to-transparent dark:via-[#161c12]/40" />
 
       <Cloud className="absolute top-16 left-[7%] w-44 max-md:top-8 max-md:w-28" />
       <Cloud

@@ -5,7 +5,7 @@ import { cn } from '~/utils/cn'
 export function GardenBackground() {
   return (
     <PageBackdrop name="garden">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-garden-sky to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-garden-canvas to-transparent" />
       <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75" />
       <svg
         className="absolute bottom-0 left-0 h-36 w-full"
