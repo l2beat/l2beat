@@ -18,7 +18,7 @@ export function GardenBackground() {
         />
         <path
           d="M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z"
-          className="fill-garden-ground"
+          className="fill-garden-border/70"
         />
       </svg>
     </PageBackdrop>
