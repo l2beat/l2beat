@@ -57,6 +57,8 @@ export interface InclusionDelayData {
   projectPoints: InclusionDelayPoint[]
   ethereumPoints: InclusionDelayPoint[]
   entityLegendEntries: InclusionDelayEntityLegendEntry[]
+  /** Legend entries that can be drawn on the chart: those with a finite delay. */
+  entityMarkers: InclusionDelayEntityMarker[]
   thresholdMarkers: InclusionDelayThresholdMarker[]
 }
 
@@ -82,18 +84,26 @@ export function getInclusionDelayData(
 ): InclusionDelayData {
   const model = createInclusionDelayModel(chart)
   const projectPoints = buildProjectPoints(model)
+  const entityLegendEntries = buildEntityLegendEntries(
+    model,
+    chart.stakeDistribution,
+  )
   return {
     projectPoints,
     ethereumPoints: getEthereumComparisonDelay(
       model.maxCensorFraction,
       model.target,
     ),
-    entityLegendEntries: buildEntityLegendEntries(
-      model,
-      chart.stakeDistribution,
-    ),
+    entityLegendEntries,
+    entityMarkers: entityLegendEntries.filter(hasFiniteDelay),
     thresholdMarkers: buildThresholdMarkers(projectPoints, thresholds),
   }
+}
+
+function hasFiniteDelay(
+  entry: InclusionDelayEntityLegendEntry,
+): entry is InclusionDelayEntityMarker {
+  return entry.delayDays !== null
 }
 
 /** The project's own inclusion-delay line, sampled across the fraction range. */
