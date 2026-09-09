@@ -1,7 +1,5 @@
 import { ProjectService } from '@l2beat/config'
-import { ATTESTATION_SCHEMA } from '@l2beat/config/build/crops/eas'
 import { decodeAbiParameters, encodeAbiParameters, type Hex } from 'viem'
-import { assertAnonymous } from './anonymity'
 
 /** The attested fields, in schema order. */
 export const ATTESTATION_PARAMS = [
@@ -36,11 +34,6 @@ export function toPayload(
 }
 
 export function encodePayload(payload: CropPayload): Hex {
-  // The anonymity rule applies to what actually lands onchain, so check the
-  // schema and the string values rather than the hex blob they encode to.
-  assertAnonymous('The attestation schema', ATTESTATION_SCHEMA)
-  assertAnonymous('The attested set', payload.projectIds.join(' '))
-
   return encodeAbiParameters(ATTESTATION_PARAMS, [
     payload.projectIds,
     BigInt(payload.reviewedAt),
@@ -77,8 +70,4 @@ export function diffSet(
     added: wanted.filter((x) => !current.includes(x)),
     removed: current.filter((x) => !wanted.includes(x)),
   }
-}
-
-export function describePayload(payload: CropPayload): string {
-  return `${payload.projectIds.length} projects rev=${payload.revision}`
 }

@@ -4,13 +4,12 @@ import type {
 } from '@l2beat/config/build/crops/canonicalCrops'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import {
+  CropFindings,
   CropNote,
   CropPlantBadge,
-  CropSection,
   getCropStatusText,
 } from '~/pages/garden/components/CropBadge'
 import { CROP_COLUMNS } from '~/pages/garden/crops'
-import { GARDEN_ANIMATIONS_CSS } from '~/pages/garden/gardenCss'
 import { GARDEN_PATH } from '~/pages/garden/submit/links'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from './ProjectSection'
@@ -41,9 +40,7 @@ export function GardenCropsSection({
       // the plain section styling: the green is the badge, not the branding,
       // and colouring a miss with it reads as a pass at a glance.
       className={
-        inGarden
-          ? 'border border-[#cfe3c0] bg-[#f2f9ec] dark:border-[#2c3a22] dark:bg-[#161f0e]'
-          : undefined
+        inGarden ? 'border border-garden-border bg-garden-tint' : undefined
       }
       headerAccessory={
         <a
@@ -55,12 +52,10 @@ export function GardenCropsSection({
         </a>
       }
     >
-      {/* The plants animate on the garden pages, which inject these globally. */}
-      <style>{GARDEN_ANIMATIONS_CSS}</style>
       <p
         className={cn(
           'font-medium text-paragraph-14',
-          inGarden ? 'text-[#4f7a3e] dark:text-[#8fbc76]' : 'text-secondary',
+          inGarden ? 'text-garden-accent' : 'text-secondary',
         )}
       >
         {inGarden
@@ -91,8 +86,7 @@ export function GardenCropsSection({
  * One crop as a widget: the plant and what it is called across the top, then
  * everything the evaluation rests on underneath. A card is only half the
  * section wide, so the findings stay a single column instead of splitting
- * good/missing side by side. The bullets are the same components the garden
- * tooltip uses, so the two readings of a crop cannot drift apart.
+ * good/missing side by side.
  */
 function CropCard({
   letter,
@@ -144,17 +138,7 @@ function CropCard({
           protocol, and it does not belong in a list of them. */}
       <CropNote note={note} className="mt-2.5 text-paragraph-12 leading-snug" />
       <div className="text-paragraph-13">
-        <CropSection
-          title="What's good"
-          items={evaluation.points}
-          license={evaluation.license}
-        />
-        <CropSection title="What is missing" items={evaluation.missing} />
-        <CropSection
-          title="Additional considerations"
-          items={evaluation.additionalConsiderations}
-        />
-        <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
+        <CropFindings evaluation={evaluation} />
       </div>
     </div>
   )

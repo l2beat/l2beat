@@ -9,7 +9,7 @@ export function HeroSection() {
     <PrimaryCard className="relative overflow-hidden md:p-8">
       <div
         aria-hidden
-        className="-top-28 -right-20 pointer-events-none absolute size-72 rounded-full bg-radial from-[#7fae6a]/25 to-transparent blur-2xl"
+        className="-top-28 -right-20 pointer-events-none absolute size-72 rounded-full bg-radial from-garden-accent/25 to-transparent blur-2xl"
       />
       <div className="relative max-w-2xl">
         <h2 className="text-balance font-bold text-heading-28 md:text-heading-40">

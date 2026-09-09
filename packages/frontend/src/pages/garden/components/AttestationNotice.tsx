@@ -2,16 +2,19 @@ import { formatTimestamp } from '~/utils/dates'
 import { SproutIcon } from './SproutIcon'
 
 export interface GardenAttestation {
-  uid: string
   revision: number
   reviewedAt: number
+  /** Every project the attestation names - the reviewed set, not the garden. */
   projectCount: number
   explorerUrl: string
 }
 
 /**
  * The onchain counterpart of the table above it. One attestation names every
- * project in the garden, so this is a single link rather than one per row.
+ * project we have reviewed, so this is a single link rather than one per row.
+ * It speaks of reviews rather than of the garden on purpose: a reviewed
+ * project with a red crop is attested but not planted, so the two counts can
+ * differ.
  */
 export function AttestationNotice({
   attestation,
@@ -22,15 +25,14 @@ export function AttestationNotice({
     return null
   }
   return (
-    <div className="mt-4 flex flex-col gap-2 rounded-xl border border-[#cfe3c0] bg-surface-primary/70 p-4 max-md:mx-4 md:mt-6 md:flex-row md:items-center md:justify-between md:px-6 md:py-4 dark:border-[#2c3a22]">
+    <div className="mt-4 flex flex-col gap-2 rounded-xl border border-garden-border bg-surface-primary/70 p-4 max-md:mx-4 md:mt-6 md:flex-row md:items-center md:justify-between md:px-6 md:py-4">
       <div className="flex items-start gap-3 md:items-center">
-        <SproutIcon className="mt-0.5 size-4 shrink-0 text-[#4a7a35] md:mt-0 dark:text-[#8fd06a]" />
+        <SproutIcon className="mt-0.5 size-4 shrink-0 text-garden-accent md:mt-0" />
         <p className="text-paragraph-14 md:text-paragraph-15">
-          <span className="font-bold">
-            These {attestation.projectCount} projects are attested onchain.
-          </span>{' '}
+          <span className="font-bold">Every review is attested onchain.</span>{' '}
           <span className="text-secondary">
-            Revision {attestation.revision}, reviewed{' '}
+            Revision {attestation.revision} covers {attestation.projectCount}{' '}
+            reviewed projects, as of{' '}
             {formatTimestamp(attestation.reviewedAt, { mode: 'date' })}.
           </span>
         </p>

@@ -31,6 +31,7 @@ export async function getGardenLookupApiData(queries: string[]) {
     getCropsAddressIndex(),
     getCropsProjects(),
   ])
+  const projectById = new Map(projects.map((x) => [x.id, x]))
 
   const results: GardenLookupResult[] = []
   for (const query of queries) {
@@ -47,8 +48,10 @@ export async function getGardenLookupApiData(queries: string[]) {
 
     const matches = index
       .lookup(parsed.chain, parsed.address)
-      .flatMap((match) => {
-        const project = projects.find((x) => x.id === match.projectId)
+      .flatMap((match): GardenLookupMatch[] => {
+        // The index and the project list are built from the same query, so
+        // this only guards against a stale index in a long-lived process.
+        const project = projectById.get(match.projectId)
         if (!project) {
           return []
         }

@@ -1,8 +1,8 @@
 import type {
+  ProjectCropSentiment,
   ProjectCropStatus,
   ProjectCrops,
   ProjectOpenSourceCropEvaluation,
-  Sentiment,
 } from '../types'
 import { getOsiLicense, type OsiLicense } from './osiLicenses'
 
@@ -22,12 +22,18 @@ export const CROP_KEYS = [
 
 export type CropKey = (typeof CROP_KEYS)[number]
 
+/**
+ * The colour a crop resolves to. `neutral` is never declared in config: it is
+ * what a crop with no quality to grade comes out as.
+ */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
 /** Statuses that make no claim about quality, so they never carry a colour. */
 const GREY_STATUSES: ProjectCropStatus[] = ['notReviewed', 'fullyTransparent']
 
 /** An evaluation with every optional field resolved to a concrete value. */
 export interface ResolvedCropEvaluation {
-  sentiment: Sentiment
+  sentiment: CropSentiment
   status: ProjectCropStatus
   /**
    * The OSI-approved license the Open source crop rests on, looked up from the

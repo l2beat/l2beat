@@ -1,18 +1,20 @@
-import type { ProjectCropStatus, Sentiment } from '@l2beat/config'
-import type { CropKey } from '@l2beat/config/build/crops/canonicalCrops'
+import type { ProjectCropStatus } from '@l2beat/config'
+import type {
+  CropKey,
+  CropSentiment,
+} from '@l2beat/config/build/crops/canonicalCrops'
 
 // The words the garden puts on screen.
 //
-// Keep them here rather than in @l2beat/config: this module is imported by
-// client components, and tsc emits `export const` from config as
-// `exports.X = void 0` followed by an assignment, which cjs-module-lexer cannot
-// see. A browser import of the built file then fails to find the named export,
-// which throws during hydration and silently kills every interactive element on
-// the page - not just the ones that read these constants.
+// Kept here rather than in @l2beat/config because this module is imported by
+// client components, and a value import of the config build breaks hydration:
+// tsc emits `exports.X = void 0` followed by an assignment, which
+// cjs-module-lexer cannot see, so the browser finds no named export. Types
+// from config are fine - they are erased.
 
 export interface CropDefinition {
   key: CropKey
-  /** The letter in the chip under each plant. */
+  /** The letters in the chip under each plant. */
   letter: string
   label: string
   /**
@@ -23,6 +25,7 @@ export interface CropDefinition {
   note?: string
 }
 
+/** The four crops, in the order they are rendered everywhere. */
 export const CROP_COLUMNS: CropDefinition[] = [
   {
     key: 'censorshipResistance',
@@ -48,12 +51,11 @@ export const CROP_COLUMNS: CropDefinition[] = [
 ]
 
 /** The colour/quality of a crop, independent of how thoroughly it was reviewed. */
-export const CROP_SENTIMENT_LABELS: Record<Sentiment, string> = {
+export const CROP_SENTIMENT_LABELS: Record<CropSentiment, string> = {
   good: 'Good',
   warning: 'Medium',
   bad: 'Bad',
   neutral: 'Neutral',
-  UnderReview: 'Under review',
 }
 
 /** The review state of a crop, independent of its sentiment/colour. */

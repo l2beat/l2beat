@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { PageBackdrop } from '~/layouts/PageBackdrop'
 import { cn } from '~/utils/cn'
 
 /**
@@ -9,10 +10,7 @@ import { cn } from '~/utils/cn'
  */
 export function PlotBackground() {
   return (
-    <div
-      aria-hidden
-      className="-z-10 pointer-events-none fixed inset-0 overflow-hidden"
-    >
+    <PageBackdrop>
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-[#fdf1de]/85 via-[#f4f6e6]/40 to-transparent dark:from-[#1e1b12]/70 dark:via-[#161c12]/40" />
 
       <Cloud className="absolute top-16 left-[7%] w-44 max-md:top-8 max-md:w-28" />
@@ -29,7 +27,7 @@ export function PlotBackground() {
           style={{
             left: pollen.left,
             bottom: pollen.bottom,
-            animation: `plot-float ${pollen.duration} linear ${pollen.delay} infinite`,
+            animation: `garden-float ${pollen.duration} linear ${pollen.delay} infinite`,
           }}
         />
       ))}
@@ -74,7 +72,7 @@ export function PlotBackground() {
           ))}
         </div>
       </div>
-    </div>
+    </PageBackdrop>
   )
 }
 
@@ -171,7 +169,7 @@ function Cloud({
         className,
       )}
       style={{
-        animation: `plot-drift ${duration} ease-in-out ${delay} infinite`,
+        animation: `garden-drift ${duration} ease-in-out ${delay} infinite`,
       }}
     >
       <path

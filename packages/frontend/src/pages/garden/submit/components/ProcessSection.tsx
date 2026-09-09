@@ -19,7 +19,7 @@ export function ProcessSection() {
               >
                 <span
                   aria-hidden
-                  className="mt-[7px] size-1.5 shrink-0 rounded-full bg-[#7fae6a] dark:bg-[#8fbc76]"
+                  className="mt-[7px] size-1.5 shrink-0 rounded-full bg-garden-accent"
                 />
                 {rule}
               </li>
@@ -35,10 +35,10 @@ export function ProcessSection() {
               {index < PROCESS_STEPS.length - 1 && (
                 <span
                   aria-hidden
-                  className="absolute top-9 left-[15px] h-[calc(100%-28px)] border-[#cfe3c0] border-l-2 border-dashed md:left-[17px] dark:border-[#2c3a22]"
+                  className="absolute top-9 left-[15px] h-[calc(100%-28px)] border-garden-border border-l-2 border-dashed md:left-[17px]"
                 />
               )}
-              <span className="absolute top-0 left-0 flex size-8 items-center justify-center rounded-full bg-[#eef7e8] font-bold text-[#4f7a3e] text-label-value-14 md:size-9 dark:bg-[#1f2a19] dark:text-[#8fbc76]">
+              <span className="absolute top-0 left-0 flex size-8 items-center justify-center rounded-full bg-garden-tint font-bold text-garden-accent text-label-value-14 md:size-9">
                 {index + 1}
               </span>
               <h3 className="pt-1 font-bold text-heading-16 md:text-heading-18">

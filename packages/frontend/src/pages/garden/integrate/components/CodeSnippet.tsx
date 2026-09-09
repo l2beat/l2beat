@@ -84,8 +84,8 @@ export function CodeSnippet({
       {hasBody && (
         <pre
           className={cn(
-            'p-4 font-mono text-paragraph-12 leading-relaxed md:text-paragraph-13',
-            wrap ? 'whitespace-pre-wrap break-all' : 'overflow-x-auto',
+            'max-h-[30rem] overflow-auto p-4 font-mono text-paragraph-12 leading-relaxed md:text-paragraph-13',
+            wrap && 'whitespace-pre-wrap break-all',
           )}
         >
           <code>

@@ -1,11 +1,12 @@
 import type { CropAttestation } from '@l2beat/config/build/crops/attestations'
 import {
+  ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
 } from '@l2beat/config/build/crops/eas'
 import { expect } from 'earl'
 import type { Hex } from 'viem'
-import { findIdentifyingStrings } from './anonymity'
+import { assertAnonymous, findIdentifyingStrings } from './anonymity'
 import type { OnchainAttestation } from './easClient'
 import {
   decodePayload,
@@ -61,12 +62,6 @@ describe('crop attestations', () => {
       const b = encodePayload(toPayload([...IDS].reverse(), 1700000000, 1))
       expect(a).toEqual(b)
     })
-
-    it('refuses to encode a set that names us', () => {
-      expect(() => encodePayload(toPayload(['l2beat-test'], 1, 1))).toThrow(
-        /must not appear onchain/,
-      )
-    })
   })
 
   describe(setMatches.name, () => {
@@ -102,6 +97,18 @@ describe('crop attestations', () => {
     it('rejects anything naming us or the framework', () => {
       expect(findIdentifyingStrings('reviewed by L2BEAT')).toEqual(['l2beat'])
       expect(findIdentifyingStrings('CROPS framework')).toEqual(['crops'])
+    })
+
+    it('refuses to sign a set that names us on a testnet', () => {
+      expect(() =>
+        assertAnonymous(ATTESTATION_NETWORKS.sepolia, 'The set', 'l2beat-test'),
+      ).toThrow(/must not appear onchain/)
+    })
+
+    it('does not apply on mainnet', () => {
+      expect(() =>
+        assertAnonymous(ATTESTATION_NETWORKS.ethereum, 'The set', 'l2beat'),
+      ).not.toThrow()
     })
   })
 

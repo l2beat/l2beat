@@ -1,3 +1,4 @@
+import { PageBackdrop } from '~/layouts/PageBackdrop'
 import { cn } from '~/utils/cn'
 
 /**
@@ -6,10 +7,7 @@ import { cn } from '~/utils/cn'
  */
 export function GardenBackground() {
   return (
-    <div
-      aria-hidden
-      className="-z-10 pointer-events-none fixed inset-0 overflow-hidden"
-    >
+    <PageBackdrop>
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#eaf4e6]/80 to-transparent dark:from-[#141b10]/60" />
       <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75" />
       <svg
@@ -23,10 +21,10 @@ export function GardenBackground() {
         />
         <path
           d="M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z"
-          className="fill-[#cfe3c0]/70 dark:fill-[#222d1a]/70"
+          className="fill-garden-border/70"
         />
       </svg>
-    </div>
+    </PageBackdrop>
   )
 }
 

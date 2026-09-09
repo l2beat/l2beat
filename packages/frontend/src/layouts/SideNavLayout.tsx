@@ -82,12 +82,19 @@ export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
   variant?: SideNavLayoutVariant
+  /**
+   * Scenery painted behind the whole content column - banner, page and footer
+   * - and under nothing else. Rendered as the column's first child, so a
+   * `sticky` backdrop can follow the viewport; see `PageBackdrop`.
+   */
+  backdrop?: React.ReactNode
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
   variant = 'default',
+  backdrop,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
@@ -109,9 +116,13 @@ export function SideNavLayout({
         <div
           className={cn(
             contentWrapperVariants({ variant }),
+            // Its own stacking context, so a negative z-index backdrop sits
+            // above the page background instead of disappearing behind it.
+            backdrop !== undefined && 'relative isolate',
             childrenWrapperClassName,
           )}
         >
+          {backdrop}
           <div className={bannerWrapperVariants({ variant })}>
             {topChildren}
           </div>

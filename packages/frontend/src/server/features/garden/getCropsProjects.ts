@@ -22,10 +22,33 @@ import {
 import { ps } from '~/server/projects'
 import { getGardenProjectPath } from './getGardenProjectPath'
 
-const BASE_URL = 'https://l2beat.com'
+/**
+ * Absolute urls in API responses point at production whatever host served
+ * them: a wallet caching a response from a preview must not link its users
+ * to a preview.
+ */
+export const BASE_URL = 'https://l2beat.com'
+
+export interface CropsAttestationsMeta {
+  network: string
+  chainId: number
+  isTestnet: boolean
+  eas: string
+  schemaUid: string
+  schema: string
+  attester: string | null
+  current: {
+    uid: string
+    revision: number
+    reviewedAt: number
+    projectIds: string[]
+    txHash: string
+    explorerUrl: string
+  } | null
+}
 
 /** The current onchain claim: which project ids we stand behind, and when. */
-export function getAttestationsMeta() {
+export function getAttestationsMeta(): CropsAttestationsMeta {
   const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
   const ledger = getCropAttestationLedger(ATTESTATION_NETWORK)
   const current = getCurrentCropAttestation(ATTESTATION_NETWORK)

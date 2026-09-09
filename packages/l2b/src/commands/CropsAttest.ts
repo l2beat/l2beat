@@ -5,6 +5,7 @@ import type {
 } from '@l2beat/config/build/crops/attestations'
 import { CROP_ATTESTATIONS } from '@l2beat/config/build/crops/attestations'
 import {
+  ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
   getAttestationUrl,
 } from '@l2beat/config/build/crops/eas'
@@ -12,6 +13,7 @@ import chalk from 'chalk'
 import { command } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
 import type { Address, Hex } from 'viem'
+import { assertAnonymous } from '../implementations/crops/anonymity'
 import {
   executeFlag,
   networkOption,
@@ -97,6 +99,14 @@ export const CropsAttest = command({
       return
     }
 
+    if (plan.payload) {
+      assertAnonymous(network, 'The attestation schema', ATTESTATION_SCHEMA)
+      assertAnonymous(
+        network,
+        'The attested set',
+        plan.payload.projectIds.join(' '),
+      )
+    }
     const attestations = plan.payload
       ? [
           {

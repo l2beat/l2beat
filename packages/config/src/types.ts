@@ -1147,10 +1147,22 @@ export type ProjectCropStatus =
   | 'notReviewed'
   | 'fullyTransparent'
 
+/**
+ * How well a crop holds. Narrower than `Sentiment` on purpose: a crop is
+ * either graded or it is not, and "not graded" is a `status`, not a colour.
+ */
+export type ProjectCropSentiment = Extract<
+  Sentiment,
+  'good' | 'warning' | 'bad'
+>
+
 export interface ProjectCropEvaluation {
-  /** Drives the color of the crop. Not needed when `status` is `notReviewed`. */
-  sentiment?: Sentiment
-  /** Review state. Defaults to `reviewed`. Only affects the dashed styling. */
+  /**
+   * Drives the colour of the crop. Ignored - and so unnecessary - when
+   * `status` is `notReviewed` or `fullyTransparent`, which render grey.
+   */
+  sentiment?: ProjectCropSentiment
+  /** How far the review got. Defaults to `reviewed`. */
   status?: ProjectCropStatus
   /** What the evaluation rests on - one finding per bullet. */
   points?: string[]

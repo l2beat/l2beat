@@ -1,18 +1,14 @@
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 
-/** How the address relates to the project that was reviewed. */
-export type CropsAddressRole = 'proxy' | 'implementation' | 'permission'
-
 export interface CropsAddressMatch {
   projectId: string
   /** Discovery's name for the contract or permission at this address. */
   targetName: string
-  role: CropsAddressRole
 }
 
 export interface CropsAddressIndex {
-  /** Every project match for a chain + address, or an empty list. */
+  /** Every reviewed project claiming a chain + address, or an empty list. */
   lookup(chain: string, address: EthereumAddress): CropsAddressMatch[]
 }
 
@@ -20,9 +16,7 @@ export interface CropsAddressIndex {
 interface IndexedContract {
   address: ChainSpecificAddress
   name: string
-  upgradeability?:
-    | { immutable?: boolean; implementations: ChainSpecificAddress[] }
-    | undefined
+  upgradeability?: { implementations: ChainSpecificAddress[] } | undefined
 }
 
 interface IndexedPermission {
@@ -73,7 +67,7 @@ export function buildCropsAddressIndex(
 
   function add(
     chain: string,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     match: CropsAddressMatch,
   ) {
     let byAddress = byChain.get(chain)
@@ -81,54 +75,47 @@ export function buildCropsAddressIndex(
       byAddress = new Map()
       byChain.set(chain, byAddress)
     }
-    let matches = byAddress.get(address)
+    const bare = ChainSpecificAddress.address(address)
+    let matches = byAddress.get(bare)
     if (!matches) {
       matches = []
-      byAddress.set(address, matches)
+      byAddress.set(bare, matches)
     }
-    // A shared contract can belong to several projects, but one project should
-    // only claim an address once in a given role.
-    if (
-      !matches.some(
-        (x) => x.projectId === match.projectId && x.role === match.role,
-      )
-    ) {
+    // A shared contract can belong to several projects, but a project claims
+    // an address once, under the first name it was met by - the contract's
+    // when it is both a contract and a permission holder.
+    if (!matches.some((x) => x.projectId === match.projectId)) {
       matches.push(match)
     }
   }
 
   for (const project of projects) {
-    for (const chain in project.contracts?.addresses ?? {}) {
-      for (const contract of project.contracts?.addresses[chain] ?? []) {
-        const isMutable =
-          contract.upgradeability && !contract.upgradeability.immutable
-        add(chain, ChainSpecificAddress.address(contract.address), {
-          projectId: project.id,
-          targetName: contract.name,
-          role: isMutable ? 'proxy' : 'implementation',
-        })
+    for (const [chain, contracts] of Object.entries(
+      project.contracts?.addresses ?? {},
+    )) {
+      for (const contract of contracts) {
+        const match = { projectId: project.id, targetName: contract.name }
+        add(chain, contract.address, match)
+        // An implementation is reached through its proxy, so a wallet asking
+        // about either should get the same answer.
         for (const implementation of contract.upgradeability?.implementations ??
           []) {
-          add(chain, ChainSpecificAddress.address(implementation), {
-            projectId: project.id,
-            targetName: contract.name,
-            role: 'implementation',
-          })
+          add(chain, implementation, match)
         }
       }
     }
 
-    for (const chain in project.permissions ?? {}) {
-      const permissions = [
-        ...(project.permissions?.[chain]?.actors ?? []),
-        ...(project.permissions?.[chain]?.roles ?? []),
-      ]
-      for (const permission of permissions) {
+    for (const [chain, permissions] of Object.entries(
+      project.permissions ?? {},
+    )) {
+      for (const permission of [
+        ...(permissions?.actors ?? []),
+        ...(permissions?.roles ?? []),
+      ]) {
         for (const account of permission.accounts) {
-          add(chain, ChainSpecificAddress.address(account.address), {
+          add(chain, account.address, {
             projectId: project.id,
             targetName: permission.name,
-            role: 'permission',
           })
         }
       }

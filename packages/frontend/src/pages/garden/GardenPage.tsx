@@ -1,4 +1,3 @@
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -9,9 +8,9 @@ import {
 } from './components/AttestationNotice'
 import { CropsSection } from './components/CropsSection'
 import { GardenCallouts } from './components/GardenCallouts'
+import { GardenPageHeader } from './components/GardenPageHeader'
 import { GardenTable } from './components/GardenTable'
 import { PlantLegendSection } from './components/PlantLegendSection'
-import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from './gardenCss'
 import type { GardenEntry } from './getGardenData'
 
 interface Props extends AppLayoutProps {
@@ -23,30 +22,22 @@ interface Props extends AppLayoutProps {
 export function GardenPage({ entries, attestation, ...props }: Props) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <style>{PAGE_CSS}</style>
-        <div className="relative flex grow flex-col pb-24">
-          <GardenBackground />
-          <div className="relative">
-            <h1 className="pt-5 font-bold text-2xl max-md:px-4 lg:hidden">
-              The Infinite Garden
-            </h1>
-            <MainPageHeader description="Each project is evaluated across the CROPS framework: Censorship Resistance, Open source, Privacy, and Security. Hover a plant for the reasoning behind its evaluation.">
-              The Infinite Garden
-            </MainPageHeader>
-            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
-              <GardenTable entries={entries} />
-            </div>
-            <AttestationNotice attestation={attestation} />
-            <GardenCallouts />
-            <PlantLegendSection />
-            <CropsSection />
+      <SideNavLayout backdrop={<GardenBackground />}>
+        <div className="flex grow flex-col pb-24">
+          <GardenPageHeader
+            title="The Infinite Garden"
+            description="Each project is evaluated across the CROPS framework: Censorship Resistance, Open source, Privacy, and Security. Hover a plant for the reasoning behind its evaluation."
+          />
+          <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
+            <GardenTable entries={entries} />
           </div>
+          <AttestationNotice attestation={attestation} />
+          <GardenCallouts />
+          <PlantLegendSection />
+          <CropsSection />
         </div>
         <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )
 }
-
-const PAGE_CSS = GARDEN_SURFACES_CSS + GARDEN_ANIMATIONS_CSS

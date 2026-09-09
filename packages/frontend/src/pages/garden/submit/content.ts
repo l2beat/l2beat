@@ -10,7 +10,7 @@ export const PROCESS_STEPS = [
   {
     title: 'Send us the details',
     description:
-      'A few minutes of to fill in the template and create a forum post.',
+      'A few minutes to fill in the template and create a forum post.',
   },
   {
     title: 'We check that it fits',

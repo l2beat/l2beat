@@ -45,9 +45,9 @@ export const CropsSchema = command({
     }
 
     assertSchemaUid()
-    assertAnonymous('The attestation schema', ATTESTATION_SCHEMA)
 
     const network = args.network
+    assertAnonymous(network, 'The attestation schema', ATTESTATION_SCHEMA)
     console.log(chalk.bold('schema  '), ATTESTATION_SCHEMA)
     console.log(chalk.bold('resolver'), ATTESTATION_SCHEMA_RESOLVER)
     console.log(chalk.bold('revocable'), ATTESTATION_SCHEMA_REVOCABLE)

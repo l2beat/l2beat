@@ -1,5 +1,21 @@
+import type { ProjectCropStatus } from '@l2beat/config'
+import type {
+  CropKey,
+  CropSentiment,
+} from '@l2beat/config/build/crops/canonicalCrops'
 import { CropPlantSample } from '../../components/CropBadge'
 import { CROP_COLUMNS } from '../../crops'
+
+/** One of each plant a wallet might show, so the picture reads as a range. */
+const SAMPLE: Record<
+  CropKey,
+  { sentiment: CropSentiment; status: ProjectCropStatus }
+> = {
+  censorshipResistance: { sentiment: 'good', status: 'reviewed' },
+  openSource: { sentiment: 'good', status: 'reviewed' },
+  privacy: { sentiment: 'neutral', status: 'notReviewed' },
+  security: { sentiment: 'good', status: 'partiallyReviewed' },
+}
 
 /**
  * What the lookup endpoint is for, drawn rather than described: the moment a
@@ -10,13 +26,13 @@ import { CROP_COLUMNS } from '../../crops'
 export function WalletMock() {
   return (
     <div className="relative mx-auto w-full max-w-[320px]" aria-hidden>
-      <div className="-inset-6 absolute rounded-[32px] bg-[#dff0dc]/50 blur-2xl dark:bg-[#15ca60]/10" />
+      <div className="-inset-6 absolute rounded-[32px] bg-crop-good/15 blur-2xl dark:bg-crop-good/10" />
       <div className="relative overflow-hidden rounded-[26px] border border-divider bg-surface-primary shadow-[0_18px_50px_-20px_rgba(16,32,20,.45)]">
         <div className="flex items-center justify-between border-divider border-b px-5 py-3.5">
           <span className="font-semibold text-paragraph-13 text-secondary">
             Confirm transaction
           </span>
-          <span className="size-2 rounded-full bg-[#15ca60]" />
+          <span className="size-2 rounded-full bg-crop-good" />
         </div>
 
         <div className="px-5 pt-4 pb-1">
@@ -35,23 +51,23 @@ export function WalletMock() {
           </div>
         </div>
 
-        <div className="mx-5 mt-3 flex items-center justify-between rounded-xl border border-[#cfe3c0] border-dashed bg-[#f6faf3] px-3 py-2 dark:border-[#2c3a22] dark:bg-[#15ca60]/[.06]">
+        <div className="mx-5 mt-3 flex items-center justify-between rounded-xl border border-garden-border border-dashed bg-garden-tint px-3 py-2">
           <span className="font-bold text-[10px] uppercase tracking-wider">
             CROPS
           </span>
           <div className="flex items-end gap-1">
-            {SAMPLE.map((crop, index) => (
+            {CROP_COLUMNS.map((column, index) => (
               <span
-                key={crop.key}
+                key={column.key}
                 className="flex scale-75 flex-col items-center gap-0.5"
               >
                 <CropPlantSample
-                  sentiment={crop.sentiment}
-                  status={crop.status}
+                  sentiment={SAMPLE[column.key].sentiment}
+                  status={SAMPLE[column.key].status}
                   delay={0.1 + index * 0.12}
                 />
                 <span className="font-semibold text-[10px] text-secondary">
-                  {crop.letter}
+                  {column.letter}
                 </span>
               </span>
             ))}
@@ -62,7 +78,7 @@ export function WalletMock() {
           <span className="flex-1 rounded-xl bg-surface-tertiary py-2.5 text-center font-semibold text-paragraph-13 text-secondary">
             Reject
           </span>
-          <span className="flex-1 rounded-xl bg-[#15ca60] py-2.5 text-center font-semibold text-paragraph-13 text-white">
+          <span className="flex-1 rounded-xl bg-crop-good py-2.5 text-center font-semibold text-paragraph-13 text-white">
             Confirm
           </span>
         </div>
@@ -70,13 +86,3 @@ export function WalletMock() {
     </div>
   )
 }
-
-const SAMPLE = CROP_COLUMNS.map((column, index) => ({
-  key: column.key,
-  letter: column.letter,
-  sentiment: (['good', 'good', 'neutral', 'good'] as const)[index] ?? 'good',
-  status:
-    (['reviewed', 'reviewed', 'notReviewed', 'partiallyReviewed'] as const)[
-      index
-    ] ?? 'reviewed',
-}))

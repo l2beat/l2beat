@@ -1,4 +1,5 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CROPS_LEGOS } from '../../common/cropsLegos'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -201,7 +202,7 @@ export const uniswapv3: BaseProject = {
       ],
       notReviewed: [
         'The router and approval contracts that sit outside the pools, which are assessed separately.',
-        'Circuit breakers and rate limits.',
+        CROPS_LEGOS.notReviewed.circuitBreakers,
       ],
     },
   },

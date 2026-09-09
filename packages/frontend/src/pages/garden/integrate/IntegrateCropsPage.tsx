@@ -1,11 +1,12 @@
-import { MainPageHeader } from '~/components/MainPageHeader'
+import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getCropsProjects'
+import { GardenPageHeader } from '../components/GardenPageHeader'
 import { SectionHeading } from '../components/SectionHeading'
 import { SproutIcon } from '../components/SproutIcon'
-import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from '../gardenCss'
 import { GARDEN_PATH } from '../submit/links'
 import { BadgeStudio } from './components/BadgeStudio'
 import { CodeSnippet, RequestHeader } from './components/CodeSnippet'
@@ -16,46 +17,37 @@ import {
   type EndpointDoc,
   VERIFY_STEPS,
 } from './content'
-
-export interface IntegrateCropsAttestations {
-  network: string
-  chainId: number
-  eas: string
-  schemaUid: string
-  schema: string
-  attester: string | null
-  current: {
-    uid: string
-    revision: number
-    reviewedAt: number
-    projectIds: string[]
-    explorerUrl: string
-  } | null
-}
+import type {
+  IntegrateExample,
+  IntegrateExamples,
+} from './getIntegrateExamples'
 
 export interface IntegrateCropsPageProps extends AppLayoutProps {
-  attestations: IntegrateCropsAttestations
+  attestations: CropsAttestationsMeta
+  examples: IntegrateExamples
 }
 
 const CONSUMERS_ID = 'for-apps'
 const PROTOCOLS_ID = 'for-protocols'
 
+// Where the badge points. Literal rather than read from the environment: the
+// markup is pasted into other people's sites, and must link to production
+// from a staging preview too.
+const BADGE_HREF = `https://l2beat.com${GARDEN_PATH}`
+
 export function IntegrateCropsPage({
   attestations,
+  examples,
   ...props
 }: IntegrateCropsPageProps) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <style>{PAGE_CSS}</style>
-        <div className="relative flex grow flex-col pb-24">
-          <h1 className="pt-5 font-bold text-2xl max-md:px-4 lg:hidden">
-            Integrate CROPS
-          </h1>
-          <MainPageHeader description="">Integrate CROPS</MainPageHeader>
+        <div className="flex grow flex-col pb-24">
+          <GardenPageHeader title="Integrate CROPS" />
           <main>
             <AudiencePicker />
-            <ConsumerSections attestations={attestations} />
+            <ConsumerSections attestations={attestations} examples={examples} />
             <ProtocolSection />
           </main>
         </div>
@@ -103,18 +95,18 @@ function AudienceCard({
   title: string
   description: string
   cta: string
-  art: React.ReactNode
+  art: ReactNode
 }) {
   return (
     <a
       href={href}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-divider bg-surface-primary transition-colors hover:border-[#9ec98a] dark:hover:border-[#3d5230]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-divider bg-surface-primary transition-colors hover:border-garden-accent/60"
     >
-      <div className="flex min-h-[220px] items-center justify-center bg-gradient-to-b from-[#f4f9f0] to-surface-primary px-6 py-8 dark:from-[#151a12] dark:to-surface-primary">
+      <div className="flex min-h-[220px] items-center justify-center bg-gradient-to-b from-garden-tint to-surface-primary px-6 py-8">
         {art}
       </div>
       <div className="flex grow flex-col border-divider border-t p-5 md:p-6">
-        <span className="font-semibold text-[#4a7a35] text-subtitle-12 uppercase tracking-wider dark:text-[#8fd06a]">
+        <span className="font-semibold text-garden-accent text-subtitle-12 uppercase tracking-wider">
           {eyebrow}
         </span>
         <h2 className="mt-1.5 font-bold text-heading-20 md:text-heading-24">
@@ -136,10 +128,10 @@ function AudienceCard({
 function BadgeArt() {
   return (
     <div className="flex flex-col items-center gap-3">
-      <span className="inline-flex items-center gap-2.5 rounded-xl border border-[#d8e3cd] bg-white px-3.5 py-2.5 shadow-[0_10px_30px_-14px_rgba(16,32,20,.5)] dark:border-[#2c3a22] dark:bg-[#17181a]">
-        <SproutIcon className="size-5 text-[#16863f] dark:text-[#3fe07f]" />
+      <span className="inline-flex items-center gap-2.5 rounded-xl border border-garden-border bg-white px-3.5 py-2.5 shadow-[0_10px_30px_-14px_rgba(16,32,20,.5)] dark:bg-[#17181a]">
+        <SproutIcon className="size-5 text-crop-good-ink" />
         <span className="flex flex-col leading-tight">
-          <span className="font-bold text-[#16863f] text-[13px] tracking-wide dark:text-[#3fe07f]">
+          <span className="font-bold text-[13px] text-crop-good-ink tracking-wide">
             CROPS
           </span>
           <span className="text-[11px] text-secondary">
@@ -151,9 +143,9 @@ function BadgeArt() {
           L2BEAT
         </span>
       </span>
-      <span className="inline-flex items-center gap-2 rounded-full border border-[#d8e3cd] bg-white px-3 py-1.5 dark:border-[#2c3a22] dark:bg-[#17181a]">
-        <SproutIcon className="size-3.5 text-[#16863f] dark:text-[#3fe07f]" />
-        <span className="font-bold text-[#16863f] text-[12px] tracking-wide dark:text-[#3fe07f]">
+      <span className="inline-flex items-center gap-2 rounded-full border border-garden-border bg-white px-3 py-1.5 dark:bg-[#17181a]">
+        <SproutIcon className="size-3.5 text-crop-good-ink" />
+        <span className="font-bold text-[12px] text-crop-good-ink tracking-wide">
           CROPS
         </span>
         <span className="text-[12px] text-secondary">attested</span>
@@ -166,17 +158,23 @@ function BadgeArt() {
 
 function ConsumerSections({
   attestations,
+  examples,
 }: {
-  attestations: IntegrateCropsAttestations
+  attestations: CropsAttestationsMeta
+  examples: IntegrateExamples
 }) {
   return (
     <>
       <SectionDivider id={CONSUMERS_ID} label="For wallets and interfaces" />
       <section className="mt-6 md:mt-8">
-        <SectionHeading title="Endpoints" description="" />
+        <SectionHeading title="Endpoints" />
         <div className="flex flex-col gap-4 md:gap-6">
           {ENDPOINTS.map((endpoint) => (
-            <EndpointCard key={endpoint.path} endpoint={endpoint} />
+            <EndpointCard
+              key={endpoint.key}
+              endpoint={endpoint}
+              example={examples[endpoint.key]}
+            />
           ))}
         </div>
       </section>
@@ -186,7 +184,13 @@ function ConsumerSections({
   )
 }
 
-function EndpointCard({ endpoint }: { endpoint: EndpointDoc }) {
+function EndpointCard({
+  endpoint,
+  example,
+}: {
+  endpoint: EndpointDoc
+  example: IntegrateExample
+}) {
   return (
     <PrimaryCard className="max-md:mx-4 md:p-8">
       <Code>{endpoint.path}</Code>
@@ -212,14 +216,14 @@ function EndpointCard({ endpoint }: { endpoint: EndpointDoc }) {
         className="mt-4"
         language="text"
         code=""
-        header={<RequestHeader url={endpoint.request} />}
-        copy={endpoint.request}
+        header={<RequestHeader url={example.request} />}
+        copy={example.request}
         copyText="Copy URL"
       />
       <CodeSnippet
         className="mt-3"
         language="json"
-        code={endpoint.response}
+        code={example.response}
         label="response"
       />
     </PrimaryCard>
@@ -229,7 +233,7 @@ function EndpointCard({ endpoint }: { endpoint: EndpointDoc }) {
 function AttestationsSection({
   attestations,
 }: {
-  attestations: IntegrateCropsAttestations
+  attestations: CropsAttestationsMeta
 }) {
   const current = attestations.current
   return (
@@ -305,7 +309,7 @@ function ProtocolSection() {
           description="If your project is in the attested set, the badge is yours to use. It is one anchor tag with inline styles - no script, no stylesheet, and no image served from our domain, so it cannot slow your page down or break when we deploy."
         />
         <div className="max-md:mx-4">
-          <BadgeStudio href={`https://l2beat.com${GARDEN_PATH}`} />
+          <BadgeStudio href={BADGE_HREF} />
         </div>
       </section>
 
@@ -318,7 +322,7 @@ function ProtocolSection() {
                 key={rule}
                 className="flex gap-3 text-paragraph-14 text-secondary md:text-paragraph-16"
               >
-                <SproutIcon className="mt-1 size-4 shrink-0 text-[#4a7a35] dark:text-[#8fd06a]" />
+                <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
                 <span>
                   <Markup text={rule} />
                 </span>
@@ -345,13 +349,7 @@ function SectionDivider({ id, label }: { id: string; label: string }) {
   )
 }
 
-function Constant({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) {
+function Constant({ label, children }: { label: string; children: ReactNode }) {
   return (
     <>
       <dt className="font-semibold text-subtitle-12 uppercase tracking-wider md:pt-0.5">
@@ -364,7 +362,7 @@ function Constant({
   )
 }
 
-function Code({ children }: { children: React.ReactNode }) {
+function Code({ children }: { children: ReactNode }) {
   return (
     <code className="rounded bg-surface-tertiary px-1.5 py-0.5 font-mono text-paragraph-13">
       {children}
@@ -388,5 +386,3 @@ function Markup({ text }: { text: string }) {
     </>
   )
 }
-
-const PAGE_CSS = GARDEN_SURFACES_CSS + GARDEN_ANIMATIONS_CSS

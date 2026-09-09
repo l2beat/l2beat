@@ -1,10 +1,11 @@
-import type { ProjectCropStatus, Sentiment } from '@l2beat/config'
+import type { ProjectCropStatus } from '@l2beat/config'
+import type { CropSentiment } from '@l2beat/config/build/crops/canonicalCrops'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CropPlantSample } from './CropBadge'
 import { SectionHeading } from './SectionHeading'
 
 const PLANTS: {
-  sentiment: Sentiment
+  sentiment: CropSentiment
   status: ProjectCropStatus
   title: string
   description: string
@@ -27,22 +28,20 @@ const PLANTS: {
     sentiment: 'bad',
     status: 'reviewed',
     title: 'Wilting',
-    description:
-      'The property does not hold in practice.',
+    description: 'The property does not hold in practice.',
   },
   {
     sentiment: 'neutral',
     status: 'notReviewed',
     title: 'Not reviewed',
-    description:
-      'We have not reviewed the property yet.',
+    description: 'We have not reviewed the property yet.',
   },
   {
     sentiment: 'neutral',
     status: 'fullyTransparent',
     title: 'Fully transparent',
     description:
-      'Applies to Privacy only: The protocol makes no claim to the property and is fully transparent.',
+      'Applies to Privacy only: the protocol makes no claim to the property and is fully transparent.',
   },
 ]
 
