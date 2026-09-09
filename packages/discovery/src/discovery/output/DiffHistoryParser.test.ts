@@ -14,6 +14,35 @@ describe('DiffHistoryParser', () => {
       expect(parser.parse(md)).toEqual([])
     })
 
+    it('takes the timestamp from the run, else from the header date', () => {
+      const modern = parser.parse(
+        [
+          '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+          '',
+          '- current timestamp: 1777994288',
+          '',
+        ].join('\n'),
+      )
+      const legacy = parser.parse(
+        [
+          '# Diff at Fri, 01 Mar 2024 10:00:00 GMT:',
+          '',
+          '- current block number: 19340000',
+          '',
+        ].join('\n'),
+      )
+      const unparsable = parser.parse(
+        ['# Diff at not a date:', '', '- current block number: 1', ''].join(
+          '\n',
+        ),
+      )
+      expect(modern[0]!.timestamp).toEqual(1777994288)
+      expect(legacy[0]!.timestamp).toEqual(
+        Math.floor(Date.parse('Fri, 01 Mar 2024 10:00:00 GMT') / 1000),
+      )
+      expect(unparsable[0]!.timestamp).toEqual(null)
+    })
+
     it('parses a modern (timestamp) entry with watched changes', () => {
       const md = [
         'Generated with discovered.json: 0xnewhash',

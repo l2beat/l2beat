@@ -1,3 +1,7 @@
+import type {
+  ProjectDiscoveryUpdate,
+  ProjectDiscoveryUpdateSectionKind,
+} from '@l2beat/config'
 import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
@@ -14,14 +18,13 @@ import {
   PaginationPrevious,
 } from '~/components/Pagination'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { DiscoveryUpdate } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
-  updates: DiscoveryUpdate[]
+  updates: ProjectDiscoveryUpdate[]
   selectedUpdateId?: string
 }
 
@@ -29,7 +32,7 @@ const SECTION_TITLES = {
   'config-related-changes': 'New and verified contracts',
   'initial-discovery': 'Initial discovery',
   'watched-changes': null,
-} satisfies Record<DiscoveryUpdate['sections'][number]['kind'], string | null>
+} satisfies Record<ProjectDiscoveryUpdateSectionKind, string | null>
 
 const PAGE_SIZE = 5
 
@@ -138,7 +141,7 @@ export function UpdateCard({
   isSelected,
   copyLinkPath,
 }: {
-  update: DiscoveryUpdate
+  update: ProjectDiscoveryUpdate
   isSelected: boolean
   copyLinkPath?: string
 }) {
@@ -247,7 +250,7 @@ export function UpdateCard({
   )
 }
 
-function formatUpdateDate(update: DiscoveryUpdate): string {
+function formatUpdateDate(update: ProjectDiscoveryUpdate): string {
   if (update.timestamp === null) {
     return update.date
   }

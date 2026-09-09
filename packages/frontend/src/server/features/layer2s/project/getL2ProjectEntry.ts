@@ -21,10 +21,7 @@ import {
 import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
-import {
-  countRecentDiscoveryUpdates,
-  getDiscoveryUpdates,
-} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
+import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
@@ -172,6 +169,7 @@ export async function getL2ProjectEntry(
     | 'colors'
     | 'ecosystemColors'
     | 'discoveryInfo'
+    | 'discoveryUpdates'
     | 'daTrackingConfig'
   >,
   helpers: SsrHelpers,
@@ -226,7 +224,7 @@ export async function getL2ProjectEntry(
 
   const projectLiveness = liveness[project.id]
   const discoveryUpdates = project.discoveryInfo?.hasDiscoUi
-    ? getDiscoveryUpdates(project.id)
+    ? (project.discoveryUpdates ?? [])
     : []
 
   const ongoingAnomalies = projectLiveness?.anomalies.filter(

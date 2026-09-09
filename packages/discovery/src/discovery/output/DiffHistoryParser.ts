@@ -22,6 +22,9 @@ export type ChainPoint =
 export interface DiffHistoryEntry {
   date: string
   current: ChainPoint | null
+  /** The run timestamp; falls back to the header date for legacy
+   *  block-numbered entries, null when neither parses. */
+  timestamp: number | null
   author: string | null
   comparing: {
     ref: string
@@ -177,6 +180,7 @@ export class DiffHistoryParser {
     return {
       date,
       current,
+      timestamp: getEntryTimestamp(date, current),
       author,
       comparing,
       discoveryHash,
@@ -184,4 +188,15 @@ export class DiffHistoryParser {
       sections,
     }
   }
+}
+
+function getEntryTimestamp(
+  date: string,
+  current: ChainPoint | null,
+): number | null {
+  if (current?.kind === 'timestamp') {
+    return current.value
+  }
+  const parsed = Date.parse(date)
+  return Number.isFinite(parsed) ? Math.floor(parsed / 1000) : null
 }

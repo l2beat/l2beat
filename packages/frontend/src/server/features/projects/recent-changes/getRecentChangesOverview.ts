@@ -1,12 +1,8 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectDiscoveryUpdate } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
-import {
-  type DiscoveryUpdate,
-  getDiscoveryUpdates,
-} from './getDiscoveryUpdates'
 
 const RECENT_CHANGES_WINDOW = 7 * UnixTime.DAY
 const PER_PROJECT_LIMIT = 20
@@ -15,7 +11,7 @@ export interface RecentChangesProjectGroup {
   name: string
   iconUrl: string
   projectHref: string
-  updates: DiscoveryUpdate[]
+  updates: ProjectDiscoveryUpdate[]
 }
 
 export interface RecentChangesOverview {
@@ -25,6 +21,7 @@ export interface RecentChangesOverview {
 
 export async function getRecentChangesOverview(): Promise<RecentChangesOverview> {
   const projects = await ps.getProjects({
+    select: ['discoveryUpdates'],
     optional: ['scalingInfo', 'interopConfig', 'privacyInfo'],
     whereNot: ['archivedAt'],
   })
@@ -38,10 +35,11 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
       continue
     }
 
-    const updates = getDiscoveryUpdates(
-      project.id.toString(),
-      PER_PROJECT_LIMIT,
-    ).filter((update) => update.timestamp !== null && update.timestamp >= since)
+    const updates = project.discoveryUpdates
+      .slice(0, PER_PROJECT_LIMIT)
+      .filter(
+        (update) => update.timestamp !== null && update.timestamp >= since,
+      )
 
     if (updates.length === 0) {
       continue
@@ -98,7 +96,7 @@ function projectTvs(
   return projects[projectId]?.breakdown.total ?? 0
 }
 
-function mostRecent(updates: DiscoveryUpdate[]): number {
+function mostRecent(updates: ProjectDiscoveryUpdate[]): number {
   return updates.reduce(
     (max, update) => Math.max(max, update.timestamp ?? 0),
     0,
