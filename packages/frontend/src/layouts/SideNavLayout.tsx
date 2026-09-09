@@ -82,7 +82,7 @@ export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
   variant?: SideNavLayoutVariant
-  /** Scenery behind the whole content column - see `PageBackdrop`. */
+  /** Scenery behind the whole page, nav included - see `PageBackdrop`. */
   backdrop?: React.ReactNode
 }
 
@@ -97,6 +97,7 @@ export function SideNavLayout({
 
   return (
     <SidebarProvider>
+      {backdrop}
       <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
         <MobileTopNavbar
@@ -112,12 +113,9 @@ export function SideNavLayout({
         <div
           className={cn(
             contentWrapperVariants({ variant }),
-            // A stacking context, so a negative z-index backdrop stays above the page background.
-            backdrop !== undefined && 'relative isolate',
             childrenWrapperClassName,
           )}
         >
-          {backdrop}
           <div className={bannerWrapperVariants({ variant })}>
             {topChildren}
           </div>
