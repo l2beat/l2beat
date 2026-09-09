@@ -1,12 +1,15 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const REPO = 'https://github.com/ScopeLift/umbra-protocol/blob/master'
 
 // Verdicts backed by .flat/Umbra.sol, .flat/StealthKeyRegistry.sol,
 // discovered.json and the umbra-js / frontend sources. Measurements as of
 // 2026-09-08, block 25,931,789.
-export const umbraAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'recipient',
+export const umbraAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'recipient',
+    text: 'Hides who controls the receiving address. Sender, amount and the address itself are public.',
+  },
   cells: {
     publicObserver: {
       condition: 'sender and amount public',
@@ -25,7 +28,7 @@ export const umbraAdversaries: ProjectPrivacyAdversaries = {
           verdict: 'atRisk',
           note: 'Sender to stealth address and stealth address to destination are both public; only the identity behind the destination can stay unknown.',
         },
-        identity: 'hidden',
+        identity: 'private',
       },
       sources: [
         {
@@ -117,7 +120,7 @@ export const umbraAdversaries: ProjectPrivacyAdversaries = {
         amount: 'leaked',
         asset: 'leaked',
         linkage: 'atRisk',
-        identity: 'hidden',
+        identity: 'private',
       },
       sources: [
         {
@@ -158,4 +161,4 @@ export const umbraAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

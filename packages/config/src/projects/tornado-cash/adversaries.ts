@@ -1,12 +1,15 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const CORE = 'https://github.com/tornadocash/tornado-core'
 const UI = 'https://github.com/tornadocash/tornado-classic-ui'
 
 // Verdicts backed by pool sources (.flat/Pool_*.sol), discovered.json and the
 // linked client repositories. Measurements as of 2026-09-08, block 25,931,789.
-export const tornadoCashAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'linkage',
+export const tornadoCashAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'linkage',
+    text: 'Hides which deposit funds which withdrawal. Everything else is public.',
+  },
   cells: {
     publicObserver: {
       condition: 'sender, recipient, amount public',
@@ -18,8 +21,8 @@ export const tornadoCashAdversaries: ProjectPrivacyAdversaries = {
         recipient: 'leaked',
         amount: 'leaked',
         asset: 'leaked',
-        linkage: 'hidden',
-        identity: 'hidden',
+        linkage: 'private',
+        identity: 'private',
       },
       sources: [
         {
@@ -72,7 +75,7 @@ export const tornadoCashAdversaries: ProjectPrivacyAdversaries = {
         recipient: 'leaked',
         amount: 'leaked',
         asset: 'leaked',
-        linkage: 'hidden',
+        linkage: 'private',
         identity: {
           verdict: 'atRisk',
           note: 'The default UI exposes the IP to every probed relayer and to The Graph unless routed through Tor; note-account recovery sends the wallet address to The Graph.',
@@ -103,8 +106,8 @@ export const tornadoCashAdversaries: ProjectPrivacyAdversaries = {
         recipient: 'leaked',
         amount: 'leaked',
         asset: 'leaked',
-        linkage: 'hidden',
-        identity: 'hidden',
+        linkage: 'private',
+        identity: 'private',
       },
       sources: [
         {
@@ -148,4 +151,4 @@ export const tornadoCashAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

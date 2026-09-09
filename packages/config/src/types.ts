@@ -1011,14 +1011,9 @@ export interface ProjectPrivacyInfo {
   detailedDescription?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  privacy: PrivacySummaryValue
-  noteDiscovery?: PrivacyNoteDiscovery
   attributes?: PrivacyAttribute[]
-  /**
-   * PoC: per-adversary privacy assessment. Intended to replace `privacy`
-   * and `noteDiscovery` once it covers all privacy projects.
-   */
-  adversaries?: ProjectPrivacyAdversaries
+  /** Per-adversary privacy assessment. Author with definePrivacyAdversaries. */
+  adversaries: ProjectPrivacyAdversaries
   /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
    * ProjectZkCatalogInfo.quantumResistant
@@ -1028,11 +1023,6 @@ export interface ProjectPrivacyInfo {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
-}
-
-export interface PrivacyNoteDiscovery {
-  description: string
-  risks?: string[]
 }
 
 export type ProjectPrivacyRelayerTracking =
@@ -1116,13 +1106,17 @@ export interface PrivacyLeakFieldInfo {
 }
 
 /**
- * hidden: hidden by construction.
- * atRisk: hidden only under a condition named in `note`, e.g. the user avoids
+ * private: private by construction.
+ * atRisk: private only under a condition named in `note`, e.g. the user avoids
  *   a footgun, runs their own node, or a counterparty never shared a key.
  * leaked: visible to this adversary by design.
  * unverifiable: cannot be derived from onchain state or published source.
  */
-export type PrivacyLeakVerdict = 'hidden' | 'atRisk' | 'leaked' | 'unverifiable'
+export type PrivacyLeakVerdict =
+  | 'private'
+  | 'atRisk'
+  | 'leaked'
+  | 'unverifiable'
 
 export type PrivacyLeak =
   | PrivacyLeakVerdict
@@ -1146,8 +1140,8 @@ export interface PrivacyAdversaryAssessment {
   condition: string
   description: string
   /**
-   * Overrides the project's `protects` field as the subject of the derived
-   * value, for cells where the promise holds but another field leaks.
+   * Overrides `promise.protects` as the subject of the derived value, for
+   * cells where the promise holds but another field leaks.
    */
   subject?: PrivacyLeakField
   /**
@@ -1169,10 +1163,37 @@ export interface PrivacySource {
   url: string
 }
 
-export interface ProjectPrivacyAdversaries {
+/** What a project author writes. definePrivacyAdversaries derives the rest. */
+export interface PrivacyPromise {
   /** The field the protocol promises to protect. Cell values are derived from it. */
   protects: PrivacyLeakField
+  /**
+   * The same promise in one plain sentence, e.g. "Hides which deposit funds
+   * which withdrawal. Everything else is public." Shown on hover / in intros.
+   */
+  text: string
+}
+
+export interface PrivacyAdversariesConfig {
+  promise: PrivacyPromise
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+}
+
+export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
+  id: PrivacyAdversaryId
+  /** Derived: "<subject> <state>", e.g. "Link private", "Identity exposed". */
+  value: string
+}
+
+/**
+ * Shipped to the frontend, which has no access to config code, so the
+ * adversary and field registries travel with the data (as attributes do).
+ */
+export interface ProjectPrivacyAdversaries {
+  promise: PrivacyPromise
+  adversaries: PrivacyAdversary[]
+  fields: PrivacyLeakFieldInfo[]
+  cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
 }
 
 // #endregion

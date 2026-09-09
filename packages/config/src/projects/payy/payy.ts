@@ -274,20 +274,6 @@ export const payy: ScalingProject = {
       description:
         'The sources for UI / wallet are not published, so users have to rely on Payy operated software. Also, DA is not posted to identifiable public source, so L2 state could not be independently reproduced.\n\nThe contracts, Noir circuits and node software are published in the Payy repository (without any license) and can be built and run locally.',
     },
-    privacy: {
-      value: 'Linkable notes',
-      sentiment: 'bad',
-      description:
-        'Transactions within the Payy network do not hide the links between token transferred: anyone with Payy block data can reconstruct the spend graph and trace every withdrawal back to contributing deposits. Only the contents of each individual note (owner address, amount and asset) are hidden.',
-    },
-    noteDiscovery: {
-      description:
-        'Payy operator runs a centralized note discovery service, where the sender submits full transfer data encrypted to the receiver. The centralized operator learns which addresses receive notes and when, and who transacted with whom.\n\nThe protocol itself allows direct peer-to-peer note communication that bypasses the registry.',
-      risks: [
-        'The Payy-operated note registry, note lookup and wallet backup services learn which addresses receive and hold which notes and can link senders to recipients. The same operator holds KYC data for users of the Payy card and fiat ramps, which can tie those addresses to real identities.',
-        'A compromise of a recipient key or of the encryption scheme exposes all note data ever stored in the encrypted registry.',
-      ],
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.privateAmounts,

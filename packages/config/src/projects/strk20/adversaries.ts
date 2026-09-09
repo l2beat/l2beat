@@ -1,4 +1,4 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const REPO = 'https://github.com/starkware-libs/starknet-privacy/blob/main'
 const POOL =
@@ -9,8 +9,11 @@ const POOL =
 // decode of the pool's apply_actions transactions on Starknet. Starknet L2
 // data is treated as public. Measurements as of 2026-09-08, Starknet block
 // 14,566,177.
-export const strk20Adversaries: ProjectPrivacyAdversaries = {
-  protects: 'linkage',
+export const strk20Adversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'linkage',
+    text: 'Hides amounts and senders inside the pool, and the link between deposit and withdrawal. Deposits, withdrawals and first contacts are public.',
+  },
   cells: {
     publicObserver: {
       sentiment: 'warning',
@@ -25,22 +28,22 @@ export const strk20Adversaries: ProjectPrivacyAdversaries = {
         recipient: 'leaked',
         amount: 'leaked',
         asset: 'leaked',
-        linkage: 'hidden',
-        identity: 'hidden',
+        linkage: 'private',
+        identity: 'private',
       },
       interior: {
-        sender: 'hidden',
+        sender: 'private',
         recipient: {
           verdict: 'leaked',
           note: 'Opening a channel to a new counterparty writes the recipient address in cleartext; later transfers in the channel do not.',
         },
-        amount: 'hidden',
+        amount: 'private',
         asset: {
           verdict: 'atRisk',
           note: 'The fee reimbursement withdrawal reveals which token the sender pays fees in; use STRK.',
         },
-        linkage: 'hidden',
-        identity: 'hidden',
+        linkage: 'private',
+        identity: 'private',
       },
       sources: [
         { title: 'PrivacyPool contract on Voyager', url: POOL },
@@ -75,7 +78,7 @@ export const strk20Adversaries: ProjectPrivacyAdversaries = {
           note: 'Channel opening in the same transaction as a deposit names the depositor as sender.',
         },
         recipient: 'leaked',
-        amount: 'hidden',
+        amount: 'private',
         asset: 'atRisk',
         linkage: 'atRisk',
         identity: 'atRisk',
@@ -185,4 +188,4 @@ export const strk20Adversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

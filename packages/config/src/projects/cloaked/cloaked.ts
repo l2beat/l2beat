@@ -68,12 +68,6 @@ export const cloaked: BaseProject = {
       description:
         'The production web wallet is closed source and cannot be self-hosted. The published derivation code and API schema can nevertheless be used to build a local client that creates an account, derives keys, and signs and submits payments through the hosted API. The backend implementations of the API, ENS gateway, indexer, and relay service are not published, so the complete service cannot be reproduced.',
     },
-    privacy: {
-      value: 'Admin view key',
-      sentiment: 'bad',
-      description:
-        'Cloaked holds a private, per-account viewing capability that lets its service derive and link every stealth address for that account. Its relay also sees both sides of Privacy Pools activity. This centralized visibility does not provide spending authority, and users can keep spending keys outside the closed-source wallet by using an inspected local client.',
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,
       PRIVACY_ATTRIBUTES.anyAmount,

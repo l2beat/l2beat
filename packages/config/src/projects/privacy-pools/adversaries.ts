@@ -1,4 +1,4 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const CORE = 'https://github.com/0xbow-io/privacy-pools-core/blob/main'
 const SITE = 'https://github.com/0xbow-io/privacy-pools-website/blob/main'
@@ -8,8 +8,11 @@ const ENTRYPOINT =
 // Verdicts backed by .flat/PrivacyPoolsEntrypoint, .flat/PrivacyPool*.sol,
 // discovered.json, the privacy-pools-core v1.2.1 circuits and SDK, and the
 // privacy-pools-website source. Measurements as of 2026-09-08, block 25,933,805.
-export const privacyPoolsAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'linkage',
+export const privacyPoolsAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'linkage',
+    text: 'Hides which deposit funds which withdrawal, for deposits the association set approves. Everything else is public.',
+  },
   cells: {
     publicObserver: {
       sentiment: 'good',
@@ -25,10 +28,10 @@ export const privacyPoolsAdversaries: ProjectPrivacyAdversaries = {
         amount: 'leaked',
         asset: 'leaked',
         linkage: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Ragequitting a change note reveals the withdrawal that created it.',
         },
-        identity: 'hidden',
+        identity: 'private',
       },
       sources: [
         { title: 'Entrypoint deposit / relay', url: `${ENTRYPOINT}#code` },
@@ -157,4 +160,4 @@ export const privacyPoolsAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

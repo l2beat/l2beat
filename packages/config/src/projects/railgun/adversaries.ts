@@ -1,4 +1,4 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const ENGINE = 'https://github.com/Railgun-Community/engine/blob/main/src'
 const WALLET = 'https://github.com/Railgun-Community/wallet/blob/main/src'
@@ -8,8 +8,11 @@ const PROXY =
 // Verdicts backed by .flat/RailgunSmartWallet, discovered.json, the engine,
 // wallet, broadcaster and POI sources. Measurements as of 2026-09-08,
 // block 25,931,791.
-export const railgunAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'linkage',
+export const railgunAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'linkage',
+    text: 'Hides everything inside the pool. Deposits and withdrawals are public.',
+  },
   cells: {
     publicObserver: {
       condition: 'interior fully encrypted',
@@ -24,22 +27,22 @@ export const railgunAdversaries: ProjectPrivacyAdversaries = {
         recipient: 'leaked',
         amount: 'leaked',
         asset: 'leaked',
-        linkage: 'hidden',
-        identity: 'hidden',
+        linkage: 'private',
+        identity: 'private',
       },
       interior: {
-        sender: 'hidden',
-        recipient: 'hidden',
+        sender: 'private',
+        recipient: 'private',
         amount: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Leaked for DeFi bundles, which unshield to RelayAdapt in cleartext.',
         },
         asset: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Leaked for DeFi bundles.',
         },
-        linkage: 'hidden',
-        identity: 'hidden',
+        linkage: 'private',
+        identity: 'private',
       },
       sources: [
         { title: 'RailgunSmartWallet shield / transact', url: `${PROXY}#code` },
@@ -69,12 +72,12 @@ export const railgunAdversaries: ProjectPrivacyAdversaries = {
         },
       },
       interior: {
-        sender: 'hidden',
-        recipient: 'hidden',
-        amount: 'hidden',
-        asset: 'hidden',
-        linkage: 'hidden',
-        identity: 'hidden',
+        sender: 'private',
+        recipient: 'private',
+        amount: 'private',
+        asset: 'private',
+        linkage: 'private',
+        identity: 'private',
       },
       sources: [
         {
@@ -97,18 +100,18 @@ export const railgunAdversaries: ProjectPrivacyAdversaries = {
         recipient: 'leaked',
         amount: 'leaked',
         asset: 'leaked',
-        linkage: 'hidden',
+        linkage: 'private',
         identity: {
           verdict: 'atRisk',
           note: 'Configured RPC sees IP and the pending unshield destination during gas estimation; default sync indexer and Waku fleet see the IP of a Railgun wallet. A self-hosted node avoids both.',
         },
       },
       interior: {
-        sender: 'hidden',
-        recipient: 'hidden',
-        amount: 'hidden',
-        asset: 'hidden',
-        linkage: 'hidden',
+        sender: 'private',
+        recipient: 'private',
+        amount: 'private',
+        asset: 'private',
+        linkage: 'private',
         identity: {
           verdict: 'atRisk',
           note: 'POI nodes receive the blinded commitments of a wallet in batches and its submissions per spend, tying an IP to a note cluster and to transaction ids; a self-hosted list avoids it.',
@@ -136,16 +139,16 @@ export const railgunAdversaries: ProjectPrivacyAdversaries = {
         recipient: 'leaked',
         amount: 'leaked',
         asset: 'leaked',
-        linkage: 'hidden',
-        identity: 'hidden',
+        linkage: 'private',
+        identity: 'private',
       },
       interior: {
-        sender: 'hidden',
-        recipient: 'hidden',
-        amount: 'hidden',
-        asset: 'hidden',
-        linkage: 'hidden',
-        identity: 'hidden',
+        sender: 'private',
+        recipient: 'private',
+        amount: 'private',
+        asset: 'private',
+        linkage: 'private',
+        identity: 'private',
       },
       sources: [
         {
@@ -200,4 +203,4 @@ export const railgunAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

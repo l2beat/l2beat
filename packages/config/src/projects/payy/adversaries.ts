@@ -1,4 +1,4 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const REPO = 'https://github.com/polybase/payy/blob/main'
 const ROLLUP =
@@ -8,8 +8,11 @@ const ROLLUP =
 // discovered.json, the public payy repository (Noir circuits, node, guild and
 // registry crates) and the operator's public block API. Measurements as of
 // 2026-09-08, block 25,933,805.
-export const payyAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'amount',
+export const payyAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'amount',
+    text: 'Hides the amount and owner of notes in flight. Who paid whom, and every deposit and withdrawal, is public.',
+  },
   cells: {
     publicObserver: {
       sentiment: 'bad',
@@ -25,21 +28,21 @@ export const payyAdversaries: ProjectPrivacyAdversaries = {
           verdict: 'leaked',
           note: 'The L2 graph connects deposit and withdrawal nodes; a merge on the path widens the candidate set, a linear path does not.',
         },
-        identity: 'hidden',
+        identity: 'private',
       },
       interior: {
         sender: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'The owner key is hidden, but the consumed note is a public graph node.',
         },
         recipient: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Recipient output and change output are indistinguishable.',
         },
-        amount: 'hidden',
+        amount: 'private',
         asset: 'leaked',
         linkage: 'leaked',
-        identity: 'hidden',
+        identity: 'private',
       },
       sources: [
         { title: 'RollupV1 verifyRollup / verifyBurn', url: `${ROLLUP}#code` },
@@ -71,7 +74,7 @@ export const payyAdversaries: ProjectPrivacyAdversaries = {
           note: 'Owner keys stay hidden, but nodes are labelled by their terminal deposit and withdrawal addresses.',
         },
         recipient: 'atRisk',
-        amount: 'hidden',
+        amount: 'private',
         asset: 'leaked',
         linkage: 'leaked',
         identity: 'atRisk',
@@ -110,7 +113,7 @@ export const payyAdversaries: ProjectPrivacyAdversaries = {
         },
         recipient: 'leaked',
         amount: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Encrypted to the recipient; the operator sees ciphertext only.',
         },
         asset: 'leaked',
@@ -209,4 +212,4 @@ export const payyAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

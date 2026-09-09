@@ -1,4 +1,4 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const POOL =
   'https://optimistic.etherscan.io/address/0xca689828854a422CF1f778be03CA80549408F620'
@@ -11,8 +11,11 @@ const SDK = 'https://www.npmjs.com/package/@sunnyside-io/privacy-boost'
 // published SDK wrapper (its Rust core and the TEE server are closed) and a
 // decode of all pool events on OP Mainnet. Measurements as of 2026-09-08,
 // OP Mainnet block 156,644,698.
-export const privacyBoostAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'linkage',
+export const privacyBoostAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'linkage',
+    text: 'Hides everything inside the ledger and the link between deposit and withdrawal. Deposits and withdrawals are public.',
+  },
   cells: {
     publicObserver: {
       sentiment: 'good',
@@ -28,27 +31,27 @@ export const privacyBoostAdversaries: ProjectPrivacyAdversaries = {
         amount: 'leaked',
         asset: 'leaked',
         linkage: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Leaked on the forced path, whose input commitments are identifiable leaves.',
         },
-        identity: 'hidden',
+        identity: 'private',
       },
       interior: {
-        sender: 'hidden',
-        recipient: 'hidden',
+        sender: 'private',
+        recipient: 'private',
         amount: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Leaked for gateway DeFi legs.',
         },
         asset: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Leaked for gateway DeFi legs.',
         },
         linkage: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'One transfer per epoch: timing and input/output shape of every transfer are public.',
         },
-        identity: 'hidden',
+        identity: 'private',
       },
       sources: [
         {
@@ -191,4 +194,4 @@ export const privacyBoostAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

@@ -1,4 +1,4 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const SDK = 'https://github.com/zama-ai/relayer-sdk/blob/main'
 const CUSDC =
@@ -7,8 +7,11 @@ const CUSDC =
 // Verdicts backed by .flat/ConfidentialUSDCWrapper, .flat/ACL, .flat/KMSVerifier,
 // discovered.json (Ethereum + gateway chain) and the relayer-sdk source.
 // Measurements as of 2026-09-08, block 25,931,789.
-export const zamaCwAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'amount',
+export const zamaCwAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'amount',
+    text: 'Hides transfer amounts. Who pays whom, and every wrap and unwrap amount, is public.',
+  },
   cells: {
     publicObserver: {
       condition: 'graph and boundary amounts public',
@@ -21,15 +24,15 @@ export const zamaCwAdversaries: ProjectPrivacyAdversaries = {
         amount: 'leaked',
         asset: 'leaked',
         linkage: 'leaked',
-        identity: 'hidden',
+        identity: 'private',
       },
       interior: {
         sender: 'leaked',
         recipient: 'leaked',
-        amount: 'hidden',
+        amount: 'private',
         asset: 'leaked',
         linkage: 'leaked',
-        identity: 'hidden',
+        identity: 'private',
       },
       sources: [
         { title: 'ConfidentialWrapper (cUSDC)', url: `${CUSDC}#code` },
@@ -94,7 +97,7 @@ export const zamaCwAdversaries: ProjectPrivacyAdversaries = {
         sender: 'leaked',
         recipient: 'leaked',
         amount: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Relayer and coprocessor see ciphertexts and handles, not plaintext.',
         },
         asset: 'leaked',
@@ -165,7 +168,7 @@ export const zamaCwAdversaries: ProjectPrivacyAdversaries = {
         sender: 'leaked',
         recipient: 'leaked',
         amount: {
-          verdict: 'hidden',
+          verdict: 'private',
           note: 'Hidden by lattice cryptography only. Every ciphertext is publicly downloadable from the coprocessor bucket, so a future KMS key compromise is retroactive and total.',
         },
         asset: 'leaked',
@@ -188,4 +191,4 @@ export const zamaCwAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

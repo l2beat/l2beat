@@ -1,4 +1,4 @@
-import type { ProjectPrivacyAdversaries } from '../../types'
+import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
 const STEALTH = 'https://github.com/cloakedxyz/clkd-stealth'
 const RESOLVER =
@@ -9,8 +9,11 @@ const RESOLVER =
 // public OpenAPI description of api.clkd.xyz and decoded relayer transactions.
 // The web app and backend are closed source. Measurements as of 2026-09-08,
 // block 25,934,069.
-export const cloakedAdversaries: ProjectPrivacyAdversaries = {
-  protects: 'recipient',
+export const cloakedAdversaries = definePrivacyAdversaries({
+  promise: {
+    protects: 'recipient',
+    text: 'Hides which account owns a receiving address. Sender, amount and the address itself are public.',
+  },
   cells: {
     publicObserver: {
       sentiment: 'good',
@@ -19,14 +22,14 @@ export const cloakedAdversaries: ProjectPrivacyAdversaries = {
         'Nothing of the stealth scheme is onchain: no announcement, no registry, no escrow. A payment is a plain transfer to a fresh EOA that the Cloaked server generated for the recipient, so sender, amount and asset are public and the receiving address is a pseudonym nobody can tie to an account. Exits are EIP-7702 transactions submitted by two Cloaked relayer EOAs with fees paid to a Cloaked Safe, so every spend is publicly attributable to Cloaked, but not to a user. The one public leak is consolidation: about a quarter of relayer transactions bundle several stealth addresses, proving common ownership. The optional Privacy Pools hop is assessed under Privacy Pools.',
       boundary: {
         sender: 'leaked',
-        recipient: 'hidden',
+        recipient: 'private',
         amount: 'leaked',
         asset: 'leaked',
         linkage: {
           verdict: 'atRisk',
           note: 'Bundling several stealth addresses in one exit links them as one owner; a change output to a fresh Cloaked address links the pair.',
         },
-        identity: 'hidden',
+        identity: 'private',
       },
       sources: [
         { title: 'Stealth derivation (clkd-stealth)', url: STEALTH },
@@ -146,4 +149,4 @@ export const cloakedAdversaries: ProjectPrivacyAdversaries = {
       ],
     },
   },
-}
+})

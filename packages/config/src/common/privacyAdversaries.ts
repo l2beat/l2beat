@@ -1,17 +1,20 @@
 import type {
+  PrivacyAdversariesConfig,
   PrivacyAdversary,
   PrivacyAdversaryAssessment,
+  PrivacyAdversaryCell,
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
   PrivacyLeakField,
   PrivacyLeakFieldInfo,
+  ProjectPrivacyAdversaries,
 } from '../types'
 
 /**
  * Each cell carries one judgment, its sentiment (see PrivacyAdversaryAssessment),
  * and its value is derived: the subject the protocol promises to protect
- * (`protects`, or the cell's `subject` override) plus the state that matches
- * the sentiment. Default-path footguns never affect the sentiment; they are
+ * (`promise.protects`, or the cell's `subject` override) plus the state that
+ * matches the sentiment. Default-path footguns never affect the sentiment; they are
  * `atRisk` verdicts in the leak maps, and "at risk" means the same thing at
  * field and cell level: hidden only under the condition in the note.
  *
@@ -94,7 +97,7 @@ export const PRIVACY_LEAK_FIELDS: Record<
   },
   linkage: {
     id: 'linkage',
-    label: 'Linkage',
+    label: 'Link',
     subject: 'Link',
     description:
       'Whether the entry and exit of the same funds, or sender and recipient of the same transfer, can be tied together.',
@@ -109,16 +112,61 @@ export const PRIVACY_LEAK_FIELDS: Record<
 }
 
 const SENTIMENT_STATE: Record<PrivacyAdversarySentiment, string> = {
-  good: 'hidden',
+  good: 'private',
   warning: 'at risk',
   bad: 'exposed',
 }
 
-/** "Link at risk", "Identity exposed": the derived table value of a cell. */
+/** "Link private", "Identity exposed": the derived table value of a cell. */
 export function getPrivacyAdversaryValue(
   protects: PrivacyLeakField,
   cell: PrivacyAdversaryAssessment,
 ): string {
   const subject = PRIVACY_LEAK_FIELDS[cell.subject ?? protects].subject
   return `${subject} ${SENTIMENT_STATE[cell.sentiment]}`
+}
+
+export const PRIVACY_ADVERSARY_ORDER: PrivacyAdversaryId[] = [
+  'publicObserver',
+  'chainAnalyst',
+  'networkObserver',
+  'privilegedInsider',
+  'futureAdversary',
+]
+
+export const PRIVACY_LEAK_FIELD_ORDER: PrivacyLeakField[] = [
+  'sender',
+  'recipient',
+  'amount',
+  'asset',
+  'linkage',
+  'identity',
+]
+
+/** Derives cell values and attaches the registries for the frontend. */
+export function definePrivacyAdversaries(
+  config: PrivacyAdversariesConfig,
+): ProjectPrivacyAdversaries {
+  const cells = Object.fromEntries(
+    PRIVACY_ADVERSARY_ORDER.map(
+      (id): [PrivacyAdversaryId, PrivacyAdversaryCell] => [
+        id,
+        {
+          ...config.cells[id],
+          id,
+          value: getPrivacyAdversaryValue(
+            config.promise.protects,
+            config.cells[id],
+          ),
+        },
+      ],
+    ),
+  ) as Record<PrivacyAdversaryId, PrivacyAdversaryCell>
+
+  return {
+    promise: config.promise,
+    adversaries: PRIVACY_ADVERSARY_ORDER.map((id) => PRIVACY_ADVERSARIES[id]),
+    fields: PRIVACY_LEAK_FIELD_ORDER.map((id) => PRIVACY_LEAK_FIELDS[id]),
+    cells,
+  }
 }

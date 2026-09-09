@@ -249,12 +249,6 @@ export const privacyBoost: BaseProject = {
       description:
         'Circuit sources are published, but the verification keys deployed in September 2026 have not yet been reproduced by L2BEAT. TEE sources are not published, so the privacy logic has not been verified.',
     },
-    privacy: {
-      value: 'Admin API',
-      sentiment: 'bad',
-      description:
-        "Registered 'auditors' can query the TEE's Audit API to retrieve the balance and transaction history of any address. These queries can be logged publicly on the AuditGateway smart contract, but there is no verifiable guarantee that all queries are logged.",
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.tee,
