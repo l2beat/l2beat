@@ -1,3 +1,4 @@
+import type { TableReadyValue } from '@l2beat/config'
 import { formatCurrency, formatInteger, pluralize } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
@@ -25,11 +26,24 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
+import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
+import { PrivacyAdversaryCell } from '../../adversaries/PrivacyAdversaryCell'
+import {
+  PRIVACY_ADVERSARY_IDS,
+  PRIVACY_ADVERSARY_SHORT_LABEL,
+  PRIVACY_ADVERSARY_TOOLTIP,
+} from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
+
+function toTableValue(
+  cell: PrivacyAdversarySummaryCell | undefined,
+): TableReadyValue | undefined {
+  return cell && { value: cell.value, sentiment: cell.sentiment }
+}
 
 function MetricCell({ children }: { children: React.ReactNode }) {
   if (children === undefined || children === null) {
@@ -176,6 +190,44 @@ const columns = [
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
+  columnHelper.group({
+    id: 'adversaries',
+    header: PRIVACY_ASSESSMENT.title,
+    meta: {
+      tooltip: PRIVACY_ASSESSMENT.tooltip,
+    },
+    columns: PRIVACY_ADVERSARY_IDS.map((adversaryId, index) =>
+      columnHelper.accessor(
+        (entry) => toTableValue(entry.adversaries.cells[index]),
+        {
+          id: adversaryId,
+          header: PRIVACY_ADVERSARY_SHORT_LABEL[adversaryId],
+          cell: (ctx) => {
+            const cell = ctx.row.original.adversaries.cells[index]
+            if (!cell) return <NoDataBadge />
+            return (
+              <PrivacyAdversaryCell
+                cell={cell}
+                promise={ctx.row.original.adversaries.promise}
+                projectHref={ctx.row.original.href}
+              />
+            )
+          },
+          sortDescFirst: true,
+          sortUndefined: 'last',
+          sortingFn: (a, b) =>
+            sortTableValues(
+              toTableValue(a.original.adversaries.cells[index]),
+              toTableValue(b.original.adversaries.cells[index]),
+            ),
+          meta: {
+            align: 'center',
+            tooltip: PRIVACY_ADVERSARY_TOOLTIP[adversaryId],
+          },
+        },
+      ),
+    ),
+  }),
   columnHelper.display({
     id: 'trustedSetup',
     header: 'Setup',
@@ -207,21 +259,6 @@ const columns = [
       align: 'center',
       tooltip:
         'Time users have to withdraw before a malicious upgrade can take effect.',
-    },
-  }),
-  columnHelper.accessor((entry) => adjustTableValue(entry.privacy), {
-    id: 'privacy',
-    header: PRIVACY_ASSESSMENT.title,
-    cell: (ctx) => (
-      <PrivacyAssessmentCell value={ctx.row.original.privacy} showValue />
-    ),
-    sortDescFirst: true,
-    sortUndefined: 'last',
-    sortingFn: (a, b) =>
-      sortTableValues(a.original.privacy, b.original.privacy),
-    meta: {
-      align: 'center',
-      tooltip: PRIVACY_ASSESSMENT.tooltip,
     },
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {

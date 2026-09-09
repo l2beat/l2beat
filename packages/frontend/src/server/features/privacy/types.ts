@@ -1,4 +1,11 @@
-import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import type {
+  PrivacyAdversaryId,
+  PrivacyAdversarySentiment,
+  PrivacyPromise,
+  Project,
+  ProjectPrivacyAdversaries,
+  ProjectZkCatalogInfo,
+} from '@l2beat/config'
 
 export type PrivacyProject = Project<
   'display' | 'privacyInfo' | 'statuses',
@@ -54,4 +61,37 @@ export interface PrivacyAsset {
   }
   depositedValueUsd: PrivacyDepositedValueUsd
   buckets: PrivacyBucket[]
+}
+
+/** One adversary cell, reduced to what tooltips and dots need. */
+export interface PrivacyAdversarySummaryCell {
+  id: PrivacyAdversaryId
+  label: string
+  value: string
+  sentiment: PrivacyAdversarySentiment
+  condition: string
+}
+
+export interface PrivacyAdversariesSummary {
+  promise: PrivacyPromise
+  /** In spine order: public observer, chain analyst, network observer, insider, future. */
+  cells: PrivacyAdversarySummaryCell[]
+}
+
+export function toPrivacyAdversariesSummary(
+  adversaries: ProjectPrivacyAdversaries,
+): PrivacyAdversariesSummary {
+  return {
+    promise: adversaries.promise,
+    cells: adversaries.adversaries.map((adversary) => {
+      const cell = adversaries.cells[adversary.id]
+      return {
+        id: adversary.id,
+        label: adversary.label,
+        value: cell.value,
+        sentiment: cell.sentiment,
+        condition: cell.condition,
+      }
+    }),
+  }
 }

@@ -8,7 +8,11 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
-import type { PrivacyProject } from './types'
+import {
+  type PrivacyAdversariesSummary,
+  type PrivacyProject,
+  toPrivacyAdversariesSummary,
+} from './types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetup,
@@ -33,7 +37,7 @@ export interface PrivacySummaryEntry {
   trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  privacy: PrivacySummaryValue
+  adversaries: PrivacyAdversariesSummary
   attributes: PrivacyAttribute[]
   quantumResistant?: boolean
 }
@@ -155,7 +159,7 @@ function getPrivacySummaryBaseEntry(
     trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
-    privacy: project.privacyInfo.privacy,
+    adversaries: toPrivacyAdversariesSummary(project.privacyInfo.adversaries),
     attributes: project.privacyInfo.attributes ?? [],
     quantumResistant: project.privacyInfo.quantumResistant,
   }

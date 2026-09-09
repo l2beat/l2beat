@@ -1,11 +1,11 @@
 import type {
   PrivacyAttribute,
   PrivacyExitWindow,
-  PrivacyNoteDiscovery,
   PrivacySummaryValue,
   ProjectContracts,
   ProjectDisplay,
   ProjectPermissions,
+  ProjectPrivacyAdversaries,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
@@ -46,11 +46,10 @@ export interface PrivacyProjectDetails {
   zkCatalogInfo?: ProjectZkCatalogInfo
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   exitWindow: PrivacyExitWindow
-  privacy: PrivacySummaryValue
+  adversaries: ProjectPrivacyAdversaries
   reproducibility: PrivacySummaryValue
   hasTvl: boolean
   detailedDescription?: string
-  noteDiscovery?: PrivacyNoteDiscovery
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
@@ -254,13 +253,12 @@ export async function getPrivacyProjectDetails(
     zkCatalogInfo: project.zkCatalogInfo,
     trustedSetups: project.trustedSetups,
     exitWindow: project.privacyInfo.exitWindow,
-    privacy: project.privacyInfo.privacy,
+    adversaries: project.privacyInfo.adversaries,
     reproducibility: project.privacyInfo.reproducibility,
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,
-    noteDiscovery: project.privacyInfo.noteDiscovery,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],

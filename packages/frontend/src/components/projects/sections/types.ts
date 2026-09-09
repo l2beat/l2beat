@@ -21,6 +21,7 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { PrivacyAdversariesSectionProps } from './privacy/PrivacyAdversariesSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
@@ -77,8 +78,8 @@ type SectionId =
   | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
+  | 'privacy-adversaries'
   | 'external-dependencies'
-  | 'note-discovery'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -281,6 +282,11 @@ interface ProjectDetailsPrivacyFlowsSection {
   props: ProjectDetailsProps<PrivacyFlowsSectionProps>
 }
 
+interface ProjectDetailsPrivacyAdversariesSection {
+  type: 'PrivacyAdversariesSection'
+  props: ProjectDetailsProps<PrivacyAdversariesSectionProps>
+}
+
 interface ProjectDetailsPrivacyAssetsBreakdownSection {
   type: 'PrivacyAssetsBreakdownSection'
   props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
@@ -334,5 +340,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsTvsValueSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
+  | ProjectDetailsPrivacyAdversariesSection
   | ProjectDetailsExternalDependenciesSection
 )
