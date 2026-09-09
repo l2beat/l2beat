@@ -72,7 +72,9 @@
   --garden-tint: #f2f9ec;
   --garden-soil: #cfc4b0;
   --garden-sky: #eaf4e6;
+  --garden-ground: #d6e4cd;
   --plot-sky: #fdf1de;
+  --plot-ground: #dcd2bf;
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
@@ -159,7 +161,9 @@
   --garden-tint: #161f0e;
   --garden-soil: #2a251d;
   --garden-sky: #141b10;
+  --garden-ground: #181f12;
   --plot-sky: #1e1b12;
+  --plot-ground: #201c14;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
@@ -515,7 +519,9 @@
   --color-garden-tint: var(--garden-tint);
   --color-garden-soil: var(--garden-soil);
   --color-garden-sky: var(--garden-sky);
+  --color-garden-ground: var(--garden-ground);
   --color-plot-sky: var(--plot-sky);
+  --color-plot-ground: var(--plot-ground);
 
   --color-branding-primary: var(--project-primary, var(--ecosystem-primary));
   --color-branding-secondary: var(
@@ -862,8 +868,8 @@
   }
 }
 
-/* Overscroll reveals the root background above the page; matching it to the
-   sky of the PageBackdrop on screen keeps the garden pages edge-free there. */
+/* Fallback for browsers whose overscroll does not carry fixed elements along
+   (see PageBackdrop): the root background is what they reveal instead. */
 html:has([data-backdrop="garden"]) {
   background-color: var(--garden-sky);
 }
