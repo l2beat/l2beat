@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PriorityWithdrawalQueue",
+  "category": "core",
+  "description": "Priority lane of the withdrawal system for privileged/large redemptions.",
+  "ignoreMethods": ["proxiableUUID"]
+}
