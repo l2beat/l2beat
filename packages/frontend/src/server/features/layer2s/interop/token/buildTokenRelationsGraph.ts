@@ -1,6 +1,6 @@
 import type { TokenRelationRoute } from '@l2beat/database'
 import { MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
-import { deploymentKey } from '../utils/deploymentKey'
+import { deploymentKey, type Endpoint } from '../utils/deploymentKey'
 
 type GraphBridgeType = 'burnAndMint' | 'lockAndMint'
 
@@ -26,11 +26,6 @@ export interface TokenRelationsGraphEdge {
 export interface TokenRelationsGraph<T> {
   nodes: TokenRelationsGraphNode<T>[]
   edges: TokenRelationsGraphEdge[]
-}
-
-interface Endpoint {
-  chain: string
-  address: string
 }
 
 type GraphRoute = TokenRelationRoute & { bridgeType: GraphBridgeType }
