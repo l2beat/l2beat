@@ -1,8 +1,4 @@
-import type {
-  CropKey,
-  ResolvedCrops,
-} from '@l2beat/config/build/crops/canonicalCrops'
-import { useState } from 'react'
+import type { ResolvedCrops } from '@l2beat/config/build/crops/canonicalCrops'
 import {
   CropFindings,
   CropNote,
@@ -12,9 +8,8 @@ import {
 import { cn } from '~/utils/cn'
 import {
   type CropEntry,
-  countInBloom,
   SENTIMENT_BORDER,
-  SENTIMENT_ROOT,
+  SENTIMENT_SWATCH,
   SENTIMENT_TEXT,
   SENTIMENT_TINT,
   toCropEntries,
@@ -28,8 +23,7 @@ import {
 
 /**
  * The four plants stand full-size in one garden bed, and each roots straight
- * down into its own findings column, so nothing is behind a click. Hovering
- * either half of a crop dims the other three.
+ * down into its own findings column, so nothing is behind a click.
  */
 export function CropsBed({
   crops,
@@ -39,28 +33,22 @@ export function CropsBed({
   inGarden: boolean
 }) {
   const entries = toCropEntries(crops)
-  const [litKey, setLitKey] = useState<CropKey | undefined>()
-  const lightUp = (key: CropKey) => ({
-    lit: litKey === undefined || litKey === key,
-    onEnter: () => setLitKey(key),
-    onLeave: () => setLitKey(undefined),
-  })
 
   return (
     <div className="@container">
+      <Verdict inGarden={inGarden} entries={entries} />
       <div
         className={cn(
-          'relative overflow-hidden rounded-t-xl border border-b-0',
+          'relative mt-4 overflow-hidden rounded-t-xl border border-b-0',
           inGarden
             ? 'border-garden-border'
             : 'border-divider dark:border-transparent',
         )}
       >
         <Sky inGarden={inGarden} />
-        <Verdict inGarden={inGarden} bloomCount={countInBloom(crops)} />
-        <div className="relative grid grid-cols-4 items-end pt-4">
+        <div className="relative grid grid-cols-4 items-end pt-7">
           {entries.map((entry) => (
-            <Plant key={entry.key} entry={entry} {...lightUp(entry.key)} />
+            <Plant key={entry.key} entry={entry} />
           ))}
         </div>
         <Soil />
@@ -74,55 +62,28 @@ export function CropsBed({
         )}
       >
         {entries.map((entry) => (
-          <Findings key={entry.key} entry={entry} {...lightUp(entry.key)} />
+          <Findings key={entry.key} entry={entry} />
         ))}
       </div>
     </div>
   )
 }
 
-interface LightUp {
-  lit: boolean
-  onEnter: () => void
-  onLeave: () => void
-}
-
-function Plant({
-  entry,
-  lit,
-  onEnter,
-  onLeave,
-}: { entry: CropEntry } & LightUp) {
+function Plant({ entry }: { entry: CropEntry }) {
   const { definition, evaluation, index } = entry
   return (
     <a
       href={`#crop-${entry.key}`}
       aria-label={`${definition.label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-      onFocus={onEnter}
-      onBlur={onLeave}
-      className={cn(
-        'group relative flex flex-col items-center gap-1.5 pb-2 outline-none transition-opacity duration-300',
-        lit ? 'opacity-100' : 'opacity-45',
-      )}
+      className="flex flex-col items-center gap-1.5 pb-2"
     >
-      <span className="relative flex items-end justify-center">
-        <span
-          aria-hidden
-          className="absolute bottom-1 h-3 w-[70%] rounded-[100%] bg-black/15 opacity-0 blur-[4px] transition-opacity duration-300 group-hover:opacity-100 dark:bg-black/60"
-        />
-        <CropPlantArt
-          status={evaluation.status}
-          sentiment={evaluation.sentiment}
-          delay={index * 0.12}
-          width={80}
-          className={cn(
-            'group-hover:-translate-y-1 group-focus-visible:-translate-y-1 relative transition-transform duration-300',
-            '@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]',
-          )}
-        />
-      </span>
+      <CropPlantArt
+        status={evaluation.status}
+        sentiment={evaluation.sentiment}
+        delay={index * 0.12}
+        width={80}
+        className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
+      />
       <LetterChip entry={entry} className="size-7 text-[11px]" />
     </a>
   )
@@ -166,36 +127,17 @@ function LetterChip({
   )
 }
 
-function Findings({
-  entry,
-  lit,
-  onEnter,
-  onLeave,
-}: { entry: CropEntry } & LightUp) {
-  const { definition, evaluation, index } = entry
+function Findings({ entry }: { entry: CropEntry }) {
+  const { definition, evaluation } = entry
   return (
     <div
       id={`crop-${entry.key}`}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
       className={cn(
-        'relative scroll-mt-24 transition-opacity duration-300',
-        '@min-[720px]:px-3 @min-[720px]:pt-8 @min-[720px]:pb-2 @min-[720px]:first:pl-0 @min-[720px]:last:pr-0',
+        'scroll-mt-24',
+        '@min-[720px]:px-3 @min-[720px]:pt-5 @min-[720px]:pb-2 @min-[720px]:first:pl-0 @min-[720px]:last:pr-0',
         '@min-[900px]:px-5',
-        lit ? 'opacity-100' : 'opacity-50',
       )}
-      style={{
-        animation: `garden-pop .45s ease-out ${0.4 + index * 0.08}s both`,
-      }}
     >
-      <span
-        aria-hidden
-        className={cn(
-          'absolute top-0 left-1/2 h-6 border-l-2 border-dashed',
-          '@max-[719.9px]:hidden',
-          SENTIMENT_ROOT[evaluation.sentiment],
-        )}
-      />
       <h3 className="flex items-center gap-2 font-bold text-paragraph-15 leading-tight">
         <LetterChip
           entry={entry}
@@ -211,10 +153,6 @@ function Findings({
       >
         {getCropStatusText(evaluation.status, evaluation.sentiment)}
       </p>
-      <CropNote
-        note={definition.note}
-        className="mt-2 text-[12px] leading-snug"
-      />
       <div
         className={cn(
           'text-paragraph-13 leading-snug',
@@ -223,32 +161,52 @@ function Findings({
       >
         <CropFindings evaluation={evaluation} />
       </div>
+      <CropNote
+        note={definition.note}
+        className="mt-3 text-[12px] leading-snug"
+      />
     </div>
   )
 }
 
+/** The verdict as a headline, with a swatch per crop so the tally can be read at a glance. */
 function Verdict({
   inGarden,
-  bloomCount,
+  entries,
 }: {
   inGarden: boolean
-  bloomCount: number
+  entries: CropEntry[]
 }) {
+  const bloomCount = entries.filter(
+    (e) => e.evaluation.sentiment === 'good',
+  ).length
   return (
-    <div className="relative z-10 flex items-center gap-2 px-4 pt-4">
-      <span
+    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <p
         className={cn(
-          'rounded-full px-2.5 py-1 font-bold text-[11px] uppercase tracking-[.12em]',
-          inGarden
-            ? 'bg-garden-accent text-white'
-            : 'bg-primary/85 text-surface-primary',
+          'font-bold text-heading-20 leading-tight',
+          inGarden ? 'text-garden-accent' : 'text-primary',
         )}
       >
-        {inGarden ? 'In the garden' : 'Not in the garden'}
-      </span>
-      <span className="font-medium text-[12px] text-secondary">
-        {bloomCount} of 4 in bloom
-      </span>
+        {inGarden ? 'Grows in the garden.' : 'Not in the garden yet.'}
+      </p>
+      <div className="flex items-center gap-2">
+        <span className="font-medium text-[12px] text-secondary uppercase tracking-wider">
+          {bloomCount} of 4 in bloom
+        </span>
+        <span className="flex gap-1" aria-hidden>
+          {entries.map((entry) => (
+            <span
+              key={entry.key}
+              title={entry.definition.label}
+              className={cn(
+                'h-2 w-5 rounded-sm',
+                SENTIMENT_SWATCH[entry.evaluation.sentiment],
+              )}
+            />
+          ))}
+        </span>
+      </div>
     </div>
   )
 }
@@ -265,7 +223,7 @@ function Sky({ inGarden }: { inGarden: boolean }) {
         )}
       />
       {inGarden && (
-        <span className="absolute top-3 right-4 size-14 rounded-full bg-[#ffd54a]/70 blur-[2px] dark:bg-[#e9e2c4]/10 dark:blur-[3px]" />
+        <span className="absolute top-3 right-4 size-14 rounded-full bg-[#ffd54a]/70 blur-[2px] dark:hidden" />
       )}
       <svg
         className="absolute inset-x-0 bottom-0 h-10 w-full"
