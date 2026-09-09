@@ -728,6 +728,45 @@ describe(InteropEventSyncer.name, () => {
       expect(syncer.runInTransactionCalls).toEqual(3)
       expect(setLastError.calls.at(-1)?.args[2]).toEqual(null)
     })
+
+    it('still considers the error stored when the transaction rolls back after the clear', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [makePlugin({ name: 'across' })],
+        }),
+        db: mockObject<Database>({
+          interopPluginSyncedRange: mockObject<
+            Database['interopPluginSyncedRange']
+          >({
+            upsert: mockFn().resolvesTo(undefined),
+          }),
+          interopPluginSyncState: mockObject<
+            Database['interopPluginSyncState']
+          >({
+            setLastError,
+          }),
+        }),
+      })
+
+      syncer.failNextCommit = true
+      await expect(
+        syncer.saveProducedInteropEvents([], makeSyncedRange()),
+      ).toBeRejectedWith('commit failed')
+      expect(setLastError).toHaveBeenCalledTimes(1)
+
+      // the clear was rolled back with the transaction, so it is written again
+      await syncer.saveProducedInteropEvents([], makeSyncedRange())
+      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(setLastError).toHaveBeenCalledTimes(2)
+      expect(setLastError.calls[1]?.args[2]).toEqual(null)
+
+      // and only now is it considered cleared
+      await syncer.saveProducedInteropEvents([], makeSyncedRange())
+      expect(syncer.runInTransactionCalls).toEqual(2)
+      expect(setLastError).toHaveBeenCalledTimes(2)
+    })
   })
 
   describe(InteropEventSyncer.prototype.getResyncState.name, () => {
@@ -1044,6 +1083,8 @@ describe(InteropEventSyncer.name, () => {
 
 class TestSyncer extends InteropEventSyncer {
   runInTransactionCalls = 0
+  /** Runs the callback, then fails the transaction as if COMMIT had failed. */
+  failNextCommit = false
 
   public triggerStatePublic<T extends SyncerState>(
     state: T,
@@ -1056,7 +1097,12 @@ class TestSyncer extends InteropEventSyncer {
     fn: () => Promise<T>,
   ): Promise<T> {
     this.runInTransactionCalls++
-    return await fn()
+    const result = await fn()
+    if (this.failNextCommit) {
+      this.failNextCommit = false
+      throw new Error('commit failed')
+    }
+    return result
   }
 }
 

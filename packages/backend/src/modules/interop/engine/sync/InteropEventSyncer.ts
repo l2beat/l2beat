@@ -192,6 +192,7 @@ export class InteropEventSyncer extends TimeLoop {
             this.state.type === 'blockProcessor'
           ) {
             await this.clearChainSyncError()
+            this.storedErrorMayExist = false
           }
         },
       )
@@ -347,6 +348,9 @@ export class InteropEventSyncer extends TimeLoop {
         await upsertRange()
         await this.clearChainSyncError()
       })
+      // Only now is the clear committed; a rollback above must leave the flag
+      // set so the next attempt writes it again.
+      this.storedErrorMayExist = false
     }
 
     this.logger.debug('Events captured for resyncable cluster', {
@@ -357,7 +361,11 @@ export class InteropEventSyncer extends TimeLoop {
     })
   }
 
-  /** Writes only when an error may be stored, see `storedErrorMayExist`. */
+  /**
+   * Writes only when an error may be stored, see `storedErrorMayExist`. The
+   * caller resets that flag once the write is known to be committed, because
+   * this may run inside a transaction that still rolls back afterwards.
+   */
   async clearChainSyncError() {
     if (!this.storedErrorMayExist) {
       return
@@ -367,7 +375,6 @@ export class InteropEventSyncer extends TimeLoop {
       this.chain,
       null,
     )
-    this.storedErrorMayExist = false
   }
 
   async saveChainSyncError(error: unknown) {
