@@ -72,7 +72,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       condition: 'mandatory relayer with API key',
       sentiment: 'bad',
       exposure:
-        "Every transfer and every balance read goes through Zama's relayer with your IP and an API key; no other relayer exists. Amounts stay encrypted.",
+        "Every transfer and every balance read goes through Zama's relayer with your IP and an API key that Zama issues on application; no other relayer exists and no anonymous access path is documented. Amounts stay encrypted.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -81,7 +81,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
         linkage: 'exposed',
         identity: {
           verdict: 'exposed',
-          note: 'The mandatory Zama relayer sees IP and API key with every input and balance read; no third-party relayer exists.',
+          note: 'The mandatory Zama relayer sees IP and API key with every input and balance read. Keys are issued by Zama on application, no third-party relayer exists, and Tor access is unverified.',
         },
       },
       interior: {

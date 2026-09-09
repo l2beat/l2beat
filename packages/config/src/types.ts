@@ -1128,8 +1128,11 @@ export interface PrivacyAdversaryAssessment {
    * The one judgment per cell. Answers "can a careful user defeat this
    * adversary using only the protocol and the supported options of its
    * reference client?": good = yes, warning = only outside supported options
-   * or by accepting a leak to another adversary, bad = no. The cell value is
-   * derived from it and from the project's `protects` field.
+   * or by accepting a leak to another adversary, bad = no. For the network
+   * observer, "supported" means a canonical, verified anonymity path: Tor
+   * documented by the project, permissionless relayers, an own node. A gated
+   * or single mandatory intermediary with no verified path is bad. The cell
+   * value is derived from it and from the project's `protects` field.
    */
   sentiment: PrivacyAdversarySentiment
   /** The condition behind the sentiment, in a few words. Shown as second line. */
