@@ -71,11 +71,11 @@ export function RelationsEdgePath({
 
 export function RelationsEdgeBadge({
   edge,
-  at,
+  position,
   isDimmed,
 }: {
   edge: InteropTokenRelationsEdge
-  at: EdgePath
+  position: EdgePath
   isDimmed: boolean
 }) {
   if (edge.bridges.length === 0) return null
@@ -87,7 +87,7 @@ export function RelationsEdgeBadge({
         <button
           type="button"
           onClick={(event) => event.stopPropagation()}
-          style={{ left: at.midX, top: at.midY }}
+          style={{ left: position.midX, top: position.midY }}
           className={cn(
             '-translate-x-1/2 -translate-y-1/2 absolute flex h-5 w-max min-w-5 items-center gap-0.5 rounded-full border border-divider bg-surface-primary px-0.5',
             isDimmed && 'opacity-10',
