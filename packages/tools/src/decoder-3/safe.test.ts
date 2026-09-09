@@ -7,8 +7,14 @@ import {
   parseAbi,
 } from 'viem'
 import type { DecodedValue } from './decode'
+import { findKnownHashes } from './knownHashes'
 import { decode } from './plugins'
-import { calculateSafeHashes, decodeSafeTransaction, SAFE_ABI } from './safe'
+import {
+  calculateNearbySafeHashes,
+  calculateSafeHashes,
+  decodeSafeTransaction,
+  SAFE_ABI,
+} from './safe'
 
 const batch = readFileSync(
   `${__dirname}/fixtures/safe-multicall.txt`,
@@ -29,6 +35,114 @@ const input = {
 }
 
 describe('Safe hashes', () => {
+  it('finds nonce 11 for the queued Unichain deposit without changing nonce 10', () => {
+    const data = readFileSync(
+      `${__dirname}/fixtures/safe-queued-multicall.txt`,
+      'utf8',
+    ).trim() as Hex
+    const calls = decodeFunctionData({ abi: multicallAbi, data }).args[0]
+    expect(
+      encodeFunctionData({
+        abi: multicallAbi,
+        functionName: 'aggregate3Value',
+        args: [calls],
+      }),
+    ).toEqual(data)
+    const approval = decodeFunctionData({
+      abi: multicallAbi,
+      data: decodeSafeTransaction(calls[0]!.callData).data,
+    }).args[0][0]!
+    const approvedHash = decodeFunctionData({
+      abi: parseAbi(['function approveHash(bytes32 hashToApprove)']),
+      data: approval.callData,
+    }).args[0]
+    expect(approvedHash).toEqual(
+      '0x586752c373176aa3d4cc2b7aee615069cdbcdd5e2a29a572170c2e603a21f2af',
+    )
+    const queued = {
+      ...input,
+      calldata: calls[1]!.callData,
+      safe: calls[1]!.target,
+      version: '1.4.1',
+      nonce: '10',
+    }
+    const selected = calculateSafeHashes(queued)
+    expect(selected.safeTxHash).toEqual(
+      '0xb43842079de7d95b5e12cc10ec6a00ae289ba60eabcbc3d4e1ebb57e7f982bcc',
+    )
+    const entry = {
+      id: 'queued',
+      hash: selected.safeTxHash,
+      address: queued.safe,
+      chainId: 1,
+      nonce: queued.nonce,
+      path: 'transaction.calls[1].callData',
+      anchor: 'queued',
+      nearbyHashes: calculateNearbySafeHashes(queued),
+    }
+    const matches = findKnownHashes([entry], approvedHash, 1)
+    expect(matches.length).toEqual(1)
+    expect(matches[0]?.matchedNonce).toEqual('11')
+    expect(matches[0]?.nonce).toEqual('10')
+    expect(findKnownHashes([entry], approvedHash, 10)).toEqual([])
+    const exact = {
+      ...entry,
+      nonce: '11',
+      hash: approvedHash,
+      nearbyHashes: calculateNearbySafeHashes({ ...queued, nonce: '11' }),
+    }
+    expect(findKnownHashes([exact], approvedHash, 1)).toEqual([exact])
+  })
+
+  it('searches only five nonces on each side of the selected nonce', () => {
+    const expected = calculateSafeHashes(input).safeTxHash
+    expect(
+      calculateNearbySafeHashes({ ...input, nonce: '60' }).find(
+        (x) => x.hash === expected,
+      )?.nonce,
+    ).toEqual('65')
+    expect(
+      calculateNearbySafeHashes({ ...input, nonce: '70' }).find(
+        (x) => x.hash === expected,
+      )?.nonce,
+    ).toEqual('65')
+    expect(
+      calculateNearbySafeHashes({ ...input, nonce: '59' }).some(
+        (x) => x.hash === expected,
+      ),
+    ).toEqual(false)
+    expect(calculateNearbySafeHashes(input).map((x) => x.nonce)).toEqual([
+      '60',
+      '61',
+      '62',
+      '63',
+      '64',
+      '66',
+      '67',
+      '68',
+      '69',
+      '70',
+    ])
+  })
+
+  it('bounds nearby nonces to uint256 and preserves large integer precision', () => {
+    expect(
+      calculateNearbySafeHashes({ ...input, nonce: '0' }).map((x) => x.nonce),
+    ).toEqual(['1', '2', '3', '4', '5'])
+    const max = 2n ** 256n - 1n
+    expect(
+      calculateNearbySafeHashes({ ...input, nonce: max.toString() }).map(
+        (x) => x.nonce,
+      ),
+    ).toEqual([5n, 4n, 3n, 2n, 1n].map((offset) => (max - offset).toString()))
+    expect(
+      calculateNearbySafeHashes({ ...input, nonce: '9007199254740992' }).some(
+        (x) => x.nonce === '9007199254740993',
+      ),
+    ).toEqual(true)
+    expect(() => calculateNearbySafeHashes({ ...input, nonce: '' })).toThrow()
+  })
+
   it('matches the independently verified mainnet signing data', () => {
     expect(calculateSafeHashes(input)).toEqual({
       domainHash:

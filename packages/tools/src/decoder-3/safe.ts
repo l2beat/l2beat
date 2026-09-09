@@ -106,3 +106,22 @@ export function calculateSafeHashes(input: {
     safeTxHash: keccak256(signingData),
   }
 }
+
+export function calculateNearbySafeHashes(
+  input: Parameters<typeof calculateSafeHashes>[0],
+) {
+  // Validate the selected transaction before trying any other nonce.
+  calculateSafeHashes(input)
+  const selected = BigInt(input.nonce)
+  const candidates: { nonce: string; hash: Hex }[] = []
+  for (let offset = -5n; offset <= 5n; offset++) {
+    const nonce = selected + offset
+    if (offset === 0n || nonce < 0n || nonce >= 2n ** 256n) continue
+    const candidate = { ...input, nonce: nonce.toString() }
+    candidates.push({
+      nonce: candidate.nonce,
+      hash: calculateSafeHashes(candidate).safeTxHash,
+    })
+  }
+  return candidates
+}

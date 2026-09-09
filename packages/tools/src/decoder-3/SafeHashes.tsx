@@ -3,7 +3,7 @@ import { useId, useMemo, useState } from 'react'
 import { type Hex, isAddress } from 'viem'
 import { getSafeState } from './api'
 import { useRegisterKnownHash } from './HashReferences'
-import { calculateSafeHashes } from './safe'
+import { calculateNearbySafeHashes, calculateSafeHashes } from './safe'
 
 export function SafeHashes(props: {
   calldata: Hex
@@ -44,7 +44,7 @@ export function SafeHashes(props: {
 
   const knownHash = useMemo(
     () =>
-      hashes
+      hashes && query.data
         ? {
             id,
             hash: hashes.safeTxHash,
@@ -53,9 +53,26 @@ export function SafeHashes(props: {
             nonce,
             path: props.path,
             anchor: props.anchor,
+            nearbyHashes: calculateNearbySafeHashes({
+              calldata: props.calldata,
+              safe: address as Hex,
+              chainId,
+              version: query.data.version,
+              nonce,
+            }),
           }
         : undefined,
-    [id, hashes?.safeTxHash, address, chainId, nonce, props.path, props.anchor],
+    [
+      id,
+      hashes?.safeTxHash,
+      address,
+      chainId,
+      nonce,
+      props.path,
+      props.anchor,
+      props.calldata,
+      query.data?.version,
+    ],
   )
   useRegisterKnownHash(knownHash)
 
@@ -140,7 +157,8 @@ export function SafeHashes(props: {
           </div>
           <p className="mb-3 text-zinc-400">
             The nonce is absent from calldata. For queued, historical, or
-            repeated Safe calls, set the nonce for this call.
+            repeated Safe calls, set the nonce for this call. Hash references
+            also check five nonces before and after this value.
           </p>
         </>
       )}

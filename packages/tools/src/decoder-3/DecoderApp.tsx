@@ -627,26 +627,45 @@ function HashMeaning({
   if (matches.length === 0) return null
 
   return (
-    <div
-      className="my-1 border-green-700 border-l-2 pl-3 text-sm"
-      aria-label="Known hash meaning"
-    >
-      <div className="text-green-400">
-        Matches calculated Safe transaction hash
-      </div>
+    <div className="my-1 space-y-2 text-sm" aria-label="Known hash meaning">
       {matches.map((match) => (
-        <div key={match.id} className="mt-1">
+        <div
+          key={match.id}
+          className={clsx(
+            'border-l-2 pl-3',
+            match.matchedNonce !== undefined
+              ? 'border-amber-600'
+              : 'border-green-700',
+          )}
+        >
+          <div
+            className={
+              match.matchedNonce !== undefined
+                ? 'text-amber-400'
+                : 'text-green-400'
+            }
+          >
+            {match.matchedNonce !== undefined
+              ? `Matches Safe transaction with nonce ${match.matchedNonce} (selected nonce: ${match.nonce})`
+              : 'Matches calculated Safe transaction hash'}
+          </div>
+          {match.matchedNonce !== undefined && (
+            <div className="text-zinc-400">
+              All other transaction fields match. The selected nonce has not
+              been changed.
+            </div>
+          )}
           <DisplayAddress address={match.address} chainId={match.chainId} />
           <span className="text-zinc-400">
             {' '}
-            · nonce {match.nonce} · chain {match.chainId}
+            · nonce {match.matchedNonce ?? match.nonce} · chain {match.chainId}
           </span>
           <div className="flex flex-wrap items-center gap-x-3">
             <span className="font-mono text-zinc-500">{match.path}</span>
             <button
               type="button"
               className="min-h-8 text-blue-400 hover:underline"
-              aria-label={`View decoded transaction ${match.path}, Safe ${match.address}, nonce ${match.nonce}`}
+              aria-label={`View decoded transaction ${match.path}, Safe ${match.address}, matching nonce ${match.matchedNonce ?? match.nonce}`}
               onClick={() => reveal({ path: match.path, anchor: match.anchor })}
             >
               View decoded transaction →
