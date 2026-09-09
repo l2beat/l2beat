@@ -22,7 +22,9 @@ export function PrivacyAdversaryTooltipContent({
           size="sm"
           className="shrink-0"
         />
-        <span className="font-medium text-base">{cell.value}</span>
+        <span className="whitespace-nowrap font-medium text-base">
+          {cell.value}
+        </span>
         <span className="text-secondary text-xs">{cell.condition}</span>
       </div>
       <p className="text-secondary text-xs">

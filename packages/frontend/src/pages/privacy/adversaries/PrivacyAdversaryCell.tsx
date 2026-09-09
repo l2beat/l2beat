@@ -33,7 +33,7 @@ export function PrivacyAdversaryCell({
             size="sm"
             className="shrink-0"
           />
-          <span className="max-w-20 whitespace-normal text-center font-medium text-[11px] text-secondary leading-tight">
+          <span className="whitespace-nowrap text-center font-medium text-[11px] text-secondary leading-tight">
             {cell.value}
           </span>
         </TableLink>
