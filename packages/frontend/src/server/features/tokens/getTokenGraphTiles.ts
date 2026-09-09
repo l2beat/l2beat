@@ -5,7 +5,7 @@ import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { getActiveInteropAbstractTokens } from '../layer2s/interop/token/getInteropAbstractTokens'
-import { getPairStatsTimeRange } from '../layer2s/interop/token/getInteropTokenRelations'
+import { getPairStatsParams } from '../layer2s/interop/token/getInteropTokenRelations'
 import { getChainDisplayInfo } from '../layer2s/interop/token/getInteropTokenRelationsGraph'
 import { createInteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
 import { getAggregatedInteropSnapshotTimestamp } from '../layer2s/interop/utils/getAggregatedInteropTimestamp'
@@ -77,9 +77,12 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
 }
 
 async function getPairStatsByTokenId() {
-  const range = await getPairStatsTimeRange()
-  if (!range) return undefined
-  const rows = await getDb().interopTransfer.getAllDeployedTokenPairStats(range)
+  const params = await getPairStatsParams()
+  if (!params) return undefined
+  const rows = await getDb().interopTransfer.getAllDeployedTokenPairStats(
+    params.timeRange,
+    params.selection,
+  )
   return Map.groupBy(rows, (row) => row.abstractTokenId)
 }
 

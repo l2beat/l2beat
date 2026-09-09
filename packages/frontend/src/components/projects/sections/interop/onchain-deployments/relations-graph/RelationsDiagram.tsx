@@ -163,7 +163,7 @@ export function RelationsDiagram({
             <RelationsEdgeBadge
               key={edgeKey(edge)}
               edge={edge}
-              at={path}
+              position={path}
               isDimmed={
                 active !== undefined && !active.edgeKeys.has(edgeKey(edge))
               }

@@ -1,6 +1,5 @@
 import type { TokenRelationRoute } from '@l2beat/database'
-import { MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
-import { deploymentKey } from '../utils/deploymentKey'
+import { deploymentKey, type Endpoint } from '../utils/deploymentKey'
 
 type GraphBridgeType = 'burnAndMint' | 'lockAndMint'
 
@@ -28,11 +27,6 @@ export interface TokenRelationsGraph<T> {
   edges: TokenRelationsGraphEdge[]
 }
 
-interface Endpoint {
-  chain: string
-  address: string
-}
-
 type GraphRoute = TokenRelationRoute & { bridgeType: GraphBridgeType }
 
 /**
@@ -48,7 +42,6 @@ export function buildTokenRelationsGraph<T extends Endpoint>(
   const byKey = new Map(deployments.map((d) => [deploymentKey(d), d]))
   const relevant = routes.filter(
     (route): route is GraphRoute =>
-      route.plugin !== MANUAL_RELATION_PLUGIN &&
       (route.bridgeType === 'burnAndMint' ||
         route.bridgeType === 'lockAndMint') &&
       byKey.has(endpointKey(route, 'A')) &&

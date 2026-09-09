@@ -2,11 +2,17 @@ import type {
   InteropTransferDeployedTokenPairStats,
   TokenRelationRoute,
 } from '@l2beat/database'
-import { Address32, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  INTEROP_TRANSFER_RETENTION,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
+import { getActiveInteropChainIds } from '../utils/getInteropChains'
 
 export interface InteropTokenRelations {
   routes: TokenRelationRoute[]
@@ -30,22 +36,33 @@ export async function getInteropTokenRelations(
 }
 
 async function getPairStats(tokenId: string) {
-  const range = await getPairStatsTimeRange()
-  if (!range) return undefined
-  return getDb().interopTransfer.getDeployedTokenPairStats(tokenId, range)
+  const params = await getPairStatsParams()
+  if (!params) return undefined
+  return getDb().interopTransfer.getDeployedTokenPairStats(
+    tokenId,
+    params.timeRange,
+    params.selection,
+  )
 }
 
-/** The day before the aggregated snapshot; undefined once raw transfers are gone. */
-export async function getPairStatsTimeRange(): Promise<
-  { from: UnixTime; to: UnixTime } | undefined
-> {
+/** Shared time window and eligibility for the tiles and detailed token graphs. */
+export async function getPairStatsParams() {
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) return undefined
   const from = snapshotTimestamp - UnixTime.DAY
   // Aggregates outlive raw transfers, so an aggregates timestamp override can
   // point at a day the cleaner has already emptied.
-  if (from < UnixTime.now() - 7 * UnixTime.DAY) return undefined
-  return { from, to: snapshotTimestamp }
+  if (from < UnixTime.now() - INTEROP_TRANSFER_RETENTION) return undefined
+  const projects = await ps.getProjects({ select: ['interopConfig'] })
+  const chains = getActiveInteropChainIds()
+  return {
+    timeRange: { from, to: snapshotTimestamp },
+    selection: {
+      plugins: projects.flatMap((project) => project.interopConfig.plugins),
+      sourceChains: chains,
+      destinationChains: chains,
+    },
+  }
 }
 
 const MOCK_INTEROP_TOKEN_RELATIONS: InteropTokenRelations = {
