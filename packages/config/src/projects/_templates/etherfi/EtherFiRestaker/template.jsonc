@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiRestaker",
+  "category": "core",
+  "description": "Routes protocol ETH/LSTs into EigenLayer restaking and Lido withdrawals. EigenLayer and Lido contracts are external dependencies.",
+  "ignoreMethods": ["proxiableUUID"]
+}

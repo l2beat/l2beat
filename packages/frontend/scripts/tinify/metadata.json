@@ -1648,5 +1648,8 @@
   "static/images/architecture/rocketpool-withdrawals.png": "bca20bfa51a7a6e129b222886c98008b",
   "static/icons/fluidkey.png": "f6a8a9273fd3fe83426071dbbd15fdae",
   "static/images/architecture/fluidkey.png": "ccb41fdbeb431ca8e807c4af88b6c906",
-  "static/meta-images/privacy/projects/fluidkey/opengraph-image.png": "b73a90fc5bdc75a3deca877b5ef6a9cf"
+  "static/meta-images/privacy/projects/fluidkey/opengraph-image.png": "b73a90fc5bdc75a3deca877b5ef6a9cf",
+  "static/icons/etherfi.png": "bf50c5c21b211103aba2a8c015b0fa70",
+  "static/meta-images/defi/projects/etherfi/opengraph-image.png": "e3bbb57f0012a0825c3e89fb10335ac2",
+  "static/images/architecture/etherfi-deposits.png": "58e7175c7ab4226c7d46cf27341ab96f"
 }

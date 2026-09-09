@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LiquidityPool",
+  "category": "core",
+  "description": "The protocol hub and ETH custodian. Holds pooled ETH, mints/burns eETH, prices shares, routes deposits to validators via StakingManager and serves withdrawals through the WithdrawRequestNFT queue and the EtherFiRedemptionManager buffer.",
+  "ignoreMethods": [
+    "amountForShare",
+    "sharesForAmount",
+    "sharesForWithdrawalAmount",
+    "proxiableUUID"
+  ]
+}

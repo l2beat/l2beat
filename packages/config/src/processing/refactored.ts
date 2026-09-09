@@ -25,6 +25,7 @@ import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { etherfi } from '../projects/etherfi/etherfi'
 import { fluidkey } from '../projects/fluidkey/fluidkey'
 import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
@@ -146,6 +147,7 @@ export const refactored: BaseProject[] = [
   chainlink,
   uniswapv3,
   lido,
+  etherfi,
   uniswapv4,
   wbeth,
   polymarket,

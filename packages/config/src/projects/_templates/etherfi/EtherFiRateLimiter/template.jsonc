@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiRateLimiter",
+  "category": "core",
+  "description": "Shared rate limiter that bounds sensitive flows (e.g. withdrawals) per epoch.",
+  "ignoreMethods": ["proxiableUUID"]
+}

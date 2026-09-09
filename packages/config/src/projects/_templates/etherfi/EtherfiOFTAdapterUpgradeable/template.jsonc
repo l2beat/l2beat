@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherfiOFTAdapterUpgradeable",
+  "category": "core",
+  "description": "LayerZero OFT lock-box for weETH: locks mainnet weETH against cross-chain mint/burn. The LayerZero endpoint is external.",
+  "ignoreMethods": ["proxiableUUID"]
+}
