@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RestakingRewardsRouter",
+  "category": "core",
+  "description": "Routes EigenLayer restaking rewards to their recipients. The reward token is external.",
+  "ignoreMethods": ["proxiableUUID"]
+}
