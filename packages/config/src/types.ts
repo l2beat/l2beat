@@ -1129,7 +1129,10 @@ export interface PrivacyAdversaryAssessment {
    * adversary using only the protocol and the supported options of its
    * reference client?": good = yes, warning = only outside supported options
    * or by accepting a leak to another adversary, bad = no. It judges the
-   * promised field only; identity and other leaks are derived markers. For the network
+   * promised field only; identity and other leaks are derived markers. User
+   * hygiene never lowers the sentiment (it goes into `advice` and `atRisk`
+   * notes); facts about the deployment do, such as an anonymity set too small
+   * for care to matter or a structural leak the adversary exploits. For the network
    * observer, "supported" means a canonical, verified anonymity path: Tor
    * documented by the project, permissionless relayers, an own node. A gated
    * or single mandatory intermediary with no verified path is bad. The cell

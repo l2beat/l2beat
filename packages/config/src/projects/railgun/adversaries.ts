@@ -50,10 +50,11 @@ export const railgunAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'token and timing narrow it',
-      sentiment: 'warning',
+      condition:
+        'private with patience, uneven amounts and fresh exit addresses',
+      sentiment: 'good',
       exposure:
-        'An analyst narrows the shields behind an unshield by token, timing and amount; published work links about one in six Ethereum withdrawals uniquely. Activity inside the pool stays hidden.',
+        'The candidates for an unshield are limited to shields of the same token in the same tree, and no delay is enforced beyond the one-hour proof-of-innocence wait; hundreds of addresses shield each month, and transfers inside the pool break the one-to-one match of a mixer. Timing and exact or round amounts narrow the set. Activity inside the pool stays private.',
       advice:
         'Keep funds shielded for a while, unshield uneven amounts that differ from any single shield, and use a fresh exit address every time.',
       boundary: {

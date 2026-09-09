@@ -3,10 +3,10 @@ import { cn } from '~/utils/cn'
 
 /**
  * The shape is what the protocol protects (or a field), the colour is how
- * well. Below it, a plus badge when the adversary learns more than a public
- * observer (identity included), coloured by the worst such leak. The row is
- * always reserved so glyphs align across cells; `badges={false}` drops it for
- * inline use, e.g. in chips.
+ * well. To its right, a plus badge when the adversary learns more than a
+ * public observer (identity included), coloured by the worst such leak. The
+ * slot is always reserved so glyphs align across cells; `badges={false}` drops
+ * it for inline use, e.g. in chips.
  */
 export function PrivacySubjectGlyph({
   field,
@@ -23,7 +23,7 @@ export function PrivacySubjectGlyph({
   more?: PrivacyExposure
   size?: 'sm' | 'md' | 'lg'
   badges?: boolean
-  /** Keep the badge row's height even when empty, so glyphs align in a grid. */
+  /** Keep the badge slot's width even when empty, so glyphs align in a grid. */
   reserveBadgeRow?: boolean
   className?: string
 }) {
@@ -50,10 +50,7 @@ export function PrivacySubjectGlyph({
   if (!reserveBadgeRow && !showMore) return glyph
   return (
     <span
-      className={cn(
-        'inline-flex shrink-0 flex-col items-center gap-0.5',
-        className,
-      )}
+      className={cn('inline-flex shrink-0 items-center gap-0.5', className)}
     >
       {glyph}
       <span className={cn('flex items-center', BADGE_SIZE_CLASS[size])}>
@@ -67,6 +64,29 @@ export function PrivacySubjectGlyph({
           </Badge>
         )}
       </span>
+    </span>
+  )
+}
+
+/** The same plus as under the glyphs, for use inline in text. */
+export function PrivacyPlusBadge({
+  exposure,
+  size = 'md',
+  className,
+}: {
+  exposure: PrivacyExposure
+  size?: 'sm' | 'md' | 'lg'
+  className?: string
+}) {
+  return (
+    <span className={cn('inline-flex items-center', className)}>
+      <Badge
+        exposure={exposure}
+        size={size}
+        title="Learns more than a public observer"
+      >
+        <path d="M12 5v14M5 12h14" />
+      </Badge>
     </span>
   )
 }
@@ -100,7 +120,7 @@ function Badge({
   )
 }
 
-const BADGE_SIZE_CLASS = { sm: 'h-2.5', md: 'h-3', lg: 'h-4' } as const
+const BADGE_SIZE_CLASS = { sm: 'w-2.5', md: 'w-3', lg: 'w-4' } as const
 const BADGE_ICON_CLASS = { sm: 'size-2.5', md: 'size-3', lg: 'size-4' } as const
 
 const SIZE_CLASS = { sm: 'size-5', md: 'size-6', lg: 'size-8' } as const

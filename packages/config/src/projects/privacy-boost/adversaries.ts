@@ -55,7 +55,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'a few dozen real users, exact exit amounts',
       exposure:
-        'Almost all activity is one operator address cycling 0.001 WETH every ten minutes, which is easy to filter out. What remains is a few dozen real users whose exits are always 0.996 times their deposit, minutes later.',
+        'Almost all activity is one operator address cycling 0.001 WETH every ten minutes, which is easy to filter out. What remains is a few dozen real users, and every exit is exactly 0.996 times the note it spends, so amount matching alone pairs a deposit with its exit.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -89,31 +89,31 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'bad',
-      condition: 'single operator endpoint, no attestation check',
+      sentiment: 'good',
+      condition: 'encrypted envelope; the operator is the insider',
       exposure:
-        'Every transfer, withdrawal and balance check goes to one operator server in plain text, including your wallet address and the key that identifies your notes. The app does not verify that the server is the enclave it claims to be.',
+        "All shielded actions go to the operator's server, which is covered under privileged insider. On the wire there is only an encrypted envelope behind Cloudflare, so a network observer learns that you use Privacy Boost and when.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
         amount: 'exposed',
         asset: 'exposed',
-        linkage: {
-          verdict: 'exposed',
-          note: "The server receives every withdrawal request with its destination and the user's nullifying key.",
-        },
+        linkage: 'private',
         identity: {
-          verdict: 'exposed',
-          note: 'IP, wallet address and app identity on every login.',
+          verdict: 'atRisk',
+          note: 'Cloudflare and your ISP see that you use Privacy Boost.',
         },
       },
       interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'exposed',
-        identity: 'exposed',
+        sender: 'private',
+        recipient: 'private',
+        amount: 'private',
+        asset: 'private',
+        linkage: 'private',
+        identity: {
+          verdict: 'atRisk',
+          note: 'Cloudflare and your ISP see that you use Privacy Boost.',
+        },
       },
       sources: [
         {
@@ -130,7 +130,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'operator holds the plaintext ledger',
       exposure:
-        'The operator runs the enclave that holds every transfer in plain text and the key that decrypts every onchain note, and the same people can upgrade all contracts with no delay. Appointed auditors could read any account; none has been appointed yet.',
+        'The operator runs the enclave that holds every transfer in plain text and the key that decrypts every onchain note. The app sends your wallet address, your note key and every transfer to that server in plain text, without verifying that it is the enclave it claims to be. The same people can upgrade all contracts with no delay, and appointed auditors could read any account; none has been appointed yet.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

@@ -1,7 +1,9 @@
 import type { PrivacyPromise } from '@l2beat/config'
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
+import { cn } from '~/utils/cn'
 import {
   EXPOSURE_TEXT_CLASS,
+  PrivacyPlusBadge,
   PrivacySubjectGlyph,
   sentimentToExposure,
 } from './PrivacySubjectGlyph'
@@ -17,6 +19,13 @@ export function PrivacyAdversaryTooltipContent({
   /** e.g. "Click for details". */
   hint?: string
 }) {
+  /** Everything this adversary learns beyond a public observer, identity included. */
+  const extra = [
+    ...(cell.identity !== 'private'
+      ? [{ label: 'Identity (who you are)', exposure: cell.identity }]
+      : []),
+    ...cell.alsoExposed.map((f) => ({ label: f.label, exposure: f.exposure })),
+  ]
   return (
     <div className="space-y-2">
       <div className="font-bold text-label-value-14">{cell.label}</div>
@@ -32,25 +41,24 @@ export function PrivacyAdversaryTooltipContent({
         </span>
         <span className="text-secondary text-xs">{cell.condition}</span>
       </div>
-      {cell.identity !== 'private' && (
+      {extra.length > 0 && (
         <p className="text-xs">
-          <span className={EXPOSURE_TEXT_CLASS[cell.identity]}>
-            Identity {PRIVACY_EXPOSURE_LABEL[cell.identity]}
+          <PrivacyPlusBadge
+            exposure={worstExtraLeak(cell) ?? 'private'}
+            size="sm"
+            className="mr-0.5 align-[-1px]"
+          />
+          <span
+            className={cn(
+              'font-bold',
+              EXPOSURE_TEXT_CLASS[worstExtraLeak(cell) ?? 'private'],
+            )}
+          >
+            :{' '}
           </span>
-          <span className="text-secondary">
-            {' '}
-            (who you are: IP, account, KYC)
-          </span>
-        </p>
-      )}
-      {cell.alsoExposed.length > 0 && (
-        <p className="text-xs">
-          <span className="text-secondary">
-            Also beyond a public observer:{' '}
-          </span>
-          {cell.alsoExposed.map((item, i) => (
+          {extra.map((item, i) => (
             <span
-              key={item.field}
+              key={item.label}
               className={EXPOSURE_TEXT_CLASS[item.exposure]}
             >
               {i > 0 && <span className="text-secondary">, </span>}

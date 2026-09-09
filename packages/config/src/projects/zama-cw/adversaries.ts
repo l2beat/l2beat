@@ -33,10 +33,10 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       sources: [{ contract: 'ConfidentialUSDCWrapper' }],
     },
     chainAnalyst: {
-      condition: 'bounded by wrap and unwrap totals',
-      sentiment: 'warning',
+      condition: 'private if funds stay wrapped and move often',
+      sentiment: 'good',
       exposure:
-        "Since all wraps and unwraps are public, an account's balance is bounded by what went in and out, and exact for the half of users who never transferred.",
+        "Since all wraps and unwraps are public, an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer.",
       advice:
         'Keep funds wrapped and transfer often; only an account with confidential transfers between wrap and unwrap has a hidden balance.',
       boundary: {
@@ -155,8 +155,8 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
         sender: 'exposed',
         recipient: 'exposed',
         amount: {
-          verdict: 'private',
-          note: 'Hidden by lattice cryptography only. Every ciphertext is publicly downloadable from the coprocessor bucket, so a future KMS key compromise is retroactive and total.',
+          verdict: 'atRisk',
+          note: 'Private by lattice cryptography alone: every ciphertext is publicly downloadable and one long-lived key protects them all.',
         },
         asset: 'exposed',
         linkage: 'exposed',

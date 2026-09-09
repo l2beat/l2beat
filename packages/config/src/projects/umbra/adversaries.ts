@@ -39,10 +39,10 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'fresh destination and patience needed',
-      sentiment: 'warning',
+      condition: 'private with a fresh destination and patience',
+      sentiment: 'good',
       exposure:
-        'Each payment lands in one address that is usually spent within minutes, so an analyst pairs payment and spend easily. About half of all recipients were identified in a published study through reused or registered destinations.',
+        'Each payment lands in one fresh address that is spent once, so there is no anonymity set: the analyst pairs the payment with its spend and asks who owns the destination. A reused destination, a registered one, or funds sent back to the payer answer that question.',
       advice: 'Wait before spending.',
       boundary: {
         sender: 'exposed',

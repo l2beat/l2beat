@@ -32,10 +32,11 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'timing and pool activity narrow it',
-      sentiment: 'warning',
+      condition:
+        'private with patience, an active pool and a fresh exit address',
+      sentiment: 'good',
       exposure:
-        'The deposit-to-withdrawal link is hidden by cryptography, but an analyst recovers it for most users from timing, repeated amounts, reused addresses and wallet fingerprints. Only the ETH pools have enough activity to hide in; the other pools are nearly empty.',
+        "Every withdrawal spends exactly one deposit of the same fixed amount, so the analyst's candidates are the unspent notes in that pool at that moment: a few thousand in the ETH pools, a handful in the stablecoin and WBTC pools. No delay is enforced, so timing and address reuse narrow that set further.",
       advice:
         'Use the ETH pools, wait days or weeks before withdrawing, withdraw to a fresh address that never touches your other wallets, and deposit a large sum as one note.',
       boundary: {

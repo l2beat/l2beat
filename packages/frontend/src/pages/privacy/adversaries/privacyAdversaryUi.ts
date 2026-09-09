@@ -7,7 +7,7 @@ import type {
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
-  'The shape is what the protocol protects: a chain link for the deposit-to-withdrawal link, a person with an incoming arrow for the recipient, coins for amounts. The colour says whether a careful user can keep it private against this adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no. A plus below the shape means the adversary learns more than a public observer, such as who you are; hover a cell for what exactly.'
+  'Ethereum is public: every address keeps its past and its future in the open, and a privacy protocol can at best cut the link between them, hide who receives, or hide how much. The shape is what the protocol protects: a chain link for the deposit-to-withdrawal link, a person with an incoming arrow for the recipient, coins for amounts. The colour says whether a careful user can keep it private against this adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no. A plus next to the shape means the adversary learns more than a public observer, such as who you are; hover a cell for what exactly.'
 
 /** Spine order; must match the order of PrivacyAdversariesSummary.cells. */
 export const PRIVACY_ADVERSARY_IDS: PrivacyAdversaryId[] = [
@@ -24,9 +24,9 @@ export const PRIVACY_ADVERSARY_TOOLTIP: Record<PrivacyAdversaryId, string> = {
   chainAnalyst:
     'Keeps a copy of the whole chain forever and correlates it: timing, amounts, wallet fingerprints, address clusters, exchange KYC data. Chain analytics firms, tax authorities, data brokers.',
   networkObserver:
-    'Sits between the user and the chain: RPC providers, relayers, indexers, wallet backends, ISPs. Learns IP addresses, query patterns and pre-broadcast transactions.',
+    'Sits between the user and the chain and sees traffic only: RPC providers, relayers, indexers, ISPs, and services that never receive keys or plaintext. Learns IP addresses, timing, ciphertext and what becomes public a block later.',
   privilegedInsider:
-    'Holds a protocol role: upgrade admin, sequencer, view or decryption key holder, TEE vendor, association set provider. Can see more than the public, or exclude users.',
+    'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, view or decryption key holder, TEE vendor, association set provider, hosted prover, note registry. Can see more than the public, or exclude users.',
   futureAdversary:
     'Harvest now, decrypt later. Holds every byte ever written onchain plus future cryptanalysis such as a quantum computer that breaks elliptic-curve key exchange, but not hashes or lattices.',
 }

@@ -48,7 +48,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the chain: RPC providers, relayers and broadcasters, indexers, wallet backends, ISPs. Learns IP addresses, query patterns and pre-broadcast transactions.',
+        'Sits between the user and the chain and sees traffic only: RPC providers, relayers and broadcasters, indexers, ISPs, and services that never receive keys or plaintext. Learns IP addresses, timing, ciphertext and what becomes public a block later.',
       examples:
         'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry.',
     },
@@ -56,7 +56,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'privilegedInsider',
       label: 'Privileged insider',
       description:
-        'Holds a protocol role: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set or proof-of-innocence provider. Can SEE more than the public, or EXCLUDE users, which also partitions anonymity sets.',
+        'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry. Can SEE more than the public, or EXCLUDE users, which also partitions anonymity sets.',
       examples:
         'A DAO with an upgrade key, a KMS committee, an ASP operator, or whoever can compel them.',
     },

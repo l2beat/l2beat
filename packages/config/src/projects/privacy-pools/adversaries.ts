@@ -19,7 +19,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       boundary: {
         sender: {
           verdict: 'exposed',
-          note: 'Self-processed withdrawals put a user-controlled gas payer next to the recipient; they are rare in practice.',
+          note: 'Self-processed withdrawals put a user-controlled gas payer next to the recipient.',
         },
         recipient: 'exposed',
         amount: 'exposed',
@@ -39,12 +39,12 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      sentiment: 'warning',
-      condition: 'active pool, common amount, patience',
+      sentiment: 'good',
+      condition: 'private with an active pool, common amounts and patience',
       exposure:
-        'Amounts are arbitrary and full exits often match one deposit exactly, so an analyst links many users by amount and timing. Only the ETH, USDC and USDT pools have enough activity to hide in.',
+        'The approved set at any block is public, so an analyst knows exactly which deposits a withdrawal can come from and matches amounts and timing against them. The website accepts any amount and suggests no common ones, so an unusual amount pairs a deposit with its withdrawal. The ETH pool holds a few thousand live notes, USDC and USDT a few hundred; the other eleven pools are nearly empty.',
       advice:
-        'Use an active pool, withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
+        'Use the ETH pool, or USDC and USDT if you must; withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -52,7 +52,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: 'Use the ETH, USDC or USDT pool, withdraw common amounts rather than a full exit, wait, and ragequit only untouched deposits.',
+          note: 'Use an active pool, withdraw common amounts rather than a full exit, wait, and ragequit only untouched deposits.',
         },
         identity: {
           verdict: 'atRisk',
@@ -117,8 +117,8 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         amount: 'exposed',
         asset: 'exposed',
         linkage: {
-          verdict: 'atRisk',
-          note: 'The ASP postman can deanonymize a targeted withdrawal by posting a partitioned root; detectable afterwards, not preventable.',
+          verdict: 'exposed',
+          note: 'On demand: the ASP postman can publish a root containing only your deposit, which the website proves against unchecked. Detectable afterwards, not preventable.',
         },
         identity: {
           verdict: 'atRisk',

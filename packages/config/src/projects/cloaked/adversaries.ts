@@ -41,10 +41,10 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      sentiment: 'warning',
-      condition: 'no consolidation, delayed spends',
+      sentiment: 'good',
+      condition: 'private with single-use addresses and patience',
       exposure:
-        'Each address receives once and is spent within minutes, and change goes to another Cloaked address, so an analyst rebuilds address clusters without any key. All exits are visibly relayed by Cloaked.',
+        'Each address receives once and is spent once, change goes to another Cloaked address, and every exit is visibly relayed by Cloaked, so an analyst can rebuild address clusters without any key and knows the whole population of Cloaked users to search in.',
       advice:
         'Wait before spending, and send to destinations that have no link to you.',
       boundary: {
@@ -72,22 +72,22 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'bad',
-      condition: 'everything through Cloaked servers',
+      sentiment: 'good',
+      condition: "only Cloaked's own servers see your traffic",
       exposure:
-        "Address generation, balances, quotes and broadcasts all go through Cloaked's servers with your IP and a fixed account identifier. Even a payer looking up your name hits Cloaked's server.",
+        "Every action goes to Cloaked's own servers, which are the operator and are covered under privileged insider. On the wire, an ISP sees encrypted traffic to Cloaked, and a payer who resolves your name reaches Cloaked's server as well.",
       boundary: {
         sender: 'exposed',
-        recipient: {
-          verdict: 'exposed',
-          note: 'The server generates the address for a known account and indexes it.',
-        },
+        recipient: 'private',
         amount: 'exposed',
         asset: 'exposed',
-        linkage: 'exposed',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'Bundling several stealth addresses in one exit links them as one owner; a change output to a fresh Cloaked address links the pair.',
+        },
         identity: {
-          verdict: 'exposed',
-          note: 'IP and account identifier on every request; payer IP on ENS lookups.',
+          verdict: 'atRisk',
+          note: "An ISP sees that you use Cloaked; a payer's lookup of your name reaches Cloaked.",
         },
       },
       sources: [
@@ -105,7 +105,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'Cloaked knows every address',
       exposure:
-        'Cloaked generates every address for your account and stores the keys needed to regenerate them all, past and future, so it knows all your addresses. It cannot spend your funds. For the pool option it also records which deposit became which withdrawal.',
+        'Cloaked generates every address for your account and stores the keys needed to regenerate them all, past and future, so it knows all your addresses; address generation, balances, quotes and broadcasts pass through its servers with your IP and a fixed account identifier. It cannot spend your funds. For the pool option it also records which deposit became which withdrawal.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

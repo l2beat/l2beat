@@ -11,10 +11,10 @@ export const payyAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      sentiment: 'bad',
-      condition: 'no nullifiers, spend graph public',
+      sentiment: 'good',
+      condition: 'only notes in flight are private',
       exposure:
-        'Every transaction shows which notes it spent and created, and the operator serves all blocks openly, so who paid whom is public and most withdrawals trace back to a deposit. Only the amount and owner of a note in flight are hidden.',
+        'Who paid whom is public: every transaction shows which notes it spent and created, the operator serves all blocks openly, and deposits and withdrawals show address and amount. What stays private is the amount and owner of a note while it is in flight.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -49,10 +49,12 @@ export const payyAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      sentiment: 'bad',
-      condition: 'linear paths, single-use deposit addresses',
+      sentiment: 'warning',
+      condition: 'amounts bounded along linear paths',
       exposure:
-        'Deposit addresses are single-use accounts one hop from your funding wallet, and most payment chains have no merges, so an analyst follows them end to end.',
+        'Deposit and withdrawal amounts are public and every transaction shows which notes it spent and created. Along a path without merges an analyst bounds or recovers the amounts and follows who paid whom end to end; the app creates a single-use deposit address per user, so the funding wallet behind it is one hop away.',
+      advice:
+        'Keep funds in the network across many transfers; a note that is split or merged along the way is what stops the amounts from being inferred.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -61,7 +63,7 @@ export const payyAdversaries = definePrivacyAdversaries({
         linkage: 'exposed',
         identity: {
           verdict: 'atRisk',
-          note: 'Single-use deposit addresses are funded from a wallet or exchange one hop upstream; card top-ups identify a cardholder.',
+          note: 'The single-use deposit address is funded from a wallet or exchange one hop upstream; card top-ups identify a cardholder.',
         },
       },
       interior: {
@@ -70,7 +72,10 @@ export const payyAdversaries = definePrivacyAdversaries({
           note: 'Owner keys stay hidden, but nodes are labelled by their terminal deposit and withdrawal addresses.',
         },
         recipient: 'atRisk',
-        amount: 'private',
+        amount: {
+          verdict: 'atRisk',
+          note: 'Inferable along a linear path from a public deposit to a public withdrawal.',
+        },
         asset: 'exposed',
         linkage: 'exposed',
         identity: 'atRisk',
@@ -83,11 +88,10 @@ export const payyAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
-      condition:
-        'ordinary notes stay encrypted; link and ramp notes are held by the operator',
+      sentiment: 'good',
+      condition: "only Payy's own servers see your traffic",
       exposure:
-        "Amounts of ordinary transfers stay encrypted to the recipient; the operator holds the spending keys, and so the contents, of notes created for payment links and fiat ramps. Everything else is exposed: the only app is closed source and talks solely to Payy's servers, which log your proofs with your IP, deliver your notes and know which notes are yours and whom you paid.",
+        "The app talks only to Payy's own servers, which are the operator and are covered under privileged insider. On the wire, an ISP sees encrypted traffic to Payy and nothing more.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -95,23 +99,20 @@ export const payyAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: 'exposed',
         identity: {
-          verdict: 'exposed',
-          note: 'Every request carries a wallet-bound token, the IP and, for deposits, the deposit address.',
+          verdict: 'atRisk',
+          note: 'An ISP sees that you use Payy.',
         },
       },
       interior: {
-        sender: {
-          verdict: 'exposed',
-          note: 'The registry records which wallet sent to which recipient key in which block.',
-        },
-        recipient: 'exposed',
-        amount: {
-          verdict: 'atRisk',
-          note: 'Encrypted to the recipient for ordinary transfers; the operator holds the keys of link and ramp notes.',
-        },
+        sender: 'private',
+        recipient: 'private',
+        amount: 'private',
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'exposed',
+        identity: {
+          verdict: 'atRisk',
+          note: 'An ISP sees that you use Payy.',
+        },
       },
       sources: [
         {
@@ -126,10 +127,9 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'warning',
-      condition:
-        'ordinary notes stay encrypted; link and ramp notes are held by the operator',
+      condition: 'operator sees all but ordinary amounts',
       exposure:
-        'Amounts of ordinary transfers stay encrypted to the recipient, but the operator holds the spending keys of notes created for payment links and fiat ramps and can read them. One company runs the only node, the note registry, the deposit relayers and the KYC checks, so it sees who paid whom and who everyone is, and it can freeze withdrawals.',
+        'One company runs the only node, the note registry, the deposit relayers and the KYC checks. Its node logs your proofs with your IP, its registry delivers your notes and records who paid whom, and it holds the spending keys of notes created for payment links and fiat ramps. Amounts of ordinary transfers stay encrypted to the recipient. It can freeze withdrawals.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -162,10 +162,10 @@ export const payyAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      sentiment: 'bad',
-      condition: 'graph public forever, X25519 registry',
+      sentiment: 'warning',
+      condition: 'registry decrypts if retained',
       exposure:
-        'The payment graph is already public forever. A quantum computer additionally opens every note ever delivered through the registry, revealing amounts and owners.',
+        "The payment graph is public forever. Amounts stay private unless the operator's note registry is retained: a quantum computer opens every note delivered through it, revealing amounts and owners.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
