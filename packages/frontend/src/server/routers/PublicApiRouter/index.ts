@@ -1,5 +1,6 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { env } from '~/env'
 import { ActivityProjectFilterType } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
 import { TvsProjectFilterType } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { optionToRange } from '~/utils/range/range'
@@ -137,6 +138,19 @@ export function createPublicApiRouter() {
     },
   )
 
+  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
+    addGardenRoutes(router)
+  }
+
+  router.get('/api/scaling/summary', async (_, res) => {
+    const data = await getL2SummaryApiData()
+    res.json(data)
+  })
+
+  return router
+}
+
+function addGardenRoutes(router: express.Router) {
   // The garden endpoints are keyless on purpose, so wallets need no onboarding.
   router.get('/api/garden/crops', async (_, res) => {
     res.json(await getGardenCropsApiData())
@@ -186,11 +200,4 @@ export function createPublicApiRouter() {
       res.json(data)
     },
   )
-
-  router.get('/api/scaling/summary', async (_, res) => {
-    const data = await getL2SummaryApiData()
-    res.json(data)
-  })
-
-  return router
 }

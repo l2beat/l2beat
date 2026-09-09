@@ -4,6 +4,7 @@ import {
   qualifiesForGarden,
   resolveProjectCrops,
 } from '@l2beat/config/build/crops/canonicalCrops'
+import { env } from '~/env'
 
 export interface ProjectGardenCrops {
   crops: ResolvedCrops
@@ -13,7 +14,7 @@ export interface ProjectGardenCrops {
 export function getProjectGardenCrops(
   crops: ProjectCrops | undefined,
 ): ProjectGardenCrops | undefined {
-  if (!crops) {
+  if (!env.CLIENT_SIDE_GARDEN_ENABLED || !crops) {
     return undefined
   }
   const resolved = resolveProjectCrops(crops)

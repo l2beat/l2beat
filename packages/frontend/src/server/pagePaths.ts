@@ -34,9 +34,6 @@ export const STATIC_PAGE_PATHS = [
   '/governance',
   '/governance/ethereum-connect',
   '/native-rollups',
-  '/garden',
-  '/garden/submit',
-  '/garden/integrate',
   '/faq',
   '/about-us',
   '/brand-kit',
@@ -57,6 +54,9 @@ export async function getPagePaths(): Promise<PagePath[]> {
   }
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
+  }
+  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
+    paths.push('/garden', '/garden/submit', '/garden/integrate')
   }
   paths.push(...(await getDynamicPagePaths()))
   return paths
