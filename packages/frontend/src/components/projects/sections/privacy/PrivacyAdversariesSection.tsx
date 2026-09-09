@@ -1,7 +1,9 @@
 import type {
   PrivacyAdversary,
   PrivacyAdversaryCell,
+  PrivacyExposure,
   PrivacyExposureMap,
+  PrivacyField,
   PrivacyFieldInfo,
   PrivacySource,
   ProjectPrivacyAdversaries,
@@ -19,6 +21,10 @@ import {
 import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import {
+  PrivacySubjectGlyph,
+  sentimentToExposure,
+} from '~/pages/privacy/adversaries/PrivacySubjectGlyph'
+import {
   getExposure,
   getExposureNote,
   getPrivacyAdversaryAnchor,
@@ -27,8 +33,6 @@ import {
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_SEGMENT_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -38,6 +42,32 @@ export interface PrivacyAdversariesSectionProps extends ProjectSectionProps {
 }
 
 type Segment = keyof typeof PRIVACY_SEGMENT_LABEL
+
+const SEVERITY: Record<PrivacyExposure, number> = {
+  private: 0,
+  unverifiable: 1,
+  atRisk: 2,
+  exposed: 3,
+}
+
+function getFieldExposure(
+  cell: PrivacyAdversaryCell,
+  field: PrivacyField,
+): PrivacyExposure {
+  let result: PrivacyExposure = 'private'
+  for (const map of [cell.boundary, cell.interior]) {
+    if (!map) continue
+    const exposure = getExposure(map[field])
+    if (SEVERITY[exposure] > SEVERITY[result]) result = exposure
+  }
+  return result
+}
+
+function worstExposure(list: PrivacyExposure[]): PrivacyExposure | undefined {
+  if (list.length === 0) return undefined
+  const worst = list.reduce((a, b) => (SEVERITY[b] > SEVERITY[a] ? b : a))
+  return worst === 'private' ? undefined : worst
+}
 
 const SECTION_TITLE = {
   permissions: 'Permissions',
@@ -86,6 +116,7 @@ export function PrivacyAdversariesSection({
             cell={adversaries.cells[adversary.id]}
             baseline={adversary.id === 'publicObserver' ? undefined : baseline}
             fields={adversaries.fields}
+            protects={adversaries.promise.protects}
           />
         ))}
       </div>
@@ -98,9 +129,11 @@ function AdversaryBlock({
   cell,
   baseline,
   fields,
+  protects,
 }: {
   adversary: PrivacyAdversary
   cell: PrivacyAdversaryCell
+  protects: PrivacyField
   /** The public observer cell; undefined when rendering the baseline itself. */
   baseline: PrivacyAdversaryCell | undefined
   fields: PrivacyFieldInfo[]
@@ -115,10 +148,15 @@ function AdversaryBlock({
       className="flex scroll-mt-24 flex-col gap-3"
     >
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <TrustedSetupRiskDot
-          risk={sentimentToRiskDot(cell.sentiment)}
+        <PrivacySubjectGlyph
+          field={protects}
+          exposure={sentimentToExposure(cell.sentiment)}
+          more={worstExposure([
+            cell.identity,
+            ...cell.alsoExposed.map((f) => getFieldExposure(cell, f)),
+          ])}
           size="md"
-          className="shrink-0"
+          reserveBadgeRow={false}
         />
         <Tooltip>
           <TooltipTrigger className="font-bold text-paragraph-16 md:text-paragraph-18">
@@ -266,6 +304,13 @@ function ExposureChips({
               PRIVACY_EXPOSURE_CLASS_NAME[verdict],
             )}
           >
+            <PrivacySubjectGlyph
+              field={field.id}
+              exposure={verdict}
+              size="sm"
+              badges={false}
+              className="-ml-0.5 size-3.5"
+            />
             {field.label}
             <span className="font-normal opacity-80">
               {PRIVACY_EXPOSURE_LABEL[verdict]}

@@ -5,11 +5,10 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TableLink } from '~/components/table/TableLink'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
-import { sentimentToRiskDot } from '../sentimentToRiskDot'
 import { PrivacyAdversaryTooltipContent } from './PrivacyAdversaryTooltipContent'
-import { getPrivacyAdversaryAnchor } from './privacyAdversaryUi'
+import { PrivacySubjectGlyph, sentimentToExposure } from './PrivacySubjectGlyph'
+import { getPrivacyAdversaryAnchor, worstExtraLeak } from './privacyAdversaryUi'
 
 export function PrivacyAdversaryCell({
   cell,
@@ -25,20 +24,18 @@ export function PrivacyAdversaryCell({
       <TooltipTrigger asChild>
         <TableLink
           href={`${projectHref}#${getPrivacyAdversaryAnchor(cell.id)}`}
-          className="flex-col justify-center gap-1"
+          className="justify-center px-2"
           aria-label={`${cell.label}: ${cell.value}`}
         >
-          <TrustedSetupRiskDot
-            risk={sentimentToRiskDot(cell.sentiment)}
-            size="sm"
-            className="shrink-0"
+          <PrivacySubjectGlyph
+            field={promise.protects}
+            exposure={sentimentToExposure(cell.sentiment)}
+            more={worstExtraLeak(cell)}
+            size="md"
           />
-          <span className="whitespace-nowrap text-center font-medium text-[11px] text-secondary leading-tight">
-            {cell.value}
-          </span>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent className="max-w-[320px]">
+      <TooltipContent className="max-w-[340px]">
         <PrivacyAdversaryTooltipContent
           cell={cell}
           promise={promise}

@@ -5,18 +5,22 @@ import type {
   PrivacyAdversaryCell,
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
+  PrivacyExposure,
   PrivacyField,
+  PrivacyFieldExposure,
   PrivacyFieldInfo,
   ProjectPrivacyAdversaries,
 } from '../types'
 
 /**
- * Each cell carries one judgment, its sentiment (see PrivacyAdversaryAssessment),
- * and its value is derived: the subject the protocol promises to protect
- * (`promise.protects`, or the cell's `subject` override) plus the state that
- * matches the sentiment. Default-path footguns never affect the sentiment; they are
- * `atRisk` verdicts in the leak maps, and "at risk" means the same thing at
- * field and cell level: hidden only under the condition in the note.
+ * Each cell carries one judgment, its sentiment (see PrivacyAdversaryAssessment).
+ * Its value is derived: the subject the protocol promises to protect
+ * (`promise.protects`) plus the state that matches the sentiment. Identity and
+ * other leaks beyond the public observer are derived markers (`identity`,
+ * `alsoExposed`), never a change of subject. Default-path footguns never affect
+ * the sentiment; they are `atRisk` verdicts in the exposure maps, and "at risk"
+ * means the same thing at field and cell level: private only under the
+ * condition in the note.
  *
  * Ordered along the "spine": the first, second and fifth adversary see the
  * same public data with increasing time and effort, so protection against a
@@ -114,13 +118,65 @@ const SENTIMENT_STATE: Record<PrivacyAdversarySentiment, string> = {
   bad: 'exposed',
 }
 
-/** "Link private", "Identity exposed": the derived table value of a cell. */
+/** "Link private", "Amounts exposed": the derived table value of a cell. */
 export function getPrivacyAdversaryValue(
   protects: PrivacyField,
   cell: PrivacyAdversaryAssessment,
 ): string {
-  const subject = PRIVACY_FIELDS[cell.subject ?? protects].subject
-  return `${subject} ${SENTIMENT_STATE[cell.sentiment]}`
+  return `${PRIVACY_FIELDS[protects].subject} ${SENTIMENT_STATE[cell.sentiment]}`
+}
+
+const EXPOSURE_SEVERITY: Record<PrivacyExposure, number> = {
+  private: 0,
+  unverifiable: 1,
+  atRisk: 2,
+  exposed: 3,
+}
+
+export function getExposure(leak: PrivacyFieldExposure): PrivacyExposure {
+  return typeof leak === 'string' ? leak : leak.verdict
+}
+
+function worse(a: PrivacyExposure, b: PrivacyExposure): PrivacyExposure {
+  return EXPOSURE_SEVERITY[a] >= EXPOSURE_SEVERITY[b] ? a : b
+}
+
+const SEGMENTS = ['boundary', 'interior'] as const
+
+/** Worst verdict of a field across the segments a cell has. */
+export function getFieldExposure(
+  cell: PrivacyAdversaryAssessment,
+  field: PrivacyField,
+): PrivacyExposure {
+  let result: PrivacyExposure = 'private'
+  for (const segment of SEGMENTS) {
+    const map = cell[segment]
+    if (map) result = worse(result, getExposure(map[field]))
+  }
+  return result
+}
+
+/**
+ * Fields, other than the promised one and identity, that this adversary
+ * learns more about than the public observer does in some segment.
+ */
+export function getAlsoExposed(
+  protects: PrivacyField,
+  cell: PrivacyAdversaryAssessment,
+  baseline: PrivacyAdversaryAssessment,
+): PrivacyField[] {
+  return PRIVACY_FIELD_ORDER.filter((field) => {
+    if (field === protects || field === 'identity') return false
+    return SEGMENTS.some((segment) => {
+      const map = cell[segment]
+      const base = baseline[segment]
+      if (!map || !base) return false
+      return (
+        EXPOSURE_SEVERITY[getExposure(map[field])] >
+        EXPOSURE_SEVERITY[getExposure(base[field])]
+      )
+    })
+  })
 }
 
 export const PRIVACY_ADVERSARY_ORDER: PrivacyAdversaryId[] = [
@@ -144,19 +200,26 @@ export const PRIVACY_FIELD_ORDER: PrivacyField[] = [
 export function definePrivacyAdversaries(
   config: PrivacyAdversariesConfig,
 ): ProjectPrivacyAdversaries {
+  const { protects } = config.promise
+  const baseline = config.cells.publicObserver
   const cells = Object.fromEntries(
     PRIVACY_ADVERSARY_ORDER.map(
-      (id): [PrivacyAdversaryId, PrivacyAdversaryCell] => [
-        id,
-        {
-          ...config.cells[id],
+      (id): [PrivacyAdversaryId, PrivacyAdversaryCell] => {
+        const cell = config.cells[id]
+        return [
           id,
-          value: getPrivacyAdversaryValue(
-            config.promise.protects,
-            config.cells[id],
-          ),
-        },
-      ],
+          {
+            ...cell,
+            id,
+            value: getPrivacyAdversaryValue(protects, cell),
+            identity: getFieldExposure(cell, 'identity'),
+            alsoExposed:
+              id === 'publicObserver'
+                ? []
+                : getAlsoExposed(protects, cell, baseline),
+          },
+        ]
+      },
     ),
   ) as Record<PrivacyAdversaryId, PrivacyAdversaryCell>
 

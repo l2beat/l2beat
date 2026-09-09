@@ -1,10 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const ENGINE = 'https://github.com/Railgun-Community/engine/blob/main/src'
-const WALLET = 'https://github.com/Railgun-Community/wallet/blob/main/src'
-const PROXY =
-  'https://etherscan.io/address/0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9'
-
 // Verdicts backed by .flat/RailgunSmartWallet, discovered.json, the engine,
 // wallet, broadcaster and POI sources. Measurements as of 2026-09-08,
 // block 25,931,791.

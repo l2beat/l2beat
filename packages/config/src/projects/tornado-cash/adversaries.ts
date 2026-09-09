@@ -1,8 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const CORE = 'https://github.com/tornadocash/tornado-core'
-const UI = 'https://github.com/tornadocash/tornado-classic-ui'
-
 // Verdicts backed by pool sources (.flat/Pool_*.sol), discovered.json and the
 // linked client repositories. Measurements as of 2026-09-08, block 25,931,789.
 export const tornadoCashAdversaries = definePrivacyAdversaries({

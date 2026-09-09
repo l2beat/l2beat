@@ -3,17 +3,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import {
-  TrustedSetupRiskDot,
-  type TrustedSetupRiskDotSize,
-} from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
-import { sentimentToRiskDot } from '../sentimentToRiskDot'
 import { PrivacyAdversaryTooltipContent } from './PrivacyAdversaryTooltipContent'
-import { getPrivacyAdversaryAnchor } from './privacyAdversaryUi'
+import { PrivacySubjectGlyph, sentimentToExposure } from './PrivacySubjectGlyph'
+import { getPrivacyAdversaryAnchor, worstExtraLeak } from './privacyAdversaryUi'
 
-/** One dot per adversary, in spine order. Hover for the cell. */
+/** One glyph per adversary, in spine order. Hover for the cell. */
 export function PrivacyAdversaryDots({
   adversaries,
   size = 'sm',
@@ -21,19 +17,20 @@ export function PrivacyAdversaryDots({
   linkToSection = false,
 }: {
   adversaries: PrivacyAdversariesSummary
-  size?: TrustedSetupRiskDotSize
+  size?: 'sm' | 'md' | 'lg'
   className?: string
   /** On the project page: jump to the adversary's block in the section. */
   linkToSection?: boolean
 }) {
   return (
-    <div className={cn('flex items-center gap-1.5', className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       {adversaries.cells.map((cell) => {
-        const dot = (
-          <TrustedSetupRiskDot
-            risk={sentimentToRiskDot(cell.sentiment)}
+        const glyph = (
+          <PrivacySubjectGlyph
+            field={adversaries.promise.protects}
+            exposure={sentimentToExposure(cell.sentiment)}
+            more={worstExtraLeak(cell)}
             size={size}
-            className="shrink-0"
           />
         )
         const label = `${cell.label}: ${cell.value}`
@@ -45,13 +42,13 @@ export function PrivacyAdversaryDots({
                   href={`#${getPrivacyAdversaryAnchor(cell.id)}`}
                   aria-label={label}
                 >
-                  {dot}
+                  {glyph}
                 </a>
               </TooltipTrigger>
             ) : (
-              <TooltipTrigger aria-label={label}>{dot}</TooltipTrigger>
+              <TooltipTrigger aria-label={label}>{glyph}</TooltipTrigger>
             )}
-            <TooltipContent className="max-w-[320px]">
+            <TooltipContent className="max-w-[340px]">
               <PrivacyAdversaryTooltipContent
                 cell={cell}
                 promise={adversaries.promise}

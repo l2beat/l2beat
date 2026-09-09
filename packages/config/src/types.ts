@@ -1128,7 +1128,8 @@ export interface PrivacyAdversaryAssessment {
    * The one judgment per cell. Answers "can a careful user defeat this
    * adversary using only the protocol and the supported options of its
    * reference client?": good = yes, warning = only outside supported options
-   * or by accepting a leak to another adversary, bad = no. For the network
+   * or by accepting a leak to another adversary, bad = no. It judges the
+   * promised field only; identity and other leaks are derived markers. For the network
    * observer, "supported" means a canonical, verified anonymity path: Tor
    * documented by the project, permissionless relayers, an own node. A gated
    * or single mandatory intermediary with no verified path is bad. The cell
@@ -1149,11 +1150,6 @@ export interface PrivacyAdversaryAssessment {
    * adds over the public observer: advice is not repeated across cells.
    */
   advice?: string
-  /**
-   * Overrides `promise.protects` as the subject of the derived value, for
-   * cells where the promise holds but another field leaks.
-   */
-  subject?: PrivacyField
   /**
    * Entry and exit: the Ethereum transactions that put funds under the
    * protocol and take them out again.
@@ -1204,8 +1200,20 @@ export interface PrivacyAdversariesConfig {
 
 export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
   id: PrivacyAdversaryId
-  /** Derived: "<subject> <state>", e.g. "Link private", "Identity exposed". */
+  /** Derived: "<promised subject> <state>", e.g. "Link private". */
   value: string
+  /**
+   * Derived: the worst identity verdict across segments. Identity is the one
+   * field no protocol promises to protect, so it is shown as a separate
+   * marker on every cell instead of overriding the subject.
+   */
+  identity: PrivacyExposure
+  /**
+   * Derived: fields other than the promised one and identity whose verdict is
+   * worse than the public observer's in some segment. Empty for the public
+   * observer itself, whose leaks the promise text already describes.
+   */
+  alsoExposed: PrivacyField[]
 }
 
 /**

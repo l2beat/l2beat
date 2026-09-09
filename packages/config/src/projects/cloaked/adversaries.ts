@@ -1,9 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const STEALTH = 'https://github.com/cloakedxyz/clkd-stealth'
-const RESOLVER =
-  'https://etherscan.io/address/0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C'
-
 // Verdicts backed by the verified OffchainResolver source, discovered.json,
 // the published clkd-stealth, clkd-recovery and clkd-privacy-pools SDKs, the
 // public OpenAPI description of api.clkd.xyz and decoded relayer transactions.

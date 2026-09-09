@@ -1,11 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const POOL =
-  'https://optimistic.etherscan.io/address/0xca689828854a422CF1f778be03CA80549408F620'
-const AUDIT =
-  'https://optimistic.etherscan.io/address/0xb328535aB3bCe578996AE9af5A7f44f175721118'
-const SDK = 'https://www.npmjs.com/package/@sunnyside-io/privacy-boost'
-
 // Verdicts backed by the .flat sources (PrivacyBoost pool, AuthRegistry,
 // AuditGateway, ExternalCallGateway, Groth16 verifiers), discovered.json, the
 // published SDK wrapper (its Rust core and the TEE server are closed) and a

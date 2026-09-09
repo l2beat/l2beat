@@ -1,9 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const SDK = 'https://github.com/zama-ai/relayer-sdk/blob/main'
-const CUSDC =
-  'https://etherscan.io/address/0xe978F22157048E5DB8E5d07971376e86671672B2'
-
 // Verdicts backed by .flat/ConfidentialUSDCWrapper, .flat/ACL, .flat/KMSVerifier,
 // discovered.json (Ethereum + gateway chain) and the relayer-sdk source.
 // Measurements as of 2026-09-08, block 25,931,789.
@@ -68,11 +64,10 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       sources: [{ contract: 'ConfidentialUSDCWrapper' }],
     },
     networkObserver: {
-      subject: 'identity',
-      condition: 'mandatory relayer with API key',
-      sentiment: 'bad',
+      condition: 'amounts stay encrypted; the relayer sees who and when',
+      sentiment: 'good',
       exposure:
-        "Every transfer and every balance read goes through Zama's relayer with your IP and an API key that Zama issues on application; no other relayer exists and no anonymous access path is documented. Amounts stay encrypted.",
+        "Amounts stay encrypted end to end: Zama's relayer and coprocessor handle ciphertexts only. What they learn is who transacts and reads which balance, when, from which IP and under which app's API key, since every request must pass through Zama's relayer and no anonymous access path is documented.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',

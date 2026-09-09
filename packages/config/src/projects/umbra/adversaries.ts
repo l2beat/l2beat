@@ -1,7 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const REPO = 'https://github.com/ScopeLift/umbra-protocol/blob/master'
-
 // Verdicts backed by .flat/Umbra.sol, .flat/StealthKeyRegistry.sol,
 // discovered.json and the umbra-js / frontend sources. Measurements as of
 // 2026-09-08, block 25,931,789.

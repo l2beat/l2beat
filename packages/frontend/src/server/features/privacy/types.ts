@@ -1,6 +1,8 @@
 import type {
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
+  PrivacyExposure,
+  PrivacyField,
   PrivacyPromise,
   Project,
   ProjectPrivacyAdversaries,
@@ -70,12 +72,43 @@ export interface PrivacyAdversarySummaryCell {
   value: string
   sentiment: PrivacyAdversarySentiment
   condition: string
+  /** Worst identity verdict of the cell; shown as a badge when not private. */
+  identity: PrivacyExposure
+  /** Other fields leaking beyond the public observer, with their labels. */
+  alsoExposed: {
+    field: PrivacyField
+    label: string
+    exposure: PrivacyExposure
+  }[]
 }
 
 export interface PrivacyAdversariesSummary {
   promise: PrivacyPromise
+  /** Fields in display order, for legends. */
+  fields: ProjectPrivacyAdversaries['fields']
   /** In spine order: public observer, chain analyst, network observer, insider, future. */
   cells: PrivacyAdversarySummaryCell[]
+}
+
+const SEVERITY: Record<PrivacyExposure, number> = {
+  private: 0,
+  unverifiable: 1,
+  atRisk: 2,
+  exposed: 3,
+}
+
+function worstFieldExposure(
+  cell: ProjectPrivacyAdversaries['cells'][PrivacyAdversaryId],
+  field: PrivacyField,
+): PrivacyExposure {
+  let result: PrivacyExposure = 'private'
+  for (const map of [cell.boundary, cell.interior]) {
+    if (!map) continue
+    const leak = map[field]
+    const exposure = typeof leak === 'string' ? leak : leak.verdict
+    if (SEVERITY[exposure] > SEVERITY[result]) result = exposure
+  }
+  return result
 }
 
 export function toPrivacyAdversariesSummary(
@@ -83,6 +116,7 @@ export function toPrivacyAdversariesSummary(
 ): PrivacyAdversariesSummary {
   return {
     promise: adversaries.promise,
+    fields: adversaries.fields,
     cells: adversaries.adversaries.map((adversary) => {
       const cell = adversaries.cells[adversary.id]
       return {
@@ -91,6 +125,12 @@ export function toPrivacyAdversariesSummary(
         value: cell.value,
         sentiment: cell.sentiment,
         condition: cell.condition,
+        identity: cell.identity,
+        alsoExposed: cell.alsoExposed.map((field) => ({
+          field,
+          label: adversaries.fields.find((f) => f.id === field)?.label ?? field,
+          exposure: worstFieldExposure(cell, field),
+        })),
       }
     }),
   }

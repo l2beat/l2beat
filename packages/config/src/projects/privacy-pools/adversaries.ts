@@ -1,10 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const CORE = 'https://github.com/0xbow-io/privacy-pools-core/blob/main'
-const SITE = 'https://github.com/0xbow-io/privacy-pools-website/blob/main'
-const ENTRYPOINT =
-  'https://etherscan.io/address/0x6818809EefCe719E480a7526D76bD3e561526b46'
-
 // Verdicts backed by .flat/PrivacyPoolsEntrypoint, .flat/PrivacyPool*.sol,
 // discovered.json, the privacy-pools-core v1.2.1 circuits and SDK, and the
 // privacy-pools-website source. Measurements as of 2026-09-08, block 25,933,805.

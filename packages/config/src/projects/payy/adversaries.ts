@@ -1,9 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const REPO = 'https://github.com/polybase/payy/blob/main'
-const ROLLUP =
-  'https://etherscan.io/address/0x367C1eAF14AA06b78ce76bd0243297de79d85270'
-
 // Verdicts backed by the verified RollupV1 / HonkVerifier sources,
 // discovered.json, the public payy repository (Noir circuits, node, guild and
 // registry crates) and the operator's public block API. Measurements as of
@@ -87,10 +83,11 @@ export const payyAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'bad',
-      condition: 'operator-only endpoints, closed app',
+      sentiment: 'warning',
+      condition:
+        'ordinary notes stay encrypted; link and ramp notes are held by the operator',
       exposure:
-        "The only app is closed source and talks solely to Payy's servers, which log your proofs with your IP, deliver your notes and know which notes are yours.",
+        "Amounts of ordinary transfers stay encrypted to the recipient; the operator holds the spending keys, and so the contents, of notes created for payment links and fiat ramps. Everything else is exposed: the only app is closed source and talks solely to Payy's servers, which log your proofs with your IP, deliver your notes and know which notes are yours and whom you paid.",
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -109,8 +106,8 @@ export const payyAdversaries = definePrivacyAdversaries({
         },
         recipient: 'exposed',
         amount: {
-          verdict: 'private',
-          note: 'Encrypted to the recipient; the operator sees ciphertext only.',
+          verdict: 'atRisk',
+          note: 'Encrypted to the recipient for ordinary transfers; the operator holds the keys of link and ramp notes.',
         },
         asset: 'exposed',
         linkage: 'exposed',
@@ -128,10 +125,11 @@ export const payyAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      sentiment: 'bad',
-      condition: 'one operator runs node, registry and KYC',
+      sentiment: 'warning',
+      condition:
+        'ordinary notes stay encrypted; link and ramp notes are held by the operator',
       exposure:
-        'One company runs the only node, the note registry, the deposit relayers and the KYC checks, and stores spending keys for payment links. It sees the full picture and can freeze withdrawals.',
+        'Amounts of ordinary transfers stay encrypted to the recipient, but the operator holds the spending keys of notes created for payment links and fiat ramps and can read them. One company runs the only node, the note registry, the deposit relayers and the KYC checks, so it sees who paid whom and who everyone is, and it can freeze withdrawals.',
       boundary: {
         sender: 'exposed',
         recipient: 'exposed',
