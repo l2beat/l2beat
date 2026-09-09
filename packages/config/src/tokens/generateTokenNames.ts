@@ -1,8 +1,8 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import {
   ChainSpecificAddress,
-  formatJson,
   type EthereumAddress,
+  formatJson,
 } from '@l2beat/shared-pure'
 import { writeFileSync } from 'fs'
 import groupBy from 'lodash/groupBy'
