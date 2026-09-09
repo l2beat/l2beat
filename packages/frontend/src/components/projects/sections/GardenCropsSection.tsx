@@ -18,10 +18,6 @@ export function GardenCropsSection({
   return (
     <ProjectSection
       {...sectionProps}
-      // The green marks a protocol that is in the garden; a miss stays plain.
-      className={
-        inGarden ? 'border border-garden-border bg-garden-tint' : undefined
-      }
       headerAccessory={
         <a
           href={GARDEN_PATH}
