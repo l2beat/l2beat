@@ -4,11 +4,8 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
-import { getInteropTokenOnchainDeployments } from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
-import { getInteropTokenRelations } from '~/server/features/layer2s/interop/token/getInteropTokenRelations'
-import { getInteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
-import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
-import { ps } from '~/server/projects'
+import { getInteropTokenRelationsGraphById } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraphById'
+import { getActiveInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -25,8 +22,7 @@ export async function getInteropTokenPageData(
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
-  const interopChains = getInteropChains()
-  const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
+  const activeInteropChains = getActiveInteropChains()
   const activeInteropChainIds = activeInteropChains.map((chain) => chain.id)
   const interopChainsWithIcons = mapInteropChainsToWithIcons(
     manifest,
@@ -110,35 +106,14 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const [
-    tokenData,
-    { deployments, relations },
-    projectsWithChains,
-    interopProjects,
-  ] = await Promise.all([
+  const [tokenData, relationsGraph] = await Promise.all([
     getInteropTokenData({
       tokenId: token.id,
       ...apiSelection,
     }),
-    getDeploymentsAndRelations(token.id, activeInteropChainIds),
-    ps.getProjects({
-      select: ['chainConfig'],
-    }),
-    ps.getProjects({
-      select: ['interopConfig'],
-    }),
+    getInteropTokenRelationsGraphById(token.id),
   ])
 
-  const relationsGraph =
-    deployments.length > 0
-      ? getInteropTokenRelationsGraph(
-          token.id,
-          deployments,
-          relations,
-          projectsWithChains,
-          interopProjects,
-        )
-      : undefined
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
@@ -154,10 +129,4 @@ async function getCachedData({
     tokenData,
     apiSelection,
   }
-}
-
-async function getDeploymentsAndRelations(tokenId: string, chainIds: string[]) {
-  const deployments = await getInteropTokenOnchainDeployments(tokenId, chainIds)
-  const relations = await getInteropTokenRelations(tokenId, deployments)
-  return { deployments, relations }
 }

@@ -138,6 +138,17 @@ export interface InteropTransferDeployedTokenPairStats {
   volume: number
 }
 
+export interface InteropTransferDeployedTokenPairStatsByToken
+  extends InteropTransferDeployedTokenPairStats {
+  abstractTokenId: string
+}
+
+interface DeployedTokenPairStatsSelection {
+  plugins: InteropTransferPluginMatcher[]
+  sourceChains: string[]
+  destinationChains: string[]
+}
+
 export interface InteropTransferTokenAddressBatch {
   latestSerialId: string | undefined
   transferCount: number
@@ -983,19 +994,49 @@ export class InteropTransferRepository extends BaseRepository {
   }
 
   /**
-   * Eligible crosschain transfers, counted once per deployed-token pair even
-   * when several project configs match. Volume uses getInteropTransferValue's
-   * convention; a side is kept only when it belongs to the abstract token.
+   * Eligible crosschain transfers, counted once per deployed-token pair and
+   * abstract token even when several project configs match. Volume uses
+   * getInteropTransferValue's convention; only the token's own sides are kept.
    */
+  getAllDeployedTokenPairStats(
+    timeRange: InteropTransferTimeRange,
+    selection: DeployedTokenPairStatsSelection,
+  ): Promise<InteropTransferDeployedTokenPairStatsByToken[]> {
+    return this.queryDeployedTokenPairStats(timeRange, selection, (eb) =>
+      eb.or([
+        eb('srcAbstractTokenId', 'is not', null),
+        eb('dstAbstractTokenId', 'is not', null),
+      ]),
+    )
+  }
+
+  /** `getAllDeployedTokenPairStats` narrowed to one abstract token. */
   async getDeployedTokenPairStats(
     abstractTokenId: string,
     timeRange: InteropTransferTimeRange,
-    selection: {
-      plugins: InteropTransferPluginMatcher[]
-      sourceChains: string[]
-      destinationChains: string[]
-    },
+    selection: DeployedTokenPairStatsSelection,
   ): Promise<InteropTransferDeployedTokenPairStats[]> {
+    const rows = await this.queryDeployedTokenPairStats(
+      timeRange,
+      selection,
+      (eb) =>
+        eb.or([
+          eb('srcAbstractTokenId', '=', abstractTokenId),
+          eb('dstAbstractTokenId', '=', abstractTokenId),
+        ]),
+    )
+    return rows
+      .filter((row) => row.abstractTokenId === abstractTokenId)
+      .map(({ abstractTokenId: _, ...stats }) => stats)
+  }
+
+  private async queryDeployedTokenPairStats(
+    timeRange: InteropTransferTimeRange,
+    selection: DeployedTokenPairStatsSelection,
+    tokenFilter: (
+      eb: ExpressionBuilder<DB, 'InteropTransfer'>,
+    ) => Expression<SqlBool>,
+  ): Promise<InteropTransferDeployedTokenPairStatsByToken[]> {
     if (
       selection.plugins.length === 0 ||
       selection.sourceChains.length === 0 ||
@@ -1040,12 +1081,7 @@ export class InteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', selection.sourceChains)
       .where('dstChain', 'in', selection.destinationChains)
       .whereRef('srcChain', '!=', 'dstChain')
-      .where((eb) =>
-        eb.or([
-          eb('srcAbstractTokenId', '=', abstractTokenId),
-          eb('dstAbstractTokenId', '=', abstractTokenId),
-        ]),
-      )
+      .where(tokenFilter)
       .groupBy([
         ...groupColumns,
         sql`"srcEventId" IS NULL`,
@@ -1056,7 +1092,10 @@ export class InteropTransferRepository extends BaseRepository {
     const matches = new InteropTransferClassifier().createMatcher(
       selection.plugins,
     )
-    const pairs = new Map<string, InteropTransferDeployedTokenPairStats>()
+    const pairs = new Map<
+      string,
+      InteropTransferDeployedTokenPairStatsByToken
+    >()
     for (const row of rows) {
       assert(
         row.bridgeType === null || isInteropBridgeType(row.bridgeType),
@@ -1080,28 +1119,37 @@ export class InteropTransferRepository extends BaseRepository {
       )
         continue
 
-      const src =
-        row.srcAbstractTokenId === abstractTokenId && row.srcTokenAddress
-          ? { chain: row.srcChain, address: row.srcTokenAddress }
-          : undefined
-      const dst =
-        row.dstAbstractTokenId === abstractTokenId && row.dstTokenAddress
-          ? { chain: row.dstChain, address: row.dstTokenAddress }
-          : undefined
-      const key = JSON.stringify([src, dst])
-      const pair = pairs.get(key) ?? {
-        ...(src ? { src } : {}),
-        ...(dst ? { dst } : {}),
-        transferCount: 0,
-        transfersWithDurationCount: 0,
-        totalDurationSum: 0,
-        volume: 0,
+      for (const abstractTokenId of new Set([
+        row.srcAbstractTokenId,
+        row.dstAbstractTokenId,
+      ])) {
+        if (!abstractTokenId) continue
+        const src =
+          row.srcAbstractTokenId === abstractTokenId && row.srcTokenAddress
+            ? { chain: row.srcChain, address: row.srcTokenAddress }
+            : undefined
+        const dst =
+          row.dstAbstractTokenId === abstractTokenId && row.dstTokenAddress
+            ? { chain: row.dstChain, address: row.dstTokenAddress }
+            : undefined
+        const key = JSON.stringify([abstractTokenId, src, dst])
+        const pair = pairs.get(key) ?? {
+          abstractTokenId,
+          ...(src ? { src } : {}),
+          ...(dst ? { dst } : {}),
+          transferCount: 0,
+          transfersWithDurationCount: 0,
+          totalDurationSum: 0,
+          volume: 0,
+        }
+        pair.transferCount += Number(row.transferCount)
+        pair.transfersWithDurationCount += Number(
+          row.transfersWithDurationCount,
+        )
+        pair.totalDurationSum += Number(row.totalDurationSum ?? 0)
+        pair.volume += Number(row.volume)
+        pairs.set(key, pair)
       }
-      pair.transferCount += Number(row.transferCount)
-      pair.transfersWithDurationCount += Number(row.transfersWithDurationCount)
-      pair.totalDurationSum += Number(row.totalDurationSum ?? 0)
-      pair.volume += Number(row.volume)
-      pairs.set(key, pair)
     }
     return [...pairs.values()]
   }

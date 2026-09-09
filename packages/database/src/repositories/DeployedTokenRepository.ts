@@ -22,6 +22,11 @@ export type DeployedTokenRecord = {
   abstractTokenAssignmentProof?: unknown
 }
 
+export type DeployedTokenAssignment = Pick<
+  DeployedTokenRecord,
+  'chain' | 'address' | 'symbol' | 'abstractTokenId'
+> & { ignored: boolean }
+
 export type DeployedTokenMetadata = {
   tvs?: TvsMetadata
 }
@@ -227,6 +232,14 @@ export class DeployedTokenRepository extends BaseRepository {
   async getAll(): Promise<DeployedTokenRecord[]> {
     const rows = await this.db.selectFrom('DeployedToken').selectAll().execute()
     return rows.map(toRecord)
+  }
+
+  /** Skips the metadata/assignment-proof JSON that `getAll` carries. */
+  async getAllAssignments(): Promise<DeployedTokenAssignment[]> {
+    return await this.db
+      .selectFrom('DeployedToken')
+      .select(['chain', 'address', 'symbol', 'abstractTokenId', 'ignored'])
+      .execute()
   }
 
   async getByPrimaryKeys(

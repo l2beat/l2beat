@@ -12,7 +12,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
-import { getInteropChains } from '../utils/getInteropChains'
+import { getActiveInteropChainIds } from '../utils/getInteropChains'
 
 export interface InteropTokenRelations {
   routes: TokenRelationRoute[]
@@ -36,6 +36,17 @@ export async function getInteropTokenRelations(
 }
 
 async function getPairStats(tokenId: string) {
+  const params = await getPairStatsParams()
+  if (!params) return undefined
+  return getDb().interopTransfer.getDeployedTokenPairStats(
+    tokenId,
+    params.timeRange,
+    params.selection,
+  )
+}
+
+/** Shared time window and eligibility for the tiles and detailed token graphs. */
+export async function getPairStatsParams() {
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) return undefined
   const from = snapshotTimestamp - UnixTime.DAY
@@ -43,18 +54,15 @@ async function getPairStats(tokenId: string) {
   // point at a day the cleaner has already emptied.
   if (from < UnixTime.now() - INTEROP_TRANSFER_RETENTION) return undefined
   const projects = await ps.getProjects({ select: ['interopConfig'] })
-  const chains = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => chain.id)
-  return getDb().interopTransfer.getDeployedTokenPairStats(
-    tokenId,
-    { from, to: snapshotTimestamp },
-    {
+  const chains = getActiveInteropChainIds()
+  return {
+    timeRange: { from, to: snapshotTimestamp },
+    selection: {
       plugins: projects.flatMap((project) => project.interopConfig.plugins),
       sourceChains: chains,
       destinationChains: chains,
     },
-  )
+  }
 }
 
 const MOCK_INTEROP_TOKEN_RELATIONS: InteropTokenRelations = {

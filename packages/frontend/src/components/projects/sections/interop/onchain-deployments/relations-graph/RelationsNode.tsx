@@ -4,47 +4,22 @@ import type { InteropTokenRelationsNode } from '~/server/features/layer2s/intero
 import { cn } from '~/utils/cn'
 import { isCluster } from './graphSelectors'
 import type { NodeBox } from './layoutRelationsGraph'
+import {
+  CLUSTER_FOOTER_HEIGHT,
+  CLUSTER_ROW_HEIGHT,
+  getClusterColumns,
+  getShownMemberCount,
+  LIST_GAP,
+  META_GAP,
+  META_HEIGHT,
+  NODE_PADDING_X as PADDING_X,
+  NODE_PADDING_Y as PADDING_Y,
+  TITLE_HEIGHT,
+} from './nodeSize'
 import { shortAddress, Volume } from './RelationsPrimitives'
 
-// Members are listed up to a cap that guards the canvas against a runaway cluster.
-const CLUSTER_MEMBERS_CAP = 16
-
-// The layout needs sizes before anything renders, so the same numbers drive
-// both the size formula and the inline styles below.
-const PADDING_X = 12
-const PADDING_Y = 10
-const BORDER_Y = 2
-const TITLE_HEIGHT = 20
-const META_GAP = 4
-const META_HEIGHT = 16
-const LIST_GAP = 12
-const CLUSTER_ROW_HEIGHT = 26
-const CLUSTER_FOOTER_HEIGHT = 20
-const HEADER_HEIGHT = TITLE_HEIGHT + META_GAP + META_HEIGHT
-
-export function getNodeSize(node: InteropTokenRelationsNode): {
-  width: number
-  height: number
-} {
-  const count = node.deployments.length
-  const frame = 2 * PADDING_Y + BORDER_Y + HEADER_HEIGHT
-  if (count <= 1) return { width: 184, height: frame + META_GAP + META_HEIGHT }
-  const shown = getShownMembers(node).length
-  const columns = getClusterColumns(count)
-  const rows = Math.ceil(shown / columns)
-  const list = LIST_GAP + rows * CLUSTER_ROW_HEIGHT
-  const footer = count > shown ? CLUSTER_FOOTER_HEIGHT : 0
-  return { width: columns === 1 ? 268 : 420, height: frame + list + footer }
-}
-
-function getClusterColumns(count: number): number {
-  return count <= 3 ? 1 : 2
-}
-
 function getShownMembers(node: InteropTokenRelationsNode) {
-  return node.deployments.length > CLUSTER_MEMBERS_CAP
-    ? node.deployments.slice(0, CLUSTER_MEMBERS_CAP - 1)
-    : node.deployments
+  return node.deployments.slice(0, getShownMemberCount(node.deployments.length))
 }
 
 interface Props {
