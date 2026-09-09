@@ -183,7 +183,14 @@ export class InteropEventSyncer extends TimeLoop {
         async () => {
           this.state = await fn(state)
           this.hasError = false
-          if (options?.clearError ?? true) {
+          // A transition into (or a tick spent in) CatchingUpState has not
+          // synced anything yet, so the stored error stays until either data
+          // is persisted (see saveProducedInteropEvents) or the syncer is
+          // following again.
+          if (
+            (options?.clearError ?? true) &&
+            this.state.type === 'blockProcessor'
+          ) {
             await this.clearChainSyncError()
           }
         },

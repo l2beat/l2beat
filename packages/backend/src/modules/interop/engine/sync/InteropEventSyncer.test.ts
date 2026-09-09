@@ -261,12 +261,12 @@ describe(InteropEventSyncer.name, () => {
           }),
         }),
       })
-      const { state: timeLoopState } = makeTimeLoopState()
-      syncer.state = timeLoopState
+      const { state: blockProcessorState } = makeBlockProcessorState()
+      syncer.state = blockProcessorState
 
-      await syncer.run()
-      await syncer.run()
-      await syncer.run()
+      await syncer.processNewestBlock(makeBlock(1), [])
+      await syncer.processNewestBlock(makeBlock(2), [])
+      await syncer.processNewestBlock(makeBlock(3), [])
 
       expect(setLastError.calls.length).toEqual(1)
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
@@ -283,15 +283,16 @@ describe(InteropEventSyncer.name, () => {
           }),
         }),
       })
-      const { state: timeLoopState, run } = makeTimeLoopState()
-      syncer.state = timeLoopState
+      const { state: blockProcessorState, processNewestBlock } =
+        makeBlockProcessorState()
+      syncer.state = blockProcessorState
 
-      await syncer.run() // clears the stale error
-      run.throwsOnce(new Error('boom'))
-      await syncer.run()
+      await syncer.processNewestBlock(makeBlock(1), []) // clears the stale error
+      processNewestBlock.throwsOnce(new Error('boom'))
+      await syncer.processNewestBlock(makeBlock(2), [])
       expect(syncer.hasError).toEqual(true)
-      await syncer.run()
-      await syncer.run()
+      await syncer.processNewestBlock(makeBlock(3), [])
+      await syncer.processNewestBlock(makeBlock(4), [])
 
       expect(syncer.hasError).toEqual(false)
       expect(setLastError.calls.map((c) => c.args[2])).toEqual([
@@ -299,6 +300,61 @@ describe(InteropEventSyncer.name, () => {
         expect.includes('boom'),
         null,
       ])
+    })
+
+    it('keeps the stored error when a block processor switches to catching up', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        db: mockObject<Database>({
+          interopPluginSyncState: mockObject<
+            Database['interopPluginSyncState']
+          >({
+            setLastError,
+          }),
+        }),
+      })
+      const { state: timeLoopState } = makeTimeLoopState()
+      const { state: blockProcessorState, processNewestBlock } =
+        makeBlockProcessorState(timeLoopState)
+      processNewestBlock.throwsOnce(new Error('boom'))
+      syncer.state = blockProcessorState
+
+      // the failed block is followed by the next one, which only detects the gap
+      await syncer.processNewestBlock(makeBlock(1), [])
+      await syncer.processNewestBlock(makeBlock(2), [])
+
+      expect(syncer.state as SyncerState).toEqual(timeLoopState)
+      expect(setLastError.calls.length).toEqual(1)
+      expect(setLastError.calls[0]?.args[2]).toInclude('boom')
+    })
+
+    it('clears the stored error only once catch-up returns to following', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        db: mockObject<Database>({
+          interopPluginSyncState: mockObject<
+            Database['interopPluginSyncState']
+          >({
+            setLastError,
+          }),
+        }),
+      })
+      const { state: blockProcessorState } = makeBlockProcessorState()
+      const run = mockFn<[], Promise<SyncerState>>()
+      const timeLoopState: TimeloopState = {
+        type: 'timeLoop',
+        name: 'catchingUp',
+        status: 'idle',
+        run,
+      }
+      run.resolvesToOnce(timeLoopState).resolvesTo(blockProcessorState)
+      syncer.state = timeLoopState
+
+      await syncer.run() // still catching up
+      expect(setLastError).not.toHaveBeenCalled()
+
+      await syncer.run() // back to following
+      expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
     })
 
     it('keeps the stored error when a status check succeeds', async () => {
