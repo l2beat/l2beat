@@ -7,6 +7,11 @@ export function getSequencingSection(
 ) {
   const sequencing = project.scalingTechnology.sequencing
   if (!sequencing) return undefined
+  const sequencerSetSpec =
+    sequencing.sequencingSpec?.type === 'sequencer-set'
+      ? sequencing.sequencingSpec
+      : undefined
+  const chart = sequencerSetSpec?.inclusionDelayChart
   return {
     projectName: project.name,
     name: sequencing.name,
@@ -15,11 +20,10 @@ export function getSequencingSection(
       project.scalingTechnology.sequencingImage ?? project.slug,
     ),
     content: sequencing.description,
-    sequencerSetSpec: sequencing.sequencerSetSpec,
-    inclusionDelay: sequencing.inclusionDelayChart
-      ? prepareInclusionDelay(sequencing.inclusionDelayChart)
-      : undefined,
-    inclusionDelayChartDescription: sequencing.inclusionDelayChartDescription,
+    sequencingSpec: sequencing.sequencingSpec,
+    inclusionDelay: chart ? prepareInclusionDelay(chart) : undefined,
+    inclusionDelayChartDescription:
+      sequencerSetSpec?.inclusionDelayChartDescription,
     censorshipResistance: sequencing.censorshipResistance,
     isUnderReview: !!project.statuses.reviewStatus,
     risks: sequencing.risks.map((r) => ({

@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1784283055,
-  "configHash": "0xa536f9d02d045f4baf08005f809eaec88e87b436d5f05936b51263da9895aa56",
+  "configHash": "0x7e4b612feaff50122e64aa64e48cd8498fee6e19edfc224e1e6e772efade0e1d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -488,7 +488,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "21d 13h",
+        "timeSinceLastL2beatInteraction": "2mo 7d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -1652,6 +1652,8 @@
         "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "initVersion": 3,
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
+        "minimumGasLimitOneByte": 21040,
+        "minimumGasLimitZeroBytes": 21000,
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516982,

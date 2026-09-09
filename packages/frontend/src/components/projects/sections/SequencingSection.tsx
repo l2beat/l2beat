@@ -1,4 +1,4 @@
-import type { ProjectSequencerSetSpec, ReferenceLink } from '@l2beat/config'
+import type { ProjectSequencingSpec, ReferenceLink } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
@@ -17,7 +17,7 @@ export interface SequencingSectionProps extends ProjectSectionProps {
   name: string
   diagram?: DiagramParams
   content: string
-  sequencerSetSpec?: ProjectSequencerSetSpec
+  sequencingSpec?: ProjectSequencingSpec
   inclusionDelay?: InclusionDelayChartProps
   inclusionDelayChartDescription?: string
   censorshipResistance?: string
@@ -31,7 +31,7 @@ export function SequencingSection({
   name,
   diagram,
   content,
-  sequencerSetSpec,
+  sequencingSpec,
   inclusionDelay,
   inclusionDelayChartDescription,
   censorshipResistance,
@@ -58,7 +58,9 @@ export function SequencingSection({
       >
         {content}
       </Markdown>
-      {sequencerSetSpec && <SequencerSetSpecSheet spec={sequencerSetSpec} />}
+      {sequencingSpec?.type === 'sequencer-set' && (
+        <SequencerSetSpecSheet spec={sequencingSpec} />
+      )}
       {inclusionDelay && (
         <>
           <ProjectInclusionDelayChart

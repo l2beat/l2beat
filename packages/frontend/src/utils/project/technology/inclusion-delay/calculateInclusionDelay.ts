@@ -171,7 +171,7 @@ function buildEntityLegendEntries(
     return []
   }
 
-  const entities = getSortedPositiveEntities(distribution.entities)
+  const entities = getSortedPositiveEntities(distribution.entities ?? [])
 
   let cumulativeStake = 0
   const entityNames: string[] = []

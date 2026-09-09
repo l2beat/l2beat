@@ -89,11 +89,11 @@ function getInclusionDelayComparison(
 ): InclusionDelayComparison | undefined {
   const projectDelays = projects
     .map((project) => {
-      const sequencing = project.scalingTechnology.sequencing
-      const chart = sequencing?.inclusionDelayChart
-      if (!sequencing?.sequencerSetSpec || !chart) {
+      const spec = project.scalingTechnology.sequencing?.sequencingSpec
+      if (spec?.type !== 'sequencer-set' || !spec.inclusionDelayChart) {
         return undefined
       }
+      const chart = spec.inclusionDelayChart
       return {
         slug: project.slug,
         name: project.name,
@@ -144,9 +144,8 @@ function getL2RiskSequencingEntry(
   project: L2RiskSequencingProject,
   changes: ProjectChanges,
 ): L2RiskSequencingEntry | undefined {
-  const sequencing = project.scalingTechnology.sequencing
-  const spec = sequencing?.sequencerSetSpec
-  if (!sequencing || !spec) {
+  const spec = project.scalingTechnology.sequencing?.sequencingSpec
+  if (spec?.type !== 'sequencer-set') {
     return undefined
   }
 
@@ -160,7 +159,7 @@ function getL2RiskSequencingEntry(
       spec.proposerRotationTime,
       spec.committeeRotationTime,
     ),
-    blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
+    blockProduction: getBlockProduction(spec.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
   }

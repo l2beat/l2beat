@@ -117,6 +117,8 @@ export class StakeDistributionFetcher {
     return {
       project: dataset.project,
       stakeToken: dataset.stakeToken,
+      dateType: 'fetched',
+      date: new Date().toISOString(),
       totalStake: toRoundedTokenAmount(
         dataset.totalStakeBaseUnits,
         dataset.stakeDecimals,
