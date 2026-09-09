@@ -22,12 +22,6 @@ export function toCropEntries(crops: ResolvedCrops): CropEntry[] {
   }))
 }
 
-/** How many of the four crops are in bloom, for the verdict tally. */
-export function countInBloom(crops: ResolvedCrops): number {
-  return toCropEntries(crops).filter((c) => c.evaluation.sentiment === 'good')
-    .length
-}
-
 // Mirrors CropBadge's PALETTE so the project page cannot drift from the garden.
 export const SENTIMENT_TEXT: Record<CropSentiment, string> = {
   good: 'text-crop-good-ink',
@@ -50,10 +44,10 @@ export const SENTIMENT_TINT: Record<CropSentiment, string> = {
   neutral: 'bg-crop-neutral/15',
 }
 
-/** The dashed root that ties a plant to its findings. */
-export const SENTIMENT_ROOT: Record<CropSentiment, string> = {
-  good: 'border-crop-good/65',
-  warning: 'border-crop-warning/65',
-  bad: 'border-crop-bad/65',
-  neutral: 'border-crop-neutral',
+/** The verdict tally swatches. */
+export const SENTIMENT_SWATCH: Record<CropSentiment, string> = {
+  good: 'bg-crop-good',
+  warning: 'bg-crop-warning',
+  bad: 'bg-crop-bad',
+  neutral: 'bg-crop-neutral/60',
 }
