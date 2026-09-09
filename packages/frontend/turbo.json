@@ -16,6 +16,7 @@
         "FEATURE_FLAG_GITCOIN_OPTION",
         "FEATURE_FLAG_HIRING",
         "CLIENT_SIDE_DEFI_ENABLED",
+        "CLIENT_SIDE_GARDEN_ENABLED",
         "MOCK",
         "NODE_ENV",
         "DEPLOYMENT_ENV",
