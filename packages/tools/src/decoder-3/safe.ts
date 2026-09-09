@@ -12,6 +12,14 @@ export const SAFE_EXEC_ABI =
   'function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures)'
 export const SAFE_ABI = parseAbi([SAFE_EXEC_ABI])
 
+export function stepSafeNonce(nonce: string, direction: 1 | -1): string {
+  if (!/^(0|[1-9][0-9]*)$/.test(nonce)) return nonce
+  const current = BigInt(nonce)
+  const next = current + BigInt(direction)
+  if (current >= 2n ** 256n || next < 0n || next >= 2n ** 256n) return nonce
+  return next.toString()
+}
+
 const SAFE_TX_TYPES = {
   SafeTx: [
     { name: 'to', type: 'address' },

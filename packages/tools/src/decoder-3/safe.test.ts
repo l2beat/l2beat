@@ -8,7 +8,12 @@ import {
 } from 'viem'
 import type { DecodedValue } from './decode'
 import { decode } from './plugins'
-import { calculateSafeHashes, decodeSafeTransaction, SAFE_ABI } from './safe'
+import {
+  calculateSafeHashes,
+  decodeSafeTransaction,
+  SAFE_ABI,
+  stepSafeNonce,
+} from './safe'
 
 const batch = readFileSync(
   `${__dirname}/fixtures/safe-multicall.txt`,
@@ -27,6 +32,25 @@ const input = {
   version: '1.3.0',
   nonce: '65',
 }
+
+describe('Safe nonce stepping', () => {
+  it('steps by one without rounding large integers', () => {
+    expect(stepSafeNonce('65', 1)).toEqual('66')
+    expect(stepSafeNonce('67', -1)).toEqual('66')
+    expect(stepSafeNonce('9007199254740992', 1)).toEqual('9007199254740993')
+    expect(stepSafeNonce('9007199254740993', -1)).toEqual('9007199254740992')
+  })
+
+  it('stops at uint256 bounds and leaves invalid inputs unchanged', () => {
+    expect(stepSafeNonce('0', -1)).toEqual('0')
+    const max = (2n ** 256n - 1n).toString()
+    expect(stepSafeNonce(max, 1)).toEqual(max)
+    for (const invalid of ['', '-1', '1.5', '1e3', (2n ** 256n).toString()]) {
+      expect(stepSafeNonce(invalid, 1)).toEqual(invalid)
+      expect(stepSafeNonce(invalid, -1)).toEqual(invalid)
+    }
+  })
+})
 
 describe('Safe hashes', () => {
   it('matches the independently verified mainnet signing data', () => {
