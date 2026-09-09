@@ -2,7 +2,7 @@ import { getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
 import type { AnchoredInteropSelection } from '../../../utils/types'
 import {
   getProtocolsByVolumeColumns,

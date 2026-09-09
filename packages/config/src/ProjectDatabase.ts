@@ -72,6 +72,7 @@ const schema = {
   permissions: 'TEXT',
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',
+  discoveryUpdates: 'TEXT',
 
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

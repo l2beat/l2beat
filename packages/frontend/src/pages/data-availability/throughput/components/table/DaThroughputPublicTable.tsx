@@ -4,7 +4,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTable } from '~/hooks/useTable'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
-import { useIncludeScalingOnly } from '../DaThroughputContext'
+import { useIncludeL2Only } from '../DaThroughputContext'
 import type { DaThroughputTableData } from './columns'
 import { publicSystemsColumns } from './columns'
 
@@ -13,11 +13,11 @@ interface Props {
 }
 
 export function DaThroughputPublicTable({ items }: Props) {
-  const { includeScalingOnly } = useIncludeScalingOnly()
+  const { includeL2Only } = useIncludeL2Only()
 
   const tableEntries = useMemo(
-    () => items.map((item) => toTableEntry(item, includeScalingOnly)),
-    [items, includeScalingOnly],
+    () => items.map((item) => toTableEntry(item, includeL2Only)),
+    [items, includeL2Only],
   )
 
   const table = useTable({
@@ -43,10 +43,18 @@ export function DaThroughputPublicTable({ items }: Props) {
 
 function toTableEntry(
   entry: DaThroughputEntry,
-  includeScalingOnly: boolean,
+  includeL2Only: boolean,
 ): DaThroughputTableData {
+  const data = includeL2Only ? entry.l2OnlyData : entry.data
+  const syncWarning = data?.syncWarning
+
   return {
     ...entry,
-    data: includeScalingOnly ? entry.scalingOnlyData : entry.data,
+    data,
+    statuses: {
+      ...entry.statuses,
+      syncWarning,
+    },
+    isSynced: !syncWarning,
   }
 }

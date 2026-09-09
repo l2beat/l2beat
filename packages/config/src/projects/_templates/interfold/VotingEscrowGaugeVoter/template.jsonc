@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VotingEscrowGaugeVoter",
+  "category": "gov",
+  "description": "Upgradeable, currently paused gauge-voting plugin connected to VotingEscrow. It can update voting state used by escrow lock operations but is not the Interfold DAO proposal-voting plugin.",
+  "ignoreMethods": ["epochTotalVotingPowerCast", "proxiableUUID"],
+  "ignoreInWatchMode": [
+    "currentEpochStart",
+    "epochId",
+    "epochStart",
+    "epochVoteEnd",
+    "epochVoteStart",
+    "getWriteEpochId",
+    "totalVotingPowerCast",
+    "votingActive"
+  ],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose permissions control gauge administration and upgrades."
+    },
+    "escrow": {
+      "description": "VotingEscrow whose lock voting state this plugin updates."
+    },
+    "clock": {
+      "description": "Clock defining gauge-voting epochs."
+    },
+    "ivotesAdapter": {
+      "description": "Voting-power source used by the gauge plugin."
+    },
+    "paused": {
+      "description": "Whether gauge voting is paused.",
+      "type": "RISK_PARAMETER"
+    },
+    "enableUpdateVotingPowerHook": {
+      "description": "Whether escrow transfers invoke the gauge-voting power update hook.",
+      "type": "RISK_PARAMETER"
+    },
+    "getCurrentTargetConfig": {
+      "description": "Stored execution target and operation for gauge-voting proposals.",
+      "type": "CODE_CHANGE"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VotingEscrowClock",
+  "category": "gov",
+  "description": "Timestamp clock defining veFOLD epochs, checkpoint cadence and gauge-voting windows.",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "resolveElapsedInEpoch",
+    "resolveEpoch",
+    "resolveEpochNextCheckpointIn",
+    "resolveEpochNextCheckpointTs",
+    "resolveEpochPrevCheckpointElapsed",
+    "resolveEpochPrevCheckpointTs",
+    "resolveEpochStartsIn",
+    "resolveEpochStartTs",
+    "resolveEpochVoteEndsIn",
+    "resolveEpochVoteEndTs",
+    "resolveEpochVoteStartsIn",
+    "resolveEpochVoteStartTs",
+    "resolveVotingActive"
+  ],
+  "ignoreInWatchMode": [
+    "currentEpoch",
+    "elapsedInEpoch",
+    "epochNextCheckpointIn",
+    "epochNextCheckpointTs",
+    "epochPrevCheckpointElapsed",
+    "epochPrevCheckpointTs",
+    "epochStartsIn",
+    "epochStartTs",
+    "epochVoteEndsIn",
+    "epochVoteEndTs",
+    "epochVoteStartsIn",
+    "epochVoteStartTs",
+    "votingActive"
+  ],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose Clock admin role can change timing and upgrade the implementation."
+    },
+    "epochDuration": {
+      "description": "Duration of a veFOLD epoch.",
+      "type": "RISK_PARAMETER"
+    },
+    "checkpointInterval": {
+      "description": "Interval between voting-power checkpoints.",
+      "type": "RISK_PARAMETER"
+    },
+    "voteDuration": {
+      "description": "Duration of the gauge-voting window in each epoch.",
+      "type": "RISK_PARAMETER"
+    },
+    "voteWindowBuffer": {
+      "description": "Buffer between the epoch boundary and gauge voting.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

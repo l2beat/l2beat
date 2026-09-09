@@ -83,6 +83,7 @@ function snapshotNodesEqual(left: Node, right: Node): boolean {
     left.box.width !== right.box.width ||
     left.box.height !== right.box.height ||
     !arraysEqual(left.hiddenFields, right.hiddenFields) ||
+    !arraysEqual(left.compressedRows, right.compressedRows) ||
     left.subnodes.length !== right.subnodes.length
   ) {
     return false

@@ -7,7 +7,7 @@ import { useTable } from '~/hooks/useTable'
 import type {
   InteropTopItemsSort,
   InteropTopItemsSorting,
-} from '~/server/features/scaling/interop/types'
+} from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import type { InteropSelection } from '../../utils/types'
 import { getTopTokensPairsColumns, type TokensPairRow } from './columns'

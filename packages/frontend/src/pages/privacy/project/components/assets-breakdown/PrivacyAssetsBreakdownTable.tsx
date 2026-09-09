@@ -22,8 +22,10 @@ import { PrivacyDepositsMetric } from './components/PrivacyDepositsMetric'
 
 export function PrivacyAssetsBreakdownTable({
   assets,
+  showTvl,
 }: {
   assets: PrivacyAsset[]
+  showTvl: boolean
 }) {
   const showBucketsColumn = assets.some((asset) => asset.bucketCount > 1)
   const totals = useMemo(() => getTotals(assets), [assets])
@@ -36,7 +38,7 @@ export function PrivacyAssetsBreakdownTable({
     getExpandedRowModel: getExpandedRowModel(),
     getRowCanExpand: (row) => row.original.bucketCount > 1,
     state: {
-      columnVisibility: { buckets: showBucketsColumn },
+      columnVisibility: { buckets: showBucketsColumn, valueLocked: showTvl },
     },
     initialState: {
       sorting: [],
@@ -91,11 +93,16 @@ export function PrivacyAssetsBreakdownTable({
                   key={`${row.id}-${bucket.id}`}
                   bucket={bucket}
                   showBucketsColumn={showBucketsColumn}
+                  showTvl={showTvl}
                 />
               ))}
           </Fragment>
         ))}
-        <TotalsRow totals={totals} showBucketsColumn={showBucketsColumn} />
+        <TotalsRow
+          totals={totals}
+          showBucketsColumn={showBucketsColumn}
+          showTvl={showTvl}
+        />
       </TableBody>
     </Table>
   )
@@ -104,9 +111,11 @@ export function PrivacyAssetsBreakdownTable({
 function BucketRow({
   bucket,
   showBucketsColumn,
+  showTvl,
 }: {
   bucket: PrivacyAsset['buckets'][number]
   showBucketsColumn: boolean
+  showTvl: boolean
 }) {
   return (
     <TableRow highlightId={undefined} className="bg-surface-secondary/30">
@@ -134,11 +143,13 @@ function BucketRow({
           depositedValueUsd={bucket.depositedValueUsd.total}
         />
       </TableCell>
-      <TableCell align="right" className="font-medium">
-        {bucket.totalValueUsd === null
-          ? '—'
-          : formatCurrency(bucket.totalValueUsd, 'usd')}
-      </TableCell>
+      {showTvl && (
+        <TableCell align="right" className="font-medium">
+          {bucket.totalValueUsd === null
+            ? '—'
+            : formatCurrency(bucket.totalValueUsd, 'usd')}
+        </TableCell>
+      )}
     </TableRow>
   )
 }
@@ -146,9 +157,11 @@ function BucketRow({
 function TotalsRow({
   totals,
   showBucketsColumn,
+  showTvl,
 }: {
   totals: ReturnType<typeof getTotals>
   showBucketsColumn: boolean
+  showTvl: boolean
 }) {
   return (
     <TableRow highlightId={undefined}>
@@ -176,11 +189,16 @@ function TotalsRow({
           depositedValueUsd={totals.depositedValueUsd.total}
         />
       </TableCell>
-      <TableCell align="right" className="border-divider border-t-2 font-bold">
-        {totals.totalValueUsd === null
-          ? '—'
-          : formatCurrency(totals.totalValueUsd, 'usd')}
-      </TableCell>
+      {showTvl && (
+        <TableCell
+          align="right"
+          className="border-divider border-t-2 font-bold"
+        >
+          {totals.totalValueUsd === null
+            ? '—'
+            : formatCurrency(totals.totalValueUsd, 'usd')}
+        </TableCell>
+      )}
     </TableRow>
   )
 }
@@ -191,9 +209,10 @@ function formatBucketLabel(label: string) {
 
 function getTotals(assets: PrivacyAsset[]) {
   return {
-    totalValueUsd: assets.reduce(
-      (sum, asset) => sum + (asset.totalValueUsd ?? 0),
-      0,
+    totalValueUsd: assets.reduce<number | null>(
+      (sum, asset) =>
+        asset.totalValueUsd === null ? sum : (sum ?? 0) + asset.totalValueUsd,
+      null,
     ),
     deposits: {
       total: assets.reduce((sum, asset) => sum + asset.deposits.total, 0),

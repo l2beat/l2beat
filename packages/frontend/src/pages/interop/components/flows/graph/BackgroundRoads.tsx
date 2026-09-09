@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
+import { useId, useMemo } from 'react'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { BubbleHolesClip } from './BubbleHolesClip'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import {
   BIDIRECTIONAL_OFFSET,
@@ -19,6 +20,7 @@ interface Props {
  */
 export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
   const { highlightedChains } = useInteropFlows()
+  const clipId = `roads-clip-${useId().replace(/\W/g, '')}`
 
   const { activePaths, inactivePaths } = useMemo(() => {
     const active: string[] = []
@@ -72,7 +74,8 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
   const activeStrokeWidth = highlightedChains.length > 0 ? 1.5 : 0.5
 
   return (
-    <g pointerEvents="none" aria-hidden="true">
+    <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
+      <BubbleHolesClip id={clipId} chainIds={chainIds} layout={layout} />
       {inactivePaths && (
         <path
           d={inactivePaths}

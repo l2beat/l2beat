@@ -4,7 +4,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('mode')
 
@@ -15,10 +15,13 @@ export const mode: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 18586931 })],
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Mode Network',
+    warning:
+      'The fault proof system is deployed but is not functional. The permissioned dispute game commits to a placeholder absolute prestate (0xdead…) set by OP Stack Upgrade 19, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
     shortName: 'Mode',
     slug: 'mode',
     description:

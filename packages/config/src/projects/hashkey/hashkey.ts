@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('hashkey')
 
@@ -33,7 +33,7 @@ export const hashkey = opStackL2({
   },
   addedAt: UnixTime(1736518370), // 2025-01-10T17:09:00Z
   discovery,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
@@ -64,20 +64,14 @@ export const hashkey = opStackL2({
         EthereumAddress('0xFa35501cab42175918093F40C317642919F45165'),
       ],
     },
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 24582182,
-      inbox: EthereumAddress('0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5'),
-      sequencers: [
-        EthereumAddress('0x5e70713222FaF60c9e9fB69240D06ae6D688563A'),
-      ],
-    },
+    getOpStackDaTracking(discovery, { sinceBlock: 24582182 }),
   ],
   additionalPurposes: ['Exchange'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'HashKey Chain',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'hashkey',
     description:
       "HashKey Chain is a regulatory-compliant, institutional-grade OP stack Layer 2 solution bridging traditional finance and Web3. It is powered by Hong Kong's premier virtual asset ecosystem.",

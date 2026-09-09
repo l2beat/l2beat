@@ -4,7 +4,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type {
   ProtocolDisplayable,
   ProtocolEntry,
-} from '~/server/features/scaling/interop/types'
+} from '~/server/features/layer2s/interop/types'
 import { NoResultsInfo } from '../summary/components/NoResultsInfo'
 import { BetweenChainsInfo } from './BetweenChainsInfo'
 import { AllProtocolsDialog } from './chain-selector/AllProtocolsDialog'

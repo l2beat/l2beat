@@ -99,10 +99,14 @@ export const lens: ScalingProject = zkStackL2({
     },
     bridge: DA_BRIDGES.VECTOR,
   },
-  availDa: {
-    sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
-    appIds: ['26'],
-  },
+  daTracking: [
+    {
+      type: 'avail',
+      daLayer: ProjectId('avail'),
+      sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
+      appIds: ['26'],
+    },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

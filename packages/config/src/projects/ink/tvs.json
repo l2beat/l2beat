@@ -75,6 +75,32 @@
     },
     {
       "mode": "auto",
+      "id": "ink-GHO-1",
+      "priceId": "gho",
+      "symbol": "GHO",
+      "name": "Gho Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/gho-token-logo.png?1720517092",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfc421aD3C883Bf9E7C4f42dE845C4e4405799e73",
+        "chain": "ink",
+        "decimals": 18,
+        "sinceTimestamp": 1755467441
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ink-kBTC",
       "priceId": "kraken-wrapped-btc",
       "symbol": "kBTC",
@@ -130,6 +156,57 @@
         "chain": "ink",
         "decimals": 6,
         "sinceTimestamp": 1735904404
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ink-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2D270e6886d130D724215A266106e6832161EAEd",
+        "chain": "ink",
+        "decimals": 6,
+        "sinceTimestamp": 1755799176
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ink-USDG",
+      "priceId": "global-dollar",
+      "symbol": "USDG",
+      "name": "Global Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe343167631d89B6Ffc58B88d6b7fB0228795491D",
+        "chain": "ink",
+        "decimals": 6,
+        "sinceTimestamp": 1744826220
       },
       "category": "stablecoin",
       "source": "external",

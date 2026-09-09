@@ -75,7 +75,7 @@ async function getPartners() {
 
       return {
         ...e.data,
-        link: e.data.link ?? `/scaling/projects/${e.data.slug}`,
+        link: e.data.link ?? `/layer2s/projects/${e.data.slug}`,
         logo: manifest.getImage(`/partners/${e.data.slug}/logo.png`),
         backgroundImage: manifest.getImage(
           `/partners/${e.data.slug}/background.png`,
@@ -93,7 +93,7 @@ async function getPartners() {
       return {
         ...e.data,
         logo: manifest.getImage(`/partners/${e.data.slug}/logo.png`),
-        link: e.data.link ?? `/scaling/projects/${e.data.slug}`,
+        link: e.data.link ?? `/layer2s/projects/${e.data.slug}`,
         backgroundImage: manifest.getImage(
           `/partners/${e.data.slug}/background.png`,
         ),

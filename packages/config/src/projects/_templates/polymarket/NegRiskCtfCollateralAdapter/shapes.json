@@ -1,0 +1,14 @@
+{
+  "NegRiskCtfCollateralAdapter-matic:0xAdA200001000ef00D07553cEE7006808F895c6F1": {
+    "hash": "0x38791e2835904a7d90fda2ec16c86939d6ad626ae1d8823e525ab678cff436b3",
+    "address": "matic:0xAdA200001000ef00D07553cEE7006808F895c6F1",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  },
+  "NegRiskCtfCollateralAdapter-matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab": {
+    "hash": "0x5bef72c678ec8248b705e336481e1df932ba5ed5106a0409a12bb7bc47374144",
+    "address": "matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  }
+}

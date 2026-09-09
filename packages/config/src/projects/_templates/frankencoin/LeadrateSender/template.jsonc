@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Permissionless helper that pushes the Savings module's current interest rate to bridged savings modules on other chains via CCIP; anyone can trigger a push by paying the CCIP fee."
+}

@@ -21,7 +21,7 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { formatTimestamp } from '~/utils/dates'
 
 type TokenChartDataPoint = {
@@ -78,7 +78,6 @@ export function TokenChart({
           fill="url(#fill)"
           fillOpacity={1}
           stroke="url(#stroke)"
-          strokeWidth={2}
           isAnimationActive={false}
         />
         <ChartCommonComponents

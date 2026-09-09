@@ -1,5 +1,6 @@
 import type { State } from '../State'
 import { hideItems, mapGraphItems } from '../utils/graphProjection'
+import { reconcileCompressedRows } from '../utils/rows'
 import {
   reconcileNodeHiddenFields,
   type StoredNodeLayout,
@@ -17,9 +18,15 @@ export function applyStoredLayout(
     const imported = saved.hiddenFields?.[node.id] ?? []
     const hiddenFields =
       mode === 'merge' ? [...node.hiddenFields, ...imported] : imported
+    const importedRows = saved.compressedRows?.[node.id] ?? []
+    const compressedRows =
+      mode === 'merge'
+        ? [...node.compressedRows, ...importedRows]
+        : importedRows
     return {
       ...node,
       hiddenFields: reconcileNodeHiddenFields(node.fields, hiddenFields),
+      compressedRows: reconcileCompressedRows(node.fields, compressedRows),
     }
   })
   const updatedNodes = nodesWithFields.map((node) => {

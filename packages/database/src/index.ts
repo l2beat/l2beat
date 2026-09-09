@@ -74,7 +74,10 @@ export type {
   InteropPluginSyncedRangeRecord,
 } from './repositories/InteropPluginSyncedRangeRepository'
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
-export type { InteropRecentPriceRequest } from './repositories/InteropRecentPricesRepository'
+export type {
+  InteropRecentPriceRequest,
+  InteropRecentPricesRecord,
+} from './repositories/InteropRecentPricesRepository'
 export {
   hasAnyInteropTransferFinancialsFilter,
   type InteropSuspiciousTransferRecord,
@@ -102,6 +105,8 @@ export type {
   PrivacyFlowEventRecord,
 } from './repositories/PrivacyFlowEventRepository'
 export type { PrivacyPriceRecord } from './repositories/PrivacyPriceRepository'
+export type { PrivacyRelayerActivityRecord } from './repositories/PrivacyRelayerActivityRepository'
+export type { PrivacyRelayerSampleRecord } from './repositories/PrivacyRelayerSampleRepository'
 export type {
   RealTimeAnomalyRecord,
   RealTimeAnomalyStatus,
@@ -127,6 +132,7 @@ export type {
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   JsonValue,
+  MintingPluginRecord,
   TokenRelationLockedToken,
   TokenRelationPrimaryKey,
   TokenRelationRecord,
@@ -146,4 +152,5 @@ export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'
 export type { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
+export { mergeTransferTypeStats } from './repositories/utils/mergeTransferTypeStats'
 export type { CleanableRepoName } from './utils/deleteArchivedRecords'

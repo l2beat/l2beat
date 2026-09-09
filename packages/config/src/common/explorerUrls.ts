@@ -16,6 +16,7 @@
 
 export const EXPLORER_URLS: Record<string, string> = {
   ethereum: 'https://etherscan.io',
+  polygonpos: 'https://polygonscan.com',
   zksync2: 'https://explorer.zksync.io',
   arbitrum: 'https://arbiscan.io',
   nova: 'https://nova.arbiscan.io',

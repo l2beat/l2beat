@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsDeposit",
+  "category": "gov",
+  "description": "Parameters of the user deposit path: whether deposits and assignment are enabled, the minimum deposit, the pool size cap, the deposit fee, and how many validators one deposit may fund. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}

@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x15ad1356a473f09f107e0037b46a16a8b542c778
+Generated with discovered.json: 0xba1117cda824f26801315e7df423379f71fea5dd
+
+# Diff at Mon, 07 Sep 2026 21:36:03 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1787668968
+- current timestamp: 1788816897
+
+## Description
+
+Conduit Multisig 2: member added; threshold 4/10 → 4/11.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0x02f6dea1eb9662a788fa4f8f23830d11ac64c8b7
+
+# Diff at Tue, 25 Aug 2026 14:43:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bba6c9e66ca2dd99590b6f233fe8f6509dc767a0 block: 1785409703
+- current timestamp: 1787668968
+
+## Description
+
+Config-related: the shared wasmModuleRoot type map gained the ArbOS v61 label. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785409703 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x75727a3746cf348ff89d5b69bf0d32373eb2da48
 
 # Diff at Thu, 30 Jul 2026 11:09:28 GMT:
 

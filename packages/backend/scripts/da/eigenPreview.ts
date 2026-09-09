@@ -113,6 +113,8 @@ async function previewProjects(
 ): Promise<LayerPreviewResult> {
   const configurations: EigenDaProjectConfiguration[] = configs.map((c) => ({
     id: c.configurationId,
+    minHeight: c.sinceTimestamp,
+    maxHeight: c.untilTimestamp ?? null,
     properties: c,
   }))
   // Per-config window clamp, computed once and reused for record filtering

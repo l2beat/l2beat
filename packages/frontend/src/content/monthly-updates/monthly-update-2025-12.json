@@ -119,7 +119,7 @@
         },
         {
           "title": "Honeypot Stage 2 Listing and PRT Contract Simplification Work",
-          "content": "Cartesi’s bug bounty application, Honeypot, has completed its review and is now live on [L2BEAT](https://l2beat.com/scaling/projects/cartesi-prt-honeypot-v2) as a Stage-2 application. Anyone can test the security of Cartesi Rollups by hacking the application and draining the funds locked in the rollup contract.\n\nAlongside this milestone, work is ongoing to simplify Permissionless Refereed Tournament (PRT) contracts. One example is a [pull request](https://github.com/cartesi/dave/pull/230) that unifies leaf and non-leaf handling for more maintainable fraud-proof primitives."
+          "content": "Cartesi’s bug bounty application, Honeypot, has completed its review and is now live on [L2BEAT](https://l2beat.com/layer2s/projects/cartesi-prt-honeypot-v2) as a Stage-2 application. Anyone can test the security of Cartesi Rollups by hacking the application and draining the funds locked in the rollup contract.\n\nAlongside this milestone, work is ongoing to simplify Permissionless Refereed Tournament (PRT) contracts. One example is a [pull request](https://github.com/cartesi/dave/pull/230) that unifies leaf and non-leaf handling for more maintainable fraud-proof primitives."
         },
         {
           "title": "Visualization Tool for the Fraud Proof System In Progress",

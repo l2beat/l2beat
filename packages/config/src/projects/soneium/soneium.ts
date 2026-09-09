@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('soneium')
 const genesisTimestamp = UnixTime(1733498411)
@@ -18,10 +18,13 @@ export const soneium = opStackL2({
   },
   addedAt: UnixTime(1736812800), // 14.01.2025
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 21314185 })],
   genesisTimestamp,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Soneium',
+    warning:
+      'The fault proof system is deployed but is not functional. The permissioned dispute game commits to a placeholder absolute prestate (0xdead…) set by OP Stack Upgrade 19, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
     aliases: ['Sony'],
     slug: 'soneium',
     stateValidationImage: 'opfp',

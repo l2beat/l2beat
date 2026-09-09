@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "description": "Timelock with enumerable roles: proposers queue batches with a delay of at least {{ minDelayFormatted }} and executors run them once it elapses. Role grants are not delayed, so an admin can install new proposers, executors or cancellers instantly.",
+  "fields": {
+    "minDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function minDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "roleHolders": {
+      "handler": {
+        "type": "array",
+        "method": "function roleHolders(uint256 role) view returns (address[])",
+        "indices": [0, 1, 2, 3]
+      },
+      "severity": "HIGH",
+      "description": "Holders of each role: 0 admin, 1 proposer, 2 executor, 3 canceller."
+    },
+    "roleHolderCount": {
+      "handler": {
+        "type": "array",
+        "method": "function roleHolderCount(uint256 role) view returns (uint256)",
+        "indices": [0, 1, 2, 3]
+      }
+    }
+  }
+}

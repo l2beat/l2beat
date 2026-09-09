@@ -4,7 +4,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('zora')
 
@@ -15,11 +15,14 @@ export const zora: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 17473957 })],
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Zora',
+    warning:
+      'The fault proof system is deployed but is not functional. The permissioned dispute game commits to a placeholder absolute prestate (0xdead…) set by OP Stack Upgrade 19, so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
     slug: 'zora',
     description:
       'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',

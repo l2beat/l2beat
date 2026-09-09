@@ -1,0 +1,814 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketStorage",
+  "category": "core",
+  "description": "Eternal-storage registry and the root of the protocol. It holds every protocol variable in typed key-value maps and is the only contract with persistent state; the logic contracts are stateless and read and write through it. Each logic contract is registered under the hash of its name, so repointing a name in a single write moves every caller to a new implementation on its next call. Write access is limited to addresses flagged as registered contracts, which means the registry itself imposes no delay: any delay comes from the contract performing the write. Registered names are not enumerable on-chain, so discovery resolves each one by calling the address lookup with its name hash.",
+  "fields": {
+    "getGuardian": {
+      "description": "Bootstrap account, stored in a dedicated slot rather than the key-value map. It is not a registered contract and cannot write to the map.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can hand the bootstrap role to another address through a two-step transfer, and still holds the ungated powers listed on the penalty-cap and one-shot upgrade contracts."
+        }
+      ]
+    },
+    "upgradeDelaySeconds": {
+      "handler": {
+        "type": "call",
+        "address": "{{ rocketDAOProtocolSettingsSecurity }}",
+        "method": "function getUpgradeDelay() view returns (uint256)",
+        "args": []
+      },
+      "description": "Waiting period, in seconds, between an approved upgrade and the moment it can be applied."
+    },
+    "upgradeDelay": {
+      "copy": "upgradeDelaySeconds",
+      "edit": ["format", "FormatSeconds"],
+      "description": "Waiting period between an approved upgrade and the moment it can be applied."
+    },
+    "addressQueueStorage": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "addressQueueStorage")
+          "0x2addccd64dd43c4ef1213c10626c6170f7f9bb5f4a96dfbbabddcbed2b170fc4"
+        ]
+      }
+    },
+    "addressSetStorage": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "addressSetStorage")
+          "0x8b4d8aed962734b7d06d04f965f3793ad1bbf0a61133d3ad89386824b7a54b7b"
+        ]
+      }
+    },
+    "beaconStateVerifier": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "beaconStateVerifier")
+          "0x5a6367e6222199e9e1cbd0452d13a79590451226ef0963b81b55f3b08a73b949"
+        ]
+      }
+    },
+    "casperDeposit": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "casperDeposit")
+          "0x936cd39d14b5d41f3fc90b99b33b3a53060a070e88596adc5ad3abfdfac788f2"
+        ]
+      }
+    },
+    "linkedListStorage": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "linkedListStorage")
+          "0x4161f285b5ecde00ac6efedd44eb63318b08f717e48e69fe4ddf2127aa4fe66c"
+        ]
+      }
+    },
+    "rocketAuctionManager": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketAuctionManager")
+          "0x3529261887590817b9b931a9692767b03da89a12f7760b608b926f262520d949"
+        ]
+      }
+    },
+    "rocketClaimDAO": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketClaimDAO")
+          "0x9f962f7366a154518619713c3762e0c7ff40312cf36c6139b71f6d1980c5fcd6"
+        ]
+      }
+    },
+    "rocketDAONodeTrusted": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      }
+    },
+    "rocketDAONodeTrustedActions": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedActions")
+          "0x0db039c744237e4ce5ef78a0f054ce1d90d4c567f771ca22f1b89eed7a7b901c"
+        ]
+      }
+    },
+    "rocketDAONodeTrustedProposals": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedProposals")
+          "0x6fa8f44e1dca6b1918fe0f362d40c767b51deb24cecbbbbc5998a32c4bbd528f"
+        ]
+      }
+    },
+    "rocketDAONodeTrustedSettingsMembers": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedSettingsMembers")
+          "0x35892cd5ef87e2f4b3c234f833b932091704e2ab89e2cb30a61907e30582efbe"
+        ]
+      }
+    },
+    "rocketDAONodeTrustedSettingsMinipool": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedSettingsMinipool")
+          "0x80020d929213e614757468e02d4b9a93a3e3e1a846a0bfcda2b0a4c6670649af"
+        ]
+      }
+    },
+    "rocketDAONodeTrustedSettingsProposals": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedSettingsProposals")
+          "0x9340beae3035f31d6d713f0446316355f13d7d9c8da2429d3e40129ca12b2736"
+        ]
+      }
+    },
+    "rocketDAONodeTrustedSettingsRewards": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedSettingsRewards")
+          "0x7eae136e4c9e33f2116a33c30141d00a502e78bc9d2f11c0bc1d1921ba93ce1a"
+        ]
+      }
+    },
+    "rocketDAONodeTrustedUpgrade": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedUpgrade")
+          "0xc4d8121668414b370f17b1b2491632caaa0782c14a891769bf34bd9718ba7193"
+        ]
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{ upgradeDelaySeconds }}",
+          "description": "can repoint any upgradeable name in this registry to a new address, which replaces the code every other contract calls. The change is scheduled by a passed oracle-set proposal, waits {{ upgradeDelay }}, and can be cancelled by the security council in that window. A fixed list of names is refused by the code: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract."
+        }
+      ]
+    },
+    "rocketDAOProposal": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProposal")
+          "0xe573065eee7d8e11eae3bce165aa0a54c8ee616fe7724710384024d387a0a63f"
+        ]
+      }
+    },
+    "rocketDAOProtocol": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocol")
+          "0xdd8392ea82afe5d437031f1c54f58ffdabbe6bd40476c61bf349c74639bc99bb"
+        ]
+      }
+    },
+    "rocketDAOProtocolActions": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolActions")
+          "0xd6651be6e5a0fb6fef5963f5d7d30f8e8be70d28ce478e036590ae4fbd8f7ed6"
+        ]
+      }
+    },
+    "rocketDAOProtocolProposal": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolProposal")
+          "0x355805c7e5994fe7e34a6e0b6ec05ece109683be593325479733ffa1350dafe8"
+        ]
+      }
+    },
+    "rocketDAOProtocolProposals": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolProposals")
+          "0xef2e22821a4475e079169ab11816e834c99a8c2cc6b2ad6d625d969e37e8cc7e"
+        ]
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can change any protocol setting kept here and can split the token issuance between claimant groups. It cannot repoint a registered name, so it cannot change which code runs."
+        }
+      ]
+    },
+    "rocketDAOProtocolSettingsAuction": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsAuction")
+          "0x9fa541d9c31273da008c6ca42a7318602de8149204c1f2c7aeadd4b431cae1ed"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsDeposit": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsDeposit")
+          "0x876d8a498b5341a6b5897a8239bfb0347e2b8d81fe9401d355c1e4b0ecebedaa"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsInflation": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsInflation")
+          "0x36b7eef85823b64ca08056c771cf2b8dd4f9f4491b3adfa282c1d3dd7b847af8"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsMegapool": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsMegapool")
+          "0x050542cbc919928ae1e180204ac202686dff54c5e7cec1d4c169340aca42e679"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsMinipool": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsMinipool")
+          "0xcabd9a4f404c4ffb362a3c40647a1a12f3bdaa2ad3bbcdb92ea716c2ea3ff22b"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsNetwork": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsNetwork")
+          "0x282fd49dacaf2128d6f069f81013ec59ae7081a236fbad29f69dd2383662ce5c"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsNode": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsNode")
+          "0x8ca4d6d0606ce014df1d1195bf14ab56b1115c8ab25bf8c7d3ea96995ecd3da3"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsProposals": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsProposals")
+          "0x5aa44b41e40cd45c081364aad7a61c1f32e659ec04db2ab21b4b81488165d219"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsRewards": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsRewards")
+          "0x3ad4f859a8131d0f6f1460405f2f1ae75831e5545f71f91a5125524636e35e53"
+        ]
+      }
+    },
+    "rocketDAOProtocolSettingsSecurity": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsSecurity")
+          "0x87336d3db0f2d2ad242d7fb1fed28c752c24fa617f404ed98ee246f9b27671b3"
+        ]
+      }
+    },
+    "rocketDAOProtocolVerifier": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolVerifier")
+          "0x291212f76742cbb717c62de79220fa5b91be71967707e5d114883b7b306c0cd5"
+        ]
+      }
+    },
+    "rocketDAOSecurity": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOSecurity")
+          "0x72244aef95b32bf9d0fd65a6e3212550a59abd181a93cfc66753a7197c36df07"
+        ]
+      }
+    },
+    "rocketDAOSecurityActions": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOSecurityActions")
+          "0xc1ee9d243c0090c328600cc77e262b1a0a6877fdc610d5918c702b919f6ffd00"
+        ]
+      }
+    },
+    "rocketDAOSecurityProposals": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOSecurityProposals")
+          "0xd615a96d4712b095cb2b361bf3b92d16e28023d809fbff89fc4947bc7a83bd9c"
+        ]
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can change the protocol settings kept here whose allow flag is set, a list that token-holder governance controls and that discovery reads from the chain. A change takes effect as soon as the council reaches quorum."
+        }
+      ]
+    },
+    "rocketDAOSecurityUpgrade": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOSecurityUpgrade")
+          "0x43656778aa233312cea1568285c59e8a8d1a86a2bde8cce9acd630c1b0a6eba6"
+        ]
+      }
+    },
+    "rocketDepositPool": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDepositPool")
+          "0x65dd923ddfc8d8ae6088f80077201d2403cbd565f0ba25e09841e2799ec90bb2"
+        ]
+      }
+    },
+    "rocketHotfixNodeFee": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketHotfixNodeFee")
+          "0x37fee01a1cee9858536c5f80a93f32bab84f0bb3ad4b88345b1f32150408e406"
+        ]
+      }
+    },
+    "rocketMegapoolDelegate": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMegapoolDelegate")
+          "0x545ae0a88400bfdb684d4c4645ecafa0a1d9b7d552c288cde0014b9570fb26a3"
+        ]
+      }
+    },
+    "rocketMegapoolFactory": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMegapoolFactory")
+          "0x0daa0d715a7b4f4224221c135ef0a61050b0d8b23f030d7c9bb8128781b94eb0"
+        ]
+      }
+    },
+    "rocketMegapoolManager": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMegapoolManager")
+          "0x2a2b4a8dd1ebf36039ccacb8955595756efac973c96d20c49559e03f5c7154ae"
+        ]
+      }
+    },
+    "rocketMegapoolPenalties": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMegapoolPenalties")
+          "0xe253286a5d5839aae062c9fb55828abb611205499f0152eedaeaa85bfcdee758"
+        ]
+      }
+    },
+    "rocketMegapoolProxy": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMegapoolProxy")
+          "0x7bf5049133be050bebadf1b72f025b975d6fb4a18d15fe2c9611753edeb25292"
+        ]
+      }
+    },
+    "rocketMerkleDistributorMainnet": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMerkleDistributorMainnet")
+          "0x759d15219b5adbaf4ec95ee41b49b3f96fcff9be0258e4a1cd69074965f237d1"
+        ]
+      }
+    },
+    "rocketMinipoolBase": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolBase")
+          "0x9afc4bad3cdfd058e9199bd5a6b3ad0bb9e3aa924fba17c620c6a9800c45321d"
+        ]
+      }
+    },
+    "rocketMinipoolBondReducer": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolBondReducer")
+          "0xc582fcd768126c28d6611f75b950535210f1d5f90fcf7f66f61e0a297ae2c8a0"
+        ]
+      }
+    },
+    "rocketMinipoolDelegate": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolDelegate")
+          "0x030d229c9fdc22a22d018c55733a2b9958801ffc58eec381e462f500eb6dd7d6"
+        ]
+      }
+    },
+    "rocketMinipoolFactory": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolFactory")
+          "0xfb0f50bff686bccae374f760b571e6fe3df00e74d626badb12a8c8f6ddeecf3d"
+        ]
+      }
+    },
+    "rocketMinipoolManager": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolManager")
+          "0xe9dfec9339b94a131861a58f1bb4ac4c1ce55c7ffe8550e0b6ebcfde87bb012f"
+        ]
+      }
+    },
+    "rocketMinipoolPenalty": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolPenalty")
+          "0x6884de1ce045c84c7c4e4b204c4ea7eaf63c114eb3ed61984c4fd2c0cef6acb6"
+        ]
+      }
+    },
+    "rocketMinipoolQueue": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolQueue")
+          "0x7f602045a039da8ac7709e3205cd54db6d7d9a1113dff494a3b44d1caba908ca"
+        ]
+      }
+    },
+    "rocketMinipoolStatus": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketMinipoolStatus")
+          "0x7c3fe01dd4b2b75ac9c1fde2dfd6a57b0439279d8b21867dc28fe0a6081eea09"
+        ]
+      }
+    },
+    "rocketNetworkBalances": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkBalances")
+          "0x7630e125f1c009e5fc974f6dae77c6d5b1802979b36e6d7145463c21782af01e"
+        ]
+      }
+    },
+    "rocketNetworkFees": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkFees")
+          "0x034cd2ba322813e095f0f5279fe7959f6a89e44e2f0f497703d997c9bc1ba0e0"
+        ]
+      }
+    },
+    "rocketNetworkPenalties": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkPenalties")
+          "0x347d4afae87d97b9278a63383047fd8514d4041bc1acab3bf23dc4e54d3e7eb5"
+        ]
+      }
+    },
+    "rocketNetworkPrices": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkPrices")
+          "0xf0de2459ea3014c17544dae653d0a2712abaa43f062fbd0b6da8e03cf5a97356"
+        ]
+      }
+    },
+    "rocketNetworkRevenues": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkRevenues")
+          "0x8f9e2ad2dfaf148af699eed576646085970cad645107033c3eed729180249a5f"
+        ]
+      }
+    },
+    "rocketNetworkSnapshots": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkSnapshots")
+          "0xef27338bd03b62faa0eaa677490d4a98a821e044d70d76339d384aa33e96c86b"
+        ]
+      }
+    },
+    "rocketNetworkSnapshotsTime": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkSnapshotsTime")
+          "0x5860447bc519a299684af42c46eaf2f2660e7cbe465c46b36f702cdacfb41f9a"
+        ]
+      }
+    },
+    "rocketNetworkVoting": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNetworkVoting")
+          "0x0253ad77dfa7370430edf1ea3f22b8f4c30d11c3bf777cb98c244a3d324c768d"
+        ]
+      }
+    },
+    "rocketNodeDeposit": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNodeDeposit")
+          "0xc5f0e8e643416573963c05884a77dfc5eba3461eb8d39b60a0a58aedca955fa5"
+        ]
+      }
+    },
+    "rocketNodeDistributorDelegate": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNodeDistributorDelegate")
+          "0xfb3483c04a4c870b23f9315ce407aceff6ee8dd58eb34aa5becfb781351d3fb8"
+        ]
+      }
+    },
+    "rocketNodeDistributorFactory": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNodeDistributorFactory")
+          "0xea051094896ef3b09ab1b794ad5ea695a5ff3906f74a9328e2c16db69d0f3123"
+        ]
+      }
+    },
+    "rocketNodeManager": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNodeManager")
+          "0xaf00be55c9fb8f543c04e0aa0d70351b880c1bfafffd15b60065a4a50c85ec94"
+        ]
+      }
+    },
+    "rocketNodeStaking": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketNodeStaking")
+          "0x8fc06385de84508eaf7eb3d75b93167987c9629589fe0a868a2b4e0e90862dd8"
+        ]
+      }
+    },
+    "rocketRewardsPool": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketRewardsPool")
+          "0x46c2b81204bf2f9dad36168c4aa8891f039200535328e7da10bb73514970fae4"
+        ]
+      }
+    },
+    "rocketSmoothingPool": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketSmoothingPool")
+          "0x822231720aef9b264db1d9ca053137498f759c28b243f45c44db1d39d6bce46e"
+        ]
+      }
+    },
+    "rocketTokenRETH": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketTokenRETH")
+          "0xe3744443225bff7cc22028be036b80de58057d65a3fdca0a3df329f525e31ccc"
+        ]
+      }
+    },
+    "rocketTokenRPL": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketTokenRPL")
+          "0x1b80652f417157fe4774177f7d33c8b600483b9193e3f00d2ab1ace8fa6bdc9c"
+        ]
+      }
+    },
+    "rocketTokenRPLFixedSupply": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketTokenRPLFixedSupply")
+          "0x7f227f747264181847dafd3e9ad89929dc29a48ea4cae5c58bbd3e0a2aca891d"
+        ]
+      }
+    },
+    "rocketUpgradeOneDotFour": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketUpgradeOneDotFour")
+          "0x4c75c94032a93f2b8a2b8ddab69221fa02962499a1647e08e19fb14202ae7290"
+        ]
+      }
+    },
+    "rocketUpgradeOneDotFourDissolveHotfix": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketUpgradeOneDotFourDissolveHotfix")
+          "0xf2a03a0c7eede24482cb62b722d36b3f3d46fedefadb2b1a92cb3f52dde9fca8"
+        ]
+      }
+    },
+    "rocketUpgradeOneDotOne": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketUpgradeOneDotOne")
+          "0x4ea6c7ba148d1fb1d4d1d6c9480de774296c59d0d87ea7ef2afb29e4ce02b56f"
+        ]
+      }
+    },
+    "rocketUpgradeOneDotThree": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketUpgradeOneDotThree")
+          "0xffed7a652674c8f86fc571d91ebcaad3cdbeffcd4400763fe1abf5eeeb6c746a"
+        ]
+      }
+    },
+    "rocketUpgradeOneDotThreeDotOne": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketUpgradeOneDotThreeDotOne")
+          "0x67aec9c98b1fb7c1245444845f9e0d9e2e67743f7058945b601acc242a3ba441"
+        ]
+      }
+    },
+    "rocketUpgradeOneDotTwo": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketUpgradeOneDotTwo")
+          "0xd0cc35be13f9712ba6ab3e7eeb84144dd9e03f6caa7399c90a6c7401c5197ce3"
+        ]
+      }
+    },
+    "rocketVault": {
+      "handler": {
+        "type": "call",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketVault")
+          "0x41c30d91bfaf5fa8d610263b0554366f2159a2b6807bf2fdbeb8f2b21a62f17b"
+        ]
+      }
+    }
+  }
+}

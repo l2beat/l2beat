@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MintingHubV2",
+  "description": "Permissionless factory for collateralized ZCHF minting positions: anyone can open a position with any ERC20 collateral and a self-declared liquidation price for a 1,000 ZCHF fee, or clone an approved one for free. No price oracle is used; anyone can challenge an overpriced position in a collateral auction (2% challenger reward) and qualified FPS holders (2% of votes) can veto new positions during their initialization period. Positions prepay interest (leadrate plus a fixed risk premium) at minting for the term to expiration and are individually registered as minters (not listed here).",
+  "ignoreMethods": ["challenges"],
+  "fields": {
+    "constructorArgs": {
+      "description": "Deployment-time immutable dependencies: the Frankencoin token, leadrate contract, equity roller, and position factory.",
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "POSITION_FACTORY": {
+      "description": "Immutable factory used by this hub to deploy original collateralized Position contracts and ERC-1167 clones.",
+      "copy": "constructorArgs",
+      "edit": ["get", "_factory"]
+    },
+    "representativePosition": {
+      "description": "The earliest PositionOpened event for which position equals original. It is followed as a stable representative of an original position opened through this hub.",
+      "handler": {
+        "type": "event",
+        "select": "position",
+        "add": {
+          "event": "PositionOpened",
+          "where": ["=", "#position", "#original"]
+        }
+      },
+      "edit": ["get", 0]
+    },
+    "rate": {
+      "description": "The contract providing the leadrate, the base interest rate positions pay on minted ZCHF."
+    }
+  }
+}

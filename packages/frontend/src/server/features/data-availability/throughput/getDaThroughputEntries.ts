@@ -30,19 +30,20 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
         project,
         daBridges,
         latestData.data[project.id],
-        latestData.scalingOnlyData[project.id],
+        latestData.l2OnlyData[project.id],
       ),
     )
     .filter(notUndefined)
     .sort(
       (a, b) =>
-        (b.scalingOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0) -
-        (a.scalingOnlyData?.pastDayData?.avgThroughputPerSecond ?? 0),
+        (b.l2OnlyData?.pastDayData?.avgThroughputPerSecond ?? 0) -
+        (a.l2OnlyData?.pastDayData?.avgThroughputPerSecond ?? 0),
     )
   return entries
 }
 
 interface DaThroughputEntryData {
+  syncWarning: string | undefined
   /**
    * @unit B/s - bytes per second
    */
@@ -77,7 +78,7 @@ interface DaThroughputEntryData {
 
 export interface DaThroughputEntry extends CommonDaEntry {
   data: DaThroughputEntryData | undefined
-  scalingOnlyData: DaThroughputEntryData | undefined
+  l2OnlyData: DaThroughputEntryData | undefined
   finality: string | undefined
   isSynced: boolean
 }
@@ -86,14 +87,12 @@ function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses' | 'display'>,
   bridges: Project<'daBridge'>[],
   data: ThroughputTableData['data'][string] | undefined,
-  scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
+  l2OnlyData: ThroughputTableData['l2OnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
-  const syncWarning = data?.syncedUntil
-    ? getThroughputSyncWarning(UnixTime(data.syncedUntil), {
-        pastDaySynced: true,
-      })
-    : undefined
+  const entryData = withSyncWarning(data)
+  const l2OnlyEntryData = withSyncWarning(l2OnlyData)
+  const syncWarning = entryData?.syncWarning
   const href = `/data-availability/projects/${project.slug}/${bridge ? bridge.slug : 'no-bridge'}`
   return {
     ...getCommonDaEntry({ project, href, syncWarning }),
@@ -102,8 +101,23 @@ function getDaThroughputEntry(
           fullUnit: true,
         })
       : undefined,
-    data,
-    scalingOnlyData,
+    data: entryData,
+    l2OnlyData: l2OnlyEntryData,
     isSynced: !syncWarning,
+  }
+}
+
+function withSyncWarning(
+  data: ThroughputTableData['data'][string] | undefined,
+): DaThroughputEntryData | undefined {
+  if (!data) return undefined
+
+  return {
+    ...data,
+    syncWarning: data.syncedUntil
+      ? getThroughputSyncWarning(UnixTime(data.syncedUntil), {
+          pastDaySynced: true,
+        })
+      : undefined,
   }
 }

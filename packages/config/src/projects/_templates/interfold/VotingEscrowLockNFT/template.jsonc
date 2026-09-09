@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VotingEscrowLockNFT",
+  "category": "gov",
+  "description": "ERC-721 whose tokens represent individual veFOLD lock positions.",
+  "ignoreMethods": [
+    "getApproved",
+    "ownerOf",
+    "proxiableUUID",
+    "tokenByIndex",
+    "tokenURI"
+  ],
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose Lock admin role controls whitelist configuration and upgrades."
+    },
+    "escrow": {
+      "description": "VotingEscrow exclusively responsible for minting and burning lock positions."
+    },
+    "WHITELIST_ANY_ADDRESS": {
+      "description": "Sentinel used by the transfer whitelist."
+    }
+  }
+}

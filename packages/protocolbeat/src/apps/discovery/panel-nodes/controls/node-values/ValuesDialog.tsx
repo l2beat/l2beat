@@ -6,9 +6,13 @@ import { Input } from '../../../../../components/Input'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import { ControlButton } from '../ControlButton'
-import type { ExpandedField } from './buildFieldTree'
-import { buildFieldTree } from './buildFieldTree'
+import { buildFieldTree, type ExpandedField } from './buildFieldTree'
 import { FieldNode } from './FieldNode'
+import {
+  type FieldState,
+  setFieldState as nextVisibility,
+  type ValueVisibility,
+} from './fieldState'
 
 export const ValuesDialog = {
   Root: ValuesDialogRoot,
@@ -67,50 +71,42 @@ function ValuesDialogBody({ node }: { node: Node }) {
     [filteredFields],
   )
 
-  const [hiddenFields, setHiddenFields] = useState(node.hiddenFields)
+  // Bulk actions work on the whole node, not on whatever the search is
+  // narrowed to.
+  const topLevelGroupPaths = useMemo(
+    () =>
+      buildFieldTree(node.fields)
+        .filter((field) => field.type === 'complex')
+        .map((field) => field.fullKey),
+    [node.fields],
+  )
+
+  const [visibility, setVisibility] = useState<ValueVisibility>({
+    hiddenFields: node.hiddenFields,
+    compressedRows: node.compressedRows,
+  })
   useEffect(() => {
-    setHiddenFields(node.hiddenFields)
-  }, [node.hiddenFields])
+    setVisibility({
+      hiddenFields: node.hiddenFields,
+      compressedRows: node.compressedRows,
+    })
+  }, [node.hiddenFields, node.compressedRows])
 
   const modifyNode = useCallback(() => {
     const newNode = {
       ...node,
-      hiddenFields,
+      hiddenFields: [...visibility.hiddenFields],
+      compressedRows: [...visibility.compressedRows],
     }
 
     setNodes(nodes.map((n) => (n.id === node.id ? newNode : n)))
-  }, [node, hiddenFields, setNodes, nodes])
+  }, [node, visibility, setNodes, nodes])
 
-  // Helper function to get all simple field keys recursively
-  const getAllSimpleFieldKeys = useCallback(
-    (field: ExpandedField): string[] => {
-      if (field.type === 'simple') {
-        return [field.fullKey]
-      }
-
-      return field.value.flatMap((child) => getAllSimpleFieldKeys(child))
+  const setFieldState = useCallback(
+    (field: ExpandedField, state: FieldState, subsumedBy?: string) => {
+      setVisibility((prev) => nextVisibility(field, prev, state, subsumedBy))
     },
     [],
-  )
-
-  // Toggle function for fields
-  const toggleField = useCallback(
-    (field: ExpandedField) => {
-      const allKeys = getAllSimpleFieldKeys(field)
-      const allKeysHidden = allKeys.every((key) => hiddenFields.includes(key))
-
-      if (allKeysHidden) {
-        // Show all keys
-        setHiddenFields((prev) => prev.filter((key) => !allKeys.includes(key)))
-      } else {
-        // Hide all keys
-        setHiddenFields((prev) => [
-          ...prev,
-          ...allKeys.filter((key) => !prev.includes(key)),
-        ])
-      }
-    },
-    [hiddenFields, getAllSimpleFieldKeys],
   )
 
   return (
@@ -119,26 +115,47 @@ function ValuesDialogBody({ node }: { node: Node }) {
         Values visibility
       </Dialog.Title>
       <Dialog.Description className="mb-5 text-sm leading-normal">
-        Make changes to what values are visible in the node.
+        Each value can be shown on its own row, compressed with the rest of its
+        group into one row that still links to every value, or hidden.
       </Dialog.Description>
-      <h3 className="font-medium text-sm">Actions</h3>
+      <h3 className="font-medium text-sm">All values</h3>
       <div className="mb-4 flex gap-2">
-        <Button onClick={() => setHiddenFields([])}>All</Button>
         <Button
-          onClick={() => {
-            const allFieldNames = node.fields.map((f) => f.name)
-            setHiddenFields(allFieldNames)
-          }}
+          onClick={() =>
+            setVisibility({ hiddenFields: [], compressedRows: [] })
+          }
         >
-          None
+          Show
         </Button>
         <Button
-          onClick={() => {
-            const allFieldNames = node.fields.map((f) => f.name)
-            setHiddenFields(
-              allFieldNames.filter((f) => !hiddenFields.includes(f)),
-            )
-          }}
+          onClick={() =>
+            setVisibility({
+              hiddenFields: [],
+              compressedRows: topLevelGroupPaths,
+            })
+          }
+        >
+          Compress groups
+        </Button>
+        <Button
+          onClick={() =>
+            setVisibility({
+              hiddenFields: node.fields.map((f) => f.name),
+              compressedRows: [],
+            })
+          }
+        >
+          Hide
+        </Button>
+        <Button
+          onClick={() =>
+            setVisibility((prev) => ({
+              ...prev,
+              hiddenFields: node.fields
+                .map((f) => f.name)
+                .filter((name) => !prev.hiddenFields.includes(name)),
+            }))
+          }
         >
           Invert
         </Button>
@@ -160,8 +177,8 @@ function ValuesDialogBody({ node }: { node: Node }) {
             <FieldNode
               key={field.type === 'simple' ? field.fullKey : field.property}
               field={field}
-              hiddenFields={hiddenFields}
-              onToggle={toggleField}
+              visibility={visibility}
+              onSetState={setFieldState}
             />
           ))}
         </div>

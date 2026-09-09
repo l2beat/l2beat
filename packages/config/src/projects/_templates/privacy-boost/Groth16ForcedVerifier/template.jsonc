@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Groth16 verifier for PrivacyBoost forced withdrawal proofs, used by the permissionless exit path. Verification keys are stored in SSTORE2 data contracts, registered per supported input count.",
+  "ignoreRelatives": ["vkInfo"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register and replace the Groth16 verification keys used to validate forced withdrawal proofs."
+        }
+      ]
+    },
+    "supportedParams": {
+      "description": "Forced withdrawal input counts with a registered verification key."
+    },
+    "vkInfo": {
+      "handler": {
+        "type": "array",
+        "method": "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+        "indices": "{{ supportedParams }}",
+        "ignoreRelative": true
+      },
+      "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported input count."
+    }
+  }
+}

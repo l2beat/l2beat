@@ -2,7 +2,10 @@ import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import {
+  getOrbitStackDaTracking,
+  orbitStackL2,
+} from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('robinhood')
 
@@ -13,6 +16,7 @@ const genesisTimestamp = UnixTime(sequencerInbox.sinceTimestamp)
 export const robinhood: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1782864000), // 2026-07-01T00:00:00Z
   discovery,
+  daTracking: [getOrbitStackDaTracking(discovery, { sinceBlock: 24994238 })],
   additionalPurposes: ['RWA'],
   // validator whitelist is enabled on-chain (validatorWhitelistDisabled: false),
   // so the fraud proof system is permissioned -> classified as Other, not Rollup

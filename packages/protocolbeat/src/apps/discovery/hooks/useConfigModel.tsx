@@ -1,9 +1,9 @@
+import { formatJson } from '@l2beat/shared-pure'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { updateConfigFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
-import { formatJson } from '../../../utils/formatJson'
 import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from '../models/ConfigModel'
@@ -60,7 +60,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
 
   const setFieldSeverity = (
     fieldName: string,
-    severity: 'HIGH' | 'LOW' | undefined,
+    severity: 'HIGH' | 'MEDIUM' | 'LOW' | undefined,
   ) => {
     const newModel = configModel.setFieldSeverity(
       selectedAddress,

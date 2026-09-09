@@ -5,12 +5,10 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react'
-import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { useEventListener } from '~/hooks/useEventListener'
 import { useTracking } from '~/hooks/useTracking'
+import { useUrlStateSync } from '~/hooks/useUrlStateSync'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
@@ -71,55 +69,26 @@ export function InteropSelectedChainsProvider({
   )
 
   const { track } = useTracking()
-  const debouncedSelection = useDebouncedValue(selection, 500)
-  const skipNextUrlUpdate = useRef(false)
-
-  useEffect(() => {
-    if (skipNextUrlUpdate.current) {
-      skipNextUrlUpdate.current = false
-      return
-    }
-
-    const currentSelection = parseInteropSelectionFromSearchParams({
-      searchParams: new URLSearchParams(window.location.search),
-      interopChainsIds: allChainIds,
-    })
-    if (isSameSelection(currentSelection, debouncedSelection)) {
-      return
-    }
-
-    const nextUrl = buildInteropUrl(
-      window.location.pathname,
-      debouncedSelection,
-    )
-
-    const currentUrl = window.location.pathname + window.location.search
-    if (nextUrl === currentUrl) {
-      return
-    }
-
-    window.history.pushState({}, '', nextUrl)
-
-    const chains = [
-      ...new Set([...debouncedSelection.from, ...debouncedSelection.to]),
-    ]
-      .sort()
-      .join(',')
-    track('interopChainsSelected', {
-      chains,
-      page: window.location.pathname,
-    })
-  }, [debouncedSelection, allChainIds, track])
-
-  useEventListener('popstate', () => {
-    skipNextUrlUpdate.current = true
-
-    const parsedSelection = parseInteropSelectionFromSearchParams({
-      searchParams: new URLSearchParams(window.location.search),
-      interopChainsIds: allChainIds,
-    })
-
-    setSelection(getValidInteropSelection(parsedSelection, allChainIds))
+  useUrlStateSync({
+    state: selection,
+    debounceMs: 500,
+    parse: (searchParams) =>
+      parseInteropSelectionFromSearchParams({
+        searchParams,
+        interopChainsIds: allChainIds,
+      }),
+    build: buildInteropUrl,
+    onPopState: (parsed) =>
+      setSelection(getValidInteropSelection(parsed, allChainIds)),
+    onPushState: (_url, pushed) => {
+      const chains = [...new Set([...pushed.from, ...pushed.to])]
+        .sort()
+        .join(',')
+      track('interopChainsSelected', {
+        chains,
+        page: window.location.pathname,
+      })
+    },
   })
 
   const selectChain = useCallback(
@@ -202,15 +171,6 @@ export function InteropSelectedChainsProvider({
     >
       {children}
     </InteropSelectedChainsContext.Provider>
-  )
-}
-
-function isSameSelection(left: InteropSelection, right: InteropSelection) {
-  return (
-    left.from.length === right.from.length &&
-    left.to.length === right.to.length &&
-    left.from.every((value, index) => value === right.from[index]) &&
-    left.to.every((value, index) => value === right.to[index])
   )
 }
 

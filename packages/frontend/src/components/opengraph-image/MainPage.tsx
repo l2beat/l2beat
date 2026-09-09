@@ -1,5 +1,5 @@
 export interface MainPage {
-  type?: 'scaling' | 'data-availability' | 'interop' | 'privacy'
+  type?: 'layer2s' | 'data-availability' | 'interop' | 'privacy' | 'defi'
   /** Appended to the `type` caption after a divider, e.g. "SCALING | RISKS". */
   secondaryLabel?: string
   title: string
@@ -106,7 +106,9 @@ export function MainPageOpengraphImage({
               }}
             >
               {typeToIcon[type]}
-              {type.toUpperCase().split('-').join(' ')}
+              {type === 'layer2s'
+                ? 'LAYER 2S'
+                : type.toUpperCase().split('-').join(' ')}
               {secondaryLabel
                 ? [
                     <div
@@ -142,7 +144,7 @@ export function MainPageOpengraphImage({
 }
 
 const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
-  scaling: (
+  layer2s: (
     <svg width="39" height="40" viewBox="0 0 39 40" fill="none">
       <path
         d="M4.209 21.774h13.522c.16 0 .29.13.29.29v13.522c0 .16-.13.29-.29.29H4.208a.29.29 0 01-.29-.29V22.064c0-.16.13-.29.29-.29"
@@ -193,6 +195,24 @@ const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
       />
       <path
         d="m7.75 9.75 1.5 1.5L12.5 8"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
+  defi: (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="#DB8BF7"
+    >
+      <circle cx="10" cy="10" r="7.25" strokeWidth="1.7" />
+      <path d="M10 5.25v9.5" strokeWidth="1.7" strokeLinecap="round" />
+      <path
+        d="M12.25 7.25c-.5-.7-1.3-1-2.25-1-1.24 0-2.25.67-2.25 1.75S8.76 9.9 10 10s2.25.67 2.25 1.75S11.24 13.75 10 13.75c-.95 0-1.75-.3-2.25-1"
         strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -20,6 +20,7 @@ export async function generateProjectOgImages(
       'zkCatalogInfo',
       'interopConfig',
       'privacyInfo',
+      'defiInfo',
     ],
   })
 
@@ -54,7 +55,13 @@ export async function generateProjectOgImages(
 
 async function generateProjectOgImage(
   project: Project<never, 'interopConfig'>,
-  type: 'scaling' | 'zk-catalog' | 'data-availability' | 'interop' | 'privacy',
+  type:
+    | 'layer2s'
+    | 'zk-catalog'
+    | 'data-availability'
+    | 'interop'
+    | 'privacy'
+    | 'defi',
   size: { width: number; height: number },
   fonts: {
     robotoMedium: Buffer
@@ -72,7 +79,7 @@ async function generateProjectOgImage(
       }
       size={size}
     >
-      {`${type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}
+      {`${type === 'layer2s' ? 'LAYER 2S' : type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}
     </ProjectOpengraphImage>,
     {
       ...size,
@@ -104,17 +111,19 @@ export function getOpengraphProjectTypes(
     | 'zkCatalogInfo'
     | 'interopConfig'
     | 'privacyInfo'
+    | 'defiInfo'
   >,
 ) {
   const types: (
-    | 'scaling'
+    | 'layer2s'
     | 'zk-catalog'
     | 'data-availability'
     | 'interop'
     | 'privacy'
+    | 'defi'
   )[] = []
   if (project.scalingInfo) {
-    types.push('scaling')
+    types.push('layer2s')
   }
   if (project.zkCatalogInfo) {
     types.push('zk-catalog')
@@ -127,6 +136,9 @@ export function getOpengraphProjectTypes(
   }
   if (project.privacyInfo) {
     types.push('privacy')
+  }
+  if (project.defiInfo) {
+    types.push('defi')
   }
   return types
 }

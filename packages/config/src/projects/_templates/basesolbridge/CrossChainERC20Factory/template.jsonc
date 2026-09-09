@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Factory that permissionlessly deploys CrossChainERC20 token contracts (beacon proxies) representing Solana-native assets (SOL and SPL tokens) on Base. The deployed tokens are minted and burned by the Bridge."
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "V4FeePolicy",
+  "description": "Computes the protocol fee for Uniswap v4 pools. Hookless pools are priced from a piecewise-linear schedule of their LP fee (the fee buckets); hooked pools pay a fee only if their hook is classified - by the fee setter directly, or through self-reported flag rules - into a family with a configured fee. The fee setter configures the schedule and classifications; the owner can replace the fee setter.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can replace the fee setter of the V4FeePolicy and transfer its owner role."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "feeSetter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configures the protocol-fee schedule in the V4FeePolicy: the default fee, the fee buckets for hookless pools, hook family assignments, flag rules, and per-family or per-pair fees."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "feeBucket": {
+      "handler": {
+        "type": "array",
+        "method": "function feeBucket(uint256 index) view returns (uint24 lpFeeFloor, uint24 alphaPips, uint32 betaPips)",
+        "length": "{{ feeBucketsLength }}"
+      },
+      "description": "Piecewise-linear protocol-fee schedule for hookless pools, ascending by LP-fee floor: within a bucket the per-direction fee is alphaPips + betaPips * (lpFee - lpFeeFloor) / 1e6, in hundredths of a basis point."
+    },
+    "defaultFee": {
+      "description": "Protocol fee for pools that fall through every classification (0 means none; the sentinel value represents an explicitly disabled fee)."
+    },
+    "isHookedNativeMathFeeOn": {
+      "description": "Whether static-fee pools whose hook does not use custom accounting are also priced from the fee buckets like hookless pools."
+    }
+  }
+}

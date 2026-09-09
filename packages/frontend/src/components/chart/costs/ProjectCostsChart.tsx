@@ -7,7 +7,7 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import type { CostsUnit } from '~/server/features/scaling/costs/types'
+import type { CostsUnit } from '~/server/features/layer2s/costs/types'
 import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { CostsChart } from './CostsChart'

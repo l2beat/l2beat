@@ -23,7 +23,7 @@ export async function getDaThroughputSection(
       helpers.trpc.da.projectCharts.queryOptions({
         range: optionToRange('1y'),
         projectId: project.id,
-        includeScalingOnly: true,
+        includeL2Only: true,
       }),
     ),
     ps.getProjects({ select: ['colors'] }),

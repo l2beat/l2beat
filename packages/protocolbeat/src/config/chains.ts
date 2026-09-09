@@ -33,4 +33,5 @@ export const AVAILABLE_CHAINS = [
   { name: 'facet', chainId: 1027303, shortName: 'facet' },
   { name: 'ethereal', chainId: 5064014, shortName: 'ethereal' },
   { name: 'jovay', chainId: 5734951, shortName: 'jovay' },
+  { name: 'robinhood', chainId: 4663, shortName: 'robinhood' },
 ].toSorted((a, b) => a.chainId - b.chainId)

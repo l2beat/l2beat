@@ -357,7 +357,7 @@ export async function callWithOptionalMulticall(
   for (const call of calls) {
     try {
       const data = await rpc.call(call, blockNumber)
-      results.push({ success: data.length !== 0, data })
+      results.push({ success: true, data })
     } catch (error) {
       if (!isCallRevertedError(error)) {
         throw error

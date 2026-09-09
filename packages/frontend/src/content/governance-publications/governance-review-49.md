@@ -107,7 +107,7 @@ Alphagrowth [created a post](https://gov.uniswap.org/t/rfc-uniswap-growth-progra
 
 ### **Scaling V4 and Supporting Unichain**
 
-GFX Labs has [shared a post](https://gov.uniswap.org/t/scaling-v4-and-supporting-unichain/25484) suggesting that the Uniswap DAO fund the integration of Uniswap V4 into the Oku platform, support adding Unichain to Oku, and grant GFX Labs a blanket license exemption for future V4 deployments. They request $250K for building V4 infrastructure and $90K annually to cover Unichain operational costs. GFX Labs, which previously expanded Uniswap's footprint to 30+ chains, plans to deliver a complete V4 interface within two months and Unichain support within two weeks. They aim to simplify V4 liquidity management, support hook developers, improve LP experience, and deepen trader engagement, helping Uniswap maintain its lead as the dominant DEX in a rapidly evolving DeFi landscape.
+GFX Labs has [shared a post](https://gov.uniswap.org/t/layer2s-v4-and-supporting-unichain/25484) suggesting that the Uniswap DAO fund the integration of Uniswap V4 into the Oku platform, support adding Unichain to Oku, and grant GFX Labs a blanket license exemption for future V4 deployments. They request $250K for building V4 infrastructure and $90K annually to cover Unichain operational costs. GFX Labs, which previously expanded Uniswap's footprint to 30+ chains, plans to deliver a complete V4 interface within two months and Unichain support within two weeks. They aim to simplify V4 liquidity management, support hook developers, improve LP experience, and deepen trader engagement, helping Uniswap maintain its lead as the dominant DEX in a rapidly evolving DeFi landscape.
 
 
 ### **[RFC] Lens Chain Application for Canonical Uniswap V3 Deployment**

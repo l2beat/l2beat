@@ -146,7 +146,7 @@ function getDacEntry(
   const bridgeEntry: DaBridgeRiskEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,
     slug: project.slug,
-    href: `/scaling/projects/${project.slug}`,
+    href: `/layer2s/projects/${project.slug}`,
     statuses: {},
     tvs: tvs.latest,
     risks: project.customDa.risks,

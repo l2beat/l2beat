@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry of account authorization keys for the PrivacyBoost pool. Accounts register BabyJubJub approval public keys into Merkle trees with EIP-712 owner signatures (submitted directly or through allowed relays), and can rotate or revoke them. PrivacyBoost snapshots the tree roots and epoch proofs validate spend authorization against them.",
+  "ignoreMethods": [
+    "authTreeCount",
+    "authTreeRoot",
+    "authTreeRootHistory",
+    "authTreeRootHistoryCursor",
+    "getAuthKeys",
+    "nonces",
+    "ownerOf"
+  ],
+  "ignoreInWatchMode": [
+    "registryRoot",
+    "getAllAuthTreeRoots",
+    "currentAuthTreeNumber"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the operator address of the AuthRegistry."
+        }
+      ]
+    },
+    "operator": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the allowlist of relays that can submit key operations to the AuthRegistry on behalf of users."
+        }
+      ]
+    },
+    "allowedRelays": {
+      "handler": {
+        "type": "event",
+        "select": "relay",
+        "add": { "event": "RelayUpdated", "where": ["=", "#allowed", true] },
+        "remove": { "event": "RelayUpdated", "where": ["!=", "#allowed", true] }
+      },
+      "description": "Relays allowed to submit account key registrations, rotations and revocations signed by account owners.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit account key registrations, rotations and revocations with valid owner signatures."
+        }
+      ]
+    },
+    "authTreeDepth": {
+      "description": "Depth of the auth Merkle trees."
+    }
+  }
+}

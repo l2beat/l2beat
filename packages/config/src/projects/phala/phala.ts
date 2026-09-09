@@ -7,7 +7,7 @@ import { BADGES } from '../../common/badges'
 import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('phala')
 
@@ -20,9 +20,12 @@ const opSuccinctL2OutputOracle = EthereumAddress(
 export const phala: ScalingProject = opStackL2({
   addedAt: UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 21418009 })],
   genesisTimestamp: UnixTime.fromDate(new Date('2024-12-16T22:14:09Z')),
   display: {
     name: 'Phala',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'phala',
     description: `Phala is a cloud computing protocol which aims at offering developers a secure and efficient platform for deploying and managing AI-ready applications in a trusted environment (TEE).
       Phala rollup on Ethereum leverages the Op-Succinct stack, a combination of OP stack contracts and Zero-Knowledge Proofs (ZK) using the SP1 zkVM.`,
@@ -59,7 +62,7 @@ export const phala: ScalingProject = opStackL2({
       },
     ],
   },
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   // nonTemplateProofSystem: {
   //   type: 'Validity',
   //   zkCatalogIds: [ProjectId('sp1hypercube')],

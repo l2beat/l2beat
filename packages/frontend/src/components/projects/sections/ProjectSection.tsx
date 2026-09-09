@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
+import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../UnderReviewCallout'
 import type { ProjectSectionId } from './types'
@@ -8,6 +9,12 @@ import type { ProjectSectionId } from './types'
 export interface ExtendedProjectSectionProps {
   title: string
   headerAccessory?: ReactNode
+  /**
+   * Link to the compare page seeded with this project and the section's
+   * metric. Rendered next to the title on desktop and below the content on
+   * mobile, so every metric section gets the same entry point.
+   */
+  compareUrl?: string
   id: ProjectSectionId
   nested?: boolean
   sectionOrder: string | undefined
@@ -20,6 +27,20 @@ export interface ExtendedProjectSectionProps {
 
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
+  const content = (
+    <>
+      {props.children}
+      {props.compareUrl && (
+        <CompareProjectsLink
+          variant="section"
+          href={props.compareUrl}
+          className="mt-4 md:hidden"
+        >
+          Compare with other projects
+        </CompareProjectsLink>
+      )}
+    </>
+  )
   return (
     <HighlightablePrimaryCard
       id={props.id}
@@ -42,20 +63,31 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
           id={props.id}
           sectionOrder={props.sectionOrder}
           nested={props.nested}
-          headerAccessory={props.headerAccessory}
+          headerAccessory={
+            props.compareUrl ? (
+              <div className="flex items-center gap-2 max-md:hidden">
+                <CompareProjectsLink variant="section" href={props.compareUrl}>
+                  Compare
+                </CompareProjectsLink>
+                {props.headerAccessory}
+              </div>
+            ) : (
+              props.headerAccessory
+            )
+          }
           className="mb-4"
         />
         {props.isUnderReview ? (
           !props.hideChildrenIfUnderReview ? (
             <>
               <UnderReviewCallout className="mb-4" />
-              {props.children}
+              {content}
             </>
           ) : (
             <UnderReviewCallout />
           )
         ) : (
-          props.children
+          content
         )}
       </Component>
     </HighlightablePrimaryCard>

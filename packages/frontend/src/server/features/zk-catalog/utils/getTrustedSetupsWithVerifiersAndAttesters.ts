@@ -19,7 +19,7 @@ import {
   getProjectUrl,
   type ProjectWithPageMetadata,
 } from '~/utils/project/getProjectUrl'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
 import { getZkCatalogLogo } from '../getZkCatalogLogo'
 import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'

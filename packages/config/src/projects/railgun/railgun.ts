@@ -225,6 +225,13 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     tokens: privacyTokens,
+    relayerTracking: {
+      type: 'railgunWaku',
+      chainId: 1,
+      // Sampling observes the current network state, so there is no history
+      // to backfill before the first deployment of the sampler.
+      sinceTimestamp: UnixTime(1788134400), // 2026-08-31T00:00:00Z
+    },
     exitWindow: {
       value: formatSeconds(executionStartOffset),
       sentiment: 'warning',

@@ -267,7 +267,7 @@ export const lighterRobinhood: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://robinhoodchain.blockscout.com/address/0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4',
+            url: 'https://robinhoodchain.blockscout.com/address/0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa',
           },
         ],
       },

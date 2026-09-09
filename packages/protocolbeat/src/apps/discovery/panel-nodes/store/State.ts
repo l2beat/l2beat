@@ -52,6 +52,9 @@ export interface Node {
   readonly name: string
   readonly fields: Field[]
   readonly hiddenFields: string[]
+  // Field paths whose subtree is drawn as one row that fans out to every
+  // value below it. Hiding is about the graph, compressing is about layout.
+  readonly compressedRows: string[]
   readonly box: Box
   readonly color: number
   readonly colorSourceId?: string

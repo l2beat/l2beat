@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
 
@@ -32,6 +32,7 @@ export const bob: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19634330 })],
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],
   additionalPurposes: ['Bitcoin DApps'],
   isPartOfSuperchain: true,

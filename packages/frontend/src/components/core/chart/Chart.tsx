@@ -56,6 +56,10 @@ export function useChart() {
 const chartContainerClassNames = cn(
   "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent",
   'select-none outline-none [&>svg]:outline-none [&_svg_*]:outline-none',
+  // Series strokes (Area/Line curves). Fill-only areas keep strokeWidth={0}.
+  '[&_.recharts-area-curve]:[stroke-linecap:round] [&_.recharts-area-curve]:[stroke-linejoin:round]',
+  '[&_.recharts-line-curve]:[stroke-linecap:round] [&_.recharts-line-curve]:[stroke-linejoin:round]',
+  "[&_.recharts-area-curve:not([stroke-width='0'])]:stroke-[1.75px] [&_.recharts-line-curve]:stroke-[1.75px]",
   // Tooltip cursor line
   '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-2 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
   // Tooltip cursor bar
@@ -94,6 +98,7 @@ function ChartContainer<T extends { timestamp: number }>({
   size = 'regular',
   interactiveLegend,
   project,
+  noDataSourceMessage,
 }: {
   meta: ChartMeta
   children: React.ReactNode
@@ -109,6 +114,7 @@ function ChartContainer<T extends { timestamp: number }>({
   isLoading?: boolean
   project?: ChartProject
   size?: 'regular' | 'small'
+  noDataSourceMessage?: string
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
@@ -146,9 +152,11 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!hasData && !isLoading && <ChartNoDataState size={size} />}
+        {!hasData && !isLoading && !(noDataSourcesSelected && isClient) && (
+          <ChartNoDataState size={size} />
+        )}
         {noDataSourcesSelected && !isLoading && isClient && (
-          <ChartNoDataSourceState />
+          <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
         {isClient && size !== 'small' && (
           <Logo

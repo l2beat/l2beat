@@ -13,6 +13,18 @@ export type ProjectsChangeReport = Awaited<
   ReturnType<typeof getProjectsChangeReportWithFns>
 >
 
+export const EMPTY_PROJECTS_CHANGE_REPORT: ProjectsChangeReport = {
+  projects: {},
+  getChanges: () => ({
+    impactfulChange: false,
+    becameVerifiedContracts: {},
+  }),
+  hasImplementationChanged: () => false,
+  hasHighSeverityFieldChanged: () => false,
+  hasUltimateUpgraderChanged: () => false,
+  getBecameVerifiedContracts: () => ({}),
+}
+
 export interface ProjectChanges {
   impactfulChange: boolean
   becameVerifiedContracts: Record<string, EthereumAddress[]>

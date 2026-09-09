@@ -56,12 +56,6 @@ assert(
     intentManagerAdmin === intentManagerProxyAdminOwner,
   'The intent-manager admin setup changed: update detailedDescription.md',
 )
-// "Several satellite contracts (including the `ExternalCallExecutor`) have
-// unverified source code"
-assert(
-  discovery.getContract('ExternalCallExecutor').unverified === true,
-  'The ExternalCallExecutor is now verified: update detailedDescription.md',
-)
 
 export const debridgeDln: BaseProject = {
   id: ProjectId('debridge-dln'),

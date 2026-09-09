@@ -10,6 +10,7 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
   ConfigReader,
+  type ContractSource,
   type DiscoveryCache,
   type DiscoveryPaths,
   flattenStartingFrom,
@@ -19,7 +20,6 @@ import {
   type IProvider,
   SQLiteCache,
 } from '@l2beat/discovery'
-import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
 import {
   Bytes,

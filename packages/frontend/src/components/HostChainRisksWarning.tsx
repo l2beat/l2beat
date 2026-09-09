@@ -24,7 +24,7 @@ export function HostChainRisksWarning({
         name: hostChainName,
         icon: hostChainIcon,
       }}
-      href={`/scaling/projects/${hostChainSlug}`}
+      href={`/layer2s/projects/${hostChainSlug}`}
     />
   )
 }

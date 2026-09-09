@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoolManager",
+  "description": "Uniswap v4 core: a non-upgradeable singleton that holds every v4 pool as a storage entry keyed by its currency pair, LP fee, tick spacing, and hook address. Anyone can create a pool with any static LP fee up to 100%, or a dynamic fee controlled by the pool's hook. All interactions run inside a lock that settles only net token amounts at the end of each transaction (flash accounting). The owner's only powers are replacing the protocol fee controller and transferring the owner role; the controller can set protocol fees on pools, hard-capped in code at 0.1% per swap direction, and collect the accrued fees.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can replace the protocol fee controller that sets protocol fees (hard-capped at 0.1% per swap direction) and collects them, and can transfer the PoolManager owner role."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "protocolFeeController": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set protocol fees on any pool up to the hard-coded cap of 0.1% per swap direction, and collect accrued protocol fees to an arbitrary recipient."
+        }
+      ],
+      "severity": "HIGH"
+    }
+  }
+}

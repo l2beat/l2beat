@@ -8,7 +8,10 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import {
+  getOrbitStackDaTracking,
+  orbitStackL2,
+} from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('syndicate')
 
@@ -26,6 +29,7 @@ export const syndicate: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1773273600), // 2026-03-12T00:00:00Z
   archivedAt: UnixTime(1782813784), // Tue, 30 Jun 2026 10:03:04 GMT
   discovery,
+  daTracking: [getOrbitStackDaTracking(discovery, { sinceBlock: 23026187 })],
   additionalBadges: [BADGES.RaaS.Alchemy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   usesEthereumBlobs: true,

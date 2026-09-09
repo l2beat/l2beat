@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -46,7 +46,7 @@ export const b3: ScalingProject = opStackL3({
       {
         type: 'rpc',
         url: 'https://mainnet-rpc.b3.fun/http',
-        callsPerMinute: 800,
+        callsPerMinute: 600,
       },
       { type: 'blockscout', url: 'https://explorer.b3.fun/api/v2/' },
     ],
@@ -57,10 +57,14 @@ export const b3: ScalingProject = opStackL3({
     adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: UnixTime(1722378840),
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM=',
+    },
+  ],
   isNodeAvailable: false,
   milestones: [
     {

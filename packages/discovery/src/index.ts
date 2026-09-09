@@ -22,11 +22,15 @@ export {
   TemplateService,
 } from './discovery/analysis/TemplateService'
 export { colorize } from './discovery/colorize/colorize'
+export type { ColorContract } from './discovery/config/ColorConfig'
 export {
   ConfigHealthService,
   type HealthHint,
 } from './discovery/config/ConfigHealthService'
-export { ConfigReader } from './discovery/config/ConfigReader'
+export {
+  ConfigReader,
+  getReferencedProjects,
+} from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
 export { ConfigWriter } from './discovery/config/ConfigWriter'
@@ -40,6 +44,7 @@ export {
   BasePermissionEntries,
   Permission,
 } from './discovery/config/PermissionConfig'
+export { ShapeSchema } from './discovery/config/ShapeSchema'
 export {
   makeEntryStructureConfig,
   type StructureContractConfig as ContractConfig,
@@ -60,24 +65,44 @@ export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePe
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
 export {
+  addReferencedDiscoveries,
+  clusterEntries,
   DiscoveryRegistry,
+  findStaleReferences,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
-  getDependenciesToDiscoverForProject,
+  hashPermissionsConfigInOwnCluster,
+  loadDiscoveriesForModelling,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'
+export { attachPermissions } from './discovery/output/attachPermissions'
+export {
+  type ChainPoint,
+  type DiffHistoryEntry,
+  DiffHistoryParser,
+  type DiffHistorySection,
+  type DiffHistorySectionKind,
+} from './discovery/output/DiffHistoryParser'
 export { type Difference, diff } from './discovery/output/diff'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
   diffDiscovery,
+  entriesForDiffPair,
 } from './discovery/output/diffDiscovery'
+export {
+  countDiffChanges,
+  type DiffBlockSpan,
+  extractDiffBlockSpans,
+  isHighSeverityDiffBody,
+} from './discovery/output/diffHistoryMarkdown'
 export {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
 } from './discovery/output/diffToMarkdown'
 export { neuterErrors } from './discovery/output/errors'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
+export { remapDiscoverySourceNames } from './discovery/output/remapDiscoverySourceNames'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
 export { generateStructureHash } from './discovery/output/structureOutput'
 export {
@@ -93,6 +118,10 @@ export type {
   ResolvedPermissionPath,
 } from './discovery/output/types'
 export { AllProviders } from './discovery/provider/AllProviders'
+export type {
+  DebugTransactionCall,
+  DebugTransactionCallResponse,
+} from './discovery/provider/DebugTransactionTrace'
 export { type DiscoveryCache } from './discovery/provider/DiscoveryCache'
 export { InMemoryCache } from './discovery/provider/InMemoryCache'
 export type { IProvider } from './discovery/provider/IProvider'
@@ -101,7 +130,6 @@ export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
 export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig'
 export type { MulticallConfig } from './discovery/provider/multicall/types'
 export { NoCache } from './discovery/provider/NoCache'
-export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider'
 export { SQLiteCache } from './discovery/provider/SQLiteCache'
 export {
   type AllProviderStats,
@@ -109,11 +137,15 @@ export {
   ProviderStats,
 } from './discovery/provider/Stats'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
-export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints'
+export {
+  generateEntrypoints,
+  generateEntrypointsCommand,
+} from './discovery/shared-modules/generateEntrypoints'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { asStructured } from './discovery/type-casters/asStructured'
 export {
+  get$Admins,
   get$Implementations,
   toAddressArray,
 } from './discovery/utils/extractors'
@@ -129,6 +161,7 @@ export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export {
   buildSimilarityHashmap,
   combineImplementationHashes,
+  contractFlatteningHash,
   estimateSimilarity,
   flatteningHash,
   getHashToBeMatched,
@@ -141,6 +174,7 @@ export {
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export {
+  type ContractSource,
   type ExplorerConfig,
   getExplorerClient,
   type IEtherscanClient,

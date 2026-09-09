@@ -39,5 +39,6 @@
     "getRevokerOperator": {
       "description": "Optional operator allowed to perform revocation-related actions on behalf of the revoker."
     }
-  }
+  },
+  "ignoreRelatives": ["getRevoker"]
 }

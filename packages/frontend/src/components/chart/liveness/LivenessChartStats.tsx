@@ -4,9 +4,9 @@ import { Fragment } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { env } from '~/env'
-import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
-import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
-import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import { AnomalyIndicator } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
+import { DurationCell } from '~/pages/layer2s/liveness/components/table/DurationCell'
+import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { cn } from '~/utils/cn'
 
 export function LivenessChartStats({

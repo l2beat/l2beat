@@ -7,7 +7,10 @@ import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import type { Configuration } from '../../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  SavedConfiguration,
+} from '../../../../tools/uif/multi/types'
 import { EigenDaLayerIndexer } from './EigenDaLayerIndexer'
 
 const DA_LAYER = 'eigen-da'
@@ -205,16 +208,134 @@ describe(EigenDaLayerIndexer.name, () => {
       ])
     })
   })
+
+  describe(EigenDaLayerIndexer.prototype.trimData.name, () => {
+    it('deletes the hourly buckets of the trimmed ranges', async () => {
+      const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      const from = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+      await indexer.trimData([
+        { id: 'config-1', range: [from, from + 3 * UnixTime.HOUR - 1] },
+        { id: 'config-2', range: [from + 600, from + 5 * UnixTime.HOUR] },
+      ])
+
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenCalledTimes(2)
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenNthCalledWith(
+        1,
+        'config-1',
+        from,
+        from + 3 * UnixTime.HOUR - 1,
+      )
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenNthCalledWith(
+        2,
+        'config-2',
+        from,
+        from + 5 * UnixTime.HOUR - 1,
+      )
+    })
+  })
+
+  describe('range edits', () => {
+    // both timestamps are full hours
+    const SINCE = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+    const CURRENT = SINCE + 48 * UnixTime.HOUR
+
+    function saved(
+      configuration: Configuration<TimestampDaIndexedConfig>,
+      minHeight: number,
+      maxHeight: number | null,
+      currentHeight: number | null,
+    ): SavedConfiguration<string> {
+      return {
+        id: configuration.id,
+        properties: JSON.stringify(configuration.properties),
+        minHeight,
+        maxHeight,
+        currentHeight,
+      }
+    }
+
+    it('trims the tail when untilTimestamp is lowered', async () => {
+      const configuration = {
+        ...createConfiguration(DA_LAYER, DA_LAYER),
+        minHeight: SINCE,
+        maxHeight: SINCE + 24 * UnixTime.HOUR,
+      }
+      const { indexer, repository } = mockIndexer({
+        configurations: [configuration],
+        savedConfigurations: [saved(configuration, SINCE, null, CURRENT)],
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        configuration.id,
+        SINCE + 24 * UnixTime.HOUR,
+        CURRENT - 1,
+      )
+    })
+
+    it('trims the head when sinceTimestamp is raised', async () => {
+      const configuration = {
+        ...createConfiguration(DA_LAYER, DA_LAYER),
+        minHeight: SINCE + 24 * UnixTime.HOUR,
+        maxHeight: null,
+      }
+      const { indexer, repository } = mockIndexer({
+        configurations: [configuration],
+        savedConfigurations: [saved(configuration, SINCE, null, CURRENT)],
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        configuration.id,
+        SINCE,
+        SINCE + 24 * UnixTime.HOUR - 1,
+      )
+    })
+
+    it('still wipes when sinceTimestamp is lowered', async () => {
+      const configuration = {
+        ...createConfiguration(DA_LAYER, DA_LAYER),
+        minHeight: SINCE - 24 * UnixTime.HOUR,
+        maxHeight: null,
+      }
+      const { indexer, repository } = mockIndexer({
+        configurations: [configuration],
+        savedConfigurations: [saved(configuration, SINCE, null, CURRENT)],
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        configuration.id,
+      ])
+    })
+  })
 })
 
 function mockIndexer($: {
   configurations: Configuration<TimestampDaIndexedConfig>[]
+  savedConfigurations?: SavedConfiguration<string>[]
   daLayer: string
   throughput?: number
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo(10),
+    deleteByConfigInTimeRange: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
   })
 
@@ -229,7 +350,7 @@ function mockIndexer($: {
   })
 
   const indexerService = mockObject<IndexerService>({
-    getSavedConfigurations: mockFn().resolvesTo([]),
+    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
     insertConfigurations: mockFn().resolvesTo(undefined),
     upsertConfigurations: mockFn().resolvesTo(undefined),
     deleteConfigurations: mockFn().resolvesTo(undefined),

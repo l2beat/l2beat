@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BondedCheckpoints",
+  "category": "core",
+  "description": "Voting-power checkpoint store updated exclusively by the BondingRegistry so FOLD bonded to ciphernode operators remains visible to governance snapshots.",
+  "ignoreInWatchMode": ["clock"],
+  "fields": {
+    "registry": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "write bonded-FOLD voting-power checkpoints."
+        }
+      ]
+    }
+  }
+}

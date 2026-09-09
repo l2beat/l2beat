@@ -18,7 +18,7 @@ import {
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { InfoIcon } from '~/icons/Info'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { cn } from '~/utils/cn'
 import { MIN_SELECTED_PROTOCOLS } from './consts'
 import { useInteropFlows } from './utils/InteropFlowsContext'

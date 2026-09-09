@@ -36,6 +36,7 @@ import { PROGRAM_HASHES } from '../common/programHashes'
 import { getAltDaStage } from '../common/stages/getAltDaStage'
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
@@ -166,18 +167,12 @@ interface OrbitStackConfigCommon {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
-  /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDa?: {
-    namespace: string
-    sinceBlock: number // Block number on Celestia Network
-  }
-  /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDa?: {
-    appIds: string[]
-    sinceBlock: number // Block number on Avail Network
-  }
-  /** Configure to enable custom DA tracking e.g. project that switched DA */
-  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  /**
+   * Explicit DA tracking history, oldest first. Closed entries are literals;
+   * the open (last) entry of a blob-posting chain is usually
+   * `getOrbitStackDaTracking(discovery, { sinceBlock })`. See docs/da-tracking.md.
+   */
+  daTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   celestiaProofSystemInactive?: boolean
   nonTemplateZkVerifiers?: ChainSpecificAddress[]
@@ -389,7 +384,8 @@ function orbitStackCommon(
   assert(daProviders.length > 0)
 
   const blockNumberOpcodeTimeSeconds =
-    templateVars.blockNumberOpcodeTimeSeconds ?? 12
+    templateVars.blockNumberOpcodeTimeSeconds ??
+    HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 
   const minimumAssertionPeriod =
     templateVars.discovery.getContractValue<number>(
@@ -521,7 +517,7 @@ function orbitStackCommon(
           adjustCount: { type: 'SubtractOne' },
         },
       ),
-      daTracking: getDaTracking(templateVars),
+      daTracking: templateVars.daTracking,
     },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
@@ -655,7 +651,9 @@ function orbitStackCommon(
             'baseStake',
           )
 
-          const blockTime = templateVars.blockNumberOpcodeTimeSeconds ?? 12
+          const blockTime =
+            templateVars.blockNumberOpcodeTimeSeconds ??
+            HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 
           const assertionsChallengePeriod =
             templateVars.discovery.getContractValue<number>(
@@ -775,7 +773,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
-  const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+  const assumedBlockTime = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS // RollupUserLogic assumes a >12s block time from pre-merge
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
@@ -835,63 +833,28 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
   }
 }
 
-function getDaTracking(
-  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
-): ProjectDaTrackingConfig[] | undefined {
-  // Return non-template tracking if it exists
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
+/**
+ * The open ethereum DA tracking entry of an Orbit chain. The identity fields
+ * (SequencerInbox, batch posters) come from discovery on purpose: a rotation
+ * changes the id, which fails the snapshot guard and forces the old entry to
+ * be frozen (see docs/da-tracking.md). The range is a literal so the indexed
+ * window never moves behind the project's back.
+ */
+export function getOrbitStackDaTracking(
+  discovery: ProjectDiscovery,
+  range: { sinceBlock: number; untilBlock?: number },
+): ProjectDaTrackingConfig {
+  const sequencerInbox = discovery.getContract('SequencerInbox')
+  const batchPosters = discovery
+    .getContractValue<ChainSpecificAddress[]>('SequencerInbox', 'batchPosters')
+    .map((a) => ChainSpecificAddress.address(a))
+  return {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: ChainSpecificAddress.address(sequencerInbox.address),
+    sequencers: batchPosters,
+    ...range,
   }
-
-  if (templateVars.usesEthereumBlobs) {
-    const batchPosters = templateVars.discovery
-      .getContractValue<ChainSpecificAddress[]>(
-        'SequencerInbox',
-        'batchPosters',
-      )
-      .map((a) => ChainSpecificAddress.address(a))
-
-    const inboxDeploymentBlockNumber =
-      templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
-
-    return [
-      {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxDeploymentBlockNumber,
-        inbox: ChainSpecificAddress.address(
-          templateVars.sequencerInbox.address,
-        ),
-        sequencers: batchPosters,
-      },
-    ]
-  }
-
-  if (templateVars.celestiaDa) {
-    return [
-      {
-        type: 'celestia',
-        daLayer: ProjectId('celestia'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.celestiaDa.sinceBlock,
-        namespace: templateVars.celestiaDa.namespace,
-      },
-    ]
-  }
-
-  if (templateVars.availDa) {
-    return [
-      {
-        type: 'avail',
-        daLayer: ProjectId('avail'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.availDa.sinceBlock,
-        appIds: templateVars.availDa.appIds,
-      },
-    ]
-  }
-
-  return undefined
 }
 
 function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
@@ -935,7 +898,8 @@ function getRiskView(
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   const blockNumberOpcodeTimeSeconds =
-    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+    templateVars.blockNumberOpcodeTimeSeconds ??
+    HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',

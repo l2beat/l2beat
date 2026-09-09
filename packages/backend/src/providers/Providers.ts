@@ -133,7 +133,7 @@ export class Providers {
       this.clients.beacon,
       this.clients.near,
       this.clients.celestiaDaBeat,
-      this.clients.availWs,
+      this.clients.availDaBeat,
       this.clients.espresso,
     )
 

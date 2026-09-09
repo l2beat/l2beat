@@ -104,7 +104,7 @@ export const forknet: ScalingProject = agglayer({
     //   },
     // },
   ],
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

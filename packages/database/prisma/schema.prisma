@@ -116,10 +116,13 @@ model Liveness {
   blockNumber     Int
   txHash          String   @db.VarChar(255)
   configurationId String   @db.VarChar(12)
-  // Partial unique grouping index: migration 20260723120001.
-  groupingKey     String?  @db.VarChar(255)
+  // 'none' marks ungrouped records; the sentinel keeps the column non-null so
+  // it can be part of the primary key and one transaction can store a record
+  // per grouping key. Partial unique grouping index (excluding 'none'):
+  // migration 20260827130000.
+  groupingKey     String   @default("none") @db.VarChar(255)
 
-  @@id([configurationId, txHash])
+  @@id([configurationId, txHash, groupingKey])
   @@index([configurationId, timestamp])
 }
 
@@ -314,6 +317,35 @@ model PrivacyFlowEvent {
   @@index([projectId, bucketId, timestamp])
   @@index([configurationId, blockNumber])
   @@index([configurationId, timestamp])
+}
+
+model PrivacyRelayerActivity {
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  chain           String   @db.VarChar(32)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  txHash          String   @db.VarChar(66)
+  logIndex        Int
+  relayerAddress  String   @db.VarChar(42)
+
+  @@id([configurationId, txHash, logIndex])
+  @@index([projectId, timestamp, relayerAddress])
+  @@index([configurationId, timestamp])
+}
+
+model PrivacyRelayerSample {
+  configurationId  String   @db.Char(12)
+  projectId        String   @db.VarChar(255)
+  chain            String   @db.VarChar(32)
+  timestamp        DateTime @db.Timestamp(6)
+  relayerCount     Int
+  messagesReceived Int
+  messagesParsed   Int
+  messagesAccepted Int
+
+  @@id([configurationId, timestamp])
+  @@index([projectId, timestamp])
 }
 
 model UpdateDiff {
@@ -567,6 +599,12 @@ model TokenDbHistory {
 // They are stored in a fixed lexicographic order — A before B — so one pair
 // cannot occupy two rows, and `lockedToken` ('A' or 'B') names the endpoint
 // holding the locked token of a `lockAndMint` pair.
+//
+// A manually added relation (e.g. a same-chain wrapper like ETH <-> WETH,
+// which no interop transfer can evidence) stores the sentinel plugin `manual`
+// — `plugin` sits in the primary key and cannot be NULL — and a
+// `{ kind: 'manual', ... }` attestation in `transfer` instead of a sample
+// transfer.
 // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
 model TokenRelation {
   tokenAChain   String  @db.VarChar(32)

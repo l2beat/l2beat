@@ -378,6 +378,20 @@ describe('getProjects', () => {
     }
   })
 
+  describe('externalDependencies', () => {
+    for (const project of projects) {
+      if (!project.externalDependencies) continue
+
+      for (const dependency of project.externalDependencies) {
+        if (dependency.type !== 'tracked') continue
+
+        it(`${project.id} tracked dependency ${dependency.projectId} exists`, () => {
+          expect(projectsById.has(dependency.projectId)).toEqual(true)
+        })
+      }
+    }
+  })
+
   describe('privacy projects', () => {
     for (const project of projects) {
       if (!project.privacyInfo) continue

@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry for node operators, their nodes, capabilities, and Decentralized Oracle Networks (DONs). The owner controls operator registration, capability availability, nodes, and DON configuration, while each node-operator admin can manage its own operator record and nodes. A DON configuration binds member p2pIds, fault tolerance, public/workflow flags, and per-capability payloads; when a capability has a configuration contract, the registry calls it before the DON update completes.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove node operators and update any operator's admin address or name."
+        },
+        {
+          "type": "interact",
+          "description": "add, update, or remove nodes for any node operator, subject to the configured DON-membership and capability constraints."
+        },
+        {
+          "type": "interact",
+          "description": "add or deprecate capabilities and select each capability's optional configuration contract when the capability is added."
+        },
+        {
+          "type": "interact",
+          "description": "create, reconfigure, or remove DONs, controlling their node membership, capability payloads, fault tolerance, public access, and, at creation, whether they accept workflows. Configuring a DON can invoke its capability configuration contracts."
+        }
+      ]
+    },
+    "getNodeOperators": {
+      "description": "Registered node operators and their admins. An admin can update its operator record and add, update, or remove nodes assigned to that operator, subject to DON-membership and capability constraints; the contract owner shares this authority.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update their node operator record and add, update, or remove nodes assigned to it, subject to DON-membership and capability constraints."
+        }
+      ]
+    }
+  }
+}

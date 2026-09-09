@@ -14,7 +14,7 @@ export const mint: ScalingProject = opStackL2({
   addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
   archivedAt: UnixTime(1775534349), // 2026-04-07T03:59:09Z
   discovery,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

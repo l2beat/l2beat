@@ -10,8 +10,8 @@ import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { TechnologyContract } from '../../../components/projects/sections/ContractEntry'
@@ -21,6 +21,10 @@ import { createAddressAnchors } from './getContractAddressAnchor'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
 import { getProgramHashes } from './getProgramHashes'
+import {
+  groupTechnologyContracts,
+  hasGroupableTechnologyContractState,
+} from './groupTechnologyContracts'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -102,7 +106,7 @@ export function getContractsSection(
         })
         return [
           contractUtils.getChainName(chainName),
-          groupTechnologyContracts(technologyContracts),
+          groupProjectContracts(technologyContracts),
         ]
       },
     ),
@@ -302,59 +306,15 @@ function makeTechnologyContract(
 // logic there. Grouping also breaks per-contract rendering that assumes a single
 // address per entry (e.g. past upgrades would need smarter handling). This is
 // the first iteration and we will work on this more if there is demand for it.
-function groupTechnologyContracts(
+function groupProjectContracts(
   contracts: (readonly [ProjectContract, TechnologyContract])[],
 ): TechnologyContract[] {
-  const isGroupable = ([rawContract, contract]: readonly [
-    ProjectContract,
-    TechnologyContract,
-  ]) =>
-    rawContract.upgradeability?.immutable === true &&
-    (contract.pastUpgrades?.upgrades.length ?? 0) === 0 &&
-    !contract.escrow &&
-    !contract.impactfulChange &&
-    !contract.addresses.some(
-      (address) => address.verificationStatus === 'became-verified',
+  return groupTechnologyContracts(contracts, ([rawContract, contract]) => {
+    return (
+      rawContract.upgradeability?.immutable === true &&
+      hasGroupableTechnologyContractState(contract)
     )
-
-  const groupKey = (contract: TechnologyContract) =>
-    JSON.stringify({
-      name: contract.name,
-      description: contract.description ?? null,
-      upgradeableBy: contract.upgradeableBy ?? null,
-      upgradeConsiderations: contract.upgradeConsiderations ?? null,
-      references: contract.references,
-      usedInProjects: contract.usedInProjects ?? null,
-    })
-
-  const result: TechnologyContract[] = []
-  const groupIndexByKey = new Map<string, number>()
-
-  for (const pair of contracts) {
-    const [, contract] = pair
-    if (!isGroupable(pair)) {
-      result.push(contract)
-      continue
-    }
-
-    const key = groupKey(contract)
-    const existingIndex = groupIndexByKey.get(key)
-    if (existingIndex === undefined) {
-      groupIndexByKey.set(key, result.length)
-      result.push(contract)
-      continue
-    }
-
-    const group = result[existingIndex]
-    assert(group, 'Group must exist')
-    result[existingIndex] = {
-      ...group,
-      addresses: [...group.addresses, ...contract.addresses],
-      groupCount: (group.groupCount ?? 1) + 1,
-    }
-  }
-
-  return result
+  })
 }
 
 function getEscrowDetails(

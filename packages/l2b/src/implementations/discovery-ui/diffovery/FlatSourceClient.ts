@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
   asStructured,
+  type ContractSource,
   codeIsEOA,
   flattenStartingFrom,
   getChainConfigs,
@@ -10,7 +11,6 @@ import {
   type IProvider,
   SQLiteCache,
 } from '@l2beat/discovery'
-import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
 import { ChainSpecificAddress, formatJson } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'

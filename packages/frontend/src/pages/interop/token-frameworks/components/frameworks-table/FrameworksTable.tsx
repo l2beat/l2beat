@@ -2,7 +2,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type {
   FrameworkTableEntry,
   TokenFrameworksData,
-} from '~/server/features/scaling/interop/getTokenFrameworksData'
+} from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { FrameworkColumn } from './FrameworkColumn'

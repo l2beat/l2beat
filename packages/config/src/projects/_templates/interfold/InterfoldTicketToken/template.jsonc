@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "InterfoldTicketToken",
+  "category": "core",
+  "description": "Non-transferable ERC-20 Votes wrapper for sUSDS used as ciphernode ticket collateral. Only the configured BondingRegistry can deposit, mint, burn, withdraw or pay out the underlying asset.",
+  "ignoreMethods": ["getPastTotalSupply"],
+  "ignoreRelatives": ["underlying"],
+  "ignoreInWatchMode": ["clock", "payableBalance", "totalSupply"],
+  "fields": {
+    "registry": {
+      "description": "Contract exclusively allowed to move the underlying collateral and mint or burn ticket tokens.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deposit and withdraw underlying sUSDS, mint and burn ticket tokens, and pay out underlying reserved by ticket slashing."
+        }
+      ]
+    },
+    "owner": {
+      "description": "Account that can transfer ownership, rescue unrelated ERC-20s and manage the registry address. Because the registry is locked, replacement requires a one-day delay and zero outstanding ticket supply and payable balance.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule and activate a registry replacement after one day when all ticket liabilities are zero, and rescue ERC-20s other than the underlying sUSDS."
+        }
+      ]
+    },
+    "underlying": {
+      "description": "External sUSDS token backing ticket collateral one-for-one; its Maker/Sky dependencies are outside the Interfold discovery perimeter."
+    },
+    "registryLocked": {
+      "description": "One-way flag requiring future registry replacements to use the delayed, zero-liability flow.",
+      "type": "RISK_PARAMETER"
+    },
+    "REGISTRY_CHANGE_DELAY": {
+      "description": "Delay between requesting and activating a locked registry replacement.",
+      "type": "RISK_PARAMETER"
+    },
+    "payableBalance": {
+      "description": "Underlying sUSDS reserved after ticket burns and available for protocol-directed payout."
+    }
+  }
+}

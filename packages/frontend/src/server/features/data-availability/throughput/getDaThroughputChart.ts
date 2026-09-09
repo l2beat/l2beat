@@ -34,16 +34,16 @@ export type DaThroughputDataPoint = [
 
 export const DaThroughputChartParams = v.object({
   range: ChartRange,
-  includeScalingOnly: v.boolean(),
+  includeL2Only: v.boolean(),
 })
 export type DaThroughputChartParams = v.infer<typeof DaThroughputChartParams>
 
 export async function getDaThroughputChart({
   range,
-  includeScalingOnly,
+  includeL2Only,
 }: DaThroughputChartParams): Promise<DaThroughputChart> {
   if (env.MOCK) {
-    return { data: getMockDaThroughputChartData({ range, includeScalingOnly }) }
+    return { data: getMockDaThroughputChartData({ range, includeL2Only }) }
   }
   const db = getDb()
   const resolution = rangeToResolution(range)
@@ -56,7 +56,7 @@ export async function getDaThroughputChart({
     )
     .filter(notUndefined)
 
-  const throughput = includeScalingOnly
+  const throughput = includeL2Only
     ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
         range,
@@ -128,7 +128,7 @@ export async function getDaThroughputChart({
 
     const fallbackValue = isSynced ? 0 : null
     const isEigendaGap =
-      !includeScalingOnly && isInEigendaLayerDataGap(timestamp, resolution)
+      !includeL2Only && isInEigendaLayerDataGap(timestamp, resolution)
 
     return [
       timestamp,

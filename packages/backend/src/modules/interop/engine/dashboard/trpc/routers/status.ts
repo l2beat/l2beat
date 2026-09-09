@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { INDEXER_NAMES } from '../../../../../../tools/uif/indexerIdentity'
 import { router } from '../../../../../../trpc/init'
 import { protectedProcedure } from '../../../../../../trpc/procedures'
 import type { PluginSyncStatus } from '../../../sync/InteropSyncersManager'
@@ -39,6 +40,18 @@ export function createStatusRouter(deps: Dependencies) {
         ...row,
         toBlock: row.toBlock?.toString(),
       }))
+    }),
+    relay: protectedProcedure.query(async ({ ctx }) => {
+      const state = await ctx.db.indexerState.findByIndexerId(
+        INDEXER_NAMES.INTEROP_RELAY,
+      )
+
+      return {
+        syncedTo:
+          state !== undefined && state.safeHeight > 0
+            ? state.safeHeight
+            : undefined,
+      }
     }),
     resync: protectedProcedure
       .input(ResyncRequest)

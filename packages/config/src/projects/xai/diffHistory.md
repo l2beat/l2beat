@@ -1,4 +1,80 @@
-Generated with discovered.json: 0x8eaa3511d62772e3b1301505fa96c5caa4b467e1
+Generated with discovered.json: 0xf40ad1bc693f957d92d46374ff35b62d02a697c1
+
+# Diff at Mon, 07 Sep 2026 21:36:18 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1787669025
+- current timestamp: 1788816912
+
+## Description
+
+SafeL2 owning the ProxyAdmin of the Sentry contracts: member added; threshold lowered 4/6 → 3/7.
+
+XaiFundsReiceiverMultisig: 3 members removed; threshold 3/7 → 2/4.
+
+Team Secret removed from the listed DAC members: its key left the keyset on 2025-01-12; the current 3/5 keyset is Xai, Ex Populus, LayerZero, Alt Layer and Offchain Labs.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x754286508D57Fae1256bC288461E075552175CBa) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
+    contract XaiFundsReiceiverMultisig (arb1:0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) [GnosisSafe] {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      values.$members.1:
+-        "arb1:0x739bd9Ed651d200dc84d0b0dF444CA47CBFf520f"
+      values.$members.2:
+-        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+      values.$members.5:
+-        "arb1:0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x0739ddbfaf861deec07ee961a14cf42b037da89d
+
+# Diff at Tue, 25 Aug 2026 14:44:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bba6c9e66ca2dd99590b6f233fe8f6509dc767a0 block: 1783591155
+- current timestamp: 1787669025
+
+## Description
+
+Config-related: the shared wasmModuleRoot type map gained the ArbOS v61 label. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783591155 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x8ec76a7e5018d665b9be9288f92fc51706191667
 
 # Diff at Thu, 09 Jul 2026 10:01:03 GMT:
 

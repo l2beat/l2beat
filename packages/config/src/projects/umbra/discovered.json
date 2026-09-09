@@ -1,7 +1,7 @@
 {
   "name": "umbra",
   "timestamp": 1786959877,
-  "configHash": "0x41eeddb311eed2d8282a3a5107e4283df7ca538cd19a7bb84dfbe3e541758a81",
+  "configHash": "0x4b70632246316db56c43bd46ebd06cb57619195661881fcfb5caad50474765ce",
   "entries": [
     {
       "address": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
@@ -39,15 +39,7 @@
     {
       "address": "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
-          "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
@@ -210,5 +202,17 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 25773986 },
-  "permissionsConfigHash": "0x6caeabcd1fdcdf101f57b39e82f1d9997b6f6bc2fac8ee263e44c9affe08dfe8"
+  "permissionsConfigHash": "0x5ce581cf4e5ede91c1e9c700fc883b642df91ce08bbb74948de61b971eaf34e8",
+  "permissions": {
+    "eth:0x5777Aa6F437399Af6cef2Fce0BE8D4B4eD7C7232": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401",
+          "description": "set an arbitrary ETH toll that must be paid on every transfer routed through the Umbra contract.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

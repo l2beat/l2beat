@@ -5,6 +5,7 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from './constants'
+import { getRowLayout } from './rows'
 
 // Apply a partial state update, then recompute node, field, and connection
 // geometry against the previous state so unchanged refs can still be reused.
@@ -62,24 +63,26 @@ export function updateNodePositions(
     const fieldsUnchanged = previousNode?.fields === node.fields
     const hiddenFieldsUnchanged =
       previousNode?.hiddenFields === node.hiddenFields
+    const compressedRowsUnchanged =
+      previousNode?.compressedRows === node.compressedRows
 
-    // If there are no hidden fields, field boxes and connection anchors are
-    // fully determined by the node box and target boxes, so we can skip the
-    // per-field walk entirely.
+    // With every value on its own visible row, field boxes and connection
+    // anchors are fully determined by the node box and target boxes, so we can
+    // skip the per-field walk entirely.
     if (
       !ownBoxMoved &&
       !targetMoved &&
       node.hiddenFields.length === 0 &&
+      node.compressedRows.length === 0 &&
       fieldsUnchanged &&
-      hiddenFieldsUnchanged
+      hiddenFieldsUnchanged &&
+      compressedRowsUnchanged
     ) {
       nextNodes[n] = node
       continue
     }
 
-    const hiddenFieldsSet =
-      node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
-    let visibleIndex = 0
+    const { rowByField, anchorByField } = getRowLayout(node)
     let anyFieldChanged = false
     const nextFields: Field[] = new Array(node.fields.length)
     for (let i = 0; i < node.fields.length; i++) {
@@ -89,19 +92,14 @@ export function updateNodePositions(
         throw new Error('missing dimensions for node ' + field.target)
       }
 
-      const currentVisibleIndex = visibleIndex
-      if (!hiddenFieldsSet?.has(field.name)) {
-        visibleIndex++
-      }
-
       const nextFieldBox: Box = {
         x: nextBox.x,
-        y: nextBox.y + HEADER_HEIGHT + currentVisibleIndex * FIELD_HEIGHT,
+        y: nextBox.y + HEADER_HEIGHT + (rowByField[i] as number) * FIELD_HEIGHT,
         width: nextBox.width,
         height: FIELD_HEIGHT,
       }
       const nextConnection = processConnection(
-        currentVisibleIndex,
+        anchorByField[i] as number,
         nextBox,
         targetBox,
       )
@@ -198,16 +196,13 @@ function shiftSubnodes(
   return changed ? next : subnodes
 }
 
-function getNodeHeight(node: Node): number {
+export function getNodeHeight(node: Node): number {
   const hiddenFieldsHeight =
     node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-  const visibleFieldsCount = Math.max(
-    0,
-    node.fields.length - node.hiddenFields.length,
-  )
+  const rowCount = getRowLayout(node).rows.length
   return (
     HEADER_HEIGHT +
-    visibleFieldsCount * FIELD_HEIGHT +
+    rowCount * FIELD_HEIGHT +
     BOTTOM_PADDING +
     hiddenFieldsHeight
   )

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MockE3Program",
+  "category": "core",
+  "description": "Permanently allowlisted test E3 application. It accepts arbitrary input and returns successful validation and output verification, so requests using it exercise the protocol proof pipeline without application-level correctness checks."
+}

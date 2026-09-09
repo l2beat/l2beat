@@ -1,0 +1,8 @@
+{
+  "UmaIdentifierWhitelist": {
+    "hash": "0x100ea559bcf1a1e8c6a6680e0ee02ed1cbee868d0e7d12f6dc14afad6ddc2636",
+    "address": "matic:0x2271a5E74eA8A29764ab10523575b41AA52455f0",
+    "chain": "polygonpos",
+    "blockNumber": 91186243
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NegRiskFeeVault",
+  "description": "Vault that can hold arbitrary ERC20 and ERC1155 tokens. Admins can transfer any balance to any recipient at any time, with no delay.",
+  "category": "core",
+  "fields": {
+    "admins": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed admin, address indexed member)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can transfer any ERC20 or ERC1155 balance out of the vault to any recipient with no delay, and add or remove admins."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewAdmin(address indexed admin, address indexed member)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+          }
+        ]
+      },
+      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. The authorization mixin grants admin in the constructor without emitting an event, so such an admin is invisible in the added/removed sets and only shows up here. The list is historical and not a live permission set - confirm current status with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

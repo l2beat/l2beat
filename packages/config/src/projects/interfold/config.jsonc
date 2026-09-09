@@ -1,0 +1,1060 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "interfold",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715", // E3 coordinator
+    "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7", // ciphernode registry
+    "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F", // bonding registry
+    "eth:0x974E865B1BB24AF2a9ef8204AdEA9251Cc7C5FD9", // slashing manager
+    "eth:0x1940eF168f4E0B3dA24BEca539856684793B0F6e", // refund manager
+    "eth:0xC0B5b49a3949eC4B520eF21BaCFE16e3695F3B5D", // ticket token
+    "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904", // FOLD token
+    "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f", // CRISP application
+    "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c", // active RISC Zero ciphertext verifier
+    "eth:0xF21e25455988887EE797050080141eba67B33920", // armed Aragon Admin plugin
+    "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb", // public staged proposal processor
+    "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC", // public token voting plugin
+    "eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2", // public proposal condition
+    "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E", // voting-power adapter used by TokenVoting
+    "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C", // listed-member executor of the voting-escrow DAO
+    "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76" // membership condition on its public proposal grant
+  ],
+  "names": {
+    "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715": "Interfold",
+    "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7": "CiphernodeRegistry",
+    "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F": "BondingRegistry",
+    "eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712": "RandomnessProvider",
+    "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A": "NodeReleaseRegistry",
+    "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": "InterfoldDAO",
+    "eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018": "InterfoldSafeA",
+    "eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593": "InterfoldSafeB",
+    "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": "CRISPProgram",
+    "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c": "Risc0BfvCiphertextVerifier",
+    "eth:0xF21e25455988887EE797050080141eba67B33920": "AdminPlugin",
+    "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb": "PublicStagedProposalProcessor",
+    "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC": "PublicTokenVoting",
+    "eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2": "PublicProposalCondition",
+    "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E": "BondedVotes",
+    "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B": "VotingEscrowDAO",
+    "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C": "VotingEscrowMultisig",
+    "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76": "VotingEscrowMemberCondition",
+    "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12": "VotingEscrow",
+    "eth:0x8f141B4D294d39e7D1530916A3eD65B3970C6FEc": "EscrowVotesAdapter",
+    "eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166": "VotingEscrowClock",
+    "eth:0xf023390C78CF95a77A8910187d5B09BBC05F37e9": "VotingPowerCurve",
+    "eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E": "VotingEscrowLockNFT",
+    "eth:0x8095C0B90Be4abCBF5CA7371f588fe1637E02b7f": "VotingEscrowExitQueue",
+    "eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0": "VotingEscrowGaugeVoter",
+    "eth:0x56ce4D8006292Abf418291FaE813C1E3769240A4": "AragonExecutor"
+  },
+  "overrides": {
+    "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e": {
+      "fields": {
+        "daoExecutors": {
+          "description": "Current grantees of Aragon's EXECUTE_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "act",
+              "description": "execute arbitrary calls from the DAO, including calls to protocol owners and ProxyAdmins."
+            }
+          ]
+        },
+        "daoRootHolders": {
+          "description": "Current grantees of Aragon's ROOT_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "grant and revoke permissions in the DAO."
+            }
+          ]
+        },
+        "daoUpgraders": {
+          "description": "Current grantees of Aragon's UPGRADE_DAO_PERMISSION on this DAO, reconstructed from grant and revoke events.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [{ "type": "upgrade" }]
+        },
+        "adminPluginExecutors": {
+          "description": "Addresses that can drive the armed Admin plugin without a DAO vote, reconstructed from Aragon grant and revoke events.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xf281525e53675515a6ba7cc7bea8a81e649b3608423ee2d73be1752cea887889",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xF21e25455988887EE797050080141eba67B33920",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "act",
+              "description": "execute arbitrary DAO actions through the armed Admin plugin without a vote or an onchain delay."
+            }
+          ]
+        },
+        "adminTargetManagers": {
+          "description": "Current grantees allowed to redirect the Admin plugin's execution target.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xF21e25455988887EE797050080141eba67B33920",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "redirect calls made by the Admin plugin to another executor or target."
+            }
+          ]
+        },
+        "sppStageManagers": {
+          "description": "Current grantees allowed to replace the staged proposal process.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x6f36f8bf0398781285f5a40c489dbf3268ce3e205aba87f21e49e6805391b5a1",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the stages, bodies, thresholds and timing rules for future public proposals."
+            }
+          ]
+        },
+        "sppProposalCreators": {
+          "description": "Current grantees allowed to create proposals in the staged proposal processor. Conditional grants remain visible in $activePermissions.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "create a staged proposal when the attached Aragon condition permits it."
+            }
+          ]
+        },
+        "sppAdvancers": {
+          "description": "Current grantees allowed to advance proposals whose configured stage conditions have passed.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xb014ce248804cab6a144581acce1eeb70ce5d54f08433b989d73bb0ccee3d3f9",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "advance proposals only after the configured stage rules permit advancement."
+            }
+          ]
+        },
+        "sppExecutors": {
+          "description": "Current grantees allowed to execute a staged proposal after its configured stages have passed.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xf281525e53675515a6ba7cc7bea8a81e649b3608423ee2d73be1752cea887889",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute a staged proposal only after every configured stage has passed."
+            }
+          ]
+        },
+        "sppTargetManagers": {
+          "description": "Current grantees allowed to redirect the staged processor's execution target.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "redirect passed proposal actions to another executor or target."
+            }
+          ]
+        },
+        "sppTrustedForwarderManagers": {
+          "description": "Current grantees allowed to replace the staged processor's trusted meta-transaction forwarder.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x06d294bc8cbad2e393408b20dd019a772661f60b8d633e56761157cb1ec85f8c",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the address trusted to append the effective caller to proposal transactions."
+            }
+          ]
+        },
+        "sppUpgraders": {
+          "description": "Current grantees of the UPGRADE_PLUGIN permission on the staged proposal processor.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [{ "type": "upgrade" }]
+        },
+        "tokenVotingSettingsManagers": {
+          "description": "Current grantees allowed to change public token-voting thresholds and duration.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xbba35d41610b7d25c8e486006535c76bd423091563e694d206ae3d71ce949fe5",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change support, participation, duration, proposer-power and minimum-approval requirements for future votes."
+            }
+          ]
+        },
+        "tokenVotingProposalCreators": {
+          "description": "Current grantees allowed to open token-voting proposals.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "open a token vote using the caller-supplied proposal payload."
+            }
+          ]
+        },
+        "tokenVotingExecutors": {
+          "description": "Current grantees allowed to execute a successful token-voting proposal.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xf281525e53675515a6ba7cc7bea8a81e649b3608423ee2d73be1752cea887889",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute a token-voting proposal only after the vote has succeeded."
+            }
+          ]
+        },
+        "tokenVotingTargetManagers": {
+          "description": "Current grantees allowed to redirect the token-voting plugin's execution target.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "redirect passed vote actions to another executor or target."
+            }
+          ]
+        },
+        "tokenVotingUpgraders": {
+          "description": "Current grantees of the UPGRADE_PLUGIN permission on the token-voting plugin.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [{ "type": "upgrade" }]
+        },
+        "conditionRuleManagers": {
+          "description": "Current grantees allowed to replace the public proposal-creation condition.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0xd3d98e95f3486fc234d80c098cf0d2a0a3fb187833d7e9cc930f8c4f8335a0e7",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the rules that gate public creation of staged proposals."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B": {
+      "fields": {
+        "veDaoExecutors": {
+          "description": "Current grantees of EXECUTE_PERMISSION on the voting-escrow DAO.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "act",
+              "description": "execute arbitrary calls from the voting-escrow DAO, including administration and upgrades of the voting-power stack."
+            }
+          ]
+        },
+        "veDaoRootHolders": {
+          "description": "Current grantees of ROOT_PERMISSION on the voting-escrow DAO.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "grant and revoke permissions in the voting-escrow DAO."
+            }
+          ]
+        },
+        "veDaoUpgraders": {
+          "description": "Current grantees of UPGRADE_DAO_PERMISSION on the voting-escrow DAO.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [{ "type": "upgrade" }]
+        },
+        "votingEscrowAdmins": {
+          "description": "Current holders of the VotingEscrow ESCROW_ADMIN role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x5153bc4ddea3acc82e49822cf2356cf42e16e0ba80c942840692ca4dd7db5995",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            { "type": "upgrade" },
+            {
+              "type": "interact",
+              "description": "replace voting-power dependencies, change minimum deposits and split rules, and upgrade VotingEscrow."
+            }
+          ]
+        },
+        "votingEscrowPausers": {
+          "description": "Current holders of the VotingEscrow PAUSER role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x539440820030c4994db4e31b6b800deafd503688728f932addfe7a410515c14c",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "pause and unpause voting-escrow operations."
+            }
+          ]
+        },
+        "votingEscrowSweepers": {
+          "description": "Current holders of the VotingEscrow SWEEPER role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0xfdecf383ad5026ade6d21db07b04781efb7ede2811d8b5fe299044cc4bb91fc9",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "sweep unaccounted tokens and NFTs from VotingEscrow."
+            }
+          ]
+        },
+        "votesAdapterAdmins": {
+          "description": "Current holders of the EscrowIVotesAdapter DELEGATION_ADMIN role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0xc4a19b785a540c2c44664ee81553e51ce4d2ff785f770bea0ef0e33e9fc2e896",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            { "type": "upgrade" },
+            {
+              "type": "interact",
+              "description": "pause the escrow voting-power adapter, manage delegation settings and upgrade its implementation."
+            }
+          ]
+        },
+        "delegationTokenManagers": {
+          "description": "Current holders of the EscrowIVotesAdapter DELEGATION_TOKEN role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x4e4bdb05aa372e853fafb37a727873f403f7f9b7c0c697830b63f63502b87535",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "update delegated voting power through the escrow voting adapter."
+            }
+          ]
+        },
+        "clockAdmins": {
+          "description": "Current holders of the voting-escrow Clock admin role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x440d025ee487c9fe654894f3750aeb18132e334d52d7a9c0a3f6a5c77450a9b5",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            { "type": "upgrade" },
+            {
+              "type": "interact",
+              "description": "change voting epochs and upgrade the voting-escrow Clock."
+            }
+          ]
+        },
+        "curveAdmins": {
+          "description": "Current holders of the voting-power Curve admin role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x065385aea91ea94bccc193b44dcdc1da3bcab7e7328692e0b12cda00df64eac4",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            { "type": "upgrade" },
+            {
+              "type": "interact",
+              "description": "change voting-power curve parameters and upgrade the Curve implementation."
+            }
+          ]
+        },
+        "lockAdmins": {
+          "description": "Current holders of the voting-escrow Lock NFT admin role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x54e26bc44f032b9c63f050973076cd279ea75ee2dceeaee6367075804fd03838",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            { "type": "upgrade" },
+            {
+              "type": "interact",
+              "description": "change transfer whitelist settings and upgrade the voting-lock NFT."
+            }
+          ]
+        },
+        "exitQueueAdmins": {
+          "description": "Current holders of the voting-escrow exit-queue admin role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0xc394c78f190ebf6a0034c84aafb4c6893f1e601de9d700227b16d74a628ac114",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            { "type": "upgrade" },
+            {
+              "type": "interact",
+              "description": "change cooldowns and exit fees and upgrade the voting-escrow exit queue."
+            }
+          ]
+        },
+        "exitQueueWithdrawers": {
+          "description": "Current holders of the voting-escrow exit-queue withdrawal role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0x5d8e12c39142ff96d79d04d15d1ba1269e4fe57bb9d26f43523628b34ba108ec",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "complete queued voting-escrow withdrawals."
+            }
+          ]
+        },
+        "gaugeAdmins": {
+          "description": "Current holders of the voting-escrow gauge-voter admin role.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "=",
+                "0xfda1ae526c1fb38407f23e8b7712f7cfacc146f3e340a04221488331e0d42014",
+                ["get", "permissionId"]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "manage gauge metadata and the voting-power update hook."
+            }
+          ]
+        },
+        "gaugeUpgraders": {
+          "description": "Current grantees of UPGRADE_PLUGIN permission on the voting-escrow gauge voter.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [{ "type": "upgrade" }]
+        },
+        "veMultisigUpgraders": {
+          "description": "Current grantees of UPGRADE_PLUGIN permission on the voting-escrow multisig plugin.",
+          "type": "PERMISSION",
+          "copy": "$activePermissions",
+          "edit": [
+            "pipe",
+            [
+              "filter",
+              [
+                "and",
+                [
+                  "=",
+                  "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+                  ["get", "permissionId"]
+                ],
+                [
+                  "=",
+                  "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C",
+                  ["get", "where"]
+                ]
+              ]
+            ],
+            ["map", ["get", "who"]]
+          ],
+          "permissions": [{ "type": "upgrade" }]
+        }
+      }
+    },
+    "eth:0x11E91FB4793047a68dFff29158387229eA313ffE": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    },
+    "eth:0x34aA3F359A9D614239015126635CE7732c18fDF3": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    },
+    "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    },
+    "eth:0x847A22303639017bcDB7F7E49EEa4a4629c1169f": {
+      "description": "CRISP encrypted-ballot application. It verifies ballot eligibility and encryption proofs, commits ciphertext inputs, checks that a RISC Zero tally is bound to its input root and parameters, and decodes the threshold-decrypted tally.",
+      "category": "core",
+      "fields": {
+        "owner": {
+          "description": "Account controlling application-level proof configuration and requester-supplied census roots.",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the eligible-voter Merkle root once per requester-census E3 and replace the application RISC Zero verifier or guest image ID immediately. Such replacement cannot change the verifier snapshotted by Interfold, but can make an in-flight round fail."
+            }
+          ]
+        },
+        "interfold": {
+          "description": "Permanently bound E3 coordinator.",
+          "handler": {
+            "type": "call",
+            "method": "function interfold() view returns (address)",
+            "args": []
+          }
+        },
+        "risc0Verifier": {
+          "description": "Application-level RISC Zero verifier. The external RISC Zero deployment is outside this discovery perimeter.",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "call",
+            "method": "function risc0Verifier() view returns (address)",
+            "args": [],
+            "ignoreRelative": true
+          }
+        },
+        "imageId": {
+          "description": "Application-level RISC Zero guest image ID. It must agree with the protocol ciphertext verifier for successful completion.",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "call",
+            "method": "function imageId() view returns (bytes32)",
+            "args": []
+          }
+        }
+      }
+    },
+    "eth:0x40a18Fc27ac4a4d86fA70385c6814e453b6BFF2c": {
+      "description": "Unverified wrapper that accepts a RISC Zero receipt for the immutable guest image ID and the E3-specific journal constructed by Interfold.",
+      "category": "core",
+      "fields": {
+        "imageId": {
+          "description": "Immutable RISC Zero guest image ID accepted as the encrypted-computation program.",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "call",
+            "method": "function imageId() view returns (bytes32)",
+            "args": []
+          }
+        },
+        "risc0Verifier": {
+          "description": "Immutable RISC Zero verifier used to validate computation receipts.",
+          "handler": {
+            "type": "call",
+            "method": "function risc0Verifier() view returns (address)",
+            "args": [],
+            "ignoreRelative": true
+          }
+        }
+      }
+    }
+  }
+}

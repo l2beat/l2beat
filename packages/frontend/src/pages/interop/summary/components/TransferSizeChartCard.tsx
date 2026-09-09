@@ -1,5 +1,5 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
+import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import { TransferSizeChart } from './charts/TransferSizeChart'
 import { TopNBadge } from './TopNBadge'

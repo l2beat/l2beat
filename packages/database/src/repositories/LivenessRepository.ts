@@ -6,6 +6,7 @@ import type { Liveness } from '../kysely/generated/types'
 import {
   insertGroupedKeepingEarliest,
   splitLivenessRecords,
+  UNGROUPED_GROUPING_KEY,
 } from './utils/livenessGrouping'
 
 export interface LivenessRecord {
@@ -19,15 +20,23 @@ export interface LivenessRecord {
 export function toRecord(row: Selectable<Liveness>): LivenessRecord {
   return {
     ...row,
-    groupingKey: row.groupingKey ?? undefined,
+    // NULL appears only on schemas from before the 'none' sentinel migrations.
+    groupingKey:
+      row.groupingKey === UNGROUPED_GROUPING_KEY
+        ? undefined
+        : (row.groupingKey ?? undefined),
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
 
 export function toRow(record: LivenessRecord): Insertable<Liveness> {
+  const { groupingKey, ...rest } = record
   return {
-    ...record,
-    groupingKey: record.groupingKey ?? null,
+    ...rest,
+    // Omitted for ungrouped records so the column default decides the stored
+    // value; this keeps the code compatible with schemas before and after the
+    // 'none' sentinel migrations.
+    ...(groupingKey === undefined ? {} : { groupingKey }),
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }

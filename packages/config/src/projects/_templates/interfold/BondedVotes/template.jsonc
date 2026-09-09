@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BondedVotes",
+  "category": "gov",
+  "description": "Voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.",
+  "ignoreMethods": ["getPastTotalSupply"],
+  "ignoreInWatchMode": ["clock"],
+  "fields": {
+    "token": {
+      "description": "Immutable FOLD token supplying metadata and the total-supply denominator."
+    },
+    "votesSource": {
+      "description": "Immutable primary IVotes source; currently an adapter for the FOLD voting escrow."
+    },
+    "escrow": {
+      "description": "Immutable FOLD voting escrow used to attribute locked balances."
+    },
+    "checkpoints": {
+      "description": "Immutable history of FOLD bonded through the BondingRegistry."
+    },
+    "registry": {
+      "description": "Immutable BondingRegistry that custodies bonded FOLD and writes checkpoints."
+    }
+  }
+}

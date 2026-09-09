@@ -49,7 +49,7 @@ describe(BalanceProvider.name, () => {
             data: Bytes.fromNumber(654_321),
           },
           {
-            success: false,
+            success: true,
             data: Bytes.fromHex('0x'),
           },
         ]),
@@ -89,7 +89,7 @@ describe(BalanceProvider.name, () => {
         getBalance: mockFn().resolvesToOnce(Bytes.fromNumber(123_456)),
         call: mockFn()
           .resolvesToOnce(Bytes.fromNumber(654_321))
-          .rejectsWithOnce('error'),
+          .resolvesToOnce(Bytes.fromHex('0x')),
         chain: CHAIN,
       })
 
@@ -119,6 +119,85 @@ describe(BalanceProvider.name, () => {
         BLOCK,
       )
       expect(result).toEqual([123_456n, 654_321n, 0n])
+    })
+
+    it('throws when multicall returns empty data for a native balance', async () => {
+      const multicallClient = mockObject<MulticallV3Client>({
+        encodeGetEthBalance: () => ({
+          to: EthereumAddress.ZERO,
+          input: Bytes.fromHex('0x'),
+        }),
+      })
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => true,
+        multicallClient: multicallClient,
+        multicall: mockFn().resolvesToOnce([
+          { success: true, data: Bytes.fromHex('0x') },
+          { success: true, data: Bytes.fromNumber(654_321) },
+          { success: true, data: Bytes.fromNumber(123_456) },
+        ]),
+        chain: CHAIN,
+      })
+
+      const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
+
+      await expect(
+        balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
+      ).toBeRejectedWith('Failed to fetch balance')
+    })
+
+    it('throws when an ERC20 balance call reverts', async () => {
+      const multicallClient = mockObject<MulticallV3Client>({
+        encodeGetEthBalance: () => ({
+          to: EthereumAddress.ZERO,
+          input: Bytes.fromHex('0x'),
+        }),
+      })
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => true,
+        multicallClient: multicallClient,
+        multicall: mockFn().resolvesToOnce([
+          { success: true, data: Bytes.fromNumber(123_456) },
+          { success: false, data: Bytes.fromHex('0x') },
+          { success: true, data: Bytes.fromNumber(654_321) },
+        ]),
+        chain: CHAIN,
+      })
+
+      const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
+
+      await expect(
+        balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
+      ).toBeRejectedWith('Failed to fetch balance')
+    })
+
+    it('tries next RPC client if a single call fails', async () => {
+      const failingRpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        getBalance: mockFn().rejectsWithOnce(new Error('RPC failure')),
+        call: mockFn()
+          .resolvesToOnce(Bytes.fromNumber(654_321))
+          .resolvesToOnce(Bytes.fromNumber(123_456)),
+        chain: CHAIN,
+      })
+
+      const workingRpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        getBalance: mockFn().resolvesToOnce(Bytes.fromNumber(123)),
+        call: mockFn()
+          .resolvesToOnce(Bytes.fromNumber(456))
+          .resolvesToOnce(Bytes.fromNumber(789)),
+        chain: CHAIN,
+      })
+
+      const balanceProvider = new BalanceProvider(
+        [failingRpc, workingRpc],
+        Logger.SILENT,
+      )
+
+      const result = await balanceProvider.getBalances(QUERIES, BLOCK, CHAIN)
+
+      expect(result).toEqual([123n, 456n, 789n])
     })
 
     it('tries next RPC client if first one fails', async () => {

@@ -27,7 +27,7 @@ describe(TotalSupplyProvider.name, () => {
             data: Bytes.fromNumber(654_321),
           },
           {
-            success: false,
+            success: true,
             data: Bytes.fromHex('0x'),
           },
         ]),
@@ -62,7 +62,7 @@ describe(TotalSupplyProvider.name, () => {
         call: mockFn()
           .resolvesToOnce(Bytes.fromNumber(123_456))
           .resolvesToOnce(Bytes.fromNumber(654_321))
-          .rejectsWithOnce('error'),
+          .resolvesToOnce(Bytes.fromHex('0x')),
         chain: CHAIN,
       })
 
@@ -93,6 +93,56 @@ describe(TotalSupplyProvider.name, () => {
         BLOCK,
       )
       expect(result).toEqual([123_456n, 654_321n, 0n])
+    })
+
+    it('throws when a totalSupply call reverts', async () => {
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => true,
+        multicall: mockFn().resolvesToOnce([
+          { success: true, data: Bytes.fromNumber(123_456) },
+          { success: false, data: Bytes.fromHex('0x') },
+          { success: true, data: Bytes.fromNumber(654_321) },
+        ]),
+        chain: CHAIN,
+      })
+
+      const totalSupplyProvider = new TotalSupplyProvider([rpc], Logger.SILENT)
+
+      await expect(
+        totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
+      ).toBeRejectedWith('Failed to fetch totalSupply')
+    })
+
+    it('tries next RPC client if a single call fails', async () => {
+      const failingRpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        call: mockFn()
+          .resolvesToOnce(Bytes.fromNumber(123_456))
+          .rejectsWithOnce(new Error('RPC failure')),
+        chain: CHAIN,
+      })
+
+      const workingRpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        call: mockFn()
+          .resolvesToOnce(Bytes.fromNumber(123))
+          .resolvesToOnce(Bytes.fromNumber(456))
+          .resolvesToOnce(Bytes.fromNumber(789)),
+        chain: CHAIN,
+      })
+
+      const totalSupplyProvider = new TotalSupplyProvider(
+        [failingRpc, workingRpc],
+        Logger.SILENT,
+      )
+
+      const result = await totalSupplyProvider.getTotalSupplies(
+        TOKENS,
+        BLOCK,
+        CHAIN,
+      )
+
+      expect(result).toEqual([123n, 456n, 789n])
     })
 
     it('tries next RPC client if first one fails', async () => {

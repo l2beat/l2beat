@@ -21,7 +21,7 @@ import {
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
-import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
+import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'

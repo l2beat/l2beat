@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FOLD",
+  "category": "core",
+  "description": "Fixed-cap FOLD governance and ciphernode-bond token. Minting and pre-TGE transfer controls are disabled after the one-way TGE transition, while lock-policy administration can continue until the immutable lock cutoff.",
+  "ignoreMethods": ["getPastTotalSupply"],
+  "ignoreRelatives": ["CLAIM_SOURCE"],
+  "ignoreInWatchMode": ["clock"],
+  "fields": {
+    "accessControl": {
+      "description": "Current role administrators and members. Some launch roles retain membership even where their pre-TGE functions now revert.",
+      "handler": { "type": "accessControl" }
+    },
+    "defaultAdmins": {
+      "description": "Members of DEFAULT_ADMIN_ROLE. Admin minting is disabled after TGE, but this role can grant and revoke the remaining roles.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke FOLD roles. The role's direct mint function permanently reverts after TGE."
+        }
+      ]
+    },
+    "lockManagers": {
+      "description": "Members of LOCK_MANAGER_ROLE.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "LOCK_MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create immutable vesting policies, link claimed balances to policies and exempt accounts from automatic claim locks until the immutable lock cutoff."
+        }
+      ]
+    },
+    "owner": {
+      "description": "Ownable controller. The one-time claim-source setter has already been consumed; the remaining live owner action is ownership transfer."
+    },
+    "phase": {
+      "description": "Token lifecycle phase. Phase 3 is the irreversible live phase in which unrestricted transfers are enabled and minting is closed.",
+      "type": "RISK_PARAMETER"
+    },
+    "CLAIM_SOURCE": {
+      "description": "One-time auction claim source. The completed auction and its dependencies are outside the live Interfold protocol perimeter."
+    },
+    "BONDING_REGISTRY": {
+      "description": "Immutable registry in which bonded FOLD remains included in governance voting power."
+    },
+    "MAX_SUPPLY": {
+      "description": "Immutable maximum FOLD supply."
+    },
+    "NO_MORE_LOCKS": {
+      "description": "Immutable timestamp after which no new token locks can be created or linked."
+    }
+  }
+}

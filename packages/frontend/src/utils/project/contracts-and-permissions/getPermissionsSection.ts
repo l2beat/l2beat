@@ -10,6 +10,10 @@ import type { UsedInProject } from '../../../components/projects/sections/permis
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { createAddressAnchors } from './getContractAddressAnchor'
 import type { ContractUtils } from './getContractUtils'
+import {
+  groupTechnologyContracts,
+  hasGroupableTechnologyContractState,
+} from './groupTechnologyContracts'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -112,29 +116,52 @@ function getGroupedTechnologyContracts(
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   getAddressAnchor: GetAddressAnchor,
 ): PermissionSection['permissionsByChain'][string] {
+  const roles =
+    permissions.roles?.map(
+      (permission) =>
+        [
+          permission,
+          toTechnologyContract(
+            projectParams,
+            permission,
+            contractUtils,
+            projectChangeReport,
+            getAddressAnchor,
+          ),
+        ] as const,
+    ) ?? []
+  const actors =
+    permissions.actors?.map(
+      (permission) =>
+        [
+          permission,
+          toTechnologyContract(
+            projectParams,
+            permission,
+            contractUtils,
+            projectChangeReport,
+            getAddressAnchor,
+            { grouped: true },
+          ),
+        ] as const,
+    ) ?? []
+
   return {
-    roles:
-      permissions.roles?.flatMap((permission) =>
-        toTechnologyContract(
-          projectParams,
-          permission,
-          contractUtils,
-          projectChangeReport,
-          getAddressAnchor,
-        ),
-      ) ?? [],
-    actors:
-      permissions.actors?.flatMap((permission) =>
-        toTechnologyContract(
-          projectParams,
-          permission,
-          contractUtils,
-          projectChangeReport,
-          getAddressAnchor,
-          { grouped: true },
-        ),
-      ) ?? [],
+    roles: groupPermissionContracts(roles),
+    actors: groupPermissionContracts(actors),
   }
+}
+
+function groupPermissionContracts(
+  permissions: (readonly [ProjectPermission, TechnologyContract])[],
+) {
+  return groupTechnologyContracts(permissions, ([permission, contract]) => {
+    return (
+      permission.accounts.length === 1 &&
+      permission.accounts[0]?.type === 'Contract' &&
+      hasGroupableTechnologyContractState(contract)
+    )
+  })
 }
 
 function getPermissionedAccountDisplayName(
@@ -152,7 +179,7 @@ function toTechnologyContract(
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   getAddressAnchor: GetAddressAnchor,
   options?: { grouped: true },
-): TechnologyContract[] {
+): TechnologyContract {
   const isGrouped = options?.grouped === true && permission.accounts.length > 1
 
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
@@ -208,20 +235,16 @@ function toTechnologyContract(
     addresses.map((a) => a.address).includes(changedAddress),
   )
 
-  const result: TechnologyContract[] = [
-    {
-      id: permission.id,
-      name,
-      addresses,
-      admins: [],
-      usedInProjects,
-      chain: permission.chain,
-      description: permission.description,
-      participants,
-      references: permission.references ?? [],
-      impactfulChange,
-    },
-  ]
-
-  return result
+  return {
+    id: permission.id,
+    name,
+    addresses,
+    admins: [],
+    usedInProjects,
+    chain: permission.chain,
+    description: permission.description,
+    participants,
+    references: permission.references ?? [],
+    impactfulChange,
+  }
 }

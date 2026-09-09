@@ -1,6 +1,6 @@
 import compact from 'lodash/compact'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
-import { compareTvs } from '~/server/features/scaling/tvs/utils/compareTvs'
+import { compareTvs } from '~/server/features/layer2s/tvs/utils/compareTvs'
 
 export function toTableRows({
   projects,

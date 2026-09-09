@@ -81,6 +81,25 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "megaeth-MEGA",
+      "priceId": "megaeth",
+      "symbol": "MEGA",
+      "name": "MEGA",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69995/large/9fcb2fa4-b240-46e2-9016-c4f6101a139d.jpeg?1778485816",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "megaeth",
+        "decimals": 18,
+        "sinceTimestamp": 1777507200,
+        "address": "0x28B7E77f82B25B95953825F1E3eA0E36c1c29861",
+        "chain": "megaeth"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "custom",
       "id": "megaeth-USDC",
       "priceId": "usd-coin",
@@ -209,6 +228,32 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "megaeth-wiTRY",
+      "priceId": "wrapped-itry",
+      "symbol": "wiTRY",
+      "name": "Wrapped iTRY",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102172903/large/wiTRY.png?1776512114",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x15B271D9012b5820FC42b1c495B4C1e206547De5",
+        "chain": "megaeth",
+        "decimals": 18,
+        "sinceTimestamp": 1778112000
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

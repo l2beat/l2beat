@@ -9,7 +9,7 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/Info'
-import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
+import type { InteropTokenDashboardData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { cn } from '~/utils/cn'
 import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import type { InteropSelection } from '../../utils/types'

@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcClient'
 import type { DaBlobProvider } from './DaProvider'
 import type { CelestiaBlob } from './types'
@@ -16,6 +16,10 @@ export class CelestiaDaProvider implements DaBlobProvider {
     }
     const blobArrays = await Promise.all(promises)
     return blobArrays.flat()
+  }
+
+  async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    return await this.rpcClient.getBlockTimestamp(blockNumber)
   }
 
   private async getBlobsFromBlock(

@@ -17,6 +17,7 @@ import { AgglayerPlugin } from './agglayer'
 import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
+import { BaseSolBridgePlugin } from './basesolbridge'
 import { BeefyBridgePlugin } from './beefy-bridge'
 import { ButterNetworkPlugin } from './butternetwork'
 import { CCIPConfigPlugin } from './ccip/ccip.config'
@@ -149,6 +150,7 @@ export function createInteropPlugins(
         deps.configs,
         deps.logger,
         deps.httpClient,
+        rpcs,
         deps.configIntervalMs,
       ),
       new ZkStackConfigPlugin(
@@ -270,6 +272,7 @@ export function createInteropPlugins(
       new LifiIntentsPlugin(),
       new HyperliquidBridgePlugin(deps.oneSidedChains),
       new LighterBridgePlugin(deps.oneSidedChains),
+      new BaseSolBridgePlugin(deps.oneSidedChains),
       new RelayPlugin(deps.oneSidedChains),
       new GasZipPlugin(deps.configs, deps.oneSidedChains),
       new PolygonPlugin(deps.configs),

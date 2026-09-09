@@ -13,7 +13,7 @@ import type {
   InteropDashboardData,
   InteropDashboardFlow,
   InteropDashboardFlowChain,
-} from '~/server/features/scaling/interop/getInteropDashboardData'
+} from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 
 export function TopRoutesWidget({

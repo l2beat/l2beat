@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { zkStackL2 } from '../../templates/zkStack'
+import { getZkStackDaTracking, zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('lachain')
 const chainId = 2904
@@ -88,7 +88,7 @@ export const lachain: ScalingProject = zkStackL2({
     },
   ],
   discovery,
-  usesEthereumBlobs: true,
+  daTracking: [getZkStackDaTracking(discovery, { sinceBlock: 21809364 })],
   // gas token LAC not on coingecko, no significant other TVS or activity
   // nonTemplateEscrows: [
   //     discovery.getEscrowDetails({

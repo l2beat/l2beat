@@ -120,34 +120,6 @@ export const boojum: BaseProject = {
         verificationStatus: 'notVerified',
       },
       {
-        hash: '0xcde2e1dc7800da93384e5b2e0bb1f195ed3eb4aed0ad01a877588a890f8bd970',
-        name: 'Boojum Plonk v30.0 verifier',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x35CD3865199F2D9c574f34DD72520B19842d440c',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
-      {
-        hash: '0x95d735ed04680e0f7777f1d2016f3b6e2f507726b32e2d8b47a37fd8355fd47a',
-        name: 'Boojum Fflonk v30.0 verifier',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x4A34cE730052cb195d8a95e730623eEcc1CB8B66',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
-      {
         hash: '0xbaaa46d644f7034d609eea327e818bd9a93a3c0fdd60e887d233da8a35c4f8ae',
         name: 'Boojum Plonk v30.1 verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,

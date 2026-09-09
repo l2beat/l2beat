@@ -89,13 +89,7 @@ export const loopring: ScalingProject = {
   chainConfig: {
     name: 'loopring',
     chainId: undefined,
-    apis: [
-      {
-        type: 'loopring',
-        url: 'https://api3.loopring.io/api/v3',
-        callsPerMinute: 240,
-      },
-    ],
+    apis: [],
   },
   config: {
     associatedTokens: ['LRC'],

@@ -9,6 +9,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
+import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -17,15 +18,19 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import type { ProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import {
+  EMPTY_TVS_BREAKDOWN,
+  get7dTvsBreakdown,
+} from '../../layer2s/tvs/get7dTvsBreakdown'
+import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
+import type { PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
-  getPrivacyTrustedSetupsSection,
+  type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
 
@@ -48,20 +53,23 @@ export interface ProjectPrivacyEntry {
   }
   bucketCount: number
   assetsCount: number
+  hasTvl: boolean
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
-  trustedSetup: PrivacySummaryValue
+  trustedSetup: PrivacyTrustedSetupSummary
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
-    totalValueLockedUsd: number
+    totalValueLockedUsd: number | undefined
     deposits: {
       total: number
       last7d: number
       last30d: number
     }
+    relayerStat?: PrivacyRelayerStat
   }
   isUnderReview: boolean
+  recentUpdatesCount: number
   warnings: {
     yellow?: string
     red?: ProjectRedWarning
@@ -70,55 +78,27 @@ export interface ProjectPrivacyEntry {
   sections: ProjectDetailsSection[]
 }
 
-const EMPTY_PROJECTS_CHANGE_REPORT: ProjectsChangeReport = {
-  projects: {},
-  getChanges: () => ({
-    impactfulChange: false,
-    becameVerifiedContracts: {},
-  }),
-  hasImplementationChanged: () => false,
-  hasHighSeverityFieldChanged: () => false,
-  hasUltimateUpgraderChanged: () => false,
-  getBecameVerifiedContracts: () => ({}),
-}
-
-const EMPTY_TVS_BREAKDOWN: SevenDayTvsBreakdown = {
-  total: 0,
-  projects: {},
-}
-
 export async function getPrivacyProjectEntry(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [
-    contractUtils,
-    allProjectsWithContracts,
-    allProjects,
-    tvs,
-    zkCatalogProjects,
-    totalValueLockedUsd,
-  ] = await Promise.all([
-    getContractUtils(),
-    ps.getProjects({
-      select: ['contracts'],
-    }),
-    ps.getProjects({
-      optional: [
-        'display',
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-      ],
-    }),
-    get7dTvsBreakdown({ type: 'all' }),
-    ps.getProjects({
-      select: ['zkCatalogInfo'],
-    }),
-    getTotalValueLockedUsd(details, helpers, defaultChartRange),
-  ])
+  const [contractUtils, allProjects, tvs, totalValueLockedUsd] =
+    await Promise.all([
+      getContractUtils(),
+      ps.getProjects({
+        optional: [
+          'display',
+          'daBridge',
+          'scalingInfo',
+          'daLayer',
+          'privacyInfo',
+          'defiInfo',
+        ],
+      }),
+      get7dTvsBreakdown({ type: 'all' }),
+      getTotalValueLockedUsd(details, helpers, defaultChartRange),
+    ])
 
   const permissionsSection = getPermissionsSection(
     {
@@ -140,8 +120,8 @@ export async function getPrivacyProjectEntry(
     },
     contractUtils,
     EMPTY_PROJECTS_CHANGE_REPORT,
-    zkCatalogProjects,
-    allProjectsWithContracts,
+    [],
+    [],
     EMPTY_TVS_BREAKDOWN,
   )
 
@@ -156,6 +136,7 @@ export async function getPrivacyProjectEntry(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
+  const discoveryUpdates = details.discoveryUpdates ?? []
 
   const sections: ProjectDetailsSection[] = []
 
@@ -172,14 +153,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.display.detailedDescription) {
+  if (details.detailedDescription) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Protocol description',
         description: undefined,
-        detailedDescription: details.display.detailedDescription,
+        detailedDescription: details.detailedDescription,
       },
     })
   }
@@ -199,24 +180,27 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (hasTrackedAssets) {
-    const chartProject = {
-      id: details.id,
-      name: details.name,
-      shortName: details.shortName,
-      iconUrl: icon,
-    }
+  const chartProject = {
+    id: details.id,
+    name: details.name,
+    shortName: details.shortName,
+    iconUrl: icon,
+  }
 
+  if (details.hasTvl) {
     sections.push({
-      type: 'PrivacyTvlSection',
+      type: 'TvsValueSection',
       props: {
         id: 'privacy-tvl',
         title: 'Value Locked',
         defaultRange: defaultChartRange,
+        rangeControls: 'privacy',
         project: chartProject,
       },
     })
+  }
 
+  if (hasTrackedAssets) {
     sections.push({
       type: 'PrivacyFlowsSection',
       props: {
@@ -233,6 +217,7 @@ export async function getPrivacyProjectEntry(
         id: 'privacy-assets-breakdown',
         title: 'Assets Breakdown',
         assets: details.assets,
+        showTvl: details.hasTvl,
       },
     })
   }
@@ -263,14 +248,16 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  sections.push({
-    type: 'TrustedSetupSection',
-    props: {
-      id: 'trusted-setups',
-      title: 'Trusted setup',
-      ...getPrivacyTrustedSetupsSection(details.zkCatalogInfo),
-    },
-  })
+  if (details.trustedSetups.length > 0) {
+    sections.push({
+      type: 'TrustedSetupSection',
+      props: {
+        id: 'trusted-setups',
+        title: 'Trusted setup',
+        ...getTrustedSetupsSectionFromTrustedSetups(details.trustedSetups),
+      },
+    })
+  }
 
   if (
     details.zkCatalogInfo?.verifierHashes &&
@@ -290,6 +277,17 @@ export async function getPrivacyProjectEntry(
         title: 'Verifier IDs',
         variant: 'privacy',
         ...verifiersSection,
+      },
+    })
+  }
+
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
       },
     })
   }
@@ -334,18 +332,21 @@ export async function getPrivacyProjectEntry(
     discoUi,
     bucketCount: details.summary.bucketCount,
     assetsCount: details.assets.length,
+    hasTvl: details.hasTvl,
     attributes: details.attributes,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
-      getPrivacyTrustedSetup(details.zkCatalogInfo),
+      getPrivacyTrustedSetup(details.trustedSetups),
     ),
     privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd,
       deposits: details.summary.deposits,
+      relayerStat: details.summary.relayerStat,
     },
     isUnderReview: !!details.statuses.reviewStatus,
+    recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     warnings: {
       yellow: details.statuses.yellowWarning,
       red: details.statuses.redWarning,
@@ -359,26 +360,32 @@ async function getTotalValueLockedUsd(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
   range: ChartRange,
-): Promise<number> {
-  if (details.assets.length === 0) {
-    return 0
+): Promise<number | undefined> {
+  const flowsPrefetch =
+    details.assets.length > 0
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.privacy.flowsChart.queryOptions({
+            projectIds: [details.id],
+            range,
+          }),
+        )
+      : undefined
+
+  if (!details.hasTvl) {
+    await flowsPrefetch
+    return undefined
   }
 
   // The flows chart prefetch rides along so both charts are dehydrated for the client
   const [tvlChart] = await Promise.all([
     helpers.queryClient.fetchQuery(
-      helpers.trpc.privacy.tvlChart.queryOptions({
+      helpers.trpc.tvs.chartByProjects.queryOptions({
         projectIds: [details.id],
         range,
       }),
     ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.flowsChart.queryOptions({
-        projectIds: [details.id],
-        range,
-      }),
-    ),
+    flowsPrefetch,
   ])
 
-  return tvlChart.chart.at(-1)?.[1][details.id] ?? 0
+  return tvlChart.chart.at(-1)?.[1][details.id] ?? undefined
 }

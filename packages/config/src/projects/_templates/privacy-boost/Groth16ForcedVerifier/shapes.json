@@ -1,0 +1,8 @@
+{
+  "Groth16ForcedVerifier": {
+    "hash": "0xc381b8c9dd9f9b5306cefcf1e97d1aa771e201a49593cf4ec16b0d5141daceca",
+    "address": "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67",
+    "chain": "optimism",
+    "blockNumber": 155689002
+  }
+}

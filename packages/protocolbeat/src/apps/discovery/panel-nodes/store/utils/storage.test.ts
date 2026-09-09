@@ -1,5 +1,10 @@
-import { expect } from 'earl'
-import { reconcileHiddenFields, reconcileNodeHiddenFields } from './storage'
+import { expect, mockObject } from 'earl'
+import type { Node, State } from '../State'
+import {
+  buildStoredNodeLayout,
+  reconcileHiddenFields,
+  reconcileNodeHiddenFields,
+} from './storage'
 
 describe(reconcileHiddenFields.name, () => {
   it('keeps entries that exist on the node', () => {
@@ -51,5 +56,27 @@ describe(reconcileNodeHiddenFields.name, () => {
     const result = reconcileNodeHiddenFields(fields, ['group-field:first'])
 
     expect(result).toEqual(['group-field:first'])
+  })
+})
+
+describe(buildStoredNodeLayout.name, () => {
+  it('stores compressed rows next to hidden values', () => {
+    const node = mockObject<Node>({
+      id: 'a',
+      hiddenFields: ['owner'],
+      compressedRows: ['$members'],
+      box: { x: 1, y: 2, width: 200, height: 50 },
+      color: 0,
+      name: 'a',
+      opened: false,
+      subnodes: [],
+    })
+
+    const layout = buildStoredNodeLayout(
+      mockObject<State>({ projectId: 'p', nodes: [node] }),
+    )
+
+    expect(layout.hiddenFields).toEqual({ a: ['owner'] })
+    expect(layout.compressedRows).toEqual({ a: ['$members'] })
   })
 })

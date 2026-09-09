@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Owner and admin of the ZCHF CCIP token pool and of the ZCHF entry in Chainlink's TokenAdminRegistry. Every action requires 2% of FPS votes: pool configuration changes (adding/removing chains and remote pools) execute after a 7-day timelock, handover of the admin role after 21 days; setting rate limits and vetoing pending proposals is immediate.",
+  "fields": {
+    "GOVERNANCE": {
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "604800",
+          "description": "propose changes to the ZCHF CCIP token pool configuration (add/remove chains and remote pools; 7-day delay) or a transfer of the CCIP admin role and pool ownership (21-day delay), with 2% of FPS votes."
+        },
+        {
+          "type": "interact",
+          "description": "immediately set per-chain CCIP rate limits for bridged ZCHF and veto pending CCIPAdmin proposals, with 2% of FPS votes."
+        }
+      ]
+    },
+    "pendingProposals": {
+      "description": "Hashes of timelocked CCIPAdmin proposals that are currently pending (proposed but not yet enacted or denied). A new entry starts the 7-day (config) or 21-day (admin transfer) veto window.",
+      "handler": {
+        "type": "event",
+        "select": "hash",
+        "add": {
+          "event": "ProposalMade"
+        },
+        "remove": {
+          "event": ["ProposalDenied", "ProposalEnacted"]
+        }
+      }
+    },
+    "proposedAdminTransfers": {
+      "description": "All addresses ever proposed as new CCIP admin (21-day timelock). A transfer hands over ownership of the ZCHF token pool and its TokenAdminRegistry entry.",
+      "handler": {
+        "type": "event",
+        "select": "newAdmin",
+        "add": {
+          "event": "AdminTransferProposed"
+        },
+        "ignoreRelative": true
+      }
+    },
+    "rateLimitUpdates": {
+      "description": "History of per-chain CCIP rate limit changes (chain selectors, from RateLimit events). Rate limits bound how much ZCHF a CCIP compromise could mint and are changeable immediately by qualified FPS holders.",
+      "handler": {
+        "type": "event",
+        "select": "remoteChain",
+        "add": {
+          "event": "RateLimit"
+        }
+      }
+    }
+  }
+}

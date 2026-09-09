@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -38,7 +38,13 @@ export const winr: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'winr',
     chainId: 777777,
-    apis: [{ type: 'rpc', url: 'https://rpc.winr.games', callsPerMinute: 300 }],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-winr-mainnet-0.t.conduit.xyz',
+        callsPerMinute: 300,
+      },
+    ],
     gasTokens: ['WINR'],
   },
   associatedTokens: ['WINR'],
@@ -46,10 +52,14 @@ export const winr: ScalingProject = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  celestiaDa: {
-    sinceBlock: 5390709,
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACFo9Sza5FZw=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 5390709,
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACFo9Sza5FZw=',
+    },
+  ],
   nonTemplateEscrows: [
     {
       chain: 'arbitrum',

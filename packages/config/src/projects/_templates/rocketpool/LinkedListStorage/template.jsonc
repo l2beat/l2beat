@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LinkedListStorage",
+  "category": "core",
+  "description": "Doubly linked list kept in the shared registry, used for queues that must support removal from the middle. Only registered contracts can write."
+}

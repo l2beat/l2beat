@@ -1,0 +1,14 @@
+{
+  "Interfold.sol": {
+    "hash": "0x25830faa7c9d8c4aecf3d78f04ce54c52aae87769713d3e9ad951ca08abd4277",
+    "address": "eth:0x8AcBf712513C802eFFc255FEa588ED21DC7A61bA",
+    "chain": "ethereum",
+    "blockNumber": 25831469
+  },
+  "InterfoldV2.sol": {
+    "hash": "0xd3737346baa5d40f73aea8a15668e65fc210c6fbb56ddf2c8d8f6a0386d0a6f9",
+    "address": "eth:0xA7e1f2693b3b5038e505396Dbd21d6c26ECa8aA2",
+    "chain": "ethereum",
+    "blockNumber": 25883001
+  }
+}

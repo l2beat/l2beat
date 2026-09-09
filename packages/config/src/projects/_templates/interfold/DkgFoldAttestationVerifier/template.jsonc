@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DkgFoldAttestationVerifier",
+  "category": "core",
+  "description": "Immutable verifier for EIP-712 attestations that bind selected ciphernode operator keys to the party commitments folded into an E3 distributed-key-generation proof."
+}

@@ -159,17 +159,17 @@ export const soon: ScalingProject = opStackL2({
       {
         type: 'svm-rpc',
         url: 'https://rpc.mainnet.soo.network/rpc',
-        callsPerMinute: 300,
+        callsPerMinute: 600,
       },
     ],
   },
   genesisTimestamp: UnixTime(1696566432), // TODO: update
   isNodeAvailable: false,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      sinceBlock: 21541468, // SystemConfig deployment
       inbox: batchInbox,
       sequencers: [oldBatcher, batcher],
     },
@@ -184,6 +184,12 @@ export const soon: ScalingProject = opStackL2({
       daLayer: ProjectId('eigenda'),
       sinceTimestamp: UnixTime(1753412400),
       customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
+    },
+    {
+      type: 'eigen-da',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1786951919),
+      customerId: '0xcb3a6380c666ff97f474e11fd41519c320b7a276',
     },
   ],
 })

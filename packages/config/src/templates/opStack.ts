@@ -77,6 +77,22 @@ import {
 } from './generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
 import {
+  type FraudProofType,
+  getFaultDisputeGameName,
+  getFraudProofType,
+  getOpStackBondScalingFactor,
+  getOpStackFullDisputeGameBondCostEther,
+  getOpStackMaxCumulativeClockExtension,
+  getOptimismPortal,
+  getOracleChallengePeriod,
+  getPermissionedGameBond,
+  getPermissionlessGameBond,
+} from './opStack/faultDisputeGame'
+import {
+  getOpStackCentralizedSequencing,
+  type OpStackCentralizedSequencingConfig,
+} from './opStack/sequencing'
+import {
   asArray,
   explorerReferences,
   mergeBadges,
@@ -245,20 +261,12 @@ interface OpStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
-  /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDa?: {
-    namespace: string
-    /* IMPORTANT: Block number on Celestia Network */
-    sinceBlock: number
-  }
-  /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDa?: {
-    appIds: string[]
-    /* IMPORTANT: Block number on Avail Network */
-    sinceBlock: number
-  }
-  /** Configure to enable custom DA tracking e.g. project that switched DA */
-  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  /**
+   * Explicit DA tracking history, oldest first. Closed entries are literals;
+   * the open (last) entry of a blob-posting chain is usually
+   * `getOpStackDaTracking(discovery, { sinceBlock })`. See docs/da-tracking.md.
+   */
+  daTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /**
    * Overrides the onchain check for superchain ecosystem
@@ -281,7 +289,11 @@ interface OpStackConfigCommon {
   securityCouncilReference?: string
   stage1PrincipleDescription?: string
   /** Manual altDA Stage 1 principle verdict (no automation). */
-  stage1Principle?: boolean | 'UnderReview'
+  stage1Principle?: boolean | 'UnderReview' /**
+   * Builds technology.sequencing for a chain run by a centralized sequencer.
+   * Exit delay and economics are derived from the respected fraud-proof type.
+   */
+  centralizedSequencing?: OpStackCentralizedSequencingConfig
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -491,7 +503,7 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      daTracking: getDaTracking(templateVars),
+      daTracking: templateVars.daTracking,
     },
     ecosystemInfo: templateVars.ecosystemInfo,
     technology: getTechnology(templateVars, explorerUrl, daProvider),
@@ -519,76 +531,32 @@ function opStackCommon(
   }
 }
 
-function getDaTracking(
-  templateVars: OpStackConfigCommon,
-): ProjectDaTrackingConfig[] | undefined {
-  // Return non-template tracking if it exists
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
+/**
+ * The open ethereum DA tracking entry of an OP Stack chain. The identity
+ * fields (inbox, batcher) come from discovery on purpose: a batcher or inbox
+ * rotation changes the id, which fails the snapshot guard and forces the old
+ * entry to be frozen (see docs/da-tracking.md). The range is a literal so the
+ * indexed window never moves behind the project's back.
+ */
+export function getOpStackDaTracking(
+  discovery: ProjectDiscovery,
+  range: { sinceBlock: number; untilBlock?: number },
+): ProjectDaTrackingConfig {
+  const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'sequencerInbox',
+  )
+  const sequencer = discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'batcherHash',
+  )
+  return {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: ChainSpecificAddress.address(sequencerInbox),
+    sequencers: [ChainSpecificAddress.address(sequencer)],
+    ...range,
   }
-
-  const discov = templateVars.discovery
-
-  const usesBlobs =
-    templateVars.usesEthereumBlobs ??
-    discov.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
-      'SystemConfig',
-      'opStackDA',
-    ).isSequencerSendingBlobTx
-
-  if (usesBlobs) {
-    const sequencerInbox = discov.getContractValue<ChainSpecificAddress>(
-      'SystemConfig',
-      'sequencerInbox',
-    )
-
-    const inboxStartBlock =
-      discov.getContractValueOrUndefined<number>(
-        'SystemConfig',
-        'startBlock',
-      ) ?? 0
-
-    const sequencer = discov.getContractValue<ChainSpecificAddress>(
-      'SystemConfig',
-      'batcherHash',
-    )
-
-    return [
-      {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxStartBlock,
-        inbox: ChainSpecificAddress.address(sequencerInbox),
-        sequencers: [ChainSpecificAddress.address(sequencer)],
-      },
-    ]
-  }
-
-  if (templateVars.celestiaDa) {
-    return [
-      {
-        type: 'celestia',
-        daLayer: ProjectId('celestia'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.celestiaDa.sinceBlock,
-        namespace: templateVars.celestiaDa.namespace,
-      },
-    ]
-  }
-
-  if (templateVars.availDa) {
-    return [
-      {
-        type: 'avail',
-        daLayer: ProjectId('avail'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.availDa.sinceBlock,
-        appIds: templateVars.availDa.appIds,
-      },
-    ]
-  }
-
-  return undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
@@ -1384,7 +1352,7 @@ function getStateValidation(
   }
 }
 
-function describeOPFP({
+export function describeOPFP({
   disputeGameBonds,
   maxClockDuration,
   gameMaxDepth,
@@ -1401,21 +1369,16 @@ function describeOPFP({
   oracleChallengePeriod: number
   isPermissionless: boolean
 }): ProjectScalingStateValidation {
-  const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
+  const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
 
-  const gameMaxClockExtension =
-    gameClockExtension * 2 + // at SPLIT_DEPTH - 1
-    oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
-    gameClockExtension * (gameMaxDepth - 3) // the rest, excluding also the last depth
+  const gameMaxClockExtension = getOpStackMaxCumulativeClockExtension(
+    gameMaxDepth,
+    gameClockExtension,
+    oracleChallengePeriod,
+  )
 
-  const permissionlessGameFullCost = (() => {
-    let cost = 0
-    const scaleFactor = 100000
-    for (let i = 0; i <= gameMaxDepth; i++) {
-      cost += (disputeGameBonds / scaleFactor) * exponentialBondsFactor ** i
-    }
-    return BigInt(cost) * BigInt(scaleFactor)
-  })()
+  const permissionlessGameFullCostEther =
+    getOpStackFullDisputeGameBondCostEther(disputeGameBonds, gameMaxDepth)
 
   return {
     description: readMarkdown('templates/opStack/opfpDescription.md', {
@@ -1441,14 +1404,15 @@ function describeOPFP({
       {
         title: 'Challenges',
         description: readMarkdown('templates/opStack/opfpChallenges.md', {
-          exponentialBondsFactor,
+          exponentialBondsFactor: exponentialBondsFactor.toFixed(5),
           gameMaxDepth,
-          fullGameCost: Number.parseFloat(
-            formatEther(permissionlessGameFullCost),
-          ).toFixed(2),
+          fullGameCost: permissionlessGameFullCostEther.toFixed(2),
           maxClockDuration: formatSeconds(maxClockDuration),
           gameClockExtension: formatSeconds(gameClockExtension),
           doubleGameClockExtension: formatSeconds(gameClockExtension * 2),
+          maxGameDepthClockExtension: formatSeconds(
+            gameClockExtension + oracleChallengePeriod,
+          ),
           gameSplitDepth,
           oracleChallengePeriod: formatSeconds(oracleChallengePeriod),
           gameMaxClockExtension: formatSeconds(gameMaxClockExtension),
@@ -1523,6 +1487,13 @@ function getRiskViewStateValidation(
       }
     }
     case 'Permissionless': {
+      const faultDisputeGame = getFaultDisputeGameName(templateVars)
+      const gameMaxDepth = templateVars.discovery.getContractValue<number>(
+        faultDisputeGame,
+        'maxGameDepth',
+      )
+      const exponentialBondsFactor = getOpStackBondScalingFactor(gameMaxDepth)
+
       return {
         ...RISK_VIEW.STATE_FP_INT(
           getChallengePeriod(templateVars),
@@ -1532,10 +1503,13 @@ function getRiskViewStateValidation(
           value: formatEther(getPermissionlessGameBond(templateVars)),
         },
         permissioned: false,
-        // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
-        // so the resource ratio is exactly that factor — slightly favors the
-        // attacker.
-        defenderAdvantage: { multiplier: 1 / 1.09493, shape: 'linear' },
+        // OPFP bonds increase at every depth, so the immediate counterclaim
+        // costs more than the claim it counters and slightly favors the
+        // attacker in a resource-exhaustion attack.
+        defenderAdvantage: {
+          multiplier: 1 / exponentialBondsFactor,
+          shape: 'linear',
+        },
       }
     }
     case 'Kailua':
@@ -1877,7 +1851,14 @@ function getTechnology(
         ],
       },
     ],
-    sequencing: templateVars.nonTemplateTechnology?.sequencing,
+    sequencing:
+      templateVars.nonTemplateTechnology?.sequencing ??
+      (templateVars.centralizedSequencing
+        ? getOpStackCentralizedSequencing(
+            templateVars,
+            templateVars.centralizedSequencing,
+          )
+        : undefined),
   }
 }
 
@@ -2542,84 +2523,6 @@ function ifPostsToEthereum<T>(
   }
 }
 
-// The active permissionless game's init bond. Pre-Karst it is initBonds[0] (game
-// type 0). After Karst the respected game is CANNON_KONA (type 8) and initBonds[0]
-// is zeroed, so the bond lives in the per-type initBondGame8 field.
-function getPermissionlessGameBond(templateVars: OpStackConfigCommon): number {
-  const portal = getOptimismPortal(templateVars)
-  const respectedGameType =
-    templateVars.discovery.getContractValueOrUndefined<number>(
-      portal.name ?? portal.address,
-      'respectedGameType',
-    )
-  if (respectedGameType === 8) {
-    return templateVars.discovery.getContractValue<number>(
-      'DisputeGameFactory',
-      'initBondGame8',
-    )
-  }
-  return templateVars.discovery.getContractValue<number[]>(
-    'DisputeGameFactory',
-    'initBonds',
-  )[0]
-}
-
-// The permissioned game's init bond. v7 DisputeGameFactory_v2 exposes it per-type
-// as initBondGame1; older factories expose the legacy initBonds array.
-function getPermissionedGameBond(templateVars: OpStackConfigCommon): number {
-  const perType = templateVars.discovery.getContractValueOrUndefined<number>(
-    'DisputeGameFactory',
-    'initBondGame1',
-  )
-  if (perType !== undefined) return perType
-  return templateVars.discovery.getContractValue<number[]>(
-    'DisputeGameFactory',
-    'initBonds',
-  )[1]
-}
-
-function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
-  if (templateVars.portal !== undefined) {
-    return templateVars.portal
-  }
-
-  try {
-    return templateVars.discovery.getContract('OptimismPortal')
-  } catch {
-    return templateVars.discovery.getContract('OptimismPortal2')
-  }
-}
-
-// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2
-function getFaultDisputeGameName(templateVars: OpStackConfigCommon): string {
-  if (templateVars.discovery.hasContract('FaultDisputeGame')) {
-    return 'FaultDisputeGame'
-  }
-  return 'FaultDisputeGameV2'
-}
-
-// V2 dispute games don't discover PreimageOracle (VM address is zero
-// in the implementation). The standard challenge period is 86400s.
-function getOracleChallengePeriod(templateVars: OpStackConfigCommon): number {
-  if (templateVars.discovery.hasContract('PreimageOracle')) {
-    return templateVars.discovery.getContractValue<number>(
-      'PreimageOracle',
-      'challengePeriod',
-    )
-  }
-  // V2: PreimageOracle not discovered (VM is zero in implementation).
-  // Read from AnchorStateRegistry's chained handler instead.
-  if (templateVars.discovery.hasContract('AnchorStateRegistry')) {
-    const fromAnchor =
-      templateVars.discovery.getContractValueOrUndefined<number>(
-        'AnchorStateRegistry',
-        'challengePeriodFromOracle',
-      )
-    if (typeof fromAnchor === 'number') return fromAnchor
-  }
-  return 86400
-}
-
 function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
   const fraudProofType = getFraudProofType(templateVars)
 
@@ -2731,62 +2634,6 @@ function getExecutionDelay(
     default:
       return undefined
   }
-}
-
-type FraudProofType =
-  | 'None'
-  | 'Permissioned'
-  | 'Permissionless'
-  | 'Kailua'
-  | 'KailuaSoon'
-  | 'OpSuccinct'
-  | 'OpSuccinctFDP'
-  | 'AggregateProof'
-
-function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
-  const portal = getOptimismPortal(templateVars)
-
-  // Legacy OptimismPortal doesn't have dispute games
-  if (portal.name === 'OptimismPortal') {
-    if (templateVars.discovery.hasContract('OPSuccinctL2OutputOracle')) {
-      return 'OpSuccinct'
-    }
-    return 'None'
-  }
-
-  // OptimismPortal2 uses dispute games - check respectedGameType
-  const respectedGameType = templateVars.discovery.getContractValue<number>(
-    portal.name ?? portal.address,
-    'respectedGameType',
-  )
-
-  if (respectedGameType === 0) {
-    return 'Permissionless'
-  }
-  // 8 = CANNON_KONA (Karst): permissionless fault proof, same trust model as
-  // type 0 (kona-client Rust program instead of op-program).
-  if (respectedGameType === 8) {
-    return 'Permissionless'
-  }
-  if (respectedGameType === 1) {
-    return 'Permissioned'
-  }
-  if (respectedGameType === 6) {
-    return 'OpSuccinct'
-  }
-  if (respectedGameType === 1337) {
-    return 'Kailua'
-  }
-  if (respectedGameType === 2000) {
-    return 'KailuaSoon'
-  }
-  if (respectedGameType === 42) {
-    return 'OpSuccinctFDP'
-  }
-  if (respectedGameType === 621) {
-    return 'AggregateProof'
-  }
-  throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
 function isPartOfSuperchainOnchain(templateVars: OpStackConfigCommon): boolean {

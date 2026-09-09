@@ -45,6 +45,7 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'a',
+        fullKey: 'a',
         value: [
           { type: 'simple', property: 'b', fullKey: 'a.b' },
           { type: 'simple', property: 'e', fullKey: 'a.e' },
@@ -53,6 +54,7 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'c',
+        fullKey: 'c',
         value: [{ type: 'simple', property: 'd', fullKey: 'c.d' }],
       },
     ])
@@ -69,6 +71,7 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'a',
+        fullKey: 'a',
         value: [
           { type: 'simple', property: '0', fullKey: 'a[0]' },
           { type: 'simple', property: '1', fullKey: 'a[1]' },
@@ -88,10 +91,12 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'map',
+        fullKey: 'map',
         value: [
           {
             type: 'complex',
             property: '0xKeyA',
+            fullKey: 'map.0xKeyA',
             value: [
               {
                 type: 'simple',
@@ -118,10 +123,12 @@ describe(buildFieldTree.name, () => {
       {
         type: 'complex',
         property: 'a',
+        fullKey: 'a',
         value: [
           {
             type: 'complex',
             property: '0',
+            fullKey: 'a[0]',
             value: [
               { type: 'simple', property: '0', fullKey: 'a[0][0]' },
               { type: 'simple', property: '1', fullKey: 'a[0][1]' },
@@ -130,6 +137,7 @@ describe(buildFieldTree.name, () => {
           {
             type: 'complex',
             property: '1',
+            fullKey: 'a[1]',
             value: [
               { type: 'simple', property: '0', fullKey: 'a[1][0]' },
               { type: 'simple', property: '1', fullKey: 'a[1][1]' },

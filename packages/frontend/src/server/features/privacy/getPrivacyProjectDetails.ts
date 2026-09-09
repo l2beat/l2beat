@@ -5,6 +5,7 @@ import type {
   PrivacySummaryValue,
   ProjectContracts,
   ProjectCrops,
+  ProjectDiscoveryUpdate,
   ProjectDisplay,
   ProjectPermissions,
   ProjectStatuses,
@@ -17,12 +18,17 @@ import type {
   TokenValueRecord,
 } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
+import { getPrivacyProject } from './getPrivacyProjects'
+import type {
+  PrivacyAsset,
+  PrivacyBucket,
+  PrivacyProject,
+  PrivacyRelayerStat,
+} from './types'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -38,12 +44,16 @@ export interface PrivacyProjectDetails {
   display: ProjectDisplay
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
+  discoveryUpdates?: ProjectDiscoveryUpdate[]
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   crops?: ProjectCrops
+  trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
+  hasTvl: boolean
+  detailedDescription?: string
   noteDiscovery?: PrivacyNoteDiscovery
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
@@ -61,25 +71,14 @@ export interface PrivacyProjectDetails {
       last7d: number
       last30d: number
     }
+    relayerStat?: PrivacyRelayerStat
   }
 }
 
 export async function getPrivacyProjectDetails(
   slug: string,
 ): Promise<PrivacyProjectDetails | undefined> {
-  const project = await ps.getProject({
-    slug,
-    where: ['privacyInfo'],
-    select: ['display', 'privacyInfo', 'statuses'],
-    optional: [
-      'tvsConfig',
-      'contracts',
-      'permissions',
-      'discoveryInfo',
-      'zkCatalogInfo',
-      'crops',
-    ],
-  })
+  const project = await getPrivacyProject(slug)
   if (!project) {
     return undefined
   }
@@ -91,12 +90,10 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const { totals, daily30d, tokenValues } = await getPrivacyProjectFlowData(
-    project,
-    last30dCutoff,
-    currentDay,
-    now,
-  )
+  const [{ totals, daily30d, tokenValues }, relayerStat] = await Promise.all([
+    getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
+    getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
+  ])
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -257,12 +254,18 @@ export async function getPrivacyProjectDetails(
     display: project.display,
     contracts: project.contracts,
     permissions: project.permissions,
+    discoveryUpdates: project.discoveryUpdates,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     crops: project.crops,
+    trustedSetups: project.trustedSetups,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
+    hasTvl: project.tvsConfig !== undefined,
+    detailedDescription:
+      project.privacyInfo.detailedDescription ??
+      project.display.detailedDescription,
     noteDiscovery: project.privacyInfo.noteDiscovery,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
@@ -280,7 +283,65 @@ export async function getPrivacyProjectDetails(
         last7d: summaryValue7d,
         last30d: summaryValue30d,
       },
+      relayerStat,
     },
+  }
+}
+
+const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7
+
+async function getRelayerStat(
+  project: PrivacyProject,
+  from: UnixTime,
+  to: UnixTime,
+): Promise<PrivacyRelayerStat | undefined> {
+  const tracking = project.privacyInfo.relayerTracking
+  if (!tracking) {
+    return undefined
+  }
+
+  if (env.MOCK) {
+    switch (tracking.type) {
+      case 'onchainEvents':
+        return {
+          kind: 'activeRelayers',
+          value: Math.round(Math.random() * 20),
+        }
+      case 'railgunWaku':
+        return {
+          kind: 'avgDailyRelayers',
+          value: Math.round(Math.random() * 20),
+        }
+      default:
+        assertUnreachable(tracking)
+    }
+  }
+
+  switch (tracking.type) {
+    case 'onchainEvents': {
+      const count = await getDb().privacyRelayerActivity.getActiveRelayerCount(
+        project.id,
+        from,
+        to,
+      )
+      return { kind: 'activeRelayers', value: count }
+    }
+    case 'railgunWaku': {
+      const result = await getDb().privacyRelayerSample.getAverageRelayerCount(
+        project.id,
+        from,
+        to,
+      )
+      if (
+        result === undefined ||
+        result.observedDays < MIN_OBSERVED_DAYS_FOR_AVERAGE
+      ) {
+        return undefined
+      }
+      return { kind: 'avgDailyRelayers', value: Math.round(result.average) }
+    }
+    default:
+      assertUnreachable(tracking)
   }
 }
 

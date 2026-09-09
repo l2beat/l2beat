@@ -1,4 +1,102 @@
-Generated with discovered.json: 0xc7c7eb92998a7dcc64bd7c4a7489edaa570995c5
+Generated with discovered.json: 0x9532ac328224caa88c82c5f509e88231fea1c7ba
+
+# Diff at Mon, 07 Sep 2026 08:37:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1788432124
+- current timestamp: 1788432124
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788432124 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"},{"permission":"interact","from":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0x14103510bcda0987e4d2ed3427166160f69656fb
+
+# Diff at Thu, 03 Sep 2026 10:43:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9f7b07492346f74d16743dd75dd367045293d930 block: 1787738150
+- current timestamp: 1788432124
+
+## Description
+
+Upgraded TEE verification SP1 program to v1.0.6, program hash reproduced.
+
+## Watched changes
+
+```diff
+    contract NitroVerifier (eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F) [fluent/NitroVerifier] {
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
+      values.getProgramVKey:
+-        "0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915"
++        "0x00022b9b7769bd21b7bc4171ba458ffc80b46cab6f5fbd5629fa2d873df676fc"
+    }
+```
+
+Generated with discovered.json: 0xbf3b8920c47a32329e350323e85d0744aa8ab7d3
+
+# Diff at Thu, 27 Aug 2026 08:52:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1787738150
+- current timestamp: 1787738150
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787738150 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x73136e41c34c81975853f0e99cbc7387702f0f4f
+
+# Diff at Wed, 26 Aug 2026 09:56:52 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00448b8c7fc6d3a3b8b155e386f5ffa195696a81 block: 1784884231
+- current timestamp: 1787738150
+
+## Description
+
+Upgraded TEE verification SP1 program, program hash reproduced.
+
+## Watched changes
+
+```diff
+    contract NitroVerifier (eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F) [fluent/NitroVerifier] {
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
+      values.getProgramVKey:
+-        "0x00e726560b91ff68e7e232d79536f4a8fb951f1f0197f97f7377b3f21e7e641e"
++        "0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915"
+    }
+```
+
+Generated with discovered.json: 0x2996eac49f580b11fbe2de42e52b69b13d3060f8
 
 # Diff at Thu, 30 Jul 2026 11:25:53 GMT:
 

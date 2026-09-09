@@ -189,7 +189,7 @@ export const zkfair: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://rpc.zkfair.io',
-        callsPerMinute: 300,
+        callsPerMinute: 600,
         retryStrategy: 'UNRELIABLE',
       },
       { type: 'blockscout', url: 'https://scan.zkfair.io/api/' },

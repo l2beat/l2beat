@@ -40,17 +40,16 @@ export class AccessControlHandler implements Handler {
     abi: string[],
   ) {
     this.knownNames.set(DEFAULT_ADMIN_ROLE_BYTES, 'DEFAULT_ADMIN_ROLE')
-    const explicitlyNamedRoles = definition.includeEmptyRoles
-      ? new Set(Object.values(definition.roleNames ?? {}))
-      : undefined
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
       this.knownNames.set(hash, name)
     }
+    // Registered names (DEFAULT_ADMIN_ROLE, roleNames) win over ABI-derived hashes
+    const registeredNames = new Set(this.knownNames.values())
     for (const entry of abi) {
       const name = entry.match(/^function (\w+)_ROLE\(\)/)?.[1]
       if (name) {
         const fullName = name + '_ROLE'
-        if (explicitlyNamedRoles?.has(fullName)) {
+        if (registeredNames.has(fullName)) {
           continue
         }
         const hash = utils.solidityKeccak256(['string'], [fullName])

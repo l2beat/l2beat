@@ -5,7 +5,7 @@ export interface SearchBarCategoryConfig {
 }
 
 export const searchBarCategories = {
-  scaling: {
+  l2: {
     name: 'Scaling',
   },
   da: {
@@ -22,6 +22,9 @@ export const searchBarCategories = {
   },
   privacy: {
     name: 'Privacy',
+  },
+  defi: {
+    name: 'DeFi',
   },
   tokens: {
     name: 'Tokens',

@@ -1,8 +1,8 @@
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 
 export interface HomeProjectCounts {
-  scaling: number
+  l2: number
   interop: number
   interopProtocols: number
   privacy: number
@@ -13,7 +13,7 @@ export interface HomeProjectCounts {
 
 export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
   const [
-    scaling,
+    l2Projects,
     daLayers,
     customDa,
     zkProjects,
@@ -50,7 +50,7 @@ export async function getHomeProjectCounts(): Promise<HomeProjectCounts> {
   const interopChains = getInteropChains().filter((chain) => !chain.isUpcoming)
 
   return {
-    scaling: scaling.length,
+    l2: l2Projects.length,
     interop: interopChains.length,
     interopProtocols: interopProtocols.length,
     privacy: privacy.length,

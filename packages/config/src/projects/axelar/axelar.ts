@@ -14,17 +14,14 @@ export const axelar: BaseProject = {
     plugins: [
       {
         plugin: 'axelar',
-        transferType: 'axelar.Transfer',
         bridgeType: 'lockAndMint',
       },
       {
         plugin: 'axelar',
-        transferType: 'axelar.Transfer',
         bridgeType: 'burnAndMint',
       },
       {
         plugin: 'axelar',
-        transferType: 'axelar.Transfer',
         bridgeType: 'nonMinting',
       },
     ],

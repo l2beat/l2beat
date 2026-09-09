@@ -34,7 +34,9 @@ There currently is no protocol fee. Users still pay Ethereum gas for each action
 
 ### Compliance
 
-Compliance is enforced in each confidential token contract. The owner can block and unblock local users, and confidential token contracts can be configured to call an underlying-token denylist function. These checks apply to direct deposits, ERC-1363 callback deposits, confidential transfers, unwrap requests, and unwrap finalization.
+Compliance is enforced in each confidential token contract. The owner can block and unblock local users, and confidential token contracts can be configured to call an underlying-token denylist function (the owner can change or disable this hook at any time). These checks apply to direct deposits, ERC-1363 callback deposits, confidential transfers, unwrap requests, and unwrap finalization.
+
+The owner can also appoint a pauser for each confidential token that can halt wrapping, unwrapping, unwrap finalization, and confidential transfers; only the owner can unpause. Furthermore, the owner can appoint observer accounts that receive a wildcard, non-expiring user-decryption delegation over all of the token's encrypted handles — effectively a full view key for its balances and transfer amounts, honored by the KMS based on the onchain ACL state. Currently, no pausers or observers are configured on any confidential token.
 
 Because confidential tokens are backed by underlying tokens held in their contract addresses, issuer or token-admin controls over those underlyings remain a dependency. If an underlying token admin blocks a confidential token address, the escrowed token can become stuck. If a user address is blocked by an underlying token and the confidential token has a transitive denylist hook configured, that address can be prevented from depositing, transferring, or completing withdrawals.
 

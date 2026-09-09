@@ -1,5 +1,5 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
+import type { IntentBridgesData } from '~/server/features/layer2s/interop/getIntentBridgesData'
 import {
   type DominanceMetric,
   type DominanceRow,

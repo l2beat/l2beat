@@ -3,8 +3,8 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { getTvsTargetTimestamp } from '../../scaling/tvs/utils/getTvsTargetTimestamp'
+import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
+import { getTvsTargetTimestamp } from '../../layer2s/tvs/utils/getTvsTargetTimestamp'
 
 export function getZkCatalogProjectTvs(
   project: Project<'zkCatalogInfo'>,

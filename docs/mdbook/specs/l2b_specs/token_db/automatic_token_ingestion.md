@@ -340,14 +340,28 @@ ping-pong cycles between two stable tokens.
 
 For each tick, the drain builds an in-memory index keyed by normalized
 `(chain, address)` from a SQL aggregation over the interop transfer table:
-one row per unique group of `(src token, dst token, bridge-type evidence)`,
-carrying the group's transfer count and a sample transfer id. Each
+one row per unique group of `(plugin, src token, dst token, bridge-type
+evidence)`, carrying the group's transfer count, a sample transfer id, and
+the sample transfer's src/dst tx hashes (joined back from the sample row —
+per-column `max()` would stitch hashes from different transfers). Each
 processed entry looks up its own routes from this index — no per-entry DB
 queries for transfer evidence. Aggregating in SQL keeps the index size
-proportional to the number of distinct bridged token pairs, not to
-transfer volume — the table retains ~7 days of transfers, and loading full
-rows for all of them (as an earlier version of this index did) caused
-out-of-memory crashes when retention grew from one day to seven.
+proportional to the number of distinct bridged token pairs (times the
+plugins that carry them, almost always one or two), not to transfer
+volume — the table retains ~7 days of transfers, and loading full rows for
+all of them (as an earlier version of this index did) caused out-of-memory
+crashes when retention grew from one day to seven.
+
+The plugin and sample tx hashes exist for humans, not for resolution:
+`plan` summarizes them into the `transfer-evidence` trace step (one entry
+per distinct plugin, with one sample transfer's hashes), so a researcher
+looking at the preview dialog — or at the ingestion log persisted to
+`TokenDbHistory` — can see *where* an address appears and jump to an
+explorer. This is deliberately derived from the current transfer window on
+every look instead of being stored on the queue entry: enqueueing an
+already-queued address is a no-op and propagation re-enqueues neighbors,
+so any stored "source" would be first-writer-wins and often meaningless,
+and it would dangle once the transfer rolls out of the 7-day window.
 
 The one consumer that needs a full transfer row — the
 `non-swapping-transfer` assignment proof — fetches the group's sample

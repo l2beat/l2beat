@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EscrowVotesAdapter",
+  "category": "gov",
+  "description": "Upgradeable IVotes adapter that exposes voting power from veFOLD locks. BondedVotes uses it as its primary voting-power source.",
+  "ignoreMethods": ["getPastTotalSupply", "proxiableUUID", "tokenIsDelegated"],
+  "ignoreInWatchMode": ["clock"],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose permission manager grants delegation administration and upgrade roles."
+    },
+    "escrow": {
+      "description": "VotingEscrow from which lock balances and ownership are read."
+    },
+    "escrowClock": {
+      "description": "Clock used for timestamp-indexed voting checkpoints."
+    },
+    "paused": {
+      "description": "Whether delegation updates through the adapter are paused.",
+      "type": "RISK_PARAMETER"
+    },
+    "MAX_EPOCHS": {
+      "description": "Maximum number of epochs traversed by voting-power calculations.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

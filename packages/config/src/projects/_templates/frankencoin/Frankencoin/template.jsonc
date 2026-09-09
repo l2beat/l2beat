@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The ZCHF stablecoin token. Immutable and ownerless: supply is controlled exclusively by registered 'minter' modules. Anyone can apply to add a minter by paying a fee of at least 1,000 ZCHF; it becomes active unless vetoed by FPS holders with 2% of votes during the application period (at least 14 days). Once active, a minter is irrevocable.",
+  "ignoreInWatchMode": ["totalSupply", "equity", "minterReserve"],
+  "fields": {
+    "MIN_APPLICATION_PERIOD": {
+      "description": "Minimum veto period (in seconds) for new minter applications."
+    },
+    "minters": {
+      "description": "All registered (or, if recently suggested, pending) minter modules, reconstructed from MinterApplied/MinterDenied events.",
+      "handler": {
+        "type": "event",
+        "select": "minter",
+        "add": {
+          "event": "MinterApplied"
+        },
+        "remove": {
+          "event": "MinterDenied"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract."
+        }
+      ]
+    },
+    "reserve": {
+      "description": "The Equity contract holding the ZCHF reserve.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "veto pending minter applications with 2% of FPS votes. This is the system's main safeguard: an unvetoed minter is irrevocable and can mint unlimited ZCHF."
+        }
+      ]
+    }
+  }
+}

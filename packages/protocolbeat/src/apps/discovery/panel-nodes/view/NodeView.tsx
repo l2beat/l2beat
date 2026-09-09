@@ -3,13 +3,18 @@ import { memo } from 'react'
 
 import { AddressIcon } from '../../../../components/AddressIcon'
 import { IconInitial } from '../../../../icons/IconInitial'
-import type { Field, Node } from '../store/State'
+import type { Node } from '../store/State'
 import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
+import { getRowLayout } from '../store/utils/rows'
 import { getColor } from './colors/colors'
+
+// Which sides of a row carry a link to a visible target: 'n'one, 'l'eft,
+// 'r'ight or 'b'oth. A compressed row can reach targets on either side.
+export type RowDots = 'n' | 'l' | 'r' | 'b'
 
 export interface NodeViewProps {
   node: Node
@@ -17,19 +22,16 @@ export interface NodeViewProps {
   isDimmed: boolean
   isGrayedOut: boolean
   isOverlapping: boolean
-  // Per-field flags packed into a string ("01101..."). Stable enough for `===`
-  // comparison in the memo comparator; cheaper than allocating an array per
-  // render.
-  fieldHighlightedMask: string
-  fieldTargetHiddenMask: string
+  // Per-row flags packed into a string ("01101..." / "nlrb..."). Stable enough
+  // for `===` comparison in the memo comparator; cheaper than allocating an
+  // array per render.
+  rowHighlightedMask: string
+  rowDotMask: string
 }
 
 function NodeViewImpl(props: NodeViewProps) {
   const { color, isDark } = getColor(props.node)
-  const hiddenFields =
-    props.node.hiddenFields.length > 0
-      ? new Set(props.node.hiddenFields)
-      : undefined
+  const { rows } = getRowLayout(props.node)
 
   const fullHeight =
     props.node.addressType === 'EOA' && props.node.fields.length === 0
@@ -75,18 +77,15 @@ function NodeViewImpl(props: NodeViewProps) {
             )}
           </div>
         </div>
-        {props.node.fields.map((field, i) => {
-          if (hiddenFields?.has(field.name)) return null
-          return (
-            <NodeField
-              key={i}
-              field={field}
-              isSelected={props.isSelected}
-              isHighlighted={props.fieldHighlightedMask[i] === '1'}
-              targetHidden={props.fieldTargetHiddenMask[i] === '1'}
-            />
-          )
-        })}
+        {rows.map((row, i) => (
+          <NodeRow
+            key={row.key}
+            label={row.label}
+            isSelected={props.isSelected}
+            isHighlighted={props.rowHighlightedMask[i] === '1'}
+            dots={(props.rowDotMask[i] ?? 'n') as RowDots}
+          />
+        ))}
         {props.node.hiddenFields.length > 0 && (
           <div
             className="flex items-end justify-center text-center text-coffee-200/40 text-xs italic"
@@ -124,8 +123,8 @@ export const NodeView = memo(NodeViewImpl, (prev, next) => {
     prev.isDimmed === next.isDimmed &&
     prev.isGrayedOut === next.isGrayedOut &&
     prev.isOverlapping === next.isOverlapping &&
-    prev.fieldHighlightedMask === next.fieldHighlightedMask &&
-    prev.fieldTargetHiddenMask === next.fieldTargetHiddenMask
+    prev.rowHighlightedMask === next.rowHighlightedMask &&
+    prev.rowDotMask === next.rowDotMask
   )
 })
 
@@ -148,16 +147,14 @@ function getTitleBackground(node: Node): string {
   )`
 }
 
-interface NodeFieldProps {
-  field: Field
+interface NodeRowProps {
+  label: string
   isSelected: boolean
   isHighlighted: boolean
-  targetHidden: boolean
+  dots: RowDots
 }
 
-function NodeFieldImpl(props: NodeFieldProps) {
-  const isLeft = props.field.connection.from.direction === 'left'
-
+function NodeRowImpl(props: NodeRowProps) {
   return (
     <div className="relative">
       <div
@@ -170,10 +167,13 @@ function NodeFieldImpl(props: NodeFieldProps) {
           lineHeight: FIELD_HEIGHT + 'px',
         }}
       >
-        {props.field.label ?? props.field.name}
+        {props.label}
       </div>
-      {!props.targetHidden && (
+      {DOT_SIDES.filter(
+        (side) => props.dots === side || props.dots === 'b',
+      ).map((side) => (
         <div
+          key={side}
           className={clsx(
             'absolute h-[10px] w-[10px] rounded-full',
             props.isHighlighted || props.isSelected
@@ -181,14 +181,16 @@ function NodeFieldImpl(props: NodeFieldProps) {
               : 'bg-coffee-400',
           )}
           style={{
-            left: isLeft ? -5 : undefined,
-            right: isLeft ? undefined : -5,
+            left: side === 'l' ? -5 : undefined,
+            right: side === 'l' ? undefined : -5,
             top: FIELD_HEIGHT / 2 - 5,
           }}
         />
-      )}
+      ))}
     </div>
   )
 }
 
-const NodeField = memo(NodeFieldImpl)
+const DOT_SIDES = ['l', 'r'] as const
+
+const NodeRow = memo(NodeRowImpl)

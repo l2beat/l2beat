@@ -3,7 +3,7 @@ import {
   formatInteger,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import type { TokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import type { TokenFrameworksData } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { InteropCompareContent } from '../../../components/comparison/InteropCompareContent'
 import type { EntitySelectOption } from '../../../components/comparison/InteropEntitySelect'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'

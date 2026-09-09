@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { BeaconChainBlob, BeaconChainClient, EVMLog } from '../../clients'
 import type { IRpcClient } from '../../clients2'
@@ -25,6 +25,11 @@ export class EthereumDaProvider implements DaBlobProvider {
     }
 
     return (await Promise.all(getBlobs)).flat()
+  }
+
+  async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    const block = await this.rpcClient.getBlock(blockNumber, false)
+    return block.timestamp
   }
 
   async getBlobsByVersionedHashesAndBlockNumber(

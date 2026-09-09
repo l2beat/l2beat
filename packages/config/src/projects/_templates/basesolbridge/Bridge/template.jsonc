@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Core contract of the Base <> Solana bridge on the Base side. Outgoing messages (token transfers and arbitrary Solana instructions) are appended to an onchain merkle mountain range accumulator that is consumed by offchain infrastructure and the bridge program on Solana. Incoming messages from Solana must first be attested in the BridgeValidator and can then be relayed permissionlessly: they mint CrossChainERC20 tokens, release escrowed Base-native assets or execute arbitrary calls through per-user Twin contracts. Base-native assets (ETH, ERC20s) that are bridged to Solana are escrowed in this contract.",
+  "ignoreInWatchMode": ["getRoot", "getNextNonce"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the guardian role and transfer ownership of the Bridge."
+        }
+      ]
+    },
+    "guardians": {
+      "description": "Accounts holding the guardian role.",
+      "handler": {
+        "type": "event",
+        "select": "user",
+        "add": { "event": "RolesUpdated", "where": ["!=", "#roles", 0] },
+        "remove": { "event": "RolesUpdated", "where": ["=", "#roles", 0] }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause the Bridge, which blocks outgoing messages, incoming relays and new message attestations in the BridgeValidator."
+        }
+      ]
+    },
+    "paused": {
+      "description": "If true, outgoing messages, incoming relays and new message attestations are blocked.",
+      "severity": "HIGH"
+    },
+    "getRoot": {
+      "description": "Current root of the merkle mountain range accumulating all outgoing messages."
+    },
+    "getNextNonce": {
+      "description": "Nonce of the next outgoing message."
+    },
+    "REMOTE_BRIDGE": {
+      "description": "Pubkey of the bridge program on Solana."
+    }
+  }
+}

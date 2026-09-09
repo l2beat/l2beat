@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
-import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
+import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
+import { TvsBreakdownSummaryBox } from '~/pages/layer2s/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import { useTRPC } from '~/trpc/React'
 import { TvsBreakdownButton } from './TvsBreakdownButton'
 
@@ -19,7 +19,7 @@ export function TvsProjectStats({
 }) {
   const trpc = useTRPC()
   const { range } = useTvsChartControlsContext()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { data, isLoading, refetch } = useQuery(
     trpc.tvs.table.queryOptions({
       type: 'projects',

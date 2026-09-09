@@ -8,8 +8,9 @@ import {
   buildRenderGraph,
   isFieldConnectionLive,
 } from '../store/utils/renderGraph'
+import { getRowLayout } from '../store/utils/rows'
 import { Connection, type ConnectionProps } from './Connection'
-import { NodeView } from './NodeView'
+import { NodeView, type RowDots } from './NodeView'
 
 interface ConnectionView extends ConnectionProps {
   key: string
@@ -20,8 +21,8 @@ interface NodeFlags {
   isDimmed: boolean
   isGrayedOut: boolean
   isOverlapping: boolean
-  fieldHighlightedMask: string
-  fieldTargetHiddenMask: string
+  rowHighlightedMask: string
+  rowDotMask: string
 }
 
 interface DerivedView {
@@ -124,8 +125,8 @@ export function NodesAndConnections() {
             isDimmed={flags.isDimmed}
             isGrayedOut={flags.isGrayedOut}
             isOverlapping={flags.isOverlapping}
-            fieldHighlightedMask={flags.fieldHighlightedMask}
-            fieldTargetHiddenMask={flags.fieldTargetHiddenMask}
+            rowHighlightedMask={flags.rowHighlightedMask}
+            rowDotMask={flags.rowDotMask}
           />
         )
       })}
@@ -170,6 +171,13 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
   }
 
   return overlapping
+}
+
+function withDot(dots: RowDots, side: 'left' | 'right'): RowDots {
+  const wanted: RowDots = side === 'left' ? 'l' : 'r'
+  if (dots === 'n') return wanted
+  if (dots === wanted) return dots
+  return 'b'
 }
 
 function buildView(
@@ -237,17 +245,28 @@ function buildView(
     const isGrayedOut = markUnreachableEntries && !node.isReachable
     const isOverlapping = overlappingIds.has(node.id)
 
-    let fieldHighlightedMask = ''
-    let fieldTargetHiddenMask = ''
+    // A compressed row stands for several values at once, so its highlight and
+    // its dots are the union over the values drawn through it.
+    const { rows, rowByField } = getRowLayout(node)
+    const rowHighlighted: string[] = new Array(rows.length).fill('0')
+    const rowDots: RowDots[] = new Array(rows.length).fill('n')
+    const hiddenFields = new Set(node.hiddenFields)
 
     for (let i = 0; i < node.fields.length; i++) {
       const field = node.fields[i]
       if (!field) continue
+      if (hiddenFields.has(field.name)) continue
 
+      const row = rowByField[i] as number
       const targetSelected = selectedSet.has(field.target)
       const targetHidden = hiddenSet.has(field.target)
-      fieldHighlightedMask += targetSelected ? '1' : '0'
-      fieldTargetHiddenMask += targetHidden ? '1' : '0'
+      if (targetSelected) rowHighlighted[row] = '1'
+      if (!targetHidden) {
+        rowDots[row] = withDot(
+          rowDots[row] as RowDots,
+          field.connection.from.direction,
+        )
+      }
 
       if (!isFieldConnectionLive(node, field, liveGroupTargets) || targetHidden)
         continue
@@ -293,8 +312,8 @@ function buildView(
       isDimmed,
       isGrayedOut,
       isOverlapping,
-      fieldHighlightedMask,
-      fieldTargetHiddenMask,
+      rowHighlightedMask: rowHighlighted.join(''),
+      rowDotMask: rowDots.join(''),
     })
   }
 

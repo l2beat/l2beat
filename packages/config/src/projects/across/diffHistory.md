@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x4c78b1a2e88eade36bd3a9399cc78098e8a5bffe
+Generated with discovered.json: 0x20bab0406c2e45130763ebf8fa65e65911d83163
+
+# Diff at Tue, 25 Aug 2026 08:51:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1786957091
+- current timestamp: 1787647766
+
+## Description
+
+7702 auth removed.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      sourceHashes:
+-        ["0x3e6b48b0583e724b7006fcec0d9a021abd698deb8f7699582cdfee96bd65db4f"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x69007702764179f14F51cdce752f4f775d74E139","accountId":"alchemy.sma-7702.1.0.0","entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getFallbackSignerData":["eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",false]}
+    }
+```
+
+Generated with discovered.json: 0x1c82e3d1a0bdceb709d78bf574f2eeedd1781e5e
 
 # Diff at Mon, 17 Aug 2026 09:13:05 GMT:
 

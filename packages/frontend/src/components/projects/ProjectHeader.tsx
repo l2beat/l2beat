@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
@@ -13,7 +14,7 @@ interface Props {
   project: Project
   ongoingAnomaly?: 'single' | 'multiple'
   recentUpdatesCount?: number
-  secondLine?: string
+  secondLine?: ReactNode
   livenessSectionHref?: string
   className?: string
 }

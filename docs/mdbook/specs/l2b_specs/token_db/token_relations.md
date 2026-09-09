@@ -14,6 +14,7 @@
   - [Display implications](#display-implications)
   - [Relations graph](#relations-graph)
   - [Human edits](#human-edits)
+    - [Manually added relations](#manually-added-relations)
   - [Known limitations](#known-limitations)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -120,8 +121,13 @@ Nothing else should ever accept the old names.
 
 The remaining columns:
 
-- `bridgeType` is `NOT NULL` — a relation only exists for non-swapping
-  types, so every row has one.
+- `bridgeType` is `NOT NULL` — a relation only exists for the non-swapping
+  types (`lockAndMint`, `burnAndMint`), so every row has one. `nonMinting` is
+  **not supported in the table**: a nonMinting route may swap assets, and a
+  relation asserts its endpoints are the same asset, so ingestion never
+  writes such a row and the add planner rejects one. This is writer policy,
+  not a `CHECK` — readers that filter on bridge type (the graph, the minter
+  queries) stay defensive anyway.
 - `lockedToken` names the slot holding the locked token: `'A'`, `'B'`, or
   `NULL` — a `CHAR(1)`, since one letter says everything there is to say. It
   is deliberately **outside** the
@@ -137,12 +143,25 @@ The remaining columns:
   |---|---|
   | `burnAndMint` | nothing is locked — the pair is symmetric, both sides burn and mint. A terminal value, not a gap. |
   | `lockAndMint` | no observation has identified the locked endpoint yet. Resolved as soon as one does. |
-- `transfer` holds one full sample interop transfer as evidence. It is
-  embedded (not referenced by id) because the interop transfer table is a
-  sliding ~7-day window — the same reasoning as the
-  `non-swapping-transfer` assignment proof on `DeployedToken`. The sample
-  keeps its own observed direction; read `srcChain`/`dstChain` from inside
-  the JSON when displaying it, never the relation's endpoint columns.
+- `transfer` holds the relation's evidence — *why we claim this relation
+  exists* — in one of two shapes, told apart inside the JSON by the presence
+  of a `kind` field and at the row level by `plugin` (see
+  [Manually added relations](#manually-added-relations)):
+  - For an ingested relation: one full sample interop transfer. It is
+    embedded (not referenced by id) because the interop transfer table is a
+    sliding ~7-day window — the same reasoning as the
+    `non-swapping-transfer` assignment proof on `DeployedToken`. The sample
+    keeps its own observed direction; read `srcChain`/`dstChain` from inside
+    the JSON when displaying it, never the relation's endpoint columns.
+  - For a manually added relation: a human attestation
+    `{ kind: 'manual', user, comment, bridge }` — the `ManualRelationEvidence`
+    schema in `@l2beat/shared-pure` — where `bridge` optionally names the
+    mechanism (`{ name, chain, address }`, e.g. the WETH contract). Sample
+    transfers carry no `kind` field, so the discriminator is unambiguous;
+    readers still dispatch on the row-level `plugin`, not on the JSON.
+
+  Either way the evidence is display-only: no read path derives roles,
+  direction, or identity from it.
 
 A pair of identical endpoints (same chain, same address) is not recorded: a
 token is trivially the same asset as itself, so the row would carry no
@@ -369,9 +388,10 @@ There is deliberately no `symmetric` role (there used to be one, shown for
 `burnAndMint` pairs). A `burnAndMint` pair *is* symmetric, but from each
 endpoint's point of view that fact reads "minted" — the question the role
 answers — and the bridge type, shown alongside, is what carries the
-symmetry. A relation that is neither `burnAndMint` nor `lockAndMint` (a
-human-added `nonMinting` row; ingestion never writes one) mints nothing and
-shows `unknown`.
+symmetry. A relation that is neither `burnAndMint` nor `lockAndMint` mints
+nothing and shows `unknown` — defensively: no writer produces such a row
+(ingestion keeps only the non-swapping types and the add planner rejects the
+rest), but the reader does not assume that.
 
 This is the answer to "which plugin minted this token, and which token is it
 a representation of" — the question the Relations tab exists for. Read it
@@ -383,8 +403,9 @@ token-backend — is answered by
 `TokenRelationRepository.getMintingPluginsFor`: the distinct plugins of the
 relations where the token's role is minted. Deliberately excluded: relations
 where the token is locked, relations with an unknown role (one of their
-endpoints is minted, but nothing says it is this one), and human-added
-`nonMinting` relations, which mint nothing. Token-UI exposes the same query
+endpoints is minted, but nothing says it is this one), and — defensively,
+since no writer produces them — `nonMinting` relations, which mint nothing.
+Token-UI exposes the same query
 as `deployedTokens.getMintingPlugins` and shows the list above the Relations
 table, so the summary can be eyeballed against the roles in the table.
 
@@ -423,6 +444,51 @@ the viewport. At low zoom levels each cluster is overlaid with its most common
 catalogued deployed-token symbol. The overlay stays readable through the
 mid-zoom range, then shrinks and fades at extreme zoom-out to avoid overlapping
 nearby cluster labels.
+
+Besides the relation endpoints, the graph shows **tokens without relations**:
+deployed tokens that were manually assigned to an abstract token (typically
+legacy imports) but appear in no observed relation. Without this they would be
+invisible on the graph and easy to forget about. Each cluster is considered to
+represent one abstract token — its most common one, decided by the same "most
+common wins" rule as the cluster's symbol label, so a rare dissenting
+assignment inside a cluster is outvoted — and every token without relations
+whose assignment matches a cluster's abstract token is attached to that
+cluster with a *virtual link*: layout-only, longer and looser than a real
+link, so the node sits with the cluster but a bit outside it, and no edge is
+drawn because none was observed. When several clusters share a most common
+abstract token the largest wins. Nodes without relations are drawn hollow (an
+outlined circle instead of a filled dot), the legend names them "No
+relations", and the page header counts them so their production volume is
+visible at a glance. The graph payload only includes tokens without relations
+whose abstract token appears among the endpoints at all; one whose abstract
+token has no cluster anywhere would have nowhere to go and is not shipped.
+The rare shipped token whose abstract token is present but is not any
+cluster's most common one stays unattached and lays out as its own
+single-node cluster.
+
+Many tokens without relations live on chains interop transfers do not cover,
+so they can never gain a relation; dropping such chains from the graph
+entirely is a decision under consideration. To size that decision, a header
+radio group ("Tokens without relations") picks which of them are displayed:
+**Hide** (the graph as it was before these tokens existed), **Show
+supported** (the default: only tokens without relations whose chain appears
+in some relation — the distinct chains among relation endpoints stand in for
+the interop-supported list, keeping the graph free of any dependency on
+interop configuration), or **Show all**. Unlike relation deletion, changing
+the mode filters the *payload* before the scene is built, so the whole
+layout re-runs and the clusters settle without the hidden nodes — an
+invisible node held in the force simulation would still distort its
+cluster's shape, which defeats the point of hiding it. Because that rebuild
+blocks the main thread for seconds, the click is acknowledged before the
+work starts: the graph renders from a deferred copy of the mode
+(`useDeferredValue`), so the switched radio and a loading overlay paint
+first and the blocking scene build then runs inside React's deferred
+re-render, whose commit shows the new clusters and removes the overlay in
+one step; the radios stay disabled until the deferred copy catches up, so
+clicks cannot queue up faster than rebuilds finish. The header counts report
+displayed tokens plus
+how many the mode hides, so the modes can be compared by switching between
+them. The picker may be simplified once the chain-support decision is made.
 
 Clicking a node keeps the node, its incident edges, and its neighbors
 prominent while dimming the rest of the graph. A non-modal details panel loads
@@ -494,6 +560,65 @@ is unordered, so the stored order is derived rather than taken. `lockedToken`
 moves with the endpoints when they are swapped, so the role a human stated is
 preserved. The update intent can also set `lockedToken` directly, which is
 how a human corrects a role the flags got wrong.
+
+The add planner accepts only the non-swapping bridge types, `lockAndMint` and
+`burnAndMint`. This is planner policy, not a `CHECK` mirror — the table has
+no constraint on `bridgeType` — and it holds a human to the same rule as
+ingestion: a relation asserts that its endpoints are the same asset, a
+`nonMinting` route may swap assets (see [The table](#the-table)), and
+`unknown` names no mechanism at all. The planners also mirror the table's
+actual `CHECK` constraints, so violations surface as friendly planning errors
+instead of failing the execute transaction: only a `lockAndMint` relation may
+name a `lockedToken`, and the two endpoints must differ (compared
+case-insensitively, like the table stores them).
+
+### Manually added relations
+
+Some relations no interop transfer can ever evidence — most prominently
+same-chain wrappers such as ETH ↔ WETH on ethereum, where WETH is minted by
+locking ETH in the WETH contract, but wrapping is not an interop transfer and
+no plugin observes it. Without the relation, both tokens look like "original"
+assets. The Relations tab of a deployed token in token-UI therefore has an
+*Add relation* flow that records such a relation manually through the
+standard add intent.
+
+A manual relation stores the sentinel plugin **`manual`**
+(`MANUAL_RELATION_PLUGIN` in `@l2beat/shared-pure`). `plugin` is part of the
+primary key, so it cannot be `NULL`, and the sentinel is what answers "which
+observer produced this observation" honestly: a human. It is a row-level
+marker — any reader can select or exclude manual relations on the `plugin`
+column alone, so future code that mines the sample-transfer evidence can
+filter manual rows without opening any JSON (`WHERE plugin != 'manual'`).
+Never name a real interop plugin `manual`. The bridge a human claims as the
+mechanism is deliberately *not* part of the plugin value: keeping free text
+out of the primary key keeps one manual row per `(pair, bridgeType)`, and the
+bridge description stays editable through the update intent instead of
+requiring delete + re-add.
+
+The evidence of a manual relation is the `{ kind: 'manual', ... }` attestation
+described in [The table](#the-table). Clients submit it without `user`; the
+planner validates the shape and stamps the authenticated plan-time user on it
+(replacing any client-sent value), exactly like deployed-token assignment
+proofs — so the confirmation diff already shows the record as it will be
+stored. No timestamp is stamped: `executePlan` regenerates the plan and
+requires it to deep-equal the confirmed one, and the history row carries the
+time. Relations with any other plugin pass their evidence through untouched —
+the backend deliberately keeps accepting arbitrary plugin values on the
+intent (it is an authenticated internal tool and every write lands in
+`TokenDbHistory`); only relations claiming the `manual` sentinel must carry
+manual-entry evidence.
+
+Manual relations are ordinary rows everywhere else — and because only the
+non-swapping types can be added, every manual row qualifies for every reader:
+they render in the Relations tab and the graph (edge label `manual`),
+`getMintingPluginsFor` counts them, and the delete intent removes them.
+Same-chain pairs are legal —
+the endpoint-ordering constraint only rejects *identical* endpoints. One
+consequence to expect: `getMintingPluginsForMany` now returns `manual`
+records to the public frontend, which **skips them for now** when resolving
+minter projects (there is no interop project to link to), rather than warning
+about an unresolvable plugin. Displaying manual bridges on l2beat.com is a
+future decision.
 
 ## Known limitations
 

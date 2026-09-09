@@ -4,8 +4,9 @@ import type { HomeRecentProject } from '../getHomeData'
 import { HomeCard } from './HomeCard'
 
 const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
-  scaling: 'Scaling project',
+  l2: 'Scaling project',
   da: 'Data Availability',
+  interop: 'Interoperability',
   zkCatalog: 'ZK Catalog',
   ecosystems: 'Ecosystem',
   privacy: 'Privacy',
@@ -36,8 +37,8 @@ export function HomeRecentProjectsCard({ projects, className }: Props) {
 
 function RecentProjectCard({ project }: { project: HomeRecentProject }) {
   const subtitle =
-    project.category === 'scaling' && project.scalingCategory
-      ? project.scalingCategory
+    project.category === 'l2' && project.l2Category
+      ? project.l2Category
       : CATEGORY_LABEL[project.category]
   return (
     <a

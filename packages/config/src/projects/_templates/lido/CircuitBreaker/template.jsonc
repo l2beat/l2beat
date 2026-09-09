@@ -34,7 +34,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "maintain a live heartbeat and trigger the assigned protocol contract's one-time emergency pause."
+          "description": "maintain a live heartbeat and trigger a one-time emergency pause of the specific protocol contract assigned to it in the pauser map."
         }
       ]
     }

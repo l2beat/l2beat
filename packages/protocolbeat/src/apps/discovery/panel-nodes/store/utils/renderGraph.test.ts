@@ -77,6 +77,7 @@ function makeNode(
     name: id,
     fields: fields.map(([name, target]) => makeField(name, target)),
     hiddenFields,
+    compressedRows: [],
     box: { x: 0, y: 0, width: 200, height: 0 },
     color: 0,
     hueShift: 0,

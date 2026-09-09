@@ -31,6 +31,7 @@
 # L2BEAT specs
 
 - [Interop](./l2b_specs/interop.md)
+- [Interop plugin matching](./l2b_specs/interop_plugin_matching.md)
 - [Permissions section](./l2b_specs/permissions.md)
 - [Contracts section](./l2b_specs/contracts.md)
 - [Finality page](./l2b_specs/finality.md)

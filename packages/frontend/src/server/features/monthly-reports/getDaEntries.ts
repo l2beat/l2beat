@@ -15,8 +15,8 @@ import {
   getDaThroughputSummary,
   type ThroughputSummaryData,
 } from '../data-availability/throughput/getDaThroughputSummary'
-import type { ActivityLatestUopsData } from '../scaling/activity/getActivityLatestTps'
-import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import type { ActivityLatestUopsData } from '../layer2s/activity/getActivityLatestTps'
+import type { SevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 
 export interface DaMonthlyUpdateEntry
   extends Omit<DataAvailabilityUpdate, 'daLayerId' | 'newProjectsIds'> {

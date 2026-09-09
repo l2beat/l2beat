@@ -1,9 +1,9 @@
+import { formatJson } from '@l2beat/shared-pure'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
-import { formatJson } from '../../../utils/formatJson'
 import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
@@ -63,7 +63,7 @@ export function useTemplateModel({ templateId, files }: Props) {
 
   const setFieldSeverity = (
     fieldName: string,
-    severity: 'HIGH' | 'LOW' | undefined,
+    severity: 'HIGH' | 'MEDIUM' | 'LOW' | undefined,
   ) => {
     const newModel = templateModel.setFieldSeverity(fieldName, severity)
     setTemplateModel(newModel)

@@ -1,7 +1,7 @@
 import {
   getProjectLivenessChart,
   ProjectLivenessChartParams,
-} from '~/server/features/scaling/liveness/getProjectLivenessChart'
+} from '~/server/features/layer2s/liveness/getProjectLivenessChart'
 import { procedure, router } from '../trpc'
 
 export const livenessRouter = router({

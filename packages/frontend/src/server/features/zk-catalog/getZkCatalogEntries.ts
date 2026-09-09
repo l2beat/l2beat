@@ -5,7 +5,7 @@ import type { FilterableEntry } from '~/components/table/filters/filterableValue
 import {
   get7dTvsBreakdown,
   type SevenDayTvsBreakdown,
-} from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+} from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -52,6 +52,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
           'scalingInfo',
           'daLayer',
           'privacyInfo',
+          'defiInfo',
         ],
       }),
       get7dTvsBreakdown({ type: 'all' }),

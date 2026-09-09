@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -75,10 +76,14 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
-  celestiaDa: {
-    sinceBlock: 5757261,
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADQSAB6M6v+s=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 5757261,
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADQSAB6M6v+s=',
+    },
+  ],
   chainConfig: {
     name: 'plumenetwork',
     coingeckoPlatform: 'plume-network',

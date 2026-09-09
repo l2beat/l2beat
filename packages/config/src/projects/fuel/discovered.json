@@ -1,7 +1,7 @@
 {
   "name": "fuel",
   "timestamp": 1784123940,
-  "configHash": "0x9d8b0ad00d7ed0800780aa3f26db1765f6ed19dadc83a1103b85c7118d56448b",
+  "configHash": "0x753c37e5f59b6e3b4eefc2bb3d7f2ba4012d3b08b032f0afb847333ff7fef3ec",
   "entries": [
     {
       "name": "Fuel Security Council",
@@ -608,5 +608,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25538506 },
-  "permissionsConfigHash": "0x4c0b6e046ddcd84ea905f4b7287a1e02a2f3489434dedddc03db119004995197"
+  "permissionsConfigHash": "0x0307d9269846258199ec5c5ead6671d8b002d53bad58907b6725cf6f9d91b680"
 }

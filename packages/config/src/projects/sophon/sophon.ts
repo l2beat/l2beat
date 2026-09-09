@@ -125,10 +125,14 @@ export const sophon: ScalingProject = zkStackL2({
       },
     }),
   ],
-  availDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    appIds: ['17', '36', '37', '38'],
-  },
+  daTracking: [
+    {
+      type: 'avail',
+      daLayer: ProjectId('avail'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      appIds: ['17', '36', '37', '38'],
+    },
+  ],
   nonTemplateRiskView: {
     sequencerFailure: {
       value: 'No mechanism',

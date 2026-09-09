@@ -176,7 +176,7 @@ export const megaeth: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
   },
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'eigen-da',
       daLayer: ProjectId('eigenda'),

@@ -3,7 +3,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('shape')
 
@@ -15,6 +15,7 @@ export const shape: ScalingProject = opStackL2({
   addedAt: UnixTime(1727654400), // 2024-09-30
   additionalBadges: [BADGES.RaaS.Alchemy],
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20369958 })],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Shape',
@@ -46,7 +47,7 @@ export const shape: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.shape.network',
-        callsPerMinute: 300,
+        callsPerMinute: 4800,
       },
     ],
   },

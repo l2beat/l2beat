@@ -21,6 +21,10 @@ export class AvailDaProvider implements DaBlobProvider {
     return blobArrays.flat()
   }
 
+  getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    return Promise.resolve(this.calculateAvailTimestamp(blockNumber))
+  }
+
   private async getBlobsFromBlock(blockNumber: number): Promise<AvailBlob[]> {
     const blobs: AvailBlob[] = []
 

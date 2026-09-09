@@ -35,12 +35,12 @@ export class StarknetTotalSupplyProvider {
         try {
           const res = await client.call(c, blockNumber)
           return res.toString() === '0x' ? 0n : BigInt(res[0])
-        } catch {
+        } catch (error) {
           this.logger.tag({ chain }).warn('Issue with totalSupply fetching', {
             token: tokens[i],
             blockNumber,
           })
-          return 0n
+          throw error
         }
       }),
     )

@@ -10,7 +10,10 @@ import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import {
+  getOrbitStackDaTracking,
+  orbitStackL2,
+} from '../../templates/orbitStack'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('kinto')
@@ -75,6 +78,7 @@ export const kinto: ScalingProject = orbitStackL2({
   capability: 'appchain',
   addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,
+  daTracking: [getOrbitStackDaTracking(discovery, { sinceBlock: 18788587 })],
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.VM.AppChain],
   archivedAt: UnixTime(1759409514),
   overridingPurposes: ['KYC-ed DeFi'],
@@ -116,7 +120,7 @@ export const kinto: ScalingProject = orbitStackL2({
       },
     ],
     apis: [
-      { type: 'rpc', url: 'https://rpc.kinto-rpc.com', callsPerMinute: 600 },
+      { type: 'rpc', url: 'https://rpc.kinto-rpc.com', callsPerMinute: 120 },
       { type: 'blockscout', url: 'https://explorer.kinto.xyz/api' },
     ],
   },

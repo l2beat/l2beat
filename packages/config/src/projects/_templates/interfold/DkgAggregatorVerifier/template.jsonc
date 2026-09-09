@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DkgAggregatorVerifier",
+  "category": "core",
+  "description": "Immutable generated Honk verifier for the BFV distributed-key-generation aggregation circuit."
+}

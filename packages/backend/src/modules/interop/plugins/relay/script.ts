@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { RelayApiClient } from './RelayApiClient'
@@ -8,7 +9,11 @@ main().catch((error) => {
 })
 
 async function main() {
-  const client = new RelayApiClient(new HttpClient())
+  const apiKey = process.env.INTEROP_RELAY_API_KEY
+  if (!apiKey) {
+    throw new Error('INTEROP_RELAY_API_KEY is required')
+  }
+  const client = new RelayApiClient(new HttpClient(), Logger.SILENT, apiKey)
   const ps = new ProjectService()
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
@@ -27,8 +32,6 @@ async function main() {
     const res = await client.getAllRequests({
       limit: 50,
       startTimestamp: lastTime,
-      sortBy: 'updatedAt',
-      sortDirection: 'asc',
     })
 
     const successes = res.requests.filter((x) => x.status === 'success')
@@ -46,11 +49,11 @@ async function main() {
       }
       known.add(req.id)
 
-      const srcId = req.data.inTxs?.[0]?.chainId
+      const srcId = req.sourceTx?.chainId
       const srcChain = srcId
         ? (chains.find((c) => c.chainId === srcId)?.name ?? srcId.toString())
         : '?'
-      const dstId = req.data.outTxs?.[0]?.chainId
+      const dstId = req.destinationTx?.chainId
       const dstChain = dstId
         ? (chains.find((c) => c.chainId === dstId)?.name ?? dstId.toString())
         : '?'
@@ -61,12 +64,12 @@ async function main() {
       if (dstChain !== 'base') continue
 
       const srcAmount = {
-        amount: req.data.metadata?.currencyIn?.amountFormatted,
-        symbol: req.data.metadata?.currencyIn?.currency?.symbol,
+        amount: req.sourceCurrency?.amountFormatted,
+        symbol: req.sourceCurrency?.currency?.symbol,
       }
       const dstAmount = {
-        amount: req.data.metadata?.currencyOut?.amountFormatted,
-        symbol: req.data.metadata?.currencyOut?.currency?.symbol,
+        amount: req.destinationCurrency?.amountFormatted,
+        symbol: req.destinationCurrency?.currency?.symbol,
       }
 
       console.log(
@@ -82,12 +85,12 @@ async function main() {
       const bsSrcChain = (srcChain as string) === 'ethereum' ? 'eth' : srcChain
       console.log(
         'src tx',
-        `https://app.blocksec.com/explorer/tx/${bsSrcChain}/${req.data.inTxs?.[0]?.hash}`,
+        `https://app.blocksec.com/explorer/tx/${bsSrcChain}/${req.sourceTx?.hash}`,
       )
       const bsDstChain = (dstChain as string) === 'ethereum' ? 'eth' : dstChain
       console.log(
         'dst tx',
-        `https://app.blocksec.com/explorer/tx/${bsDstChain}/${req.data.outTxs?.[0]?.hash}`,
+        `https://app.blocksec.com/explorer/tx/${bsDstChain}/${req.destinationTx?.hash}`,
       )
     }
   }

@@ -1,7 +1,7 @@
 import type {
   TokenFrameworksData,
   TopTokenItem,
-} from '~/server/features/scaling/interop/getTokenFrameworksData'
+} from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import type { InteropTokenRowData } from '../../components/InteropTokenRow'
 import {
   InteropTopTokensWidget,

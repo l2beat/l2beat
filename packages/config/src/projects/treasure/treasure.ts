@@ -21,7 +21,7 @@ export const treasure: ScalingProject = zkStackL2({
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1733875200), // 2024-12-11T00:00:00Z
   archivedAt: UnixTime(1752676593), // 2025-07-16T15:36:00Z
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

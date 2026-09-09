@@ -18,7 +18,7 @@ import type {
   TokenData,
   TokenFlowData,
   TokensPairData,
-} from '~/server/features/scaling/interop/types'
+} from '~/server/features/layer2s/interop/types'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'

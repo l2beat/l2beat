@@ -1,4 +1,4 @@
-import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/scaling/interop/consts'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 
 /**
  * Builds `/interop/tokens/{id}/{issuer}/{symbol}`. The issuer and symbol

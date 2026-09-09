@@ -63,8 +63,8 @@ export async function getProjectDaThroughputCharts(
       getDaThroughputChartByProjectData(params),
       getDaThroughputTable([params.projectId]),
     ])
-  const projectData = params.includeScalingOnly
-    ? throughputTable.scalingOnlyData[params.projectId]
+  const projectData = params.includeL2Only
+    ? throughputTable.l2OnlyData[params.projectId]
     : throughputTable.data[params.projectId]
 
   if (!totalChartData || !byProjectChartData || !projectData) {
@@ -75,8 +75,7 @@ export async function getProjectDaThroughputCharts(
   const to = Math.max(totalChartData.to, byProjectChartData.to)
 
   const timestamps = generateTimestamps([from, to], resolution)
-  const hasEigendaGap =
-    params.projectId === 'eigenda' && !params.includeScalingOnly
+  const hasEigendaGap = params.projectId === 'eigenda' && !params.includeL2Only
   const firstGapIndex = hasEigendaGap
     ? timestamps.findIndex((t) => isInEigendaLayerDataGap(t, resolution))
     : -1

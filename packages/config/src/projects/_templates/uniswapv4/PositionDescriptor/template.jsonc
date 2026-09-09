@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PositionDescriptor",
+  "description": "Renders the metadata and SVG image (tokenURI) of Uniswap v4 position NFTs. It takes no part in pool accounting and cannot affect funds."
+}

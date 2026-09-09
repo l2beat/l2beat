@@ -10,6 +10,8 @@ export interface EigenProjectDataEntry {
 
 export interface EigenDaProjectConfiguration {
   id: string
+  minHeight: number
+  maxHeight: number | null
   properties: Extract<TimestampDaIndexedConfig, { type: 'eigen-da' }>
 }
 
@@ -32,7 +34,7 @@ export function mapEigenProjectData(
     const configuration = configurations.find(
       (c) => c.properties.customerId === d.customer_id,
     )
-    if (!configuration) {
+    if (!configuration || !isInsideRange(d.datetime, configuration)) {
       continue
     }
     const key = `${d.datetime}-${configuration.id}`
@@ -54,4 +56,18 @@ export function mapEigenProjectData(
   }
 
   return Array.from(recordsMap.values())
+}
+
+// The API reports every customer regardless of our ranges. Keep only the hourly
+// buckets inside the configuration's range, cut at full hours the same way
+// trimData cuts them, so later updates never recreate trimmed rows.
+function isInsideRange(
+  timestamp: UnixTime,
+  configuration: EigenDaProjectConfiguration,
+): boolean {
+  return (
+    timestamp >= UnixTime.toStartOf(configuration.minHeight, 'hour') &&
+    (configuration.maxHeight === null ||
+      timestamp < UnixTime.toStartOf(configuration.maxHeight + 1, 'hour'))
+  )
 }

@@ -6,13 +6,16 @@
 
 import type { Logger } from '@l2beat/backend-tools'
 import {
+  addReferencedDiscoveries,
   ConfigReader,
+  clusterEntries,
   combinePermissionsIntoDiscovery,
   type DiscoveryDiff,
   type DiscoveryOutput,
   DiscoveryRegistry,
   diffDiscovery,
   discoveryDiffToMarkdown,
+  entriesForDiffPair,
   getDiscoveryPaths,
   modelPermissions,
   TemplateService,
@@ -102,20 +105,17 @@ export async function updateDiffHistoryForChain(
     codeDiff = rerun.codeDiff
 
     diff = diffDiscovery(
-      rerun.prevDiscovery?.entries ?? [],
-      curDiscovery.entries,
+      ...entriesForDiffPair(rerun.prevDiscovery, curDiscovery),
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.entries ?? [],
-      rerun.prevDiscovery?.entries ?? [],
+      ...entriesForDiffPair(discoveryFromMainBranch, rerun.prevDiscovery),
     )
   } else {
     logger.info(
       'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.entries ?? [],
-      curDiscovery?.entries ?? [],
+      ...entriesForDiffPair(discoveryFromMainBranch, curDiscovery),
     )
   }
 
@@ -227,6 +227,10 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     overwriteCache,
   )
   discoveries.set(prevStructure.name, prevStructure)
+  // Without this the previous model spans one project while the current one
+  // spans the whole cluster, and every cross-project permission reads as newly
+  // added on the next timestamped discovery.
+  addReferencedDiscoveries(discoveries, projectName, configReader, logger)
 
   const discoveryPaths = getDiscoveryPaths()
   const templateService = new TemplateService(discoveryPaths.discovery)
@@ -243,6 +247,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   combinePermissionsIntoDiscovery(
     targetDiscovery.discoveryOutput,
     permissionsOutput,
+    clusterEntries(discoveries),
   )
   const prevDiscovery = withoutUndefinedKeys(targetDiscovery.discoveryOutput)
 

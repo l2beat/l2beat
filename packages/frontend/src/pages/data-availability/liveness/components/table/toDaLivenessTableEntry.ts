@@ -5,7 +5,7 @@ import type {
 import type {
   LivenessDataPoint,
   LivenessTimeRange,
-} from '~/server/features/scaling/liveness/types'
+} from '~/server/features/layer2s/liveness/types'
 
 export type DaLivenessBridgeTableEntry = Omit<DaBridgeLivenessEntry, 'data'> & {
   data:

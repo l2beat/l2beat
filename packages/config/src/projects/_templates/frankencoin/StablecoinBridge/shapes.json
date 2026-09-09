@@ -1,0 +1,12 @@
+{
+  "StablecoinBridge": {
+    "hash": "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19",
+    "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+    "blockNumber": 25780626
+  },
+  "StablecoinBridgeV2": {
+    "hash": "0x9279e115ddca68b2b3076c4523429608113ec5518c7eb70cdd7d5f09a70c0924",
+    "address": "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1",
+    "blockNumber": 25780626
+  }
+}

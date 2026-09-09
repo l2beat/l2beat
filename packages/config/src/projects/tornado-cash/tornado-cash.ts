@@ -108,7 +108,9 @@ export const tornadoCash: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning: undefined,
-    redWarning: undefined,
+    redWarning: {
+      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds. See Secure frontend section below.',
+    },
     emergencyWarning: undefined,
     reviewStatus: undefined,
     unverifiedContracts: [],
@@ -122,6 +124,7 @@ export const tornadoCash: BaseProject = {
     ),
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
+      socialMedia: ['https://t.me/TornadoCashOfficialDAO'],
     },
     badges: [],
   },
@@ -179,6 +182,14 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: BUCKETS.map((bucket) => ({
+        address: bucket.address,
+        sinceTimestamp: bucket.sinceTimestamp,
+        extractor: 'tornadoCashWithdrawal',
+      })),
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

@@ -43,7 +43,11 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { CCIPConfig } from './ccip.config'
+import {
+  CCIPConfig,
+  getKnownOnRamps,
+  getOnRampsByDestination,
+} from './ccip.config'
 import { decodeCCIPV2Message } from './ccip.v2'
 
 // --- Messaging events (v1.0–v1.5, per-lane) ---
@@ -260,29 +264,33 @@ export class CCIPPlugin implements InteropPluginResyncable {
 
     for (const network of networks) {
       try {
-        for (const addr of Object.values(network.outboundLanes)) {
-          v15SendAddresses.push(
-            ChainSpecificAddress.fromLong(network.chain, addr),
-          )
+        for (const addresses of Object.values(
+          getOnRampsByDestination(network),
+        )) {
+          for (const address of addresses) {
+            v15SendAddresses.push(
+              ChainSpecificAddress.fromLong(network.chain, address),
+            )
+          }
         }
         for (const addr of Object.values(network.inboundLanes)) {
           v15RecvAddresses.push(
             ChainSpecificAddress.fromLong(network.chain, addr),
           )
         }
-        if (network.onRamp) {
-          v16SendAddresses.push(
-            ChainSpecificAddress.fromLong(network.chain, network.onRamp),
+        for (const address of getKnownOnRamps(network)) {
+          const chainAddress = ChainSpecificAddress.fromLong(
+            network.chain,
+            address,
           )
+          // The event signature identifies the ramp generation. Querying both
+          // signatures over the same address set also supports live migrations.
+          v16SendAddresses.push(chainAddress)
+          v2SendAddresses.push(chainAddress)
         }
         if (network.offRamp) {
           v16RecvAddresses.push(
             ChainSpecificAddress.fromLong(network.chain, network.offRamp),
-          )
-        }
-        if (network.onRampV2) {
-          v2SendAddresses.push(
-            ChainSpecificAddress.fromLong(network.chain, network.onRampV2),
           )
         }
         if (network.offRampV2) {
@@ -346,9 +354,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
     // --- v1.5 source: CCIPSendRequested from per-lane OnRamp ---
     const sendRequested = parseCCIPSendRequested(input.log, null)
     if (sendRequested) {
-      const dstChainEntry = Object.entries(network.outboundLanes).find(
-        ([_, address]) => address === EthereumAddress(input.log.address),
-      )
+      const logAddress = EthereumAddress(input.log.address)
+      const dstChainEntry = Object.entries(
+        getOnRampsByDestination(network),
+      ).find(([_, addresses]) => addresses.includes(logAddress))
       if (!dstChainEntry) return
 
       return this.captureSend(input, {
@@ -379,8 +388,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
     const messageSent = parseCCIPMessageSent(input.log, null)
     if (messageSent) {
       if (
-        !network.onRamp ||
-        EthereumAddress(input.log.address) !== network.onRamp
+        !getKnownOnRamps(network).includes(EthereumAddress(input.log.address))
       )
         return
 
@@ -422,8 +430,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
     const messageSentV2 = parseCCIPMessageSentV2(input.log, null)
     if (messageSentV2) {
       if (
-        !network.onRampV2 ||
-        EthereumAddress(input.log.address) !== network.onRampV2
+        !getKnownOnRamps(network).includes(EthereumAddress(input.log.address))
       )
         return
 

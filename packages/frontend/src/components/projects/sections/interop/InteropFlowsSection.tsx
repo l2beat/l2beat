@@ -19,7 +19,7 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'

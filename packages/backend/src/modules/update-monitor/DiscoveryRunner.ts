@@ -1,17 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
-  type Analysis,
+  addReferencedDiscoveries,
   ConfigReader,
   type ConfigRegistry,
+  clusterEntries,
   combinePermissionsIntoDiscovery,
   type DiscoveryEngine,
   type DiscoveryOutput,
   DiscoveryRegistry,
   flattenDiscoveredSources,
-  getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   modelPermissions,
+  remapDiscoverySourceNames,
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
@@ -54,27 +55,17 @@ export class DiscoveryRunner {
 
     const discoveryPaths = getDiscoveryPaths()
     configReader ??= new ConfigReader(discoveryPaths.discovery)
-    const rawConfig = configReader.readRawConfig(projectName)
-
-    let toDiscover: string[] = []
-    if (rawConfig.modelCrossChainPermissions) {
-      logger.info('Discovering dependencies for cross-chain modelling')
-      toDiscover = getDependenciesToDiscoverForProject(
-        projectName,
-        configReader,
-      )
-      logger.info('Dependent project:', toDiscover)
-    } else {
-      logger.info('Discovering only current project - no cross-chain modelling')
-      toDiscover.push(projectName)
-    }
 
     const discoveries = await this.discoverMany(
-      toDiscover,
+      [projectName],
       discoveryTimestamp,
       configReader,
       logger,
     )
+    // Projects reached through an entrypoint are deliberately not
+    // rediscovered: modelling runs against their committed discovery, and
+    // keeping the two sides in sync is handled through Update Monitor.
+    addReferencedDiscoveries(discoveries, projectName, configReader, logger)
 
     const permissionsOutput = await modelPermissions(
       projectName,
@@ -88,14 +79,14 @@ export class DiscoveryRunner {
     combinePermissionsIntoDiscovery(
       projectDiscovery.discoveryOutput,
       permissionsOutput,
+      clusterEntries(discoveries),
     )
 
     assert(projectDiscovery.analysis)
     // TODO: Should not be here - drop it and use implementation name once it's ready
     // if somebody changes the name and decides to re-colorize
     // then .flat folder will be incorrect
-    // Duplicated from saveDiscoveryResult.ts
-    const remappedResults = remapNames(
+    const remappedResults = remapDiscoverySourceNames(
       projectDiscovery.analysis,
       projectDiscovery.discoveryOutput,
     )
@@ -171,30 +162,4 @@ export class DiscoveryRunner {
       throw err
     }
   }
-}
-
-function remapNames(
-  results: Analysis[],
-  discoveryOutput: DiscoveryOutput,
-): Analysis[] {
-  return results.map((entry) => {
-    if (entry.type === 'EOA' || entry.type === 'Reference') {
-      return entry
-    }
-
-    const matchingEntry = discoveryOutput.entries.find(
-      (e) => e.address === entry.address,
-    )
-
-    if (!matchingEntry) {
-      return entry
-    }
-
-    const newName = matchingEntry.name ?? entry.name
-
-    return {
-      ...entry,
-      name: newName,
-    }
-  })
 }

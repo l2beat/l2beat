@@ -101,13 +101,7 @@ export const zksync: ScalingProject = {
   chainConfig: {
     name: 'zksync',
     chainId: undefined,
-    apis: [
-      {
-        type: 'zksync',
-        url: 'https://api.zksync.io/api/v0.2',
-        callsPerMinute: 3_000,
-      },
-    ],
+    apis: [],
   },
   config: {
     escrows: [

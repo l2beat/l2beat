@@ -2,7 +2,7 @@ import type { RetryHandlerVariant } from '@l2beat/shared'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 interface BlockBasedApi {
-  type: 'rpc' | 'starknet' | 'zksync' | 'loopring' | 'degate3' | 'fuel'
+  type: 'rpc' | 'starknet' | 'fuel'
   url: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant

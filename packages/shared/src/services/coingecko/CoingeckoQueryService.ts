@@ -14,6 +14,7 @@ import type {
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
 export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 14
+export const MAX_REPAIRED_SUPPLY_GAP_HOURS = 24
 
 export interface QueryResultPoint {
   value: number
@@ -52,7 +53,7 @@ export class CoingeckoQueryService {
       coingeckoId,
       range,
     )
-    return zip(queryResult.prices, queryResult.marketCaps).map(
+    const supplies = zip(queryResult.prices, queryResult.marketCaps).map(
       ([price, marketCap]) => {
         assert(price && marketCap && price.timestamp === marketCap.timestamp)
 
@@ -63,6 +64,86 @@ export class CoingeckoQueryService {
         }
       },
     )
+    return this.repairInvalidSupplies(coingeckoId, supplies)
+  }
+
+  // Coingecko occasionally poisons single points of its market cap history
+  // (e.g. venice-token had market cap -1 for one hour), which makes the
+  // calculated supply NaN. Repair short gaps from the neighboring hours,
+  // but refuse to fabricate data for longer corrupt stretches.
+  private repairInvalidSupplies(
+    coingeckoId: CoingeckoId,
+    points: QueryResultPoint[],
+  ): QueryResultPoint[] {
+    let invalidCount = 0
+    let longestGapHours = 0
+    let currentGapHours = 0
+    let firstInvalid: UnixTime | undefined
+    let lastInvalid: UnixTime | undefined
+
+    for (const point of points) {
+      if (isValidSupply(point.value)) {
+        currentGapHours = 0
+        continue
+      }
+      // points are hourly (see getHourlyTimestamps), so a run of
+      // consecutive invalid points is a gap of that many hours
+      invalidCount++
+      currentGapHours++
+      longestGapHours = Math.max(longestGapHours, currentGapHours)
+      firstInvalid ??= point.timestamp
+      lastInvalid = point.timestamp
+    }
+
+    if (invalidCount === 0) {
+      return points
+    }
+
+    const context = {
+      coingeckoId: coingeckoId.toString(),
+      invalidCount,
+      longestGapHours,
+      from: firstInvalid,
+      to: lastInvalid,
+    }
+
+    if (
+      invalidCount === points.length ||
+      longestGapHours > MAX_REPAIRED_SUPPLY_GAP_HOURS
+    ) {
+      this.logger.error(
+        'Invalid circulating supply values, gap too long to repair',
+        context,
+      )
+      // this prefix makes callers skip the configuration instead of halting
+      throw new Error(`Insufficient data in response for ${coingeckoId}`)
+    }
+
+    this.logger.error(
+      'Invalid circulating supply values, repaired from neighboring hours',
+      context,
+    )
+
+    const repaired = [...points]
+    let previousValid: number | undefined
+    for (let i = 0; i < repaired.length; i++) {
+      if (isValidSupply(repaired[i].value)) {
+        previousValid = repaired[i].value
+      } else if (previousValid !== undefined) {
+        repaired[i] = { ...repaired[i], value: previousValid }
+      }
+    }
+    // only a leading gap can still be invalid - fill it from the next valid value
+    let nextValid: number | undefined
+    for (let i = repaired.length - 1; i >= 0; i--) {
+      if (isValidSupply(repaired[i].value)) {
+        nextValid = repaired[i].value
+      } else {
+        assert(nextValid !== undefined)
+        repaired[i] = { ...repaired[i], value: nextValid }
+      }
+    }
+    return repaired
   }
 
   async queryHourlyPricesAndMarketCaps(
@@ -269,6 +350,10 @@ function combineResults(results: CoinMarketChartRangeData[]) {
   data.marketCaps.sort((a, b) => a.date.getTime() - b.date.getTime())
 
   return data
+}
+
+function isValidSupply(value: number) {
+  return Number.isFinite(value) && value >= 0
 }
 
 // This function is a neat helper to make circulating supply values more "round"

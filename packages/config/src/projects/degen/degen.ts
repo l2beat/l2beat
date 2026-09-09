@@ -7,9 +7,11 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('degen')
+const archivedAt = UnixTime(1788332400) // 2026-09-02T07:00:00Z, last successfully indexed TVS hour
 
 export const degen: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1711584000), // 2024-03-28T00:00:00Z
+  archivedAt,
   hostChain: 'base',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
@@ -23,6 +25,8 @@ export const degen: ScalingProject = orbitStackL3({
     slug: 'degen',
     description:
       'Degen Chain is an ultra-low-cost L3 for the Degen community built with Arbitrum Orbit, Base for settlement, and AnyTrust for data availability. DEGEN is the native gas token.',
+    headerWarning:
+      'Degen Chain is sunsetting on August 31, 2026. See the [announcement](https://x.com/degentokenbase/status/2086430796412576030) and make sure to bridge off your funds before the deadline.',
     links: {
       websites: ['https://syndicate.io/blog/degen-chain'],
       bridges: ['https://bridge.degen.tips/', 'https://degen.tips/'],
@@ -48,6 +52,7 @@ export const degen: ScalingProject = orbitStackL3({
     chainId: 666666666,
     explorerUrl: 'https://explorer.degen.tips',
     sinceTimestamp: UnixTime(1710087539),
+    untilTimestamp: archivedAt,
     multicallContracts: [
       {
         address: EthereumAddress('0x79035Dc4436bA9C95016D3bF6304e5bA78B1066A'),

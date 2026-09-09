@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
+import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import {
   BridgeTypeTvsChart,
@@ -22,7 +22,7 @@ export function ProjectBridgeTypeTvsChart({
 }: ProjectBridgeTypeTvsChartProps) {
   const trpc = useTRPC()
   const { range, unit } = useTvsChartControlsContext()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
   const { data, isLoading } = useQuery(

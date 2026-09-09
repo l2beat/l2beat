@@ -9,8 +9,8 @@ import {
   PaginationLink,
 } from '~/components/Pagination'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
-import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import { AnomalyText } from '~/pages/layer2s/liveness/components/AnomalyText'
+import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 
 const ANOMALIES_PER_PAGE = 5
 

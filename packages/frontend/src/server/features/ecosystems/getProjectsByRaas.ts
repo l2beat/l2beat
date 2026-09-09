@@ -24,7 +24,7 @@ export function getProjectsByRaas(
       slug: curr.slug.toString(),
       icon: manifest.getUrl(`/icons/${curr.slug}.png`),
       name: curr.name,
-      url: `/scaling/projects/${curr.slug}`,
+      url: `/layer2s/projects/${curr.slug}`,
     })
     return acc
   }, {} as ProjectByRaas)

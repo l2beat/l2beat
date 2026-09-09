@@ -60,7 +60,7 @@ export async function getDaThroughputChartByProject(
 export async function getDaThroughputChartByProjectData({
   range,
   projectId,
-  includeScalingOnly,
+  includeL2Only,
 }: ProjectDaThroughputChartParams) {
   const db = getDb()
 
@@ -80,11 +80,11 @@ export async function getDaThroughputChartByProjectData({
     db.dataAvailability.getByDaLayersAndTimeRange(
       [projectId],
       range,
-      includeScalingOnly ? sovereignProjectIds : undefined,
+      includeL2Only ? sovereignProjectIds : undefined,
     ),
     db.dataAvailability.getFirstTimestampByDaLayers(
       [projectId],
-      includeScalingOnly ? sovereignProjectIds : undefined,
+      includeL2Only ? sovereignProjectIds : undefined,
     ),
   ])
 
@@ -107,7 +107,7 @@ export async function getDaThroughputChartByProjectData({
     allProjects,
     resolution,
     sovereignProjects,
-    includeScalingOnly,
+    includeL2Only,
   )
 
   const expectedTo = getThroughputExpectedTimestamp({
@@ -144,7 +144,7 @@ function groupByTimestampAndProjectId(
   allProjects: Project[],
   resolution: ChartResolution,
   sovereignProjects: Map<ProjectId, string>,
-  includeScalingOnly: boolean,
+  includeL2Only: boolean,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
@@ -184,7 +184,7 @@ function groupByTimestampAndProjectId(
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
-  if (!includeScalingOnly) {
+  if (!includeL2Only) {
     // Add the difference between the total size and the sum of the other projects as 'Unknown'
     const summedDaLayerByDay = sumByResolutionAndProject(
       daLayerRecords,

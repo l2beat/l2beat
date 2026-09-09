@@ -20,6 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { formatDelay } from '../../common/formatDelays'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -29,6 +30,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { describeOPFP } from '../../templates/opStack'
 import {
   explorerReferences,
   safeGetImplementation,
@@ -95,12 +97,19 @@ const FAULT_PROOF_CUTOVER_TIMESTAMP = UnixTime(1785852695)
 export const zircuit: ScalingProject = {
   id: ProjectId('zircuit'),
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
-  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Stack.OPStack],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  badges: [
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.RaaS.Conduit,
+  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   capability: 'universal',
   type: 'layer2',
   display: {
     name: 'Zircuit',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'zircuit',
     purposes: ['Universal'],
     stacks: ['OP Stack'],
@@ -164,10 +173,7 @@ export const zircuit: ScalingProject = {
       rollupNodeLink: 'https://github.com/zircuit-labs/l2-geth-public',
     },
   ),
-  proofSystem: {
-    type: 'Optimistic',
-    challengeProtocol: 'Interactive',
-  },
+  proofSystem: undefined,
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(
@@ -187,13 +193,36 @@ export const zircuit: ScalingProject = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      description:
-        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
-        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
+      // the value is inside the node config, but we have no reference to it
+      // so we assume it to be the same value as in other op stack chains
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      ),
+      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
+  stateValidation: describeOPFP({
+    disputeGameBonds: ZIRCUIT_PERMISSIONED_GAME_BOND,
+    maxClockDuration: ZIRCUIT_CHALLENGE_PERIOD_SECONDS,
+    gameMaxDepth: discovery.getContractValue<number>(
+      'PermissionedDisputeGame',
+      'maxGameDepth',
+    ),
+    gameSplitDepth: discovery.getContractValue<number>(
+      'PermissionedDisputeGame',
+      'splitDepth',
+    ),
+    gameClockExtension: discovery.getContractValue<number>(
+      'PermissionedDisputeGame',
+      'clockExtension',
+    ),
+    oracleChallengePeriod: discovery.getContractValue<number>(
+      'PreimageOracle',
+      'challengePeriod',
+    ),
+    isPermissionless: false,
+  }),
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
@@ -414,18 +443,7 @@ export const zircuit: ScalingProject = {
         ]),
       ],
     },
-    operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
-      description:
-        OPERATOR.CENTRALIZED_OPERATOR.description +
-        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
-      references: [
-        {
-          title: 'L1Block.sol - Sourcify explorer source code',
-          url: 'https://repo.sourcify.dev/48900/0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12',
-        },
-      ],
-    },
+    operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
@@ -467,12 +485,6 @@ export const zircuit: ScalingProject = {
       },
       {
         ...EXITS.FORCED_MESSAGING('all-messages'),
-        risks: [
-          {
-            category: 'Users can be censored if',
-            text: 'the operator explicitly censors their forced transaction, possible through a modification in the smart contracts.',
-          },
-        ],
         references: [
           {
             title: 'Forced withdrawal from an OP Stack blockchain',

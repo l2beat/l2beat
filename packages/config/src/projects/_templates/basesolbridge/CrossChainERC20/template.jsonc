@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Implementation contract for the CrossChainERC20 tokens (beacon proxies) representing Solana-native assets on Base (e.g. SOL, JitoSOL). Only the Bridge can mint and burn them.",
+  "ignoreInWatchMode": ["totalSupply"]
+}

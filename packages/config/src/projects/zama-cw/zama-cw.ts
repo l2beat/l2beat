@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
@@ -59,6 +60,27 @@ const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {
     return []
   }
 })
+
+// The privacy and risk texts state that no wrapper has observers (wildcard
+// decryption grantees) or an active pauser. Update them if this changes.
+for (const name of WRAPPER_NAMES) {
+  if (!discovery.hasContract(name)) {
+    continue
+  }
+  const observers = discovery.getContractValue<string[]>(name, 'observers')
+  assert(
+    observers.length === 0,
+    `${name} has observers configured: update the privacy and risk texts.`,
+  )
+  const pauser = discovery.getContractValue<ChainSpecificAddress>(
+    name,
+    'pauser',
+  )
+  assert(
+    ChainSpecificAddress.address(pauser) === EthereumAddress.ZERO,
+    `${name} has a pauser configured: update the privacy and risk texts.`,
+  )
+}
 
 const kmsThreshold = discovery.getContractValue<number>(
   'KMSVerifier',
@@ -183,9 +205,10 @@ export const zamaCw: BaseProject = {
         'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification. The offchain data cannot currently be fully reproduced from Ethereum DA.',
     },
     privacy: {
-      value: 'Threshold FHE view key',
-      sentiment: 'warning',
-      description: `The ${kmsThreshold}/${kmsSignerCount} threshold covers only the current Ethereum verifier context. A threshold with usable KMS key shares can decrypt current and past private balances. Zama states that KMS nodes run inside TEEs, but this is not verified onchain. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.`,
+      value: 'Transparent transfer graph',
+      sentiment: 'bad',
+      description:
+        'Zama confidential tokens do not hide the links between senders and recipients, only the amounts. Anyone can retrace each confidential transfer to its contributing plaintext deposits.\nAdditionally, a threshold with usable KMS key shares can decrypt current and past private balances. Zama states that KMS nodes run inside TEEs, but this is not verified onchain. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization. Confidential token owners can also appoint observer accounts that receive wildcard decryption access to all balances and transfer amounts of their token (currently none are configured).',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,

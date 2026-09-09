@@ -10,6 +10,7 @@ import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexe
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { BlobService } from '../services/BlobService'
@@ -167,6 +168,39 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         configurations: configurations.length,
         deletedRecords,
       })
+    }
+  }
+
+  /**
+   * Records are hourly buckets while the range is in blocks, so the range
+   * edges are mapped to timestamps (two rpc calls, inside the update
+   * transaction) and every hour the range touches is deleted. The hour
+   * straddling an edge holds blobs from both sides and cannot be split, so it
+   * goes too: that loses at most an hour of in-range data per edited edge,
+   * while keeping it would count the same blobs twice if indexing ever
+   * resumes inside that hour.
+   */
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
+    for (const { id, range } of configurations) {
+      const [from, to] = await Promise.all(
+        range.map((block) =>
+          this.$.daProvider.getBlockTimestamp(this.daLayer, block),
+        ),
+      )
+      const deletedRecords =
+        await this.$.db.dataAvailability.deleteByConfigInTimeRange(
+          id,
+          UnixTime.toStartOf(from, 'hour'),
+          UnixTime.toStartOf(to, 'hour'),
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DA records for configuration', {
+          id,
+          range,
+          deletedRecords,
+        })
+      }
     }
   }
 

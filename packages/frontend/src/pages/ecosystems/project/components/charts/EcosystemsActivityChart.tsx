@@ -26,7 +26,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { InfoIcon } from '~/icons/Info'
-import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
+import { ActivityChartRangeControls } from '~/pages/layer2s/activity/components/ActivityChartRangeControls'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -45,14 +45,14 @@ export function EcosystemsActivityChart({
   id,
   name,
   entries,
-  allScalingProjectsUops,
+  allL2ProjectsUops,
   className,
   ecosystemMilestones,
 }: {
   id: string
   name: string
   entries: EcosystemEntry['liveProjects']
-  allScalingProjectsUops: number
+  allL2ProjectsUops: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
@@ -103,7 +103,7 @@ export function EcosystemsActivityChart({
     [data?.data],
   )
 
-  const stats = getStats(chartData, allScalingProjectsUops)
+  const stats = getStats(chartData, allL2ProjectsUops)
   const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
 
   return (
@@ -137,14 +137,12 @@ export function EcosystemsActivityChart({
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
-                strokeWidth: 2,
                 fill: 'url(#fillEthereum)',
                 hide: !dataKeys.includes('ethereum'),
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
-                strokeWidth: 2,
                 fill: 'url(#fillProjects)',
                 hide: !dataKeys.includes('projects'),
               },
@@ -242,7 +240,7 @@ function Header({
 
 function getStats(
   chartData: { projects: number | null }[] | undefined,
-  allScalingProjectsUops: number,
+  allL2ProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
@@ -258,6 +256,6 @@ function getStats(
 
   return {
     latestUops: lastWithData.projects,
-    marketShare: lastWithData.projects / allScalingProjectsUops,
+    marketShare: lastWithData.projects / allL2ProjectsUops,
   }
 }

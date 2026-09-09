@@ -1,5 +1,8 @@
-import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
-import { generateEntrypointsCommand } from '@l2beat/discovery/dist/discovery/shared-modules/generateEntrypoints'
+import {
+  ConfigReader,
+  generateEntrypointsCommand,
+  getDiscoveryPaths,
+} from '@l2beat/discovery'
 import { command, positional, string } from 'cmd-ts'
 
 export const GenerateEntrypoints = command({

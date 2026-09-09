@@ -231,7 +231,10 @@ function drawNodes(
     }
 
     ctx.globalAlpha = groupAlpha
-    ctx.fillStyle = color
+    // A node without relations — placed by its abstract token assignment, not
+    // by an observed relation — is hollow: the fill/stroke colors swap.
+    const isHollow = !node.data.hasRelations
+    ctx.fillStyle = isHollow ? theme.background : color
     ctx.beginPath()
     ctx.arc(
       x,
@@ -241,7 +244,7 @@ function drawNodes(
       2 * Math.PI,
     )
     ctx.fill()
-    ctx.strokeStyle = theme.background
+    ctx.strokeStyle = isHollow ? color : theme.background
     ctx.lineWidth = 2 * visualScale
     ctx.stroke()
   }

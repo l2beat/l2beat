@@ -81,6 +81,11 @@ export function buildStoredNodeLayout(
         .filter((n) => n.hiddenFields.length > 0)
         .map((n) => [n.id, n.hiddenFields]),
     ),
+    compressedRows: Object.fromEntries(
+      all
+        .filter((n) => n.compressedRows.length > 0)
+        .map((n) => [n.id, n.compressedRows]),
+    ),
     groups: groups.length > 0 ? groups : undefined,
   }
 }

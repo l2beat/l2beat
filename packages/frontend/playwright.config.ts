@@ -6,6 +6,8 @@ process.env.NO_PROXY = [process.env.NO_PROXY, 'localhost,127.0.0.1']
   .filter(Boolean)
   .join(',')
 
+process.env.CLIENT_SIDE_DEFI_ENABLED = 'true'
+
 // biome-ignore lint/style/noDefaultExport: Playwright config uses a default export.
 export default defineConfig({
   testDir: './e2e',
@@ -19,6 +21,7 @@ export default defineConfig({
       LOG_LEVEL: 'ERROR',
       INTEROP_CHAINS: 'ethereum,arbitrum,base,optimism',
       CLIENT_SIDE_HOME_PAGE: 'true',
+      CLIENT_SIDE_DEFI_ENABLED: 'true',
     },
     command: 'pnpm start:mock',
     url: 'http://localhost:7357',

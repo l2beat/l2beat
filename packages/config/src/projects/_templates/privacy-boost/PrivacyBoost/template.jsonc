@@ -1,0 +1,89 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main contract of the PrivacyBoost private transfer pool. It escrows registered ERC-20 tokens deposited against note commitments, and lets allowed relays batch private transfers and withdrawals into epochs that are verified with Groth16 proofs against a note Merkle tree. Users can exit without relay cooperation via a delayed forced withdrawal with their own proof.",
+  "ignoreMethods": [
+    "authSnapshotRoundAt",
+    "commitmentToRequestKey",
+    "currentAuthSnapshotRound",
+    "forcedWithdrawalRequests",
+    "nullifierSpent",
+    "pendingDeposits",
+    "processedDeposits",
+    "treeCount",
+    "treeRoot",
+    "treeRootHistoryCursor"
+  ],
+  "ignoreInWatchMode": ["latestSnapshotRound", "currentTreeNumber"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the epoch, deposit and forced withdrawal proof verifiers, set the withdrawal fee (up to 10%), and set the treasury and operator addresses."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "operator": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the relay allowlist and schedule changes of the auth snapshot interval."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "allowedRelays": {
+      "handler": {
+        "type": "event",
+        "select": "relay",
+        "add": { "event": "RelayUpdated", "where": ["=", "#allowed", true] },
+        "remove": { "event": "RelayUpdated", "where": ["!=", "#allowed", true] }
+      },
+      "description": "Relays allowed to submit epochs to the pool.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit epochs of private transfers, withdrawals and deposits with validity proofs, and snapshot auth tree roots."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "epochVerifier": {
+      "description": "Groth16 verifier used for private transfer / withdrawal epoch proofs.",
+      "severity": "HIGH"
+    },
+    "depositVerifier": {
+      "description": "Groth16 verifier used for deposit epoch proofs.",
+      "severity": "HIGH"
+    },
+    "forcedVerifier": {
+      "description": "Groth16 verifier used for forced withdrawal proofs.",
+      "severity": "HIGH"
+    },
+    "tokenRegistry": {
+      "description": "Registry of ERC-20 tokens accepted by the pool.",
+      "severity": "HIGH"
+    },
+    "authRegistry": {
+      "description": "Registry of account authorization keys whose tree roots are snapshotted and used to validate spend authorization in epoch proofs.",
+      "severity": "HIGH"
+    },
+    "treasury": {
+      "description": "Address receiving withdrawal fees.",
+      "severity": "HIGH"
+    },
+    "withdrawFeeBps": {
+      "description": "Withdrawal fee in basis points, charged on withdrawals and forced withdrawals."
+    },
+    "cancelDelay": {
+      "description": "Number of blocks after which an unprocessed deposit request can be cancelled and refunded by the depositor."
+    },
+    "forcedWithdrawalDelay": {
+      "description": "Number of blocks between requesting and executing a forced withdrawal."
+    },
+    "authSnapshotInterval": {
+      "description": "Block interval between snapshots of auth tree roots."
+    }
+  }
+}

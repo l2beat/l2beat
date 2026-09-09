@@ -1179,6 +1179,7 @@ function route(
   overrides: Partial<InteropTokenRouteRecord>,
 ): InteropTokenRouteRecord {
   return {
+    plugin: 'plugin1',
     srcChain: 'ethereum',
     srcTokenAddress: token('ethereum', '0xaaa').address,
     dstChain: 'base',
@@ -1188,6 +1189,8 @@ function route(
     dstWasMinted: true,
     transferCount: 1,
     sampleTransferId: 'transfer-id',
+    sampleSrcTxHash: '0xsrc',
+    sampleDstTxHash: '0xdst',
     ...overrides,
   }
 }

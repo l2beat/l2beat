@@ -48,7 +48,7 @@ interface ProjectCellProps {
 
 function redWarningDetailHref(project: ProjectCellProject): string | undefined {
   const anchor = project.statuses?.redWarning?.detailAnchor
-  return anchor ? `/scaling/projects/${project.slug}#${anchor}` : undefined
+  return anchor ? `/layer2s/projects/${project.slug}#${anchor}` : undefined
 }
 
 function MobileProjectIconTooltip({
@@ -150,7 +150,7 @@ export function ProjectNameMobileStatusIcons({
               <>
                 <p>{project.statuses.verificationWarnings.contracts}</p>
                 <CustomLink
-                  href={`/scaling/projects/${project.slug}#contracts`}
+                  href={`/layer2s/projects/${project.slug}#contracts`}
                   className="inline-block text-label-value-13"
                 >
                   View details
@@ -170,7 +170,7 @@ export function ProjectNameMobileStatusIcons({
                   </Markdown>
                 )}
                 <CustomLink
-                  href={`/scaling/projects/${project.slug}#program-hashes`}
+                  href={`/layer2s/projects/${project.slug}#program-hashes`}
                   className="inline-block text-label-value-13"
                 >
                   View details
@@ -228,7 +228,7 @@ export function ProjectNameMobileStatusIcons({
             information.
           </p>
           <CustomLink
-            href={`/scaling/projects/${project.slug}#liveness`}
+            href={`/layer2s/projects/${project.slug}#liveness`}
             className="inline-block text-label-value-13"
           >
             View details
@@ -411,7 +411,7 @@ function getTooltipSections(project: ProjectCellProject) {
     sections.push({
       id: 'contracts',
       text: project.statuses.verificationWarnings.contracts,
-      href: `/scaling/projects/${project.slug}#contracts`,
+      href: `/layer2s/projects/${project.slug}#contracts`,
       variant: 'negative',
       icon: <UnverifiedIcon className="size-4" />,
     })
@@ -423,7 +423,7 @@ function getTooltipSections(project: ProjectCellProject) {
       text: project.statuses.verificationWarnings.programHashes,
       textDetail:
         project.statuses.verificationWarnings.programHashesDescription,
-      href: `/scaling/projects/${project.slug}#program-hashes`,
+      href: `/layer2s/projects/${project.slug}#program-hashes`,
       variant: 'negative',
       icon: <UnverifiedIcon className="size-4" />,
     })
@@ -472,7 +472,7 @@ function getTooltipSections(project: ProjectCellProject) {
     sections.push({
       id: 'ongoing-anomaly',
       text: "There's an ongoing anomaly. Check detailed page for more information.",
-      href: `/scaling/projects/${project.slug}#liveness`,
+      href: `/layer2s/projects/${project.slug}#liveness`,
       variant: 'negative',
       icon: (
         <span className="flex h-4 shrink-0 items-center pb-px">

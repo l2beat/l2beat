@@ -1,10 +1,10 @@
 import { expect, mockObject } from 'earl'
 import type {
-  AvailWsClient,
   BeaconChainClient,
   CelestiaRpcClient,
   EspressoClient,
   NearClient,
+  PolkadotRpcClient,
 } from '../../clients'
 import { DaBeatStatsProvider } from './DaBeatStatsProvider'
 
@@ -88,10 +88,7 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('routes to getAvailStats for avail project', async () => {
-      const mockAvailWsClient = mockObject<AvailWsClient>({
-        connect: async () => {},
-        disconnect: async () => {},
-        getCurrentEra: async () => '1',
+      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
         getStakingEraOverview: async () => ({
           validator1: { own: 400n, total: 400n },
           validator2: { own: 600n, total: 600n },
@@ -102,7 +99,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         undefined,
-        mockAvailWsClient,
+        mockPolkadotRpcClient,
         undefined,
       )
 
@@ -360,18 +357,8 @@ describe(DaBeatStatsProvider.name, () => {
   })
 
   describe(DaBeatStatsProvider.prototype.getAvailStats.name, () => {
-    it('returns correct stats and handles connection lifecycle', async () => {
-      let connected = false
-      let disconnected = false
-
-      const mockAvailWsClient = mockObject<AvailWsClient>({
-        connect: async () => {
-          connected = true
-        },
-        disconnect: async () => {
-          disconnected = true
-        },
-        getCurrentEra: async () => '42',
+    it('returns correct stats', async () => {
+      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
         getStakingEraOverview: async () => ({
           validator1: {
             own: 1000000000000000000n,
@@ -389,14 +376,12 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         undefined,
-        mockAvailWsClient,
+        mockPolkadotRpcClient,
         undefined,
       )
 
       const result = await provider.getAvailStats()
 
-      expect(connected).toEqual(true)
-      expect(disconnected).toEqual(true)
       expect(result).toEqual({
         totalStake: 3500000000000000000n,
         thresholdStake: 2333333333333333333n,
@@ -404,35 +389,27 @@ describe(DaBeatStatsProvider.name, () => {
       })
     })
 
-    it('ensures disconnect is called even when error occurs', async () => {
-      let disconnected = false
-
-      const mockAvailWsClient = mockObject<AvailWsClient>({
-        connect: async () => {},
-        disconnect: async () => {
-          disconnected = true
-        },
-        getCurrentEra: async () => {
+    it('propagates client errors', async () => {
+      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
+        getStakingEraOverview: async () => {
           throw new Error('Connection failed')
         },
-        getStakingEraOverview: async () => ({}),
       })
 
       const provider = new DaBeatStatsProvider(
         undefined,
         undefined,
         undefined,
-        mockAvailWsClient,
+        mockPolkadotRpcClient,
         undefined,
       )
 
       await expect(provider.getAvailStats()).toBeRejectedWith(
         'Connection failed',
       )
-      expect(disconnected).toEqual(true)
     })
 
-    it('throws error when Avail WS client is not provided', async () => {
+    it('throws error when Avail client is not provided', async () => {
       const provider = new DaBeatStatsProvider(
         undefined,
         undefined,
@@ -442,7 +419,7 @@ describe(DaBeatStatsProvider.name, () => {
       )
 
       await expect(provider.getAvailStats()).toBeRejectedWith(
-        'Avail WS client not found',
+        'Avail client not found',
       )
     })
   })

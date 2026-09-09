@@ -1,4 +1,162 @@
-Generated with discovered.json: 0x4d2048d2fc0580042dc05e7115a2f727431a23ee
+Generated with discovered.json: 0xcdad374b569704b4178e82afe71c2068254015b0
+
+# Diff at Tue, 01 Sep 2026 13:08:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1787230295
+- current timestamp: 1788265000
+
+## Description
+
+Add more signature verification modes (incl delegation): https://disco.l2beat.com/diff/eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35/eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677
+
+## Watched changes
+
+```diff
+    contract DeBridgeIntentManager (eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708) [debridge/DeBridgeIntentManager] {
+    +++ description: Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder and forwards them into DlnSource in the same transaction, charging a variable fee that is not part of the user-signed intent.
+      sourceHashes.1:
+-        "0xab4d827474b8362b953864f2ccb0de7e02c8c7150914446ea11c4c3f64413967"
++        "0x8bc472a2f0e9dd05e3781fa6f0e5b4bedc8e395196df151a26af1120fa398c8c"
+      values.$implementation:
+-        "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35"
++        "eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677"
+      values.$pastUpgrades.2:
++        ["2026-08-31T18:05:47.000Z","0x42218e55e5eab2e3c79d608b6302fd5dec0750f4426a55ed69d8564ed4a8dfb8",["eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "2.1.0"
++        "2.3.0"
+      implementationNames.eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35:
+-        "DeBridgeIntentManager"
+      implementationNames.eth:0xFf09c2C917180cDDb5d217073dd774fAA4A47677:
++        "DeBridgeIntentManager"
+    }
+```
+
+## Source code changes
+
+```diff
+.../DeBridgeIntentManager.sol                      | 340 +++++++++++++++++----
+ 1 file changed, 282 insertions(+), 58 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787230295 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeIntentManager (eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708) [debridge/DeBridgeIntentManager] {
+    +++ description: Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder and forwards them into DlnSource in the same transaction, charging a variable fee that is not part of the user-signed intent.
+      description:
+-        "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder (Permit2 or direct approvals) and forwards them into DlnSource in the same transaction, charging a variable fee that is NOT part of the user-signed intent. It is non-custodial in steady state. Note that the EIP-712 signature users sign covers only an opaque intent hash, and fills are permissionless unless the intent restricts senders."
++        "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder and forwards them into DlnSource in the same transaction, charging a variable fee that is not part of the user-signed intent."
+    }
+```
+
+Generated with discovered.json: 0x70e30947066882650fcd9f01ea226cafd5b4b3d1
+
+# Diff at Thu, 20 Aug 2026 13:17:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00219f808cbf3466c6d2af96ddc96440efc3714c block: 1787035190
+- current timestamp: 1787230295
+
+## Description
+
+Verified source code of 3 proxy admins and external call executor. The sources of two more contract were not identified
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787035190 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract ExternalCallExecutor (eth:0xAE0361b1C3454b297129e01046057F1D294c7974) [N/A] {
+    +++ description: The default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.
+      unverified:
+-        true
+      description:
+-        "Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders."
++        "The default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders."
+      values.ADAPTER_ROLE:
++        "0xdbeb657137b1822b3d5418bea6fd641226d964b4c3871ef23546db2622258871"
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      implementationNames.eth:0xAE0361b1C3454b297129e01046057F1D294c7974:
+-        ""
++        "ExternalCallExecutor"
+      sourceHashes:
++        ["0x6c5aae59f2a5722455f7f6b27b17e514a918ab56299c83ae29aed90c2f8863b0"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb54CD1e74f232C6de444464C81f81D13E6978816) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xb54CD1e74f232C6de444464C81f81D13E6978816:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+Generated with discovered.json: 0xf9e9961ba5caa63fe68c0ace8aa0932fdf5aebef
 
 # Diff at Tue, 18 Aug 2026 06:41:07 GMT:
 

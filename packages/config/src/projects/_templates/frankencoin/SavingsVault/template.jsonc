@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SavingsVault",
+  "description": "ERC4626 vault (svZCHF) over the Savings module: deposited ZCHF is forwarded there and interest auto-compounds into the share price. Ownership has been renounced, so its only privileged function (activating a referral-fee skim of up to 25% of interest) is permanently disabled and the vault is fully immutable.",
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewMint",
+    "previewRedeem",
+    "previewWithdraw"
+  ],
+  "ignoreInWatchMode": [
+    "price",
+    "totalAssets",
+    "totalClaimed",
+    "totalSupply",
+    "info"
+  ]
+}

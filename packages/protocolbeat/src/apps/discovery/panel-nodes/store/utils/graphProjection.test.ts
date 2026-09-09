@@ -204,6 +204,28 @@ describe(isHideable.name, () => {
   })
 })
 
+describe('compressed rows and hiddenness', () => {
+  it('keeps a node visible when every reference to it is compressed away', () => {
+    const nodes = [
+      makeNode(
+        'root',
+        [
+          ['$members[0]', 'first'],
+          ['$members[1]', 'second'],
+        ],
+        [],
+        true,
+        ['$members'],
+      ),
+      makeNode('first'),
+      makeNode('second'),
+    ]
+
+    expect(hidden(nodes)).toEqual([])
+    expect(getGraphProjection(nodes).visibleEdges.length).toEqual(2)
+  })
+})
+
 describe(mapGraphItems.name, () => {
   it('updates leaves and groups without clearing group fields', () => {
     const member = makeNode('member')
@@ -244,6 +266,7 @@ function makeNode(
   fields: Array<[name: string, target: string]> = [],
   hiddenFields: string[] = [],
   isInitial = false,
+  compressedRows: string[] = [],
 ): Node {
   return {
     id,
@@ -262,6 +285,7 @@ function makeNode(
       },
     })),
     hiddenFields,
+    compressedRows,
     box: { x: 0, y: 0, width: 200, height: 0 },
     color: 0,
     hueShift: 0,

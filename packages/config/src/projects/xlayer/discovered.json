@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1782911432,
-  "configHash": "0xd9a3898bd8d7a58d38f0e4d498e674d201ba713c7633f36e347dae6f389a3a92",
+  "configHash": "0x6cefe46b7e019ba7016d8763e8ebda1b6940ef00ae5ac31e2f82fb692a8041b3",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -317,60 +317,6 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9",
-          "description": "set and change address mappings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x85d37236f063C687d056b3604CBEe4B60d124858",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567143,
       "sinceBlock": 23668700,
@@ -394,15 +340,7 @@
     {
       "address": "eth:0x491619874b866c3cDB7C8553877da223525ead01",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-          "description": "sole address that can force batches.",
-          "role": ".forceBatchAddress"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
@@ -540,15 +478,7 @@
     {
       "address": "eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-          "description": "sign state transitions (replaces state validation for this aggchain).",
-          "role": ".aggchainSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -706,40 +636,12 @@
     {
       "address": "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
-          "description": "Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x736E68Af2CbF2aB0E46E4310fE5Ae568b3642FF6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challenger"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge_neutered",
@@ -864,15 +766,7 @@
     {
       "address": "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AccessManager",
@@ -997,15 +891,7 @@
     {
       "address": "eth:0xa90B4C8B8807569980F6cC958c8905383136B5eA",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-          "description": "set the trusted sequencer address.",
-          "role": ".admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1StandardBridge_neutered",
@@ -1054,97 +940,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9",
-          "description": "set and change address mappings.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x85d37236f063C687d056b3604CBEe4B60d124858",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xEf2Dd344AE3d5032b779C5B8914c10689707883F",
       "sinceTimestamp": 1762742567,
@@ -1179,13 +974,6 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567083,
       "sinceBlock": 23668695,
@@ -1207,21 +995,7 @@
     {
       "address": "eth:0xE43944421681170648E10007f73816e04F74394F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".proposers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".proposer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OwnerContract",
@@ -1229,23 +1003,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567071,
       "sinceBlock": 23668694,
@@ -2527,5 +2284,554 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 25437874 },
-  "permissionsConfigHash": "0x44508de8da43a58c4015bd6cbb454255778d91efe03419386f02f22f4f387c1f"
+  "permissionsConfigHash": "0x73ba427d62217ac58c3e9f3fddc2664ce0cff007b42c207aeadba6bacaa97605",
+  "modelledAgainst": {
+    "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27",
+    "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
+  },
+  "permissions": {
+    "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "Permissioned to post new state roots and global exit roots accompanied by ZK proofs.",
+          "role": ".trustedAggregatorAC"
+        }
+      ]
+    },
+    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".addPpRouteAC",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors.",
+          "role": ".aggchainDefaultVKeyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "change the aggchainSigners and threshold (a multisig used for permissioned state transitions).",
+          "role": ".alMultisigAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".freezePpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
+          "role": ".createRollupAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
+          "role": ".tweakParametersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)",
+          "via": [
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ]
+    },
+    "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9",
+          "description": "set and change address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x85d37236f063C687d056b3604CBEe4B60d124858",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
+          "role": ".emergencyCouncilAdminAC"
+        }
+      ]
+    },
+    "eth:0x491619874b866c3cDB7C8553877da223525ead01": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
+        }
+      ]
+    },
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "role": ".aggchainSigners"
+        }
+      ]
+    },
+    "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+          "description": "Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x736E68Af2CbF2aB0E46E4310fE5Ae568b3642FF6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        }
+      ]
+    },
+    "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
+        }
+      ]
+    },
+    "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9",
+          "description": "set and change address mappings.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x85d37236f063C687d056b3604CBEe4B60d124858",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
+          "role": ".createRollupAC"
+        }
+      ]
+    },
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xE43944421681170648E10007f73816e04F74394F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposer"
+        }
+      ]
+    },
+    "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
+          "role": ".addPpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ]
+    },
+    "eth:0xa90B4C8B8807569980F6cC958c8905383136B5eA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "description": "set the trusted sequencer address.",
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

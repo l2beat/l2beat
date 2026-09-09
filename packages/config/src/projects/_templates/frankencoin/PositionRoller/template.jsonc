@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Helper that rolls debt and collateral from one minting position into another in a single transaction. It is a registered minter but uses that right only transiently within a roll."
+}

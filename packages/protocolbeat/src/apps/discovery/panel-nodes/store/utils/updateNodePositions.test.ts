@@ -230,6 +230,48 @@ describe('updateNodePositions', () => {
   })
 })
 
+describe('compressed rows', () => {
+  it('shortens the node to one row per group and fans the links off it', () => {
+    const state = buildState([
+      makeNode(
+        'a',
+        0,
+        0,
+        [
+          ['$members[0]', 'b'],
+          ['$members[1]', 'c'],
+          ['$members[2]', 'd'],
+        ],
+        ['$members[2]'],
+        ['$members'],
+      ),
+      makeNode('b', 400, 0, []),
+      makeNode('c', 400, 100, []),
+      makeNode('d', 400, 200, []),
+    ])
+
+    const node = state.nodes[0] as Node
+    expect(node.box.height).toEqual(
+      HEADER_HEIGHT +
+        FIELD_HEIGHT +
+        BOTTOM_PADDING +
+        HIDDEN_FIELDS_FOOTER_HEIGHT,
+    )
+
+    const rowTop = node.box.y + HEADER_HEIGHT
+    const anchors = node.fields
+      .slice(0, 2)
+      .map((field) => field.connection.from.y)
+    for (const anchor of anchors) {
+      expect(anchor > rowTop).toEqual(true)
+      expect(anchor < rowTop + FIELD_HEIGHT).toEqual(true)
+    }
+    // Links leave the shared row at distinct heights, so a 1:N row reads as a
+    // fan rather than one stroke.
+    expect(new Set(anchors).size).toEqual(2)
+  })
+})
+
 function buildState(nodes: Node[]): State {
   return updateNodePositions({
     projectId: 'test',
@@ -272,6 +314,7 @@ function makeNode(
   y: number,
   fields: Array<[name: string, target: string]>,
   hiddenFields: string[] = [],
+  compressedRows: string[] = [],
 ): Node {
   return {
     id,
@@ -295,6 +338,7 @@ function makeNode(
       },
     })),
     hiddenFields,
+    compressedRows,
     box: {
       x,
       y,

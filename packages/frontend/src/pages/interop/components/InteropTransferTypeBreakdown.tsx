@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type { TransferTypeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
+import type { TransferTypeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import {
   INTEROP_TYPE_TO_BG_COLOR,
   TRANSFER_TYPE_DISPLAY,

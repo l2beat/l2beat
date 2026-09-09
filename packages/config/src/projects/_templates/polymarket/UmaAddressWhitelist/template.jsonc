@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
+  "description": "Owner-managed address whitelist. Other contracts can query whether an address is listed; the whitelist itself does not assign a meaning to the listed addresses.",
+  "ignoreMethods": ["whitelistIndices"],
+  "ignoreRelatives": ["getWhitelist"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the addresses on the whitelist."
+        }
+      ]
+    }
+  }
+}

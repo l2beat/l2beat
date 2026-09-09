@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
+import type { TopItems } from '~/server/features/layer2s/interop/utils/getTopItems'
 import { cn } from '~/utils/cn'
 
 export type TopItem = {

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrustedSettingsRewards",
+  "category": "gov",
+  "description": "Per-network switches for where reward claims may be directed. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal.",
+  "ignoreMethods": ["getNetworkEnabled"]
+}

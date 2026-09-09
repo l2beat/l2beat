@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Position",
+  "description": "Collateralized debt position whose owner can mint the configured stablecoin against a fixed ERC20 collateral, subject to a declared liquidation price and fixed minimum collateral, risk premium, challenge period, and expiration. A full Position deployment tracks the minting limit for its clone family and acts as the implementation and immutable-parameter source for ERC-1167 child positions; the configured hub conducts challenges and forced collateral sales.",
+  "ignoreMethods": ["getMintAmount"],
+  "ignoreRelatives": ["collateral", "owner"],
+  "ignoreInWatchMode": [
+    "annualInterestPPM",
+    "availableForClones",
+    "availableForMinting",
+    "calculateCurrentFee",
+    "challengeData",
+    "challengedAmount",
+    "cooldown",
+    "isClosed",
+    "minted",
+    "owner",
+    "price"
+  ]
+}

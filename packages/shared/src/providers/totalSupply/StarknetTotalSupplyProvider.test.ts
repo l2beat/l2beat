@@ -17,7 +17,7 @@ describe(StarknetTotalSupplyProvider.name, () => {
         call: mockFn()
           .resolvesToOnce(['0x1'])
           .resolvesToOnce(['0x2'])
-          .rejectsWithOnce('error'),
+          .resolvesToOnce(['0x0']),
         chain: CHAIN,
       })
 
@@ -60,6 +60,25 @@ describe(StarknetTotalSupplyProvider.name, () => {
         BLOCK,
       )
       expect(result).toEqual([1n, 2n, 0n])
+    })
+
+    it('throws if any call fails', async () => {
+      const client = mockObject<StarknetClient>({
+        call: mockFn()
+          .resolvesToOnce(['0x1'])
+          .resolvesToOnce(['0x2'])
+          .rejectsWithOnce(new Error('RPC failure')),
+        chain: CHAIN,
+      })
+
+      const totalSupplyProvider = new StarknetTotalSupplyProvider(
+        [client],
+        Logger.SILENT,
+      )
+
+      await expect(
+        totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
+      ).toBeRejectedWith('RPC failure')
     })
 
     it('throws error if no client for chain', async () => {

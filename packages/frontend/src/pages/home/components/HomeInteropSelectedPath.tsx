@@ -14,7 +14,7 @@ import type {
   FlowProtocol,
   FlowToken,
   InteropFlowsData,
-} from '~/server/features/scaling/interop/getInteropFlows'
+} from '~/server/features/layer2s/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
 
 interface StatRow {

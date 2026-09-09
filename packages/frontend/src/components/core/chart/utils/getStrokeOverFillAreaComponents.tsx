@@ -39,7 +39,6 @@ export function ChartStrokeOverFillAreaComponents({
       <Area
         key={`stroke-${index}`}
         isAnimationActive={false}
-        strokeWidth={2}
         {...props}
         fill="none"
       />,

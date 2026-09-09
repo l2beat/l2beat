@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from 'react'
-import type { InteropScope } from '~/server/features/scaling/interop/types'
+import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { TransferDetailsDialog } from './table/transfer-count-cell/TransferCountCell'
 
 export function InteropTransferDetailsTrigger({

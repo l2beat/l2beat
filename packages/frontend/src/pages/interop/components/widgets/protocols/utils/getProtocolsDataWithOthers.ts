@@ -1,4 +1,4 @@
-import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
+import type { InteropProtocolData } from '~/server/features/layer2s/interop/utils/getTopProtocols'
 import type { DisplayProtocol } from '../TopProtocolsWidget'
 import { OTHERS_PROTOCOL_NAME } from '../useProtocolColorMap'
 

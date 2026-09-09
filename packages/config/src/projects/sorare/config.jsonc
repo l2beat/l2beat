@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "sorare",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xF5C9F957705bea56a7e806943f98F7777B995826"],

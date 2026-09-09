@@ -98,8 +98,7 @@ export const abstract: ScalingProject = zkStackL2({
       },
     }),
   ],
-  usesEthereumBlobs: true,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

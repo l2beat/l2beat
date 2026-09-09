@@ -3,7 +3,7 @@ import type {
   ProjectScalingContractsProgramHash,
 } from '@l2beat/config'
 import type { StateValidationProgramHashData } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { manifest } from '~/utils/Manifest'
 
 export function getProgramHashes(
@@ -26,7 +26,7 @@ export function getProgramHashes(
       const usedInWithIcons = usedIn.map((project) => ({
         ...project,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        url: `/scaling/projects/${project.slug}`,
+        url: `/layer2s/projects/${project.slug}`,
       }))
 
       return {

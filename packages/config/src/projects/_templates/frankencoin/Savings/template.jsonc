@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Current savings module: deposited ZCHF earns a governance-set interest rate, minted against the equity reserve (3-day interest delay on deposits). Savers can opt into a referral fee of up to 25% of their interest for frontends. Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
+  "ignoreInWatchMode": ["currentTicks"],
+  "ignoreMethods": ["ticks"],
+  "fields": {
+    "equity": {
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "604800",
+          "description": "propose a new interest rate for the Savings module with 2% of FPS votes, in force after 7 days unless replaced by a counter-proposal. The rate is paid to savers (including the SavingsVault) by minting against the equity reserve."
+        }
+      ]
+    }
+  }
+}

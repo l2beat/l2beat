@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
@@ -13,7 +13,7 @@ export const bobanetwork: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
@@ -24,19 +24,13 @@ export const bobanetwork: ScalingProject = opStackL2({
         EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
       ],
     },
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 22790097,
-      inbox: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
-      sequencers: [
-        EthereumAddress('0xA4eD58737Fc5C4861C33410c29ECb1E2AF29d960'),
-      ],
-    },
+    getOpStackDaTracking(discovery, { sinceBlock: 22790097 }),
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Boba Network',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     shortName: 'Boba',
     slug: 'bobanetwork',
     description:

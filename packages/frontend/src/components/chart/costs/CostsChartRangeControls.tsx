@@ -1,4 +1,4 @@
-import type { CostsMetric } from '~/pages/scaling/costs/components/CostsMetricContext'
+import type { CostsMetric } from '~/pages/layer2s/costs/components/CostsMetricContext'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 
