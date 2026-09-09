@@ -278,16 +278,45 @@ export function CropPlantSample({
   )
 }
 
+/** The bare plant at any size, for layouts where it is the hero rather than a badge. */
+export function CropPlantArt({
+  status,
+  sentiment,
+  delay,
+  width,
+  className,
+}: {
+  status: ProjectCropStatus
+  sentiment: CropSentiment
+  delay: number
+  width: number
+  className?: string
+}) {
+  return (
+    <span className={cn('flex items-end', PALETTE[sentiment].plant, className)}>
+      <CropPlant
+        status={status}
+        sentiment={sentiment}
+        delay={delay}
+        width={width}
+      />
+    </span>
+  )
+}
+
 function CropPlant({
   status,
   sentiment,
   delay,
   compact,
+  width,
 }: {
   status: ProjectCropStatus
   sentiment: CropSentiment
   delay: number
   compact?: boolean
+  /** Overrides the badge sizes; height follows the 34:40 viewBox. */
+  width?: number
 }) {
   const grow: CSSProperties = {
     transformBox: 'fill-box',
@@ -316,11 +345,12 @@ function CropPlant({
   })
 
   const shape = PLANT_SHAPE[sentiment]
+  const svgWidth = width ?? (compact ? 27 : 34)
 
   return (
     <svg
-      width={compact ? 27 : 34}
-      height={compact ? 32 : 40}
+      width={svgWidth}
+      height={(svgWidth * 40) / 34}
       viewBox="0 0 34 40"
       className="block overflow-visible"
       aria-hidden
