@@ -1,6 +1,7 @@
 import { Address32 } from '@l2beat/shared-pure'
 
-interface Endpoint {
+/** A deployed token or relation endpoint: chain id plus token address. */
+export interface Endpoint {
   chain: string
   address: string
 }
