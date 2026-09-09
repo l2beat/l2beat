@@ -3,7 +3,7 @@ import { useId, useMemo, useState } from 'react'
 import { type Hex, isAddress } from 'viem'
 import { getSafeState } from './api'
 import { useRegisterKnownHash } from './HashReferences'
-import { calculateSafeHashes, stepSafeNonce } from './safe'
+import { calculateSafeHashes } from './safe'
 
 export function SafeHashes(props: {
   calldata: Hex
@@ -119,47 +119,15 @@ export function SafeHashes(props: {
           </p>
           <div className="my-2 flex items-center gap-3">
             <label htmlFor={`${id}-nonce`}>Transaction nonce</label>
-            <div className="flex overflow-hidden rounded bg-zinc-800">
-              <input
-                id={`${id}-nonce`}
-                className="w-40 bg-transparent px-2 py-1 font-mono"
-                inputMode="numeric"
-                role="spinbutton"
-                aria-valuemin={0}
-                aria-valuenow={
-                  /^(0|[1-9][0-9]*)$/.test(nonce) &&
-                  Number.isSafeInteger(Number(nonce))
-                    ? Number(nonce)
-                    : undefined
-                }
-                aria-valuetext={nonce}
-                value={nonce}
-                onChange={(e) => setNonceOverride(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
-                  e.preventDefault()
-                  setNonceOverride(
-                    stepSafeNonce(nonce, e.key === 'ArrowUp' ? 1 : -1),
-                  )
-                }}
-              />
-              <div className="grid border-zinc-700 border-l">
-                {([1, -1] as const).map((direction) => (
-                  <button
-                    key={direction}
-                    type="button"
-                    aria-label={`${direction === 1 ? 'Increase' : 'Decrease'} transaction nonce`}
-                    className="min-h-6 w-8 text-zinc-300 hover:bg-zinc-700 disabled:opacity-30"
-                    disabled={stepSafeNonce(nonce, direction) === nonce}
-                    onClick={() =>
-                      setNonceOverride(stepSafeNonce(nonce, direction))
-                    }
-                  >
-                    {direction === 1 ? '▴' : '▾'}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <input
+              id={`${id}-nonce`}
+              className="w-24 rounded bg-zinc-800 px-2 py-1 font-mono"
+              type="number"
+              min="0"
+              step="1"
+              value={nonce}
+              onChange={(e) => setNonceOverride(e.target.value)}
+            />
             {nonceOverride !== undefined && (
               <button
                 type="button"
