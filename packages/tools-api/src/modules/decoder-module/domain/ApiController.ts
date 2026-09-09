@@ -89,6 +89,12 @@ export class ApiController {
     }
   }
 
+  async getSafeState(chainId: number, address: `0x${string}`) {
+    const chain = this.chains.find((x) => x.chainId === chainId)
+    if (!chain) throw new Error('Unknown chain id')
+    return await this.alchemyClient.getSafeState(address, chain)
+  }
+
   lookupPreimages(hashes: `0x${string}`[]): PreimageResult[] {
     return hashes.flatMap((hash) => {
       const preimage = this.hashes[hash]

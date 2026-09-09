@@ -21,6 +21,25 @@ const baseUrl =
     ? 'https://tools-api.l2beat.com'
     : 'http://localhost:3000'
 
+export async function getSafeState(
+  chainId: number,
+  address: `0x${string}`,
+): Promise<{
+  nonce: string
+  version: string
+  blockNumber: string
+}> {
+  const res = await fetch(`${baseUrl}/api/safe-state`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chainId, address: address.toLowerCase() }),
+    signal: AbortSignal.timeout(40_000),
+  })
+  if (!res.ok)
+    throw new Error('Could not read Safe version and nonce from RPC.')
+  return await res.json()
+}
+
 export async function lookupTx(
   query: TransactionQuery,
 ): Promise<TransactionResult | null> {

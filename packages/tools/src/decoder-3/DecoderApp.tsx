@@ -8,6 +8,7 @@ import {
   useContext,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react'
@@ -17,7 +18,10 @@ import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
 import type { DecodedValue } from './decode'
 import { formatNumber, getFormatHint } from './format'
+import { HashReferencesProvider, useHashReferences } from './HashReferences'
+import { findKnownHashes } from './knownHashes'
 import { decode } from './plugins'
+import { SafeHashes } from './SafeHashes'
 
 export function DecoderApp() {
   const [values, setValues] = useState<FormValues | undefined>()
@@ -46,7 +50,9 @@ export function DecoderApp() {
       {showDecoded && (
         <main className="mx-auto max-w-[1200px] p-12 pb-20">
           <AbiManager />
-          <DecodedView value={value} />
+          <HashReferencesProvider>
+            <DecodedView value={value} path="transaction" />
+          </HashReferencesProvider>
         </main>
       )}
     </ChainsContextProvider>
@@ -402,10 +408,23 @@ function AbiManager() {
   )
 }
 
-function DecodedView({ value }: { value: DecodedValue }) {
+function DecodedView({ value, path }: { value: DecodedValue; path: string }) {
   const store = useStore()
+  const anchor = useId()
+  const { target } = useHashReferences()
   const [lessMembers, setLessMembers] = useState(false)
   const [decoded, setDecoded] = useState(value)
+
+  useLayoutEffect(() => {
+    if (
+      target &&
+      (target.path === path ||
+        target.path.startsWith(`${path}.`) ||
+        target.path.startsWith(`${path}[`))
+    ) {
+      setLessMembers(false)
+    }
+  }, [target, path])
 
   useEffect(() => {
     setDecoded(value)
@@ -465,7 +484,10 @@ function DecodedView({ value }: { value: DecodedValue }) {
       <ol className={clsx('pl-4', lessMembers && 'hidden')}>
         {decoded.members.map((m, i) => (
           <li key={i}>
-            <DecodedView value={m} />
+            <DecodedView
+              value={m}
+              path={`${path}${/^\d+$/.test(m.name ?? '') ? `[${m.name}]` : `.${m.name ?? i}`}`}
+            />
           </li>
         ))}
       </ol>
@@ -474,7 +496,11 @@ function DecodedView({ value }: { value: DecodedValue }) {
 
   if (decoded.type === 'call') {
     return (
-      <div className="group">
+      <div
+        id={anchor}
+        tabIndex={-1}
+        className="group scroll-mt-4 rounded focus:outline focus:outline-1 focus:outline-blue-400"
+      >
         {nameElement}
         <DisplayAddress
           short
@@ -494,6 +520,16 @@ function DecodedView({ value }: { value: DecodedValue }) {
         <span className="text-zinc-300">(</span>
         {members}
         <span className="text-zinc-300">)</span>
+        {decoded.bytes.slice(0, 10).toLowerCase() === '0x6a761202' && (
+          <SafeHashes
+            key={`${decoded.chainId}:${decoded.address}:${decoded.bytes}`}
+            calldata={decoded.bytes}
+            address={decoded.address}
+            chainId={decoded.chainId}
+            path={path}
+            anchor={anchor}
+          />
+        )}
       </div>
     )
   }
@@ -515,6 +551,7 @@ function DecodedView({ value }: { value: DecodedValue }) {
       <div>
         {nameElement}
         <DisplayBytes bytes={decoded.bytes} />
+        <HashMeaning hash={decoded.bytes} chainId={decoded.chainId} />
       </div>
     )
   }
@@ -564,6 +601,49 @@ function DecodedView({ value }: { value: DecodedValue }) {
       </div>
     )
   }
+}
+
+function HashMeaning({
+  hash,
+  chainId,
+}: {
+  hash: `0x${string}`
+  chainId?: number
+}) {
+  const { entries, reveal } = useHashReferences()
+  const matches = findKnownHashes(entries, hash, chainId)
+  if (matches.length === 0) return null
+
+  return (
+    <div
+      className="my-1 border-green-700 border-l-2 pl-3 text-sm"
+      aria-label="Known hash meaning"
+    >
+      <div className="text-green-400">
+        Matches calculated Safe transaction hash
+      </div>
+      {matches.map((match) => (
+        <div key={match.id} className="mt-1">
+          <DisplayAddress address={match.address} chainId={match.chainId} />
+          <span className="text-zinc-400">
+            {' '}
+            · nonce {match.nonce} · chain {match.chainId}
+          </span>
+          <div className="flex flex-wrap items-center gap-x-3">
+            <span className="font-mono text-zinc-500">{match.path}</span>
+            <button
+              type="button"
+              className="min-h-8 text-blue-400 hover:underline"
+              aria-label={`View decoded transaction ${match.path}, Safe ${match.address}, nonce ${match.nonce}`}
+              onClick={() => reveal({ path: match.path, anchor: match.anchor })}
+            >
+              View decoded transaction →
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
 }
 
 function DisplayBytes(props: { bytes: `0x${string}` }) {
