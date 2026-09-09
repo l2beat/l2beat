@@ -1,8 +1,6 @@
 import { expect } from 'earl'
-import {
-  extractStakeDistribution,
-  type StakingDataset,
-} from './getStakeDistrib'
+import { extractStakeDistribution } from './extractStakeDistribution'
+import type { StakingDataset } from './types'
 
 describe(extractStakeDistribution.name, () => {
   const dataset: StakingDataset = {
@@ -27,11 +25,14 @@ describe(extractStakeDistribution.name, () => {
     expect(output.totalStake).toEqual(3_500_000_000)
   })
 
-  it('stamps a fetched timestamp when the source has no snapshot date', () => {
+  it('stamps the fetch time when the source has no snapshot date', () => {
+    const before = Date.now()
     const output = extractStakeDistribution(dataset, 10)
 
     expect(output.dateType).toEqual('fetched')
-    expect(Number.isNaN(Date.parse(output.date))).toEqual(false)
+    const fetchedAt = Date.parse(output.date)
+    expect(fetchedAt).toBeGreaterThanOrEqual(before)
+    expect(fetchedAt).toBeLessThanOrEqual(Date.now())
   })
 
   it('uses the source snapshot date when reported', () => {

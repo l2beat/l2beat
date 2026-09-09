@@ -11,11 +11,12 @@ import {
 } from 'cmd-ts'
 import { config as loadEnv } from 'dotenv'
 import path from 'path'
+import type { StakeDistributionOutputTarget } from '../implementations/stake-distribution/outputPlan'
+import { StakeDistributionFetcher } from '../implementations/stake-distribution/StakeDistributionFetcher'
 import {
   STAKING_PROJECT_IDS,
-  StakeDistributionFetcher,
   type StakingProjectSelection,
-} from '../implementations/getStakeDistrib'
+} from '../implementations/stake-distribution/types'
 
 const PositiveInteger = extendType(number, {
   // biome-ignore lint/suspicious/useAwait: cmd-ts types require async-compatible parsing
@@ -61,21 +62,40 @@ export const GetStakeDistrib = command({
   },
   handler: async (args) => {
     loadDotenvFiles()
-    const outputPath =
-      args.outputPath !== undefined
-        ? path.resolve(process.cwd(), args.outputPath)
-        : undefined
     const fetcher = new StakeDistributionFetcher(
       args.project,
       args.limit,
-      outputPath,
+      getOutputTarget(args.outputPath),
     )
     await fetcher.fetchAndDisplay()
   },
 })
 
+function getOutputTarget(
+  outputPath: string | undefined,
+): StakeDistributionOutputTarget {
+  if (outputPath !== undefined) {
+    return { type: 'file', path: path.resolve(process.cwd(), outputPath) }
+  }
+  return { type: 'discovery', root: getDiscoveryPaths().discovery }
+}
+
+// The repository dotenv files are a convenience for in-repo runs. Outside the
+// repository there is no .discovery.json to anchor on, so the environment is
+// the only source of credentials.
 function loadDotenvFiles(): void {
-  const { root } = getDiscoveryPaths()
+  const root = findRepositoryRoot()
+  if (root === undefined) {
+    return
+  }
   loadEnv({ path: path.join(root, 'packages/backend/.env') })
   loadEnv({ path: path.join(root, '.env') })
+}
+
+function findRepositoryRoot(): string | undefined {
+  try {
+    return getDiscoveryPaths().root
+  } catch {
+    return undefined
+  }
 }

@@ -1,8 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import {
-  CENTRALIZED_SEQUENCING_FIELD_KEYS,
-  CENTRALIZED_SEQUENCING_FIELDS,
-} from '~/components/projects/sections/sequencing/centralizedSequencingFields'
+import { CENTRALIZED_SEQUENCING_FIELDS } from '~/components/projects/sections/sequencing/centralizedSequencingFields'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import {
@@ -19,12 +16,12 @@ function getSequencingHref(entry: L2RiskCentralizedSequencingEntry) {
 
 export const l2CentralizedSequencingColumns = [
   ...getL2CommonProjectColumns(columnHelper, getSequencingHref),
-  ...CENTRALIZED_SEQUENCING_FIELD_KEYS.map((key) =>
+  ...CENTRALIZED_SEQUENCING_FIELDS.map(({ key, header, tooltip }) =>
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
       id: key,
-      header: CENTRALIZED_SEQUENCING_FIELDS[key].header,
+      header,
       cell: (ctx) => <TableValueCell value={ctx.row.original[key]} />,
-      meta: { tooltip: CENTRALIZED_SEQUENCING_FIELDS[key].tooltip },
+      meta: { tooltip },
       sortDescFirst: true,
       sortingFn: (a, b) => sortTableValues(a.original[key], b.original[key]),
     }),

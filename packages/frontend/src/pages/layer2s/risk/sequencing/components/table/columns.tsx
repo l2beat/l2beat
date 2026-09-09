@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import type { ReactNode } from 'react'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import {
@@ -42,7 +43,11 @@ type SequencingTableValueKey =
   | 'additionalCrGadgets'
 
 const tableValueColumns = [
-  { key: 'sequencerCount', header: 'Set\nsize' },
+  {
+    key: 'sequencerCount',
+    header: 'Set\nsize',
+    cell: (entry) => <SequencerCountCell entry={entry} />,
+  },
   {
     key: 'blockProductionAccess',
     header: 'Block production\naccess',
@@ -87,32 +92,22 @@ const tableValueColumns = [
   key: SequencingTableValueKey
   header: string
   tooltip?: string
+  /** Overrides the default table-value cell. */
+  cell?: (entry: L2RiskSequencingEntry) => ReactNode
 }[]
 
 export const l2SequencingColumns = [
   ...getL2CommonProjectColumns(columnHelper, getSequencingHref),
-  ...tableValueColumns.map(({ key, header, tooltip }) =>
+  ...tableValueColumns.map(({ key, header, tooltip, cell }) =>
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
       id: key,
       header,
-      cell: (ctx) => {
-        if (key !== 'sequencerCount') {
-          return <TableValueCell value={ctx.row.original[key]} />
-        }
-
-        const stakeDistributionDate = ctx.row.original.stakeDistributionDate
-
-        return (
-          <div className="flex items-center gap-1">
-            <TableValueCell value={ctx.row.original[key]} />
-            {stakeDistributionDate && (
-              <TableTooltip>
-                {getStakeDistributionTooltip(stakeDistributionDate)}
-              </TableTooltip>
-            )}
-          </div>
-        )
-      },
+      cell: (ctx) =>
+        cell ? (
+          cell(ctx.row.original)
+        ) : (
+          <TableValueCell value={ctx.row.original[key]} />
+        ),
       meta: tooltip ? { tooltip } : undefined,
       sortDescFirst: true,
       sortUndefined: 'last',
@@ -120,3 +115,16 @@ export const l2SequencingColumns = [
     }),
   ),
 ]
+
+function SequencerCountCell({ entry }: { entry: L2RiskSequencingEntry }) {
+  return (
+    <div className="flex items-center gap-1">
+      <TableValueCell value={entry.sequencerCount} />
+      {entry.stakeDistributionDate && (
+        <TableTooltip>
+          {getStakeDistributionTooltip(entry.stakeDistributionDate)}
+        </TableTooltip>
+      )}
+    </div>
+  )
+}

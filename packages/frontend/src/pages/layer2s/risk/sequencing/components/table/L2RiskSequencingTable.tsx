@@ -30,7 +30,7 @@ export function L2RiskSequencingTable({ entries }: Props) {
 
   return (
     <>
-      <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+      <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <h2 className="font-bold text-heading-16 md:text-heading-20">
           Decentralized Sequencing
         </h2>

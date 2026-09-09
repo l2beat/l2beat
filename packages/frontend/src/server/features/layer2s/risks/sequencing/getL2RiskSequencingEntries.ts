@@ -3,20 +3,18 @@ import type {
   ProjectCentralizedSequencingSpec,
   ProjectInclusionDelayChart,
   ProjectInclusionDelayChartStakeDistribution,
-  ProjectSequencingTechnologyChoice,
+  ProjectSequencerSetSpec,
   TableReadyValue,
 } from '@l2beat/config'
 import { assert, notUndefined, ProjectId } from '@l2beat/shared-pure'
-import type { CommonL2Entry } from '~/server/features/layer2s/getCommonL2Entry'
 import { getCommonL2Entry } from '~/server/features/layer2s/getCommonL2Entry'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
+import { getEthereumCommonEntry } from '~/server/features/utils/getEthereumCommonEntry'
 import { ps } from '~/server/projects'
-import { manifest } from '~/utils/Manifest'
 import type {
   InclusionDelayChartDataPoint,
-  InclusionDelayEntityLegendEntry,
   InclusionDelayEntityMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
@@ -28,8 +26,6 @@ type L2RiskSequencingProject = Project<
   'statuses' | 'scalingInfo' | 'scalingRisks' | 'display' | 'scalingTechnology',
   'contracts'
 >
-
-type EthereumSequencingProject = Project<'display' | 'scalingTechnology'>
 
 export interface L2RiskSequencingEntry extends CommonProjectEntry {
   sequencerCount: TableReadyValue | undefined
@@ -46,7 +42,7 @@ export interface L2RiskSequencingEntry extends CommonProjectEntry {
 }
 
 export interface L2RiskCentralizedSequencingEntry
-  extends CommonL2Entry,
+  extends CommonProjectEntry,
     Omit<ProjectCentralizedSequencingSpec, 'type'> {}
 
 export interface InclusionDelayComparisonSeries {
@@ -94,12 +90,22 @@ export async function getL2RiskSequencingEntries(): Promise<L2RiskSequencingPage
     }),
   ])
 
+  // Ethereum is the baseline row and the baseline chart series. Its config is
+  // always populated, so a missing spec or chart is a config error.
   assert(ethereum, 'Ethereum sequencing configuration not found')
-  const ethereumEntry = getEthereumSequencingEntry(ethereum)
-  assert(ethereumEntry, 'Ethereum sequencer set specification not found')
+  const ethereumSpec = ethereum.scalingTechnology.sequencing?.sequencingSpec
+  assert(
+    ethereumSpec?.type === 'sequencer-set' && ethereumSpec.inclusionDelayChart,
+    'Ethereum sequencer set specification with inclusion delay chart not found',
+  )
 
-  const decentralizedEntries = [
-    ethereumEntry,
+  const decentralizedEntries: L2RiskSequencingEntry[] = [
+    {
+      ...getEthereumCommonEntry({
+        description: ethereum.display.description,
+      }),
+      ...getSequencingValues(ethereumSpec),
+    },
     ...projects
       .map((project) =>
         getL2RiskSequencingEntry(
@@ -124,147 +130,91 @@ export async function getL2RiskSequencingEntries(): Promise<L2RiskSequencingPage
   return {
     decentralizedEntries,
     centralizedEntries,
-    inclusionDelayComparison: getInclusionDelayComparison(projects, ethereum),
+    inclusionDelayComparison: getInclusionDelayComparison(
+      projects,
+      ethereumSpec.inclusionDelayChart,
+    ),
   }
 }
 
-const ETHEREUM_SERIES_KEY = 'ethereum'
+interface InclusionDelaySeriesInput extends InclusionDelayComparisonSeries {
+  chart: ProjectInclusionDelayChart
+}
 
 function getInclusionDelayComparison(
   projects: L2RiskSequencingProject[],
-  ethereum: EthereumSequencingProject,
+  ethereumChart: ProjectInclusionDelayChart,
 ): InclusionDelayComparison | undefined {
-  const projectDelays = projects
-    .map((project) => {
+  const projectInputs = projects
+    .map((project): InclusionDelaySeriesInput | undefined => {
       const spec = project.scalingTechnology.sequencing?.sequencingSpec
       if (spec?.type !== 'sequencer-set' || !spec.inclusionDelayChart) {
         return undefined
       }
-      const chart = spec.inclusionDelayChart
-      const inclusionDelay = getInclusionDelayData(chart)
       return {
-        slug: project.slug,
-        name: project.name,
-        points: inclusionDelay.projectPoints,
-        entityMarkers: inclusionDelay.entityLegendEntries.filter(hasDelay),
-        maxCensorFraction: chart.maxCensorFraction,
+        key: project.slug,
+        label: project.name,
+        type: 'project',
+        chart: spec.inclusionDelayChart,
       }
     })
     .filter(notUndefined)
-    .sort((a, b) => a.name.localeCompare(b.name))
+    .sort((a, b) => a.label.localeCompare(b.label))
 
-  const ethereumSpec = ethereum.scalingTechnology.sequencing?.sequencingSpec
-  const ethereumChart =
-    ethereumSpec?.type === 'sequencer-set'
-      ? ethereumSpec.inclusionDelayChart
-      : undefined
-  if (projectDelays.length === 0 || !ethereumChart) {
+  if (projectInputs.length === 0) {
     return undefined
   }
 
-  const maxCensorFraction = Math.max(
-    ...projectDelays.map((delay) => delay.maxCensorFraction),
-    ethereumChart.maxCensorFraction,
-  )
-  const ethereumDelay = getInclusionDelayData(ethereumChart)
-
-  const data = mergeInclusionDelaySeries([
-    ...projectDelays.map((delay) => ({
-      key: delay.slug,
-      points: delay.points,
-    })),
-    { key: ETHEREUM_SERIES_KEY, points: ethereumDelay.projectPoints },
-  ])
-
-  const series: InclusionDelayComparisonSeries[] = [
-    ...projectDelays.map((delay) => ({
-      key: delay.slug,
-      label: delay.name,
-      type: 'project' as const,
-    })),
-    { key: ETHEREUM_SERIES_KEY, label: 'Ethereum', type: 'ethereum' as const },
+  const inputs: InclusionDelaySeriesInput[] = [
+    {
+      key: 'ethereum',
+      label: 'Ethereum',
+      type: 'ethereum',
+      chart: ethereumChart,
+    },
+    ...projectInputs,
   ]
+  const computed = inputs.map((input) => ({
+    ...input,
+    delay: getInclusionDelayData(input.chart),
+  }))
 
-  const entityMarkers: InclusionDelayComparisonEntityMarker[] = [
-    ...projectDelays.flatMap((delay) =>
+  return {
+    data: mergeInclusionDelaySeries(
+      computed.map(({ key, delay }) => ({ key, points: delay.projectPoints })),
+    ),
+    series: computed.map(({ key, label, type }) => ({ key, label, type })),
+    entityMarkers: computed.flatMap(({ key, delay }) =>
       delay.entityMarkers.map((marker) => ({
         ...marker,
-        id: `${delay.slug}-${marker.id}`,
-        seriesKey: delay.slug,
+        id: `${key}-${marker.id}`,
+        seriesKey: key,
       })),
     ),
-    ...ethereumDelay.entityLegendEntries.filter(hasDelay).map((marker) => ({
-      ...marker,
-      id: `${ETHEREUM_SERIES_KEY}-${marker.id}`,
-      seriesKey: ETHEREUM_SERIES_KEY,
-    })),
-  ]
-
-  return { data, series, entityMarkers, maxCensorFraction }
-}
-
-function hasDelay(
-  marker: InclusionDelayEntityLegendEntry,
-): marker is InclusionDelayEntityMarker {
-  return marker.delayDays !== null
+    maxCensorFraction: Math.max(
+      ...computed.map(({ chart }) => chart.maxCensorFraction),
+    ),
+  }
 }
 
 function getL2RiskSequencingEntry(
   project: L2RiskSequencingProject,
   changes: ProjectChanges,
 ): L2RiskSequencingEntry | undefined {
-  const values = getSequencingValues(project.scalingTechnology.sequencing)
-  if (!values) {
+  const spec = project.scalingTechnology.sequencing?.sequencingSpec
+  if (spec?.type !== 'sequencer-set') {
     return undefined
   }
 
   return {
     ...getCommonL2Entry({ project, changes }),
-    ...values,
+    ...getSequencingValues(spec),
   }
 }
 
-function getEthereumSequencingEntry(
-  project: EthereumSequencingProject,
-): L2RiskSequencingEntry | undefined {
-  const values = getSequencingValues(project.scalingTechnology.sequencing)
-  if (!values) {
-    return undefined
-  }
+type SequencingValues = Omit<L2RiskSequencingEntry, keyof CommonProjectEntry>
 
-  return {
-    id: project.id,
-    slug: project.slug,
-    icon: manifest.getUrl('/icons/ethereum.png'),
-    name: project.name,
-    shortName: project.shortName,
-    backgroundColor: 'blue',
-    statuses: undefined,
-    description: project.display.description,
-    ...values,
-  }
-}
-
-type SequencingValues = Pick<
-  L2RiskSequencingEntry,
-  | 'sequencerCount'
-  | 'stakeDistributionDate'
-  | 'blockProductionAccess'
-  | 'entryPolicy'
-  | 'blockTime'
-  | 'rotation'
-  | 'blockProduction'
-  | 'deterministicCrGadget'
-  | 'additionalCrGadgets'
->
-
-function getSequencingValues(
-  sequencing: ProjectSequencingTechnologyChoice | undefined,
-): SequencingValues | undefined {
-  if (sequencing?.sequencingSpec?.type !== 'sequencer-set') {
-    return undefined
-  }
-  const spec = sequencing.sequencingSpec
+function getSequencingValues(spec: ProjectSequencerSetSpec): SequencingValues {
   const stakeDistribution = spec.inclusionDelayChart?.stakeDistribution
 
   return {

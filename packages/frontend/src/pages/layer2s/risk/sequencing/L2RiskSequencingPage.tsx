@@ -43,9 +43,11 @@ export function L2RiskSequencingPage({
             />
           )}
         </PrimaryCard>
-        <TableSortingProvider initialSort={{ id: '#', desc: false }}>
-          <CentralizedSequencingTable entries={centralizedEntries} />
-        </TableSortingProvider>
+        <PrimaryCard className="mt-6">
+          <TableSortingProvider initialSort={{ id: '#', desc: false }}>
+            <CentralizedSequencingTable entries={centralizedEntries} />
+          </TableSortingProvider>
+        </PrimaryCard>
         <Callout
           color="blue"
           body="A system combining decentralized sequencing for real-time censorship resistance with deterministic L1 inclusion for eventual censorship resistance would provide the strongest overall protection. No live system shown here offers that combination yet."
