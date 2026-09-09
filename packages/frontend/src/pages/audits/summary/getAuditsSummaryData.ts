@@ -22,7 +22,7 @@ export async function getAuditsSummaryData(
           'How much of the smart contract code deployed by each project is covered by public audits.',
         url,
         openGraph: {
-          image: '/meta-images/opengraph-image.png',
+          image: '/meta-images/audits/opengraph-image.png',
         },
       }),
     },

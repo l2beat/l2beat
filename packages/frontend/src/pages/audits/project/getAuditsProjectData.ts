@@ -25,7 +25,7 @@ export async function getAuditsProjectData(
         description: `Deployed vs audited source comparison for ${details.name}.`,
         url,
         openGraph: {
-          image: '/meta-images/opengraph-image.png',
+          image: '/meta-images/audits/opengraph-image.png',
         },
       }),
     },
