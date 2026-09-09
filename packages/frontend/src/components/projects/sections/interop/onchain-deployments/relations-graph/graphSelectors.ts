@@ -1,3 +1,4 @@
+import { unique } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type {
   InteropTokenDeploymentView,
@@ -155,9 +156,9 @@ export interface SameChainComparison {
     node: InteropTokenRelationsNode
     deployment: InteropTokenDeploymentView
     selected: boolean
+    /** 1-based position on this chain; undefined without volume data. */
+    rank: number | undefined
   }[]
-  /** 1-based position of the node's deployment; undefined without volume data. */
-  rank: number | undefined
 }
 
 /** How the node's deployments rank against the token's other deployments on the same chains. */
@@ -172,48 +173,42 @@ export function getSameChainComparisons(
       selected: candidate.id === node.id,
     })),
   )
-  return node.deployments
-    .flatMap((own) => {
-      const ranked = all
-        .filter((item) => item.deployment.chain.id === own.chain.id)
-        .toSorted(
-          (a, b) => (b.deployment.volume ?? -1) - (a.deployment.volume ?? -1),
-        )
-      if (ranked.length <= 1) return []
-      const index = ranked.findIndex(
-        (item) => item.selected && item.deployment.address === own.address,
-      )
-      const comparison: SameChainComparison = {
+  const byChain = Map.groupBy(all, (item) => item.deployment.chain.id)
+  // Compare each chain once, ordered by its busiest selected deployment.
+  const ownChains = unique(
+    node.deployments.toSorted((a, b) => (b.volume ?? -1) - (a.volume ?? -1)),
+    (deployment) => deployment.chain.id,
+  )
+  return ownChains.flatMap((own) => {
+    const deployments = byChain.get(own.chain.id) ?? []
+    if (deployments.length <= 1) return []
+    return [
+      {
         chain: own.chain,
-        ranked,
-        rank: own.volume === null ? undefined : index + 1,
-      }
-      return [[own.volume ?? -1, comparison] as const]
+        ranked: deployments
+          .toSorted(
+            (a, b) => (b.deployment.volume ?? -1) - (a.deployment.volume ?? -1),
+          )
+          .map((item, index) => ({
+            ...item,
+            rank: item.deployment.volume === null ? undefined : index + 1,
+          })),
+      },
+    ]
+  })
+}
+
+/** Every directly backed node and its minting bridges, busiest first. */
+export function getDirectlyBackedNodes(
+  graph: InteropTokenRelationsGraph,
+  nodeId: string,
+): { node: InteropTokenRelationsNode; bridges: ProjectIconListItem[] }[] {
+  const nodesById = new Map(graph.nodes.map((node) => [node.id, node]))
+  return graph.edges
+    .flatMap((edge) => {
+      if (edge.from !== nodeId) return []
+      const node = nodesById.get(edge.to)
+      return node ? [{ node, bridges: edge.bridges }] : []
     })
-    .toSorted(([a], [b]) => b - a)
-    .map(([, comparison]) => comparison)
-}
-
-export interface BackedGroups {
-  /** Every directly backed node with the bridges minting it, in path order. */
-  direct: { node: InteropTokenRelationsNode; bridges: ProjectIconListItem[] }[]
-  /** Paths reaching further than one hop. */
-  nested: RelationsPath[]
-}
-
-export function groupBackedPaths(paths: RelationsPath[]): BackedGroups {
-  const direct = new Map<string, BackedGroups['direct'][number]>()
-  const nested: RelationsPath[] = []
-  for (const path of paths) {
-    const target = path.nodes[1]
-    if (!target) continue
-    if (path.nodes.length > 2) nested.push(path)
-    if (!direct.has(target.id)) {
-      direct.set(target.id, {
-        node: target,
-        bridges: path.edges[0]?.bridges ?? [],
-      })
-    }
-  }
-  return { direct: [...direct.values()], nested }
+    .toSorted((a, b) => (b.node.volume ?? -1) - (a.node.volume ?? -1))
 }
