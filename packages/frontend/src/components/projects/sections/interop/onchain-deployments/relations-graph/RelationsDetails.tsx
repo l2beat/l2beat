@@ -8,9 +8,9 @@ import type {
 import { cn } from '~/utils/cn'
 import {
   describeNode,
+  getDirectlyBackedNodes,
   getRelationsPaths,
   getSameChainComparisons,
-  groupBackedPaths,
   isCluster,
   type RelationsPath,
   type SameChainComparison,
@@ -199,7 +199,12 @@ function BackedBySection({ graph, node, onSelectNode }: SectionProps) {
 
 function BacksSection({ graph, node, onSelectNode }: SectionProps) {
   const { direct, nested } = useMemo(
-    () => groupBackedPaths(getRelationsPaths(graph, node.id, 'backed')),
+    () => ({
+      direct: getDirectlyBackedNodes(graph, node.id),
+      nested: getRelationsPaths(graph, node.id, 'backed').filter(
+        (path) => path.nodes.length > 2,
+      ),
+    }),
     [graph, node],
   )
   return (
@@ -282,9 +287,7 @@ function SameChainComparisonView({
           <span className="truncate">{comparison.chain.name}</span>
         </span>
         <span className="shrink-0 text-secondary">
-          {comparison.rank === undefined
-            ? 'no volume data'
-            : `#${comparison.rank} of ${comparison.ranked.length} by volume`}
+          {comparison.ranked.length} deployments by volume
         </span>
       </div>
       <ul className="mt-3 space-y-3">
@@ -292,6 +295,9 @@ function SameChainComparisonView({
           <li key={`${item.node.id}|${item.deployment.address}`}>
             <div className="flex items-center justify-between gap-3 text-label-value-13">
               <span className="flex min-w-0 items-baseline gap-1.5">
+                <span className="shrink-0 text-secondary tabular-nums">
+                  {item.rank === undefined ? '—' : `#${item.rank}`}
+                </span>
                 {item.selected ? (
                   <span className="font-bold">{item.deployment.symbol}</span>
                 ) : (
