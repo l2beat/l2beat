@@ -2,7 +2,12 @@
 source .env
 
 if [ -n "$TEST_DB_URL" ]; then
-    export PRISMA_DB_URL=$TEST_DB_URL && pnpm db:migrate && mocha --timeout 10000 $@
+    # Package test suites run in parallel against a single Postgres server, so each
+    # one gets its own schema. Sharing "public" lets suites truncate each other's rows.
+    SCHEMA=database_test
+    export PRISMA_DB_URL="$TEST_DB_URL?schema=$SCHEMA"
+    export TEST_DB_URL="$TEST_DB_URL?options=-c%20search_path%3D$SCHEMA"
+    pnpm db:migrate && mocha --timeout 10000 $@
 else
     mocha --timeout 10000 $@
 fi
