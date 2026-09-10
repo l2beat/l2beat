@@ -1,4 +1,4 @@
-import type { ResolvedCrops } from '@l2beat/config/build/crops/canonicalCrops'
+import type { ResolvedCrops } from '@l2beat/config'
 import {
   CropFindings,
   CropNote,

@@ -1,8 +1,4 @@
-import type { ProjectCropStatus } from '@l2beat/config'
-import type {
-  CropKey,
-  CropSentiment,
-} from '@l2beat/config/build/crops/canonicalCrops'
+import type { CropKey, CropSentiment, ProjectCropStatus } from '@l2beat/config'
 import { CropPlantSample } from '../../components/CropBadge'
 import { CROP_COLUMNS } from '../../crops'
 

@@ -1,4 +1,4 @@
-import type { CropKey } from '@l2beat/config/build/crops/canonicalCrops'
+import type { CropKey } from '@l2beat/config'
 
 /** Marks where `reference` is linked inside a minimum. */
 export const REFERENCE_SLOT = '{{reference}}'

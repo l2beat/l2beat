@@ -1,10 +1,8 @@
-import type { ProjectCrops } from '@l2beat/config'
-import type { ResolvedCrops } from '@l2beat/config/build/crops/canonicalCrops'
-import {
-  qualifiesForGarden,
-  resolveProjectCrops,
-} from '@l2beat/config/build/crops/canonicalCrops'
+import type { ProjectCrops, ResolvedCrops } from '@l2beat/config'
+import { CROPS } from '@l2beat/config'
 import { env } from '~/env'
+
+const { qualifiesForGarden, resolveProjectCrops } = CROPS.canonicalCrops
 
 export interface ProjectGardenCrops {
   crops: ResolvedCrops

@@ -1,8 +1,4 @@
-import type { ProjectCropStatus } from '@l2beat/config'
-import type {
-  CropKey,
-  CropSentiment,
-} from '@l2beat/config/build/crops/canonicalCrops'
+import type { CropKey, CropSentiment, ProjectCropStatus } from '@l2beat/config'
 
 // Kept here rather than in @l2beat/config: client components import this, and
 // a value import of the config build breaks hydration (tsc emits

@@ -1,26 +1,23 @@
-import {
-  getCropAttestationLedger,
-  getCurrentCropAttestation,
-} from '@l2beat/config/build/crops/attestations'
 import type {
   CropKey,
   ResolvedCropEvaluation,
   ResolvedCrops,
-} from '@l2beat/config/build/crops/canonicalCrops'
-import {
-  CROP_KEYS,
-  qualifiesForGarden,
-  resolveProjectCrops,
-} from '@l2beat/config/build/crops/canonicalCrops'
-import {
+} from '@l2beat/config'
+import { CROPS } from '@l2beat/config'
+import { ps } from '~/server/projects'
+import { getGardenProjectPath } from './getGardenProjectPath'
+
+const { getCropAttestationLedger, getCurrentCropAttestation } =
+  CROPS.attestations
+const { CROP_KEYS, qualifiesForGarden, resolveProjectCrops } =
+  CROPS.canonicalCrops
+const {
   ATTESTATION_NETWORK,
   ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
   getAttestationUrl,
-} from '@l2beat/config/build/crops/eas'
-import { ps } from '~/server/projects'
-import { getGardenProjectPath } from './getGardenProjectPath'
+} = CROPS.eas
 
 // API responses link to production whatever host served them.
 export const BASE_URL = 'https://l2beat.com'

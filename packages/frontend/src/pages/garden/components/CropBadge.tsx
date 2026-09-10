@@ -1,8 +1,9 @@
-import type { OsiLicense, ProjectCropStatus } from '@l2beat/config'
 import type {
   CropSentiment,
+  OsiLicense,
+  ProjectCropStatus,
   ResolvedCropEvaluation,
-} from '@l2beat/config/build/crops/canonicalCrops'
+} from '@l2beat/config'
 import type { CSSProperties, ReactNode } from 'react'
 import {
   Tooltip,
