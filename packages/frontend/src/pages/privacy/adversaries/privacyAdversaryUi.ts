@@ -7,7 +7,7 @@ import type {
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
-  'Ethereum is public: every address keeps its past and its future in the open, and a privacy protocol can at best cut the link between them, hide who receives, or hide how much. The shape is what the protocol protects: a chain link for the deposit-to-withdrawal link, a person with an incoming arrow for the recipient, coins for amounts. The colour says whether a careful user can keep it private against this adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no. A plus next to the shape means the adversary learns more than a public observer, such as who you are; hover a cell for what exactly.'
+  'Ethereum is public: every address keeps its past and its future in the open, and a privacy protocol can at best cut the link between them, hide who receives, or hide how much. The shape is what the protocol protects: a chain link for the deposit-to-withdrawal link, a person with an incoming arrow for the recipient, coins for amounts. The colour says whether a careful user can keep it private against this adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no. A plus next to the shape means the adversary learns more than a public observer; hover a cell for what exactly.'
 
 /** Spine order; must match the order of PrivacyAdversariesSummary.cells. */
 export const PRIVACY_ADVERSARY_IDS: PrivacyAdversaryId[] = [
@@ -20,15 +20,15 @@ export const PRIVACY_ADVERSARY_IDS: PrivacyAdversaryId[] = [
 
 export const PRIVACY_ADVERSARY_TOOLTIP: Record<PrivacyAdversaryId, string> = {
   publicObserver:
-    'Anyone with a block explorer, today. Sees every transaction and event but does no correlation beyond following links.',
+    'Anyone with a block explorer, today. Sees every transaction, event and storage slot, but does no correlation beyond following links.',
   chainAnalyst:
-    'Keeps a copy of the whole chain forever and correlates it: timing, amounts, wallet fingerprints, address clusters, exchange KYC data. Chain analytics firms, tax authorities, data brokers.',
+    'Keeps a copy of the whole chain forever and correlates it: timing, amounts, gas and wallet fingerprints, address clusters, and offchain data such as exchange KYC. Cannot coerce anyone.',
   networkObserver:
-    'Sits between the user and the chain and sees traffic only: RPC providers, relayers, indexers, ISPs, and services that never receive keys or plaintext. Learns IP addresses, timing, ciphertext and what becomes public a block later.',
+    'Sits between the user and the chain and sees traffic only: RPC providers, relayers and broadcasters, indexers, ISPs. Learns IP addresses, timing, ciphertext and what becomes public. Assumes Tor and, where the client has an RPC setting, an own node.',
   privilegedInsider:
-    'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, view or decryption key holder, TEE vendor, association set provider, hosted prover, note registry. Can see more than the public, or exclude users.',
+    'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry, any service the operator runs. Can SEE more than the public, or EXCLUDE users, which also partitions anonymity sets.',
   futureAdversary:
-    'Harvest now, decrypt later. Holds every byte ever written onchain plus future cryptanalysis such as a quantum computer that breaks elliptic-curve key exchange, but not hashes or lattices.',
+    'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and future cryptanalysis such as a large quantum computer that breaks elliptic-curve key exchange and pairings, but not hashes, symmetric ciphers or lattices.',
 }
 
 /** Short column headers for the summary table. */
@@ -55,10 +55,8 @@ export const PRIVACY_EXPOSURE_CLASS_NAME: Record<PrivacyExposure, string> = {
   unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
 }
 
-export const PRIVACY_SEGMENT_LABEL = {
-  boundary: 'In and out',
-  interior: 'Inside',
-} as const
+/** Title of the interior field chips; entry and exit are public and have none. */
+export const PRIVACY_INTERIOR_LABEL = 'Inside'
 
 export function getExposure(leak: PrivacyFieldExposure): PrivacyExposure {
   return typeof leak === 'string' ? leak : leak.verdict
@@ -93,11 +91,15 @@ const SEVERITY: Record<PrivacyExposure, number> = {
   exposed: 3,
 }
 
-/** Worst leak beyond the public observer, identity included. */
+/** Worst leak beyond the public observer. */
 export function worstExtraLeak(
   cell: PrivacyAdversarySummaryCell,
 ): PrivacyExposure | undefined {
-  const all = [cell.identity, ...cell.alsoExposed.map((f) => f.exposure)]
-  const worst = all.reduce((a, b) => (SEVERITY[b] > SEVERITY[a] ? b : a))
+  const worst = cell.alsoExposed
+    .map((f) => f.exposure)
+    .reduce<PrivacyExposure>(
+      (a, b) => (SEVERITY[b] > SEVERITY[a] ? b : a),
+      'private',
+    )
   return worst === 'private' ? undefined : worst
 }

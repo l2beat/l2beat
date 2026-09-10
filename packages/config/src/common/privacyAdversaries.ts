@@ -15,9 +15,9 @@ import type {
 /**
  * Each cell carries one judgment, its sentiment (see PrivacyAdversaryAssessment).
  * Its value is derived: the subject the protocol promises to protect
- * (`promise.protects`) plus the state that matches the sentiment. Identity and
- * other leaks beyond the public observer are derived markers (`identity`,
- * `alsoExposed`), never a change of subject. Default-path footguns never affect
+ * (`promise.protects`) plus the state that matches the sentiment. Other leaks
+ * beyond the public observer are a derived marker (`alsoExposed`), never a
+ * change of subject. Default-path footguns never affect
  * the sentiment; they are `atRisk` verdicts in the exposure maps, and "at risk"
  * means the same thing at field and cell level: private only under the
  * condition in the note.
@@ -48,7 +48,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the chain and sees traffic only: RPC providers, relayers and broadcasters, indexers, ISPs, and services that never receive keys or plaintext. Learns IP addresses, timing, ciphertext and what becomes public a block later.',
+        'Sits between the user and the chain and sees traffic only: RPC providers, relayers and broadcasters, indexers, ISPs. Learns IP addresses, timing, ciphertext and what becomes public. Assumes Tor and, where the client has an RPC setting, an own node.',
       examples:
         'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry.',
     },
@@ -56,7 +56,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'privilegedInsider',
       label: 'Privileged insider',
       description:
-        'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry. Can SEE more than the public, or EXCLUDE users, which also partitions anonymity sets.',
+        'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry, any service the operator runs. Can SEE more than the public, or EXCLUDE users, which also partitions anonymity sets.',
       examples:
         'A DAO with an upgrade key, a KMS committee, an ASP operator, or whoever can compel them.',
     },
@@ -103,13 +103,6 @@ export const PRIVACY_FIELDS: Record<PrivacyField, PrivacyFieldInfo> = {
     description:
       'Whether the entry and exit of the same funds, or sender and recipient of the same transfer, can be tied together.',
   },
-  identity: {
-    id: 'identity',
-    label: 'Identity',
-    subject: 'Identity',
-    description:
-      'The person behind an address: IP address, API key, exchange KYC record.',
-  },
 }
 
 const SENTIMENT_STATE: Record<PrivacyAdversarySentiment, string> = {
@@ -137,46 +130,29 @@ export function getExposure(leak: PrivacyFieldExposure): PrivacyExposure {
   return typeof leak === 'string' ? leak : leak.verdict
 }
 
-function worse(a: PrivacyExposure, b: PrivacyExposure): PrivacyExposure {
-  return EXPOSURE_SEVERITY[a] >= EXPOSURE_SEVERITY[b] ? a : b
-}
-
-const SEGMENTS = ['boundary', 'interior'] as const
-
-/** Worst verdict of a field across the segments a cell has. */
+/** Verdict of a field inside the protocol; private when there is no interior. */
 export function getFieldExposure(
   cell: PrivacyAdversaryAssessment,
   field: PrivacyField,
 ): PrivacyExposure {
-  let result: PrivacyExposure = 'private'
-  for (const segment of SEGMENTS) {
-    const map = cell[segment]
-    if (map) result = worse(result, getExposure(map[field]))
-  }
-  return result
+  return cell.interior ? getExposure(cell.interior[field]) : 'private'
 }
 
 /**
- * Fields, other than the promised one and identity, that this adversary
- * learns more about than the public observer does in some segment.
+ * Fields, other than the promised one, that this adversary learns more about
+ * than the public observer does inside the protocol.
  */
 export function getAlsoExposed(
   protects: PrivacyField,
   cell: PrivacyAdversaryAssessment,
   baseline: PrivacyAdversaryAssessment,
 ): PrivacyField[] {
-  return PRIVACY_FIELD_ORDER.filter((field) => {
-    if (field === protects || field === 'identity') return false
-    return SEGMENTS.some((segment) => {
-      const map = cell[segment]
-      const base = baseline[segment]
-      if (!map || !base) return false
-      return (
-        EXPOSURE_SEVERITY[getExposure(map[field])] >
-        EXPOSURE_SEVERITY[getExposure(base[field])]
-      )
-    })
-  })
+  return PRIVACY_FIELD_ORDER.filter(
+    (field) =>
+      field !== protects &&
+      EXPOSURE_SEVERITY[getFieldExposure(cell, field)] >
+        EXPOSURE_SEVERITY[getFieldExposure(baseline, field)],
+  )
 }
 
 export const PRIVACY_ADVERSARY_ORDER: PrivacyAdversaryId[] = [
@@ -193,7 +169,6 @@ export const PRIVACY_FIELD_ORDER: PrivacyField[] = [
   'amount',
   'asset',
   'linkage',
-  'identity',
 ]
 
 /** Derives cell values and attaches the registries for the frontend. */
@@ -212,7 +187,6 @@ export function definePrivacyAdversaries(
             ...cell,
             id,
             value: getPrivacyAdversaryValue(protects, cell),
-            identity: getFieldExposure(cell, 'identity'),
             alsoExposed:
               id === 'publicObserver'
                 ? []

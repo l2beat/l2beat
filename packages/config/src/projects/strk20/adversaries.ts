@@ -21,18 +21,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposure:
         'Deposits and withdrawals show address, token and amount. Transfers inside are encrypted, but the first payment to any new recipient writes their address in the clear, and the fee refund reveals which token you pay fees in.',
       advice:
-        'Pay fees in STRK, and treat the first payment to any new recipient as public.',
-      boundary: {
-        sender: {
-          verdict: 'exposed',
-          note: 'Withdrawals are submitted by paymaster relayers; self-submitted transactions expose the user account.',
-        },
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'private',
-        identity: 'private',
-      },
+        'Pay fees in STRK, let the paymaster submit, and treat the first payment to a new recipient as public.',
       interior: {
         sender: 'private',
         recipient: {
@@ -42,10 +31,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
         amount: 'private',
         asset: {
           verdict: 'atRisk',
-          note: 'The fee reimbursement withdrawal reveals which token the sender pays fees in; use STRK.',
+          note: 'The fee refund reveals the fee token; use STRK.',
         },
         linkage: 'private',
-        identity: 'private',
       },
       sources: [
         { title: 'PrivacyPool contract on Voyager', url: POOL },
@@ -62,20 +50,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
         'Under three thousand registered users and about a hundred transactions a day, split across tokens, leave a small set to hide in. No delay is enforced, the fee token is public, and a channel opened in the same transaction as a deposit ties the two together.',
       advice:
         'Hold funds in the pool for a long time, withdraw uneven amounts that match no deposit, pay fees in STRK, and make your first payment to a new contact in a transaction without a deposit.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Hidden only with a long hold, a non-round amount, in-pool hops and STRK as fee token.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'Starknet accounts carry public bridge and exchange history; deposit addresses are screened by Elliptic.',
-        },
-      },
       interior: {
         sender: {
           verdict: 'atRisk',
@@ -85,56 +59,20 @@ export const strk20Adversaries = definePrivacyAdversaries({
         amount: 'private',
         asset: 'atRisk',
         linkage: 'atRisk',
-        identity: 'atRisk',
       },
       sources: [{ title: 'PrivacyPool contract on Voyager', url: POOL }],
     },
     networkObserver: {
-      sentiment: 'warning',
-      condition: 'paymaster gets IP and a non-zero-knowledge proof',
+      sentiment: 'good',
+      condition: 'proof is not zero-knowledge; leak unverified',
       exposure:
-        "Transactions reach the chain through the AVNU paymaster and the sequencer, which see the encrypted actions, public a block later anyway, your IP, and the client proof. That proof is not zero-knowledge by default, so what its bytes reveal about your actions is unverified. The operator's prover and discovery service, which receive your viewing key, are covered under privileged insider.",
-      advice:
-        'Use a wallet that routes requests through an OHTTP relay, and let the paymaster submit rather than your own account, which would name you publicly.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'The paymaster holds a proof that is not zero-knowledge; whether it leaks the link is unverified.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'IP reaches the paymaster and the node; an OHTTP relay hides it.',
-        },
-      },
+        'The AVNU paymaster and the sequencer receive the encrypted actions and the client proof. That proof is not zero-knowledge by default, so what its bytes reveal is unverified.',
       interior: {
-        sender: {
-          verdict: 'atRisk',
-          note: 'Encrypted in calldata; the non-zero-knowledge proof is the unverified caveat.',
-        },
-        recipient: {
-          verdict: 'atRisk',
-          note: 'Same caveat as sender.',
-        },
-        amount: {
-          verdict: 'atRisk',
-          note: 'Same caveat as sender.',
-        },
-        asset: {
-          verdict: 'atRisk',
-          note: 'Fee token public; otherwise same caveat as sender.',
-        },
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Same caveat as sender.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'IP reaches the paymaster and the node; an OHTTP relay hides it.',
-        },
+        sender: 'unverifiable',
+        recipient: 'unverifiable',
+        amount: 'unverifiable',
+        asset: 'atRisk',
+        linkage: 'unverifiable',
       },
       sources: [
         {
@@ -155,28 +93,13 @@ export const strk20Adversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'prover and auditor key read everything',
       exposure:
-        "The operator's prover receives your private viewing key and every action in the clear, and the discovery service receives the viewing key again on every sync, so the operator sees everything you do. Every user's viewing key is also escrowed to a single auditor key held by the operators, and every deposit needs a screener's signature.",
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'exposed',
-          note: 'To the auditor key holder, retroactively for every user.',
-        },
-        identity: {
-          verdict: 'exposed',
-          note: 'The screener and the operator prover see depositor addresses and IPs.',
-        },
-      },
+        "The operator's prover receives your viewing key and every action in the clear, and the discovery service receives the viewing key on every sync. Every user's viewing key is also escrowed to a single auditor key held by the operators, and every deposit needs the signature of the screener, Elliptic.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
         amount: 'exposed',
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'exposed',
       },
       sources: [
         { title: 'Auditor and screener keys in storage', url: POOL },
@@ -191,21 +114,12 @@ export const strk20Adversaries = definePrivacyAdversaries({
       condition: 'auditor escrow is elliptic-curve ECDH',
       exposure:
         'The auditor escrow uses elliptic-curve encryption and sits onchain. A quantum computer recovers the auditor key and with it every transfer, amount and recipient ever made.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'exposed',
-        identity: 'atRisk',
-      },
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
         amount: 'exposed',
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'atRisk',
       },
       sources: [
         { title: 'Stark-curve ECDH encryption (SDK)', url: `${REPO}/sdk/src` },

@@ -77,8 +77,6 @@ export interface PrivacyAdversarySummaryCell {
   value: string
   sentiment: PrivacyAdversarySentiment
   condition: string
-  /** Worst identity verdict of the cell; shown as a badge when not private. */
-  identity: PrivacyExposure
   /** Other fields leaking beyond the public observer, with their labels. */
   alsoExposed: {
     field: PrivacyField
@@ -95,25 +93,13 @@ export interface PrivacyAdversariesSummary {
   cells: PrivacyAdversarySummaryCell[]
 }
 
-const SEVERITY: Record<PrivacyExposure, number> = {
-  private: 0,
-  unverifiable: 1,
-  atRisk: 2,
-  exposed: 3,
-}
-
-function worstFieldExposure(
+function interiorExposure(
   cell: ProjectPrivacyAdversaries['cells'][PrivacyAdversaryId],
   field: PrivacyField,
 ): PrivacyExposure {
-  let result: PrivacyExposure = 'private'
-  for (const map of [cell.boundary, cell.interior]) {
-    if (!map) continue
-    const leak = map[field]
-    const exposure = typeof leak === 'string' ? leak : leak.verdict
-    if (SEVERITY[exposure] > SEVERITY[result]) result = exposure
-  }
-  return result
+  const leak = cell.interior?.[field]
+  if (leak === undefined) return 'private'
+  return typeof leak === 'string' ? leak : leak.verdict
 }
 
 export function toPrivacyAdversariesSummary(
@@ -130,11 +116,10 @@ export function toPrivacyAdversariesSummary(
         value: cell.value,
         sentiment: cell.sentiment,
         condition: cell.condition,
-        identity: cell.identity,
         alsoExposed: cell.alsoExposed.map((field) => ({
           field,
           label: adversaries.fields.find((f) => f.id === field)?.label ?? field,
-          exposure: worstFieldExposure(cell, field),
+          exposure: interiorExposure(cell, field),
         })),
       }
     }),

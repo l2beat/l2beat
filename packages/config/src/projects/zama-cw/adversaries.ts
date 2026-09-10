@@ -10,25 +10,16 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      condition: 'graph and boundary amounts public',
+      condition: 'graph and wrap amounts public',
       sentiment: 'good',
       exposure:
-        'Who pays whom, and every wrap and unwrap with its exact amount, is public. Only the amount of a confidential transfer is hidden; unwrapping publishes it, and a failed unwrap reveals that your balance was below it.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'exposed',
-        identity: 'private',
-      },
+        'Who pays whom and every wrap and unwrap amount are public. Only the amount of a confidential transfer is hidden; unwrapping publishes it, and a failed unwrap reveals your balance was below it.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
         amount: 'private',
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'private',
       },
       sources: [{ contract: 'ConfidentialUSDCWrapper' }],
     },
@@ -39,17 +30,6 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
         "Since all wraps and unwraps are public, an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer.",
       advice:
         'Keep funds wrapped and transfer often; only an account with confidential transfers between wrap and unwrap has a hidden balance.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'exposed',
-        identity: {
-          verdict: 'atRisk',
-          note: 'Exchange KYC on any address in the public graph.',
-        },
-      },
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -59,36 +39,20 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
         },
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'atRisk',
       },
       sources: [{ contract: 'ConfidentialUSDCWrapper' }],
     },
     networkObserver: {
-      condition: 'amounts stay encrypted; the relayer sees who and when',
+      condition: 'ciphertexts only',
       sentiment: 'good',
       exposure:
-        "Amounts stay encrypted end to end: Zama's relayer and coprocessor handle ciphertexts only. What they learn is who transacts and reads which balance, when, from which IP and under which app's API key, since every request must pass through Zama's relayer and no anonymous access path is documented.",
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'exposed',
-        identity: {
-          verdict: 'exposed',
-          note: 'The mandatory Zama relayer sees IP and API key with every input and balance read. Keys are issued by Zama on application, no third-party relayer exists, and Tor access is unverified.',
-        },
-      },
+        'Amounts are encrypted on your device; on the wire there is nothing but encrypted traffic to Zama.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
-        amount: {
-          verdict: 'private',
-          note: 'Relayer and coprocessor see ciphertexts and handles, not plaintext.',
-        },
+        amount: 'private',
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'exposed',
       },
       sources: [
         {
@@ -105,18 +69,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       condition: 'KMS or owner can decrypt',
       sentiment: 'bad',
       exposure:
-        'Thirteen key holders can together decrypt every balance and transfer ever made, and the token owner can appoint an observer with the same power at any time, with no delay.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'exposed',
-        identity: {
-          verdict: 'exposed',
-          note: 'Zama operates the relayer, the coprocessor and two KMS nodes.',
-        },
-      },
+        "Thirteen key holders can together decrypt every balance and transfer ever made, and the token owner can appoint an observer with the same power at any time, with no delay. Zama's mandatory relayer sees who transacts and under which app's API key; Zama also runs the coprocessor and two KMS nodes.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -126,7 +79,6 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
         },
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'exposed',
       },
       sources: [
         {
@@ -143,24 +95,15 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       sentiment: 'warning',
       exposure:
         'The encryption itself survives quantum computers, but every ciphertext is publicly downloadable today and one long-lived key protects them all. If enough key shares ever leak, the entire history is exposed.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: 'exposed',
-        identity: 'atRisk',
-      },
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
         amount: {
           verdict: 'atRisk',
-          note: 'Private by lattice cryptography alone: every ciphertext is publicly downloadable and one long-lived key protects them all.',
+          note: 'Lattice cryptography and one long-lived key.',
         },
         asset: 'exposed',
         linkage: 'exposed',
-        identity: 'atRisk',
       },
       sources: [
         {

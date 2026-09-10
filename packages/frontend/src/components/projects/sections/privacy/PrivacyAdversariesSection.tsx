@@ -31,7 +31,7 @@ import {
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_CLASS_NAME,
   PRIVACY_EXPOSURE_LABEL,
-  PRIVACY_SEGMENT_LABEL,
+  PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
@@ -40,8 +40,6 @@ import type { ProjectSectionProps } from '../types'
 export interface PrivacyAdversariesSectionProps extends ProjectSectionProps {
   adversaries: ProjectPrivacyAdversaries
 }
-
-type Segment = keyof typeof PRIVACY_SEGMENT_LABEL
 
 const SEVERITY: Record<PrivacyExposure, number> = {
   private: 0,
@@ -54,13 +52,7 @@ function getFieldExposure(
   cell: PrivacyAdversaryCell,
   field: PrivacyField,
 ): PrivacyExposure {
-  let result: PrivacyExposure = 'private'
-  for (const map of [cell.boundary, cell.interior]) {
-    if (!map) continue
-    const exposure = getExposure(map[field])
-    if (SEVERITY[exposure] > SEVERITY[result]) result = exposure
-  }
-  return result
+  return cell.interior ? getExposure(cell.interior[field]) : 'private'
 }
 
 function worstExposure(list: PrivacyExposure[]): PrivacyExposure | undefined {
@@ -138,10 +130,6 @@ function AdversaryBlock({
   baseline: PrivacyAdversaryCell | undefined
   fields: PrivacyFieldInfo[]
 }) {
-  const segments = (['boundary', 'interior'] as const).filter(
-    (segment) => cell[segment] !== undefined,
-  )
-
   return (
     <div
       id={getPrivacyAdversaryAnchor(adversary.id)}
@@ -151,10 +139,9 @@ function AdversaryBlock({
         <PrivacySubjectGlyph
           field={protects}
           exposure={sentimentToExposure(cell.sentiment)}
-          more={worstExposure([
-            cell.identity,
-            ...cell.alsoExposed.map((f) => getFieldExposure(cell, f)),
-          ])}
+          more={worstExposure(
+            cell.alsoExposed.map((f) => getFieldExposure(cell, f)),
+          )}
           size="md"
           reserveBadgeRow={false}
         />
@@ -183,40 +170,29 @@ function AdversaryBlock({
           {cell.advice}
         </p>
       )}
-      {baseline ? (
-        <>
-          <ExposureDiff cell={cell} baseline={baseline} fields={fields} />
-          <Collapsible>
-            <CollapsibleTrigger className="group/trigger inline-flex items-center gap-1 text-left font-medium text-paragraph-13 text-secondary underline-offset-2 hover:underline">
-              <ChevronIcon className="size-3 transition-transform group-data-[state=open]/Collapsible:rotate-180" />
-              All fields
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <div className="mt-2 flex flex-col gap-3">
-                {segments.map((segment) => (
-                  <ExposureChips
-                    key={segment}
-                    title={PRIVACY_SEGMENT_LABEL[segment]}
-                    map={cell[segment]}
-                    fields={fields}
-                  />
-                ))}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
-      ) : (
-        <div className="flex flex-col gap-3">
-          {segments.map((segment) => (
-            <ExposureChips
-              key={segment}
-              title={PRIVACY_SEGMENT_LABEL[segment]}
-              map={cell[segment]}
+      {cell.interior &&
+        (baseline?.interior ? (
+          <>
+            <ExposureDiff
+              interior={cell.interior}
+              baseline={baseline.interior}
               fields={fields}
             />
-          ))}
-        </div>
-      )}
+            <Collapsible>
+              <CollapsibleTrigger className="group/trigger inline-flex items-center gap-1 text-left font-medium text-paragraph-13 text-secondary underline-offset-2 hover:underline">
+                <ChevronIcon className="size-3 transition-transform group-data-[state=open]/Collapsible:rotate-180" />
+                All fields
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="mt-2">
+                  <ExposureChips map={cell.interior} fields={fields} />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </>
+        ) : (
+          <ExposureChips map={cell.interior} fields={fields} />
+        ))}
       {cell.sources && cell.sources.length > 0 && (
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-paragraph-13">
           <span className="text-secondary">Sources:</span>
@@ -234,28 +210,22 @@ function AdversaryBlock({
   )
 }
 
-/** Only the fields whose verdict differs from the public observer. */
+/** Only the interior fields whose verdict differs from the public observer. */
 function ExposureDiff({
-  cell,
+  interior,
   baseline,
   fields,
 }: {
-  cell: PrivacyAdversaryCell
-  baseline: PrivacyAdversaryCell
+  interior: PrivacyExposureMap
+  baseline: PrivacyExposureMap
   fields: PrivacyFieldInfo[]
 }) {
-  const segments: Segment[] = ['boundary', 'interior']
-  const diffs = segments.flatMap((segment) => {
-    const map = cell[segment]
-    const base = baseline[segment]
-    if (!map || !base) return []
-    const changed = fields.filter(
-      (field) => getExposure(map[field.id]) !== getExposure(base[field.id]),
-    )
-    return changed.length === 0 ? [] : [{ segment, map, changed }]
-  })
+  const changed = fields.filter(
+    (field) =>
+      getExposure(interior[field.id]) !== getExposure(baseline[field.id]),
+  )
 
-  if (diffs.length === 0) {
+  if (changed.length === 0) {
     return (
       <p className="text-paragraph-13 text-secondary italic">
         Learns nothing beyond the public observer.
@@ -268,31 +238,23 @@ function ExposureDiff({
       <span className="font-medium text-paragraph-12 text-secondary uppercase tracking-wide">
         Compared with a public observer
       </span>
-      {diffs.map(({ segment, map, changed }) => (
-        <ExposureChips
-          key={segment}
-          title={PRIVACY_SEGMENT_LABEL[segment]}
-          map={map}
-          fields={changed}
-        />
-      ))}
+      <ExposureChips map={interior} fields={changed} />
     </div>
   )
 }
 
 function ExposureChips({
-  title,
   map,
   fields,
 }: {
-  title: string
-  map: PrivacyExposureMap | undefined
+  map: PrivacyExposureMap
   fields: PrivacyFieldInfo[]
 }) {
-  if (!map) return null
   return (
     <div className="flex flex-wrap items-center gap-1.5">
-      <span className="mr-1 text-paragraph-12 text-secondary">{title}</span>
+      <span className="mr-1 text-paragraph-12 text-secondary">
+        {PRIVACY_INTERIOR_LABEL}
+      </span>
       {fields.map((field) => {
         const leak = map[field.id]
         const verdict = getExposure(leak)

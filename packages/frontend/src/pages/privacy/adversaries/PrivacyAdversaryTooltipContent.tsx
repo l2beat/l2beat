@@ -19,13 +19,11 @@ export function PrivacyAdversaryTooltipContent({
   /** e.g. "Click for details". */
   hint?: string
 }) {
-  /** Everything this adversary learns beyond a public observer, identity included. */
-  const extra = [
-    ...(cell.identity !== 'private'
-      ? [{ label: 'Identity (who you are)', exposure: cell.identity }]
-      : []),
-    ...cell.alsoExposed.map((f) => ({ label: f.label, exposure: f.exposure })),
-  ]
+  /** Everything this adversary learns beyond a public observer. */
+  const extra = cell.alsoExposed.map((f) => ({
+    label: f.label,
+    exposure: f.exposure,
+  }))
   return (
     <div className="space-y-2">
       <div className="font-bold text-label-value-14">{cell.label}</div>

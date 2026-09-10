@@ -407,14 +407,12 @@ describe('getProjects', () => {
       if (adversaries) {
         const baseline = adversaries.cells.publicObserver
         for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
-          it(`${project.id} ${adversaryId} leak maps are complete and match the baseline segments`, () => {
+          it(`${project.id} ${adversaryId} interior map is complete and matches the baseline`, () => {
             expect(cell.interior !== undefined).toEqual(
               baseline.interior !== undefined,
             )
-            for (const segment of ['boundary', 'interior'] as const) {
-              const map = cell[segment]
-              if (!map) continue
-              expect(Object.keys(map).sort()).toEqual(
+            if (cell.interior) {
+              expect(Object.keys(cell.interior).sort()).toEqual(
                 Object.keys(PRIVACY_FIELDS).sort(),
               )
             }

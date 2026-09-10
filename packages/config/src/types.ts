@@ -1150,14 +1150,17 @@ export interface PrivacyAdversary {
   examples: string
 }
 
-/** What can be learned about a single user action. */
+/**
+ * What can be learned about a single user action. Web2 identifiers (IP,
+ * session, account, API key) are a route by which a field is exposed, named
+ * in that field's note, never a field.
+ */
 export type PrivacyField =
   | 'sender'
   | 'recipient'
   | 'amount'
   | 'asset'
   | 'linkage'
-  | 'identity'
 
 export interface PrivacyFieldInfo {
   id: PrivacyField
@@ -1170,7 +1173,8 @@ export interface PrivacyFieldInfo {
 /**
  * private: private by construction.
  * atRisk: private only under a condition named in `note`, e.g. the user avoids
- *   a footgun, runs their own node, or a counterparty never shared a key.
+ *   a footgun or a counterparty never shared a key. No note where the verdict
+ *   is inherited from the public observer or the previous spine adversary.
  * exposed: visible to this adversary by design.
  * unverifiable: cannot be derived from onchain state or published source.
  */
@@ -1191,21 +1195,22 @@ export interface PrivacyAdversaryAssessment {
    * adversary using only the protocol and the supported options of its
    * reference client?": good = yes, warning = only outside supported options
    * or by accepting a leak to another adversary, bad = no. It judges the
-   * promised field only; identity and other leaks are derived markers. User
+   * promised field only; other leaks are a derived marker. User
    * hygiene never lowers the sentiment (it goes into `advice` and `atRisk`
    * notes); facts about the deployment do, such as an anonymity set too small
-   * for care to matter or a structural leak the adversary exploits. For the network
-   * observer, "supported" means a canonical, verified anonymity path: Tor
-   * documented by the project, permissionless relayers, an own node. A gated
-   * or single mandatory intermediary with no verified path is bad. The cell
+   * for care to matter or a structural leak the adversary exploits. Network
+   * observer baseline: Tor, and an own node where the client has an RPC
+   * setting. Tor hides only the IP; identifiers the client sends stay
+   * attributed, and one server still sees a session's requests together.
+   * Services the operator runs are judged as the privileged insider. The cell
    * value is derived from it and from the project's `protects` field.
    */
   sentiment: PrivacyAdversarySentiment
   /** The condition behind the sentiment, in a few words. Shown as second line. */
   condition: string
   /**
-   * What is private and what is exposed to this adversary, in one or two
-   * plain sentences. No jargon: a user should learn something.
+   * What this adversary learns beyond the public observer and what stays
+   * hidden, in one or two plain sentences. Never refers to other cells.
    */
   exposure: string
   /**
@@ -1216,13 +1221,10 @@ export interface PrivacyAdversaryAssessment {
    */
   advice?: string
   /**
-   * Entry and exit: the Ethereum transactions that put funds under the
-   * protocol and take them out again.
-   */
-  boundary: PrivacyExposureMap
-  /**
    * Actions taken while shielded (private transfers, in-pool DeFi). Present
-   * for all adversaries of a project or for none.
+   * for all adversaries of a project or for none. Entry and exit are public
+   * Ethereum transactions; whether the promised field survives them is the
+   * cell's sentiment and condition.
    */
   interior?: PrivacyExposureMap
   /** Pointers to the onchain state or source code backing the verdicts. */
@@ -1268,15 +1270,9 @@ export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
   /** Derived: "<promised subject> <state>", e.g. "Link private". */
   value: string
   /**
-   * Derived: the worst identity verdict across segments. Identity is the one
-   * field no protocol promises to protect, so it is shown as a separate
-   * marker on every cell instead of overriding the subject.
-   */
-  identity: PrivacyExposure
-  /**
-   * Derived: fields other than the promised one and identity whose verdict is
-   * worse than the public observer's in some segment. Empty for the public
-   * observer itself, whose leaks the promise text already describes.
+   * Derived: fields other than the promised one whose interior verdict is
+   * worse than the public observer's. Empty for the public observer itself,
+   * whose leaks the promise text already describes.
    */
   alsoExposed: PrivacyField[]
 }

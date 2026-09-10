@@ -13,23 +13,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       condition: 'sender, recipient, amount public',
       exposure:
-        'Deposits and withdrawals show address, amount and asset, and the list of approved deposits is public. Hidden is which approved deposit a withdrawal spends.',
+        'Deposits, withdrawals and the list of approved deposits are public. Which approved deposit a withdrawal spends is not.',
       advice:
-        'Withdraw through a relayer. If you need to ragequit, do it with an untouched deposit; ragequitting a change note reveals the withdrawal it came from.',
-      boundary: {
-        sender: {
-          verdict: 'exposed',
-          note: 'Self-processed withdrawals put a user-controlled gas payer next to the recipient.',
-        },
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'private',
-          note: 'Ragequitting a change note reveals the withdrawal that created it.',
-        },
-        identity: 'private',
-      },
+        'Withdraw through a relayer. Ragequit only untouched deposits; ragequitting a change note reveals the withdrawal it came from.',
       sources: [
         { contract: 'PrivacyPoolsEntrypoint' },
         {
@@ -42,23 +28,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       condition: 'private with an active pool, common amounts and patience',
       exposure:
-        'The approved set at any block is public, so an analyst knows exactly which deposits a withdrawal can come from and matches amounts and timing against them. The website accepts any amount and suggests no common ones, so an unusual amount pairs a deposit with its withdrawal. The ETH pool holds a few thousand live notes, USDC and USDT a few hundred; the other eleven pools are nearly empty.',
+        'The approved set at any block is public, so the candidates for a withdrawal are known exactly and matched by amount and timing. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. The ETH pool holds a few thousand live notes, USDC and USDT a few hundred; the other eleven pools are nearly empty.',
       advice:
         'Use the ETH pool, or USDC and USDT if you must; withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Use an active pool, withdraw common amounts rather than a full exit, wait, and ragequit only untouched deposits.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'Exchange KYC on the depositor or on the address the recipient sweeps to.',
-        },
-      },
       sources: [
         {
           title: 'Blockchain Privacy and Regulatory Compliance (design paper)',
@@ -71,65 +43,45 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
-      condition: 'raw SDK and Tor needed',
+      sentiment: 'good',
+      condition: 'relayers and nodes see only public data',
       exposure:
-        'The website sends the labels of all your deposits to the approval service and your withdrawal to one of two relayers, from the same IP. Whoever sees both links your deposit to your withdrawal.',
-      advice:
-        'Use the raw SDK: it syncs from any node without contacting the service and can relay through any address. If you use the website, use Tor.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Whoever sees both the ASP label lookup and the relayer request from one IP links deposit to withdrawal; the raw SDK with IPFS leaves and own relaying keeps both local.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'ASP learns IP and deposit set; relayer learns IP and recipient; Tor removes the IP.',
-        },
-      },
+        "Event sync runs through 0xbow's own proxy, not a public node. The relayers, Fast Relay and Cloaked, only submit the finished withdrawal.",
       sources: [
-        {
-          title: 'ASP lookup by label',
-          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/utils/aspClient.ts',
-        },
         {
           title: 'Relayer request',
           url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/utils/relayerClient.ts',
         },
         {
-          title: 'SDK event sync',
-          url: 'https://github.com/0xbow-io/privacy-pools-core/blob/main/packages/sdk/src/core/data.service.ts',
+          title: 'Relayer list and event proxy',
+          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/config/chainData.ts',
         },
       ],
     },
     privilegedInsider: {
       sentiment: 'bad',
-      condition: 'ASP decides who exits privately',
+      condition: 'ASP sees the link for website users',
       exposure:
-        'Withdrawing privately requires your deposit to be in the current approved list, which a 2-of-4 multisig or a single key publishes hourly with no delay. They can leave you only a public exit, and can single out one deposit by publishing a list with just that one in it.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'exposed',
-          note: 'On demand: the ASP postman can publish a root containing only your deposit, which the website proves against unchecked. Detectable afterwards, not preventable.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: "The ASP operator also runs the API that receives the user's labels and IP.",
-        },
-      },
+        'The website sends the labels of all your deposits to the ASP on every load, and the amount you type before withdrawing, so 0xbow can pair your deposits with the withdrawal that follows. The ASP publishes the approved list hourly with no delay and the pool accepts only the latest one, so it can deny you a private exit or publish a list with just your deposit in it, which the website does not detect.',
+      advice:
+        'Use a client that fetches the approved list whole and checks it locally, such as Kohaku or the raw SDK, and check the list size before withdrawing.',
       sources: [
         { contract: 'PrivacyPoolsEntrypoint' },
         {
           section: 'permissions',
           title: 'Privacy Pools Multisig and ASP postman',
+        },
+        {
+          title: 'ASP lookup by label',
+          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/utils/aspClient.ts',
+        },
+        {
+          title: 'Amount sent to the ASP before withdrawing',
+          url: 'https://github.com/0xbow-io/privacy-pools-website/blob/main/src/containers/Modals/Withdraw/WithdrawForm.tsx',
+        },
+        {
+          title: 'Kohaku fetches the approved list whole',
+          url: 'https://github.com/ethereum/kohaku/blob/main/packages/privacy-pools/src/data/0xbowAsp.service.ts',
         },
       ],
     },
@@ -137,23 +89,9 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       condition: 'seed-phrase account, not wallet-derived',
       exposure:
-        "Nothing encrypted is written onchain and the commitments are plain hashes, so a quantum computer recovers nothing. The exception is accounts created from a wallet signature, which reduce to that wallet's key.",
+        "Nothing encrypted is written onchain and commitments are plain hashes, so a quantum computer recovers nothing, except for accounts created from a wallet signature, which reduce to that wallet's key.",
       advice:
         'Create your account from a seed phrase, not from a wallet signature.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: "Hidden for seed-phrase accounts; wallet-derived accounts reduce to the wallet's secp256k1 key.",
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'Inherits what the chain analyst learns.',
-        },
-      },
       sources: [
         {
           title: 'Commitment circuit (Poseidon)',

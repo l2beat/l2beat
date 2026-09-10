@@ -15,20 +15,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       condition: 'spend one address at a time',
       exposure:
-        'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh address that Cloaked generated for you. Everyone sees sender and amount; nobody can tell who owns the address.',
+        'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh address Cloaked generated for you. Everyone sees sender and amount; nobody can tell who owns the address.',
       advice:
         'Spend one address at a time; every address you bundle into one exit is publicly marked as yours.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'private',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Bundling several stealth addresses in one exit links them as one owner; a change output to a fresh Cloaked address links the pair.',
-        },
-        identity: 'private',
-      },
       sources: [
         {
           contract: 'OffchainResolver',
@@ -44,26 +33,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       condition: 'private with single-use addresses and patience',
       exposure:
-        'Each address receives once and is spent once, change goes to another Cloaked address, and every exit is visibly relayed by Cloaked, so an analyst can rebuild address clusters without any key and knows the whole population of Cloaked users to search in.',
+        'Each address receives once and is spent once, change goes to another Cloaked address, and every exit is visibly relayed by Cloaked, so the analyst rebuilds address clusters without any key and knows the whole population of Cloaked users.',
       advice:
         'Wait before spending, and send to destinations that have no link to you.',
-      boundary: {
-        sender: 'exposed',
-        recipient: {
-          verdict: 'atRisk',
-          note: 'Hidden unless the exit destination is reused or KYC-linked, or the address is bundled with others.',
-        },
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Change-graph clustering and consolidation reveal which addresses belong together.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'Exchange KYC on the payer or on the exit destination.',
-        },
-      },
       sources: [
         {
           title: 'Porto Orchestrator (exit transactions)',
@@ -73,23 +45,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      condition: "only Cloaked's own servers see your traffic",
+      condition: 'only encrypted traffic to Cloaked',
       exposure:
-        "Every action goes to Cloaked's own servers, which are the operator and are covered under privileged insider. On the wire, an ISP sees encrypted traffic to Cloaked, and a payer who resolves your name reaches Cloaked's server as well.",
-      boundary: {
-        sender: 'exposed',
-        recipient: 'private',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Bundling several stealth addresses in one exit links them as one owner; a change output to a fresh Cloaked address links the pair.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: "An ISP sees that you use Cloaked; a payer's lookup of your name reaches Cloaked.",
-        },
-      },
+        "Every action goes to Cloaked's servers; on the wire there is nothing but encrypted traffic to Cloaked.",
       sources: [
         {
           title: 'Server-bound keys (clkd-stealth)',
@@ -105,21 +63,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'Cloaked knows every address',
       exposure:
-        'Cloaked generates every address for your account and stores the keys needed to regenerate them all, past and future, so it knows all your addresses; address generation, balances, quotes and broadcasts pass through its servers with your IP and a fixed account identifier. It cannot spend your funds. For the pool option it also records which deposit became which withdrawal.',
-      boundary: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'exposed',
-          note: 'Including deposit-to-withdrawal links of the Privacy Pools hop, which the server records.',
-        },
-        identity: {
-          verdict: 'exposed',
-          note: 'Same operator as the network observer; a database leak hands the same to anyone.',
-        },
-      },
+        'Cloaked generates every address for your account and stores the keys to regenerate them all, so it knows all your addresses, past and future. Address generation, balances, quotes and broadcasts pass through its servers under a fixed account identifier, and every payer who resolves your name hits its server. It cannot spend your funds. For the pool option it records which deposit became which withdrawal.',
       sources: [
         {
           title: 'Account creation stores keys (OpenAPI)',
@@ -132,29 +76,12 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      sentiment: 'warning',
-      condition: 'passkey account, not wallet plus PIN',
+      sentiment: 'good',
+      condition: 'only with passkey account',
       exposure:
         "No key material is published onchain, so a quantum computer cannot link your addresses, unless your account was created from a wallet signature plus PIN, which reduces to that wallet's key.",
       advice:
         'Create your account with a passkey, not with a wallet signature.',
-      boundary: {
-        sender: 'exposed',
-        recipient: {
-          verdict: 'atRisk',
-          note: "Hidden for passkey accounts; wallet-plus-PIN accounts reduce to the wallet's secp256k1 key.",
-        },
-        amount: 'exposed',
-        asset: 'exposed',
-        linkage: {
-          verdict: 'atRisk',
-          note: 'Same condition; consolidation links remain public regardless.',
-        },
-        identity: {
-          verdict: 'atRisk',
-          note: 'Only via retained server or ISP logs.',
-        },
-      },
       sources: [
         {
           title: 'Key derivation (clkd-stealth)',

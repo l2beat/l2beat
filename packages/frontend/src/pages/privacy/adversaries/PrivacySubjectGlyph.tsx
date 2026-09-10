@@ -4,7 +4,7 @@ import { cn } from '~/utils/cn'
 /**
  * The shape is what the protocol protects (or a field), the colour is how
  * well. To its right, a plus badge when the adversary learns more than a
- * public observer (identity included), coloured by the worst such leak. The
+ * public observer, coloured by the worst such leak. The
  * slot is always reserved so glyphs align across cells; `badges={false}` drops
  * it for inline use, e.g. in chips.
  */
@@ -19,7 +19,7 @@ export function PrivacySubjectGlyph({
 }: {
   field: PrivacyField
   exposure: PrivacyExposure
-  /** Worst leak beyond the public observer, identity included. */
+  /** Worst leak beyond the public observer. */
   more?: PrivacyExposure
   size?: 'sm' | 'md' | 'lg'
   badges?: boolean
@@ -148,13 +148,6 @@ const SUBJECT_PATHS: Record<PrivacyField, React.ReactNode> = {
       <path d="M7.5 7.1A7 7 0 1 1 16.9 16.5" />
       <circle cx="9" cy="14" r="7" />
       <path d="m7 12 2-2v8m-2 0h4" />
-    </>
-  ),
-  identity: (
-    <>
-      <rect x="2" y="4" width="20" height="16" rx="3" />
-      <circle cx="8" cy="10" r="2" />
-      <path d="M5 16a3 3 0 0 1 6 0m4-7h4m-4 4h4m-4 4h2" />
     </>
   ),
   sender: (
