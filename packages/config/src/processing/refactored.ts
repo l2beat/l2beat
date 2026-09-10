@@ -25,6 +25,7 @@ import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { fluidkey } from '../projects/fluidkey/fluidkey'
 import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
@@ -151,6 +152,7 @@ export const refactored: BaseProject[] = [
   rocketpool,
   // privacy
   cloaked,
+  fluidkey,
   privacyPools,
   railgun,
   strk20,
