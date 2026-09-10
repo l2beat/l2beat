@@ -18,6 +18,7 @@ export const INDEXER_NAMES = {
   TVS_CLEANER: 'tvs_cleaner',
   PRIVACY_BLOCK_TIMESTAMP: 'privacy_block_timestamp_indexer',
   PRIVACY_FLOW: 'privacy_flow_indexer',
+  PRIVACY_ANONYMITY_SET: 'privacy_anonymity_set_indexer',
   PRIVACY_STARKNET_FLOW: 'privacy_starknet_flow_indexer',
   PRIVACY_PRICE: 'privacy_price_indexer',
   PRIVACY_RELAYER_ACTIVITY: 'privacy_relayer_activity_indexer',

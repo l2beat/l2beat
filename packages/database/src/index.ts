@@ -99,6 +99,10 @@ export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type {
+  PrivacyAnonymitySetEventRecord,
+  PrivacyAnonymitySetSenderDayRecord,
+} from './repositories/PrivacyAnonymitySetEventRepository'
+export type {
   PrivacyFlowBucketTotalRecord,
   PrivacyFlowDailyRecord,
   PrivacyFlowDirection,

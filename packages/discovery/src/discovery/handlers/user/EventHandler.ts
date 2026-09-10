@@ -286,11 +286,12 @@ function flattenSelectedLogRows(logRows: LogRow[], select: string[]): LogRow[] {
       'Event handler flatten requires object log values',
     )
     assert(
-      Array.isArray(selectedValue),
-      `Event handler flatten requires selected field [${selectedKey}] to be an array`,
+      selectedValue !== undefined,
+      `Event handler flatten requires selected field [${selectedKey}]`,
     )
-
-    for (const item of selectedValue) {
+    // Some contracts batch additions but emit one scalar per removal.
+    // Normalize both forms before applying the chronological add/remove logic.
+    for (const item of ensureArray(selectedValue)) {
       result.push({
         log: row.log,
         value: { ...row.value, [selectedKey]: item },

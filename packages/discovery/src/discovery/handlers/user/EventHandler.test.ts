@@ -16,6 +16,7 @@ describe(EventHandler.name, () => {
     'event Remove(address user)',
     'event AddMany(address[] users)',
     'event RemoveMany(address[] users)',
+    'event RemoveOne(address users)',
     'event ConfigLike(bytes32 digest, (uint256 chainId, uint256 value) config)',
   ]
 
@@ -40,6 +41,7 @@ describe(EventHandler.name, () => {
   const Remove = event<[ChainSpecificAddress]>('Remove')
   const AddMany = event<[ChainSpecificAddress[]]>('AddMany')
   const RemoveMany = event<[ChainSpecificAddress[]]>('RemoveMany')
+  const RemoveOne = event<[ChainSpecificAddress]>('RemoveOne')
   const ConfigLike = event<[string, [number, number]]>('ConfigLike')
 
   const ADDRESS = ChainSpecificAddress.random()
@@ -272,6 +274,41 @@ describe(EventHandler.name, () => {
       const result = await handler.execute(provider, ADDRESS)
 
       expect(result.value).toEqual([ChainSpecificAddress.address(U1)])
+    })
+
+    it('combines array additions with scalar removals and later re-additions', async () => {
+      const U1 = ChainSpecificAddress.random()
+      const U2 = ChainSpecificAddress.random()
+      const U3 = ChainSpecificAddress.random()
+      const provider = mockObject<IProvider>({
+        chain: 'ethereum',
+        blockNumber: 123,
+        timestamp: 456,
+        getLogs: getLogsStub([
+          AddMany([U1, U2]),
+          RemoveOne(U1),
+          AddMany([U1, U3]),
+          RemoveOne(U2),
+        ]),
+      })
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'users',
+          flatten: true,
+          add: { event: 'AddMany' },
+          remove: { event: 'RemoveOne' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([
+        ChainSpecificAddress.address(U1),
+        ChainSpecificAddress.address(U3),
+      ])
     })
   })
 

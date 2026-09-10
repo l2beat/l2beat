@@ -403,6 +403,36 @@ describe('getProjects', () => {
         ).toBeLessThanOrEqual(1)
       })
 
+      it(`${project.id} has valid anonymity-set configuration`, () => {
+        const state = project.privacyInfo?.anonymitySet
+        const trackedBucketIds = new Set<string>()
+        const seriesIds = new Set<string>()
+        let configuredBuckets = 0
+
+        for (const token of project.privacyInfo?.tokens ?? []) {
+          for (const bucket of token.buckets) {
+            const amounts = bucket.anonymitySet?.minimumAmounts
+            if (amounts === undefined) continue
+
+            expect(amounts.length).toBeGreaterThan(0)
+            expect(trackedBucketIds.has(bucket.id)).toEqual(false)
+            trackedBucketIds.add(bucket.id)
+
+            configuredBuckets++
+            for (const amount of amounts) {
+              expect(amount).toMatchRegex(/^[1-9]\d*$/)
+              const seriesId = `${bucket.id}:${amount}`
+              expect(seriesIds.has(seriesId)).toEqual(false)
+              seriesIds.add(seriesId)
+            }
+          }
+        }
+
+        if (state?.type === 'not-applicable') {
+          expect(configuredBuckets).toEqual(0)
+        }
+      })
+
       const adversaries = project.privacyInfo.adversaries
       if (adversaries) {
         const baseline = adversaries.cells.publicObserver

@@ -267,6 +267,9 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       address: bucket.address,
       sinceTimestamp: bucket.sinceTimestamp,
       denomination: bucket.denomination,
+      anonymitySet: {
+        minimumAmounts: [bucket.denominationAmount],
+      },
       deposit: {
         event: bucket.depositEvent,
         extractor: 'fixedAmount',

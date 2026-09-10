@@ -1066,6 +1066,10 @@ export interface ProjectPrivacyInfo {
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
   summaryTrackedItemName?: string
+  anonymitySet?: {
+    type: 'not-applicable'
+    description: string
+  }
   /**
    * Privacy-specific detailed description shown on the privacy project page.
    * Falls back to display.detailedDescription when not set.
@@ -1302,16 +1306,31 @@ export interface ProjectPrivacyToken {
   buckets: ProjectPrivacyBucket[]
 }
 
-export interface ProjectPrivacyBucket {
+interface ProjectPrivacyBucketBase {
   id: string
   type: 'pool' | 'denomination'
   label: string
   address: PrivacyBucketAddress
   sinceTimestamp: UnixTime
   denomination?: string
-  deposit: PrivacyFlowSource
   withdrawal: PrivacyFlowSource
 }
+
+export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
+  (
+    | {
+        anonymitySet: {
+          /** Minimum deposit amounts in token base units. */
+          minimumAmounts: string[]
+        }
+        address: ChainSpecificAddress
+        deposit: PrivacyAnonymitySetDepositSource
+      }
+    | {
+        anonymitySet?: undefined
+        deposit: PrivacyFlowSource
+      }
+  )
 
 /**
  * Privacy pools can live on non-EVM chains. Keep EVM addresses in their
@@ -1325,6 +1344,13 @@ export type PrivacyBucketAddress =
 export type PrivacyFlowSource = {
   event: string
 } & PrivacyFlowExtractorConfig
+
+export type PrivacyAnonymitySetDepositSource = {
+  event: string
+} & Extract<
+  PrivacyFlowExtractorConfig,
+  { extractor: 'fixedAmount' | 'privacyPoolsValue' | 'railgunShield' }
+>
 
 export type PrivacyFlowExtractorConfig =
   | {
