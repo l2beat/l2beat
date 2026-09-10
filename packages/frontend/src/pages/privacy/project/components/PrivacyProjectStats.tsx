@@ -155,7 +155,7 @@ export function PrivacyProjectStats({
           <div className="flex items-center gap-2">
             {formatInteger(deposits.last7d ?? 0)}
             {deposits.change7d !== undefined && (
-              <PercentChange value={deposits.change7d} period="7D" />
+              <PercentChange value={deposits.change7d} period="last7d" />
             )}
           </div>
         }
