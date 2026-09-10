@@ -56,6 +56,8 @@ export interface PrivacyProjectDetails {
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
+  /** ChainConfig names of the chains the protocol is deployed on. */
+  chains: string[]
   assets: PrivacyAsset[]
   summary: {
     bucketCount: number
@@ -267,6 +269,7 @@ export async function getPrivacyProjectDetails(
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
+    chains: project.privacyInfo.chains,
     assets: orderedAssets,
     summary: {
       bucketCount: summaryBucketCount,

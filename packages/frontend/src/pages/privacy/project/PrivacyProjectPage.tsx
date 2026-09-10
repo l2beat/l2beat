@@ -19,6 +19,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { PrivacyDeployedChains } from './components/PrivacyDeployedChains'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
@@ -114,6 +115,17 @@ export function PrivacyProjectPage({
                         reproducibility={entry.reproducibility}
                         className="mt-4"
                       />
+
+                      {entry.deployedOn.length > 0 && (
+                        <ProjectSummaryStat
+                          className="mt-6 md:mt-4"
+                          title="Deployed on"
+                          tooltip="Chains on which the protocol is deployed."
+                          value={
+                            <PrivacyDeployedChains chains={entry.deployedOn} />
+                          }
+                        />
+                      )}
 
                       {entry.attributes.length > 0 && (
                         <ProjectSummaryStat
