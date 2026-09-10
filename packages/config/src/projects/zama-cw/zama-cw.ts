@@ -187,6 +187,11 @@ export const zamaCw: BaseProject = {
   privacyInfo: {
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
+    anonymitySet: {
+      type: 'not-applicable',
+      description:
+        'Zama confidential tokens hide amounts, but sender and receiver addresses remain public and are not mixed in a shared anonymity set.',
+    },
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
