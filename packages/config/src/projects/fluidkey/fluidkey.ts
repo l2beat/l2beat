@@ -44,6 +44,14 @@ export const fluidkey: BaseProject = {
     badges: [],
   },
   privacyInfo: {
+    chains: [
+      'ethereum',
+      'base',
+      'arbitrum',
+      'optimism',
+      'polygonpos',
+      'gnosis',
+    ],
     // Balances live in individual stealth Safes. Earn-module events identify
     // only a subset of accounts, not a complete set of Fluidkey balances.
     tokens: [],

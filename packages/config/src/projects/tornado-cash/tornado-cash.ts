@@ -180,6 +180,15 @@ export const tornadoCash: BaseProject = {
     ],
   },
   privacyInfo: {
+    chains: [
+      'ethereum',
+      'bsc',
+      'polygonpos',
+      'arbitrum',
+      'optimism',
+      'avalanche',
+      'gnosis',
+    ],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',
