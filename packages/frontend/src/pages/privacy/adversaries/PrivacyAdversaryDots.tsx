@@ -3,57 +3,59 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
+import { sentimentToRiskDot } from '../sentimentToRiskDot'
 import { PrivacyAdversaryTooltipContent } from './PrivacyAdversaryTooltipContent'
-import { PrivacySubjectGlyph, sentimentToExposure } from './PrivacySubjectGlyph'
-import { getPrivacyAdversaryAnchor, worstExtraLeak } from './privacyAdversaryUi'
+import { getPrivacyAdversaryAnchor } from './privacyAdversaryUi'
 
-/** One glyph per adversary, in spine order. Hover for the cell. */
+/** One dot per adversary, in spine order. Hover for the cell. */
 export function PrivacyAdversaryDots({
   adversaries,
+  href,
   size = 'sm',
   className,
-  linkToSection = false,
 }: {
   adversaries: PrivacyAdversariesSummary
-  size?: 'sm' | 'md' | 'lg'
+  /** Page each dot links into, '' for the current one; no link when omitted. */
+  href?: string
+  size?: 'sm' | 'md'
   className?: string
-  /** On the project page: jump to the adversary's block in the section. */
-  linkToSection?: boolean
 }) {
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <div className={cn('flex items-center gap-1.5', className)}>
       {adversaries.cells.map((cell) => {
-        const glyph = (
-          <PrivacySubjectGlyph
-            field={adversaries.promise.protects}
-            exposure={sentimentToExposure(cell.sentiment)}
-            more={worstExtraLeak(cell)}
+        const dot = (
+          <TrustedSetupRiskDot
+            risk={sentimentToRiskDot(cell.sentiment)}
             size={size}
+            className="shrink-0"
           />
         )
         const label = `${cell.label}: ${cell.value}`
         return (
           <Tooltip key={cell.id}>
-            {linkToSection ? (
+            {href === undefined ? (
+              <TooltipTrigger aria-label={label}>{dot}</TooltipTrigger>
+            ) : (
               <TooltipTrigger asChild>
                 <a
-                  href={`#${getPrivacyAdversaryAnchor(cell.id)}`}
+                  href={`${href}#${getPrivacyAdversaryAnchor(cell.id)}`}
                   aria-label={label}
                 >
-                  {glyph}
+                  {dot}
                 </a>
               </TooltipTrigger>
-            ) : (
-              <TooltipTrigger aria-label={label}>{glyph}</TooltipTrigger>
             )}
             <TooltipContent className="max-w-[340px]">
               <PrivacyAdversaryTooltipContent
                 cell={cell}
                 promise={adversaries.promise}
                 hint={
-                  linkToSection ? 'Click for the full assessment.' : undefined
+                  href === undefined
+                    ? undefined
+                    : 'Click for the full assessment.'
                 }
               />
             </TooltipContent>

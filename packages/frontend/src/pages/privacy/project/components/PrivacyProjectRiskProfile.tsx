@@ -62,11 +62,7 @@ export function PrivacyProjectRiskProfile({
         title={PRIVACY_ASSESSMENT.title}
         tooltip={PRIVACY_ASSESSMENT.tooltip}
         value={
-          <PrivacyAdversaryDots
-            adversaries={adversaries}
-            size="md"
-            linkToSection
-          />
+          <PrivacyAdversaryDots adversaries={adversaries} size="md" href="" />
         }
       />
       <ProjectSummaryStat

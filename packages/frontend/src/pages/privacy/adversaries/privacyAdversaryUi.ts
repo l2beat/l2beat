@@ -1,13 +1,13 @@
 import type {
   PrivacyAdversaryId,
-  PrivacyAdversarySentiment,
   PrivacyExposure,
+  PrivacyField,
   PrivacyFieldExposure,
 } from '@l2beat/config'
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
-  'Ethereum is public: every address keeps its past and its future in the open, and a privacy protocol can at best cut the link between them, hide who receives, or hide how much. The shape is what the protocol protects: a chain link for the deposit-to-withdrawal link, a person with an incoming arrow for the recipient, coins for amounts. The colour says whether a careful user can keep it private against this adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no. A plus next to the shape means the adversary learns more than a public observer; hover a cell for what exactly.'
+  'Ethereum is public: every address keeps its past and its future in the open, and a privacy protocol can at best cut the link between them, hide who receives, or hide how much. One dot per adversary, in order of reach: public observer, chain analyst, network observer, privileged insider, future adversary. The colour says whether a careful user can keep the promised field private against that adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no.'
 
 /** Spine order; must match the order of PrivacyAdversariesSummary.cells. */
 export const PRIVACY_ADVERSARY_IDS: PrivacyAdversaryId[] = [
@@ -31,16 +31,6 @@ export const PRIVACY_ADVERSARY_TOOLTIP: Record<PrivacyAdversaryId, string> = {
     'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and future cryptanalysis such as a large quantum computer that breaks elliptic-curve key exchange and pairings, but not hashes, symmetric ciphers or lattices.',
 }
 
-/** Short column headers for the summary table. */
-export const PRIVACY_ADVERSARY_SHORT_LABEL: Record<PrivacyAdversaryId, string> =
-  {
-    publicObserver: 'Public',
-    chainAnalyst: 'Analyst',
-    networkObserver: 'Network',
-    privilegedInsider: 'Insider',
-    futureAdversary: 'Future',
-  }
-
 export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   private: 'private',
   atRisk: 'at risk',
@@ -53,6 +43,22 @@ export const PRIVACY_EXPOSURE_CLASS_NAME: Record<PrivacyExposure, string> = {
   atRisk: 'text-[#5C3B00] bg-[#FFE8A3] border-[#D9A31A]',
   exposed: 'text-[#5D1111] bg-[#FFC9C9] border-[#E06565]',
   unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
+}
+
+export const EXPOSURE_TEXT_CLASS: Record<PrivacyExposure, string> = {
+  private: 'text-[#2C8A57] dark:text-[#4FC98B]',
+  atRisk: 'text-[#C9900E] dark:text-[#E7A63A]',
+  exposed: 'text-[#C2413E] dark:text-[#F07670]',
+  unverifiable: 'text-[#6A5DB5] dark:text-[#AA9DEA]',
+}
+
+/** What the protocol promises to hide, as the subtext under the dots. */
+export const PRIVACY_PROMISE_LABEL: Record<PrivacyField, string> = {
+  sender: 'Hides the sender',
+  recipient: 'Hides the recipient',
+  amount: 'Hides amounts',
+  asset: 'Hides the asset',
+  linkage: 'Hides the link',
 }
 
 /** Title of the interior field chips; entry and exit are public and have none. */
@@ -68,38 +74,19 @@ export function getExposureNote(
   return typeof leak === 'string' ? undefined : leak.note
 }
 
-export function sentimentToState(sentiment: PrivacyAdversarySentiment) {
-  switch (sentiment) {
-    case 'good':
-      return 'private'
-    case 'warning':
-      return 'at risk'
-    case 'bad':
-      return 'exposed'
-  }
-}
-
 /** Anchor of an adversary block inside the project page section. */
 export function getPrivacyAdversaryAnchor(id: PrivacyAdversaryId): string {
   return `privacy-adversaries-${id}`
 }
 
-const SEVERITY: Record<PrivacyExposure, number> = {
-  private: 0,
-  unverifiable: 1,
-  atRisk: 2,
-  exposed: 3,
-}
-
-/** Worst leak beyond the public observer. */
-export function worstExtraLeak(
-  cell: PrivacyAdversarySummaryCell,
-): PrivacyExposure | undefined {
-  const worst = cell.alsoExposed
-    .map((f) => f.exposure)
-    .reduce<PrivacyExposure>(
-      (a, b) => (SEVERITY[b] > SEVERITY[a] ? b : a),
-      'private',
-    )
-  return worst === 'private' ? undefined : worst
+/** Sort key for the summary table: red cells weigh more than yellow ones. */
+export function getPrivacyAdversaryRank(
+  cells: PrivacyAdversarySummaryCell[],
+): number {
+  let rank = 0
+  for (const cell of cells) {
+    if (cell.sentiment === 'bad') rank += 10
+    if (cell.sentiment === 'warning') rank += 1
+  }
+  return rank
 }

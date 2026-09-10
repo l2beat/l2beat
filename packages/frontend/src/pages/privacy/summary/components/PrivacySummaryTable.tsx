@@ -1,4 +1,3 @@
-import type { TableReadyValue } from '@l2beat/config'
 import { formatCurrency, formatInteger, pluralize } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
@@ -26,24 +25,17 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
-import { PrivacyAdversaryCell } from '../../adversaries/PrivacyAdversaryCell'
+import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
 import {
-  PRIVACY_ADVERSARY_IDS,
-  PRIVACY_ADVERSARY_SHORT_LABEL,
-  PRIVACY_ADVERSARY_TOOLTIP,
+  getPrivacyAdversaryRank,
+  PRIVACY_PROMISE_LABEL,
 } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
-
-function toTableValue(
-  cell: PrivacyAdversarySummaryCell | undefined,
-): TableReadyValue | undefined {
-  return cell && { value: cell.value, sentiment: cell.sentiment }
-}
 
 function MetricCell({ children }: { children: React.ReactNode }) {
   if (children === undefined || children === null) {
@@ -98,39 +90,6 @@ const columns = [
     meta: {
       cellClassName: 'pl-4',
       headClassName: 'pl-4',
-    },
-  }),
-  columnHelper.display({
-    id: 'attributes',
-    header: 'Attributes',
-    cell: (ctx) => {
-      const attributes = ctx.row.original.attributes
-
-      if (attributes.length === 0) {
-        return <NoDataBadge />
-      }
-
-      const half = Math.ceil(attributes.length / 2)
-      const rows = [attributes.slice(0, half), attributes.slice(half)].filter(
-        (row) => row.length > 0,
-      )
-
-      return (
-        <div className="flex w-max flex-col gap-1">
-          {rows.map((row, index) => (
-            <div key={index} className="flex gap-1">
-              {row.map((attribute) => (
-                <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-              ))}
-            </div>
-          ))}
-        </div>
-      )
-    },
-    enableSorting: false,
-    meta: {
-      cellClassName: 'py-2',
-      tooltip: 'Protocol attributes and capabilities.',
     },
   }),
   columnHelper.accessor('totalValueLockedUsd', {
@@ -190,44 +149,27 @@ const columns = [
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
-  columnHelper.group({
-    id: 'adversaries',
-    header: PRIVACY_ASSESSMENT.title,
-    meta: {
-      tooltip: PRIVACY_ASSESSMENT.tooltip,
+  columnHelper.accessor(
+    (entry) => getPrivacyAdversaryRank(entry.adversaries.cells),
+    {
+      id: 'adversaries',
+      header: PRIVACY_ASSESSMENT.title,
+      cell: (ctx) => {
+        const { adversaries, href } = ctx.row.original
+        return (
+          <DotWithLabel
+            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
+            label={PRIVACY_PROMISE_LABEL[adversaries.promise.protects]}
+          />
+        )
+      },
+      sortDescFirst: true,
+      meta: {
+        align: 'center',
+        tooltip: PRIVACY_ASSESSMENT.tooltip,
+      },
     },
-    columns: PRIVACY_ADVERSARY_IDS.map((adversaryId, index) =>
-      columnHelper.accessor(
-        (entry) => toTableValue(entry.adversaries.cells[index]),
-        {
-          id: adversaryId,
-          header: PRIVACY_ADVERSARY_SHORT_LABEL[adversaryId],
-          cell: (ctx) => {
-            const cell = ctx.row.original.adversaries.cells[index]
-            if (!cell) return <NoDataBadge />
-            return (
-              <PrivacyAdversaryCell
-                cell={cell}
-                promise={ctx.row.original.adversaries.promise}
-                projectHref={ctx.row.original.href}
-              />
-            )
-          },
-          sortDescFirst: true,
-          sortUndefined: 'last',
-          sortingFn: (a, b) =>
-            sortTableValues(
-              toTableValue(a.original.adversaries.cells[index]),
-              toTableValue(b.original.adversaries.cells[index]),
-            ),
-          meta: {
-            align: 'center',
-            tooltip: PRIVACY_ADVERSARY_TOOLTIP[adversaryId],
-          },
-        },
-      ),
-    ),
-  }),
+  ),
   columnHelper.display({
     id: 'trustedSetup',
     header: 'Setup',
@@ -247,7 +189,6 @@ const columns = [
     cell: (ctx) => (
       <PrivacyAssessmentCell
         value={ctx.row.original.exitWindow}
-        showValue
         walkawayTest={ctx.row.original.exitWindow.walkawayTest}
       />
     ),
@@ -265,10 +206,7 @@ const columns = [
     id: 'reproducibility',
     header: 'Repro',
     cell: (ctx) => (
-      <PrivacyAssessmentCell
-        value={ctx.row.original.reproducibility}
-        showValue
-      />
+      <PrivacyAssessmentCell value={ctx.row.original.reproducibility} />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -278,6 +216,39 @@ const columns = [
       align: 'center',
       tooltip:
         'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
+    },
+  }),
+  columnHelper.display({
+    id: 'attributes',
+    header: 'Attributes',
+    cell: (ctx) => {
+      const attributes = ctx.row.original.attributes
+
+      if (attributes.length === 0) {
+        return <NoDataBadge />
+      }
+
+      const half = Math.ceil(attributes.length / 2)
+      const rows = [attributes.slice(0, half), attributes.slice(half)].filter(
+        (row) => row.length > 0,
+      )
+
+      return (
+        <div className="flex w-max flex-col gap-1">
+          {rows.map((row, index) => (
+            <div key={index} className="flex gap-1">
+              {row.map((attribute) => (
+                <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+              ))}
+            </div>
+          ))}
+        </div>
+      )
+    },
+    enableSorting: false,
+    meta: {
+      cellClassName: 'py-2',
+      tooltip: 'Protocol attributes and capabilities.',
     },
   }),
 ]
