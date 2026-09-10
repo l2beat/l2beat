@@ -286,7 +286,7 @@ function AttestationsSection({
     <section className="mt-8 md:mt-12">
       <SectionHeading
         title="Verifying the set onchain"
-        description="One attestation on Ethereum Attestation Service names every protocol we have reviewed. Ask the API for details."
+        description={describeAttestation(attestations)}
       />
       <PrimaryCard className="max-md:mx-4 md:p-8">
         <dl className="grid gap-x-8 gap-y-3 md:grid-cols-[auto_1fr]">
@@ -341,6 +341,14 @@ function AttestationsSection({
       </PrimaryCard>
     </section>
   )
+}
+
+// Says the same thing as the OpenAPI description: the set is attested, the ratings are not.
+function describeAttestation(attestations: CropsAttestationsMeta): string {
+  const where = attestations.isTestnet
+    ? `It currently lives on the ${attestations.network} testnet.`
+    : `It lives on ${attestations.network}.`
+  return `One attestation on Ethereum Attestation Service names every protocol we have reviewed. ${where} It proves the set we named, not the ratings: ratings change as protocols change and are served by the API without a transaction.`
 }
 
 function ProtocolSection() {

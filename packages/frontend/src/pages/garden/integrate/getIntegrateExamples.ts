@@ -7,7 +7,7 @@ import {
   toCropsSummary,
 } from '~/server/features/garden/getCropsProjects'
 import { ps } from '~/server/projects'
-import { CROPS_API_URL, type IntegrateEndpoint } from './content'
+import { CROPS_API_URL, ENDPOINTS, type IntegrateEndpoint } from './content'
 
 export interface IntegrateExample {
   request: string
@@ -17,14 +17,26 @@ export interface IntegrateExample {
 
 export type IntegrateExamples = Record<IntegrateEndpoint, IntegrateExample>
 
+export interface SampleContract {
+  chainId: number
+  address: string
+  name: string
+}
+
 /** A reviewed protocol and one of its contracts, shown in every example. */
 export interface IntegrateSample {
   project: CropsApiProject
-  contract: { chainId: number; address: string; name: string }
+  contract: SampleContract
 }
 
 const ETHEREUM_CHAIN_ID = 1
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+/** Keeps the docs rendering when no reviewed project has an Ethereum contract. */
+const PLACEHOLDER_CONTRACT: SampleContract = {
+  chainId: ETHEREUM_CHAIN_ID,
+  address: '0x0000000000000000000000000000000000000000',
+  name: 'Contract',
+}
 
 /**
  * Built from the same config the generator reads rather than typed into the
@@ -61,14 +73,17 @@ export function buildIntegrateExamples(
 
   return {
     address: {
-      request: `${CROPS_API_URL}/v1/address/${contract.chainId}/${address}.json`,
+      request: toRequestUrl('address', {
+        chainId: String(contract.chainId),
+        address,
+      }),
       response: toExample(
         { ...stamp, chainId: contract.chainId, address, matches: [match] },
         ['attestations'],
       ),
     },
     addresses: {
-      request: `${CROPS_API_URL}/v1/addresses.json`,
+      request: toRequestUrl('addresses'),
       response: toExample(
         {
           ...stamp,
@@ -78,14 +93,33 @@ export function buildIntegrateExamples(
       ),
     },
     project: {
-      request: `${CROPS_API_URL}/v1/project/${project.slug}.json`,
+      request: toRequestUrl('project', { id: project.slug }),
       response: toExample({ ...stamp, ...project }, ['attestations']),
     },
     crops: {
-      request: `${CROPS_API_URL}/v1/crops.json`,
+      request: toRequestUrl('crops'),
       response: toExample({ ...stamp, projects: [project] }, ['projects']),
     },
   }
+}
+
+/** The documented path with its `{param}` placeholders filled in, on the static host. */
+function toRequestUrl(
+  endpoint: IntegrateEndpoint,
+  params: Record<string, string> = {},
+): string {
+  const doc = ENDPOINTS.find((x) => x.key === endpoint)
+  if (!doc) {
+    throw new Error(`Undocumented endpoint ${endpoint}`)
+  }
+  const path = doc.path.replace(/\{(\w+)\}/g, (_, name: string) => {
+    const value = params[name]
+    if (value === undefined) {
+      throw new Error(`Missing ${name} for ${doc.path}`)
+    }
+    return value
+  })
+  return `${CROPS_API_URL}${path}`
 }
 
 /** Prefers a protocol both attested and in the garden that has an Ethereum contract. */
@@ -108,24 +142,15 @@ async function pickSample(
   if (!project) {
     throw new Error('No reviewed project to build the CROPS examples from')
   }
-  return {
-    project,
-    contract: {
-      chainId: ETHEREUM_CHAIN_ID,
-      address: ZERO_ADDRESS,
-      name: 'Contract',
-    },
-  }
+  return { project, contract: PLACEHOLDER_CONTRACT }
 }
 
-async function loadEthereumContracts(): Promise<
-  Map<string, IntegrateSample['contract']>
-> {
+async function loadEthereumContracts(): Promise<Map<string, SampleContract>> {
   const projects = await ps.getProjects({
     where: ['crops'],
     optional: ['contracts'],
   })
-  const contracts = new Map<string, IntegrateSample['contract']>()
+  const contracts = new Map<string, SampleContract>()
   for (const project of projects) {
     const contract = project.contracts?.addresses.ethereum?.[0]
     if (contract) {
