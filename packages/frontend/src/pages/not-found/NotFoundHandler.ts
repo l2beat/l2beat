@@ -4,13 +4,17 @@ import type { Manifest } from '~/utils/Manifest'
 import { getNotFoundData } from './getNotFoundData'
 
 /**
- * Renders the 404 page for GET/HEAD requests no page route handled, including
+ * Renders the 404 page for GET/HEAD page requests no route handled, including
  * page routes that found no data for their params and called `next()`.
- * Other methods fall through to the default Express 404 response.
+ * Other methods and non-page namespaces such as /api fall through to the
+ * default Express 404 response.
  */
 export function NotFoundHandler(manifest: Manifest, render: RenderFunction) {
   return async (req: Request, res: Response, next: NextFunction) => {
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
+    if (
+      (req.method !== 'GET' && req.method !== 'HEAD') ||
+      req.path.startsWith('/api/')
+    ) {
       next()
       return
     }
