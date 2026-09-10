@@ -49,10 +49,9 @@ export function ProjectIconList({
   const overflowProjects = projects.slice(maxVisibleProjects)
 
   function onItemSelect(project: ProjectIconListItem) {
+    if (!project.href) return
     setOpen(false)
-    if (project.href) {
-      router.push(project.href)
-    }
+    router.push(project.href)
   }
 
   return (
