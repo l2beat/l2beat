@@ -24,7 +24,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       sources: [{ contract: 'ConfidentialUSDCWrapper' }],
     },
     chainAnalyst: {
-      condition: 'private if funds stay wrapped and move often',
+      condition: 'balance bounded by public wraps and unwraps',
       sentiment: 'good',
       exposure:
         "Since all wraps and unwraps are public, an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer.",
@@ -69,7 +69,7 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       condition: 'KMS or owner can decrypt',
       sentiment: 'bad',
       exposure:
-        "Thirteen key holders can together decrypt every balance and transfer ever made, and the token owner can appoint an observer with the same power at any time, with no delay. Zama's mandatory relayer sees who transacts and under which app's API key; Zama also runs the coprocessor and two KMS nodes.",
+        "The KMS key holders can together decrypt every balance and transfer ever made, and the token owner can appoint an observer with the same power at any time, with no delay. Zama's mandatory relayer sees who transacts and under which app's API key; Zama also runs the coprocessor and KMS nodes of its own.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

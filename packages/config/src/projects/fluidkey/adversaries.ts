@@ -13,7 +13,7 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'spend one Safe at a time',
+      condition: 'bundled exits link Safes',
       exposure:
         'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh Safe that Fluidkey derived for you. Everyone sees sender and amount; nobody can tell who owns the Safe.',
       advice:
@@ -31,7 +31,7 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      condition: 'private with single-use Safes and patience',
+      condition: 'clusters by destination and timing',
       exposure:
         'Every receiving address is a 1/1 Safe deployed and relayed by Fluidkey, so the analyst knows the whole population of Fluidkey Safes and clusters those emptied together or sent to one destination. Hide Trail moves funds through two exchanges, which breaks the public trail but hands it to them.',
       advice:
@@ -71,7 +71,7 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      condition: 'embedded or device key, not an active wallet',
+      condition: 'wallet-signature accounts reduce to the wallet key',
       exposure:
         "No key material is published onchain: Fluidkey derives addresses from your viewing node and never announces them, so a quantum computer alone cannot link your Safes. Accounts created from the signature of a wallet that has transacted onchain reduce to that wallet's key plus a short PIN.",
       advice:

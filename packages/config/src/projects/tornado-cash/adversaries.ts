@@ -24,13 +24,12 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition:
-        'private with patience, an active pool and a fresh exit address',
+      condition: 'anonymity set per pool, no delay',
       sentiment: 'good',
       exposure:
-        'Every withdrawal spends one deposit of the same fixed amount, so the candidates are the unspent notes in that pool: a few thousand in the ETH pools, a handful in the stablecoin and WBTC pools. No delay is enforced; timing and address reuse narrow the set further.',
+        'Every withdrawal spends one deposit of the same fixed amount, so the candidates are the unspent notes in that pool, the tracked anonymity set, which differs sharply between pools. No delay is enforced; timing and address reuse narrow the set further.',
       advice:
-        'Use the ETH pools, wait days or weeks before withdrawing, withdraw to a fresh address that never touches your other wallets, and deposit a large sum as one note.',
+        'Use a pool with a large anonymity set, wait days or weeks before withdrawing, withdraw to a fresh address that never touches your other wallets, and deposit a large sum as one note.',
       sources: [
         {
           title: 'Tutela (arXiv:2201.06811)',

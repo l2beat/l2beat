@@ -13,7 +13,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'exit through the relay, never forced',
+      condition: 'forced exits reveal the notes spent',
       exposure:
         'Deposits and withdrawals show address, token and amount. Transfers inside publish only encrypted notes, and the link between deposit and withdrawal is hidden.',
       advice:
@@ -38,15 +38,15 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'bad',
-      condition: 'a few dozen real users, exact exit amounts',
+      condition: 'tiny real set; exits equal note minus fee',
       exposure:
-        'Almost all activity is one operator address cycling 0.001 WETH every ten minutes, which is easy to filter out. What remains is a few dozen real users, and every exit is exactly 0.996 times the note it spends, so amount matching alone pairs a deposit with its exit.',
+        'Almost all activity is one operator address cycling a fixed amount on a fixed cadence, which is easy to filter out. The real anonymity set is what remains, and every exit is the note it spends minus the fixed fee, so amount matching alone pairs a deposit with its exit.',
       interior: {
         sender: 'atRisk',
         recipient: 'atRisk',
         amount: {
           verdict: 'atRisk',
-          note: 'Bounded by the public deposit and exit amounts of the few real users.',
+          note: 'Bounded by the public deposit and exit amounts of the real users.',
         },
         asset: 'atRisk',
         linkage: {

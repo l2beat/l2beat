@@ -45,9 +45,9 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      condition: 'long hold, uneven amount, STRK fees',
+      condition: 'small set, no delay, fee token public',
       exposure:
-        'Under three thousand registered users and about a hundred transactions a day, split across tokens, leave a small set to hide in. No delay is enforced, the fee token is public, and a channel opened in the same transaction as a deposit ties the two together.',
+        'The anonymity set is small and split across tokens. No delay is enforced, the fee token is public, and a channel opened in the same transaction as a deposit ties the two together.',
       advice:
         'Hold funds in the pool for a long time, withdraw uneven amounts that match no deposit, pay fees in STRK, and make your first payment to a new contact in a transaction without a deposit.',
       interior: {

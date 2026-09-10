@@ -38,11 +38,10 @@ export const railgunAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition:
-        'private with patience, uneven amounts and fresh exit addresses',
+      condition: 'no delay; exact amounts and reuse narrow the set',
       sentiment: 'good',
       exposure:
-        'The candidates for an unshield are the shields of the same token in the same tree: hundreds of addresses shield each month, transfers inside break the one-to-one match of a mixer, and no delay is enforced beyond the one-hour proof-of-innocence wait. Timing and exact or round amounts narrow the set.',
+        'The candidates for an unshield are the shields of the same token in the same tree: transfers inside break the one-to-one match of a mixer, and no delay is enforced beyond the one-hour proof-of-innocence wait. Timing and exact or round amounts narrow the set.',
       advice:
         'Keep funds shielded for a while, unshield uneven amounts that differ from any single shield, and use a fresh exit address every time.',
       interior: {
@@ -64,7 +63,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      condition: 'own node; notes are found locally',
+      condition: 'default RPC sees pending unshields',
       sentiment: 'good',
       exposure:
         'The wallet finds its notes by trying to decrypt every note locally, so nodes learn nothing about which are yours. By default it sends the pending unshield to the configured node for a gas estimate, which reveals the destination early.',

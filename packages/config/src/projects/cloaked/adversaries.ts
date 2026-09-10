@@ -13,7 +13,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'spend one address at a time',
+      condition: 'bundled exits link addresses',
       exposure:
         'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh address Cloaked generated for you. Everyone sees sender and amount; nobody can tell who owns the address.',
       advice:
@@ -31,7 +31,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      condition: 'private with single-use addresses and patience',
+      condition: 'clusters by destination and timing',
       exposure:
         'Each address receives once and is spent once, change goes to another Cloaked address, and every exit is visibly relayed by Cloaked, so the analyst rebuilds address clusters without any key and knows the whole population of Cloaked users.',
       advice:
@@ -77,7 +77,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      condition: 'only with passkey account',
+      condition: 'wallet-plus-PIN accounts reduce to the wallet key',
       exposure:
         "No key material is published onchain, so a quantum computer cannot link your addresses, unless your account was created from a wallet signature plus PIN, which reduces to that wallet's key.",
       advice:

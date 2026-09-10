@@ -26,11 +26,11 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      condition: 'private with an active pool, common amounts and patience',
+      condition: 'approved set public, odd amounts pair',
       exposure:
-        'The approved set at any block is public, so the candidates for a withdrawal are known exactly and matched by amount and timing. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. The ETH pool holds a few thousand live notes, USDC and USDT a few hundred; the other eleven pools are nearly empty.',
+        'The approved set at any block is public, so the candidates for a withdrawal are known exactly and matched by amount and timing. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. The anonymity set differs sharply between pools.',
       advice:
-        'Use the ETH pool, or USDC and USDT if you must; withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
+        'Use a pool with a large anonymity set; withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
       sources: [
         {
           title: 'Blockchain Privacy and Regulatory Compliance (design paper)',
@@ -62,7 +62,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       condition: 'ASP sees the link for website users',
       exposure:
-        'The website sends the labels of all your deposits to the ASP on every load, and the amount you type before withdrawing, so 0xbow can pair your deposits with the withdrawal that follows. The ASP publishes the approved list hourly with no delay and the pool accepts only the latest one, so it can deny you a private exit or publish a list with just your deposit in it, which the website does not detect.',
+        'The website sends the labels of all your deposits to the ASP on every load, and the amount you type before withdrawing, so 0xbow can pair your deposits with the withdrawal that follows. The ASP publishes new approved lists with no delay and the pool accepts only the latest one, so it can deny you a private exit or publish a list with just your deposit in it, which the website does not detect.',
       advice:
         'Use a client that fetches the approved list whole and checks it locally, such as Kohaku or the raw SDK, and check the list size before withdrawing.',
       sources: [
@@ -87,7 +87,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      condition: 'seed-phrase account, not wallet-derived',
+      condition: 'wallet-derived accounts reduce to the wallet key',
       exposure:
         "Nothing encrypted is written onchain and commitments are plain hashes, so a quantum computer recovers nothing, except for accounts created from a wallet signature, which reduce to that wallet's key.",
       advice:

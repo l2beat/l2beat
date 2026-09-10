@@ -1210,11 +1210,15 @@ export interface PrivacyAdversaryAssessment {
    * value is derived from it and from the project's `protects` field.
    */
   sentiment: PrivacyAdversarySentiment
-  /** The condition behind the sentiment, in a few words. Shown as second line. */
+  /**
+   * The fact that decides the sentiment, in a few words: a property of the
+   * protocol or deployment, never an instruction. Shown as second line.
+   */
   condition: string
   /**
    * What this adversary learns beyond the public observer and what stays
-   * hidden, in one or two plain sentences. Never refers to other cells.
+   * hidden, in one or two plain sentences. Never refers to other cells or
+   * quotes live numbers; the tracked anonymity set stands in for them.
    */
   exposure: string
   /**

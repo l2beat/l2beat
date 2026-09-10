@@ -25,7 +25,7 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'private with a fresh destination and patience',
+      condition: 'no anonymity set; the destination gives you away',
       sentiment: 'good',
       exposure:
         'Each payment lands in one fresh address spent once, so there is no anonymity set: the analyst pairs payment with spend and asks who owns the destination. A reused or registered destination, or funds sent back to the payer, answer that.',
@@ -39,7 +39,7 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      condition: 'own node in the wallet',
+      condition: 'wallet RPC reads your stealth balances',
       sentiment: 'good',
       exposure:
         "The protocol needs nothing but a node. The app reads the balances of exactly your stealth addresses through your wallet's node, which ties them to your wallet unless that node is yours.",
