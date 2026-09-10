@@ -11,7 +11,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'Which deposit paid for which withdrawal is hidden. Each pool has a fixed amount, so who deposited, who withdrew and how much is public.',
+        'Which deposit paid for which withdrawal is private. Each pool has a fixed amount and there are no in-pool transfers, meaning each withdrawal is funded by exactly one deposit.',
       advice:
         'Withdraw through a relayer, so no wallet of yours pays the gas next to the receiving address.',
       sources: [
@@ -25,7 +25,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'good',
       exposure:
-        'Every withdrawal spends one deposit of the same fixed amount, so the candidates are the unspent notes in that pool, the tracked anonymity set, which differs sharply between pools. Timing and address reuse narrow the set further.',
+        'Every withdrawal spends one deposit of the same fixed amount, so the candidates are the unspent notes in that pool, the tracked anonymity set, which differs sharply between pools. Timing, address reuse, gas and relayer fingerprinting narrow the set further.',
       advice:
         'Use a pool with a large anonymity set, wait days or weeks before withdrawing, withdraw to a fresh address that never touches your other wallets, and deposit a large sum as one note.',
       sources: [
@@ -43,6 +43,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposure:
         'The app downloads all deposits and searches locally, so a node learns only which pool you looked at. The relayer only submits the finished withdrawal.',
+      advice: 'Use a local node for reading the blockchain and a public RPC via Tor to send your transaction and disassociate it from your IP. Use a popular relayer.',
       sources: [
         {
           title: 'Event sync (classic UI)',
@@ -59,7 +60,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       exposure:
         'The pools cannot be paused, upgraded or made to reveal anything. Governance controls only the website, the router and the relayer list.',
       advice:
-        'Load the frontend from its ENS name or run it locally; a tampered copy could read your notes.',
+        'Load a publicly audited version of the app from its ENS name or IPFS hash or run it locally. Do not use IPFS gateways.',
       sources: [
         { contract: 'Pool_0.1_ETH', title: '0.1 ETH pool (no operator)' },
         { contract: 'InstanceRegistry' },
@@ -69,7 +70,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'warning',
       exposure:
-        'Whether a quantum computer can invert the Pedersen hash that hides the link is an open question. The proofs themselves reveal nothing, ever. Notes backed up onchain are exposed outright.',
+        'Whether a quantum computer can invert the Pedersen hash that hides the link is an open question. The proofs themselves reveal nothing. Notes backed up onchain are not post-quantum secure.',
       advice:
         'Keep the note only on your device and skip the onchain backup option.',
       sources: [
