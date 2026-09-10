@@ -16,8 +16,6 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
-export type GardenProjectType = 'l1' | 'l2' | 'l3' | 'privacy' | 'defi'
-
 // Editorial display order; anything else is appended alphabetically.
 const CURATED_ORDER = ['tornado-cash', 'aztecnetwork', 'umbra', 'uniswapv3']
 
@@ -36,7 +34,6 @@ export interface GardenEntry {
   href: string | undefined
   subtitle: string
   iconUrl: string
-  types: GardenProjectType[]
   crops: ResolvedCrops
   /** Undefined when we track nothing for the project. */
   metric: GardenMetric | undefined
@@ -75,7 +72,6 @@ export async function getGardenData(
       href: getGardenProjectPath(project),
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      types: getTypes(project),
       crops: resolveProjectCrops(project.crops),
       metric: getMetric(project, tvsBreakdown, depositCounts),
     }))
@@ -174,25 +170,6 @@ function getSubtitle(project: GardenProject): string {
     return project.defiInfo.category
   }
   return isBaseLayer(project) ? 'Layer 1' : 'Protocol'
-}
-
-function getTypes(project: GardenProject): GardenProjectType[] {
-  const types: GardenProjectType[] = []
-  if (project.scalingInfo) {
-    types.push(project.scalingInfo.layer === 'layer3' ? 'l3' : 'l2')
-  } else if (isBaseLayer(project)) {
-    types.push('l1')
-  }
-  if (
-    project.privacyInfo ||
-    project.scalingInfo?.purposes.includes('Privacy')
-  ) {
-    types.push('privacy')
-  }
-  if (project.defiInfo) {
-    types.push('defi')
-  }
-  return types
 }
 
 function isBaseLayer(project: GardenProject): boolean {

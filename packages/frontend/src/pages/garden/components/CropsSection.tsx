@@ -57,7 +57,6 @@ function CropCard({
     <PrimaryCard className="md:p-8">
       <div className="flex items-start gap-4 md:gap-5">
         <CropBadge
-          letter={column.letter}
           label={column.label}
           note={column.note}
           evaluation={sampleEvaluation(criteria.summary)}

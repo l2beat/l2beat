@@ -22,51 +22,26 @@ const PLANT_SHAPE: Record<CropSentiment, PlantShape> = {
   bad: 'wilt',
 }
 
-// The chip border is separate because the dashed border overrides it.
-const PALETTE: Record<
-  CropSentiment,
-  { plant: string; chip: string; chipBorder: string }
-> = {
-  good: {
-    plant: 'text-crop-good',
-    chip: 'bg-crop-good/10 text-crop-good-ink',
-    chipBorder: 'border-crop-good/50',
-  },
-  warning: {
-    plant: 'text-crop-warning',
-    chip: 'bg-crop-warning/10 text-crop-warning-ink',
-    chipBorder: 'border-crop-warning/50',
-  },
-  bad: {
-    plant: 'text-crop-bad',
-    chip: 'bg-crop-bad/10 text-crop-bad-ink',
-    chipBorder: 'border-crop-bad/50',
-  },
-  neutral: {
-    plant: 'text-crop-neutral',
-    chip: 'bg-crop-neutral/10 text-crop-neutral-ink',
-    chipBorder: 'border-crop-neutral/50',
-  },
+const PALETTE: Record<CropSentiment, { plant: string }> = {
+  good: { plant: 'text-crop-good' },
+  warning: { plant: 'text-crop-warning' },
+  bad: { plant: 'text-crop-bad' },
+  neutral: { plant: 'text-crop-neutral' },
 }
 
-// The dash signals the review state, not the colour, so it is always grey.
-const CHIP_DASHED_BORDER = 'border-dashed border-crop-neutral'
-
 interface Props {
-  letter: string
   label: string
   note?: string
   evaluation: ResolvedCropEvaluation
   delay: number
 }
 
-export function CropBadge({ letter, label, note, evaluation, delay }: Props) {
+export function CropBadge({ label, note, evaluation, delay }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <span className="hover:-translate-y-0.5 transition-transform duration-200">
           <CropPlantBadge
-            letter={letter}
             label={label}
             status={evaluation.status}
             sentiment={evaluation.sentiment}
@@ -88,61 +63,35 @@ export function CropBadge({ letter, label, note, evaluation, delay }: Props) {
   )
 }
 
-/** The plant and its chip without the tooltip, for where the findings are on the page. */
+/** The plant without the tooltip, for where the findings are on the page. */
 export function CropPlantBadge({
-  letter,
   label,
   status,
   sentiment,
   delay,
   compact,
 }: {
-  letter: string
   label: string
   status: ProjectCropStatus
   sentiment: CropSentiment
   delay: number
   compact?: boolean
 }) {
-  // `fullyTransparent` is a finished assessment, so its ring stays solid.
-  const isDashed = status === 'partiallyReviewed' || status === 'notReviewed'
-  const palette = PALETTE[sentiment]
   return (
     <span
       className={cn(
-        'flex flex-col items-center gap-1',
-        compact ? 'w-8' : 'w-10',
+        'flex items-end justify-center',
+        compact ? 'size-8' : 'h-14 w-14',
+        PALETTE[sentiment].plant,
       )}
       aria-label={`${label}: ${getCropStatusText(status, sentiment)}`}
     >
-      <span
-        className={cn(
-          'flex items-end',
-          compact ? 'h-8' : 'h-10',
-          palette.plant,
-        )}
-      >
-        <CropPlant
-          status={status}
-          sentiment={sentiment}
-          delay={delay}
-          compact={compact}
-        />
-      </span>
-      <span
-        className={cn(
-          'flex items-center justify-center rounded-full border-[1.5px] font-semibold',
-          compact ? 'size-[21px]' : 'size-[26px]',
-          letter.length > 1 || compact ? 'text-[10px]' : 'text-xs',
-          palette.chip,
-          isDashed ? CHIP_DASHED_BORDER : palette.chipBorder,
-        )}
-        style={{
-          animation: `garden-pop .5s ease-out ${delay}s both`,
-        }}
-      >
-        {letter}
-      </span>
+      <CropPlant
+        status={status}
+        sentiment={sentiment}
+        delay={delay}
+        compact={compact}
+      />
     </span>
   )
 }
@@ -345,7 +294,7 @@ function CropPlant({
   })
 
   const shape = PLANT_SHAPE[sentiment]
-  const svgWidth = width ?? (compact ? 27 : 34)
+  const svgWidth = width ?? (compact ? 27 : 46)
 
   return (
     <svg
