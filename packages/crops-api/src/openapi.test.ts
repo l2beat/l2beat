@@ -1,11 +1,11 @@
 import { expect } from 'earl'
 import { generateCropsSite } from './generateCropsSite'
-import { FIXTURE_INPUT } from './generateCropsSite.test'
 import {
   buildOpenApiDocument,
   findPublishedRoute,
   PUBLISHED_ROUTES,
 } from './openapi'
+import { FIXTURE_INPUT } from './test/fixtures'
 
 describe('OpenAPI agreement', () => {
   const files = generateCropsSite(FIXTURE_INPUT)

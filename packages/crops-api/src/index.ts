@@ -4,6 +4,7 @@ import { absolutePath as swaggerUiPath } from 'swagger-ui-dist'
 import { type GeneratedFile, generateCropsSite } from './generateCropsSite'
 import { loadGeneratorInput } from './loadGeneratorInput'
 
+const OUT_DIR = resolve(__dirname, '../out')
 const STATIC_DIR = resolve(__dirname, '../static')
 const SWAGGER_UI_ASSETS = [
   'swagger-ui.css',
@@ -19,17 +20,16 @@ main().catch((error) => {
 })
 
 async function main() {
-  const outDir = resolve(process.argv[2] ?? 'out')
   const input = await loadGeneratorInput()
   const files = generateCropsSite(input)
 
-  rmSync(outDir, { recursive: true, force: true })
-  writeJsonFiles(outDir, files)
-  cpSync(STATIC_DIR, outDir, { recursive: true })
-  copySwaggerUi(outDir)
+  rmSync(OUT_DIR, { recursive: true, force: true })
+  writeJsonFiles(OUT_DIR, files)
+  cpSync(STATIC_DIR, OUT_DIR, { recursive: true })
+  copySwaggerUi(OUT_DIR)
 
   console.log(
-    `Wrote ${files.length} files for ${input.projects.length} projects at ${input.commit} to ${outDir}`,
+    `Wrote ${files.length} files for ${input.projects.length} projects at ${input.commit} to ${OUT_DIR}`,
   )
 }
 

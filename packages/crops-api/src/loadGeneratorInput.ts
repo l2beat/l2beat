@@ -8,14 +8,14 @@ import type { ChainLookup, GeneratorInput } from './generateCropsSite'
 const DB_PATH = resolve(__dirname, '../../config/build/db.sqlite')
 
 export async function loadGeneratorInput(): Promise<GeneratorInput> {
-  const ps = new ProjectService(DB_PATH)
+  const projectService = new ProjectService(DB_PATH)
   const [projects, chains] = await Promise.all([
-    ps.getProjects({
+    projectService.getProjects({
       where: ['crops'],
       select: ['crops'],
       optional: ['contracts', 'permissions', 'scalingInfo', 'privacyInfo'],
     }),
-    loadChains(ps),
+    loadChains(projectService),
   ])
   return {
     projects,
@@ -26,8 +26,12 @@ export async function loadGeneratorInput(): Promise<GeneratorInput> {
   }
 }
 
-async function loadChains(ps: ProjectService): Promise<ChainLookup> {
-  const projects = await ps.getProjects({ select: ['chainConfig'] })
+async function loadChains(
+  projectService: ProjectService,
+): Promise<ChainLookup> {
+  const projects = await projectService.getProjects({
+    select: ['chainConfig'],
+  })
   const chains: ChainLookup = {}
   for (const { chainConfig } of projects) {
     if (chainConfig.chainId !== undefined) {
