@@ -6,10 +6,10 @@ import { getStagesData } from './getStagesData'
 export function createStagesRouter(manifest: Manifest, render: RenderFunction) {
   const router = express.Router()
 
-  router.get('/stages', async (req, res) => {
+  router.get('/stages', async (req, res, next) => {
     const data = await getStagesData(manifest, req.originalUrl)
     if (!data) {
-      res.status(404).send('Not found')
+      next()
       return
     }
     const html = await render(data, req.originalUrl)

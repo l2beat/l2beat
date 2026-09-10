@@ -41,7 +41,7 @@ export function createDefiRouter(
     validateRoute({
       params: v.object({ slug: v.string() }),
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const data = await cache.get(
         {
           key: ['defi', 'projects', req.params.slug],
@@ -52,7 +52,7 @@ export function createDefiRouter(
       )
 
       if (!data) {
-        res.status(404).send('Not found')
+        next()
         return
       }
 

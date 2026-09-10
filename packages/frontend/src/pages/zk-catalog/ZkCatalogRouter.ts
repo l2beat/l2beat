@@ -25,7 +25,7 @@ export function createZkCatalogRouter(
     validateRoute({
       params: v.object({ slug: v.string() }),
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const data = await cache.get(
         {
           key: ['zk-catalog', 'v2', 'projects', req.params.slug],
@@ -36,7 +36,7 @@ export function createZkCatalogRouter(
           getZkCatalogProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
-        res.status(404).send('Not found')
+        next()
         return
       }
       const html = await render(data, req.originalUrl)

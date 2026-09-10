@@ -9,10 +9,10 @@ export function createTermsOfServiceRouter(
 ) {
   const router = express.Router()
 
-  router.get('/terms-of-service', async (req, res) => {
+  router.get('/terms-of-service', async (req, res, next) => {
     const data = await getTermsOfServiceData(manifest, req.originalUrl)
     if (!data) {
-      res.status(404).send('Not found')
+      next()
       return
     }
     const html = await render(data, req.originalUrl)

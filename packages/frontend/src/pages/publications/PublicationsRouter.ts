@@ -17,11 +17,11 @@ export function createPublicationsRouter(
 ) {
   const router = express.Router()
 
-  router.get('/publications', async (req, res) => {
+  router.get('/publications', async (req, res, next) => {
     const data = await getPublicationsData(manifest, req.originalUrl)
 
     if (!data) {
-      res.status(404).send('Not found')
+      next()
       return
     }
     const html = await render(data, req.originalUrl)
@@ -33,7 +33,7 @@ export function createPublicationsRouter(
     validateRoute({
       params: v.object({ id: v.string() }),
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const governancePublication = getCollectionEntry(
         'governance-publications',
         req.params.id,
@@ -71,7 +71,7 @@ export function createPublicationsRouter(
       }
 
       if (!data) {
-        res.status(404).send('Not found')
+        next()
         return
       }
       const html = await render(data, req.originalUrl)

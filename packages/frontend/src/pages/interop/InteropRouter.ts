@@ -106,7 +106,7 @@ export function createInteropRouter(
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const project = await ps.getProject({
         slug: req.params.slug,
         optional: ['scalingInfo', 'interopConfig'],
@@ -121,7 +121,7 @@ export function createInteropRouter(
 
       const data = await getInteropProtocolPageData(req, manifest, cache)
       if (!data) {
-        res.status(404).send('Not found')
+        next()
         return
       }
       const html = await render(data, req.originalUrl)
@@ -157,10 +157,10 @@ export function createInteropRouter(
       params: v.object({ slug: v.string() }),
       query: InteropQuery,
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const data = await getInteropTokenPageData(req, manifest, cache)
       if (!data) {
-        res.status(404).send('Not found')
+        next()
         return
       }
       const html = await render(data, req.originalUrl)

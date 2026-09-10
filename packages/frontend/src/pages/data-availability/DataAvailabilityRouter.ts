@@ -92,7 +92,7 @@ export function createDataAvailabilityRouter(
     validateRoute({
       params: v.object({ layer: v.string(), bridge: v.string() }),
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const data = await cache.get(
         {
           key: [
@@ -108,7 +108,7 @@ export function createDataAvailabilityRouter(
           getDataAvailabilityProjectData(manifest, req.params, req.originalUrl),
       )
       if (!data) {
-        res.status(404).send('Not found')
+        next()
         return
       }
       const html = await render(data, req.originalUrl)

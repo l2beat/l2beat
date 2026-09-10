@@ -37,7 +37,7 @@ export function createPrivacyRouter(
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
-    async (req, res) => {
+    async (req, res, next) => {
       const data = await getPrivacyProjectData(
         manifest,
         req.params.slug,
@@ -47,7 +47,7 @@ export function createPrivacyRouter(
       )
 
       if (!data) {
-        res.status(404).send('Not found')
+        next()
         return
       }
 
