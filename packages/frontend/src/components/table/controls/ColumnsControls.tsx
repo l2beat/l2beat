@@ -28,9 +28,11 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
       </span>
     </div>
   )
-  const columnsWithoutGroups = columns.flatMap((column) =>
-    column.columns.length > 0 ? column.columns : [column],
-  )
+  const pickerColumns = columns
+    .flatMap((column) =>
+      column.columns.length > 0 ? column.columns : [column],
+    )
+    .filter((column) => column.getCanHide())
 
   return (
     <>
@@ -47,11 +49,9 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
             Columns
           </span>
           <div className="flex flex-wrap gap-1">
-            {columnsWithoutGroups
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <ColumnControl key={column.id} column={column} />
-              ))}
+            {pickerColumns.map((column) => (
+              <ColumnControl key={column.id} column={column} />
+            ))}
           </div>
         </PopoverContent>
       </Popover>
@@ -69,11 +69,9 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
             </DrawerDescription>
           </DrawerHeader>
           <div className="mb-5 flex flex-wrap gap-1">
-            {columnsWithoutGroups
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <ColumnControl key={column.id} column={column} />
-              ))}
+            {pickerColumns.map((column) => (
+              <ColumnControl key={column.id} column={column} />
+            ))}
           </div>
         </DrawerContent>
       </Drawer>

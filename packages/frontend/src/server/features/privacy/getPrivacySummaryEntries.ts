@@ -168,6 +168,7 @@ function getTrackingMetrics(
     return {
       isTracked: false,
       poolsTracked: metrics.poolsTracked,
+      totalValueLockedUsd: metrics.totalValueLockedUsd,
     }
   }
 

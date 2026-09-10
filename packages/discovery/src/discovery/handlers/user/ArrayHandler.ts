@@ -14,6 +14,7 @@ import {
 } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
+import { valueToBigInt } from '../utils/valueToBigInt'
 import { valueToNumber } from '../utils/valueToNumber'
 
 export type ArrayHandlerDefinition = v.infer<typeof ArrayHandlerDefinition>
@@ -155,7 +156,7 @@ function createCallIndex(
   address: ChainSpecificAddress,
   fragment: utils.FunctionFragment,
 ) {
-  return async (index: number) => {
+  return async (index: number | bigint) => {
     return await callMethod(provider, address, fragment, [index])
   }
 }
@@ -166,7 +167,7 @@ function resolveDependencies(
 ): {
   method: string | undefined
   length: number | undefined
-  indices: number[] | undefined
+  indices: (number | bigint)[] | undefined
   maxLength: number
   startIndex: number
   ignoreRelative: boolean | undefined
@@ -177,7 +178,7 @@ function resolveDependencies(
     length = valueToNumber(resolved)
   }
 
-  let indices: number[] | undefined
+  let indices: (number | bigint)[] | undefined
   if (
     definition.indices !== undefined &&
     typeof definition.indices === 'string'
@@ -186,7 +187,7 @@ function resolveDependencies(
     if (!Array.isArray(resolved)) {
       throw new Error('Expected array of indices')
     }
-    indices = resolved.map((v) => valueToNumber(v))
+    indices = resolved.map((v) => valueToBigInt(v))
   } else {
     indices = definition.indices
   }

@@ -150,6 +150,7 @@ export function createInteropPlugins(
         deps.configs,
         deps.logger,
         deps.httpClient,
+        rpcs,
         deps.configIntervalMs,
       ),
       new ZkStackConfigPlugin(

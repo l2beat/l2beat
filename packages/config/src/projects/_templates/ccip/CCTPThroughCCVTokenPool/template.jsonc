@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "CCIP 2.0 USDC pool for transfers that use CCTP through a CCV. The CCTP verifier burns and mints the USDC, while this pool validates the configured route, RMN state, finality, rate limits, transfer fees, and authorized caller.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure remote chains and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers."
+        },
+        {
+          "type": "interact",
+          "description": "withdraw fee-token balances held by this pool to an arbitrary recipient."
+        }
+      ]
+    },
+    "getAllAuthorizedCallers": {
+      "description": "Addresses allowed to invoke the pool's lock-or-burn and release-or-mint flows.",
+      "edit": ["sort"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "invoke USDC transfers through this pool for its configured remote chains."
+        }
+      ]
+    },
+    "getAllowedFinalityConfig": {
+      "description": "Finality modes accepted by this pool. Full finality is always accepted; the decoded fields additionally show support for the safe head, the minimum block depth, and any currently unassigned flags.",
+      "edit": ["format", "CCIPAllowedFinality"]
+    },
+    "getSupportedChains": {
+      "description": "Remote chains currently configured on this child pool.",
+      "edit": ["pipe", ["map", ["format", "CCIPChainName"]], ["sort"]]
+    },
+    "getCCTPVerifier": {
+      "description": "CCTP verifier resolver that selects the implementation used to burn and mint USDC."
+    },
+    "getAdvancedPoolHooks": {
+      "description": "Optional hook used only to return token-specific required CCVs. This pool disables preflight and postflight hook calls.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "require token-specific CCVs or block transfers by reverting the CCV query."
+        }
+      ]
+    },
+    "rateLimitAdmin": {
+      "copy": "getDynamicConfig",
+      "edit": ["get", "rateLimitAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change this pool's inbound and outbound rate limits."
+        }
+      ]
+    },
+    "feeAdmin": {
+      "copy": "getDynamicConfig",
+      "edit": ["get", "feeAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw fee-token balances held by this pool to an arbitrary recipient."
+        }
+      ]
+    },
+    "getRmnProxy": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block this pool's transfers when RMN marks a remote chain or the global subject as cursed."
+        }
+      ]
+    }
+  }
+}

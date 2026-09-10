@@ -1,4 +1,191 @@
-Generated with discovered.json: 0xeb92c7221649da73ad67ce15309d6353e63c36f9
+Generated with discovered.json: 0x9a741caf14a980385ac26bf86c3f1d3331702152
+
+# Diff at Mon, 07 Sep 2026 15:08:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@041f4be232de31648e9a26f8b80fa8f2d65fc60d block: 1788265057
+- current timestamp: 1788793617
+
+## Description
+
+Four new proposals (IDs 29-32) created 2026-09-06 by the same proposer (0x5964ed1e...), all byte-identical, so effectively one proposal submitted four times. Title: "Add USDC and USDT to AGR Rewards". Single action: Delegator calls `addTokens([USDT, USDC])` on GovernorRewards, adding both stablecoins to the Active Governor Rewards distribution set (4.2% of Treasury balance per 2-week interval streamed to stakers). No other parameter changes. Only ID 32 has sponsorship (~90.7k of the 500k RAIL threshold), 29-31 have none. None has gone to vote or been executed. Proposal 28 (swap ~15.1k Treasury USDC to DAI via Curve 3pool, all DAI returned to Treasury) is still open with zero sponsorship.
+
+Governance UI: https://governance.railgun.org/proposals/v2/32 (proposal document on IPFS: bafkreia5rfx3x4phxl3tyscjc55eaac5sd7dnfjpsk4nywlgq55viy4e5e).
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        29
++        33
+    }
+```
+
+Generated with discovered.json: 0x92545357fb8d6dd48dd38419a5e25b563564f80d
+
+# Diff at Fri, 04 Sep 2026 10:21:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@baf0b699cdc10b266955eb55accdcb1b49c30e40 block: 1788265057
+- current timestamp: 1788265057
+
+## Description
+
+Dedicated Railgun Proxy detector
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788265057 (main branch discovery), not current.
+
+```diff
+    contract GovernorRewardsSweeper (eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B) [railgun/Sweeper] {
+    +++ description: Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-11-22T20:14:11.000Z","0x8a7ec325dbefb9e150064f9b94f680f3a96fef73b2f1160c40aa195a88a98ad6",["eth:0x7d1C12008d180718938F535eE0dec7ac3473c179"]]
+      values.$pastUpgrades.1:
++        ["2023-02-07T06:14:47.000Z","0x128597009072e4bbc08293c81904d4cf5bb22b9cad1f87bf99a7edaa2878deaf",["eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.$paused:
++        false
+    }
+```
+
+```diff
+    contract GovernorRewards (eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f) [railgun/GovernorRewards] {
+    +++ description: Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2023-01-20T05:37:35.000Z","0x2a5967e08e872f7bd998842cbd9224ee81a39ddd16f7f40452fc3ba47c01c783",["eth:0xF035cEBa76C0C1f2c15457775745B1F5DC42CA2c"]]
+      values.$pastUpgrades.1:
++        ["2023-01-20T05:40:47.000Z","0x14b883f710dbcdc1be58c03cedc447a7af82c843bfb2259c194eea7aef19d972",["eth:0x3db1c53366Fff57001fF6a9DaaCdA1FCFBaB56A9"]]
+      values.$pastUpgrades.2:
++        ["2023-01-20T05:59:59.000Z","0x948534918749a94532adcbc0b5fbf6248e2cdb1ac905c688fc30b8eef649260b",["eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b"]]
+      values.$pastUpgrades.3:
++        ["2026-07-18T18:15:47.000Z","0x01b125307242dcb57f77aa1c925ac1b0af56dc29616631336bb15f25fdca1778",["eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB"]]
+      values.$upgradeCount:
+-        0
++        4
+      values.$paused:
++        false
+    }
+```
+
+```diff
+    contract LegacySweeper (eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686) [railgun/SweeperLegacy] {
+    +++ description: Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-09-10T00:32:00.000Z","0x1413ff21c2423fcb8cf10812ada82f33fe76a34f18368277ce5f1cd51e5750a5",["eth:0x27d30E803A0EC079DAA3A2e6c3590Cca9f63C9D8"]]
+      values.$pastUpgrades.1:
++        ["2022-12-02T04:09:35.000Z","0xa61b7db4ff3ca6d8a4b44f396b019ee3bea1f9a8616ef8a35d0511bf03c2b7e1",["eth:0x9b1310BdCC19D172D0092240e33209a9156c8EE2"]]
+      values.$upgradeCount:
+-        0
++        2
+      values.$paused:
++        true
+    }
+```
+
+```diff
+    contract Treasury (eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40) [railgun/Treasury] {
+    +++ description: Collects Railgun fees. Managed through access control roles.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-07-14T05:21:05.000Z","0x271cb0bfab8dfeeda44381b22e6f93adc955002d387a96c0f8cd5719fb6a9504",["eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255"]]
+      values.$upgradeCount:
+-        0
++        1
+      values.$paused:
++        false
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      proxyType:
+-        "EIP1967 proxy"
++        "Railgun proxy"
+      values.$pastUpgrades.0:
++        ["2022-05-08T18:32:52.000Z","0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361",["eth:0xBCFA4De73afb071C9FF18a20A22F818e657C541a"]]
+      values.$pastUpgrades.1:
++        ["2022-11-29T16:10:23.000Z","0xab0625746a64ed88fd040a39bdbe9ed930328d9b09245b36cd1d9a64444dad95",["eth:0x321617E18bE9EC7CFE5ab8856DE2aAbAA478E13B"]]
+      values.$pastUpgrades.2:
++        ["2023-03-09T11:09:47.000Z","0xe001ac69697083957933db13ff27c56769ce8826d4ab676b3965d7a44b9f0668",["eth:0xc0BEF2D373A1EfaDE8B952f33c1370E486f209Cc"]]
+      values.$pastUpgrades.3:
++        ["2025-07-28T15:48:23.000Z","0xfc6cda4a6e9b8e2d055a50212551e6daa8ec180ad7aced11d00ae71e1d0eab6e",["eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b"]]
+      values.$pastUpgrades.4:
++        ["2026-08-14T13:50:35.000Z","0x7ac142845ccd9f156d992099a7ca8d6cb52655f4153cc49c48c38c8966a6b3ad",["eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C"]]
+      values.$upgradeCount:
+-        0
++        5
+      values.$paused:
++        false
+    }
+```
+
+Generated with discovered.json: 0xa8a97c0fd6ca0a394fbaf4c99930093f8c35160a
+
+# Diff at Tue, 01 Sep 2026 12:18:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1787311119
+- current timestamp: 1788265057
+
+## Description
+
+Swap USDC to DAI proposal: https://tools.l2beat.com/decoder-new/?hash=0x83963ddea866aa6d77200fd5f6633d59aa6d4dc9a807496277f6910cc76a0369&data=AwA
+
+Actions:
+
+1. Treasury → Delegator: 15109.211424 USDC
+2. Delegator: USDC.approve(Curve3pool, 15109.211424)
+3. Curve3pool: exchange USDC→DAI (min_dy = 15031.466111962828487747 DAI, 0.5% slippage)
+4. Delegator → Treasury: 15031.466111962828487747 DAI (floor)
+5. Delegator → Treasury: 75.535005587752906974 DAI (expected bonus)
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0xd9649be084919b1ae25d4d396555667632253f10ddb6a9bddc939db45f797b10"]
+      values:
++        {"$implementation":"eth:0x5A7FC11397E9a8AD41BF10bf13F22B0a63f96f6d","nonce":0}
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        28
++        29
+    }
+```
+
+Generated with discovered.json: 0xb68c1522119f896599658251dcc3295d444e059e
 
 # Diff at Fri, 21 Aug 2026 11:19:42 GMT:
 

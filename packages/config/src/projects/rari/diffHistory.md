@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xf741fff9a7125975f2f050f1258c262dd2ac14cc
+Generated with discovered.json: 0x2fc63c641959e71d9cd41eb59ce7ddb8b86e72d0
+
+# Diff at Mon, 07 Sep 2026 08:37:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1782746888
+- current timestamp: 1782746888
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746888 (main branch discovery), not current.
+
+```diff
+    external contract (arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","role":".relayers"}]
+    }
+```
+
+```diff
+    external contract (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"can freeze the bridge contract and update the list of authorized relayers.","role":".guardians"},{"permission":"upgrade","from":"arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","role":"admin"}]
+    }
+```
+
+```diff
+    external contract (arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","role":".relayers"}]
+    }
+```
+
+```diff
+    external contract (arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0x8070c8e3b838eca15364abfe2894480109a0f9a6
 
 # Diff at Wed, 29 Jul 2026 11:32:30 GMT:
 

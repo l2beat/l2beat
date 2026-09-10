@@ -3,6 +3,7 @@
   "displayName": "stETH",
   "description": "The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreRelatives": ["getRecoveryVault"],
   "ignoreMethods": [
     "getPooledEthByShares",

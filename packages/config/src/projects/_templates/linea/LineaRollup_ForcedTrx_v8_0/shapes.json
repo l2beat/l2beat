@@ -4,5 +4,11 @@
     "address": "eth:0x59290394dDC1cF84e671701A929710643c343530",
     "chain": "ethereum",
     "blockNumber": 25551321
+  },
+  "LineaRollup_ForcedTrx_v8_1": {
+    "hash": "0x99448a403aaba56b396cab263fdccd1a13345cb737178fc7813f1a5bf8d927d5",
+    "address": "eth:0x052b73d934E9412045Bf731574463Fd026D74645",
+    "chain": "ethereum",
+    "blockNumber": 25882371
   }
 }

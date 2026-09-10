@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Replaceable CCIP 2.0 executor endpoint selected by OnRamps. It forwards fee-quote calls to its configured Executor target and receives executor fees, which anyone can withdraw to the configured fee aggregator.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the Executor target that handles forwarded calls, changing the fee, finality, and CCV policy exposed by this endpoint."
+        },
+        {
+          "type": "interact",
+          "description": "change the fee aggregator that receives fee tokens withdrawn from this endpoint."
+        }
+      ]
+    },
+    "getTarget": {
+      "description": "Executor implementation that receives fallback calls through a normal external call. This endpoint is not a delegatecall storage proxy.",
+      "type": "CODE_CHANGE"
+    },
+    "getFeeAggregator": {
+      "description": "Address that receives fee-token balances withdrawn from this executor endpoint."
+    }
+  }
+}

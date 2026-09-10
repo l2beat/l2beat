@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": [
     "getAllNodeOperatorDigests",
     "getDepositsAllocation",

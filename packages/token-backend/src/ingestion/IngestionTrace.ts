@@ -7,6 +7,18 @@ import type {
 } from '../schemas/DeployedToken'
 import type { TokenAddress } from './tokenIngestionUtils'
 
+/** Per-plugin summary of the transfers involving an address: the total count
+ * and one sample transfer's tx hashes with their chains, so a researcher can
+ * jump from the ingestion trace to an explorer. */
+export interface TransferPluginEvidence {
+  plugin: string
+  transferCount: number
+  sampleSrcChain: string
+  sampleSrcTxHash: string | undefined
+  sampleDstChain: string
+  sampleDstTxHash: string | undefined
+}
+
 export interface IngestionTrace {
   id: string
   address: TokenAddress
@@ -29,6 +41,10 @@ export type IngestionStep =
       total: number
       nonSwapping: number
       abstractTokens: AbstractTokenRef[]
+      /** One entry per distinct interop plugin whose transfers involve the
+       * address, with a sample transfer's tx hashes — the evidence a
+       * researcher needs to see where the token appears. */
+      plugins: TransferPluginEvidence[]
     }
   | { kind: 'resolved-from-transfers'; abstractToken: AbstractTokenRef }
   | { kind: 'resolved-from-existing'; abstractToken: AbstractTokenRef }

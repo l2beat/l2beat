@@ -26,9 +26,11 @@ export const bobanetwork: ScalingProject = opStackL2({
     },
     getOpStackDaTracking(discovery, { sinceBlock: 22790097 }),
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Boba Network',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     shortName: 'Boba',
     slug: 'bobanetwork',
     description:

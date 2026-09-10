@@ -1,0 +1,125 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "USDC-specific CCV for CCIP 2.0. On the source chain it burns one USDC transfer through Circle CCTP v2 and binds the CCIP message identifier and verifier version into the attested hook data. On the destination chain it validates the attested CCTP fields against the CCIP message and configured domain before minting through a fixed transmitter proxy.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists."
+        },
+        {
+          "type": "interact",
+          "description": "change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator."
+        }
+      ]
+    },
+    "remoteChainSelectors": {
+      "description": "Remote chain selectors with verifier configuration, reconstructed from configuration events.",
+      "handler": {
+        "type": "event",
+        "select": "remoteChainSelector",
+        "add": {
+          "event": "event RemoteChainConfigSet(uint64 indexed remoteChainSelector, address router, bool allowlistEnabled)"
+        }
+      }
+    },
+    "remoteChainConfigs": {
+      "description": "Current verifier configuration for every configured remote chain: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.",
+      "handler": {
+        "type": "array",
+        "method": "function getRemoteChainConfig(uint64 remoteChainSelector) view returns ((address router, uint64 remoteChainSelector, bool allowlistEnabled, uint16 feeUSDCents, uint32 gasForVerification, uint16 payloadSizeBytes) remoteChainConfig, address[] allowedSendersList)",
+        "indices": "{{ remoteChainSelectors }}"
+      },
+      "edit": [
+        "pipe",
+        [
+          "map",
+          [
+            "pipe",
+            ["shape", "remoteChainConfig", "allowedSendersList"],
+            [
+              "set",
+              ["remoteChainConfig", "remoteChainSelector"],
+              ["format", "CCIPChainName"]
+            ],
+            ["set", "allowedSendersList", ["sort"]]
+          ]
+        ],
+        ["sort", ["get", "remoteChainConfig", "remoteChainSelector"]]
+      ]
+    },
+    "routeRouters": {
+      "description": "Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.",
+      "copy": "remoteChainConfigs",
+      "edit": [
+        "pipe",
+        [
+          "map",
+          [
+            "pipe",
+            ["shape", "remoteChainConfig", "allowedSendersList"],
+            ["get", "remoteChainConfig"],
+            ["pick", "remoteChainSelector", "router"],
+            ["set", "remoteChainSelector", ["format", "CCIPChainName"]]
+          ]
+        ],
+        ["sort", ["get", "remoteChainSelector"]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain."
+        }
+      ]
+    },
+    "allowedSenders": {
+      "description": "Per-destination-chain sender allowlists reconstructed from add and remove events. A list is enforced only when that chain's current allowlist flag is enabled.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": "senders",
+        "add": {
+          "event": "event AllowListSendersAdded(uint64 indexed destChainSelector, address senders)"
+        },
+        "remove": {
+          "event": "event AllowListSendersRemoved(uint64 indexed destChainSelector, address senders)"
+        }
+      },
+      "edit": ["map_keys", ["format", "CCIPChainName"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "send USDC through this verifier on routes whose sender allowlist is enabled."
+        }
+      ]
+    },
+    "allowlistAdmin": {
+      "description": "Account that can update sender allowlists in addition to the owner.",
+      "copy": "getDynamicConfig",
+      "edit": ["get", "allowlistAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove allowed senders and toggle sender allowlists for remote chains."
+        }
+      ]
+    },
+    "getAllowedFinalityConfig": {
+      "description": "Finality modes accepted by this verifier. Full finality is always accepted; the decoded fields additionally show support for the safe head, the minimum block depth, and any currently unassigned flags.",
+      "edit": ["format", "CCIPAllowedFinality"]
+    },
+    "getStaticConfig": {
+      "description": "Immutable Circle TokenMessenger, stable message-transmitter proxy, USDC token, and local CCTP domain."
+    },
+    "getDynamicConfig": {
+      "description": "Fee aggregator, sender-allowlist administrator, and maximum fast-finality fee in basis points."
+    },
+    "getStorageLocations": {
+      "description": "Offchain storage-location identifiers advertised for verifier results."
+    },
+    "versionTag": {
+      "description": "Four-byte version placed in CCTP hook data and used by the resolver for inbound implementation selection."
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketClaimDAO",
+  "category": "gov",
+  "description": "Treasury spender. It can make a one-off payment or open a recurring payment stream to a named recipient, and it pays out of the custody contract. Only an executed token-holder proposal can create or change a payment; claiming an already-approved balance is permissionless.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "governanceProposals": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolProposals")
+          "0xef2e22821a4475e079169ab11816e834c99a8c2cc6b2ad6d625d969e37e8cc7e"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Execution contract of token-holder governance, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pay out the treasury balance, as a one-off transfer or as a recurring payment stream to a named recipient."
+        }
+      ]
+    }
+  }
+}

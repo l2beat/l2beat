@@ -2,7 +2,12 @@ import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 
 export type PrivacyProject = Project<
   'display' | 'privacyInfo' | 'statuses',
-  'tvsConfig' | 'contracts' | 'permissions' | 'discoveryInfo' | 'zkCatalogInfo'
+  | 'tvsConfig'
+  | 'contracts'
+  | 'permissions'
+  | 'discoveryInfo'
+  | 'discoveryUpdates'
+  | 'zkCatalogInfo'
 > & {
   /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
@@ -11,6 +16,17 @@ export interface PrivacyDepositedValueUsd {
   total: number
   last7d: number
   last30d: number
+}
+
+export interface PrivacyRelayerStat {
+  /**
+   * activeRelayers - unique relayer addresses seen in onchain withdrawals
+   * over the last 30 days.
+   * avgDailyRelayers - average count of unique relayers seen in daily
+   * network observations over the last 30 days.
+   */
+  kind: 'activeRelayers' | 'avgDailyRelayers'
+  value: number
 }
 
 export interface PrivacyBucket {

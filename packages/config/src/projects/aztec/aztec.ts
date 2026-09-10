@@ -17,6 +17,7 @@ import {
 } from '../../common'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -46,7 +47,7 @@ function getRollupProviders() {
 
 const escapeBlockUpperBound = 4800 // in blocks, immutable
 const escapeBlockLowerBound = 4560 // in blocks, immutable
-const assumedBlockTime = 12 // in seconds
+const assumedBlockTime = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 
 const finalizationPeriod = 0 // state root immediately finalized when proven
 

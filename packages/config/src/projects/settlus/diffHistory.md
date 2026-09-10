@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x09b94620f14ed60060cf20fc1154a9dcf172c400
+Generated with discovered.json: 0xe3c69831d382f802e2ebb6d4664bb27a942f7b45
+
+# Diff at Mon, 07 Sep 2026 14:49:01 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@041f4be232de31648e9a26f8b80fa8f2d65fc60d block: 1784283126
+- current timestamp: 1788792449
+
+## Description
+
+Settlus switched back from Celestia to Ethereum blobs on 2026-08-31: last Celestia commitment at height 13618693, first blob batch at L1 block 25875293.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.opStackDA.isUsingCelestia:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xde734dbe82f34d46fc4c7f690744f87ab7287f4a
 
 # Diff at Fri, 17 Jul 2026 10:13:35 GMT:
 

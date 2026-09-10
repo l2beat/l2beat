@@ -168,6 +168,28 @@ export const lighter: ScalingProject = {
           sinceTimestamp: 1737090335, // Friday, January 17, 2025 5:05:35 AM
         },
       },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'batchSubmissions',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'batchSubmissions',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
+          ),
+          selector: '0xe415f0f4',
+          functionSignature:
+            'function commitBatch(tuple(uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 newStateRoot, bytes32 newValidiumRoot, bytes pubdataCommitments) newBatchData, tuple(uint64 batchNumber, uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 stateRoot, bytes32 validiumRoot, bytes32 commitment) lastStoredBatch)',
+          sinceTimestamp: 1737149807, // block 21646942, first commitBatch blob tx: https://etherscan.io/tx/0x5b9954f76e6bbae376197d8d9ddeece1ab410231229d1932981029037552e563
+        },
+      },
     ],
     activityConfig: {
       type: 'day',
@@ -309,7 +331,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xB1386c4266974D81256afB9908e104B00587112A#code#F1#L54',
+            url: 'https://etherscan.io/address/0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',

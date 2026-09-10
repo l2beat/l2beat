@@ -130,7 +130,8 @@ export async function makeConfig(
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
-    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
+    daBeat:
+      flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env, flags)),
     ecosystems:
       flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
@@ -164,7 +165,8 @@ export async function makeConfig(
       activeChains,
     ),
     privacy:
-      flags.isEnabled('privacy') && (await getPrivacyConfig(ps, env, flags)),
+      flags.isEnabled('privacy') &&
+      (await getPrivacyConfig(ps, env, flags, chains)),
     backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last

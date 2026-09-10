@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The central registry and lifecycle manager for stVaults connected to Lido. It enforces collateral and risk parameters, tracks vault reports and liabilities, mints and burns stETH shares, settles fees, rebalances unhealthy vaults, and manages bad debt.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreInWatchMode": [
     "badDebtToInternalize",
     "badDebtToInternalizeForLastRefSlot",

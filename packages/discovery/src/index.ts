@@ -27,7 +27,10 @@ export {
   ConfigHealthService,
   type HealthHint,
 } from './discovery/config/ConfigHealthService'
-export { ConfigReader } from './discovery/config/ConfigReader'
+export {
+  ConfigReader,
+  getReferencedProjects,
+} from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
 export { ConfigWriter } from './discovery/config/ConfigWriter'
@@ -62,18 +65,37 @@ export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePe
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
 export {
+  addReferencedDiscoveries,
+  clusterEntries,
   DiscoveryRegistry,
+  findStaleReferences,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
-  getDependenciesToDiscoverForProject,
+  hashPermissionsConfigInOwnCluster,
+  loadDiscoveriesForModelling,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'
+export { attachPermissions } from './discovery/output/attachPermissions'
+export {
+  type ChainPoint,
+  type DiffHistoryEntry,
+  DiffHistoryParser,
+  type DiffHistorySection,
+  type DiffHistorySectionKind,
+} from './discovery/output/DiffHistoryParser'
 export { type Difference, diff } from './discovery/output/diff'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
   diffDiscovery,
+  entriesForDiffPair,
 } from './discovery/output/diffDiscovery'
+export {
+  countDiffChanges,
+  type DiffBlockSpan,
+  extractDiffBlockSpans,
+  isHighSeverityDiffBody,
+} from './discovery/output/diffHistoryMarkdown'
 export {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
