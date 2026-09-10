@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xb9cf5f20fd40bcfe5effd115df25ea747ae01542
+
+# Diff at Thu, 10 Sep 2026 12:09:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f7783cd20948876b6d5829b7513d3f4c00170b8a block: 1788530106
+- current timestamp: 1789042096
+
+## Description
+
+Created these two funding proposals:
+
+- https://www.tally.xyz/gov/zksync/proposal/26841071117409907139848935459753246787270287837068168394696134464253012067875?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160
+- https://www.tally.xyz/gov/zksync/proposal/9292342771625757633615945374579493617267631975721787105265494990446454241296?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        18
++        19
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x1ddfe918922bea62696e17572d100772dd25041c
 
 # Diff at Fri, 04 Sep 2026 13:56:11 GMT:

@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x35bda2ba37180e79e0a87cc33fcd8b3c8ee84515
+
+# Diff at Thu, 10 Sep 2026 12:08:25 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f7783cd20948876b6d5829b7513d3f4c00170b8a block: 1787147637
+- current timestamp: 1789042037
+
+## Description
+
+Rotated 3 sophon admin ms members.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x3b6036d410cA018661324766680674921a8b2d89"
++        "eth:0x1B5a420Dc78290b0F30ED12634Fa9b068A22F96c"
+      values.$members.3:
+-        "eth:0x14574dfC6B7aF658c5033BA95673864947956521"
++        "eth:0x02266d7404AF55F39605Ea1D2b6bfff6DF74157d"
+      values.$members.4:
+-        "eth:0xbe6D418089AaFeD4f95e516F21b2F56027a2E263"
++        "eth:0x45Bd9b1B0525C81778A0E4AE1f58eFA9e88E53f8"
+    }
+```
+
 Generated with discovered.json: 0x72211354e87c1c7adfbfce5ef1ba251d0517c57f
 
 # Diff at Mon, 07 Sep 2026 08:38:00 GMT:
