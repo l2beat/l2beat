@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1787147637,
+  "timestamp": 1789042037,
   "configHash": "0x3f98f0f4c2a9ae655c216b369e91bf02b3ef6b88bae0e1852dc3b68724d9deb2",
   "entries": [
     {
@@ -53,6 +53,11 @@
       "implementationNames": {
         "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41": "SophonTransactionFilterer"
       }
+    },
+    {
+      "address": "eth:0x02266d7404AF55F39605Ea1D2b6bfff6DF74157d",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Vector",
@@ -238,8 +243,8 @@
           ]
         ],
         "$upgradeCount": 13,
-        "baseTokenGasPriceMultiplierDenominator": 43,
-        "baseTokenGasPriceMultiplierNominator": 25000000,
+        "baseTokenGasPriceMultiplierDenominator": 9,
+        "baseTokenGasPriceMultiplierNominator": 5000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
           "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
@@ -372,12 +377,12 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 39260,
-        "getTotalBatchesExecuted": 39259,
-        "getTotalBatchesVerified": 39260,
-        "getTotalBlocksCommitted": 39260,
-        "getTotalBlocksExecuted": 39259,
-        "getTotalBlocksVerified": 39260,
+        "getTotalBatchesCommitted": 39433,
+        "getTotalBatchesExecuted": 39432,
+        "getTotalBatchesVerified": 39432,
+        "getTotalBlocksCommitted": 39433,
+        "getTotalBlocksExecuted": 39432,
+        "getTotalBlocksVerified": 39432,
         "getTotalPriorityTxs": 10212,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
@@ -470,7 +475,7 @@
       }
     },
     {
-      "address": "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
+      "address": "eth:0x1B5a420Dc78290b0F30ED12634Fa9b068A22F96c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -573,7 +578,7 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "address": "eth:0x3b6036d410cA018661324766680674921a8b2d89",
+      "address": "eth:0x45Bd9b1B0525C81778A0E4AE1f58eFA9e88E53f8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -670,11 +675,6 @@
     },
     {
       "address": "eth:0xBaEb92889696217A3A6be2175E5a95dC4cFFC9f7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xbe6D418089AaFeD4f95e516F21b2F56027a2E263",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -791,16 +791,16 @@
         "$members": [
           "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845",
           "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
-          "eth:0x3b6036d410cA018661324766680674921a8b2d89",
-          "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
-          "eth:0xbe6D418089AaFeD4f95e516F21b2F56027a2E263"
+          "eth:0x1B5a420Dc78290b0F30ED12634Fa9b068A22F96c",
+          "eth:0x02266d7404AF55F39605Ea1D2b6bfff6DF74157d",
+          "eth:0x45Bd9b1B0525C81778A0E4AE1f58eFA9e88E53f8"
         ],
         "$threshold": 3,
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 50,
+        "nonce": 53,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1367,8 +1367,8 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
-  "usedBlockNumbers": { "ethereum": 25789580 },
-  "permissionsConfigHash": "0x2136257b3ce6f67e31adf8d177e1bc042d9545c6821082ad7fc7f9c45038be24",
+  "usedBlockNumbers": { "ethereum": 25946883 },
+  "permissionsConfigHash": "0x40c5ada199ee49a3adbdc57f5cabcafd4808bbe551a5d9247c9c82d7eb2b7d04",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540",
     "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9",
