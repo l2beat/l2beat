@@ -17,43 +17,53 @@ pnpm dev                 # generate + serve ./out with wrangler on localhost
 
 `.github/workflows/deploy-crops-api.yml` deploys production on every push to
 `main` that changes this package or anything it depends on (decided by Turbo,
-not a path filter). Run it manually from any branch with the `environment`
-input to deploy `staging` or `production`, and `force` to skip the change check.
+not a path filter). Run it manually with the `environment` input to deploy
+`staging` or `production`, and `force` to skip the change check.
 
-| Environment | Hostname                  | Wrangler command       |
-| ----------- | ------------------------- | ---------------------- |
-| production  | `crops.l2beat.com`        | `wrangler deploy`      |
-| staging     | `crops-staging.l2beat.com` | `wrangler deploy --env staging` |
+| Environment | Hostname                   | Wrangler command                |
+| ----------- | -------------------------- | ------------------------------- |
+| production  | `crops.l2beat.com`         | `wrangler deploy --env production` |
+| staging     | `crops-staging.l2beat.com` | `wrangler deploy --env staging`    |
 
 Both are `custom_domain` routes in `wrangler.jsonc`, so Cloudflare creates the
 DNS records itself on first deploy as long as the `l2beat.com` zone is in the
 same account.
+
+GitHub only offers manual dispatch for workflows that already exist on `main`.
+The first staging deploy from a feature branch therefore needs the workflow
+file merged first; after that any branch can be dispatched.
 
 ### One-time human setup
 
 Wrangler cannot create credentials, so a person has to do this once:
 
 1. Make sure the `l2beat.com` zone is in the Cloudflare account that will own
-   the Worker, and that neither `crops` nor `crops-staging` already has a DNS
-   record (Cloudflare refuses to create a custom domain over an existing one).
-2. Create an API token from the **Edit Cloudflare Workers** template. It grants
-   Workers Scripts edit, Workers Routes edit and the zone DNS edit needed for
-   custom domains. Scope it to the `l2beat.com` zone.
+   the Worker, and that neither `crops` nor `crops-staging` has a DNS record
+   yet (Cloudflare refuses to create a custom domain over an existing CNAME).
+2. Create an API token from the **Edit Cloudflare Workers** template, scoped
+   to the `l2beat.com` zone, and add **Zone / DNS / Edit** and
+   **Zone / SSL and Certificates / Edit**. Custom domains create a DNS record
+   and a certificate, and the deploy fails with an authentication error on the
+   custom-domain step if either is missing.
 3. Copy the account id from the Workers overview page.
 4. Add the GitHub repository secrets `CLOUDFLARE_API_TOKEN` and
    `CLOUDFLARE_ACCOUNT_ID`.
-5. Dispatch the workflow with `environment: staging` and check the URLs in the
-   verification list below. Then merge, or dispatch with `production`.
+5. Dispatch the workflow with `environment: staging` and run the verification
+   below. Then merge, or dispatch with `production`.
 
 ### Verification after a deploy
 
 ```sh
 HOST=https://crops-staging.l2beat.com
 curl -si $HOST/v1/crops.json | head -20
+curl -si $HOST/v1/project/uniswapv3.json | head -20
 curl -si $HOST/v1/addresses.json | head -20
 curl -si $HOST/v1/openapi.json | head -20
 curl -si $HOST/ | head -20                     # Swagger UI
-curl -si $HOST/v1/address/1/0x0000000000000000000000000000000000000000.json  # empty 404
+# pick any chainId/address pair from addresses.json for a hit
+curl -si $HOST/v1/address/1/0x000000000022d473030f116ddee9f6b43ac78ba3.json | head -20
+# a missing address is an empty 404
+curl -si $HOST/v1/address/1/0x0000000000000000000000000000000000000000.json
 ```
 
 Every response, including the 404, must carry `access-control-allow-origin: *`
