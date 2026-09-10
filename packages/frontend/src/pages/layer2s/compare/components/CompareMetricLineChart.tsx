@@ -16,7 +16,6 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/layer2s/compare/getCompareProjectEntries'
-import { useIsCompareChartHovered } from './CompareChartHoverContext'
 import { useCompareSeries } from './CompareSeriesContext'
 
 /**
@@ -169,11 +168,6 @@ function CustomTooltip({
   renderTimestamp: (label: number) => ReactNode
 }) {
   const { meta } = useChart()
-  const isHovered = useIsCompareChartHovered()
-  // On a synced hover the follower charts show only the crosshair cursor -
-  // one full tooltip per hover is plenty, and with many projects selected
-  // several tall tooltips at once would cover the very charts being compared.
-  if (!isHovered) return null
   if (!payload || typeof label !== 'number') return null
 
   const visible = payload.filter(
