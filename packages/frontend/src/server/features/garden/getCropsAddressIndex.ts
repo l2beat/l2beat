@@ -51,6 +51,7 @@ export async function getCropsAddressIndex(): Promise<CropsAddressIndex> {
     select: ['crops'],
     optional: ['contracts', 'permissions'],
   })
+  console.log(projects)
   index = buildCropsAddressIndex(projects)
   return index
 }
@@ -112,6 +113,7 @@ export function buildCropsAddressIndex(
       }
     }
   }
+  console.log(byChain)
 
   return {
     lookup(chain, address) {
