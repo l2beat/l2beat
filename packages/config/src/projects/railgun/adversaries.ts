@@ -10,10 +10,9 @@ export const railgunAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      condition: 'interior fully encrypted',
       sentiment: 'good',
       exposure:
-        'Shielding and unshielding show your address, token and amount. Everything inside the pool is encrypted, and nobody can see which shield funds which unshield.',
+        'Everything inside the pool is encrypted, and nobody can see which shield funds which unshield. Shielding and unshielding show your address, token and amount.',
       advice:
         'Unshield through a broadcaster, so no wallet of yours pays the gas next to the recipient. DeFi through the pool shows tokens and amounts.',
       interior: {
@@ -38,7 +37,6 @@ export const railgunAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'no delay; exact amounts and reuse narrow the set',
       sentiment: 'good',
       exposure:
         'The candidates for an unshield are the shields of the same token in the same tree: transfers inside break the one-to-one match of a mixer, and no delay is enforced beyond the one-hour proof-of-innocence wait. Timing and exact or round amounts narrow the set.',
@@ -63,7 +61,6 @@ export const railgunAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      condition: 'default RPC sees pending unshields',
       sentiment: 'good',
       exposure:
         'The wallet finds its notes by trying to decrypt every note locally, so nodes learn nothing about which are yours. By default it sends the pending unshield to the configured node for a gas estimate, which reveals the destination early.',
@@ -87,7 +84,6 @@ export const railgunAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      condition: 'no view keys; 7-day upgrade delay; POI list can exclude',
       sentiment: 'good',
       exposure:
         'There is no view key, so nobody can read past activity. The DAO can upgrade the contracts after a seven-day delay, which could weaken future privacy. The proof-of-innocence list provider can refuse to list a shield, leaving only a self-broadcast exit, and its nodes receive blinded commitments and spend submissions per wallet.',
@@ -116,7 +112,6 @@ export const railgunAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      condition: 'notes of shared addresses decrypt',
       sentiment: 'warning',
       exposure:
         'Notes are encrypted with elliptic-curve key exchange. A quantum computer decrypts every note sent to any 0zk address that was ever shared, including all broadcaster fee notes: amounts, tokens and counterparties.',

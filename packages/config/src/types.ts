@@ -1211,14 +1211,10 @@ export interface PrivacyAdversaryAssessment {
    */
   sentiment: PrivacyAdversarySentiment
   /**
-   * The fact that decides the sentiment, in a few words: a property of the
-   * protocol or deployment, never an instruction. Shown as second line.
-   */
-  condition: string
-  /**
    * What this adversary learns beyond the public observer and what stays
-   * hidden, in one or two plain sentences. Never refers to other cells or
-   * quotes live numbers; the tracked anonymity set stands in for them.
+   * hidden, in one or two plain sentences; the first sentence carries the
+   * reason for the sentiment. Never refers to other cells or quotes live
+   * numbers; the tracked anonymity set stands in for them.
    */
   exposure: string
   /**
@@ -1232,7 +1228,7 @@ export interface PrivacyAdversaryAssessment {
    * Actions taken while shielded (private transfers, in-pool DeFi). Present
    * for all adversaries of a project or for none. Entry and exit are public
    * Ethereum transactions; whether the promised field survives them is the
-   * cell's sentiment and condition.
+   * cell's sentiment.
    */
   interior?: PrivacyExposureMap
   /** Pointers to the onchain state or source code backing the verdicts. */

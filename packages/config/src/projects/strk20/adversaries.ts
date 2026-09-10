@@ -17,9 +17,8 @@ export const strk20Adversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'first contacts and fee token are public',
       exposure:
-        'Deposits and withdrawals show address, token and amount. Transfers inside are encrypted, but the first payment to any new recipient writes their address in the clear, and the fee refund reveals which token you pay fees in.',
+        'Transfers inside are encrypted, but the first payment to any new recipient writes their address in the clear, and the fee refund reveals which token you pay fees in. Deposits and withdrawals show address, token and amount.',
       advice:
         'Pay fees in STRK, let the paymaster submit, and treat the first payment to a new recipient as public.',
       interior: {
@@ -45,7 +44,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      condition: 'small set, no delay, fee token public',
       exposure:
         'The anonymity set is small and split across tokens. No delay is enforced, the fee token is public, and a channel opened in the same transaction as a deposit ties the two together.',
       advice:
@@ -64,7 +62,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      condition: 'proof is not zero-knowledge; leak unverified',
       exposure:
         'The AVNU paymaster and the sequencer receive the encrypted actions and the client proof. That proof is not zero-knowledge by default, so what its bytes reveal is unverified.',
       interior: {
@@ -91,7 +88,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      condition: 'prover and auditor key read everything',
       exposure:
         "The operator's prover receives your viewing key and every action in the clear, and the discovery service receives the viewing key on every sync. Every user's viewing key is also escrowed to a single auditor key held by the operators, and every deposit needs the signature of the screener, Elliptic.",
       interior: {
@@ -111,7 +107,6 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'bad',
-      condition: 'auditor escrow is elliptic-curve ECDH',
       exposure:
         'The auditor escrow uses elliptic-curve encryption and sits onchain. A quantum computer recovers the auditor key and with it every transfer, amount and recipient ever made.',
       interior: {

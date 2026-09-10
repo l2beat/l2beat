@@ -9,10 +9,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      condition: 'sender, recipient, amount public',
       sentiment: 'good',
       exposure:
-        'Each pool has a fixed amount, so who deposited, who withdrew and how much is public. Which deposit paid for which withdrawal is not.',
+        'Which deposit paid for which withdrawal is hidden. Each pool has a fixed amount, so who deposited, who withdrew and how much is public.',
       advice:
         'Withdraw through a relayer, so no wallet of yours pays the gas next to the receiving address.',
       sources: [
@@ -24,7 +23,6 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'different anonymity set per pool',
       sentiment: 'good',
       exposure:
         'Every withdrawal spends one deposit of the same fixed amount, so the candidates are the unspent notes in that pool, the tracked anonymity set, which differs sharply between pools. Timing and address reuse narrow the set further.',
@@ -42,7 +40,6 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      condition: 'note never leaves the device',
       sentiment: 'good',
       exposure:
         'The app downloads all deposits and searches locally, so a node learns only which pool you looked at. The relayer only submits the finished withdrawal.',
@@ -58,7 +55,6 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      condition: 'no role can see or block',
       sentiment: 'good',
       exposure:
         'The pools cannot be paused, upgraded or made to reveal anything. Governance controls only the website, the router and the relayer list.',
@@ -71,10 +67,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      condition: 'hash question open; onchain backups exposed',
       sentiment: 'warning',
       exposure:
-        'The proofs reveal nothing, ever. Whether a quantum computer can invert the Pedersen hash that hides the link is an open question. Notes backed up onchain are exposed outright.',
+        'Whether a quantum computer can invert the Pedersen hash that hides the link is an open question. The proofs themselves reveal nothing, ever. Notes backed up onchain are exposed outright.',
       advice:
         'Keep the note only on your device and skip the onchain backup option.',
       sources: [

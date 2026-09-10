@@ -13,9 +13,8 @@ export const cloakedAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'bundled exits link addresses',
       exposure:
-        'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh address Cloaked generated for you. Everyone sees sender and amount; nobody can tell who owns the address.',
+        'Nobody can tell who owns the address: nothing of the scheme is onchain, a payment is a plain transfer to a fresh address Cloaked generated for you. Everyone sees sender and amount.',
       advice:
         'Spend one address at a time; every address you bundle into one exit is publicly marked as yours.',
       sources: [
@@ -31,7 +30,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      condition: 'clusters by destination and timing',
       exposure:
         'Each address receives once and is spent once, change goes to another Cloaked address, and every exit is visibly relayed by Cloaked, so the analyst rebuilds address clusters without any key and knows the whole population of Cloaked users.',
       advice:
@@ -45,7 +43,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      condition: 'only encrypted traffic to Cloaked',
       exposure:
         "Every action goes to Cloaked's servers; on the wire there is nothing but encrypted traffic to Cloaked.",
       sources: [
@@ -61,7 +58,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      condition: 'Cloaked knows every address',
       exposure:
         'Cloaked generates every address for your account and stores the keys to regenerate them all, so it knows all your addresses, past and future. Address generation, balances, quotes and broadcasts pass through its servers under a fixed account identifier, and every payer who resolves your name hits its server. It cannot spend your funds. For the pool option it records which deposit became which withdrawal.',
       sources: [
@@ -77,7 +73,6 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      condition: 'wallet-plus-PIN accounts reduce to the wallet key',
       exposure:
         "No key material is published onchain, so a quantum computer cannot link your addresses, unless your account was created from a wallet signature plus PIN, which reduces to that wallet's key.",
       advice:

@@ -11,9 +11,8 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'sender, recipient, amount public',
       exposure:
-        'Deposits, withdrawals and the list of approved deposits are public. Which approved deposit a withdrawal spends is not.',
+        'Which approved deposit a withdrawal spends is hidden. Deposits, withdrawals and the list of approved deposits are public.',
       advice:
         'Withdraw through a relayer. Ragequit only untouched deposits; ragequitting a change note reveals the withdrawal it came from.',
       sources: [
@@ -26,7 +25,6 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      condition: 'approved set public, odd amounts pair',
       exposure:
         'The approved set at any block is public, so the candidates for a withdrawal are known exactly and matched by amount and timing. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. The anonymity set differs sharply between pools.',
       advice:
@@ -44,7 +42,6 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      condition: 'relayers and nodes see only public data',
       exposure:
         "Event sync runs through 0xbow's own proxy, not a public node. The relayers, Fast Relay and Cloaked, only submit the finished withdrawal.",
       sources: [
@@ -60,7 +57,6 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      condition: 'ASP sees the link for website users',
       exposure:
         'The website sends the labels of all your deposits to the ASP on every load, and the amount you type before withdrawing, so 0xbow can pair your deposits with the withdrawal that follows. The ASP publishes new approved lists with no delay and the pool accepts only the latest one, so it can deny you a private exit or publish a list with just your deposit in it, which the website does not detect.',
       advice:
@@ -87,7 +83,6 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      condition: 'wallet-derived accounts reduce to the wallet key',
       exposure:
         "Nothing encrypted is written onchain and commitments are plain hashes, so a quantum computer recovers nothing, except for accounts created from a wallet signature, which reduce to that wallet's key.",
       advice:

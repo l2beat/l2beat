@@ -122,9 +122,6 @@ function AdversaryBlock({
         <span className="font-medium text-paragraph-15 md:text-paragraph-16">
           {cell.value}
         </span>
-        <span className="text-paragraph-13 text-secondary">
-          {cell.condition}
-        </span>
       </div>
       <p className="text-paragraph-15 md:text-paragraph-16">{cell.exposure}</p>
       {cell.advice && (

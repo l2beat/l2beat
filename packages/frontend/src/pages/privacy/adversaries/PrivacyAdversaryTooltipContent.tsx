@@ -27,7 +27,6 @@ export function PrivacyAdversaryTooltipContent({
         <span className="whitespace-nowrap font-medium text-base">
           {cell.value}
         </span>
-        <span className="text-secondary text-xs">{cell.condition}</span>
       </div>
       <p className="text-xs leading-normal">{cell.exposure}</p>
       {cell.alsoExposed.length > 0 && (

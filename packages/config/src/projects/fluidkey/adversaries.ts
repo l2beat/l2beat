@@ -13,9 +13,8 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'bundled exits link Safes',
       exposure:
-        'Nothing of the scheme is onchain: a payment is a plain transfer to a fresh Safe that Fluidkey derived for you. Everyone sees sender and amount; nobody can tell who owns the Safe.',
+        'Nobody can tell who owns the Safe: nothing of the scheme is onchain, a payment is a plain transfer to a fresh Safe that Fluidkey derived for you. Everyone sees sender and amount.',
       advice:
         'Spend one Safe at a time; every Safe you empty in one action is publicly marked as yours.',
       sources: [
@@ -31,7 +30,6 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      condition: 'clusters by destination and timing',
       exposure:
         'Every receiving address is a 1/1 Safe deployed and relayed by Fluidkey, so the analyst knows the whole population of Fluidkey Safes and clusters those emptied together or sent to one destination. Hide Trail moves funds through two exchanges, which breaks the public trail but hands it to them.',
       advice:
@@ -45,7 +43,6 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      condition: 'only encrypted traffic to Fluidkey',
       exposure:
         "Every action goes to Fluidkey's servers; on the wire there is nothing but encrypted traffic to Fluidkey.",
       sources: [
@@ -57,7 +54,6 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      condition: 'Fluidkey derives every address',
       exposure:
         'Fluidkey holds your private viewing node and public spending key, derives every receiving Safe from them and indexes their balances, so it knows all your addresses, past and future. It picks the Safes you spend from and prepares each transaction, and every payer who resolves your name hits its gateway. It cannot spend your funds. Hide Trail hands the link between source and destination to Houdini Swap and two exchanges.',
       sources: [
@@ -71,7 +67,6 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      condition: 'wallet-signature accounts reduce to the wallet key',
       exposure:
         "No key material is published onchain: Fluidkey derives addresses from your viewing node and never announces them, so a quantum computer alone cannot link your Safes. Accounts created from the signature of a wallet that has transacted onchain reduce to that wallet's key plus a short PIN.",
       advice:

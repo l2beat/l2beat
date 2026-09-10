@@ -10,10 +10,9 @@ export const umbraAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      condition: 'sender and amount public',
       sentiment: 'good',
       exposure:
-        'Everyone sees who paid, how much, and the fresh address that received it. Who owns that address stays hidden until it spends to somewhere tied to you.',
+        'Who owns the receiving address stays hidden until it spends to somewhere tied to you. Everyone sees who paid, how much, and the fresh address that received it.',
       advice:
         'Withdraw to a fresh, unregistered address without an ENS name, and use it once.',
       sources: [
@@ -25,7 +24,6 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'no anonymity set; the destination gives you away',
       sentiment: 'good',
       exposure:
         'Each payment lands in one fresh address spent once, so there is no anonymity set: the analyst pairs payment with spend and asks who owns the destination. A reused or registered destination, or funds sent back to the payer, answer that.',
@@ -39,7 +37,6 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      condition: 'wallet RPC reads your stealth balances',
       sentiment: 'good',
       exposure:
         "The protocol needs nothing but a node. The app reads the balances of exactly your stealth addresses through your wallet's node, which ties them to your wallet unless that node is yours.",
@@ -56,7 +53,6 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      condition: 'owner can only stop new payments',
       sentiment: 'good',
       exposure:
         'The contracts are immutable and nobody holds a view key. The owner can only raise the fee on new payments. The indexer learns which wallet scans and the token relayer the withdrawal destination, nothing beyond the chain.',
@@ -70,7 +66,6 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      condition: 'key exchange breaks',
       sentiment: 'bad',
       exposure:
         'Recipient privacy rests on elliptic-curve key exchange with keys published in the registry. A quantum computer links every payment since 2021 to its registered recipient.',

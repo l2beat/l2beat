@@ -41,8 +41,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       label: 'Chain analyst',
       description:
         'Scrapes all public data and correlates it: timing, amounts, gas and wallet fingerprints, address clusters.',
-      examples:
-        'Chain analytics firms, ZachXBT, data brokers.',
+      examples: 'Chain analytics firms, ZachXBT, data brokers.',
     },
     networkObserver: {
       id: 'networkObserver',
@@ -65,7 +64,8 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       label: 'Future adversary',
       description:
         'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and future cryptanalysis such as a large quantum computer that breaks elliptic-curve key exchange and pairings, but not hashes, symmetric ciphers or lattices.',
-      examples: 'First well-funded insiders, then everyone in a potential post-quantum future.',
+      examples:
+        'First well-funded insiders, then everyone in a potential post-quantum future.',
     },
   }
 

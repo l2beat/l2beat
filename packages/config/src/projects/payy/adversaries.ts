@@ -12,9 +12,8 @@ export const payyAdversaries = definePrivacyAdversaries({
   cells: {
     publicObserver: {
       sentiment: 'good',
-      condition: 'only notes in flight are private',
       exposure:
-        'Every transaction shows which notes it spent and created, all blocks are served openly, and deposits and withdrawals show address and amount. Only the amount and owner of a note in flight are hidden.',
+        'Only the amount and owner of a note in flight are hidden. Every transaction shows which notes it spent and created, all blocks are served openly, and deposits and withdrawals show address and amount.',
       interior: {
         sender: {
           verdict: 'private',
@@ -38,7 +37,6 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'warning',
-      condition: 'amounts bounded along linear paths',
       exposure:
         'Along a path without merges the public deposit and withdrawal amounts bound or fix every amount in between, and the graph shows who paid whom end to end. The app creates a single-use deposit address per user, so the funding wallet is one hop away.',
       advice:
@@ -65,7 +63,6 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     networkObserver: {
       sentiment: 'good',
-      condition: 'only encrypted traffic to Payy',
       exposure:
         "The app talks only to Payy's servers; on the wire there is nothing but encrypted traffic to Payy.",
       interior: {
@@ -88,9 +85,8 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'warning',
-      condition: 'operator sees all but ordinary amounts',
       exposure:
-        'One company runs the only node, the note registry, the deposit relayers and the KYC checks, so card top-ups and ramps tie accounts to real names. Its node logs your proofs with your IP, its registry delivers your notes and records who paid whom, and it holds the spending keys of notes created for payment links and fiat ramps. Amounts of ordinary transfers stay encrypted to the recipient. It can freeze withdrawals.',
+        'Amounts of ordinary transfers stay encrypted to the recipient, but the operator holds the spending keys, and so the amounts, of notes created for payment links and fiat ramps. One company runs the only node, the note registry, the deposit relayers and the KYC checks, so card top-ups and ramps tie accounts to real names; its node logs your proofs with your IP and its registry records who paid whom. It can freeze withdrawals.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -112,7 +108,6 @@ export const payyAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'warning',
-      condition: 'registry decrypts if retained',
       exposure:
         "Amounts stay private unless the operator's note registry is retained: a quantum computer then opens every note delivered through it.",
       interior: {

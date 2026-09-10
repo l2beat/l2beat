@@ -10,10 +10,9 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
   },
   cells: {
     publicObserver: {
-      condition: 'graph and wrap amounts public',
       sentiment: 'good',
       exposure:
-        'Who pays whom and every wrap and unwrap amount are public. Only the amount of a confidential transfer is hidden; unwrapping publishes it, and a failed unwrap reveals your balance was below it.',
+        'Only the amount of a confidential transfer is hidden; unwrapping publishes it, and a failed unwrap reveals your balance was below it. Who pays whom and every wrap and unwrap amount are public.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -24,7 +23,6 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       sources: [{ contract: 'ConfidentialUSDCWrapper' }],
     },
     chainAnalyst: {
-      condition: 'balance bounded by public wraps and unwraps',
       sentiment: 'good',
       exposure:
         "Since all wraps and unwraps are public, an account's balance is bounded by what went in and out, and exact for any account that never made a confidential transfer.",
@@ -43,7 +41,6 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       sources: [{ contract: 'ConfidentialUSDCWrapper' }],
     },
     networkObserver: {
-      condition: 'ciphertexts only',
       sentiment: 'good',
       exposure:
         'Amounts are encrypted on your device; on the wire there is nothing but encrypted traffic to Zama.',
@@ -66,7 +63,6 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      condition: 'KMS or owner can decrypt',
       sentiment: 'bad',
       exposure:
         "The KMS key holders can together decrypt every balance and transfer ever made, and the token owner can appoint an observer with the same power at any time, with no delay. Zama's mandatory relayer sees who transacts and under which app's API key; Zama also runs the coprocessor and KMS nodes of its own.",
@@ -91,7 +87,6 @@ export const zamaCwAdversaries = definePrivacyAdversaries({
       ],
     },
     futureAdversary: {
-      condition: 'ciphertexts public, one key',
       sentiment: 'warning',
       exposure:
         'The encryption itself survives quantum computers, but every ciphertext is publicly downloadable today and one long-lived key protects them all. If enough key shares ever leak, the entire history is exposed.',
