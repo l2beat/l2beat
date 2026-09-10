@@ -24,10 +24,10 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      condition: 'anonymity set per pool, no delay',
+      condition: 'different anonymity set per pool',
       sentiment: 'good',
       exposure:
-        'Every withdrawal spends one deposit of the same fixed amount, so the candidates are the unspent notes in that pool, the tracked anonymity set, which differs sharply between pools. No delay is enforced; timing and address reuse narrow the set further.',
+        'Every withdrawal spends one deposit of the same fixed amount, so the candidates are the unspent notes in that pool, the tracked anonymity set, which differs sharply between pools. Timing and address reuse narrow the set further.',
       advice:
         'Use a pool with a large anonymity set, wait days or weeks before withdrawing, withdraw to a fresh address that never touches your other wallets, and deposit a large sum as one note.',
       sources: [

@@ -7,7 +7,7 @@ import type {
 import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
-  'Ethereum is public: every address keeps its past and its future in the open, and a privacy protocol can at best cut the link between them, hide who receives, or hide how much. One dot per adversary, in order of reach: public observer, chain analyst, network observer, privileged insider, future adversary. The colour says whether a careful user can keep the promised field private against that adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no.'
+  'On public blockchains like Ethereum, every address keeps its past and its future in the open. A privacy protocol can at best cut the link between addresses. One coloured dot per adversary, in order of reach. The colour says whether a careful user can keep the link, amount or recipient private against that adversary using the privacy protocol: green yes, yellow only outside supported options or by accepting another leak, red no.'
 
 export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   private: 'private',

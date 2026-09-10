@@ -33,39 +33,39 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'publicObserver',
       label: 'Public observer',
       description:
-        'Anyone with a block explorer, today. Sees every transaction, event and storage slot, but does no correlation beyond following links.',
+        'Everyone with a block explorer and some basic tools. Sees every public onchain event, but does no correlation beyond following links.',
       examples: 'A curious counterparty, an employer, a journalist.',
     },
     chainAnalyst: {
       id: 'chainAnalyst',
       label: 'Chain analyst',
       description:
-        'Keeps a copy of the whole chain forever and correlates it: timing, amounts, gas and wallet fingerprints, address clusters, and offchain data such as exchange KYC. Cannot coerce anyone.',
+        'Scrapes all public data and correlates it: timing, amounts, gas and wallet fingerprints, address clusters.',
       examples:
-        'Chain analytics firms, tax authorities, data brokers, anyone who buys their data later.',
+        'Chain analytics firms, ZachXBT, data brokers.',
     },
     networkObserver: {
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the chain and sees traffic only: RPC providers, relayers and broadcasters, indexers, ISPs. Learns IP addresses, timing, ciphertext and what becomes public. Assumes Tor and, where the client has an RPC setting, an own node.',
+        'Sits between the user and the chain and sees web2 traffic only: RPC providers, relayers and broadcasters, indexers, ISPs. Learns IP addresses, timing, browser fingerprints, ciphertext and what becomes public. Assumes Tor to send transactions and, where the client has an RPC setting, an own node to read the blockchain.',
       examples:
-        'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry.',
+        'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry, Google captcha or analytics in the dapp frontend.',
     },
     privilegedInsider: {
       id: 'privilegedInsider',
       label: 'Privileged insider',
       description:
-        'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry, any service the operator runs. Can SEE more than the public, or EXCLUDE users, which also partitions anonymity sets.',
+        'Holds a protocol operator role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry.',
       examples:
-        'A DAO with an upgrade key, a KMS committee, an ASP operator, or whoever can compel them.',
+        'A compliance backdoor key, a DAO with an upgrade key, a KMS committee, an ASP operator.',
     },
     futureAdversary: {
       id: 'futureAdversary',
       label: 'Future adversary',
       description:
         'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and future cryptanalysis such as a large quantum computer that breaks elliptic-curve key exchange and pairings, but not hashes, symmetric ciphers or lattices.',
-      examples: 'Anyone, once the cryptography or the operator logs fail.',
+      examples: 'First well-funded insiders, then everyone in a potential post-quantum future.',
     },
   }
 
