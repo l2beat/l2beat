@@ -20,40 +20,41 @@ pnpm dev                 # generate + serve ./out with wrangler on localhost
 not a path filter). Run it manually with the `environment` input to deploy
 `staging` or `production`, and `force` to skip the change check.
 
-| Environment | Hostname                   | Wrangler command                |
-| ----------- | -------------------------- | ------------------------------- |
-| production  | `crops.l2beat.com`         | `wrangler deploy --env production` |
-| staging     | `crops-staging.l2beat.com` | `wrangler deploy --env staging`    |
+| Environment | Worker              | Hostname                   | Wrangler command                   |
+| ----------- | ------------------- | -------------------------- | ---------------------------------- |
+| production  | `crops-api`         | `crops.l2beat.com`         | `wrangler deploy --env production` |
+| staging     | `crops-api-staging` | `crops-staging.l2beat.com` | `wrangler deploy --env staging`    |
 
-Both are `custom_domain` routes in `wrangler.jsonc`, so Cloudflare creates the
-DNS records itself on first deploy as long as the `l2beat.com` zone is in the
-same account.
+The hostnames are custom domains attached to the Workers once by hand, not
+declared in `wrangler.jsonc`. Declaring them would make wrangler list the
+zone's routes on every deploy, and the deploy token deliberately has no zone
+rights. A custom domain survives every later deploy of the same Worker.
 
 GitHub only offers manual dispatch for workflows that already exist on `main`.
-The first staging deploy from a feature branch therefore needs the workflow
-file merged first; after that any branch can be dispatched.
+Until then, deploy staging from a laptop with the two variables below exported.
 
 ### One-time human setup
 
-Wrangler cannot create credentials, so a person has to do this once:
+Wrangler cannot create credentials or attach domains with the token below, so
+a person has to do this once:
 
-1. Make sure the `l2beat.com` zone is in the Cloudflare account that will own
-   the Worker, and that neither `crops` nor `crops-staging` has a DNS record
-   yet (Cloudflare refuses to create a custom domain over an existing CNAME).
-2. Create a custom API token with two permissions:
-   **Account / Workers Scripts / Edit** restricted to that one account, and
-   **Zone / Workers Routes / Read** restricted to the `l2beat.com` zone.
-   The first uploads the site and attaches the custom domains through the
-   account-level Workers domains API, which creates the DNS record and the
-   certificate itself. The second is only for wrangler's pre-deploy check that
-   the hostname is not already routed to another Worker; without it the deploy
-   fails with `Authentication error [code: 10000]` on `/zones/.../workers/routes`
-   after the upload. No DNS or SSL rights are needed.
-3. Copy the account id from the Workers overview page.
-4. Add the GitHub repository secrets `CLOUDFLARE_API_TOKEN` and
+1. Create a custom API token with the single permission
+   **Account / Workers Scripts / Edit**, restricted to the account that owns
+   the `l2beat.com` zone. That is enough to upload the site. It cannot touch
+   DNS, certificates, routes or other Workers products.
+2. Copy the account id from the Workers & Pages overview page.
+3. Add the GitHub repository secrets `CLOUDFLARE_API_TOKEN` and
    `CLOUDFLARE_ACCOUNT_ID`.
-5. Dispatch the workflow with `environment: staging` and run the verification
-   below. Then merge, or dispatch with `production`.
+4. Deploy staging once so the Worker exists:
+   `CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... pnpm exec wrangler deploy --env staging`.
+5. In the dashboard open Workers & Pages → `crops-api-staging` → Settings →
+   Domains & Routes → Add → Custom domain, enter `crops-staging.l2beat.com`.
+   Cloudflare creates the proxied DNS record and issues the certificate
+   itself; the first request may return 522 or 526 for a minute while the
+   certificate is pending. The hostname must not already have a DNS record.
+6. Run the verification below against staging.
+7. After the first production deploy from `main`, repeat step 5 for the
+   `crops-api` Worker with `crops.l2beat.com`.
 
 ### Verification after a deploy
 
