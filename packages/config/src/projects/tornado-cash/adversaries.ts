@@ -71,13 +71,17 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'warning',
       exposure:
-        'Whether a quantum computer can invert the Pedersen hash that hides the link is an open question. The proofs themselves reveal nothing. Notes backed up onchain are not post-quantum secure.',
+        'A quantum computer that solves discrete logs on the Pedersen curve reduces the commitment to a structured equation over the secret, so an attacker is expected to be able to test whether a given deposit could fund a withdrawal. This shrinks the candidate set but does not single out the deposit, since many unrelated deposits pass the test. The proofs themselves reveal nothing. Notes backed up onchain are not post-quantum secure.',
       advice:
-        'Keep the note only on your device and skip the onchain backup option.',
+        'Use a pool with a large anonymity set, since the quantum test only shrinks the candidate set. Keep the note only on your device and skip the onchain backup option.',
       sources: [
         {
-          title: 'Pedersen hash (circomlib)',
-          url: 'https://github.com/iden3/circomlib/blob/master/circuits/pedersen.circom',
+          title: 'Pedersen hash circuit (pinned circomlib fork)',
+          url: 'https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/circuits/pedersen.circom',
+        },
+        {
+          title: 'Commitment and nullifier hashing',
+          url: 'https://github.com/tornadocash/tornado-core/blob/v2.1/circuits/withdraw.circom',
         },
         { contract: 'TornadoRouter', title: 'Onchain note backups' },
       ],
