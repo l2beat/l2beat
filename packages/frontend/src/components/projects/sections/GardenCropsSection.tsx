@@ -1,4 +1,4 @@
-import type { ResolvedCrops } from '@l2beat/config/build/crops/canonicalCrops'
+import type { ResolvedCrops } from '@l2beat/config'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { GARDEN_PATH } from '~/pages/garden/submit/links'
 import { CropsBed } from './crops/CropsBed'

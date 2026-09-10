@@ -1,5 +1,4 @@
-import type { ProjectCropStatus } from '@l2beat/config'
-import type { CropSentiment } from '@l2beat/config/build/crops/canonicalCrops'
+import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CropPlantSample } from './CropBadge'
 import { SectionHeading } from './SectionHeading'

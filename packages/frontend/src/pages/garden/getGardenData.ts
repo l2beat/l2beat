@@ -1,9 +1,5 @@
-import type { Project } from '@l2beat/config'
-import type { ResolvedCrops } from '@l2beat/config/build/crops/canonicalCrops'
-import {
-  qualifiesForGarden,
-  resolveProjectCrops,
-} from '@l2beat/config/build/crops/canonicalCrops'
+import type { Project, ResolvedCrops } from '@l2beat/config'
+import { CROPS } from '@l2beat/config'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -15,6 +11,8 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+
+const { qualifiesForGarden, resolveProjectCrops } = CROPS.canonicalCrops
 
 // Editorial display order; anything else is appended alphabetically.
 const CURATED_ORDER = ['tornado-cash', 'aztecnetwork', 'umbra', 'uniswapv3']

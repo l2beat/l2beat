@@ -1,8 +1,4 @@
-import type {
-  CropKey,
-  CropSentiment,
-  ResolvedCrops,
-} from '@l2beat/config/build/crops/canonicalCrops'
+import type { CropKey, CropSentiment, ResolvedCrops } from '@l2beat/config'
 import { CROP_COLUMNS, type CropDefinition } from '~/pages/garden/crops'
 
 /** A crop's definition and its evaluation together, in garden order. */

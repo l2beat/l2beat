@@ -1,4 +1,4 @@
-import type { ResolvedCropEvaluation } from '@l2beat/config/build/crops/canonicalCrops'
+import type { ResolvedCropEvaluation } from '@l2beat/config'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import {
