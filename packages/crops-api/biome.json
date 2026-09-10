@@ -2,7 +2,7 @@
   "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
   "root": false,
   "extends": ["../../../biome.json"],
-  "files": { "includes": ["**", "!static/**"] },
+  "files": { "includes": ["**", "!static/**", "!.wrangler/**"] },
   "linter": {
     "rules": {
       "style": {

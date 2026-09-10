@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "crops-api",
+  "compatibility_date": "2026-09-01",
+  // Static assets only: no Worker script, Cloudflare serves `out/` directly.
+  "assets": {
+    "directory": "./out",
+    // A path that is not a generated file is a plain empty 404, never an HTML page.
+    "not_found_handling": "none"
+  },
+  "workers_dev": false,
+  "routes": [{ "pattern": "crops.l2beat.com", "custom_domain": true }],
+  "env": {
+    "staging": {
+      "name": "crops-api-staging",
+      "routes": [
+        { "pattern": "crops-staging.l2beat.com", "custom_domain": true }
+      ]
+    }
+  }
+}
