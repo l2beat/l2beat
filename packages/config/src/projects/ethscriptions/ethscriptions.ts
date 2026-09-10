@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
-  CROPS_LEGOS,
+  CROPS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -362,7 +362,7 @@ export const ethscriptions: ScalingProject = {
         'Audit coverage.',
         'Trusted setup requirements of the proof system.',
         'Prover decentralization and multiproof.',
-        CROPS_LEGOS.notReviewed.circuitBreakers,
+        CROPS.notReviewed.circuitBreakers,
       ],
     },
   },

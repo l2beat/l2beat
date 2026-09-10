@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  CROPS_LEGOS,
+  CROPS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -852,7 +852,7 @@ export const aztecnetwork: ScalingProject = {
         'Sequencing is permissionless with no single privileged actor.',
         'Decentralised sequencing and private execution environment provide excellent realtime, probabilistic CR.',
         'Exit window is infinite due to immutable core contracts + Escape Hatch.',
-        CROPS_LEGOS.passesWalkawayTest(),
+        CROPS.passesWalkawayTest(),
       ],
       missing: [
         'No deterministic CR: Self-proposal is probabilistic through the escape hatch.',
@@ -885,8 +885,8 @@ export const aztecnetwork: ScalingProject = {
         'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
       ],
       notReviewed: [
-        CROPS_LEGOS.notReviewed.quantumSafety,
-        CROPS_LEGOS.notReviewed.circuitBreakers,
+        CROPS.notReviewed.quantumSafety,
+        CROPS.notReviewed.circuitBreakers,
       ],
     },
   },

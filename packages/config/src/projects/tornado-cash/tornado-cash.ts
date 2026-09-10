@@ -8,7 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { CROPS_LEGOS } from '../../common/cropsLegos'
+import { CROPS } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
@@ -239,9 +239,9 @@ export const tornadoCash: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        CROPS_LEGOS.infiniteExitWindow,
+        CROPS.infiniteExitWindow,
         'CR based on Ethereum L1 inclusion.',
-        CROPS_LEGOS.passesWalkawayTest(),
+        CROPS.passesWalkawayTest(),
         'Multiple active relayers; users can self-relay withdrawals.',
       ],
     },
