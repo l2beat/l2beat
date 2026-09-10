@@ -9,28 +9,6 @@ import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/type
 export const PRIVACY_ADVERSARIES_TOOLTIP =
   'Ethereum is public: every address keeps its past and its future in the open, and a privacy protocol can at best cut the link between them, hide who receives, or hide how much. One dot per adversary, in order of reach: public observer, chain analyst, network observer, privileged insider, future adversary. The colour says whether a careful user can keep the promised field private against that adversary using the protocol and its supported client options: green yes, yellow only outside supported options or by accepting another leak, red no.'
 
-/** Spine order; must match the order of PrivacyAdversariesSummary.cells. */
-export const PRIVACY_ADVERSARY_IDS: PrivacyAdversaryId[] = [
-  'publicObserver',
-  'chainAnalyst',
-  'networkObserver',
-  'privilegedInsider',
-  'futureAdversary',
-]
-
-export const PRIVACY_ADVERSARY_TOOLTIP: Record<PrivacyAdversaryId, string> = {
-  publicObserver:
-    'Anyone with a block explorer, today. Sees every transaction, event and storage slot, but does no correlation beyond following links.',
-  chainAnalyst:
-    'Keeps a copy of the whole chain forever and correlates it: timing, amounts, gas and wallet fingerprints, address clusters, and offchain data such as exchange KYC. Cannot coerce anyone.',
-  networkObserver:
-    'Sits between the user and the chain and sees traffic only: RPC providers, relayers and broadcasters, indexers, ISPs. Learns IP addresses, timing, ciphertext and what becomes public. Assumes Tor and, where the client has an RPC setting, an own node.',
-  privilegedInsider:
-    'Holds a protocol role or receives keys or plaintext by design: upgrade admin, sequencer, decryption or view key holder, TEE vendor, association set provider, hosted prover, note registry, any service the operator runs. Can SEE more than the public, or EXCLUDE users, which also partitions anonymity sets.',
-  futureAdversary:
-    'Harvest now, decrypt later. Holds every byte ever written onchain plus any retained logs, and future cryptanalysis such as a large quantum computer that breaks elliptic-curve key exchange and pairings, but not hashes, symmetric ciphers or lattices.',
-}
-
 export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   private: 'private',
   atRisk: 'at risk',

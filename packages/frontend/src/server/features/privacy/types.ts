@@ -74,6 +74,7 @@ export interface PrivacyAsset {
 export interface PrivacyAdversarySummaryCell {
   id: PrivacyAdversaryId
   label: string
+  description: string
   value: string
   sentiment: PrivacyAdversarySentiment
   condition: string
@@ -114,6 +115,7 @@ export function toPrivacyAdversariesSummary(
       return {
         id: adversary.id,
         label: adversary.label,
+        description: adversary.description,
         value: cell.value,
         sentiment: cell.sentiment,
         condition: cell.condition,
