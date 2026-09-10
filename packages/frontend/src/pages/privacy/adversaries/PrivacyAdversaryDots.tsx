@@ -51,7 +51,6 @@ export function PrivacyAdversaryDots({
             <TooltipContent className="max-w-[340px]">
               <PrivacyAdversaryTooltipContent
                 cell={cell}
-                promise={adversaries.promise}
                 hint={
                   href === undefined
                     ? undefined

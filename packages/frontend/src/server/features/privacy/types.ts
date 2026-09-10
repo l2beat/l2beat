@@ -77,6 +77,7 @@ export interface PrivacyAdversarySummaryCell {
   value: string
   sentiment: PrivacyAdversarySentiment
   condition: string
+  exposure: string
   /** Other fields leaking beyond the public observer, with their labels. */
   alsoExposed: {
     field: PrivacyField
@@ -116,6 +117,7 @@ export function toPrivacyAdversariesSummary(
         value: cell.value,
         sentiment: cell.sentiment,
         condition: cell.condition,
+        exposure: cell.exposure,
         alsoExposed: cell.alsoExposed.map((field) => ({
           field,
           label: adversaries.fields.find((f) => f.id === field)?.label ?? field,

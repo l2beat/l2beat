@@ -7,17 +7,11 @@ import type {
   ProjectPrivacyAdversaries,
 } from '@l2beat/config'
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '~/components/core/Collapsible'
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
-import { ChevronIcon } from '~/icons/Chevron'
 import {
   getExposure,
   getExposureNote,
@@ -141,24 +135,11 @@ function AdversaryBlock({
       )}
       {cell.interior &&
         (baseline?.interior ? (
-          <>
-            <ExposureDiff
-              interior={cell.interior}
-              baseline={baseline.interior}
-              fields={fields}
-            />
-            <Collapsible>
-              <CollapsibleTrigger className="group/trigger inline-flex items-center gap-1 text-left font-medium text-paragraph-13 text-secondary underline-offset-2 hover:underline">
-                <ChevronIcon className="size-3 transition-transform group-data-[state=open]/Collapsible:rotate-180" />
-                All fields
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="mt-2">
-                  <ExposureChips map={cell.interior} fields={fields} />
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </>
+          <ExposureDiff
+            interior={cell.interior}
+            baseline={baseline.interior}
+            fields={fields}
+          />
         ) : (
           <ExposureChips map={cell.interior} fields={fields} />
         ))}
