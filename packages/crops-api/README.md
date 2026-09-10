@@ -40,11 +40,11 @@ Wrangler cannot create credentials, so a person has to do this once:
 1. Make sure the `l2beat.com` zone is in the Cloudflare account that will own
    the Worker, and that neither `crops` nor `crops-staging` has a DNS record
    yet (Cloudflare refuses to create a custom domain over an existing CNAME).
-2. Create an API token from the **Edit Cloudflare Workers** template, scoped
-   to the `l2beat.com` zone, and add **Zone / DNS / Edit** and
-   **Zone / SSL and Certificates / Edit**. Custom domains create a DNS record
-   and a certificate, and the deploy fails with an authentication error on the
-   custom-domain step if either is missing.
+2. Create a custom API token with a single permission,
+   **Account / Workers Scripts / Edit**, restricted to that one account. That
+   is all a static-assets deploy needs: custom domains are attached through
+   the account-level Workers domains API, which creates the DNS record and
+   certificate itself, so the token needs no zone, DNS or SSL rights.
 3. Copy the account id from the Workers overview page.
 4. Add the GitHub repository secrets `CLOUDFLARE_API_TOKEN` and
    `CLOUDFLARE_ACCOUNT_ID`.
