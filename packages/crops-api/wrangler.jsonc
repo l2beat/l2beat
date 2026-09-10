@@ -2,15 +2,18 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "crops-api",
   "compatibility_date": "2026-09-01",
-  // Static assets only: no Worker script, Cloudflare serves `out/` directly.
+  // No `main` on purpose: the whole site is pre-generated, so a script would only add latency.
   "assets": {
     "directory": "./out",
-    // A path that is not a generated file is a plain empty 404, never an HTML page.
+    // Clients probe addresses that may not exist; they need an empty 404, not an HTML page.
     "not_found_handling": "none"
   },
   "workers_dev": false,
-  "routes": [{ "pattern": "crops.l2beat.com", "custom_domain": true }],
+  // Every deploy names its environment so a bare `wrangler deploy` cannot hit production by accident.
   "env": {
+    "production": {
+      "routes": [{ "pattern": "crops.l2beat.com", "custom_domain": true }]
+    },
     "staging": {
       "name": "crops-api-staging",
       "routes": [

@@ -41,7 +41,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_API: ${{ secrets.TURBO_API_RO }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -60,16 +60,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build config
+      - name: Build dependencies
         run: pnpm build:dependencies:crops-api
 
       - name: Generate site
         run: pnpm --filter @l2beat/crops-api generate
 
       - name: Deploy with Wrangler
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: packages/crops-api
-          command: deploy ${{ github.event.inputs.environment == 'staging' && '--env staging' || '' }}
+          environment: ${{ github.event.inputs.environment || 'production' }}
+          command: deploy
