@@ -5,16 +5,11 @@ export interface PrivacyDeployedChain {
   id: string
   name: string
   iconUrl: string
-  /** Set when the chain has its own scaling project page. */
   href?: string
 }
 
 export type PrivacyChainProject = Project<'chainConfig', 'scalingInfo'>
 
-/**
- * Resolves privacyInfo.chains (ChainConfig names) to the projects that define
- * those chains, preserving the configured order.
- */
 export function getPrivacyDeployedChains(
   chainNames: string[],
   chainProjects: PrivacyChainProject[],

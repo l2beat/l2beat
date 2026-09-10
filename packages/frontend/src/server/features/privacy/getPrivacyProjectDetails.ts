@@ -56,7 +56,6 @@ export interface PrivacyProjectDetails {
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
-  /** ChainConfig names of the chains the protocol is deployed on. */
   chains: string[]
   assets: PrivacyAsset[]
   summary: {

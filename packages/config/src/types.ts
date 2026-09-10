@@ -1058,11 +1058,7 @@ export type ProjectExternalDependency =
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
-  /**
-   * Chains the protocol is deployed on, identified by ChainConfig.name.
-   * Each chain needs a project with a matching chainConfig (see e.g.
-   * avalanche.ts for a chain-only project) so that its icon can be shown.
-   */
+  /** Each chain needs a project with a matching chainConfig for its icon. */
   chains: string[]
   tokens: ProjectPrivacyToken[]
   /**
