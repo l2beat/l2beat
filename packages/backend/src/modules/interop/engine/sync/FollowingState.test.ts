@@ -4,6 +4,7 @@ import type {
   InteropEventRecord,
 } from '@l2beat/database'
 import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
+import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type {
   InteropEvent,
@@ -151,7 +152,6 @@ describe(FollowingState.name, () => {
         .returnsOnce([eventA])
         .returnsOnce([eventB, eventC])
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
-      const clearChainSyncError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
         getLastSyncedRange: mockFn().resolvesTo(
           makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
@@ -162,7 +162,6 @@ describe(FollowingState.name, () => {
         }),
         captureLog,
         saveProducedInteropEvents,
-        clearChainSyncError,
       })
       const state = new FollowingState(syncer, Logger.SILENT)
 
@@ -182,7 +181,6 @@ describe(FollowingState.name, () => {
         [],
         [],
       )
-      expect(clearChainSyncError).toHaveBeenCalled()
     })
 
     it('bootstraps range from the oldest event when no synced range exists', async () => {
@@ -309,6 +307,115 @@ describe(FollowingState.name, () => {
       )
     })
 
+    it('reads the resync state and synced range once for consecutive blocks', async () => {
+      const getResyncState = mockFn().resolvesTo({
+        resyncFrom: undefined,
+        wipeRequired: false,
+      })
+      const getLastSyncedRange = mockFn().resolvesTo(
+        makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
+      )
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        getResyncState,
+        getLastSyncedRange,
+        saveProducedInteropEvents,
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      await state.processNewestBlock(BLOCK, LOGS)
+      await state.processNewestBlock(makeBlock(101, UnixTime(1_010)), LOGS)
+
+      expect(getResyncState).toHaveBeenCalledTimes(1)
+      expect(getLastSyncedRange).toHaveBeenCalledTimes(1)
+      expect(saveProducedInteropEvents).toHaveBeenCalledTimes(2)
+      expect(saveProducedInteropEvents.calls[1]?.args[1]).toEqual({
+        fromBlock: 90n,
+        fromTimestamp: UnixTime(0),
+        toBlock: 101n,
+        toTimestamp: UnixTime(1_010),
+      })
+    })
+
+    it('does not advance the cached range when saving fails', async () => {
+      const getLastSyncedRange = mockFn().resolvesTo(
+        makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
+      )
+      const saveProducedInteropEvents = mockFn()
+        .rejectsWithOnce(new Error('db down'))
+        .resolvesTo(undefined)
+      const syncer = createSyncer({
+        getLastSyncedRange,
+        saveProducedInteropEvents,
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      await expect(state.processNewestBlock(BLOCK, LOGS)).toBeRejectedWith(
+        'db down',
+      )
+      const nextState = await state.processNewestBlock(BLOCK, LOGS)
+
+      expect(nextState).toEqual(state)
+      expect(getLastSyncedRange).toHaveBeenCalledTimes(1)
+      expect(saveProducedInteropEvents).toHaveBeenCalledTimes(2)
+      expect(saveProducedInteropEvents.calls[1]?.args[1]).toEqual(
+        saveProducedInteropEvents.calls[0]?.args[1],
+      )
+    })
+
+    it('checks for a resync request again after the interval', async () => {
+      const clock = install({ now: 1_000_000 })
+      try {
+        const getResyncState = mockFn()
+          .resolvesToOnce({ resyncFrom: undefined, wipeRequired: false })
+          .resolvesTo({ resyncFrom: UnixTime(1), wipeRequired: false })
+        const syncer = createSyncer({
+          getResyncState,
+          getLastSyncedRange: mockFn().resolvesTo(
+            makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
+          ),
+        })
+        const state = new FollowingState(syncer, Logger.SILENT)
+
+        await state.processNewestBlock(BLOCK, LOGS)
+        clock.tick(9_999)
+        const sameState = await state.processNewestBlock(
+          makeBlock(101, UnixTime(1_010)),
+          LOGS,
+        )
+        clock.tick(1)
+        const nextState = await state.processNewestBlock(
+          makeBlock(102, UnixTime(1_020)),
+          LOGS,
+        )
+
+        expect(sameState).toEqual(state)
+        expect(nextState).toBeA(CatchingUpState)
+        expect(getResyncState).toHaveBeenCalledTimes(2)
+      } finally {
+        clock.uninstall()
+      }
+    })
+
+    it('counts a status check as a resync check', async () => {
+      const getResyncState = mockFn().resolvesTo({
+        resyncFrom: undefined,
+        wipeRequired: false,
+      })
+      const syncer = createSyncer({
+        getResyncState,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
+        ),
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      await state.checkStatus()
+      await state.processNewestBlock(BLOCK, LOGS)
+
+      expect(getResyncState).toHaveBeenCalledTimes(1)
+    })
+
     it('captures pending historical txs before processing the current block', async () => {
       const historicalEvent = mockObject<InteropEvent>({})
       const txToCapture = mockObject<TxToCapture>({
@@ -394,7 +501,6 @@ function createSyncer(
     }),
     captureTx: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
-    clearChainSyncError: mockFn().resolvesTo(undefined),
     blockProcessingStats: mockObject<
       InteropEventSyncer['blockProcessingStats']
     >({
