@@ -12,9 +12,9 @@ export const railgunAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'Everything inside the pool is encrypted, and nobody can see which shield funds which unshield. Shielding and unshielding show your address, token and amount.',
+        'Everything inside the pool is private, and nobody can see which shield funds which unshield. Shielding and unshielding show your address, token and amount.',
       advice:
-        'Unshield through a broadcaster, so no wallet of yours pays the gas next to the recipient. DeFi through the pool shows tokens and amounts.',
+        'Unshield through a broadcaster, so no wallet of yours pays the gas to the recipient. DeFi through the pool shows tokens and amounts.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -39,7 +39,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'good',
       exposure:
-        'The candidates for an unshield are the shields of the same token in the same tree: transfers inside break the one-to-one match of a mixer, and no delay is enforced beyond the one-hour proof-of-innocence wait. Timing and exact or round amounts narrow the set.',
+        'The candidates for an unshield are the shields of the same token, although the DeFi bundles create shields with new tokens that likely have a clean sender. Transfers inside the pool break the one-to-one match of a mixer. Timing and exact or round amounts narrow the set.',
       advice:
         'Keep funds shielded for a while, unshield uneven amounts that differ from any single shield, and use a fresh exit address every time.',
       interior: {
@@ -64,7 +64,8 @@ export const railgunAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposure:
         'The wallet finds its notes by trying to decrypt every note locally, so nodes learn nothing about which are yours. By default it sends the pending unshield to the configured node for a gas estimate, which reveals the destination early.',
-      advice: 'Point the wallet at your own node.',
+      advice:
+        'Use a local node for reading the blockchain and a public RPC via Tor to send your transaction and disassociate it from your IP. Use a popular relayer.',
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -86,9 +87,9 @@ export const railgunAdversaries = definePrivacyAdversaries({
     privilegedInsider: {
       sentiment: 'good',
       exposure:
-        'There is no view key, so nobody can read past activity. The DAO can upgrade the contracts after a seven-day delay, which could weaken future privacy. The proof-of-innocence list provider can refuse to list a shield, leaving only a self-broadcast exit, and its nodes receive blinded commitments and spend submissions per wallet.',
+        'There is no view key, so nobody can read past activity. The DAO can upgrade the contracts after a seven-day delay, which could weaken future privacy. The proof-of-innocence list provider can refuse to list a shield, leaving only a self-broadcast exit.',
       advice:
-        'Watch governance proposals; you have seven days to unshield before an upgrade takes effect. Self-host the proof-of-innocence list.',
+        'Watch governance proposals; you have seven days to unshield before an upgrade takes effect. Be prepared for self-broadcasting if the POI-provider censors you.',
       interior: {
         sender: 'private',
         recipient: 'private',

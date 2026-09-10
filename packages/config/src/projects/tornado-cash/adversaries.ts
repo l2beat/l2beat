@@ -13,7 +13,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       exposure:
         'Which deposit paid for which withdrawal is private. Each pool has a fixed amount and there are no in-pool transfers, meaning each withdrawal is funded by exactly one deposit.',
       advice:
-        'Withdraw through a relayer, so no wallet of yours pays the gas next to the receiving address.',
+        'Withdraw through a relayer, so no wallet of yours pays the gas to the receiving address.',
       sources: [
         { contract: 'Pool_1_ETH', title: '1 ETH pool' },
         {
@@ -43,7 +43,8 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
       sentiment: 'good',
       exposure:
         'The app downloads all deposits and searches locally, so a node learns only which pool you looked at. The relayer only submits the finished withdrawal.',
-      advice: 'Use a local node for reading the blockchain and a public RPC via Tor to send your transaction and disassociate it from your IP. Use a popular relayer.',
+      advice:
+        'Use a local node for reading the blockchain and a public RPC via Tor to send your transaction and disassociate it from your IP. Use a popular relayer.',
       sources: [
         {
           title: 'Event sync (classic UI)',
