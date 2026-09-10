@@ -16,7 +16,7 @@ export interface ProjectIconListItem {
   id: string
   name: string
   iconUrl: string
-  href: string
+  href?: string
 }
 
 export interface ProjectIconListDialog {
@@ -50,7 +50,9 @@ export function ProjectIconList({
 
   function onItemSelect(project: ProjectIconListItem) {
     setOpen(false)
-    router.push(project.href)
+    if (project.href) {
+      router.push(project.href)
+    }
   }
 
   return (
@@ -62,6 +64,7 @@ export function ProjectIconList({
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
         {visibleProjects.map((project, index) => {
+          const href = disableIconLinks ? undefined : project.href
           const image = (
             <img
               width={20}
@@ -75,18 +78,18 @@ export function ProjectIconList({
 
           return (
             <Tooltip key={project.id}>
-              {disableIconLinks ? (
-                <TooltipTrigger>{image}</TooltipTrigger>
-              ) : (
+              {href ? (
                 <TooltipTrigger asChild disabledOnMobile>
-                  <a href={project.href} className="size-5">
+                  <a href={href} className="size-5">
                     {image}
                   </a>
                 </TooltipTrigger>
+              ) : (
+                <TooltipTrigger>{image}</TooltipTrigger>
               )}
               <TooltipContent>
                 <p className="font-bold">{project.name}</p>
-                {!disableIconLinks && (
+                {href && (
                   <p className="text-secondary text-xs">
                     Click to view project page
                   </p>

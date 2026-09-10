@@ -3,6 +3,7 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
@@ -19,7 +20,6 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
-import { PrivacyDeployedChains } from './components/PrivacyDeployedChains'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
@@ -124,8 +124,15 @@ export function PrivacyProjectPage({
                               title="Deployed on"
                               tooltip="Chains on which the protocol is deployed."
                               value={
-                                <PrivacyDeployedChains
-                                  chains={entry.deployedOn}
+                                <ProjectIconList
+                                  projects={entry.deployedOn}
+                                  dialog={{
+                                    title: 'Deployed on',
+                                    description: 'Search for chains',
+                                    searchPlaceholder:
+                                      'Start typing to find chain...',
+                                    emptyText: 'No chains found.',
+                                  }}
                                 />
                               }
                             />
