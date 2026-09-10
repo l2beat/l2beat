@@ -13,6 +13,7 @@ import {
   EXITS,
   OPERATOR,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   SOA,
   STATE_VALIDATION,
 } from '../../common'
@@ -26,7 +27,10 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import stakeDistribution from './stake-distribution.json'
+import { readStakeDistribution } from '../../utils/readStakeDistribution'
+import stakeDistributionJson from './stake-distribution.json'
+
+const stakeDistribution = readStakeDistribution(stakeDistributionJson)
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -55,6 +59,14 @@ const activationThreshold = discovery.getContractValueBigInt(
 const escapeHatchBond = discovery.getContractValueBigInt(
   'EscapeHatch',
   'getBondSize',
+)
+const escapeHatchWithdrawalTax = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getWithdrawalTax',
+)
+const escapeHatchFailedPunishment = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getFailedHatchPunishment',
 )
 const targetCommitteeSize = discovery.getContractValue<number>(
   'Rollup',
@@ -206,6 +218,12 @@ function formatMonthYear(timestamp: number): string {
 
 const activationThresholdString = formatAztecAmount(activationThreshold)
 const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
+const escapeHatchWithdrawalTaxString = formatAztecAmount(
+  escapeHatchWithdrawalTax,
+)
+const escapeHatchFailedPunishmentString = formatAztecAmount(
+  escapeHatchFailedPunishment,
+)
 const governanceLockAmount = BigInt(
   governanceConfiguration.proposeConfig.lockAmount,
 )
@@ -520,7 +538,8 @@ export const aztecnetwork: ScalingProject = {
         targetCommitteeSize,
         activeSequencerCount,
       }),
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: {
           value: `${formatSeconds(l2BlockTime)}`,
           description:
@@ -532,37 +551,46 @@ export const aztecnetwork: ScalingProject = {
           description:
             'A random committee is sampled from the sequencer set for each epoch, a random block producer is sampled from the committee for each slot in the epoch',
         },
-        sequencerCount: { value: `${activeSequencerCount} sequencers` },
-        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        sequencerCount: {
+          value: `${activeSequencerCount} sequencers`,
+          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+        },
+        blockProductionAccess: SEQUENCING_SPEC.OPEN_BLOCK_PRODUCTION(),
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
-          value: `Up to ${entryQueueFlushSize} sequencers per epoch (current)`,
+          value: `${entryQueueFlushSize} sequencers / epoch`,
           description:
             'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },
-        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        deterministicCrGadget: SEQUENCING_SPEC.NO_DETERMINISTIC_CR_GADGET(),
         additionalCrGadgets: {
           value: 'Bonded escape hatch, private transactions',
+          secondLine: `${escapeHatchBondString}; every ${escapeHatchFrequencyString}`,
           sentiment: 'good',
+          description: `Escape hatch: ${escapeHatchBondString} bond to enter a set from which one proposer is periodically selected every ${escapeHatchFrequencyString} to bypass the regular committee, include transactions, and prove the resulting checkpoints. ${escapeHatchWithdrawalTaxString} proposal tax. Private transactions: allow users to cheaply resist censorship based on transaction content while the chain is live.`,
         },
+        inclusionDelayChart: {
+          type: 'committeelike',
+          validatorCount: activeSequencerCount,
+          committeeSize: targetCommitteeSize,
+          epochSlots,
+          slotSeconds: slotDuration,
+          blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
+          target: 0.99,
+          maxCensorFraction: 0.5,
+          stakeDistribution,
+        },
+        inclusionDelayChartDescription:
+          'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       },
-      inclusionDelayChart: {
-        type: 'committeelike',
-        validatorCount: activeSequencerCount,
-        committeeSize: targetCommitteeSize,
-        epochSlots,
-        slotSeconds: slotDuration,
-        blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
-        target: 0.99,
-        maxCensorFraction: 0.5,
-        stakeDistribution,
-      },
-      inclusionDelayChartDescription:
-        'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       censorshipResistance: readProjectMarkdown(
         'aztecnetwork',
         'censorshipResistance',
-        { escapeHatchBondString, escapeHatchFrequencyString },
+        {
+          escapeHatchBondString,
+          escapeHatchFailedPunishmentString,
+          escapeHatchFrequencyString,
+        },
       ),
       references: [
         {

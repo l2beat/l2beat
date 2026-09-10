@@ -11,7 +11,12 @@ import type {
 
 export type PrivacyProject = Project<
   'display' | 'privacyInfo' | 'statuses',
-  'tvsConfig' | 'contracts' | 'permissions' | 'discoveryInfo' | 'zkCatalogInfo'
+  | 'tvsConfig'
+  | 'contracts'
+  | 'permissions'
+  | 'discoveryInfo'
+  | 'discoveryUpdates'
+  | 'zkCatalogInfo'
 > & {
   /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']

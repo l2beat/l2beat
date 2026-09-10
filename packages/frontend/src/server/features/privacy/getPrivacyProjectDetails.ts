@@ -3,6 +3,7 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   ProjectContracts,
+  ProjectDiscoveryUpdate,
   ProjectDisplay,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
@@ -42,6 +43,7 @@ export interface PrivacyProjectDetails {
   display: ProjectDisplay
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
+  discoveryUpdates?: ProjectDiscoveryUpdate[]
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   trustedSetups: ProjectZkCatalogInfo['trustedSetups']
@@ -249,6 +251,7 @@ export async function getPrivacyProjectDetails(
     display: project.display,
     contracts: project.contracts,
     permissions: project.permissions,
+    discoveryUpdates: project.discoveryUpdates,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     trustedSetups: project.trustedSetups,

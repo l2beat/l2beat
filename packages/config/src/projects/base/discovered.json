@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1785226129,
-  "configHash": "0x8f4d91a966c931bbd753e0ebaa304934f2595f71a06a2d7732d497d2d46b91af",
+  "configHash": "0xf1bf948da4ceb7c3862854d606b61893595f3b11dae7d6ec68141e18d43cda34",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -1384,6 +1384,8 @@
         "guardian": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "initVersion": 3,
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
+        "minimumGasLimitOneByte": 21040,
+        "minimumGasLimitZeroBytes": 21000,
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1030380,

@@ -83,6 +83,27 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.getBlockTimestamp.name, () => {
+    it('fetches the block without tx bodies and returns its timestamp', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockTimestamp(100)
+
+      expect(result).toEqual(100)
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', false],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
   describe(RpcClient.prototype.getTransaction.name, () => {
     it('fetches tx from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({

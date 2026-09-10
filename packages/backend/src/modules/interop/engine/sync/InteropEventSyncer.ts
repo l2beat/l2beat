@@ -148,6 +148,10 @@ export class InteropEventSyncer extends TimeLoop {
   public latestBlockNumber?: bigint
   public waitingForWipe = false
   public hasError = false
+  // InteropPluginSyncState.lastError may hold a value from a previous run or a
+  // failed attempt. It is cleared lazily on the next success, so steady-state
+  // block processing never writes to that table.
+  private storedErrorMayExist = true
   public readonly blockProcessingStats = new BlockProcessingStats()
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
@@ -177,11 +181,19 @@ export class InteropEventSyncer extends TimeLoop {
         'interop.sync',
         this.getRpcMetricsContext(),
         async () => {
-          if (options?.clearError ?? true) {
-            await this.clearChainSyncError()
-          }
           this.state = await fn(state)
           this.hasError = false
+          // A transition into (or a tick spent in) CatchingUpState has not
+          // synced anything yet, so the stored error stays until either data
+          // is persisted (see saveProducedInteropEvents) or the syncer is
+          // following again.
+          if (
+            (options?.clearError ?? true) &&
+            this.state.type === 'blockProcessor'
+          ) {
+            await this.clearChainSyncError()
+            this.storedErrorMayExist = false
+          }
         },
       )
     } catch (error) {
@@ -313,17 +325,33 @@ export class InteropEventSyncer extends TimeLoop {
     fulfilledCreatorEvents: InteropEvent[] = [],
     checkedInHistoryEvents: InteropEvent[] = [],
   ) {
-    await this.runInTransaction(async () => {
-      await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
-      await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
-      await this.store.updateDerivedCheckedInHistory(checkedInHistoryEvents)
-      await this.db.interopPluginSyncedRange.upsert({
+    const upsertRange = () =>
+      this.db.interopPluginSyncedRange.upsert({
         pluginName: this.cluster.name,
         chain: this.chain,
         ...fullRange,
       })
-      await this.clearChainSyncError()
-    })
+
+    const hasEventWrites =
+      interopEvents.length > 0 ||
+      fulfilledCreatorEvents.length > 0 ||
+      checkedInHistoryEvents.length > 0
+    if (!hasEventWrites && !this.storedErrorMayExist) {
+      // Most followed blocks produce nothing. A single upsert is atomic on its
+      // own, so skip the BEGIN/COMMIT round trips.
+      await upsertRange()
+    } else {
+      await this.runInTransaction(async () => {
+        await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+        await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
+        await this.store.updateDerivedCheckedInHistory(checkedInHistoryEvents)
+        await upsertRange()
+        await this.clearChainSyncError()
+      })
+      // Only now is the clear committed; a rollback above must leave the flag
+      // set so the next attempt writes it again.
+      this.storedErrorMayExist = false
+    }
 
     this.logger.debug('Events captured for resyncable cluster', {
       plugin: this.cluster.name,
@@ -333,7 +361,15 @@ export class InteropEventSyncer extends TimeLoop {
     })
   }
 
+  /**
+   * Writes only when an error may be stored, see `storedErrorMayExist`. The
+   * caller resets that flag once the write is known to be committed, because
+   * this may run inside a transaction that still rolls back afterwards.
+   */
   async clearChainSyncError() {
+    if (!this.storedErrorMayExist) {
+      return
+    }
     await this.db.interopPluginSyncState.setLastError(
       this.cluster.name,
       this.chain,
@@ -342,6 +378,7 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async saveChainSyncError(error: unknown) {
+    this.storedErrorMayExist = true
     await this.db.interopPluginSyncState.setLastError(
       this.cluster.name,
       this.chain,

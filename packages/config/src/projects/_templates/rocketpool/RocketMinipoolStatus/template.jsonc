@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolStatus",
+  "category": "core",
+  "description": "Oracle-set entry point for marking a legacy validator contract withdrawable and for scrubbing one whose withdrawal credentials do not match before it is funded. The scrub window is a governed setting and is the check that stops an operator pointing pooled ETH at credentials they control.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can mark a legacy validator contract withdrawable, and can scrub one whose withdrawal credentials do not match before it is funded."
+        }
+      ]
+    }
+  }
+}

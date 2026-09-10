@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMegapoolManager",
+  "category": "core",
+  "description": "Global index of validators across all pooled validator contracts, and the entry point for the beacon-state proofs that record a validator staking, exiting, or failing to exit. Anyone can submit a valid proof; the checks are cryptographic, not permissioned.",
+  "ignoreMethods": ["getValidatorInfo", "getLastChallenger"],
+  "ignoreInWatchMode": ["getValidatorCount"]
+}

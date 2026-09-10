@@ -16,6 +16,7 @@ import {
   formatChallengePeriod,
   formatExecutionDelay,
 } from '../common/formatDelays'
+import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
   Bridge,
   Layer2TxConfig,
@@ -59,6 +60,12 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
+    .map(withDiscoveryUpdates)
+}
+
+function withDiscoveryUpdates(project: BaseProject): BaseProject {
+  const discoveryUpdates = loadDiscoveryUpdates(project.id)
+  return discoveryUpdates ? { ...project, discoveryUpdates } : project
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {

@@ -76,6 +76,13 @@ export {
   modelPermissions,
 } from './discovery/modelling/modelPermissions'
 export { attachPermissions } from './discovery/output/attachPermissions'
+export {
+  type ChainPoint,
+  type DiffHistoryEntry,
+  DiffHistoryParser,
+  type DiffHistorySection,
+  type DiffHistorySectionKind,
+} from './discovery/output/DiffHistoryParser'
 export { type Difference, diff } from './discovery/output/diff'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
@@ -83,6 +90,12 @@ export {
   diffDiscovery,
   entriesForDiffPair,
 } from './discovery/output/diffDiscovery'
+export {
+  countDiffChanges,
+  type DiffBlockSpan,
+  extractDiffBlockSpans,
+  isHighSeverityDiffBody,
+} from './discovery/output/diffHistoryMarkdown'
 export {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
