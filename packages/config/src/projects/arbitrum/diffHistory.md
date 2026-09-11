@@ -1,3 +1,160 @@
+Generated with discovered.json: 0x628931c1ac69577f30047718cf928f585bd6e318
+
+# Diff at Mon, 07 Sep 2026 22:08:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e97c778bc0927037cecd6f24f2fb42b7a1703e60 block: 1787840339
+- current timestamp: 1788818926
+
+## Description
+
+Security Council Election Process Improvements AIP, executed 2026-08-31 20:52 UTC
+(L1Timelock scheduled tx #143 → `SecurityCouncilUpgradeAction.perform()`). Both
+governance contracts were upgraded:
+
+- `SecurityCouncilManager`: adds member self-rotation and a minimum 44-day
+  rotation period, gated by a new `MIN_ROTATION_PERIOD_SETTER` role held by the
+  L2UpgradeExecutor.
+- `SecurityCouncilNomineeElectionGovernor`: election cadence set to 12 months,
+  qualification quorum lowered from 0.2% to 0.1%.
+- `ConstitutionHash` updated.
+
+## Watched changes
+
+```diff
+    contract ConstitutionHash (arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417) [orbitstack/layer2/ConstitutionHash] {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      values.constitutionHash:
+-        "0x263080bed3962d0476fa84fbb32ab81dfff1244e2b145f9864da24353b2f3b05"
++        "0x310d1c0495cf8ff7b5e89c26fbca91b230ce6dd2b9b8bde8c1a8605545f25063"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      sourceHashes.1:
+-        "0x467a6d321abaf3adf3783b74c4ab2cb9712f8c21a21696fde01fc236733df050"
++        "0x2c28a185d54c18615d4892e1c62fd8df740411c245e0a4b2adc39bc22365a4d5"
+      values.$implementation:
+-        "arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C"
++        "arb1:0xB4Fd52807d5856B4CfF85d53D53d1Dc714C4D482"
+      values.$pastUpgrades.2:
++        ["2026-08-31T20:52:09.000Z","0x48468a996d2e64c1b0f067518eb050e1863eb04e59da19d4652910835d00fe26",["arb1:0xB4Fd52807d5856B4CfF85d53D53d1Dc714C4D482"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.firstNominationStartDate.year:
+-        2023
++        2021
+      values.firstNominationStartDate.month:
+-        9
++        3
+      values.quorumNumerator:
+-        20
++        10
+      values.cadenceInMonths:
++        12
+      values.ROTATION_CUT_OFF_BLOCKS:
++        21600
+      implementationNames.arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C:
+-        "SecurityCouncilNomineeElectionGovernor"
+      implementationNames.arb1:0xB4Fd52807d5856B4CfF85d53D53d1Dc714C4D482:
++        "SecurityCouncilNomineeElectionGovernor"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC"}
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      sourceHashes.1:
+-        "0xf2eeba703974bbc2cb02cd7d24845f71be941a764f033493e85fba52b3d6de28"
++        "0x91ac856c76d1dece40ddd75f96a4c2f01abea4b57cea64f43b24149466105b4f"
+      values.$implementation:
+-        "arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"
++        "arb1:0x01B370d9b1ed1591C64C9a4b0FAFF193AF5Fa928"
+      values.$pastUpgrades.1:
++        ["2026-08-31T20:52:09.000Z","0x48468a996d2e64c1b0f067518eb050e1863eb04e59da19d4652910835d00fe26",["arb1:0x01B370d9b1ed1591C64C9a4b0FAFF193AF5Fa928"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.DOMAIN_TYPE_HASH:
++        "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f"
+      values.MIN_ROTATION_PERIOD_SETTER_ROLE:
++        "0xdca740b6747d464c97988ea224a1c2afa5d593dea6c130c887834cb139bbe3cd"
+      values.minRotationPeriod:
++        3801600
+      values.minRotationPeriodSetterAC:
++        ["arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
+      values.NAME_HASH:
++        "0xf935788d54266c928db40f457ef3948e98c56fe8d272b38ba9d240bf19b3fcf5"
+      values.ROTATE_MEMBER_TYPE_HASH:
++        "0x680519cfd93b36ad1cb2f56839eef9e22266c5109fac35adee21f6f49b248260"
+      values.VERSION_HASH:
++        "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6"
+      errors:
+-        {"minRotationPeriodSetterAC":"Processing error occurred."}
+      implementationNames.arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64:
+-        "SecurityCouncilManager"
+      implementationNames.arb1:0x01B370d9b1ed1591C64C9a4b0FAFF193AF5Fa928:
++        "SecurityCouncilManager"
+    }
+```
+
+```diff
+    EOA L1Timelock_l2alias (arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"set the minimum period between Security Council member key rotations.","role":".minRotationPeriodSetterAC","via":[{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.143:
++        {"id":"0xbf93fbef0a1274cf00bfcbdff101bdc83b9924f9711879d284d6495728356e85","decoded":{"chain":"arbitrum","contractName":"SecurityCouncilUpgradeAction","function":"perform","inputs":[],"address":"arb1:0xeF98Fc7A7F08De47Ed01f3F11f07319c22106445","calldata":"0xb147f40c","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000ef98fc7a7f08de47ed01f3f11f07319c2210644500000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+## Source code changes
+
+```diff
+.../SecurityCouncilManager.sol                     | 1323 +++++++++++++++-----
+ .../SecurityCouncilNomineeElectionGovernor.sol     |  606 ++++++---
+ 2 files changed, 1455 insertions(+), 474 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787840339 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      errors:
++        {"minRotationPeriodSetterAC":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0xc21c7b9cf5f8edd643f933075148c22fd18b8280
 
 # Diff at Thu, 27 Aug 2026 14:20:06 GMT:
