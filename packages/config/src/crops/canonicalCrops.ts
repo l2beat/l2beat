@@ -1,12 +1,12 @@
-import type {
-  ProjectCropSentiment,
-  ProjectCropStatus,
-  ProjectCrops,
-  ProjectOpenSourceCropEvaluation,
+import { v } from '@l2beat/validate'
+import {
+  GRADED_CROP_STATUSES,
+  PROJECT_CROP_SENTIMENTS,
+  type ProjectCrops,
+  type ProjectOpenSourceCropEvaluation,
+  UNGRADED_CROP_STATUSES,
 } from '../types'
-import { getOsiLicense, type OsiLicense } from './osiLicenses'
-
-// Deep-imported by the frontend and the l2b CLI; keep it dependency-free.
+import { getOsiLicense, OsiLicenseSchema } from './osiLicenses'
 
 /** The four crops, in the order they are rendered and served. */
 export const CROP_KEYS = [
@@ -19,22 +19,44 @@ export const CROP_KEYS = [
 export type CropKey = (typeof CROP_KEYS)[number]
 
 /** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
-export type CropSentiment = ProjectCropSentiment | 'neutral'
+export const CropSentimentSchema = v.enum([
+  ...PROJECT_CROP_SENTIMENTS,
+  'neutral',
+])
+export type CropSentiment = v.infer<typeof CropSentimentSchema>
 
-/** Statuses that make no claim about quality, so they never carry a colour. */
-const GREY_STATUSES: ProjectCropStatus[] = ['notReviewed', 'fullyTransparent']
+export const CropStatusSchema = v.enum([
+  ...GRADED_CROP_STATUSES,
+  ...UNGRADED_CROP_STATUSES,
+])
 
-/** An evaluation with every optional field resolved to a concrete value. */
-export interface ResolvedCropEvaluation {
-  sentiment: CropSentiment
-  status: ProjectCropStatus
-  /** Only on the Open source crop, and only when the license is confirmed; absent otherwise. */
-  license?: OsiLicense
-  points: string[]
-  missing: string[]
-  additionalConsiderations: string[]
-  notReviewed: string[]
-}
+/**
+ * An evaluation with every optional field resolved to a concrete value. The
+ * validator is the shape the CROPS API serves; the type is derived from it so
+ * the two cannot drift.
+ */
+export const ResolvedCropEvaluationSchema = v.strictObject({
+  sentiment: CropSentimentSchema,
+  status: CropStatusSchema,
+  license: OsiLicenseSchema.optional().meta({
+    description: 'Only on the open source crop, once the license is confirmed.',
+  }),
+  points: v.array(v.string()),
+  missing: v.array(v.string()),
+  additionalConsiderations: v.array(v.string()),
+  notReviewed: v.array(v.string()),
+})
+export type ResolvedCropEvaluation = v.infer<
+  typeof ResolvedCropEvaluationSchema
+>
+
+export const ResolvedCropsSchema = v.strictObject({
+  censorshipResistance: ResolvedCropEvaluationSchema,
+  openSource: ResolvedCropEvaluationSchema,
+  privacy: ResolvedCropEvaluationSchema,
+  security: ResolvedCropEvaluationSchema,
+})
+export type ResolvedCrops = v.infer<typeof ResolvedCropsSchema>
 
 /**
  * The single place the implicit defaults of a config entry are resolved, so
@@ -44,12 +66,9 @@ export function resolveCropEvaluation(
   // The Open source shape is the superset; `license` is simply absent elsewhere.
   evaluation: ProjectOpenSourceCropEvaluation,
 ): ResolvedCropEvaluation {
-  const status: ProjectCropStatus = evaluation.status ?? 'reviewed'
   const resolved: ResolvedCropEvaluation = {
-    sentiment: GREY_STATUSES.includes(status)
-      ? 'neutral'
-      : (evaluation.sentiment ?? 'neutral'),
-    status,
+    sentiment: evaluation.sentiment ?? 'neutral',
+    status: evaluation.status ?? 'reviewed',
     points: evaluation.points ?? [],
     missing: evaluation.missing ?? [],
     additionalConsiderations: evaluation.additionalConsiderations ?? [],
@@ -60,8 +79,6 @@ export function resolveCropEvaluation(
   }
   return resolved
 }
-
-export type ResolvedCrops = Record<CropKey, ResolvedCropEvaluation>
 
 export function resolveProjectCrops(crops: ProjectCrops): ResolvedCrops {
   const resolved = {} as ResolvedCrops

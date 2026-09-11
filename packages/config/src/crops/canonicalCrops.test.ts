@@ -20,12 +20,13 @@ describe('canonicalCrops', () => {
       })
     })
 
-    it('makes a not-reviewed crop neutral, whatever the config says', () => {
-      const resolved = resolveCropEvaluation({
-        sentiment: 'good',
-        status: 'notReviewed',
-      })
-      expect(resolved.sentiment).toEqual('neutral')
+    it('resolves an ungraded crop to neutral, since it declares no sentiment', () => {
+      expect(
+        resolveCropEvaluation({ status: 'notReviewed' }).sentiment,
+      ).toEqual('neutral')
+      expect(
+        resolveCropEvaluation({ status: 'fullyTransparent' }).sentiment,
+      ).toEqual('neutral')
     })
 
     it('keeps the sentiment of a partially reviewed crop', () => {
@@ -35,10 +36,6 @@ describe('canonicalCrops', () => {
       })
       expect(resolved.sentiment).toEqual('warning')
       expect(resolved.status).toEqual('partiallyReviewed')
-    })
-
-    it('falls back to neutral when no sentiment is given', () => {
-      expect(resolveCropEvaluation({}).sentiment).toEqual('neutral')
     })
 
     it('resolves a declared license id against the OSI list', () => {

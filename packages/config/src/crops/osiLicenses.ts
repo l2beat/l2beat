@@ -1,14 +1,16 @@
+import { v } from '@l2beat/validate'
 import licenses from './osiLicenses.json'
 
-// Imported by the frontend and the l2b CLI; keep it dependency-free.
+export const OsiLicenseSchema = v.strictObject({
+  spdxId: v.string(),
+  name: v.string(),
+  url: v.string(),
+  categories: v
+    .array(v.string())
+    .meta({ description: "The OSI's own filing, e.g. 'superseded'." }),
+})
 
-export interface OsiLicense {
-  spdxId: string
-  name: string
-  url: string
-  /** The OSI's own filing, e.g. 'popular-strong-community' or 'superseded'. Context only. */
-  categories: readonly string[]
-}
+export type OsiLicense = v.infer<typeof OsiLicenseSchema>
 
 /**
  * Every OSI-approved license, keyed by SPDX id, pulled from
