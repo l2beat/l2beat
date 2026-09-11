@@ -1,16 +1,5 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-// Verdicts backed by .flat/ConfidentialUSDCWrapper, .flat/ACL, .flat/KMSVerifier,
-// .flat/ProtocolConfig, discovered.json (Ethereum + gateway chain), the
-// protocol-apps wrapper source (commit 85eef95c), the OpenZeppelin ERC-7984
-// implementation (commit 23ba1540), the fhevm host contracts (commit 94f1f3b3),
-// the kms repo (commit b5cd5cf4) and the relayer-sdk (commit d06f1e58).
-// Measurements as of 2026-09-11, block 25,953,020. USDC wrapper since
-// deployment: 2,710 wraps to 1,382 recipients, 1,523 unwraps, 2,573
-// confidential transfers between 925 accounts; 645 of 1,552 holders (41.6%)
-// never made a confidential transfer, so their balance is exactly public.
-// KMS: 13 signers, MPC threshold 4, public decryption 7, user decryption 9.
-// InputVerifier: 1 coprocessor signer. No observer or pauser set on any token.
 const OZ =
   'https://github.com/OpenZeppelin/openzeppelin-confidential-contracts/blob/23ba15402346027f2416667acbb1e741179f8485/contracts/token/ERC7984/'
 const WRAPPER =
