@@ -7,9 +7,8 @@ Restore data from a remote database into your local DB, either by feature (`db:r
 ## Prerequisites
 
 1. Install the PostgreSQL 18 client tools (`psql`, `pg_dump`, `pg_restore`) via the `postgres` or
-   `libpq` package, and make sure they are on your `PATH`. `pg_dump` cannot dump a server from a
-   newer major version, and older `psql` clients are not reliable for `\\copy` against PostgreSQL
-   18.
+   `libpq` package, and make sure they are on your `PATH`. `pg_dump` refuses to dump a server from
+   a newer major version, and `psql` backslash commands assume a matching server major.
 2. Run the commands from the package root (`packages/database`) — Prisma needs it.
 3. Add variables to a `.env` file in `packages/database`:
 
