@@ -4,7 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
-import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 
 export function createEcosystemsRouter(
@@ -30,7 +30,7 @@ export function createEcosystemsRouter(
           getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
-        await renderNotFoundPage(manifest, render, req.originalUrl, res)
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)

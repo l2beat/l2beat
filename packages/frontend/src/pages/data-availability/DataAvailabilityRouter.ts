@@ -4,7 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
-import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getDataAvailabilityArchivedData } from './archived/getDataAvailabilityArchivedData'
 import { getDataAvailabilityLivenessData } from './liveness/getDataAvailabilityLivenessData'
 import { getDataAvailabilityProjectData } from './project/getDataAvailabilityProjectData'
@@ -109,7 +109,7 @@ export function createDataAvailabilityRouter(
           getDataAvailabilityProjectData(manifest, req.params, req.originalUrl),
       )
       if (!data) {
-        await renderNotFoundPage(manifest, render, req.originalUrl, res)
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)

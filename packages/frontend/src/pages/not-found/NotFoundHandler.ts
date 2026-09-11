@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { renderNotFoundPage } from './renderNotFoundPage'
+import { sendNotFoundPage } from './sendNotFoundPage'
 
 /**
  * Renders the 404 page for GET/HEAD page requests no route matched. Other
@@ -17,6 +17,6 @@ export function NotFoundHandler(manifest: Manifest, render: RenderFunction) {
       next()
       return
     }
-    await renderNotFoundPage(manifest, render, req.originalUrl, res)
+    await sendNotFoundPage(manifest, render, req.originalUrl, res)
   }
 }

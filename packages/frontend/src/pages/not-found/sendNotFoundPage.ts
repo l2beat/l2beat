@@ -4,7 +4,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { getNotFoundData } from './getNotFoundData'
 
 /** Responds with the 404 page. Call it where a route decides the resource does not exist. */
-export async function renderNotFoundPage(
+export async function sendNotFoundPage(
   manifest: Manifest,
   render: RenderFunction,
   url: string,

@@ -5,7 +5,7 @@ import { env } from '~/env'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
-import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getL2ActivityData } from './activity/getL2ActivityData'
 import { getL2ArchivedData } from './archived/getL2ArchivedData'
 import { getL2CompareData } from './compare/getL2CompareData'
@@ -134,7 +134,7 @@ export function createL2Router(
     async (req, res) => {
       const data = await getL2ProjectData(req, manifest, cache)
       if (!data) {
-        await renderNotFoundPage(manifest, render, req.originalUrl, res)
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)
@@ -162,7 +162,7 @@ export function createL2Router(
           ),
       )
       if (!data) {
-        await renderNotFoundPage(manifest, render, req.originalUrl, res)
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)

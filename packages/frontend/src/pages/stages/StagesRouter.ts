@@ -1,7 +1,7 @@
 import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '../../utils/Manifest'
-import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getStagesData } from './getStagesData'
 
 export function createStagesRouter(manifest: Manifest, render: RenderFunction) {
@@ -10,7 +10,7 @@ export function createStagesRouter(manifest: Manifest, render: RenderFunction) {
   router.get('/stages', async (req, res) => {
     const data = await getStagesData(manifest, req.originalUrl)
     if (!data) {
-      await renderNotFoundPage(manifest, render, req.originalUrl, res)
+      await sendNotFoundPage(manifest, render, req.originalUrl, res)
       return
     }
     const html = await render(data, req.originalUrl)

@@ -5,7 +5,7 @@ import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
-import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
@@ -122,7 +122,7 @@ export function createInteropRouter(
 
       const data = await getInteropProtocolPageData(req, manifest, cache)
       if (!data) {
-        await renderNotFoundPage(manifest, render, req.originalUrl, res)
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)
@@ -161,7 +161,7 @@ export function createInteropRouter(
     async (req, res) => {
       const data = await getInteropTokenPageData(req, manifest, cache)
       if (!data) {
-        await renderNotFoundPage(manifest, render, req.originalUrl, res)
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)
