@@ -1,11 +1,7 @@
 import { useMemo, useState } from 'react'
 import { cn } from '~/utils/cn'
-import {
-  type BadgeTheme,
-  type BadgeVariant,
-  cropsBadgeHtml,
-  cropsBadgeSnippet,
-} from '../badge'
+import { type BadgeTheme, type BadgeVariant, cropsBadgeSnippet } from '../badge'
+import { BadgeHtml } from './BadgeHtml'
 import { CodeSnippet } from './CodeSnippet'
 
 const VARIANTS: { value: BadgeVariant; label: string; hint: string }[] = [
@@ -28,7 +24,6 @@ export function BadgeStudio({ href }: { href: string }) {
     () => ({ variant, theme, href }),
     [variant, theme, href],
   )
-  const preview = useMemo(() => cropsBadgeHtml(options), [options])
   const snippet = useMemo(() => cropsBadgeSnippet(options), [options])
 
   return (
@@ -57,8 +52,7 @@ export function BadgeStudio({ href }: { href: string }) {
           theme === 'dark' ? 'bg-[#0d0e10]' : 'bg-[#f3f5f7]',
         )}
       >
-        {/* Our own literals from badge.ts, injected so the preview is byte-for-byte the copied string. */}
-        <div dangerouslySetInnerHTML={{ __html: preview }} />
+        <BadgeHtml options={options} />
       </div>
 
       <CodeSnippet

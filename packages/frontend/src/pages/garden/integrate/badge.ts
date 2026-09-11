@@ -1,3 +1,5 @@
+import { SPROUT_PATHS } from '../components/SproutIcon'
+
 /**
  * The badge a reviewed protocol puts on its own site: inline-styled HTML, so
  * it needs no stylesheet, no image from our domain and no fixed-width text.
@@ -10,7 +12,8 @@ export type BadgeTheme = 'light' | 'dark'
 export interface BadgeOptions {
   variant: BadgeVariant
   theme: BadgeTheme
-  href: string
+  /** Without one the badge is a plain span: illustration only, never a link. */
+  href?: string
 }
 
 const PALETTE: Record<
@@ -41,9 +44,9 @@ const TITLE = 'Reviewed under the CROPS framework by L2BEAT'
 function sprout(indent: string, size: number, color: string): string[] {
   return [
     `${indent}<svg width="${size}" height="${size}" viewBox="0 0 16 16" fill="none" style="flex:none;color:${color}" aria-hidden="true">`,
-    `${indent}  <path d="M8 15V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
-    `${indent}  <path d="M8 8.4C4.9 8.4 2.6 6.3 2.2 3.2 5.6 2.9 8 5.1 8 8.4Z" fill="currentColor"/>`,
-    `${indent}  <path d="M8 8.4c3.1 0 5.4-2.1 5.8-5.2C10.4 2.9 8 5.1 8 8.4Z" fill="currentColor" opacity=".75"/>`,
+    `${indent}  <path d="${SPROUT_PATHS.stem}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
+    `${indent}  <path d="${SPROUT_PATHS.leftLeaf}" fill="currentColor"/>`,
+    `${indent}  <path d="${SPROUT_PATHS.rightLeaf}" fill="currentColor" opacity=".75"/>`,
     `${indent}</svg>`,
   ]
 }
@@ -54,27 +57,32 @@ function badgeLines({ variant, theme, href }: BadgeOptions): string[] {
     `display:inline-flex;align-items:center;gap:${gap};padding:${padding};` +
     `border:1px solid ${c.border};border-radius:${radius};background:${c.bg};` +
     `font-family:${FONT};text-decoration:none;line-height:1.2`
+  const open = (style: string) =>
+    href
+      ? `<a href="${href}" title="${TITLE}" style="${style}">`
+      : `<span title="${TITLE}" style="${style}">`
+  const close = href ? '</a>' : '</span>'
 
   if (variant === 'mark') {
     return [
-      `<a href="${href}" title="${TITLE}" style="${shell('8px', '0', '999px')}">`,
+      open(shell('8px', '0', '999px')),
       ...sprout('  ', 18, c.title),
-      '</a>',
+      close,
     ]
   }
 
   if (variant === 'compact') {
     return [
-      `<a href="${href}" title="${TITLE}" style="${shell('6px 12px 6px 10px', '7px', '999px')}">`,
+      open(shell('6px 12px 6px 10px', '7px', '999px')),
       ...sprout('  ', 15, c.title),
       `  <span style="font-size:12px;font-weight:700;letter-spacing:.04em;color:${c.title}">CROPS</span>`,
       `  <span style="font-size:12px;color:${c.body}">attested</span>`,
-      '</a>',
+      close,
     ]
   }
 
   return [
-    `<a href="${href}" title="${TITLE}" style="${shell('9px 14px', '10px', '12px')}">`,
+    open(shell('9px 14px', '10px', '12px')),
     ...sprout('  ', 20, c.title),
     '  <span style="display:flex;flex-direction:column;gap:1px">',
     `    <span style="font-size:13px;font-weight:700;letter-spacing:.04em;color:${c.title}">CROPS</span>`,
@@ -82,7 +90,7 @@ function badgeLines({ variant, theme, href }: BadgeOptions): string[] {
     '  </span>',
     `  <span style="width:1px;align-self:stretch;background:${c.rule}"></span>`,
     `  <span style="font-size:11px;font-weight:600;letter-spacing:.06em;color:${c.body}">L2BEAT</span>`,
-    '</a>',
+    close,
   ]
 }
 
