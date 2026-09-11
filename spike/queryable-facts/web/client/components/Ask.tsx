@@ -4,6 +4,7 @@ import { api } from '../api'
 import {
   askQuestion,
   cancelQuestion,
+  conversationKey,
   resetConversation,
   setModelChoice,
   type Turn,
@@ -17,11 +18,33 @@ import { Callout, Panel } from './ui'
 
 const EFFORTS = ['low', 'medium', 'high', 'xhigh', 'max', 'ultra']
 
-/** The ask box of step 7: model and effort, a question, the turns so far. */
-export function Ask() {
+export interface AskTarget {
+  runId: string
+  /** A unit inside a project run (its slug): the agent then works in that unit's folder. */
+  unit?: string
+  /** Shown to the reader: the folder the agent is started in. */
+  dir: string
+  kind: 'unit' | 'project'
+}
+
+/** The ask box of steps 7 and 8: model and effort, a question, the turns so far. */
+export function Ask({
+  target,
+  suggestions: given,
+}: {
+  target?: AskTarget
+  suggestions?: string[]
+}) {
   const { index } = useRun()
   const run = index.run
-  const conversation = useConversation(run.runId)
+  const t: AskTarget = target ?? {
+    runId: run.runId,
+    unit: run.unitSlug,
+    dir: run.runDir,
+    kind: 'unit',
+  }
+  const key = conversationKey(t.runId, t.unit)
+  const conversation = useConversation(key)
   const [config, setConfig] = useState<AskConfig>()
   const [configError, setConfigError] = useState<string>()
   const [question, setQuestion] = useState('')
@@ -59,19 +82,26 @@ export function Ask() {
       : allowed.includes('high')
         ? 'high'
         : (allowed[allowed.length - 1] ?? nextEffort)
-    setModelChoice(run.runId, nextModel, e)
+    setModelChoice(key, nextModel, e)
   }
 
   const submit = (text?: string) => {
     const q = (text ?? question).trim()
     if (!q || !ready || !model || !effort) return
     setQuestion('')
-    void askQuestion(run.runId, { question: q, model, effort })
+    void askQuestion(
+      { runId: t.runId, unit: t.unit },
+      { question: q, model, effort },
+    )
   }
 
   return (
     <Panel
-      title="Ask an AI about this run"
+      title={
+        t.kind === 'project'
+          ? 'Ask an AI about the whole project'
+          : 'Ask an AI about this run'
+      }
       actions={
         config && !codexError ? (
           <>
@@ -108,7 +138,7 @@ export function Ask() {
                 type="button"
                 className="btn small"
                 disabled={conversation.running}
-                onClick={() => resetConversation(run.runId)}
+                onClick={() => resetConversation(key)}
                 title="start a fresh thread; the transcripts stay in the run folder"
               >
                 new conversation
@@ -121,18 +151,31 @@ export function Ask() {
       tight
     >
       <div className="panel-body">
-        <p className="small" style={{ color: '#3a3f47' }}>
-          The agent is the <code>codex</code> CLI, started in{' '}
-          <code>{run.runDir}</code> with the files you just walked through, in a
-          sandbox that can write only there. It works through the{' '}
-          <code>./qf</code> commands (writers, guards, function, gaps, explain),
-          writes Datalog only when no relation states what it needs, and is
-          asked to cite tuples and source lines. Citations are links: click a
-          relation name to see that row in step 6 (or 4, or 3), an id to light
-          it up in the source, <code>L25</code> to jump there. A cited tuple
-          this run does not contain is{' '}
-          <code className="cite unknown">marked like this</code>.
-        </p>
+        {t.kind === 'project' ? (
+          <p className="small" style={{ color: '#3a3f47' }}>
+            The agent is the <code>codex</code> CLI, started in{' '}
+            <code>{t.dir}</code>, the project run folder, in a sandbox that can
+            write only there. It works through <code>./qf</code> in project mode
+            (contracts, contract, values, writers, paths, who, calls, gaps;
+            function, guards and source are answered by the unit an id belongs
+            to), writes Datalog only when no relation states what it needs, and
+            is asked to cite tuples. A cited project tuple opens its row in the
+            Derived tab; a unit id opens that unit in steps 2–7.
+          </p>
+        ) : (
+          <p className="small" style={{ color: '#3a3f47' }}>
+            The agent is the <code>codex</code> CLI, started in{' '}
+            <code>{t.dir}</code> with the files you just walked through, in a
+            sandbox that can write only there. It works through the{' '}
+            <code>./qf</code> commands (writers, guards, function, gaps,
+            explain), writes Datalog only when no relation states what it needs,
+            and is asked to cite tuples and source lines. Citations are links:
+            click a relation name to see that row in step 6 (or 4, or 3), an id
+            to light it up in the source, <code>L25</code> to jump there. A
+            cited tuple this run does not contain is{' '}
+            <code className="cite unknown">marked like this</code>.
+          </p>
+        )}
         {codexError && (
           <Callout kind="warn">
             <b>codex is not available:</b> {codexError}. Install the codex CLI,
@@ -158,7 +201,7 @@ export function Ask() {
       <div className="panel-body compose">
         {conversation.turns.length === 0 && config && !codexError && (
           <div className="suggest">
-            {suggestions(index).map((s) => (
+            {(given ?? suggestions(index)).map((s) => (
               <button
                 type="button"
                 key={s}
@@ -183,7 +226,9 @@ export function Ask() {
           placeholder={
             conversation.turns.length > 0
               ? 'Follow up… (same thread, the agent remembers what it found)'
-              : 'Ask about this contract… e.g. who can change `value`, and is every writer really guarded?'
+              : t.kind === 'project'
+                ? 'Ask about the project… e.g. who can pause the system, and through which contracts and Safes?'
+                : 'Ask about this contract… e.g. who can change `value`, and is every writer really guarded?'
           }
           disabled={!config || Boolean(codexError)}
         />

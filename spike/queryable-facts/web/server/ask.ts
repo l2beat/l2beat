@@ -126,6 +126,41 @@ function ensureQf(runDir: string): void {
   if (!fresh) installQf(runDir, QF_SCRIPT)
 }
 
+/** What the agent is told before the first question about a project run. */
+function projectBriefing(project: string, contracts: number): string {
+  return `You are answering a researcher's question about a project of ${contracts} deployed contracts (${project}), from inside one project run of a static-analysis pipeline: your working directory. discovered.json is discovery's snapshot of the project (addresses, proxies, the values of state variables and getters at one block, Safe signers and modules). units/<slug>/ holds one run per flattened source file (source.sol, the derived relations, its own ./qf). Everything the pipeline knows is reachable through the ./qf commands, which print rows as Datalog atoms you can quote.
+
+## Commands (use these; do not read program.dl, derived/*.csv or discovered.json directly)
+- ./qf contracts                     every deployed contract: name, address, proxy type, code, storage, entry points
+- ./qf contract <name|address>       one contract: code units, discovered values, references, entry points and who passes their checks
+- ./qf values <name|address> [field] the values discovery recorded and the state variable each one matched
+- ./qf writers <Contract.var>        who may write a storage variable of a deployed contract, and every path from an actor to each writer
+- ./qf paths <Contract.function>     every way an actor reaches an entry point: direct callers, Safe signers, modules, admin chains
+- ./qf who <name|address>            what an actor is (EOA, Safe with signers/threshold/modules, contract), who drives it, what it can call
+- ./qf calls [<name>]                calls between contracts resolved through discovered values; calls relayed through Safes by modules
+- ./qf gaps                          what could not be resolved: checks without a value, calls without a target, values without a variable
+- ./qf function <name> · ./qf guards <entry point> · ./qf source <function>   answered by the unit the id belongs to (line numbers refer to that unit's source.sol)
+- ./qf rows <relation> [<text>]      rows of any project relation, or of a unit relation across all units (./qf help lists them)
+- ./qf explain '<atom>'              why a tuple holds (a project tuple down to discovery's facts and the unit relations; a unit tuple down to its AST)
+- ./qf query <file.dl>               only when no relation states what you need: write rules to scratch/extra.dl (with .decl and .output) against the project facts, and quote them in the answer
+Names: a deployed contract by its discovery name ("Optimism Security Council"), address, or Solidity contract name; a function or variable by \`Deployed.member\`, \`Contract.member\` or \`member\`.
+
+## Reading the answers
+A path reads left to right: actor → (how it drives the next hop) → … → Contract.function [the check at the end and the discovered value it resolved to]. Tiers of the check (the Tier column of allowed): checked (a guaranteed sender check + a discovered value) · checked-or (the sender test is one side of an OR) · signature / signature-lead (a signature check: whoever holds a signature by that address passes; -lead when it runs only on some paths) · lead (a sender check that runs only on some paths) · discovered (a proxy's own functions admit the admin discovery read from the admin slot) · open (no sender or signature check the rules recognise: anyone). "k of n signers" rests on discovery's snapshot of the Safe, not on the Safe's code. Every value is a snapshot at one block: a path holds as long as those values hold. An unknown effect (delegatecall, unresolved store) in a contract's code caps every universal statement about it.
+
+## How to work
+1. Start with ./qf writers, ./qf paths or ./qf who for the things in the question; ./qf contract for an overview of one contract. Two or three commands usually suffice.
+2. Repeat checked/signature/discovered rows as facts and cite them; treat lead and open rows as leads to verify with ./qf source; say when a check is unresolved (./qf gaps) rather than guessing.
+3. Never claim that nobody else can do something unless the relevant unit has no unknown effects on the way and every check is resolved.
+4. Be concise: a researcher should be able to verify the answer in a minute.
+
+## Answer format (Markdown)
+- One or two sentences of verdict first.
+- Then **Evidence**: bullets, each with a path or a fact from qf output, and an atom copied verbatim in backticks, e.g. \`allowed("eth:0x…", "eth:0x…", "SuperchainConfig/SuperchainConfig.sol:SuperchainConfig.pause(address)", "…", "checked")\`; source lines as \`L26\` together with the unit they belong to.
+- Then, if relevant, **What the rules do not capture**: what you concluded from the code or the values that no relation states.
+- No preamble, no restating the question, no closing summary.`
+}
+
 /** What the agent is told before the first question of a conversation. */
 function briefing(unit: string): string {
   return `You are answering a researcher's question about one Solidity contract, from inside one run of a static-analysis pipeline: your working directory. source.sol is the flattened source exactly as compiled (unit name \`${unit}\`); line numbers refer to it. Everything the pipeline knows is reachable through the ./qf commands, which print rows as Datalog atoms you can quote.
@@ -215,12 +250,14 @@ export function streamAsk(
   res: ServerResponse,
 ): Promise<void> {
   const question = validate(req)
-  const unit =
-    (
-      JSON.parse(readFileSync(join(runDir, 'run.json'), 'utf8')) as {
-        unit?: string
-      }
-    ).unit ?? 'source.sol'
+  const meta = JSON.parse(readFileSync(join(runDir, 'run.json'), 'utf8')) as {
+    kind?: string
+    unit?: string
+    project?: string
+    units?: unknown[]
+  }
+  const unit = meta.unit ?? 'source.sol'
+  const isProject = meta.kind === 'project'
   ensureQf(runDir)
   const common = [
     '--json',
@@ -237,9 +274,12 @@ export function streamAsk(
   const args = req.threadId
     ? ['exec', 'resume', req.threadId, ...common, '-']
     : ['exec', ...common, '--skip-git-repo-check', '--color', 'never', '-']
+  const first = isProject
+    ? projectBriefing(meta.project ?? 'this project', readDeployedCount(runDir))
+    : briefing(unit)
   const prompt = req.threadId
     ? `## Follow-up question\n\n${question}`
-    : `${briefing(unit)}\n\n## Question\n\n${question}`
+    : `${first}\n\n## Question\n\n${question}`
   const shownCommand = `${CODEX} ${args
     .map((a) => (/[\s"]/.test(a) ? `'${a}'` : a))
     .join(' ')}  (cwd: ${runDir})`
@@ -423,6 +463,15 @@ export function streamAsk(
     })
     child.stdin.end(prompt)
   })
+}
+
+/** How many deployed contracts a project run has (its `deployed` relation). */
+function readDeployedCount(runDir: string): number {
+  const path = join(runDir, 'derived', 'deployed.csv')
+  if (!existsSync(path)) return 0
+  return readFileSync(path, 'utf8')
+    .split('\n')
+    .filter((l) => l.length > 0).length
 }
 
 function writeTranscript(

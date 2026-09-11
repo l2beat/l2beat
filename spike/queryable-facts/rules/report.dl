@@ -10,6 +10,19 @@
 .output writesIn
 .output containsAssembly
 .output unhandled
+// Read by the project layer (rules/project.dl) when several units are put together.
+.output reachableIn
+.output reachesFrom
+.output hasAnyCheck
+.output hasSignerCheck
+.output alwaysSigner
+.output sometimesSigner
+.output signerCheck
+.output checkGetter
+.output checkSelf
+.output weakCheck
+.output timeCheck
+.output condCall
 
 // The storage-writers table (may): for each storage variable of each deployable contract, the entry
 // points that may write it, through any chain of calls. Deployment is the pseudo entry "constructor".

@@ -401,3 +401,67 @@ Transcript: `out/runs/ClaimSemanticsPlayground-20260907-105631/ask/01-20260907-1
 What is still open, in order: a benchmark of a few dozen questions with known answers across the
 fixtures and two zora contracts, run three ways (source only, `qf` plus source, `qf` only), scored on
 correctness, missed writers, unsupported claims, latency and tokens; and the CFG layer.
+
+## Update: the whole project, with discovery's values
+
+Reviewing one contract is not how we work: a project is many deployed contracts referring to each other, and a
+question such as "who can pause withdrawals?" runs through a config contract, a Safe, a module and a signer.
+The pipeline now runs on a discovery project as a whole (`pnpm exec tsx src/main.ts project zora`, or step 1 of
+the explorer): the unit pipeline once per flattened file, then a second rule layer (`rules/project.dl`) over the
+union of the units' relations and `discovered.json` written down as facts (`src/discovery.ts`: `dEntry`,
+`dImpl`, `dUnit`, `dValue`, `dPermission`, no interpretation). The values are taken as what they are in 95% of
+the cases, values of state variables and getters, matched by name, with the few synthesised fields aliased
+(`$members` → `owners`, `$threshold` → `threshold`, `GnosisSafe_modules` → `modules`); everything that does not
+match is listed rather than dropped.
+
+What the project rules derive, all citable and provable down to the unit relations and discovery's rows:
+
+| Relation | Says | Rests on |
+| --- | --- | --- |
+| `codeOf(Addr, Role, C)` | the contract of the unit that is the code at an address (self / proxy / implementation) | `dImpl`, `dUnit`, `contract` |
+| `valueOf(Addr, V, Kind, Value)` | a state variable's discovered value (getter names and aliases resolved) | `dValue`, `stateVariable`, `returnsStateVar` |
+| `allowed(A, Addr, H, How, Tier)` | who passes entry H's checks, one hop; Tier: checked / checked-or / signature / signature-lead / lead / discovered / open | the unit's `alwaysChecks`/`alwaysSigner` + `comparesWith` through values |
+| `acts(A, S, How, Tier)` | a Safe's signer can make it act (k of n) | `$members`, `$threshold` |
+| `crossCall(Addr, E, T, H, K, Tier)` | code at Addr, from entry E, calls T.H; receiver resolved through a value, or caller-chosen where T admits Addr | `extCall`, `valueOf`, `sameSelector` |
+| `relayed(Mod, E, S, T, H, K)` | a module makes Safe S call T.H (`execTransactionFromModule` + `abi.encodeCall`) | `crossCall`, `encodedCall`, `argDenotes` |
+| `canCall(A, T, H)` / `hop` | reachability over the above, with the edges kept for printing paths | recursion |
+| `whoCanWrite(Addr, V, H, A)` / `whoCanUpgrade` | the question: who can change which variable (or upgrade which proxy) | `storageWriters` + `canCall` |
+| `unresolvedCheck`, `crossCallGap`, `unmatchedValue`, `writerUnreached`, `codeGap` | where "who" is not answered, and why | negation over the above |
+
+On zora the pause question comes out as two paths, both with every hop justified: *10 of 13 signers of the
+Optimism Security Council → (1 of 1 signer of) Optimism Guardian Multisig → SuperchainConfig.pause [sender check
+`msg.sender != guardian`, guardian = the Guardian Multisig]*, and *Optimism EOA 1 → DeputyPauseModule.pause
+[signature check `ECDSA.recover(digest, _signature) != deputy`, deputy = that EOA] → relayed through the Guardian
+Multisig (enabled module) → SuperchainConfig.pause*. Upgrades resolve as *5 of 7 signers of
+OpFoundationUpgradeSafe or 10 of 13 of the Security Council → (2 of 2 signers of) SuperchainProxyAdminOwner →
+ProxyAdmin.upgrade [onlyOwner] → (caller-chosen target that admits the ProxyAdmin) → Proxy.upgradeTo*. The agent
+(step 8, `./qf` in project mode) answered "who can pause withdrawals and through which contracts" correctly with
+those citations in 14 commands and 105 s.
+
+Two unit-level rules were needed on the way, both found by reading the corpus, both now fixtures-in-waiting: a
+modifier that runs the body under `if (<sender>) { _; } else { … }` is a sender check for the body (the OP
+proxies), and a condition that tests a recovered signer — `ecrecover`/`ECDSA.recover` in the condition or a
+local assigned from one — is a *signature check*, its own finding kind, so Safe `execTransaction` and the
+DeputyPauseModule are no longer reported as open. A third fix corrected a principal: in `msg.sender !=
+systemConfig.guardian()` the compared value is the call's result, not `systemConfig`, so a state variable that
+only appears as a call receiver is no longer a principal; the external getter is resolved through the receiver's
+value instead (`comparesWith`, `remoteCallValue`).
+
+Numbers (zora: 25 contracts, 37 EOAs, 41 flattened files, all compiled): units 42 s in total, project facts 0.1 s,
+project Soufflé 0.23 s, 65 716 unit rows imported; `allowed` 700 (186 checked, 45 discovered, 121 signature, 348
+open — the open ones are mostly views and deposit/bridge entry points), `crossCall` 171, `relayed` 9, `canCall`
+3451, `whoCanWrite` 3454. Gaps: 33 unresolved checks (Safe `approvedHashes`, the dispute game template's
+zero-address `proposer()`/`challenger()`, `_balanceOf`), 112 external calls without a target (85 caller-chosen
+receivers nobody admits, 23 receivers the rules do not understand — mostly `ISignatureValidator(currentOwner)`),
+32 discovered values matching no variable (`multisigThreshold`, `game*`, `proposerFromDGF`: discovery's
+handlers). Of discovery's 43 permissions, 36 have a derived `canCall` behind them; the 7 that do not are
+handler-derived roles (`proposerFromDGF`, `batcherHash`, `.livenessGuard`, `.fallbackOwner`) that no on-chain
+check names in these contracts.
+
+What this does not do yet, on purpose: values are one snapshot (a path holds while they hold); `acts` rests on
+discovery's Safe fields, not on the Safe's code; a Safe's `execTransaction` with `operation = DelegateCall` is an
+unknown effect like any delegatecall; caller-chosen receivers are resolved only to contracts that admit the
+caller; conditions on values other than the sender (a `paused` flag, a delay: `delayAt` names them) are shown,
+not evaluated. Whether discovery itself should be rebuilt on these rules is the separate question the user
+raised; for now the project layer consumes `discovered.json` as it is.
+

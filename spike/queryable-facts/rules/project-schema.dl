@@ -1,0 +1,126 @@
+// =============================================================================
+// Project level, layer 0: what the project program reads from disk.
+//
+// A project run first runs the unit pipeline (rules/schema.dl → concepts.dl → lib.dl → report.dl)
+// once per flattened file, then puts the results together. Two kinds of input:
+//
+//   d*  discovery, verbatim (src/discovery.ts): every discovered address, the code behind it, every
+//       value discovery read from the chain, and discovery's own permission model for comparison.
+//   the rest: relations the unit pipeline derived, one file per relation holding the rows of *every*
+//       unit. Ids stay unique because each carries its `<unit>:` prefix. Their meaning is documented
+//       where they are defined (rules/concepts.dl, rules/lib.dl, rules/report.dl); the declarations
+//       here only repeat the column types so Soufflé can read the files.
+// =============================================================================
+
+// ---- discovery ------------------------------------------------------------
+
+// One discovered address. Type: Contract | EOA. ProxyType: immutable | EIP1967 proxy | gnosis safe | ...
+.decl dEntry(Addr: symbol, Type: symbol, Name: symbol, ProxyType: symbol, Template: symbol)
+.input dEntry
+
+// The code at Addr: Role self (the address is its own code), proxy (the proxy contract at Addr), or
+// implementation (code at CodeAddr that Addr delegates to). ContractName is discovery's name for the source.
+.decl dImpl(Addr: symbol, CodeAddr: symbol, ContractName: symbol, Role: symbol)
+.input dImpl
+
+// The flattened source unit that code was compiled from (missing when discovery wrote no file).
+.decl dUnit(Addr: symbol, CodeAddr: symbol, Unit: symbol)
+.input dUnit
+
+// Every value discovery recorded for Addr, flattened. Field is the top-level key (a getter name, a state
+// variable name, or a synthesised field such as `$members` or `GnosisSafe_modules`); Path is "" for a
+// scalar, "[i]" inside arrays, ".key" inside objects. Kind: address | number | boolean | string | null.
+.decl dValue(Addr: symbol, Field: symbol, Path: symbol, Kind: symbol, Value: symbol)
+.input dValue
+
+// Discovery's permission model: To received Permission (act | interact | upgrade | ...) from From under
+// Role, directly (1) or through the addresses in Via (0). Kept to compare, never used to derive.
+.decl dPermission(To: symbol, Direct: number, Permission: symbol, From: symbol, Role: symbol, Via: symbol)
+.input dPermission
+
+// ---- from the unit pipeline (rows of every unit) ---------------------------
+
+.decl codeUnit(Unit: symbol, File: symbol, Solc: symbol)
+.input codeUnit
+.decl contract(C: symbol, Name: symbol, Kind: symbol, Abstract: number)
+.input contract
+.decl inherits(C: symbol, Base: symbol, Order: number)
+.input inherits
+.decl function(F: symbol, C: symbol, Name: symbol, Sig: symbol, Kind: symbol, Vis: symbol, Mut: symbol, Selector: symbol)
+.input function
+.decl param(F: symbol, Index: number, P: symbol, Type: symbol, Location: symbol)
+.input param
+.decl stateVariable(V: symbol, C: symbol, Name: symbol, Type: symbol, Mutability: symbol, Vis: symbol)
+.input stateVariable
+.decl storageSlot(C: symbol, V: symbol, Slot: number, Offset: number)
+.input storageSlot
+.decl initializer(V: symbol, Text: symbol)
+.input initializer
+.decl deployable(C: symbol)
+.input deployable
+.decl entryPoint(C: symbol, F: symbol)
+.input entryPoint
+.decl reachableIn(C: symbol, F: symbol)
+.input reachableIn
+.decl reachesFrom(C: symbol, E: symbol, F: symbol)
+.input reachesFrom
+.decl storageWriters(C: symbol, V: symbol, Slot: number, E: symbol)
+.input storageWriters
+.decl writerDetail(C: symbol, V: symbol, E: symbol, F: symbol, How: symbol, Line: number)
+.input writerDetail
+.decl finding(C: symbol, E: symbol, V: symbol, Kind: symbol, Detail: symbol, Tier: symbol, Evidence: symbol)
+.input finding
+.decl opaqueWrites(C: symbol, E: symbol, F: symbol, Kind: symbol, Detail: symbol, Line: number, K: symbol)
+.input opaqueWrites
+.decl callSite(K: symbol, S: symbol, F: symbol, Kind: symbol, Callee: symbol, Text: symbol)
+.input callSite
+.decl argBinding(K: symbol, Index: number, X: symbol)
+.input argBinding
+.decl condition(X: symbol, Text: symbol)
+.input condition
+.decl sourceLoc(Id: symbol, File: symbol, StartLine: number, EndLine: number, Start: number, Length: number)
+.input sourceLoc
+.decl returnsStateVar(F: symbol, V: symbol)
+.input returnsStateVar
+.decl getterFn(G: symbol)
+.input getterFn
+.decl extCall(K: symbol, F: symbol, G: symbol, Kind: symbol, X: symbol)
+.input extCall
+.decl lowLevelTarget(K: symbol, F: symbol, Member: symbol, Kind: symbol, X: symbol)
+.input lowLevelTarget
+.decl encodedCall(K: symbol, G: symbol)
+.input encodedCall
+.decl argDenotes(K: symbol, Index: number, Kind: symbol, X: symbol)
+.input argDenotes
+.decl condCall(X: symbol, K: symbol)
+.input condCall
+.decl returnsCall(F: symbol, K: symbol)
+.input returnsCall
+.decl senderCheck(X: symbol, F: symbol)
+.input senderCheck
+.decl senderGate(S: symbol, F: symbol)
+.input senderGate
+.decl signerCheck(X: symbol, F: symbol)
+.input signerCheck
+.decl checkPrincipal(X: symbol, P: symbol)
+.input checkPrincipal
+.decl checkGetter(X: symbol, G: symbol)
+.input checkGetter
+.decl checkSelf(X: symbol)
+.input checkSelf
+.decl weakCheck(X: symbol)
+.input weakCheck
+.decl alwaysChecks(C: symbol, F: symbol, X: symbol)
+.input alwaysChecks
+.decl sometimesChecks(C: symbol, F: symbol, X: symbol)
+.input sometimesChecks
+.decl alwaysSigner(C: symbol, F: symbol, X: symbol)
+.input alwaysSigner
+.decl sometimesSigner(C: symbol, F: symbol, X: symbol)
+.input sometimesSigner
+.decl hasAnyCheck(C: symbol, F: symbol)
+.input hasAnyCheck
+.decl hasSignerCheck(C: symbol, F: symbol)
+.input hasSignerCheck
+.decl timeCheck(X: symbol, F: symbol, V: symbol)
+.input timeCheck

@@ -457,7 +457,12 @@ globalRef("block.timestamp"). globalRef("block.number").
 .output refs
 refs(X, G) :- condDesc(XN, D), node(D, "MemberAccess"), child(D, "expression", 0, B), builtinIdent(B), attr(B, "name", BN),
               attr(D, "memberName", M), G = cat(BN, ".", M), globalRef(G), siteId(XN, X).
-refs(X, V) :- condDesc(XN, D), node(D, "Identifier"), refOf(D, DV), isStateVar(DV), name(DV, V), siteId(XN, X).
+refs(X, V) :- condDesc(XN, D), node(D, "Identifier"), refOf(D, DV), isStateVar(DV), name(DV, V), siteId(XN, X), !callReceiver(D).
+// The identifier is the receiver of a call (`systemConfig.guardian()`): the condition tests the call's result,
+// not the variable, so the variable is not what the sender is compared with (the call is, see refs on calls).
+.decl callReceiver(D: number)
+callReceiver(D) :- child(MA, "expression", 0, D), node(MA, "MemberAccess"), child(K, "expression", 0, MA), node(K, "FunctionCall").
+callReceiver(D) :- child(MA, "expression", 0, D), node(MA, "MemberAccess"), child(O, "expression", 0, MA), node(O, "FunctionCallOptions").
 refs(X, G) :- condDesc(XN, D), node(D, "FunctionCall"), callKind(D, Kind, G), G != "",
               (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library" ; Kind = "external" ; Kind = "emit" ; Kind = "error" ; Kind = "unknown"),
               siteId(XN, X).
@@ -607,6 +612,9 @@ accessPeel(E, B) :- node(E, "IndexRangeAccess"), child(E, "baseExpression", 0, B
 accessPeel(E, B) :- node(E, "MemberAccess"), child(E, "expression", 0, B).
 .decl parenPeel(E: number, B: number)
 parenPeel(E, B) :- singleTuple(E), child(E, "components", 0, B).
+// A type conversion with one argument (`address(x)`, `IFoo(x)`, `payable(x)`) wraps a value without changing what it denotes.
+.decl convPeel(E: number, B: number)
+convPeel(E, B) :- node(E, "FunctionCall"), attr(E, "kind", "typeConversion"), child(E, "arguments", 0, B), !child(E, "arguments", 1, _).
 
 // Expressions whose root we care about: left sides, right sides, call arguments, receivers,
 // initial values, returned values — and both arms of a `c ? a : b`.
@@ -624,11 +632,13 @@ rootStart(T) :- rootStart(C), node(C, "Conditional"), child(C, "falseExpression"
 peelNode(E) :- rootStart(E).
 peelNode(B) :- peelNode(E), accessPeel(E, B).
 peelNode(B) :- peelNode(E), parenPeel(E, B).
+peelNode(B) :- peelNode(E), convPeel(E, B).
 // rootOf(N, R, Bare): following peels from N ends at R; Bare is 1 when no index/member was crossed.
 .decl rootOf(N: number, R: number, Bare: number)
-rootOf(N, N, 1) :- peelNode(N), !accessPeel(N, _), !parenPeel(N, _).
+rootOf(N, N, 1) :- peelNode(N), !accessPeel(N, _), !parenPeel(N, _), !convPeel(N, _).
 rootOf(N, R, 0) :- peelNode(N), accessPeel(N, B), rootOf(B, R, _).
 rootOf(N, R, Bare) :- peelNode(N), parenPeel(N, B), rootOf(B, R, Bare).
+rootOf(N, R, Bare) :- peelNode(N), convPeel(N, B), rootOf(B, R, Bare).
 
 // The state variable or storage reference an rvalue is rooted in ("what does this expression point into").
 // A call returning a storage reference is named by its result: "<call site>#0".
@@ -897,6 +907,14 @@ returnsGlobal(F, G) :- returnPart(Ret, _, E), stmtNode(Ret, FN, _, _), node(E, "
 .decl returnsStateVar(F: symbol, V: symbol)
 .output returnsStateVar
 returnsStateVar(F, V) :- returnPart(Ret, _, E), stmtNode(Ret, FN, _, _), node(E, "Identifier"), refOf(E, D), isStateVar(D), name(D, V), functionName(FN, F).
+// ...or assigns one to a named return variable (`guardianSafe_ = GUARDIAN_SAFE;`), the other way getters are written.
+returnsStateVar(F, V) :- namedReturnAssign(FN, E), node(E, "Identifier"), refOf(E, D), isStateVar(D), name(D, V), functionName(FN, F).
+returnsGlobal(F, G) :- namedReturnAssign(FN, E), node(E, "MemberAccess"), child(E, "expression", 0, B), builtinIdent(B),
+                       attr(B, "name", BN), attr(E, "memberName", M), G = cat(BN, ".", M), globalRef(G), functionName(FN, F).
+// `ret = <E>;` inside F, where ret is one of F's return variables.
+.decl namedReturnAssign(F: number, E: number)
+namedReturnAssign(F, E) :- inFn(A, F), node(A, "Assignment"), attr(A, "operator", "="), child(A, "leftHandSide", 0, L), node(L, "Identifier"),
+                           refOf(L, RP), fnReturn(F, _, RP), child(A, "rightHandSide", 0, E).
 
 // Function-typed variable Var (local, parameter or state variable) is given function G: at its
 // declaration, by assignment, or as the call argument that binds a callee's parameter.
@@ -918,3 +936,106 @@ argGlobal(K, I, G) :- callArg(KN, I, A), node(A, "MemberAccess"), child(A, "expr
 .decl argCall(K: symbol, I: number, G: symbol)
 .output argCall
 argCall(K, I, G) :- callArg(KN, I, A), node(A, "FunctionCall"), callKind(A, Kind, G), (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"), siteId(KN, K).
+
+// ---------------------------------------------------------------------------
+// 1k. Across contracts: what an external call is aimed at, what its calldata encodes, and the
+// checks that compare something other than a state variable with the sender. The project layer
+// (rules/project.dl) resolves these against the values discovery read from the chain.
+// ---------------------------------------------------------------------------
+
+// `T x = <Init>;` with a single declaration: the initializer of local x.
+.decl localInit(D: number, Init: number)
+localInit(D, Init) :- isStmt(St), node(St, "VariableDeclarationStatement"), declCount(St, 1), child(St, "declarations", _, D), child(St, "initialValue", 0, Init).
+
+// What an expression denotes once index accesses, parentheses and type conversions are peeled:
+//   stateVar  a state variable (immutables included), X is its id
+//   param     a parameter of the enclosing function: the caller chooses the value
+//   getter    a call to function X (its result is the value): `superchainConfig().pause()`
+//   this      the contract itself
+// A local variable denotes whatever its initializer denotes (one or more hops).
+.decl exprDenotes(E: number, Kind: symbol, X: symbol)
+exprDenotes(E, "stateVar", X) :- rootOf(E, R, _), node(R, "Identifier"), refOf(R, D), isStateVar(D), name(D, X).
+exprDenotes(E, "param", X)    :- rootOf(E, R, _), node(R, "Identifier"), refOf(R, D), fnParam(_, _, D), name(D, X).
+exprDenotes(E, "this", "")    :- rootOf(E, R, _), node(R, "Identifier"), builtinIdent(R), attr(R, "name", "this").
+exprDenotes(E, "getter", H)   :- rootOf(E, R, _), node(R, "FunctionCall"), callKind(R, Kind, H), H != "",
+                                 (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "external" ; Kind = "library").
+exprDenotes(E, Kind, X)       :- rootOf(E, R, _), node(R, "Identifier"), refOf(R, D), localInit(D, Init), exprDenotes(Init, Kind, X).
+.decl hasDenotation(E: number)
+hasDenotation(E) :- exprDenotes(E, _, _).
+
+// The receiver of an external call: `<B>.f(...)` where f resolved to a function of a contract or interface.
+.decl extReceiver(K: number, B: number)
+extReceiver(K, B) :- memberFn(K, _, B, D), !fnOwnerKind(D, "library"), !explicitBase(B), contractTypedBase(B).
+
+// External call K in F to declaration G (an interface or contract function), aimed at what the receiver denotes.
+// Kind: stateVar | param | getter | this | unknown (X is "" for this/unknown).
+.decl extCall(K: symbol, F: symbol, G: symbol, Kind: symbol, X: symbol)
+.output extCall
+extCall(K, F, G, Kind, X) :- callKind(KN, "external", G), extReceiver(KN, B), exprDenotes(B, Kind, X), siteId(KN, K), callNode(KN, FN), functionName(FN, F).
+extCall(K, F, G, "unknown", "") :- callKind(KN, "external", G), extReceiver(KN, B), !hasDenotation(B), siteId(KN, K), callNode(KN, FN), functionName(FN, F).
+
+// Low-level call K in F (`<B>.call(...)`, `<B>.delegatecall(...)`, ...), aimed at what the receiver denotes.
+.decl lowLevelTarget(K: symbol, F: symbol, Member: symbol, Kind: symbol, X: symbol)
+.output lowLevelTarget
+lowLevelTarget(K, F, M, Kind, X) :- lowLevelCall(KN, M), memberCallee(KN, _, B, M), exprDenotes(B, Kind, X), siteId(KN, K), callNode(KN, FN), functionName(FN, F).
+lowLevelTarget(K, F, M, "unknown", "") :- lowLevelCall(KN, M), memberCallee(KN, _, B, M), !hasDenotation(B), siteId(KN, K), callNode(KN, FN), functionName(FN, F).
+
+// Nodes under the arguments of call K.
+.decl argUnder(K: number, N: number)
+argUnder(K, A) :- callArg(K, _, A).
+argUnder(K, N) :- argUnder(K, P), child(P, _, _, N).
+
+// Call K carries calldata for function G: an argument is `abi.encodeCall(I.f, (...))`, or
+// `abi.encodeWithSelector(I.f.selector, ...)`. Which contract receives that calldata is the receiver's business.
+.decl encodedCall(K: symbol, G: symbol)
+.output encodedCall
+encodedCall(K, G) :- argUnder(KN, Enc), callKind(Enc, "builtin", "abi.encodeCall"), child(Enc, "arguments", 0, Fn), refOf(Fn, D), node(D, "FunctionDefinition"), name(D, G), siteId(KN, K).
+encodedCall(K, G) :- argUnder(KN, Enc), callKind(Enc, "builtin", "abi.encodeWithSelector"), child(Enc, "arguments", 0, Sel), node(Sel, "MemberAccess"), attr(Sel, "memberName", "selector"),
+                     child(Sel, "expression", 0, Fn), refOf(Fn, D), node(D, "FunctionDefinition"), name(D, G), siteId(KN, K).
+
+// The condition of X mentions `this` (`msg.sender == address(this)`: a Safe's `authorized`).
+.decl refsThis(X: symbol)
+.output refsThis
+refsThis(X) :- condDesc(XN, D), node(D, "Identifier"), builtinIdent(D), attr(D, "name", "this"), siteId(XN, X).
+
+// A call that recovers a signer: `ecrecover(...)`, or a call to a function named recover/tryRecover (ECDSA).
+.decl recoverCall(K: number)
+recoverCall(K) :- callKind(K, "builtin", "ecrecover").
+recoverCall(K) :- callKind(K, Kind, G), (Kind = "library" ; Kind = "internal" ; Kind = "internalExplicit"),
+                  function(G, _, Name, _, _, _, _, _), (Name = "recover" ; Name = "tryRecover").
+// A local variable that holds a recovered signer: initialised from, or assigned, a recover call
+// (`currentOwner = ecrecover(...)` in a Safe's checkNSignatures).
+.decl recoverAssigned(L: number)
+recoverAssigned(L) :- localInit(L, Init), rootOf(Init, R, _), recoverCall(R).
+recoverAssigned(L) :- inFn(A, _), node(A, "Assignment"), child(A, "leftHandSide", 0, LHS), node(LHS, "Identifier"), refOf(LHS, L),
+                      child(A, "rightHandSide", 0, Rhs), rootOf(Rhs, R, _), recoverCall(R).
+// The condition of X tests a recovered signer: the recover call itself, or a local holding its result.
+.decl refsRecover(X: symbol)
+.output refsRecover
+refsRecover(X) :- condDesc(XN, D), node(D, "FunctionCall"), recoverCall(D), siteId(XN, X).
+refsRecover(X) :- condDesc(XN, D), node(D, "Identifier"), refOf(D, L), recoverAssigned(L), siteId(XN, X).
+
+// An external call inside the condition of X (`msg.sender != systemConfig.guardian()`): the project layer
+// resolves the receiver's value and asks that contract's recorded value for the callee.
+.decl condCall(X: symbol, K: symbol)
+.output condCall
+condCall(X, K) :- condDesc(XN, D), node(D, "FunctionCall"), callKind(D, "external", _), siteId(D, K), siteId(XN, X).
+
+// F returns the result of external call K (`return systemConfig.guardian();`, or via a named return variable).
+.decl returnsCall(F: symbol, K: symbol)
+.output returnsCall
+returnsCall(F, K) :- returnPart(Ret, _, E), stmtNode(Ret, FN, _, _), rootOf(E, R, _), node(R, "FunctionCall"), callKind(R, "external", _), siteId(R, K), functionName(FN, F).
+returnsCall(F, K) :- namedReturnAssign(FN, E), rootOf(E, R, _), node(R, "FunctionCall"), callKind(R, "external", _), siteId(R, K), functionName(FN, F).
+
+// What argument Index of call K denotes (see exprDenotes): a state variable, a parameter, a getter's result, `this`.
+.decl argDenotes(K: symbol, Index: number, Kind: symbol, X: symbol)
+.output argDenotes
+argDenotes(K, Idx, Kind, X) :- callArg(KN, I, A), argIndex(KN, I, Idx), exprDenotes(A, Kind, X), siteId(KN, K).
+
+// A zero-argument view/pure function: the shape of a getter discovery can call and record under its name.
+.decl getterFn(G: symbol)
+.output getterFn
+getterFn(G) :- function(G, C, _, _, "function", Vis, Mut, _), C != "", (Vis = "public" ; Vis = "external" ; Vis = "internal" ; Vis = "private"), (Mut = "view" ; Mut = "pure"), !hasParam(G).
+.decl hasParam(G: symbol)
+hasParam(G) :- param(G, _, _, _, _).
+

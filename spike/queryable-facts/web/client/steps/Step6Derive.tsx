@@ -55,7 +55,7 @@ export function Step6Derive() {
     if (!cols) return
     setProof({ row, loading: true })
     api
-      .explain({ runId: run.runId, relation, cols })
+      .explain({ runId: run.runId, unit: run.unitSlug, relation, cols })
       .then((result) => setProof({ row, result, loading: false }))
       .catch((e: unknown) =>
         setProof({

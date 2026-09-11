@@ -25,17 +25,6 @@ import { parseProgram } from './program'
 export const ROOT = fileURLToPath(new URL('../..', import.meta.url))
 export const RUNS_DIR = join(ROOT, 'out', 'runs')
 const FIXTURES_DIR = join(ROOT, 'contracts')
-const ZORA_FLAT_DIR = join(
-  ROOT,
-  '..',
-  '..',
-  'packages',
-  'config',
-  'src',
-  'projects',
-  'zora',
-  '.flat',
-)
 
 function listSol(dir: string, group: string, prefix: string): ContractChoice[] {
   if (!existsSync(dir)) return []
@@ -60,23 +49,16 @@ function listSol(dir: string, group: string, prefix: string): ContractChoice[] {
   return out
 }
 
+/** The single-file choices: the spike's fixtures. Discovery projects are listed by web/server/project.ts. */
 export function listContracts(): ContractChoice[] {
-  return [
-    ...listSol(FIXTURES_DIR, 'fixtures', ''),
-    ...listSol(ZORA_FLAT_DIR, 'zora', ''),
-  ]
+  return listSol(FIXTURES_DIR, 'fixtures', '')
 }
 
 export function readContract(id: string): { name: string; source: string } {
   const [group, ...rest] = id.split(':')
   const rel = rest.join(':')
   if (rel.includes('..')) throw new Error('bad contract id')
-  const dir =
-    group === 'fixtures'
-      ? FIXTURES_DIR
-      : group === 'zora'
-        ? ZORA_FLAT_DIR
-        : undefined
+  const dir = group === 'fixtures' ? FIXTURES_DIR : undefined
   if (!dir) throw new Error(`unknown contract group ${group}`)
   const path = join(dir, rel)
   return { name: basename(path), source: readFileSync(path, 'utf8') }

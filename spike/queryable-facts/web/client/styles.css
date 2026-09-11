@@ -1390,3 +1390,63 @@ code.cite.unknown {
   white-space: normal;
   line-height: 1.3;
 }
+
+/* ---------- project (step 1 picker, step 8) ---------- */
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.tabs .tab {
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: transparent;
+  padding: 7px 12px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  cursor: pointer;
+  color: var(--muted);
+}
+.tabs .tab:hover {
+  background: var(--hl-hover);
+  color: var(--text);
+}
+.tabs .tab.active {
+  background: var(--panel);
+  border-color: var(--border);
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: -1px;
+}
+.project-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.unit-line {
+  white-space: nowrap;
+}
+.unit-line .st {
+  display: inline-block;
+  width: 16px;
+  color: var(--muted);
+}
+.unit-line .st.done {
+  color: var(--ok);
+}
+.unit-line .st.failed {
+  color: var(--danger);
+}
+.cite.addr {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.step .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

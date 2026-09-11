@@ -1,0 +1,28 @@
+// =============================================================================
+// Layer 0 (project): what discovery said, verbatim.
+//
+// The second kind of input. src/discovery.ts writes discovered.json down as facts the same way
+// src/emit.ts writes the AST down: mechanically, with an encoding that depends only on the shape of
+// the JSON, never on what a field means. What a value means ("`owner` is who may call `setAddress`")
+// is the business of the project rules (3-project.dl).
+// =============================================================================
+
+
+// One discovered address. Type: Contract | EOA. ProxyType: immutable | EIP1967 proxy | gnosis safe | ...
+.decl dEntry(Addr: symbol, Type: symbol, Name: symbol, ProxyType: symbol, Template: symbol)
+.input dEntry
+
+// The code at Addr: Role self (the address is its own code), proxy (the proxy contract at Addr), or
+// implementation (code at CodeAddr that Addr delegates to). ContractName is discovery's name for the source.
+.decl dImpl(Addr: symbol, CodeAddr: symbol, ContractName: symbol, Role: symbol)
+.input dImpl
+
+// The flattened source unit that code was compiled from (missing when discovery wrote no file).
+.decl dUnit(Addr: symbol, CodeAddr: symbol, Unit: symbol)
+.input dUnit
+
+// Every value discovery recorded for Addr, flattened. Field is the top-level key (a getter name, a state
+// variable name, or a synthesised field such as `$members` or `GnosisSafe_modules`); Path is "" for a
+// scalar, "[i]" inside arrays, ".key" inside objects. Kind: address | number | boolean | string | null.
+.decl dValue(Addr: symbol, Field: symbol, Path: symbol, Kind: symbol, Value: symbol)
+.input dValue

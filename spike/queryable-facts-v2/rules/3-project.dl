@@ -1,0 +1,352 @@
+// =============================================================================
+// Project level: many deployed contracts, one snapshot of their values.
+//
+// The unit pipeline answers "which entry point may change this variable, and what does it check
+// about the sender" for one flattened file. Here those answers meet discovery's snapshot: which code
+// runs at which address, what every state variable holds right now, who the Safes' signers are. The
+// layers continue where rules/2-analysis.dl stopped:
+//
+//   layer 7  deployment   which contract of which unit is the code at an address; proxies and their implementations
+//   layer 8  values       a state variable's discovered value; references from one contract to another
+//   layer 9  authority    who passes an entry point's checks (one hop), how actors drive each other, reachability,
+//                         and finally: who can change which variable of which deployed contract
+//
+// A row here is only as good as its inputs: the unit findings carry their tiers, and every value comes
+// from discovery's snapshot at one block. Rows that rest on a discovered value say so in their Tier.
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// Layer 7: deployment
+// ---------------------------------------------------------------------------
+
+// A contract discovery found, with the proxy type it recognised.
+.decl deployed(Addr: symbol, Name: symbol, ProxyType: symbol)
+deployed(A, N, P) :- dEntry(A, "Contract", N, P, _).
+
+// An externally owned account discovery found (Name is "" unless discovery named it).
+.decl eoa(Addr: symbol, Name: symbol)
+eoa(A, N) :- dEntry(A, "EOA", N, _, _).
+
+// The contract (unit-qualified id) whose code runs at Addr in a role: self | proxy | implementation.
+// Discovery names the source and the file; the contract of that name in that file is the code.
+.decl codeOf(Addr: symbol, Role: symbol, C: symbol)
+codeOf(A, Role, C) :- dImpl(A, CodeAddr, Name, Role), dUnit(A, CodeAddr, U), C = cat(U, ":", Name), contract(C, Name, "contract", _).
+
+// Code discovery knows about but the project could not compile or map to a contract.
+.decl codeGap(Addr: symbol, CodeAddr: symbol, ContractName: symbol, Why: symbol)
+codeGap(A, CodeAddr, Name, "no flattened source file") :- dImpl(A, CodeAddr, Name, _), !dUnit(A, CodeAddr, _).
+codeGap(A, CodeAddr, Name, cat("no contract named ", Name, " in ", U)) :- dImpl(A, CodeAddr, Name, _), dUnit(A, CodeAddr, U), CN = cat(U, ":", Name), !contract(CN, Name, _, _).
+
+// The externally callable functions of a deployed address: those of every piece of code that runs there.
+// Through a proxy's fallback, an implementation's entry points are the address's entry points.
+.decl entryAt(Addr: symbol, H: symbol, Role: symbol)
+entryAt(A, H, Role) :- codeOf(A, Role, C), entryPoint(C, H).
+
+// The storage of a deployed address, as laid out by the code that runs there (proxy and implementation
+// share one storage: EIP-1967 proxies keep theirs in hashed slots, a GnosisSafeProxy's slot 0 is the
+// singleton, which the implementation lays out identically).
+.decl storageAt(Addr: symbol, V: symbol, Role: symbol, Slot: number)
+storageAt(A, V, Role, Slot) :- codeOf(A, Role, C), storageSlot(C, V, Slot, _).
+
+// A proxy's fallback forwards to the implementation discovery found: the unknown effect in the proxy's
+// code (its delegatecall) is this code.
+.decl proxyForwardsTo(Addr: symbol, ProxyC: symbol, ImplC: symbol)
+proxyForwardsTo(A, P, I) :- codeOf(A, "proxy", P), codeOf(A, "implementation", I).
+
+// The upgrade authority of a proxy, as discovery read it from the proxy's admin slot.
+.decl proxyAdminOf(Addr: symbol, Admin: symbol)
+proxyAdminOf(A, Admin) :- deployed(A, _, _), dValue(A, "$admin", "", "address", Admin).
+
+// ---------------------------------------------------------------------------
+// Layer 8: values
+// Discovery records a value under the name it called: a public variable's getter has the variable's
+// name, a view function has its own, and a few fields are synthesised (`$members`, `$threshold`,
+// `GnosisSafe_modules`). This layer ties those names back to the state variables the rules talk about.
+// ---------------------------------------------------------------------------
+
+// Discovery's synthesised fields and the state variable they stand for.
+.decl fieldAlias(Field: symbol, VarName: symbol)
+fieldAlias("$members", "owners").
+fieldAlias("$threshold", "threshold").
+fieldAlias("GnosisSafe_modules", "modules").
+fieldAlias("$implementation", "singleton").
+fieldAlias("$implementation", "masterCopy").
+
+// The base contracts whose members the code at Addr has (its linearization, itself included).
+.decl baseOf(Addr: symbol, B: symbol)
+baseOf(A, B) :- codeOf(A, _, C), inherits(C, B, _).
+
+// State variable V of the code at Addr is what discovery recorded under Field: the variable's own name,
+// the name of a zero-argument getter that returns it, or an alias of either.
+.decl fieldOf(Addr: symbol, V: symbol, Field: symbol)
+fieldOf(A, V, Name) :- baseOf(A, B), stateVariable(V, B, Name, _, _, _).
+fieldOf(A, V, Name) :- baseOf(A, B), function(G, B, Name, _, "function", _, _, _), getterFn(G), returnsStateVar(G, V), baseOf(A, BV), stateVariable(V, BV, _, _, _, _).
+fieldOf(A, V, Field) :- fieldOf(A, V, Name), fieldAlias(Field, Name).
+
+// The discovered value of state variable V at Addr (one row per array element or object member).
+.decl valueOf(Addr: symbol, V: symbol, Kind: symbol, Value: symbol)
+valueOf(A, V, Kind, Val) :- fieldOf(A, V, Field), dValue(A, Field, _, Kind, Val).
+.decl hasValue(Addr: symbol, V: symbol)
+hasValue(A, V) :- valueOf(A, V, _, _).
+
+// The discovered value of a zero-argument getter G of the code at Addr: recorded under the getter's name, or,
+// when G returns what another contract's getter returns (`return systemConfig.guardian();`), that contract's
+// recorded value for the callee (one hop, through the receiver's own value).
+.decl getterValue(Addr: symbol, G: symbol, Kind: symbol, Value: symbol)
+getterValue(A, G, Kind, Val) :- baseOf(A, B), function(G, B, Name, _, "function", _, _, _), getterFn(G), dValue(A, Name, _, Kind, Val).
+getterValue(A, G, Kind, Val) :- baseOf(A, B), function(G, B, _, _, "function", _, _, _), getterFn(G), !hasOwnValue(A, G),
+                                returnsCall(G, K), remoteCallValue(A, K, Kind, Val).
+.decl hasOwnValue(Addr: symbol, G: symbol)
+hasOwnValue(A, G) :- baseOf(A, B), function(G, B, Name, _, "function", _, _, _), dValue(A, Name, _, _, _).
+// The value external call K (made by the code at Addr) returns, when the receiver is a state variable or
+// getter whose value is contract T and T has a recorded value under the callee's name.
+.decl remoteCallValue(Addr: symbol, K: symbol, Kind: symbol, Value: symbol)
+remoteCallValue(A, K, Kind, Val) :- extCall(K, _, G2, "stateVar", X), valueOf(A, X, "address", T), function(G2, _, Name, _, _, _, _, _), dValue(T, Name, "", Kind, Val).
+remoteCallValue(A, K, Kind, Val) :- extCall(K, _, G2, "getter", GG), getterTarget(A, GG, T), function(G2, _, Name, _, _, _, _, _), dValue(T, Name, "", Kind, Val).
+
+// The zero address: a value that names nobody. A check against it admits no one (until it is set).
+.decl zeroAddress(A: symbol)
+zeroAddress(A) :- dValue(_, _, _, "address", A), strlen(A) >= 40, substr(A, strlen(A) - 40, 40) = "0000000000000000000000000000000000000000".
+
+// A state variable or getter of Addr holds the address of another discovered entry: a reference.
+.decl refersTo(Addr: symbol, V: symbol, Target: symbol)
+refersTo(A, V, T) :- valueOf(A, V, "address", T), known(T), T != A.
+refersTo(A, G, T) :- getterValue(A, G, "address", T), known(T), T != A, !returnsStateVar(G, _).
+.decl known(Addr: symbol)
+known(A) :- deployed(A, _, _).
+known(A) :- eoa(A, _).
+
+// Values discovery recorded that no state variable or getter of the code claims: discovery's handlers
+// (events, computed fields) or names the rules could not match. Listed so nothing is silently dropped.
+.decl unmatchedValue(Addr: symbol, Field: symbol)
+unmatchedValue(A, Field) :- dValue(A, Field, _, _, _), codeOf(A, _, _), !fieldMatched(A, Field), !metaField(Field).
+.decl fieldMatched(Addr: symbol, Field: symbol)
+fieldMatched(A, Field) :- fieldOf(A, _, Field).
+fieldMatched(A, Field) :- baseOf(A, B), function(_, B, Field, _, "function", _, _, _).
+.decl metaField(Field: symbol)
+metaField(F) :- dValue(_, F, _, _, _), strlen(F) >= 1, substr(F, 0, 1) = "$".
+
+// A delay or expiry: entry H of Addr reaches a condition comparing block.timestamp with V, whose value is known.
+.decl delayAt(Addr: symbol, H: symbol, X: symbol, V: symbol, Value: symbol)
+delayAt(A, H, X, V, Val) :- entryAt(A, H, Role), codeOf(A, Role, C), reachesFrom(C, H, F), timeCheck(X, F, V), valueOf(A, V, "number", Val).
+
+// ---------------------------------------------------------------------------
+// Layer 9: authority
+// ---------------------------------------------------------------------------
+
+// Two functions with the same ABI selector: an interface declaration and the implementation it names.
+.decl sameSelector(G: symbol, H: symbol)
+sameSelector(G, H) :- function(G, _, _, _, _, _, _, Sel), Sel != "", function(H, _, _, _, _, _, _, Sel).
+
+// The condition of a check, quoted.
+.decl condText(X: symbol, T: symbol)
+condText(X, cat("`", Cond, "`")) :- condition(X, Cond).
+
+// The plain name of a state variable or function.
+.decl shortName(Id: symbol, Name: symbol)
+shortName(V, N) :- stateVariable(V, _, N, _, _, _).
+shortName(F, N) :- function(F, _, N, _, _, _, _, _).
+
+// --- 9a. One hop: who passes the checks of entry H at Addr.
+// Tier says what the row rests on:
+//   checked      a guaranteed unit finding (the check runs on every completing execution) + a discovered value
+//   checked-or   the same, but the sender test is one side of an OR
+//   signature    a guaranteed signature check + a discovered value: the holder of a signature by A passes
+//   lead         a check that runs only on some paths (heuristic at the unit level)
+//   discovered   discovery's proxy admin slot, for a proxy's own functions (their check reads the same slot in assembly)
+//   open         no sender or signature check the rules recognise: "anyone"
+.decl allowed(A: symbol, Addr: symbol, H: symbol, How: symbol, Tier: symbol)
+// What check X compares the sender (or the recovered signer) with, resolved to an address through the values:
+// a state variable, a zero-argument getter, an external getter called in the condition, or the contract itself.
+.decl comparesWith(Addr: symbol, X: symbol, A: symbol, Name: symbol)
+comparesWith(Addr, X, A, Name) :- checkAt(Addr, _, X), checkPrincipal(X, P), valueOf(Addr, P, "address", A), shortName(P, Name).
+comparesWith(Addr, X, A, cat(Name, "()")) :- checkAt(Addr, _, X), checkGetter(X, G), getterValue(Addr, G, "address", A), shortName(G, Name).
+comparesWith(Addr, X, A, cat(Name, "()")) :- checkAt(Addr, _, X), condCall(X, K), remoteCallValue(Addr, K, "address", A), extCall(K, _, G, _, _), shortName(G, Name).
+comparesWith(Addr, X, Addr, "address(this)") :- checkAt(Addr, _, X), checkSelf(X).
+// Every check on the way to an entry point of Addr.
+.decl checkAt(Addr: symbol, H: symbol, X: symbol)
+checkAt(Addr, H, X) :- entryAt(Addr, H, Role), codeOf(Addr, Role, C), (alwaysChecks(C, H, X) ; sometimesChecks(C, H, X) ; alwaysSigner(C, H, X) ; sometimesSigner(C, H, X)).
+
+// the sender is compared with something whose discovered value is A
+allowed(A, Addr, H, cat("sender check ", T, " compares with `", Name, "` = ", A), "checked") :-
+    entryAt(Addr, H, Role), codeOf(Addr, Role, C), alwaysChecks(C, H, X), !weakCheck(X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
+allowed(A, Addr, H, cat("sender check ", T, " (the sender test is one side of an OR) compares with `", Name, "` = ", A), "checked-or") :-
+    entryAt(Addr, H, Role), codeOf(Addr, Role, C), alwaysChecks(C, H, X), weakCheck(X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
+allowed(A, Addr, H, cat("sender check ", T, " runs only on some paths; compares with `", Name, "` = ", A), "lead") :-
+    entryAt(Addr, H, Role), codeOf(Addr, Role, C), sometimesChecks(C, H, X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
+// a signature by A is required
+allowed(A, Addr, H, cat("signature check ", T, " recovers a signer compared with `", Name, "` = ", A), "signature") :-
+    entryAt(Addr, H, Role), codeOf(Addr, Role, C), alwaysSigner(C, H, X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
+allowed(A, Addr, H, cat("signature check ", T, " runs only on some paths (a loop or branch); recovers a signer compared with `", Name, "` = ", A), "signature-lead") :-
+    entryAt(Addr, H, Role), codeOf(Addr, Role, C), sometimesSigner(C, H, X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
+// a proxy's own functions: the proxy checks the admin slot in assembly, which discovery read for us
+allowed(Admin, Addr, H, "proxy function: the proxy admits the admin stored in its EIP-1967 admin slot, which discovery read", "discovered") :-
+    codeOf(Addr, "proxy", C), entryPoint(C, H), function(H, _, _, _, "function", _, _, _), proxyAdminOf(Addr, Admin).
+// nothing the rules recognise as a check: anyone
+allowed("anyone", Addr, H, "no sender check and no signature check found on the way", "open") :-
+    entryAt(Addr, H, Role), codeOf(Addr, Role, C), !hasAnyCheck(C, H), !hasSignerCheck(C, H), !proxyOwnFunction(Addr, H).
+.decl proxyOwnFunction(Addr: symbol, H: symbol)
+proxyOwnFunction(Addr, H) :- codeOf(Addr, "proxy", C), entryPoint(C, H), function(H, _, _, _, "function", _, _, _), proxyAdminOf(Addr, _).
+
+// Checks the rules saw but could not resolve to an address: the principal has no discovered value, or the
+// condition names nothing the rules recognise. These are the places where "who" is not answered.
+.decl unresolvedCheck(Addr: symbol, H: symbol, X: symbol, Why: symbol)
+unresolvedCheck(Addr, H, X, cat("compares with `", Name, "`, which has no discovered value")) :-
+    checkAt(Addr, H, X), !resolved(Addr, X), !proxyOwnFunction(Addr, H), checkPrincipal(X, P), !hasValue(Addr, P), shortName(P, Name), stateVariable(P, _, _, _, Mut, _), Mut != "constant".
+unresolvedCheck(Addr, H, X, cat("compares with `", Name, "()`, which has no discovered value")) :-
+    checkAt(Addr, H, X), !resolved(Addr, X), !proxyOwnFunction(Addr, H), checkGetter(X, G), !hasGetterValue(Addr, G), shortName(G, Name).
+unresolvedCheck(Addr, H, X, cat("compares with `", Name, "` = the zero address: nobody passes until it is set")) :-
+    checkAt(Addr, H, X), comparesWith(Addr, X, A, Name), zeroAddress(A).
+unresolvedCheck(Addr, H, X, "the condition names no state variable, getter or address(this) the rules recognise") :-
+    checkAt(Addr, H, X), !proxyOwnFunction(Addr, H), !checkPrincipal(X, _), !checkGetter(X, _), !checkSelf(X), !condCall(X, _).
+.decl resolved(Addr: symbol, X: symbol)
+resolved(Addr, X) :- comparesWith(Addr, X, _, _).
+.decl hasGetterValue(Addr: symbol, G: symbol)
+hasGetterValue(A, G) :- getterValue(A, G, _, _).
+
+// --- 9b. Actors: what an address is, and who can make it act.
+
+// A Safe, with its signers and threshold as discovery read them.
+.decl safe(Addr: symbol)
+safe(A) :- deployed(A, _, "gnosis safe").
+.decl safeMember(Safe: symbol, Member: symbol)
+safeMember(S, M) :- safe(S), dValue(S, "$members", _, "address", M).
+.decl safeThreshold(Safe: symbol, K: number)
+safeThreshold(S, to_number(KS)) :- safe(S), dValue(S, "$threshold", "", "number", KS).
+.decl safeSize(Safe: symbol, N: number)
+safeSize(S, N) :- safe(S), N = count : { safeMember(S, _) }.
+.decl safeModule(Safe: symbol, Module: symbol)
+safeModule(S, M) :- safe(S), dValue(S, "GnosisSafe_modules", _, "address", M).
+
+// What kind of thing an address is: EOA | multisig | contract | anyone.
+.decl actor(A: symbol, Kind: symbol, Name: symbol)
+actor(A, "EOA", N) :- eoa(A, N).
+actor(A, "multisig", N) :- safe(A), deployed(A, N, _).
+actor(A, "contract", N) :- deployed(A, N, _), !safe(A).
+actor("anyone", "anyone", "anyone").
+
+// A can make S act (issue any call S is allowed to make): as one of S's signers, K of N of whom must agree.
+// Rests on discovery's snapshot of the Safe, not on the Safe's code.
+.decl acts(A: symbol, S: symbol, How: symbol, Tier: symbol)
+acts(M, S, cat("signer of ", Name, " (", to_string(K), " of ", to_string(N), " must sign)"), "discovered") :-
+    safeMember(S, M), safeThreshold(S, K), safeSize(S, N), deployed(S, Name, _).
+
+// --- 9c. Calls between contracts, resolved through values.
+
+// Code at Addr, from entry E, calls entry H of deployed T. The receiver is a state variable, or a getter,
+// whose discovered value is T (Tier "resolved"); or a parameter, so the caller picks the target: then every
+// deployed contract exposing that function *and admitting Addr as the sender* is a possible target
+// (Tier "caller-chosen"). K is the call site.
+.decl crossCall(Addr: symbol, E: symbol, T: symbol, H: symbol, K: symbol, Tier: symbol)
+crossCall(Addr, E, T, H, K, "resolved") :-
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "stateVar", X), valueOf(Addr, X, "address", T), entryAt(T, H, _), sameSelector(G, H).
+crossCall(Addr, E, T, H, K, "resolved") :-
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "getter", GG), getterTarget(Addr, GG, T), entryAt(T, H, _), sameSelector(G, H).
+crossCall(Addr, E, T, H, K, "caller-chosen") :-
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "param", _), entryAt(T, H, _), sameSelector(G, H), T != Addr,
+    allowed(Addr, T, H, _, Tier), Tier != "open".
+// What a getter used as a receiver resolves to: the state variable it returns, or its own recorded value.
+.decl getterTarget(Addr: symbol, G: symbol, T: symbol)
+getterTarget(A, G, T) :- returnsStateVar(G, X), valueOf(A, X, "address", T).
+getterTarget(A, G, T) :- getterValue(A, G, "address", T), !returnsStateVar(G, _).
+
+// External calls whose target the project could not resolve: the receiver is unknown, or has no value.
+.decl crossCallGap(Addr: symbol, E: symbol, K: symbol, G: symbol, Why: symbol)
+crossCallGap(Addr, E, K, G, "receiver expression not understood") :-
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "unknown", _).
+crossCallGap(Addr, E, K, G, cat("receiver `", Name, "` has no discovered address value")) :-
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "stateVar", X), !hasAddressValue(Addr, X), shortName(X, Name).
+crossCallGap(Addr, E, K, G, "receiver is a parameter and no deployed contract admits this caller") :-
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "param", _), !crossCallAt(Addr, E, K).
+.decl hasAddressValue(Addr: symbol, X: symbol)
+hasAddressValue(A, X) :- valueOf(A, X, "address", _).
+.decl crossCallAt(Addr: symbol, E: symbol, K: symbol)
+crossCallAt(Addr, E, K) :- crossCall(Addr, E, _, _, K, _).
+
+// A Safe module relaying a call: code at Mod, from entry E, calls S's execTransactionFromModule(ReturnData)
+// with calldata for function G aimed at T (both taken from the module's state), and S admits Mod as a module.
+// The Safe then calls T.H as itself.
+.decl relayed(Mod: symbol, E: symbol, S: symbol, T: symbol, H: symbol, K: symbol)
+// the target `to` is a state variable of the module (or the Safe itself, named by the same variable)
+relayed(Mod, E, S, T, H, K) :-
+    crossCall(Mod, E, S, HS, K, _), moduleEntry(HS), allowed(Mod, S, HS, _, _),
+    encodedCall(K, G), argDenotes(K, 0, "stateVar", XT), valueOf(Mod, XT, "address", T), entryAt(T, H, _), sameSelector(G, H).
+// the Safe is a parameter and the target is that same parameter: the module makes the (caller-chosen) Safe call itself
+relayed(Mod, E, S, S, H, K) :-
+    crossCall(Mod, E, S, HS, K, "caller-chosen"), moduleEntry(HS), allowed(Mod, S, HS, _, _),
+    encodedCall(K, G), argDenotes(K, 0, "param", XT), extCall(K, _, _, "param", XT), entryAt(S, H, _), sameSelector(G, H).
+.decl moduleEntry(H: symbol)
+moduleEntry(H) :- function(H, _, Name, _, _, _, _, _), (Name = "execTransactionFromModule" ; Name = "execTransactionFromModuleReturnData").
+// A module relaying calls whose calldata the rules could not read: it may make S call anything S can.
+.decl relayedAny(Mod: symbol, E: symbol, S: symbol, K: symbol)
+relayedAny(Mod, E, S, K) :- crossCall(Mod, E, S, HS, K, _), moduleEntry(HS), allowed(Mod, S, HS, _, _), !hasEncoded(K).
+.decl hasEncoded(K: symbol)
+hasEncoded(K) :- encodedCall(K, _).
+
+// --- 9d. Reachability: A can cause entry H of T to run.
+
+// Who passes H's checks at T (directly), including "anyone".
+.decl passes(A: symbol, T: symbol, H: symbol)
+passes(A, T, H) :- allowed(A, T, H, _, _).
+.decl passesAnyone(T: symbol, H: symbol)
+passesAnyone(T, H) :- allowed("anyone", T, H, _, _).
+
+.decl canCall(A: symbol, T: symbol, H: symbol)
+// directly
+canCall(A, T, H) :- allowed(A, T, H, _, _).
+// as a signer of a Safe that can
+canCall(A, T, H) :- acts(A, S, _, _), canCall(S, T, H).
+// through a contract call: A can run Mid.E, which calls T.H, and T admits Mid (or anyone)
+canCall(A, T, H) :- canCall(A, Mid, E), crossCall(Mid, E, T, H, _, _), (passes(Mid, T, H) ; passesAnyone(T, H)).
+// through a Safe module: A can run the module's entry E, which makes Safe S call T.H, and T admits S (or anyone)
+canCall(A, T, H) :- canCall(A, Mod, E), relayed(Mod, E, S, T, H, _), (passes(S, T, H) ; passesAnyone(T, H)).
+canCall(A, T, H) :- canCall(A, Mod, E), relayedAny(Mod, E, S, _), canCall(S, T, H).
+
+// The hops behind canCall, for printing a path: A reaches (T, H) in one step from (Mid, E) or from S.
+.decl hop(A: symbol, T: symbol, H: symbol, Via: symbol, ViaEntry: symbol, How: symbol)
+hop(A, T, H, "", "", How) :- allowed(A, T, H, How, _).
+hop(A, T, H, S, "", How) :- acts(A, S, How, _), canCall(S, T, H).
+hop(A, T, H, Mid, E, "call from the contract") :- canCall(A, Mid, E), crossCall(Mid, E, T, H, _, _), (passes(Mid, T, H) ; passesAnyone(T, H)).
+hop(A, T, H, Mod, E, cat("relayed through the Safe ", S)) :- canCall(A, Mod, E), relayed(Mod, E, S, T, H, _), (passes(S, T, H) ; passesAnyone(T, H)).
+hop(A, T, H, Mod, E, cat("may relay any call through the Safe ", S)) :- canCall(A, Mod, E), relayedAny(Mod, E, S, _), canCall(S, T, H).
+
+// Terminal actors: keys (EOAs) and "anyone". Everything else is a contract someone else drives.
+.decl ultimately(A: symbol, T: symbol, H: symbol)
+ultimately(A, T, H) :- canCall(A, T, H), eoa(A, _).
+ultimately("anyone", T, H) :- canCall("anyone", T, H).
+// A contract nobody known drives: its authority ends there (an unresolved check, or an EOA-less Safe).
+ultimately(A, T, H) :- canCall(A, T, H), deployed(A, _, _), !driven(A).
+.decl driven(A: symbol)
+driven(S) :- acts(_, S, _, _).
+driven(Mid) :- canCall(_, Mid, E), (crossCall(Mid, E, _, _, _, _) ; relayed(Mid, E, _, _, _, _) ; relayedAny(Mid, E, _, _)).
+
+// --- 9e. The question: who can change which variable of which deployed contract.
+
+// Entry H of the code at Addr may write storage variable V (after deployment).
+.decl mayWrite(Addr: symbol, V: symbol, H: symbol, Role: symbol)
+mayWrite(A, V, H, Role) :- codeOf(A, Role, C), storageWriters(C, V, _, H), H != "constructor".
+
+// ...and A can make H run: A can change V at Addr.
+.decl whoCanWrite(Addr: symbol, V: symbol, H: symbol, A: symbol)
+whoCanWrite(A, V, H, Who) :- mayWrite(A, V, H, _), canCall(Who, A, H).
+
+// A proxy's own administrative functions (upgradeTo, changeAdmin, setStorage, ...): they change the proxy's
+// hashed slots, which the unit pipeline reports as unresolved stores rather than as named variables, so they
+// are listed on their own. Read-only ones (admin(), implementation()) are left out.
+.decl proxyAdminFunction(Addr: symbol, H: symbol)
+proxyAdminFunction(A, H) :- codeOf(A, "proxy", C), entryPoint(C, H), function(H, _, _, _, "function", _, Mut, _), Mut != "view", Mut != "pure".
+.decl whoCanUpgrade(Addr: symbol, H: symbol, A: symbol)
+whoCanUpgrade(Addr, H, Who) :- proxyAdminFunction(Addr, H), canCall(Who, Addr, H).
+
+// A writer nobody known can reach: every check on the way is unresolved, so "who" is not answered.
+.decl writerUnreached(Addr: symbol, V: symbol, H: symbol)
+writerUnreached(A, V, H) :- mayWrite(A, V, H, _), !reached(A, H).
+.decl reached(Addr: symbol, H: symbol)
+reached(A, H) :- canCall(_, A, H).
+
+// Unknown effects in the code at Addr (from the unit pipeline), minus a proxy's own forwarding delegatecall,
+// which layer 7 resolved to the implementation.
+.decl unknownAt(Addr: symbol, E: symbol, Kind: symbol, Detail: symbol, K: symbol)
+unknownAt(A, E, Kind, Detail, K) :- codeOf(A, Role, C), opaqueWrites(C, E, _, Kind, Detail, _, K), !forwarding(A, Role, Kind).
+.decl forwarding(Addr: symbol, Role: symbol, Kind: symbol)
+forwarding(A, "proxy", Kind) :- proxyForwardsTo(A, _, _), (Kind = "delegatecall" ; Kind = "asm-delegatecall").

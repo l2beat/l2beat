@@ -101,11 +101,17 @@ function applyEvent(t: Turn, event: AskEvent): Turn {
   return next
 }
 
+/** One conversation per run folder: the project run, or one of its units. */
+export function conversationKey(runId: string, unit?: string): string {
+  return unit ? `${runId}/${unit}` : runId
+}
+
 /** Sends one question (a follow-up if the conversation already has a thread) and streams the turn in. */
 export async function askQuestion(
-  runId: string,
+  target: { runId: string; unit?: string },
   req: { question: string; model: string; effort: string },
 ): Promise<void> {
+  const runId = conversationKey(target.runId, target.unit)
   const conversation = get(runId)
   if (conversation.running) return
   const controller = new AbortController()
@@ -124,7 +130,12 @@ export async function askQuestion(
     }))
   try {
     await api.ask(
-      { runId, ...req, threadId: conversation.threadId },
+      {
+        runId: target.runId,
+        unit: target.unit,
+        ...req,
+        threadId: conversation.threadId,
+      },
       (event) => {
         if (event.type === 'started' && event.threadId)
           update(runId, (c) => ({ ...c, threadId: event.threadId }))

@@ -5,10 +5,17 @@
 import { existsSync, readFileSync } from 'fs'
 import type { IncomingMessage, ServerResponse } from 'http'
 import { join } from 'path'
-import type { AskRequest, ExplainRequest } from '../shared/types'
+import type { AskRequest, ExplainRequest, ProjectEvent } from '../shared/types'
 import { askConfig, streamAsk } from './ask'
 import { explainTuple, formatAtom } from './explain'
 import { parseProgram } from './program'
+import {
+  listProjectChoices,
+  loadUnitRun,
+  projectInfo,
+  runProjectForExplorer,
+  unitRunDir,
+} from './project'
 import { listContracts, RUNS_DIR, readContract, runForExplorer } from './run'
 
 const SOUFFLE = process.env.SOUFFLE ?? 'souffle'
@@ -53,10 +60,54 @@ export async function handleApi(
       send(res, 200, await runForExplorer(name || 'Pasted.sol', source))
       return
     }
+    if (req.method === 'GET' && url.pathname === '/api/projects') {
+      send(res, 200, listProjectChoices())
+      return
+    }
+    if (req.method === 'GET' && url.pathname === '/api/project') {
+      send(res, 200, projectInfo(url.searchParams.get('id') ?? ''))
+      return
+    }
+    if (req.method === 'POST' && url.pathname === '/api/project/run') {
+      const { id } = JSON.parse(await readBody(req)) as { id: string }
+      // streams NDJSON: progress events, then {type: "done", result}
+      res.writeHead(200, {
+        'content-type': 'application/x-ndjson; charset=utf-8',
+        'cache-control': 'no-cache',
+        'x-accel-buffering': 'no',
+      })
+      const emit = (event: ProjectEvent) => {
+        if (!res.writableEnded) res.write(`${JSON.stringify(event)}\n`)
+      }
+      try {
+        const result = await runProjectForExplorer(id, emit)
+        emit({ type: 'done', result })
+      } catch (error) {
+        emit({
+          type: 'error',
+          message: error instanceof Error ? error.message : String(error),
+        })
+      }
+      res.end()
+      return
+    }
+    if (req.method === 'GET' && url.pathname === '/api/project/unit') {
+      send(
+        res,
+        200,
+        loadUnitRun(
+          url.searchParams.get('runId') ?? '',
+          url.searchParams.get('unit') ?? '',
+        ),
+      )
+      return
+    }
     if (req.method === 'POST' && url.pathname === '/api/explain') {
       const body = JSON.parse(await readBody(req)) as ExplainRequest
       if (!/^[\w.-]+$/.test(body.runId)) throw new Error('bad runId')
-      const runDir = join(RUNS_DIR, body.runId)
+      const runDir = body.unit
+        ? unitRunDir(body.runId, body.unit)
+        : join(RUNS_DIR, body.runId)
       if (!existsSync(runDir)) throw new Error(`unknown run ${body.runId}`)
       const program = parseProgram(
         readFileSync(join(runDir, 'program.dl'), 'utf8'),
@@ -74,7 +125,9 @@ export async function handleApi(
     if (req.method === 'POST' && url.pathname === '/api/ask') {
       const body = JSON.parse(await readBody(req)) as AskRequest
       if (!/^[\w.-]+$/.test(body.runId)) throw new Error('bad runId')
-      const runDir = join(RUNS_DIR, body.runId)
+      const runDir = body.unit
+        ? unitRunDir(body.runId, body.unit)
+        : join(RUNS_DIR, body.runId)
       if (!existsSync(runDir)) throw new Error(`unknown run ${body.runId}`)
       // streams NDJSON and ends the response itself; errors after the first byte travel in-band
       await streamAsk(body, runDir, res)

@@ -1,0 +1,8 @@
+// ---------------------------------------------------------------------------
+// Proposed (unit stage): rules promoted from questions that read the syntax tree.
+//
+// Each block below came from a query an agent wrote while answering a question; the comment says
+// what it means and where it came from, expected/proposed/<relation>.tsv holds the rows it derived
+// then. These are interpretations of syntax awaiting review: move a block into 1-syntax.dl or
+// 2-analysis.dl once it is checked, or delete it.
+// ---------------------------------------------------------------------------

@@ -1,0 +1,13 @@
+# storageWriters: reviewed rows for ReviewCases.sol; regenerate with 'pnpm semantic --update', then check the diff
+ReviewCases.sol:ReviewCases	ReviewCases.sol:Ownable._owner	0	constructor
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.adminWrite(uint256)
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.checkThenReturn(uint256,bool)
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.conditionalGuard(bool,uint256)
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.earlyReturn(bool)
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.notOwner(uint256)
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.ownerWrite(uint256)
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.pointerWrite()
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.returnThenCheck(uint256,bool)
+ReviewCases.sol:ReviewCases	ReviewCases.sol:ReviewCases.value	2	ReviewCases.sol:ReviewCases.viaParam()
+ReviewCases.sol:Sealed	ReviewCases.sol:Locked.value	0	ReviewCases.sol:Locked.set(uint256)
+ReviewCases.sol:Unlocked	ReviewCases.sol:Locked.value	0	ReviewCases.sol:Locked.set(uint256)

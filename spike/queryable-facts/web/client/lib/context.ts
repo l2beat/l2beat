@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import type { AstNode } from '../../shared/types'
+import type { AstNode, ProjectRunResult } from '../../shared/types'
 import type { Range, RowRef, RunIndex } from './run'
 
 /** What the user is looking at; shared across steps so a click in one step can be followed in another. */
@@ -25,6 +25,24 @@ export interface Nav {
   derivedRow?: string[]
   /** Steps 4/5: scroll to the card of this relation. */
   focusRelation?: string
+  /** Step 8: which tab, which project relation is being browsed, and a row (by its columns) to select. */
+  projectTab?: 'overview' | 'discovery' | 'rules' | 'derived' | 'report'
+  projectRelation?: string
+  projectRow?: string[]
+  projectFocus?: string
+}
+
+/** A project run around the unit run being shown (steps 2–7 show one unit of it at a time). */
+export interface ProjectCtx {
+  result: ProjectRunResult
+  /** Slug of the unit currently loaded into steps 2–7. */
+  unitSlug?: string
+  /** Load another unit into steps 2–7, then run `then` (e.g. highlight an id) once it is there. */
+  selectUnit: (slug: string, then?: (index: RunIndex) => void) => void
+  /** The unit an id belongs to, by its `<unit>:` prefix. */
+  unitOf: (id: string) => string | undefined
+  /** Human name of an address: discovery's name, or a short address. */
+  who: (address: string) => string
 }
 
 export interface Ctx {
@@ -34,6 +52,7 @@ export interface Ctx {
   /** Highlight a range in the source and scroll to it. */
   showRange: (range: Range | undefined) => void
   showId: (id: string) => void
+  project?: ProjectCtx
 }
 
 export const RunContext = createContext<Ctx | undefined>(undefined)

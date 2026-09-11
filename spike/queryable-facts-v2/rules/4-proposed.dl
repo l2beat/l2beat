@@ -1,0 +1,7 @@
+// ---------------------------------------------------------------------------
+// Proposed (project stage): rules promoted from questions that compose reviewed relations.
+//
+// Each block below came from a query an agent wrote while answering a question; the comment says
+// what it means and where it came from, expected/proposed/<relation>.tsv holds the rows it derived
+// then. Move a block into 3-project.dl once it is reviewed, or delete it.
+// ---------------------------------------------------------------------------

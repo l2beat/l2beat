@@ -12,6 +12,109 @@ export interface ContractChoice {
   bytes: number
 }
 
+// ---------- projects: a discovery output folder (discovered.json + .flat/) run as a whole ----------
+
+export interface ProjectChoice {
+  /** Folder name under packages/config/src/projects. */
+  id: string
+  name: string
+  contracts: number
+  eoas: number
+  /** Flattened .sol files under .flat/. */
+  units: number
+  timestamp?: number
+}
+
+/** One flattened file of a project, before or after running. */
+export interface ProjectUnitInfo {
+  unit: string
+  slug: string
+  /** The discovered entry this code belongs to (the proxy address for proxied contracts). */
+  address: string
+  entryName: string
+  codeAddress: string
+  contractName: string
+  role: 'self' | 'proxy' | 'implementation'
+  bytes: number
+  status?: 'ok' | 'failed'
+  error?: string
+  solcVersion?: string
+  timings?: Timings
+  baseRows?: number
+  derivedRows?: number
+}
+
+export interface ProjectContractInfo {
+  address: string
+  name: string
+  proxyType: string
+  template: string
+  units: ProjectUnitInfo[]
+}
+
+/** What the explorer shows before a project run: the discovered contracts and their files. */
+export interface ProjectInfo {
+  id: string
+  name: string
+  dir: string
+  contracts: ProjectContractInfo[]
+  eoas: number
+  units: ProjectUnitInfo[]
+  missing: Array<{
+    entryName: string
+    contractName: string
+    expectedPath: string
+  }>
+}
+
+export interface ProjectRunResult {
+  kind: 'project'
+  runId: string
+  runDir: string
+  project: string
+  projectId: string
+  contracts: ProjectContractInfo[]
+  units: ProjectUnitInfo[]
+  /** Discovery as facts: dEntry, dImpl, dUnit, dValue, dPermission. */
+  discovery: FactRelation[]
+  /** Rows per unit relation the project program imported. */
+  imported: Record<string, number>
+  program: Program
+  derived: DerivedRelation[]
+  souffle: { version: string; command: string; stderr: string }
+  timings: {
+    unitsMs: number
+    factsMs: number
+    souffleMs: number
+    reportMs: number
+  }
+  report: string
+  files: string[]
+}
+
+/** One line of the NDJSON stream `POST /api/project/run` answers with. */
+export type ProjectEvent =
+  | { type: 'plan'; units: number; missing: number }
+  | { type: 'unit'; unit: string; index: number; status: 'running' }
+  | {
+      type: 'unit'
+      unit: string
+      index: number
+      status: 'done'
+      ms: number
+      solcVersion: string
+    }
+  | {
+      type: 'unit'
+      unit: string
+      index: number
+      status: 'failed'
+      error: string
+    }
+  | { type: 'project'; status: 'facts' | 'souffle' | 'report' }
+  | { type: 'done'; result: ProjectRunResult }
+  | { type: 'error'; message: string }
+
 export interface Diagnostic {
   severity: string
   message: string
@@ -110,6 +213,8 @@ export interface RunResult {
   runId: string
   runDir: string
   unit: string
+  /** Set when this run is one unit of a project run: its slug under units/ (for /api/explain and /api/ask). */
+  unitSlug?: string
   source: string
   compile: {
     constraints: string[]
@@ -155,6 +260,8 @@ export interface ProofNode {
 
 export interface ExplainRequest {
   runId: string
+  /** A unit inside a project run (its slug under units/); the project program itself otherwise. */
+  unit?: string
   relation: string
   cols: string[]
 }
@@ -186,6 +293,8 @@ export interface AskConfig {
 
 export interface AskRequest {
   runId: string
+  /** A unit inside a project run (its slug under units/): ask about that unit instead of the project. */
+  unit?: string
   question: string
   model: string
   effort: string

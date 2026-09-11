@@ -1,16 +1,27 @@
-# Spike: queryable contract facts, end to end on one contract
+# Spike: queryable contract facts, end to end on one contract — and on a whole project
 
 Throwaway code for [L2B-14851](https://linear.app/l2beat/issue/L2B-14851/1-prove-the-pipeline-end-to-end-on-one-contract):
-walk the whole pipeline once, by hand, on a contract we understand.
+walk the whole pipeline once, by hand, on a contract we understand; then on every contract of a discovery
+project at once, with discovery's snapshot of their values.
 
 ```
 flattened .sol ─► pragma → exact solc ─► standard JSON (AST + storageLayout)
                ─► emitter (src/emit.ts, no Solidity knowledge) ─► layer 0: the AST as facts (TSV)
                ─► Soufflé + rules/*.dl
-                    layer 1  concepts.dl   syntax → function, stmt, callSite, writeSite, …
+                    layer 1  concepts.dl   syntax → function, stmt, callSite, writeSite, extCall, …
                     layers 2–6  lib.dl     structure → call graph → writes → sender checks → findings (tiered)
                     report.dl              what the report, the qf commands and the explorer read
                ─► derived relations ─► report.md, ./qf commands in the run folder
+
+discovery project (discovered.json + .flat/*.sol)
+               ─► the unit pipeline above, once per flattened file (src/project.ts)
+               ─► discovery as facts (src/discovery.ts): dEntry, dImpl, dUnit, dValue, dPermission
+               ─► Soufflé + rules/project-schema.dl + rules/project.dl over every unit's relations + the d* facts
+                    layer 7  deployment    which contract of which unit is the code at an address; proxies → implementations
+                    layer 8  values        a state variable's discovered value; references between contracts
+                    layer 9  authority     who passes each check (resolved through values), Safe signers, calls between
+                                           contracts, calls relayed through Safes by modules, reachability, who can change what
+               ─► project relations ─► report.md, ./qf in project mode
 ```
 
 The one design rule: **a base fact is something solc said, verbatim**. Everything that *means*
@@ -25,10 +36,14 @@ cd spike/queryable-facts
 pnpm dev            # then open http://localhost:5178
 ```
 
-A local web page that walks the pipeline as a seven-step wizard on a contract you pick or paste:
+A local web page that walks the pipeline as an eight-step wizard on a contract you pick or paste, or on a
+whole discovery project:
 
-1. **Contract** – the prepared fixtures (including `ClaimSemanticsPlayground.sol`) and the zora flattened
-   files from `packages/config`, or your own text.
+1. **Contract** – the prepared fixtures (including `ClaimSemanticsPlayground.sol`), the discovery projects under
+   `packages/config/src/projects` that have flattened sources (today: zora), or your own text. Picking a project
+   shows its contracts and files; "Run the pipeline on the whole project" runs every file (progress per unit),
+   then the project rules, and lands on step 8. The unit shown in steps 2–7 is then chosen from a dropdown in
+   the run bar (or by clicking a unit in step 8).
 2. **Compile** – which `solc` was chosen and why, the exact standard-JSON request, the AST as a tree linked
    both ways to the source (click a word → its node, click a node → its text), and the storage layout.
 3. **Tree as facts** – layer 0. Click any word: its AST node's JSON on the left, the rows the emitter wrote
@@ -50,9 +65,20 @@ A local web page that walks the pipeline as a seven-step wizard on a contract yo
    Model and reasoning effort are selectable (default `gpt-5.6-sol` at `high`; `CODEX_MODEL` /
    `CODEX_EFFORT` change the default, `CODEX` the binary). Each question leaves a transcript in `<run>/ask/`.
 
+8. **Project** – only after a project run. Tabs: the deployed contracts and the code behind each (proxy and
+   implementation, with the Safes' thresholds, signers and modules); discovery written down as facts; the project
+   rules as cards; every project relation with a **why?** button (the proof stops at discovery's rows and the
+   units' relations, and a unit id in a proof or a citation opens that unit in steps 2–7); the project
+   `report.md` (contracts, actors, *who can change what* with the full paths through Safes, modules and
+   admins, upgrades, calls between contracts, discovery's permissions checked, gaps) and an ask box whose agent
+   runs `./qf` in project mode.
+
 Every run is written to `out/runs/<contract>-<timestamp>/` (source, solc input/output, `facts/`,
 `program.dl`, `derived/`, `report.md`, `README.txt`, `qf`, `ask/`), which is exactly what the agent of
-step 7 sees. The server is Vite's dev server with a tiny API (`web/server`); nothing is published anywhere.
+step 7 sees. A project run is `out/runs/<project>-<timestamp>/` with one such unit run per file under
+`units/<slug>/`, plus `discovered.json`, `discovery/facts/`, the project's own `facts/` (the d* rows and every
+unit's rows of each imported relation), `program.dl`, `derived/`, `report.md`, `qf`. The server is Vite's dev
+server with a tiny API (`web/server`); nothing is published anywhere.
 
 ### The `qf` commands
 
@@ -78,6 +104,26 @@ can quote it and the explorer can link it.
 Names are matched loosely (`conditionalGuard`, `Contract.f`, `Contract.f(uint256)` or the full id), and an
 ambiguous name lists the candidates instead of guessing.
 
+In a project run folder the same script answers project questions (`./qf help` lists the tiers and relations):
+
+```
+./qf contracts                     every deployed contract: name, address, proxy type, code, storage, entry points
+./qf contract <name|address>       one contract: code units, discovered values, references, entry points and who passes their checks
+./qf values <name|address> [field] the values discovery recorded, and the state variable each one matched
+./qf writers <Contract.var>        who may write a storage variable of a deployed contract, and every path from an actor to each writer
+./qf paths <Contract.function>     every way an actor reaches an entry point: direct callers, Safe signers, modules, admin chains
+./qf who <name|address>            what an actor is (EOA, Safe with signers/threshold/modules, contract), who drives it, what it can call
+./qf calls [<name|address>]        calls between contracts resolved through discovered values; calls relayed through Safes by modules
+./qf gaps                          checks without a value, calls without a target, values without a variable, writers nobody reaches
+./qf rows / explain / query        as above, over the project relations (a unit tuple is explained by its unit's qf)
+./qf function / guards / source    answered by the unit the id belongs to (units/<slug>/qf)
+```
+
+A path reads left to right: `actor → (how it drives the next hop) → … → Contract.function [the check at the
+end and the discovered value it resolved to]`; EOA signers of one Safe fold into "k of n signers". Contracts
+are named by their discovery name ("Optimism Security Council"), address or Solidity contract name; members by
+`Deployed.member`, `Contract.member` or `member`.
+
 ## Running it
 
 Prerequisites:
@@ -100,6 +146,9 @@ pnpm semantic                                                               # fi
 out/ClaimSemanticsPlayground/qf guards conditionalGuard                     # the qf commands work on CLI runs too
 pnpm exec tsx src/compare.ts analyzer.md out/<unit>/report.md              # diff vs storage-writers
 ./corpus.sh <flat-root> /tmp/corpus <entrypoint.sol>...                     # analyzer vs pipeline over many files
+pnpm exec tsx src/main.ts project zora                                       # every flattened file of packages/config/src/projects/zora
+                                                                            # + discovered.json → out/projects/zora/ (./qf in project mode)
+pnpm exec tsx src/main.ts project zora --reuse-units --all-relations        # keep the unit runs, re-run only the project rules
 ```
 
 The first native run downloads the solc binary the pragma resolves to (same mechanism as
@@ -121,6 +170,11 @@ expected/    <fixture>/*.tsv     reviewed rows of storageWriters / findings / op
 src/         compile.ts   pragma → version → solc standard JSON
              emit.ts      solc JSON → layer 0 facts, one rule per JSON shape (the only stage that sees the AST)
              pipeline.ts  the whole loop as one function (used by the CLI, the explorer and the parity check)
+             discovery.ts a discovery project: discovered.json + .flat/ → units (which file is the code at which
+                          address, mirroring discovery's flattener) and the d* facts (no interpretation)
+             project.ts   the project run: the unit pipeline per file, the union of their relations + d* facts,
+                          Soufflé on rules/project*.dl, the project report, qf
+             projectReport.ts  the project report, with the path printer (hop → readable chains)
              parity.ts    derived concept relations vs golden facts, row for row
              semantic.ts  answer relations vs expected/ rows, per fixture
              report.ts    Soufflé outputs → report.md (may-writers, unknown effects, findings with tiers)
@@ -133,15 +187,22 @@ web/         vite.config.ts  dev server + API in one process (`pnpm dev`)
              client/         the React wizard (steps/, components/, lib/); Markdown.tsx renders report.md and
                              answers, Cite.tsx turns cited atoms / ids / lines into links, lib/ask.ts keeps
                              the conversations
+             server/project.ts  list projects, describe one, run one (streaming progress), rebuild a unit's RunResult from disk
+             client/steps/Step8Project.tsx  the project step (contracts, discovery facts, rules, derived + proofs, report & ask)
              smoke.ts        renders every step server-side against a run (no browser needed)
 rules/       schema.dl    layer 0: .decl + .input for the ten base relations, with the encoding explained
-             concepts.dl  layer 1: names, statements, calls, writes, storage references, inline assembly
+             concepts.dl  layer 1: names, statements, calls, writes, storage references, inline assembly, and (1k)
+                          what an external call is aimed at, what its calldata encodes, signer/self/getter checks
              lib.dl       layers 2–6: structure → call graph → writes → sender checks → findings
              report.dl    .output relations, storageWriters, writerDetail, findings
+             project-schema.dl  project layer 0: the d* discovery relations and the unit relations the project reads
+             project.dl   layers 7–9: deployment, values, authority (allowed, acts, crossCall, relayed, canCall, whoCanWrite)
 out/<unit>/  facts/*.facts  derived/*.csv  program.dl  report.md   (CLI output; `out/` is gitignored repo-wide,
                                                                        so run the CLI once to regenerate)
 out/runs/    one folder per explorer run; <run>/ask/ holds the transcripts of step 7, <run>/scratch/ what the
              agent wrote while answering (extra rules, Soufflé outputs)
+out/projects/<name>/  a CLI project run: units/<slug>/ (one unit run each), discovery/facts/, facts/, program.dl,
+                      derived/, report.md, qf (explorer project runs land in out/runs/<name>-<timestamp>/ instead)
 ```
 
 ## The three layers
@@ -205,6 +266,42 @@ sender is compared with is not a statement that the comparison grants access. Se
 through `msg.sender` itself, through a getter that returns it (`_msgSender()`), and through a parameter that
 every caller fills with the sender (`_checkRole(role, _msgSender())` → `hasRole(role, account)`); the
 principal through the variable named, or through a getter that returns it (`owner()` → `_owner`).
+
+## The project level
+
+A discovery project is many deployed contracts and one snapshot of their values. The unit pipeline answers
+"which entry point may change this variable, and what does it check about the sender" for one file; the
+project level (`rules/project.dl`) puts those answers together with `discovered.json`:
+
+- **Deployment** (`codeOf`, `entryAt`, `storageAt`): discovery says which contract name is the code at an
+  address and whether it is the address itself, a proxy, or an implementation; the contract of that name in
+  that flattened file is the code. A proxy's forwarding delegatecall is thereby resolved to its implementation.
+- **Values** (`fieldOf`, `valueOf`, `getterValue`, `refersTo`): discovery records a value under the name it
+  called — a public variable's getter has the variable's name, a view function its own, a few are synthesised
+  (`$members`, `$threshold`, `GnosisSafe_modules`). Getters that return a state variable (`return _owner;`,
+  `guardianSafe_ = GUARDIAN_SAFE;`) and getters that return another contract's getter (`return
+  systemConfig.guardian();`) are followed. Values that match nothing are listed (`unmatchedValue`).
+- **Authority** (`allowed`, `acts`, `crossCall`, `relayed`, `canCall`, `whoCanWrite`, `whoCanUpgrade`): a check
+  compares the sender with a state variable, a getter, an external getter called in the condition, or
+  `address(this)`; resolving that through the values gives *who passes* (one hop, with a tier: checked,
+  checked-or, signature, signature-lead, lead, discovered, open). Safe signers drive their Safe (`acts`, from
+  `$members`/`$threshold`). An external call whose receiver is a state variable or getter with a known value
+  is a call between contracts; one whose receiver is a parameter is caller-chosen and resolved to the contracts
+  that admit the caller (a ProxyAdmin upgrading its proxies). A module calling a Safe's
+  `execTransactionFromModule` with `abi.encodeCall(I.f, …)` for a target held in its state relays a call.
+  Reachability (`canCall`) is plain Datalog recursion over those hops; `hop` keeps the edges so `qf` and the
+  report print paths.
+
+Two unit-level additions came with it: a modifier's `if (<sender>) { _; } else { … }` is a sender check for the
+body (the OP proxies' `proxyCallIfNotAdmin`), and a *signature check* — a condition testing `ecrecover`/
+`ECDSA.recover` or a local holding its result — is its own finding kind (`signature-check`), so Safe
+transactions and the DeputyPauseModule are not reported as open.
+
+Measured on zora (25 contracts, 37 EOAs, 41 flattened files): units 42 s in total (compile + emit + Soufflé
+per file), project facts 0.1 s, project Soufflé 0.23 s; 700 `allowed` rows, 171 calls between contracts, 9
+relayed calls, 3451 `canCall` rows; 33 checks whose principal has no value, 112 external calls without a
+target (mostly caller-chosen receivers nobody admits), 32 values matching no variable (discovery's handlers).
+Of discovery's 43 recorded permissions, 36 have a derived `canCall` behind them.
 
 ## Results in one line each
 

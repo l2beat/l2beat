@@ -296,6 +296,22 @@ nonSenderArg(P) :- param(G, I, P, _, _), callSite(K, _, _, Kind, G, _), (Kind = 
 .decl senderCheck(X: symbol, F: symbol)
 senderCheck(K, F) :- callSite(K, _, F, "builtin", B, _), (B = "require" ; B = "assert"), mentionsSender(K).
 senderCheck(S, F) :- stmt(S, F, "IfStatement", _, _), mentionsSender(S), abortsWithin(S).
+// In a modifier, `if (<sender ...>) { _; } else { <something else> }`: the function body runs only when the
+// sender condition holds (a proxy's `proxyCallIfNotAdmin`: the else branch forwards to the implementation
+// instead, which is reported on its own as an unknown effect).
+senderCheck(S, M) :- stmt(S, M, "IfStatement", _, _), function(M, _, _, _, "modifier", _, _, _), mentionsSender(S), placeholderIn(S), !placeholderInElse(S).
+.decl placeholderIn(S: symbol)
+placeholderIn(S) :- stmt(S, _, "PlaceholderStatement", _, _).
+placeholderIn(S) :- within(S, T), stmt(T, _, "PlaceholderStatement", _, _).
+.decl placeholderInElse(S: symbol)
+placeholderInElse(S) :- stmt(E, _, _, S, 1), stmt(S, _, "IfStatement", _, _), placeholderIn(E).
+
+// A *signature check*: the condition tests a recovered signer (`ecrecover`, ECDSA.recover, or a local that
+// holds one) and aborts when it does not match. Whoever holds a signature by the compared address passes,
+// whatever msg.sender is. A condition that also mentions the sender is a sender check, not this.
+.decl signerCheck(X: symbol, F: symbol)
+signerCheck(K, F) :- callSite(K, _, F, "builtin", B, _), (B = "require" ; B = "assert"), refsRecover(K), !mentionsSender(K).
+signerCheck(S, F) :- stmt(S, F, "IfStatement", _, _), refsRecover(S), abortsWithin(S), !mentionsSender(S).
 
 // A *gate*: `if (<sender ...>) return;` — protects only what comes after it; a return undoes nothing.
 .decl senderGate(S: symbol, F: symbol)
@@ -305,8 +321,24 @@ senderGate(S, F) :- stmt(S, F, "IfStatement", _, _), mentionsSender(S), returnsW
 // getter the condition calls (`owner()` → `_owner`). This names the principal; it does not say the
 // comparison grants access — `msg.sender != owner` lands here too, so findings quote the condition.
 .decl checkPrincipal(X: symbol, P: symbol)
-checkPrincipal(X, P) :- (senderCheck(X, _) ; senderGate(X, _)), refs(X, P), stateVariable(P, _, _, _, _, _).
-checkPrincipal(X, P) :- (senderCheck(X, _) ; senderGate(X, _)), refs(X, G), returnsStateVar(G, P).
+checkPrincipal(X, P) :- (senderCheck(X, _) ; senderGate(X, _) ; signerCheck(X, _)), refs(X, P), stateVariable(P, _, _, _, _, _).
+checkPrincipal(X, P) :- (senderCheck(X, _) ; senderGate(X, _) ; signerCheck(X, _)), refs(X, G), returnsStateVar(G, P).
+// ...or with the result of a zero-argument getter that does not return a state variable directly
+// (`proxyAdminOwner()`, which asks another contract): the project layer looks its value up by name.
+.decl checkGetter(X: symbol, G: symbol)
+checkGetter(X, G) :- (senderCheck(X, _) ; senderGate(X, _)), refs(X, G), getterFn(G), !returnsGlobal(G, "msg.sender"), !returnsAnyStateVar(G).
+.decl returnsAnyStateVar(G: symbol)
+returnsAnyStateVar(G) :- returnsStateVar(G, _).
+// ...or with the contract itself (`msg.sender == address(this)`: only a call the contract makes to itself passes).
+.decl checkSelf(X: symbol)
+checkSelf(X) :- (senderCheck(X, _) ; senderGate(X, _)), refsThis(X).
+
+// A condition in F that compares block.timestamp with a state variable: a delay or expiry whose value matters.
+.decl timeCheck(X: symbol, F: symbol, V: symbol)
+timeCheck(X, F, V) :- checkerIn(X, F), refs(X, "block.timestamp"), refs(X, V), stateVariable(V, _, _, _, _, _).
+.decl checkerIn(X: symbol, F: symbol)
+checkerIn(X, F) :- condition(X, _), stmt(X, F, _, _, _).
+checkerIn(X, F) :- condition(X, _), callSite(X, _, F, _, _, _).
 
 // The condition is a disjunction (`open || msg.sender == owner`): the sender test is one way to pass.
 .decl weakCheck(X: symbol)
@@ -346,6 +378,22 @@ hasAnyCheck(C, F) :- alwaysChecks(C, F, _).
 hasAnyCheck(C, F) :- sometimesChecks(C, F, _).
 hasAnyCheck(C, F) :- reachableIn(C, F), senderGate(_, F).
 
+// The same two notions for signature checks: on every completing execution, or only on some paths.
+.decl alwaysSigner(C: symbol, F: symbol, X: symbol)
+alwaysSigner(C, F, X) :- reachableIn(C, F), signerCheck(X, F), stmtOf(X, S), alwaysExecuted(S).
+alwaysSigner(C, F, X) :- reachableIn(C, F), callSite(_, "", F, "modifier", M0, _), dispatch(C, F, M0, M), alwaysSigner(C, M, X).
+alwaysSigner(C, F, X) :-
+    reachableIn(C, F), callSite(_, S, F, Kind, G0, _), (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
+    S != "", alwaysExecuted(S), dispatch(C, F, G0, G), alwaysSigner(C, G, X).
+.decl sometimesSigner(C: symbol, F: symbol, X: symbol)
+sometimesSigner(C, F, X) :- reachableIn(C, F), signerCheck(X, F), !alwaysSigner(C, F, X).
+sometimesSigner(C, F, X) :-
+    reachableIn(C, F), callSite(_, _, F, Kind, G0, _), (Kind = "modifier" ; Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
+    dispatch(C, F, G0, G), (sometimesSigner(C, G, X) ; alwaysSigner(C, G, X)), !alwaysSigner(C, F, X).
+.decl hasSignerCheck(C: symbol, F: symbol)
+hasSignerCheck(C, F) :- alwaysSigner(C, F, _).
+hasSignerCheck(C, F) :- sometimesSigner(C, F, _).
+
 // Statements of E (running in C) where V may change: a write site of V, direct or through a storage
 // reference; a call statement whose dispatched callee writes V; an assembly block that stores to V.
 .decl effectStmt(C: symbol, E: symbol, V: symbol, S: symbol)
@@ -384,7 +432,7 @@ entryWrites(C, E, "*") :- entryPoint(C, E), reachesFrom(C, E, F), opaqueWrite(F,
 
 // The condition of check or gate X, quoted.
 .decl checkText(X: symbol, T: symbol)
-checkText(X, cat("`", Cond, "`")) :- (senderCheck(X, _) ; senderGate(X, _)), condition(X, Cond).
+checkText(X, cat("`", Cond, "`")) :- (senderCheck(X, _) ; senderGate(X, _) ; signerCheck(X, _)), condition(X, Cond).
 
 .decl finding(C: symbol, E: symbol, V: symbol, Kind: symbol, Detail: symbol, Tier: symbol, Evidence: symbol)
 
@@ -427,9 +475,16 @@ finding(C, E, V, "write-before-gate", cat("early return on the sender ", T, " co
 finding(C, E, V, "gate-some-paths", cat("early return on the sender ", T, " runs only on some paths"), "heuristic", S) :-
     entryWrites(C, E, V), V != "*", !alwaysReverts(E), senderGate(S, E), !alwaysExecuted(S), checkText(S, T).
 
-// Nothing on the way tests the sender — relative to what the rules recognise as a check.
+// A signature check that runs whenever the call completes: the caller must present a signature by the
+// address the recovered signer is compared with. Who sent the transaction does not matter.
+finding(C, E, V, "signature-check", cat("signature check ", T, " runs on every completing execution: the caller must hold a signature by the address it compares with"), "guaranteed", X) :-
+    entryWrites(C, E, V), !alwaysReverts(E), alwaysSigner(C, E, X), checkText(X, T).
+finding(C, E, V, "signature-some-paths", cat("signature check ", T, " runs only on some paths"), "heuristic", X) :-
+    entryWrites(C, E, V), !alwaysReverts(E), sometimesSigner(C, E, X), checkText(X, T).
+
+// Nothing on the way tests the sender (or a signature) — relative to what the rules recognise as a check.
 finding(C, E, V, "no-check", "no sender check found: no require/assert/if on msg.sender (or on a getter returning it) in the function, its modifiers, or anything it calls", "heuristic", "") :-
-    entryWrites(C, E, V), !alwaysReverts(E), !hasAnyCheck(C, E).
+    entryWrites(C, E, V), !alwaysReverts(E), !hasAnyCheck(C, E), !hasSignerCheck(C, E).
 
 // Something on the way from E that the analysis cannot follow. Never dropped: a universal claim
 // ("only the owner can change anything") must see these.

@@ -1,0 +1,70 @@
+// =============================================================================
+// Layer 0: base facts — what solc said, verbatim.
+//
+// These are the only relations read from disk (`.input`). They are produced by src/emit.ts,
+// which walks solc's compact JSON AST and writes every object and every field down once, using
+// an encoding that depends only on the *shape* of the JSON, never on what a field means:
+//
+//   { nodeType, id, src, ... }    →  node(Id, Type)  loc(Id, Src, Start, Len, Line, EndLine)  text(Id, Text)
+//   field holding another node    →  child(Parent, Field, Index, Child)
+//   field holding a string/bool   →  attr(Id, Field, Value)
+//   field holding a number        →  num(Id, Field, Value)
+//   field holding an array        →  one row per element with its Index (child / attrList / numList)
+//   field holding a plain object  →  flattened with dotted keys ("typeDescriptions.typeString")
+//
+// Nothing here knows what a function or an assignment is. That knowledge lives in the next
+// layer (rules/1-syntax.dl), where every step from syntax to meaning is a rule that Soufflé can
+// explain back down to these rows.
+// =============================================================================
+
+// The source unit this run is about: its id prefix, the file name solc saw, the compiler version.
+.decl unit(Unit: symbol, File: symbol, Solc: symbol)
+.input unit
+
+// One row per AST node: solc's own node id and its nodeType ("FunctionDefinition", "Assignment",
+// "YulFunctionCall", ...). Yul nodes have no id in solc's JSON and get synthetic ids above the
+// largest solc id.
+.decl node(Id: number, Type: symbol)
+.input node
+
+// Where a node sits in the source. Src is solc's "<start>:<length>:<file>" string, Start/Len decode it
+// (bytes), StartLine/EndLine are 1-based lines of the first and last byte.
+.decl loc(Id: number, Src: symbol, Start: number, Len: number, StartLine: number, EndLine: number)
+.input loc
+
+// The tree itself: node Child sits in field Field of node Parent. Index is the position when the
+// field is an array (`statements`, `arguments`, `parameters`, ...), 0 otherwise. Fields inside plain
+// objects inside arrays are flattened with dotted keys ("functionList.definition").
+.decl child(Parent: number, Field: symbol, Index: number, Child: number)
+.input child
+
+// String and boolean fields of a node: name, operator, visibility, kind, stateMutability,
+// storageLocation, memberName, value, "typeDescriptions.typeString", ... Booleans are "true"/"false".
+.decl attr(Id: number, Key: symbol, Value: symbol)
+.input attr
+
+// Numeric fields of a node. The important one is referencedDeclaration: the id of the node an
+// Identifier / MemberAccess / IdentifierPath refers to (solc's name resolution, for free).
+// Builtins (`require`, `msg`, ...) have negative ids that the JSON prints as uint32 (>= 2^31).
+.decl num(Id: number, Key: symbol, Value: number)
+.input num
+
+// Strings/booleans inside arrays, with their index: `names` of a call with named arguments,
+// "externalReferences.src" / "externalReferences.isSlot" of an inline assembly block, ...
+.decl attrList(Id: number, Key: symbol, Index: number, Value: symbol)
+.input attrList
+
+// Numbers inside arrays, with their index: linearizedBaseContracts (the C3 order, most-derived
+// first), baseFunctions (what an override overrides), "externalReferences.declaration", ...
+.decl numList(Id: number, Key: symbol, Index: number, Value: number)
+.input numList
+
+// The source text under a node, collapsed to one line and cut at 200 characters. Display only:
+// no rule should reason about text when the tree is available.
+.decl text(Id: number, Text: symbol)
+.input text
+
+// solc's storageLayout for each contract, one row per state variable that occupies storage
+// (constants and immutables never appear). AstId is the VariableDeclaration's node id.
+.decl storageLayout(Contract: symbol, AstId: number, Label: symbol, Slot: number, Offset: number, Type: symbol)
+.input storageLayout

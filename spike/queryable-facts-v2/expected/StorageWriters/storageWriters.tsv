@@ -1,0 +1,12 @@
+# storageWriters: reviewed rows for StorageWriters.sol; regenerate with 'pnpm semantic --update', then check the diff
+StorageWriters.sol:StorageWriters	StorageWriters.sol:Owned.opCount	1	StorageWriters.sol:StorageWriters.addTotal(uint256)
+StorageWriters.sol:StorageWriters	StorageWriters.sol:Owned.opCount	1	StorageWriters.sol:StorageWriters.trackedWrite()
+StorageWriters.sol:StorageWriters	StorageWriters.sol:Owned.owner	0	constructor
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.asmLiteral	6	StorageWriters.sol:StorageWriters.asmLiteralWrite(uint256)
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.asmSlotRef	7	StorageWriters.sol:StorageWriters.asmSlotRefWrite(uint256)
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.asmViaLet	8	StorageWriters.sol:StorageWriters.asmLetWrite(uint256)
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.ctorOnly	11	constructor
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.libData	3	StorageWriters.sol:StorageWriters.bumpLib()
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.paramData	4	StorageWriters.sol:StorageWriters.bumpParam()
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.ptrData	5	StorageWriters.sol:StorageWriters.pointerWrite(uint256)
+StorageWriters.sol:StorageWriters	StorageWriters.sol:StorageWriters.total	2	StorageWriters.sol:StorageWriters.addTotal(uint256)
