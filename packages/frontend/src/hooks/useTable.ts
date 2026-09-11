@@ -57,10 +57,7 @@ export function useTable<TData extends RowData>(
 export function parseHiddenColumns(raw: string): string[] {
   try {
     const parsed: unknown = JSON.parse(raw)
-    if (
-      Array.isArray(parsed) &&
-      parsed.every((id) => typeof id === 'string')
-    ) {
+    if (Array.isArray(parsed) && parsed.every((id) => typeof id === 'string')) {
       return parsed
     }
   } catch {
