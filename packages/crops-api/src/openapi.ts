@@ -12,11 +12,6 @@ import {
 
 const COMPONENT_SCHEMAS_REF = '#/components/schemas/'
 
-export const SERVERS = [
-  { url: 'https://crops.l2beat.com', description: 'Production' },
-  { url: 'https://crops-staging.l2beat.com', description: 'Staging' },
-]
-
 export interface PublishedRoute {
   /** OpenAPI template, e.g. `/v1/project/{id}.json`. */
   path: string
@@ -125,7 +120,8 @@ export function buildOpenApiDocument(ledger: CropsAttestationsMeta) {
       version: '1.0.0',
       description: buildOpenApiDescription(ledger),
     },
-    servers: SERVERS,
+    // No `servers` on purpose: without them every client, Swagger UI included, resolves paths
+    // against the host that served the spec, so staging can never accidentally call production.
     paths: Object.fromEntries(
       PUBLISHED_ROUTES.map((route) => [
         route.path,
