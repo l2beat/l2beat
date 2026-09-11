@@ -1,6 +1,6 @@
 import type { CropKey, CropSentiment, ProjectCropStatus } from '@l2beat/config'
-import { CropPlantSample } from '../../components/CropBadge'
-import { CROP_COLUMNS } from '../../crops'
+import { CropPlant } from '~/components/garden/CropPlant'
+import { CROP_COLUMNS } from '~/components/garden/crops'
 
 const SAMPLE: Record<
   CropKey,
@@ -51,7 +51,8 @@ export function WalletMock() {
                 key={column.key}
                 className="flex scale-75 flex-col items-center gap-0.5"
               >
-                <CropPlantSample
+                <CropPlant
+                  className="h-10"
                   sentiment={SAMPLE[column.key].sentiment}
                   status={SAMPLE[column.key].status}
                   delay={0.1 + index * 0.12}

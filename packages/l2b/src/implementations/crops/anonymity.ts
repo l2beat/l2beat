@@ -1,4 +1,4 @@
-import type { AttestationNetworkConfig } from '@l2beat/config/build/crops/eas'
+import type { AttestationNetworkConfig } from '@l2beat/config'
 
 // While the attestations live on a testnet, nothing published onchain may tie
 // them to L2BEAT. The commands run this right before signing.

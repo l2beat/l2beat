@@ -4,7 +4,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { externalLinks } from '~/consts/externalLinks'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { SproutIcon } from '../../components/SproutIcon'
-import { SUBMISSION_QUESTIONS_PATH } from '../links'
+import { SUBMISSION_QUESTIONS_PATH } from '../../paths'
 
 export function ClosingSection() {
   return (

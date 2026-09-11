@@ -4,7 +4,7 @@ import {
   ATTESTATION_SCHEMA_REVOCABLE,
   ATTESTATION_SCHEMA_UID,
   getSchemaUrl,
-} from '@l2beat/config/build/crops/eas'
+} from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
@@ -17,7 +17,6 @@ import {
 import {
   createReader,
   createSigner,
-  hasAttesterKey,
   isSchemaRegistered,
   registerSchema,
 } from '../implementations/crops/easClient'
@@ -34,19 +33,13 @@ export const CropsSchema = command({
     execute: executeFlag,
   },
   handler: async (args) => {
-    if (args.execute && !hasAttesterKey()) {
-      console.log(
-        chalk.red(
-          'L2B_CROPS_PRIVATE_KEY is not set. Export the attester key in the shell you run this from - it is deliberately not a command line flag, so it never lands in shell history.',
-        ),
-      )
-      process.exitCode = 1
-      return
-    }
-
     assertSchemaUid()
 
     const network = args.network
+    const rpcUrl = args.rpcUrl ?? defaultRpcUrl(network)
+    // Before any RPC work, so a missing key fails first.
+    const signer = args.execute ? createSigner(rpcUrl) : undefined
+
     assertAnonymous(network, 'The attestation schema', ATTESTATION_SCHEMA)
     console.log(chalk.bold('schema  '), ATTESTATION_SCHEMA)
     console.log(chalk.bold('resolver'), ATTESTATION_SCHEMA_RESOLVER)
@@ -55,7 +48,6 @@ export const CropsSchema = command({
     console.log(chalk.bold('network '), `${network.name} (${network.chainId})`)
     console.log(chalk.bold('explorer'), getSchemaUrl(network))
 
-    const rpcUrl = args.rpcUrl ?? defaultRpcUrl(network)
     const reader = createReader(rpcUrl)
     if (await isSchemaRegistered(reader, network)) {
       console.log(chalk.green('\nAlready registered on this network.'))
@@ -63,13 +55,11 @@ export const CropsSchema = command({
     }
     console.log(chalk.yellow('\nNot registered on this network yet.'))
 
-    if (!args.execute) {
+    if (!signer) {
       console.log('Pass --execute to register it.')
       return
     }
 
-    // Before the prompt, so a missing key fails before the operator confirms.
-    const signer = createSigner(rpcUrl)
     console.log(`\nattester ${signer.account?.address} on ${network.name}`)
     if (network.isTestnet) {
       console.log(

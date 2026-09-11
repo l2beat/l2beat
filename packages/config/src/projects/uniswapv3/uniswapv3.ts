@@ -1,5 +1,5 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { CROPS } from '../../common/crops'
+import { CROP_NOTES } from '../../common/crops'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -202,7 +202,7 @@ export const uniswapv3: BaseProject = {
       ],
       notReviewed: [
         'The router and approval contracts that sit outside the pools, which are assessed separately.',
-        CROPS.notReviewed.circuitBreakers,
+        CROP_NOTES.notReviewed.circuitBreakers,
       ],
     },
   },

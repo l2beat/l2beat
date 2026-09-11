@@ -2,7 +2,7 @@ import { Button } from '~/components/core/Button'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { SproutIcon } from '../../components/SproutIcon'
-import { GARDEN_PATH, SUBMISSION_QUESTIONS_PATH } from '../links'
+import { GARDEN_PATH, SUBMISSION_QUESTIONS_PATH } from '../../paths'
 
 export function HeroSection() {
   return (

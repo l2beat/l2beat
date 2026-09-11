@@ -1,11 +1,10 @@
-import { CROP_ATTESTATIONS } from '@l2beat/config/build/crops/attestations'
 import {
   ATTESTATION_SCHEMA_UID,
+  CROP_ATTESTATIONS,
   getAttestationUrl,
-} from '@l2beat/config/build/crops/eas'
+} from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
-import type { Hex } from 'viem'
 import { networkOption, rpcUrlOption } from '../implementations/crops/args'
 import {
   createReader,
@@ -45,7 +44,7 @@ export const CropsVerify = command({
 
     for (const record of ledger.live) {
       const label = `rev ${record.revision} (${record.uid})`
-      const onchain = await getAttestation(reader, network, record.uid as Hex)
+      const onchain = await getAttestation(reader, network, record.uid)
       if (!onchain) {
         problems.push(`${label}: does not exist`)
         continue

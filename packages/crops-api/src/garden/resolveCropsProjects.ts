@@ -4,7 +4,11 @@ import type {
   ProjectScalingInfo,
   ResolvedCrops,
 } from '@l2beat/config'
-import { CROPS } from '@l2beat/config'
+import {
+  CROP_KEYS,
+  qualifiesForGarden,
+  resolveProjectCrops,
+} from '@l2beat/config'
 import type {
   CropsApiAttestation,
   CropsApiProject,
@@ -15,9 +19,6 @@ import { getGardenProjectPath } from './getGardenProjectPath'
 
 // Copied from the frontend's getCropsProjects until the garden helpers move
 // into config, minus the ProjectService call: the generator is handed projects.
-
-const { CROP_KEYS, qualifiesForGarden, resolveProjectCrops } =
-  CROPS.canonicalCrops
 
 // API responses link to production whatever host served them.
 const BASE_URL = 'https://l2beat.com'

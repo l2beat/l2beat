@@ -1,6 +1,6 @@
 import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import { CropPlant } from '~/components/garden/CropPlant'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { CropPlantSample } from './CropBadge'
 import { SectionHeading } from './SectionHeading'
 
 const PLANTS: {
@@ -56,7 +56,8 @@ export function PlantLegendSection() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {PLANTS.map((plant, index) => (
             <article key={plant.title} className="flex flex-col gap-2">
-              <CropPlantSample
+              <CropPlant
+                className="h-10"
                 sentiment={plant.sentiment}
                 status={plant.status}
                 delay={index * 0.14}

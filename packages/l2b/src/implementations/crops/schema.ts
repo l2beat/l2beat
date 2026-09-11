@@ -3,7 +3,7 @@ import {
   ATTESTATION_SCHEMA_RESOLVER,
   ATTESTATION_SCHEMA_REVOCABLE,
   ATTESTATION_SCHEMA_UID,
-} from '@l2beat/config/build/crops/eas'
+} from '@l2beat/config'
 import { encodePacked, type Hex, keccak256 } from 'viem'
 
 /**
@@ -16,10 +16,7 @@ export function computeSchemaUid(
   revocable = ATTESTATION_SCHEMA_REVOCABLE,
 ): Hex {
   return keccak256(
-    encodePacked(
-      ['string', 'address', 'bool'],
-      [schema, resolver as Hex, revocable],
-    ),
+    encodePacked(['string', 'address', 'bool'], [schema, resolver, revocable]),
   )
 }
 

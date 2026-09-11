@@ -1,10 +1,10 @@
 import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
+import { CropBadge } from '~/components/garden/CropBadge'
+import { CROP_COLUMNS } from '~/components/garden/crops'
 import { PercentChange } from '~/components/PercentChange'
 import { Table, TableBody, TableCell, TableRow } from '~/components/table/Table'
 import { cn } from '~/utils/cn'
-import { CROP_COLUMNS } from '../crops'
 import type { GardenEntry } from '../getGardenData'
-import { CropBadge } from './CropBadge'
 
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   return (

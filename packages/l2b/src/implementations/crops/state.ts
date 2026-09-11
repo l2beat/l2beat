@@ -1,5 +1,4 @@
-import type { CropAttestation } from '@l2beat/config/build/crops/attestations'
-import type { AttestationNetworkConfig } from '@l2beat/config/build/crops/eas'
+import type { AttestationNetworkConfig, CropAttestation } from '@l2beat/config'
 import type { Address, Hex, PublicClient } from 'viem'
 import {
   getAttestation,
@@ -14,7 +13,7 @@ export async function loadOnchainState(
   ledger: CropAttestation[],
   options: { scan: boolean; attester?: Address; fromBlock?: number },
 ): Promise<Map<string, OnchainAttestation>> {
-  const uids = new Set<Hex>(ledger.map((x) => x.uid as Hex))
+  const uids = new Set<Hex>(ledger.map((x) => x.uid))
 
   if (options.scan) {
     if (!options.attester) {

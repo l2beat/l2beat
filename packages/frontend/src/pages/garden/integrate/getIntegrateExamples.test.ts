@@ -1,4 +1,4 @@
-import { CROPS } from '@l2beat/config'
+import { resolveProjectCrops } from '@l2beat/config'
 import { expect } from 'earl'
 import type {
   CropsApiProject,
@@ -39,7 +39,7 @@ const UNISWAP: CropsApiProject = {
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
   href: 'https://l2beat.com/layer2s/projects/uniswap-v3',
-  crops: CROPS.canonicalCrops.resolveProjectCrops({
+  crops: resolveProjectCrops({
     censorshipResistance: { sentiment: 'good', points: ['One', 'Two'] },
     openSource: { sentiment: 'good', license: 'MIT' },
     privacy: { sentiment: 'good' },

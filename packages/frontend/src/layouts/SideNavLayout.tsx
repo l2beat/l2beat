@@ -96,7 +96,7 @@ export function SideNavLayout({
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
 
   return (
-    <SidebarProvider>
+    <SidebarProvider transparent={backdrop !== undefined}>
       {backdrop}
       <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>

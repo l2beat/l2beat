@@ -1,22 +1,20 @@
-import { CROPS } from '@l2beat/config'
-import type { CropsAttestationsMeta } from '../schemas'
-
-// Copied from the frontend until the garden helpers move into config.
-
-const { getCropAttestationLedger, getCurrentCropAttestation } =
-  CROPS.attestations
-const {
+import {
   ATTESTATION_NETWORK,
   ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
+  CROP_ATTESTATIONS,
   getAttestationUrl,
-} = CROPS.eas
+  getCurrentCropAttestation,
+} from '@l2beat/config'
+import type { CropsAttestationsMeta } from '../schemas'
+
+// Copied from the frontend until the garden helpers move into config.
 
 /** Reads the committed ledger for the configured network, so no RPC call is needed. */
 export function getAttestationsMeta(): CropsAttestationsMeta {
   const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
-  const ledger = getCropAttestationLedger(ATTESTATION_NETWORK)
+  const ledger = CROP_ATTESTATIONS[ATTESTATION_NETWORK]
   const current = getCurrentCropAttestation(ATTESTATION_NETWORK)
   return {
     network: network.name,

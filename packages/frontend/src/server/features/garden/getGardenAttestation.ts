@@ -1,9 +1,10 @@
-import { CROPS } from '@l2beat/config'
+import {
+  ATTESTATION_NETWORK,
+  ATTESTATION_NETWORKS,
+  getAttestationUrl,
+  getCurrentCropAttestation,
+} from '@l2beat/config'
 import type { GardenAttestation } from '~/pages/garden/components/AttestationNotice'
-
-const { getCurrentCropAttestation } = CROPS.attestations
-const { ATTESTATION_NETWORK, ATTESTATION_NETWORKS, getAttestationUrl } =
-  CROPS.eas
 
 export function getGardenAttestation(): GardenAttestation | undefined {
   const attestation = getCurrentCropAttestation(ATTESTATION_NETWORK)

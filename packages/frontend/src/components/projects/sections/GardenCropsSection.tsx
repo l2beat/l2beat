@@ -1,6 +1,6 @@
 import type { ResolvedCrops } from '@l2beat/config'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import { GARDEN_PATH } from '~/pages/garden/submit/links'
+import { GARDEN_PATH } from '~/pages/garden/paths'
 import { CropsBed } from './crops/CropsBed'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'

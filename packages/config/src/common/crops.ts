@@ -2,7 +2,7 @@
  * Shared CROPS wording, so identical claims read identically everywhere. The
  * license claim is generated from the OSI list instead - see `license`.
  */
-export const CROPS = {
+export const CROP_NOTES = {
   passesWalkawayTest: (detail?: string) =>
     detail
       ? `Passes the walkaway test: ${detail}`

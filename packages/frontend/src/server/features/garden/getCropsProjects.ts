@@ -3,24 +3,21 @@ import type {
   ResolvedCropEvaluation,
   ResolvedCrops,
 } from '@l2beat/config'
-import { CROPS } from '@l2beat/config'
-import { ps } from '~/server/projects'
-import { getGardenProjectPath } from './getGardenProjectPath'
-
-const { getCropAttestationLedger, getCurrentCropAttestation } =
-  CROPS.attestations
-const { CROP_KEYS, qualifiesForGarden, resolveProjectCrops } =
-  CROPS.canonicalCrops
-const {
+import {
   ATTESTATION_NETWORK,
   ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
+  CROP_ATTESTATIONS,
+  CROP_KEYS,
   getAttestationUrl,
-} = CROPS.eas
-
-// API responses link to production whatever host served them.
-export const BASE_URL = 'https://l2beat.com'
+  getCurrentCropAttestation,
+  qualifiesForGarden,
+  resolveProjectCrops,
+} from '@l2beat/config'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import { ps } from '~/server/projects'
+import { getGardenProjectPath } from './getGardenProjectPath'
 
 export interface CropsAttestationsMeta {
   network: string
@@ -42,7 +39,7 @@ export interface CropsAttestationsMeta {
 
 export function getAttestationsMeta(): CropsAttestationsMeta {
   const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
-  const ledger = getCropAttestationLedger(ATTESTATION_NETWORK)
+  const ledger = CROP_ATTESTATIONS[ATTESTATION_NETWORK]
   const current = getCurrentCropAttestation(ATTESTATION_NETWORK)
   return {
     network: network.name,
@@ -112,7 +109,7 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
         id: project.id,
         slug: project.slug,
         name: project.name,
-        href: path ? `${BASE_URL}${path}` : null,
+        href: path ? `${PRODUCTION_ORIGIN}${path}` : null,
         crops,
         inGarden: qualifiesForGarden(crops),
         attested: isAttested,
