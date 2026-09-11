@@ -11,6 +11,8 @@
   "workers_dev": false,
   // No routes on purpose: declared routes make wrangler read the zone on every deploy, and the
   // deploy token is scoped to Workers Scripts only. Custom domains are attached once by hand.
+  // `production` is empty because it inherits everything above. It exists so the workflow can
+  // pass one `--env` input for both targets: wrangler rejects an env name missing from this block.
   "env": {
     "production": {},
     "staging": {

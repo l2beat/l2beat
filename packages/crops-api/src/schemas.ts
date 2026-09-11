@@ -25,7 +25,7 @@ const AttestationsMetaSchema = v
     chainId: v.number(),
     isTestnet: v
       .boolean()
-      .describe('True while attestations are on a testnet such as Sepolia.'),
+      .describe('True while attestations are on a testnet.'),
     eas: v.string().describe('EAS contract address.'),
     schemaUid: v.string(),
     schema: v.string().describe('EAS schema definition string.'),
