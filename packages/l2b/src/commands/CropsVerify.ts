@@ -1,11 +1,11 @@
 import {
-  ATTESTATION_SCHEMA_UID,
+  ATTESTATION_NETWORKS,
   CROP_ATTESTATIONS,
   getAttestationUrl,
+  isCurrentSchema,
 } from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
-import { networkOption, rpcUrlOption } from '../implementations/crops/args'
 import {
   createReader,
   getAttestation,
@@ -16,8 +16,7 @@ import {
   getAttestedProjectIds,
   setMatches,
 } from '../implementations/crops/payload'
-import { defaultRpcUrl } from '../implementations/crops/rpc'
-import { assertSchemaUid } from '../implementations/crops/schema'
+import { attestationNetwork, optionalRpcUrl } from './args'
 
 /** Read-only. Exits non-zero when ledger, config and chain disagree, so it can gate CI. */
 export const CropsVerify = command({
@@ -25,20 +24,18 @@ export const CropsVerify = command({
   description:
     'Checks the committed crop attestation against EAS and against the set of projects with crop evaluations in config.',
   args: {
-    network: networkOption,
-    rpcUrl: rpcUrlOption,
+    network: attestationNetwork,
+    rpcUrl: optionalRpcUrl,
   },
   handler: async (args) => {
-    assertSchemaUid()
-
-    const network = args.network
+    const network = ATTESTATION_NETWORKS[args.network]
     const ledger = CROP_ATTESTATIONS[network.name]
     if (!ledger || ledger.live.length === 0) {
       console.log(chalk.dim(`Nothing attested on ${network.name} yet.`))
       return
     }
 
-    const reader = createReader(args.rpcUrl ?? defaultRpcUrl(network))
+    const reader = createReader(network, args.rpcUrl)
     const projectIds = await getAttestedProjectIds()
     const problems: string[] = []
 
@@ -59,9 +56,7 @@ export const CropsVerify = command({
         )
         continue
       }
-      if (
-        onchain.schema.toLowerCase() !== ATTESTATION_SCHEMA_UID.toLowerCase()
-      ) {
+      if (!isCurrentSchema(onchain.schema)) {
         problems.push(
           `${label}: attested under superseded schema ${onchain.schema} - revoke it with \`l2b crops-attest --execute\``,
         )

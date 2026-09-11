@@ -6,18 +6,19 @@ import type {
 } from '@l2beat/config'
 import { ATTESTATION_SCHEMA_UID, getAttestationUrl } from '@l2beat/config'
 import chalk from 'chalk'
-import type { Address, PublicClient, WalletClient } from 'viem'
+import type { Address, PublicClient } from 'viem'
 import {
   multiAttest,
   multiRevoke,
   type NewAttestation,
   readAttestedUids,
+  type Signer,
 } from './easClient'
 import type { AttestPlan } from './plan'
 
 export interface ExecuteInput {
   reader: PublicClient
-  signer: WalletClient
+  signer: Signer
   attester: Address
   network: AttestationNetworkConfig
   plan: AttestPlan

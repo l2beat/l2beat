@@ -1,22 +1,19 @@
 import type { AttestationNetworkConfig } from '@l2beat/config'
-import { ATTESTATION_SCHEMA, CROP_ATTESTATIONS } from '@l2beat/config'
-import chalk from 'chalk'
-import { command } from 'cmd-ts'
-import { keyInYN } from 'readline-sync'
-import { assertAnonymous } from '../implementations/crops/anonymity'
 import {
-  executeFlag,
-  networkOption,
-  rpcUrlOption,
-  scanFlag,
-} from '../implementations/crops/args'
+  ATTESTATION_NETWORKS,
+  ATTESTATION_SCHEMA,
+  CROP_ATTESTATIONS,
+} from '@l2beat/config'
+import chalk from 'chalk'
+import { boolean, command, flag } from 'cmd-ts'
+import { keyInYN } from 'readline-sync'
+import { zeroHash } from 'viem'
+import { assertAnonymous } from '../implementations/crops/anonymity'
 import {
   createReader,
   createSigner,
-  estimateGas,
   isSchemaRegistered,
   type NewAttestation,
-  ZERO_UID,
 } from '../implementations/crops/easClient'
 import { executePlan } from '../implementations/crops/execute'
 import { getLedgerPath, writeLedger } from '../implementations/crops/ledger'
@@ -25,30 +22,38 @@ import {
   getAttestedProjectIds,
 } from '../implementations/crops/payload'
 import { type AttestPlan, planAttestation } from '../implementations/crops/plan'
-import { defaultRpcUrl } from '../implementations/crops/rpc'
-import { assertSchemaUid } from '../implementations/crops/schema'
 import { loadOnchainState } from '../implementations/crops/state'
+import { attestationNetwork, optionalRpcUrl } from './args'
+import { readAttesterKey } from './cropsKey'
 
 export const CropsAttest = command({
   name: 'crops-attest',
   description:
     'Diffs the set of projects with crop evaluations in config against the set attested onchain, and publishes the difference. Dry run unless --execute is passed; the attester key comes from L2B_CROPS_PRIVATE_KEY, never a flag.',
   args: {
-    network: networkOption,
-    rpcUrl: rpcUrlOption,
-    scan: scanFlag,
-    execute: executeFlag,
+    network: attestationNetwork,
+    rpcUrl: optionalRpcUrl,
+    scan: flag({
+      type: boolean,
+      long: 'scan',
+      description:
+        'reconcile against every attestation the attester ever made, via eth_getLogs, instead of only the uids in the committed ledger.',
+    }),
+    execute: flag({
+      type: boolean,
+      long: 'execute',
+      description: 'send transactions. Needs L2B_CROPS_PRIVATE_KEY.',
+    }),
   },
   handler: async (args) => {
-    assertSchemaUid()
-
-    const network = args.network
-    const rpcUrl = args.rpcUrl ?? defaultRpcUrl(network)
-    const reader = createReader(rpcUrl)
+    const network = ATTESTATION_NETWORKS[args.network]
+    const reader = createReader(network, args.rpcUrl)
     // Before any RPC work, so a missing key fails first.
-    const signer = args.execute ? createSigner(rpcUrl) : undefined
+    const signer = args.execute
+      ? createSigner(network, readAttesterKey(), args.rpcUrl)
+      : undefined
     const ledger = CROP_ATTESTATIONS[network.name]
-    const attester = signer?.account?.address ?? ledger?.attester
+    const attester = signer?.account.address ?? ledger?.attester
 
     const projectIds = await getAttestedProjectIds()
     const onchain = await loadOnchainState(
@@ -71,7 +76,7 @@ export const CropsAttest = command({
     }
 
     const attestations = toAttestations(plan, network)
-    if (!signer?.account) {
+    if (!signer) {
       console.log(
         chalk.dim(
           `\nDry run. Pass --execute to revoke ${plan.revoke.length} and attest ${attestations.length}.`,
@@ -89,13 +94,7 @@ export const CropsAttest = command({
       )
     }
 
-    const gas = await estimateGas(reader, network, signer.account.address, {
-      attestations,
-      revoke: plan.revoke,
-    })
-    console.log(
-      `\nattester ${signer.account.address} on ${network.name}, estimated gas ${gas}`,
-    )
+    console.log(`\nattester ${signer.account.address} on ${network.name}`)
     if (network.isTestnet) {
       console.log(
         chalk.dim(
@@ -142,7 +141,7 @@ function toAttestations(
   return [
     {
       // Chains it to the one it replaces, so the history is walkable onchain.
-      refUID: plan.revoke[0]?.uid ?? ZERO_UID,
+      refUID: plan.revoke[0]?.uid ?? zeroHash,
       data: encodePayload(plan.payload),
     },
   ]

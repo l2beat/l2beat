@@ -4,21 +4,12 @@ import type {
   CropAttestationLedgers,
 } from '@l2beat/config'
 import { writeFileSync } from 'fs'
-import { join } from 'path'
+import { dirname, join } from 'path'
 
-// Resolved from this file rather than cwd so the command works from anywhere.
+/** The source file behind CROP_ATTESTATIONS, found through the package rather than a directory depth. */
 export function getLedgerPath(): string {
-  return join(
-    __dirname,
-    '..',
-    '..',
-    '..',
-    '..',
-    'config',
-    'src',
-    'crops',
-    'attestationData.json',
-  )
+  const configRoot = dirname(require.resolve('@l2beat/config/package.json'))
+  return join(configRoot, 'src', 'crops', 'attestationData.json')
 }
 
 export function writeLedger(

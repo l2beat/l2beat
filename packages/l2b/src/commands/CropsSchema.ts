@@ -1,4 +1,5 @@
 import {
+  ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_RESOLVER,
   ATTESTATION_SCHEMA_REVOCABLE,
@@ -6,39 +7,37 @@ import {
   getSchemaUrl,
 } from '@l2beat/config'
 import chalk from 'chalk'
-import { command } from 'cmd-ts'
+import { boolean, command, flag } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
 import { assertAnonymous } from '../implementations/crops/anonymity'
-import {
-  executeFlag,
-  networkOption,
-  rpcUrlOption,
-} from '../implementations/crops/args'
 import {
   createReader,
   createSigner,
   isSchemaRegistered,
   registerSchema,
 } from '../implementations/crops/easClient'
-import { defaultRpcUrl } from '../implementations/crops/rpc'
-import { assertSchemaUid } from '../implementations/crops/schema'
+import { attestationNetwork, optionalRpcUrl } from './args'
+import { readAttesterKey } from './cropsKey'
 
 export const CropsSchema = command({
   name: 'crops-schema',
   description:
     'Prints the crop attestation schema and its uid, and registers it in the EAS SchemaRegistry.',
   args: {
-    network: networkOption,
-    rpcUrl: rpcUrlOption,
-    execute: executeFlag,
+    network: attestationNetwork,
+    rpcUrl: optionalRpcUrl,
+    execute: flag({
+      type: boolean,
+      long: 'execute',
+      description: 'send the transaction. Needs L2B_CROPS_PRIVATE_KEY.',
+    }),
   },
   handler: async (args) => {
-    assertSchemaUid()
-
-    const network = args.network
-    const rpcUrl = args.rpcUrl ?? defaultRpcUrl(network)
+    const network = ATTESTATION_NETWORKS[args.network]
     // Before any RPC work, so a missing key fails first.
-    const signer = args.execute ? createSigner(rpcUrl) : undefined
+    const signer = args.execute
+      ? createSigner(network, readAttesterKey(), args.rpcUrl)
+      : undefined
 
     assertAnonymous(network, 'The attestation schema', ATTESTATION_SCHEMA)
     console.log(chalk.bold('schema  '), ATTESTATION_SCHEMA)
@@ -48,7 +47,7 @@ export const CropsSchema = command({
     console.log(chalk.bold('network '), `${network.name} (${network.chainId})`)
     console.log(chalk.bold('explorer'), getSchemaUrl(network))
 
-    const reader = createReader(rpcUrl)
+    const reader = createReader(network, args.rpcUrl)
     if (await isSchemaRegistered(reader, network)) {
       console.log(chalk.green('\nAlready registered on this network.'))
       return
@@ -60,7 +59,7 @@ export const CropsSchema = command({
       return
     }
 
-    console.log(`\nattester ${signer.account?.address} on ${network.name}`)
+    console.log(`\nattester ${signer.account.address} on ${network.name}`)
     if (network.isTestnet) {
       console.log(
         chalk.dim(

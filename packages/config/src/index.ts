@@ -42,6 +42,7 @@ export {
 } from './crops/cropsApi'
 export {
   ATTESTATION_NETWORK,
+  ATTESTATION_NETWORK_NAMES,
   ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_RESOLVER,
@@ -49,7 +50,6 @@ export {
   ATTESTATION_SCHEMA_UID,
   type AttestationNetwork,
   type AttestationNetworkConfig,
-  getAttestationNetwork,
   getAttestationUrl,
   getSchemaUrl,
   type HexString,

@@ -1,5 +1,5 @@
 // Imported by the frontend, so kept dependency-free: the schema uid is
-// hardcoded here and recomputed by the l2b tests, which fail if it drifts.
+// hardcoded here and recomputed by eas.test.ts, which fails if it drifts.
 
 /** Typed so viem's `Hex` and `Address` accept these values without a cast. */
 export type HexString = `0x${string}`
@@ -11,11 +11,8 @@ export type HexString = `0x${string}`
  * While the attestations live on a testnet nothing here may name L2BEAT - see
  * the anonymity guard in packages/l2b.
  */
-export const ATTESTATION_SCHEMA = [
-  'string[] projectIds',
-  'uint64 reviewedAt',
-  'uint32 revision',
-].join(',')
+export const ATTESTATION_SCHEMA =
+  'string[] projectIds,uint64 reviewedAt,uint32 revision'
 
 export const ATTESTATION_SCHEMA_RESOLVER: HexString =
   '0x0000000000000000000000000000000000000000'
@@ -26,7 +23,8 @@ export const ATTESTATION_SCHEMA_REVOCABLE = true
 export const ATTESTATION_SCHEMA_UID: HexString =
   '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb'
 
-export type AttestationNetwork = 'sepolia' | 'ethereum'
+export const ATTESTATION_NETWORK_NAMES = ['sepolia', 'ethereum'] as const
+export type AttestationNetwork = (typeof ATTESTATION_NETWORK_NAMES)[number]
 
 export interface AttestationNetworkConfig {
   name: AttestationNetwork
@@ -61,12 +59,6 @@ export const ATTESTATION_NETWORKS: Record<
 
 /** Moving to mainnet is a change here plus a fresh run of `l2b crops-attest`. */
 export const ATTESTATION_NETWORK: AttestationNetwork = 'sepolia'
-
-export function getAttestationNetwork(
-  name: string,
-): AttestationNetworkConfig | undefined {
-  return Object.values(ATTESTATION_NETWORKS).find((x) => x.name === name)
-}
 
 export function getAttestationUrl(
   network: AttestationNetworkConfig,

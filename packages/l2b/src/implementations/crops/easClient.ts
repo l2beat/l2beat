@@ -1,4 +1,7 @@
-import type { AttestationNetworkConfig } from '@l2beat/config'
+import type {
+  AttestationNetwork,
+  AttestationNetworkConfig,
+} from '@l2beat/config'
 import {
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_RESOLVER,
@@ -7,6 +10,7 @@ import {
 } from '@l2beat/config'
 import {
   type Address,
+  type Chain,
   createPublicClient,
   createWalletClient,
   type Hex,
@@ -16,13 +20,14 @@ import {
   parseAbi,
   parseAbiItem,
   parseEventLogs,
-  type WalletClient,
+  publicActions,
+  zeroAddress,
+  zeroHash,
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
+import { mainnet, sepolia } from 'viem/chains'
 
-export const ZERO_UID: Hex = `0x${'0'.repeat(64)}`
-export const ZERO_ADDRESS: Address =
-  '0x0000000000000000000000000000000000000000'
+const CHAINS: Record<AttestationNetwork, Chain> = { sepolia, ethereum: mainnet }
 
 export const EAS_ABI = parseAbi([
   'struct AttestationRequestData { address recipient; uint64 expirationTime; bool revocable; bytes32 refUID; bytes data; uint256 value; }',
@@ -67,26 +72,34 @@ export interface Revocation {
   schema: Hex
 }
 
-export function createReader(rpcUrl: string): PublicClient {
-  return createPublicClient({ transport: http(rpcUrl) })
-}
-
-// The key never comes from a flag, which would land it in shell history. On a
-// testnet it should be a throwaway EOA with no link to L2BEAT.
-export function createSigner(rpcUrl: string): WalletClient {
-  const key = process.env.L2B_CROPS_PRIVATE_KEY
-  if (!key) {
-    throw new Error(
-      'L2B_CROPS_PRIVATE_KEY is not set. Export the attester key in the shell you run this from - it is deliberately not a command line flag, so it never lands in shell history.',
-    )
-  }
-  return createWalletClient({
-    account: privateKeyToAccount(
-      key.startsWith('0x') ? (key as Hex) : `0x${key}`,
-    ),
+/**
+ * With the chain object viem supplies a public rpc when none is given and
+ * checks the rpc's chain id before every write.
+ */
+export function createReader(
+  network: AttestationNetworkConfig,
+  rpcUrl?: string,
+): PublicClient {
+  return createPublicClient({
+    chain: CHAINS[network.name],
     transport: http(rpcUrl),
   })
 }
+
+/** Signs and simulates: every write is dry-run against the node before it is sent. */
+export function createSigner(
+  network: AttestationNetworkConfig,
+  privateKey: Hex,
+  rpcUrl?: string,
+) {
+  return createWalletClient({
+    chain: CHAINS[network.name],
+    account: privateKeyToAccount(privateKey),
+    transport: http(rpcUrl),
+  }).extend(publicActions)
+}
+
+export type Signer = ReturnType<typeof createSigner>
 
 export async function isSchemaRegistered(
   reader: PublicClient,
@@ -98,16 +111,14 @@ export async function isSchemaRegistered(
     functionName: 'getSchema',
     args: [ATTESTATION_SCHEMA_UID],
   })
-  return record.uid !== ZERO_UID
+  return record.uid !== zeroHash
 }
 
 export async function registerSchema(
-  signer: WalletClient,
+  signer: Signer,
   network: AttestationNetworkConfig,
 ): Promise<Hex> {
-  return await signer.writeContract({
-    chain: null,
-    account: signer.account ?? null,
+  const { request } = await signer.simulateContract({
     address: network.schemaRegistry,
     abi: SCHEMA_REGISTRY_ABI,
     functionName: 'register',
@@ -117,6 +128,7 @@ export async function registerSchema(
       ATTESTATION_SCHEMA_REVOCABLE,
     ],
   })
+  return await signer.writeContract(request)
 }
 
 export async function getAttestation(
@@ -130,7 +142,7 @@ export async function getAttestation(
     functionName: 'getAttestation',
     args: [uid],
   })
-  if (result.uid === ZERO_UID) {
+  if (result.uid === zeroHash) {
     return undefined
   }
   return {
@@ -152,7 +164,7 @@ function multiAttestArgs(attestations: NewAttestation[]) {
       {
         schema: ATTESTATION_SCHEMA_UID,
         data: attestations.map((attestation) => ({
-          recipient: ZERO_ADDRESS,
+          recipient: zeroAddress,
           expirationTime: 0n,
           revocable: true,
           refUID: attestation.refUID,
@@ -164,8 +176,8 @@ function multiAttestArgs(attestations: NewAttestation[]) {
   ] as const
 }
 
-// EAS groups revocations by schema.
-function multiRevokeArgs(revocations: Revocation[]) {
+/** EAS groups revocations by schema. */
+export function multiRevokeArgs(revocations: Revocation[]) {
   const bySchema = new Map<Hex, Hex[]>()
   for (const revocation of revocations) {
     const uids = bySchema.get(revocation.schema) ?? []
@@ -181,61 +193,31 @@ function multiRevokeArgs(revocations: Revocation[]) {
 }
 
 export async function multiAttest(
-  signer: WalletClient,
+  signer: Signer,
   network: AttestationNetworkConfig,
   attestations: NewAttestation[],
 ): Promise<Hex> {
-  return await signer.writeContract({
-    chain: null,
-    account: signer.account ?? null,
+  const { request } = await signer.simulateContract({
     address: network.eas,
     abi: EAS_ABI,
     functionName: 'multiAttest',
     args: multiAttestArgs(attestations),
   })
+  return await signer.writeContract(request)
 }
 
 export async function multiRevoke(
-  signer: WalletClient,
+  signer: Signer,
   network: AttestationNetworkConfig,
   revocations: Revocation[],
 ): Promise<Hex> {
-  return await signer.writeContract({
-    chain: null,
-    account: signer.account ?? null,
+  const { request } = await signer.simulateContract({
     address: network.eas,
     abi: EAS_ABI,
     functionName: 'multiRevoke',
     args: multiRevokeArgs(revocations),
   })
-}
-
-export async function estimateGas(
-  reader: PublicClient,
-  network: AttestationNetworkConfig,
-  account: Address,
-  work: { attestations: NewAttestation[]; revoke: Revocation[] },
-): Promise<bigint> {
-  let total = 0n
-  if (work.revoke.length > 0) {
-    total += await reader.estimateContractGas({
-      account,
-      address: network.eas,
-      abi: EAS_ABI,
-      functionName: 'multiRevoke',
-      args: multiRevokeArgs(work.revoke),
-    })
-  }
-  if (work.attestations.length > 0) {
-    total += await reader.estimateContractGas({
-      account,
-      address: network.eas,
-      abi: EAS_ABI,
-      functionName: 'multiAttest',
-      args: multiAttestArgs(work.attestations),
-    })
-  }
-  return total
+  return await signer.writeContract(request)
 }
 
 /** EAS emits one Attested event per attestation, in submission order. */

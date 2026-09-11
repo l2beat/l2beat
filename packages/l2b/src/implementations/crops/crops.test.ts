@@ -1,9 +1,5 @@
 import type { CropAttestation } from '@l2beat/config'
-import {
-  ATTESTATION_NETWORKS,
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_UID,
-} from '@l2beat/config'
+import { ATTESTATION_NETWORKS, ATTESTATION_SCHEMA_UID } from '@l2beat/config'
 import { expect } from 'earl'
 import type { Hex } from 'viem'
 import { assertAnonymous, findIdentifyingStrings } from './anonymity'
@@ -16,41 +12,11 @@ import {
   toPayload,
 } from './payload'
 import { planAttestation } from './plan'
-import { assertSchemaUid, computeSchemaUid } from './schema'
 
 const IDS = ['aztecnetwork', 'tornado-cash', 'uniswapv3']
 const OLD_SCHEMA = `0x${'99'.repeat(32)}` as Hex
 
 describe('crop attestations', () => {
-  describe('schema', () => {
-    it('the uid committed in config matches the schema string', () => {
-      expect(() => assertSchemaUid()).not.toThrow()
-      expect(computeSchemaUid()).toEqual(ATTESTATION_SCHEMA_UID)
-    })
-
-    it('a different schema hashes to a different uid', () => {
-      expect(computeSchemaUid('string projectId')).not.toEqual(
-        ATTESTATION_SCHEMA_UID,
-      )
-    })
-
-    it('revocability is part of the uid', () => {
-      expect(
-        computeSchemaUid(
-          undefined,
-          '0x0000000000000000000000000000000000000000',
-          false,
-        ),
-      ).not.toEqual(ATTESTATION_SCHEMA_UID)
-    })
-
-    it('attests the set and nothing about a rating', () => {
-      expect(ATTESTATION_SCHEMA).toEqual(
-        'string[] projectIds,uint64 reviewedAt,uint32 revision',
-      )
-    })
-  })
-
   describe('payload', () => {
     it('round trips through abi encoding', () => {
       const payload = toPayload(IDS, 1700000000, 3)

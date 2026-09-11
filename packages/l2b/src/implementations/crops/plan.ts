@@ -1,5 +1,5 @@
 import type { CropAttestation } from '@l2beat/config'
-import { ATTESTATION_SCHEMA_UID } from '@l2beat/config'
+import { isCurrentSchema } from '@l2beat/config'
 import type { OnchainAttestation, Revocation } from './easClient'
 import { type CropPayload, decodePayload, diffSet, setMatches } from './payload'
 
@@ -83,10 +83,6 @@ export function planAttestation(input: PlanInput): AttestPlan {
         },
     reason: reasonFor(live.length, keeper !== undefined, added, removed),
   }
-}
-
-function isCurrentSchema(schema: string): boolean {
-  return schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase()
 }
 
 function coveredIds(ledger: CropAttestation[]): string[] {

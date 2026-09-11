@@ -1,11 +1,13 @@
-import { ProjectService } from '@l2beat/config'
-import { decodeAbiParameters, encodeAbiParameters, type Hex } from 'viem'
+import { ATTESTATION_SCHEMA, ProjectService } from '@l2beat/config'
+import {
+  decodeAbiParameters,
+  encodeAbiParameters,
+  type Hex,
+  parseAbiParameters,
+} from 'viem'
 
-export const ATTESTATION_PARAMS = [
-  { name: 'projectIds', type: 'string[]' },
-  { name: 'reviewedAt', type: 'uint64' },
-  { name: 'revision', type: 'uint32' },
-] as const
+/** Parsed from the one schema string config registers, so the codec cannot disagree with it. */
+export const ATTESTATION_PARAMS = parseAbiParameters(ATTESTATION_SCHEMA)
 
 export interface CropPayload {
   /** Sorted. */
