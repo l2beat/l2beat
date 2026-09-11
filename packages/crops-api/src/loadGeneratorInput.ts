@@ -2,7 +2,7 @@ import { ProjectService } from '@l2beat/config'
 import { execSync } from 'child_process'
 import { resolve } from 'path'
 import { getAttestationsMeta } from './garden/getAttestationsMeta'
-import type { ChainLookup, GeneratorInput } from './generateCropsSite'
+import type { ChainIdByName, GeneratorInput } from './generateCropsSite'
 
 // Built by `pnpm build:dependencies`, like the frontend's ProjectService.
 const DB_PATH = resolve(__dirname, '../../config/build/db.sqlite')
@@ -28,11 +28,11 @@ export async function loadGeneratorInput(): Promise<GeneratorInput> {
 
 async function loadChains(
   projectService: ProjectService,
-): Promise<ChainLookup> {
+): Promise<ChainIdByName> {
   const projects = await projectService.getProjects({
     select: ['chainConfig'],
   })
-  const chains: ChainLookup = {}
+  const chains: ChainIdByName = {}
   for (const { chainConfig } of projects) {
     if (chainConfig.chainId !== undefined) {
       chains[chainConfig.name] = chainConfig.chainId

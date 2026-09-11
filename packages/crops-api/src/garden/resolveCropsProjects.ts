@@ -60,26 +60,28 @@ export function resolveCropsProjects(
   projects: CropsSourceProject[],
   meta: CropsAttestationsMeta,
 ): CropsApiProject[] {
-  const attestation = toApiAttestation(meta)
-  const attested = new Set(meta.current?.projectIds ?? [])
-
   return projects
-    .map((project) => {
-      const path = getGardenProjectPath(project)
-      const crops = resolveProjectCrops(project.crops)
-      const isAttested = attested.has(project.id)
-      return {
-        id: project.id,
-        slug: project.slug,
-        name: project.name,
-        href: path ? `${BASE_URL}${path}` : null,
-        crops,
-        inGarden: qualifiesForGarden(crops),
-        attested: isAttested,
-        attestation: isAttested ? attestation : null,
-      }
-    })
+    .map((project) => resolveCropsProject(project, meta))
     .sort((a, b) => a.id.localeCompare(b.id))
+}
+
+export function resolveCropsProject(
+  project: CropsSourceProject,
+  meta: CropsAttestationsMeta,
+): CropsApiProject {
+  const path = getGardenProjectPath(project)
+  const crops = resolveProjectCrops(project.crops)
+  const attested = meta.current?.projectIds.includes(project.id) ?? false
+  return {
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    href: path ? `${BASE_URL}${path}` : null,
+    crops,
+    inGarden: qualifiesForGarden(crops),
+    attested,
+    attestation: attested ? toApiAttestation(meta) : null,
+  }
 }
 
 export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {

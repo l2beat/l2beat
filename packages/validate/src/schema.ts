@@ -2,13 +2,24 @@ import type { Imp, Parser } from './validate.js'
 
 export const SCHEMA_VERSION = 'https://json-schema.org/draft-07/schema#'
 
+export interface JsonSchemaOptions {
+  /**
+   * Where `$ref`s point, e.g. `#/components/schemas/` for a document whose
+   * caller moves `definitions` under OpenAPI components.
+   */
+  refPrefix?: string
+}
+
 export function toJsonSchema(
   schema: Parser<unknown>,
   topLevel: Record<string, Parser<unknown>> = {},
+  options: JsonSchemaOptions = {},
 ): object {
+  const refPrefix = options.refPrefix ?? '#/definitions/'
   const remaining = Object.entries(topLevel) as [string, Imp<unknown>][]
   const state: State = {
-    refs: new Map(remaining.map(([k, v]) => [v, `#/definitions/${k}`])),
+    refs: new Map(remaining.map(([k, v]) => [v, `${refPrefix}${k}`])),
+    refPrefix,
     lazyCounter: 0,
     remaining,
     skipRefs: false,
@@ -35,6 +46,7 @@ export function toJsonSchema(
 interface State {
   remaining: [string, Imp<unknown>][]
   refs: Map<Imp<unknown>, string>
+  refPrefix: string
   lazyCounter: number
   skipRefs: boolean
 }
@@ -138,7 +150,7 @@ function decomposeCore(
     case 'lazy': {
       state.lazyCounter++
       const key = `__lazy_${state.lazyCounter}`
-      const $ref = `#/definitions/${key}`
+      const $ref = `${state.refPrefix}${key}`
       state.refs.set(imp, $ref)
       state.remaining.push([key, imp])
       return { $ref }

@@ -58,6 +58,11 @@ describe('OpenAPI agreement', () => {
     expect(JSON.stringify(document)).not.toInclude('#/definitions/')
   })
 
+  it('fills the network section into the prose from openapi.md', () => {
+    expect(document.info.description).toInclude('## Attestations are on ')
+    expect(document.info.description).not.toInclude('{{')
+  })
+
   it('is OpenAPI 3.1 with production and staging servers', () => {
     expect(document.openapi).toEqual('3.1.0')
     expect(document.servers.map((x) => x.url)).toEqual([
