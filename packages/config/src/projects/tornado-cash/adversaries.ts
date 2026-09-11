@@ -71,9 +71,9 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     futureAdversary: {
       sentiment: 'warning',
       exposure:
-        'A quantum computer that solves discrete logs on the Pedersen curve reduces the commitment to a structured equation over the secret, so an attacker is expected to be able to test whether a given deposit could fund a withdrawal. This shrinks the candidate set but does not single out the deposit, since many unrelated deposits pass the test. The proofs themselves reveal nothing. Notes backed up onchain are not post-quantum secure.',
+        'A quantum computer that solves discrete logs on the Pedersen curve is expected to be able to test whether a given deposit could fund a withdrawal. This shrinks the candidate set but does not single out the deposit, since many unrelated deposits pass the test. Notes backed up onchain are not post-quantum secure.',
       advice:
-        'Use a pool with a large anonymity set, since the quantum test only shrinks the candidate set. Keep the note only on your device and skip the onchain backup option.',
+        'Use a pool with a large anonymity set. Keep the note only on your device and skip the onchain backup option.',
       sources: [
         {
           title: 'Pedersen hash circuit (pinned circomlib fork)',
