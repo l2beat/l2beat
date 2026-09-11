@@ -75,36 +75,26 @@ function addressFiles(
   stamp: Stamp,
 ): GeneratedFile[] {
   const projectById = new Map(projects.map((x) => [x.id, x]))
-  const entries = buildCropsAddressIndex(input.projects).map((entry) => {
+  return buildCropsAddressIndex(input.projects).map((entry) => {
     const chainId = input.chains[entry.chain]
     if (chainId === undefined) {
       throw new Error(
         `Chain ${entry.chain} has no chain id, but ${entry.address} is reviewed`,
       )
     }
+    const address = entry.address.toLowerCase()
     return {
-      chainId,
-      address: entry.address.toLowerCase(),
-      matches: entry.matches.map((match) => toAddressMatch(match, projectById)),
+      path: `v1/address/${chainId}/${address}.json`,
+      body: {
+        ...stamp,
+        chainId,
+        address,
+        matches: entry.matches.map((match) =>
+          toAddressMatch(match, projectById),
+        ),
+      },
     }
   })
-
-  const addresses = Object.fromEntries(
-    entries
-      .map((entry): [string, AddressMatch[]] => [
-        `${entry.chainId}:${entry.address}`,
-        entry.matches,
-      ])
-      .sort(([a], [b]) => a.localeCompare(b)),
-  )
-
-  return [
-    ...entries.map((entry) => ({
-      path: `v1/address/${entry.chainId}/${entry.address}.json`,
-      body: { ...stamp, ...entry },
-    })),
-    { path: 'v1/addresses.json', body: { ...stamp, addresses } },
-  ]
 }
 
 function toAddressMatch(

@@ -196,15 +196,6 @@ export const AddressResponseSchema = v
   })
   .describe('AddressResponse')
 
-export const AddressesResponseSchema = v
-  .strictObject({
-    ...stampFields,
-    addresses: v.record(v.string(), v.array(AddressMatchSchema)).meta({
-      description: 'Keyed by `chainId:address`, the address lowercase.',
-    }),
-  })
-  .describe('AddressesResponse')
-
 /** Everything published under components.schemas, keyed by its `describe` name. */
 export const NAMED_SCHEMAS = byName([
   AttestationsMetaSchema,
@@ -217,7 +208,6 @@ export const NAMED_SCHEMAS = byName([
   ProjectResponseSchema,
   AddressMatchSchema,
   AddressResponseSchema,
-  AddressesResponseSchema,
 ])
 
 function byName(

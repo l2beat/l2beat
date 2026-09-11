@@ -2,7 +2,6 @@ import { toJsonSchemaDefinitions, type Validator } from '@l2beat/validate'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import {
-  AddressesResponseSchema,
   AddressResponseSchema,
   type CropsAttestationsMeta,
   CropsResponseSchema,
@@ -66,14 +65,6 @@ export const PUBLISHED_ROUTES: PublishedRoute[] = [
     ],
     result: AddressResponseSchema,
     notFound: 'The address is not part of any reviewed protocol.',
-  },
-  {
-    path: '/v1/addresses.json',
-    summary: 'Every reviewed address',
-    description:
-      'The whole address index in one file, so a client can download it once and answer lookups offline.',
-    params: [],
-    result: AddressesResponseSchema,
   },
 ]
 
