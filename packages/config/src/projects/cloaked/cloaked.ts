@@ -44,7 +44,7 @@ export const cloaked: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    chains: ['ethereum'],
+    deployedOn: ['ethereum'],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.

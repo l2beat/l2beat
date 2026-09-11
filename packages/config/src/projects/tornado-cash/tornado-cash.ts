@@ -180,7 +180,7 @@ export const tornadoCash: BaseProject = {
     ],
   },
   privacyInfo: {
-    chains: [
+    deployedOn: [
       'ethereum',
       'bsc',
       'polygonpos',

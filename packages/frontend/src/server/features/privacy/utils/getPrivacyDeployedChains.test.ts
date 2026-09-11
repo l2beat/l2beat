@@ -1,61 +1,56 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  getPrivacyDeployedChains,
-  type PrivacyChainProject,
-} from './getPrivacyDeployedChains'
+import { getPrivacyDeployedChains } from './getPrivacyDeployedChains'
 
 describe(getPrivacyDeployedChains.name, () => {
-  const ethereum = chainProject('ethereum', 'Ethereum', 'ethereum')
-  const polygon = chainProject('polygon-pos', 'Polygon PoS', 'polygonpos')
-  const arbitrum = chainProject('arbitrum', 'Arbitrum One', 'arbitrum', {
+  const ethereum = {
+    slug: 'ethereum',
+    name: 'Ethereum',
+    chainConfig: { name: 'ethereum' },
+  }
+  const polygon = {
+    slug: 'polygon-pos',
+    name: 'Polygon PoS',
+    chainConfig: { name: 'polygonpos' },
+  }
+  const arbitrum = {
+    slug: 'arbitrum',
+    name: 'Arbitrum One',
+    chainConfig: { name: 'arbitrum' },
     scalingInfo: {},
-  })
-  const chainProjects = [ethereum, polygon, arbitrum]
+  }
+  const projects = [ethereum, polygon, arbitrum]
 
   it('resolves chain names in configured order', () => {
     const result = getPrivacyDeployedChains(
       ['polygonpos', 'ethereum'],
-      chainProjects,
+      projects,
+      [],
     )
     expect(result.map((c) => c.id)).toEqual(['polygonpos', 'ethereum'])
     expect(result.map((c) => c.name)).toEqual(['Polygon PoS', 'Ethereum'])
   })
 
   it('uses the project slug for the icon', () => {
-    const [result] = getPrivacyDeployedChains(['polygonpos'], chainProjects)
+    const [result] = getPrivacyDeployedChains(['polygonpos'], projects, [])
     expect(result?.iconUrl).toEqual('/icons/polygon-pos.png')
   })
 
-  it('links only chains that are scaling projects', () => {
+  it('links only chains that have a project page', () => {
     const [ethereumChain, arbitrumChain] = getPrivacyDeployedChains(
       ['ethereum', 'arbitrum'],
-      chainProjects,
+      projects,
+      [],
     )
     expect(ethereumChain?.href).toEqual(undefined)
-    expect(arbitrumChain?.href).toEqual('/scaling/projects/arbitrum')
+    expect(arbitrumChain?.href).toEqual('/layer2s/projects/arbitrum')
   })
 
   it('skips chains without a matching chainConfig', () => {
     const result = getPrivacyDeployedChains(
       ['ethereum', 'unknown'],
-      chainProjects,
+      projects,
+      [],
     )
     expect(result.map((c) => c.id)).toEqual(['ethereum'])
   })
 })
-
-function chainProject(
-  slug: string,
-  name: string,
-  chainName: string,
-  extra: object = {},
-): PrivacyChainProject {
-  return {
-    id: ProjectId(slug),
-    slug,
-    name,
-    chainConfig: { name: chainName },
-    ...extra,
-  } as unknown as PrivacyChainProject
-}

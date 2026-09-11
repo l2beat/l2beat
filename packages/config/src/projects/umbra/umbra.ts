@@ -103,7 +103,7 @@ export const umbra: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    chains: [
+    deployedOn: [
       'ethereum',
       'optimism',
       'arbitrum',

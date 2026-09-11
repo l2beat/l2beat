@@ -224,7 +224,7 @@ export const privacyBoost: BaseProject = {
     ],
   },
   privacyInfo: {
-    chains: ['optimism'],
+    deployedOn: ['optimism'],
     // TODO: Proposed tracking: deposits from DepositRequested (has tokenId + totalAmount),
     // withdrawals from ERC-20 Transfer logs with from == pool (epoch withdrawals emit no pool event).
     // Needs: (1) indexed-topic (topic1/2) filter support in LogsProvider/PrivacyFlowIndexerConfig,

@@ -44,7 +44,7 @@ export const fluidkey: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    chains: [
+    deployedOn: [
       'ethereum',
       'base',
       'arbitrum',

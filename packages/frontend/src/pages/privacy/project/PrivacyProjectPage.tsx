@@ -116,42 +116,37 @@ export function PrivacyProjectPage({
                         className="mt-4"
                       />
 
-                      {(entry.deployedOn.length > 0 ||
-                        entry.attributes.length > 0) && (
-                        <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
-                          {entry.deployedOn.length > 0 && (
-                            <ProjectSummaryStat
-                              title="Deployed on"
-                              tooltip="Chains on which the protocol is deployed."
-                              value={
-                                <ProjectIconList
-                                  projects={entry.deployedOn}
-                                  dialog={{
-                                    title: 'Deployed on',
-                                    description: 'Search for chains',
-                                    searchPlaceholder:
-                                      'Start typing to find chain...',
-                                    emptyText: 'No chains found.',
-                                  }}
-                                />
-                              }
+                      <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
+                        <ProjectSummaryStat
+                          title="Deployed on"
+                          tooltip="Chains on which the protocol is deployed."
+                          value={
+                            <ProjectIconList
+                              projects={entry.deployedOn}
+                              dialog={{
+                                title: 'Deployed on',
+                                description: 'Search for chains',
+                                searchPlaceholder:
+                                  'Start typing to find chain...',
+                                emptyText: 'No chains found.',
+                              }}
                             />
-                          )}
-                          {entry.attributes.length > 0 && (
-                            <ProjectSummaryStat
-                              title="Attributes"
-                              tooltip="Protocol attributes and capabilities."
-                              valueClassName="flex flex-wrap justify-start gap-1"
-                              value={entry.attributes.map((attribute) => (
-                                <PrivacyAttributeTag
-                                  key={attribute.id}
-                                  attribute={attribute}
-                                />
-                              ))}
-                            />
-                          )}
-                        </div>
-                      )}
+                          }
+                        />
+                        {entry.attributes.length > 0 && (
+                          <ProjectSummaryStat
+                            title="Attributes"
+                            tooltip="Protocol attributes and capabilities."
+                            valueClassName="flex flex-wrap justify-start gap-1"
+                            value={entry.attributes.map((attribute) => (
+                              <PrivacyAttributeTag
+                                key={attribute.id}
+                                attribute={attribute}
+                              />
+                            ))}
+                          />
+                        )}
+                      </div>
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />
                       <div className="max-md:hidden">

@@ -31,7 +31,6 @@ interface Props {
   dialog: ProjectIconListDialog
   className?: string
   maxVisibleProjects?: number
-  disableIconLinks?: boolean
 }
 
 export function ProjectIconList({
@@ -39,7 +38,6 @@ export function ProjectIconList({
   dialog,
   className,
   maxVisibleProjects = 5,
-  disableIconLinks,
 }: Props) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -63,7 +61,6 @@ export function ProjectIconList({
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
         {visibleProjects.map((project, index) => {
-          const href = disableIconLinks ? undefined : project.href
           const image = (
             <img
               width={20}
@@ -77,9 +74,9 @@ export function ProjectIconList({
 
           return (
             <Tooltip key={project.id}>
-              {href ? (
+              {project.href ? (
                 <TooltipTrigger asChild disabledOnMobile>
-                  <a href={href} className="size-5">
+                  <a href={project.href} className="size-5">
                     {image}
                   </a>
                 </TooltipTrigger>
@@ -88,7 +85,7 @@ export function ProjectIconList({
               )}
               <TooltipContent>
                 <p className="font-bold">{project.name}</p>
-                {href && (
+                {project.href && (
                   <p className="text-secondary text-xs">
                     Click to view project page
                   </p>

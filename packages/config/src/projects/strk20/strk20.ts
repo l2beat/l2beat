@@ -121,7 +121,7 @@ export const strk20: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    chains: ['starknet'],
+    deployedOn: ['starknet'],
     tokens: getPrivacyTokens(),
     zkCatalogId: ProjectId('stwo'),
     exitWindow: {

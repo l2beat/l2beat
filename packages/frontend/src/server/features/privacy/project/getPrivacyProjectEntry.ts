@@ -5,6 +5,7 @@ import type {
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -27,10 +28,6 @@ import {
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
-import {
-  getPrivacyDeployedChains,
-  type PrivacyDeployedChain,
-} from '../utils/getPrivacyDeployedChains'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -58,7 +55,7 @@ export interface ProjectPrivacyEntry {
   assetsCount: number
   hasTvl: boolean
   attributes: PrivacyAttribute[]
-  deployedOn: PrivacyDeployedChain[]
+  deployedOn: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   privacy: PrivacySummaryValue
@@ -87,7 +84,7 @@ export async function getPrivacyProjectEntry(
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [contractUtils, allProjects, chainProjects, tvs, totalValueLockedUsd] =
+  const [contractUtils, allProjects, tvs, totalValueLockedUsd] =
     await Promise.all([
       getContractUtils(),
       ps.getProjects({
@@ -100,7 +97,6 @@ export async function getPrivacyProjectEntry(
           'defiInfo',
         ],
       }),
-      ps.getProjects({ select: ['chainConfig'], optional: ['scalingInfo'] }),
       get7dTvsBreakdown({ type: 'all' }),
       getTotalValueLockedUsd(details, helpers, defaultChartRange),
     ])
@@ -326,7 +322,7 @@ export async function getPrivacyProjectEntry(
     assetsCount: details.assets.length,
     hasTvl: details.hasTvl,
     attributes: details.attributes,
-    deployedOn: getPrivacyDeployedChains(details.chains, chainProjects),
+    deployedOn: details.deployedOn,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),
