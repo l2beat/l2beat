@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xed71541febc8b629f23a76b9cae711c8f0f401cd
+Generated with discovered.json: 0xb05903944bd0caf7083fe816a2c78259ec3812a3
 
-# Diff at Thu, 10 Sep 2026 22:04:04 GMT:
+# Diff at Fri, 11 Sep 2026 16:12:17 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1787834376
@@ -53,28 +53,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1787834376 (main branch discovery), not current.
 
 ```diff
-    contract KailuaGame (eth:0x296e7aD6D441b0627768bC0650179a4206479444) [risc0/KailuaGame] {
-    +++ description: Implementation of the KailuaGame (game type 1337). Still registered in the DisputeGameFactory, but not the respected game type since 2026-09-07: new Kailua proposals stopped and games created from now on are not usable for withdrawals.
-      description:
--        "Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal."
-+        "Implementation of the KailuaGame (game type 1337). Still registered in the DisputeGameFactory, but not the respected game type since 2026-09-07: new Kailua proposals stopped and games created from now on are not usable for withdrawals."
-    }
-```
-
-```diff
     contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
     +++ description: None
       receivedPermissions:
 +        [{"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}]
-    }
-```
-
-```diff
-    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
-    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned. Dormant since the respected game type moved back to the PermissionedDisputeGame on 2026-09-07.
-      description:
--        "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
-+        "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned. Dormant since the respected game type moved back to the PermissionedDisputeGame on 2026-09-07."
     }
 ```
 
