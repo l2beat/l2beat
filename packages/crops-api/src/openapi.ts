@@ -1,10 +1,10 @@
-import { CROPS } from '@l2beat/config'
 import { toJsonSchema, type Validator, v } from '@l2beat/validate'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import {
   AddressesResponseSchema,
   AddressResponseSchema,
+  type CropsAttestationsMeta,
   CropsResponseSchema,
   NAMED_SCHEMAS,
   ProjectResponseSchema,
@@ -96,33 +96,33 @@ function toPathRegex(template: string): RegExp {
   return new RegExp(`^${escaped}$`)
 }
 
-const ATTESTATION_NETWORK =
-  CROPS.eas.ATTESTATION_NETWORKS[CROPS.eas.ATTESTATION_NETWORK]
+/** The prose lives in openapi.md; only the network section depends on the ledger. */
+const OPENAPI_PROSE = readFileSync(resolve(__dirname, '../openapi.md'), 'utf8')
 
-/** Derived from the network constant so the caveat cannot outlive the testnet. */
-const ATTESTATION_NETWORK_SECTION = ATTESTATION_NETWORK.isTestnet
-  ? `## Attestations are on ${ATTESTATION_NETWORK.name}
+export function buildOpenApiDescription(ledger: CropsAttestationsMeta) {
+  return OPENAPI_PROSE.replace(
+    '{{ATTESTATION_NETWORK_SECTION}}',
+    attestationNetworkSection(ledger),
+  ).trim()
+}
 
-The attestation currently lives on the ${ATTESTATION_NETWORK.name} testnet (chain id ${ATTESTATION_NETWORK.chainId}); \`attestations.isTestnet\` in every response says so. It proves the set L2BEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.`
-  : `## Attestations are on ${ATTESTATION_NETWORK.name}
+/** Derived from the same ledger as every data file, so the caveat cannot outlive the testnet. */
+function attestationNetworkSection(ledger: CropsAttestationsMeta): string {
+  const where = ledger.isTestnet
+    ? `currently lives on the ${ledger.network} testnet (chain id ${ledger.chainId}); \`attestations.isTestnet\` in every response says so`
+    : `lives on ${ledger.network} (chain id ${ledger.chainId})`
+  return `## Attestations are on ${ledger.network}
 
-The attestation lives on ${ATTESTATION_NETWORK.name} (chain id ${ATTESTATION_NETWORK.chainId}). It proves the set L2BEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.`
+The attestation ${where}. It proves the set L2BEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.`
+}
 
-/** The prose lives in openapi.md; only the network section is computed. */
-export const OPENAPI_DESCRIPTION = readFileSync(
-  resolve(__dirname, '../openapi.md'),
-  'utf8',
-)
-  .replace('{{ATTESTATION_NETWORK_SECTION}}', ATTESTATION_NETWORK_SECTION)
-  .trim()
-
-export function buildOpenApiDocument() {
+export function buildOpenApiDocument(ledger: CropsAttestationsMeta) {
   return {
     openapi: '3.1.0',
     info: {
       title: 'L2BEAT CROPS API',
       version: '1.0.0',
-      description: OPENAPI_DESCRIPTION,
+      description: buildOpenApiDescription(ledger),
     },
     servers: SERVERS,
     paths: Object.fromEntries(

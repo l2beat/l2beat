@@ -1,16 +1,17 @@
 import { expect } from 'earl'
 import { generateCropsSite } from './generateCropsSite'
 import {
+  buildOpenApiDescription,
   buildOpenApiDocument,
   findPublishedRoute,
   PUBLISHED_ROUTES,
 } from './openapi'
-import { FIXTURE_INPUT } from './test/fixtures'
+import { FIXTURE_INPUT, LEDGER } from './test/fixtures'
 
 describe('OpenAPI agreement', () => {
   const files = generateCropsSite(FIXTURE_INPUT)
   const dataFiles = files.filter((x) => x.path !== 'v1/openapi.json')
-  const document = buildOpenApiDocument()
+  const document = buildOpenApiDocument(FIXTURE_INPUT.ledger)
 
   it('parses every generated file with the validator behind its OpenAPI entry', () => {
     for (const file of dataFiles) {
@@ -69,5 +70,19 @@ describe('OpenAPI agreement', () => {
       'https://crops.l2beat.com',
       'https://crops-staging.l2beat.com',
     ])
+  })
+
+  it('names the ledger network and warns about a testnet only while on one', () => {
+    expect(buildOpenApiDescription(LEDGER)).toInclude(
+      'currently lives on the sepolia testnet (chain id 11155111)',
+    )
+    const mainnet = buildOpenApiDescription({
+      ...LEDGER,
+      network: 'ethereum',
+      chainId: 1,
+      isTestnet: false,
+    })
+    expect(mainnet).toInclude('lives on ethereum (chain id 1)')
+    expect(mainnet).not.toInclude('testnet')
   })
 })

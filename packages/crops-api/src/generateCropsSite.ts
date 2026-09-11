@@ -57,7 +57,7 @@ export function generateCropsSite(input: GeneratorInput): GeneratedFile[] {
     { path: 'v1/crops.json', body: { ...stamp, projects } },
     ...projectFiles(projects, stamp),
     ...addressFiles(input, stamp),
-    { path: 'v1/openapi.json', body: buildOpenApiDocument() },
+    { path: 'v1/openapi.json', body: buildOpenApiDocument(input.ledger) },
   ]
   return files.sort((a, b) => a.path.localeCompare(b.path))
 }
