@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type {
+  DuneQueryService,
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharedBridgeConfig,
@@ -24,7 +25,6 @@ import {
   gatewaySharedBridgeChainAddress,
 } from '../../test/sharedBridge'
 import type { Configuration } from '../../tools/uif/multi/types'
-import type { DuneQueryService } from './services/DuneQueryService'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import type { DuneFunctionCallResult, DuneTransferResult } from './types/model'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'

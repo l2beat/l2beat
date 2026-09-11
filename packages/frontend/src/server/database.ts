@@ -13,6 +13,7 @@ export function getDb() {
           connectionString: env.DATABASE_URL,
           ssl: ssl(),
           ...pool(),
+          ...statementTimeout(),
           log: env.DATABASE_LOG_ENABLED ? makeDbLogger('Database') : undefined,
         })
       : createThrowingProxy()
@@ -75,6 +76,16 @@ export function pool() {
         min: 2,
       }
   }
+}
+
+/**
+ * Server-side timeout: Postgres cancels the statement itself, so the query
+ * stops even when the HTTP request that started it has already timed out or
+ * been abandoned. `query_timeout` would only reject the client promise and
+ * leave the statement running.
+ */
+export function statementTimeout() {
+  return { statement_timeout: env.DATABASE_STATEMENT_TIMEOUT_MS }
 }
 
 export function makeDbLogger(tag: string) {

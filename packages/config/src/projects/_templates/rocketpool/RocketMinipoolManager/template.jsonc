@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMinipoolManager",
+  "category": "core",
+  "description": "Register of the legacy one-validator-per-contract deployments: creation, status counts, public-key mapping, and destruction. Individual validator contracts are not listed here because there are tens of thousands of them and they share one implementation.",
+  "ignoreMethods": ["getMinipoolAt", "getVacantMinipoolAt"],
+  "ignoreInWatchMode": [
+    "getMinipoolCount",
+    "getStakingMinipoolCount",
+    "getActiveMinipoolCount",
+    "getFinalisedMinipoolCount",
+    "getVacantMinipoolCount"
+  ]
+}

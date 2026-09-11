@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CombosExchange",
+  "description": "Upgradeable request-for-quote exchange where operator-role holders settle EIP-712 signed orders for combination positions. Operators supply the fee on each fill; it is not part of the signed order and is checked only against a global limit of {{ MAX_FEE_RATE }} bps fixed at deployment. A zero limit means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the exchange implementation and manage all roles."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "MAX_FEE_RATE": {
+      "handler": {
+        "type": "call",
+        "method": "function MAX_FEE_RATE() view returns (uint256)",
+        "args": []
+      },
+      "description": "Global fee-rate limit for operator-supplied settlement fees, in basis points. It is fixed at deployment. Zero means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance."
+    },
+    "FEE_RECEIVER": {
+      "description": "Address receiving all trading fees collected at settlement."
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger whose positions are traded on this exchange."
+    },
+    "COLLATERAL_TOKEN": {
+      "description": "The collateral token used to pay for positions and fees."
+    }
+  }
+}

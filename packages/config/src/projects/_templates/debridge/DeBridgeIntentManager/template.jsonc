@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder (Permit2 or direct approvals) and forwards them into DlnSource in the same transaction, charging a variable fee that is NOT part of the user-signed intent. It is non-custodial in steady state. Note that the EIP-712 signature users sign covers only an opaque intent hash, and fills are permissionless unless the intent restricts senders.",
+  "description": "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder and forwards them into DlnSource in the same transaction, charging a variable fee that is not part of the user-signed intent.",
   "fields": {
     "getDefaultFeeBps": {
       "description": "Default variable fee in basis points charged on intent fills (admin-settable up to 100% with immediate effect; the fee is not covered by the user-signed price constraints on all paths)."
@@ -17,11 +17,7 @@
     "getGlobalNullificationTimestamp": {
       "description": "Intents signed before this timestamp are invalid. Setting it to the current time (GOVMONITORING_ROLE) invalidates all outstanding intents."
     },
-    "accessControl": {
-      "handler": {
-        "type": "accessControl"
-      }
-    },
+    "accessControl": { "handler": { "type": "accessControl" } },
     "defaultAdminAC": {
       "handler": {
         "type": "accessControl",

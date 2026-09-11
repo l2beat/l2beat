@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NegRiskCtfCollateralAdapter",
+  "description": "Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.",
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the admin role that can pause splitting, merging, redeeming and converting.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can grant and revoke the admin role that can pause splitting, merging, redeeming and converting through this contract with no delay."
+        }
+      ],
+      "severity": "HIGH"
+    }
+  }
+}

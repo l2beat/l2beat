@@ -141,7 +141,6 @@ export function EcosystemsTvsChart({
             fill="url(#fill)"
             fillOpacity={1}
             stroke="var(--ecosystem-primary)"
-            strokeWidth={2}
             isAnimationActive={false}
           />
           <ChartCommonComponents

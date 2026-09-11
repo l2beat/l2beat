@@ -199,7 +199,9 @@ function sceneNode(chain: string, address: string): SceneNode {
     chain,
     address,
     symbol: 'TOKEN',
+    abstractTokenId: null,
     isDeployed: true,
+    hasRelations: true,
   }
   return { data, label: 'TOKEN', x: 0, y: 0 }
 }

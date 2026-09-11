@@ -1,0 +1,8 @@
+{
+  "DepositWalletBeacon": {
+    "hash": "0xe662818aa0e3e07036af6594274458467cde9e52276c8faf3f61a85632119899",
+    "address": "matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  }
+}

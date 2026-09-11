@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xc37257f27b6045a303423020d3de7ea0045ea9b2
+Generated with discovered.json: 0x7a7ec18362dee9633bbf65ab9c1cd03ce0bc39ee
+
+# Diff at Mon, 07 Sep 2026 08:37:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@25578f132c6c06c4de07ab98ad602d8239829c04 block: 1786359758
+- current timestamp: 1786359758
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786359758 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"},{"permission":"interact","from":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0x0e2111ba1739b93acf432d4d1314a6540d05875c
 
 # Diff at Mon, 10 Aug 2026 11:03:46 GMT:
 

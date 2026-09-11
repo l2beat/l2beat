@@ -36,6 +36,7 @@ import { PROGRAM_HASHES } from '../common/programHashes'
 import { getAltDaStage } from '../common/stages/getAltDaStage'
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
@@ -383,7 +384,8 @@ function orbitStackCommon(
   assert(daProviders.length > 0)
 
   const blockNumberOpcodeTimeSeconds =
-    templateVars.blockNumberOpcodeTimeSeconds ?? 12
+    templateVars.blockNumberOpcodeTimeSeconds ??
+    HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 
   const minimumAssertionPeriod =
     templateVars.discovery.getContractValue<number>(
@@ -649,7 +651,9 @@ function orbitStackCommon(
             'baseStake',
           )
 
-          const blockTime = templateVars.blockNumberOpcodeTimeSeconds ?? 12
+          const blockTime =
+            templateVars.blockNumberOpcodeTimeSeconds ??
+            HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
 
           const assertionsChallengePeriod =
             templateVars.discovery.getContractValue<number>(
@@ -769,7 +773,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
-  const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+  const assumedBlockTime = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS // RollupUserLogic assumes a >12s block time from pre-merge
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
@@ -894,7 +898,8 @@ function getRiskView(
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   const blockNumberOpcodeTimeSeconds =
-    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+    templateVars.blockNumberOpcodeTimeSeconds ??
+    HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',

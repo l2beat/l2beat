@@ -105,6 +105,11 @@ export const umbra: BaseProject = {
   privacyInfo: {
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
+    anonymitySet: {
+      type: 'not-applicable',
+      description:
+        'Umbra sends funds to one-time stealth addresses instead of mixing deposits in a shared pool.',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
@@ -121,7 +126,7 @@ export const umbra: BaseProject = {
     },
     privacy: {
       value: 'Recipient privacy',
-      sentiment: 'good',
+      sentiment: 'warning',
       description:
         'There is no protocol-level compliance mechanism or privileged view key. Umbra hides who controls the receiving address, but the sender, amount, and stealth address remain public and privacy can be weakened by transaction patterns or poor withdrawal hygiene.',
     },

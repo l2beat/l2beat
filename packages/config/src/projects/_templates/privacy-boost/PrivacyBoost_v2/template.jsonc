@@ -1,0 +1,145 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main contract of the PrivacyBoost pool. Escrows ERC-20 tokens and verifies relay-submitted private transfer, withdrawal, deposit, portal deposit and gift settlement proofs. Supports approved external gateway calls and permissionless exits through delayed forced withdrawals or public gift exits.",
+  "ignoreMethods": [
+    "commitmentToRequestKey",
+    "forcedWithdrawalRequests",
+    "nullifierSpent",
+    "pendingDeposits",
+    "processedDeposits",
+    "treeCount",
+    "treeRoot",
+    "treeRootHistoryCursor",
+    "portalPendingDeposits",
+    "processedPortalDeposits"
+  ],
+  "ignoreInWatchMode": ["currentTreeNumber"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace all five proof verifiers, set withdrawal and portal sweep fees (each up to 10%), set token-specific portal minimum sweeps, and change the treasury, operator and gateway route manager."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "operator": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the allowlist of relays that submit epochs to the pool."
+        }
+      ]
+    },
+    "allowedRelays": {
+      "handler": {
+        "type": "event",
+        "select": "relay",
+        "add": {
+          "event": "RelayUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "RelayUpdated",
+          "where": ["!=", "#allowed", true]
+        }
+      },
+      "description": "Relays allowed to submit epochs to the pool.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit private transfer, withdrawal, deposit, portal deposit and gift settlement epochs with validity proofs, and simulate gateway withdrawals."
+        }
+      ]
+    },
+    "epochVerifier": {
+      "description": "Groth16 verifier used for private transfer / withdrawal epoch proofs.",
+      "severity": "HIGH"
+    },
+    "depositVerifier": {
+      "description": "Groth16 verifier used for deposit epoch proofs.",
+      "severity": "HIGH"
+    },
+    "forcedVerifier": {
+      "description": "Groth16 verifier used for forced withdrawal proofs.",
+      "severity": "HIGH"
+    },
+    "tokenRegistry": {
+      "description": "Registry of ERC-20 tokens accepted by the pool.",
+      "severity": "HIGH"
+    },
+    "authRegistry": {
+      "description": "Registry of account authorization keys and spend approvals used to validate spend authorization.",
+      "severity": "HIGH"
+    },
+    "treasury": {
+      "description": "Address receiving withdrawal fees."
+    },
+    "withdrawFeeBps": {
+      "description": "Withdrawal fee in basis points, charged on withdrawals and forced withdrawals."
+    },
+    "cancelDelay": {
+      "description": "Number of blocks after which an unprocessed deposit request can be cancelled and refunded by the depositor.",
+      "severity": "HIGH"
+    },
+    "forcedWithdrawalDelay": {
+      "description": "Number of blocks between requesting and executing a forced withdrawal.",
+      "severity": "HIGH"
+    },
+    "gatewayRouteManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve or revoke external gateway routes used by proof-authorized withdrawals."
+        }
+      ]
+    },
+    "gateways": {
+      "handler": {
+        "type": "event",
+        "select": "gateway",
+        "add": {
+          "event": "GatewayRouteUpdated",
+          "where": ["!=", "#route", 0]
+        },
+        "remove": {
+          "event": "GatewayRouteUpdated",
+          "where": ["=", "#route", 0]
+        }
+      },
+      "severity": "HIGH",
+      "description": "Approved synchronous gateway routes for proof-authorized external calls."
+    },
+    "portalMinimumSweeps": {
+      "handler": {
+        "type": "event",
+        "groupBy": "tokenId",
+        "select": "newMinSweep",
+        "set": {
+          "event": "PortalMinSweepUpdated"
+        }
+      },
+      "description": "Minimum gross amount per token ID required for a portal sweep, in token base units; defaults to zero."
+    },
+    "portalDepositVerifier": {
+      "description": "Groth16 verifier for portal deposit proofs.",
+      "severity": "HIGH"
+    },
+    "giftClaimVerifier": {
+      "description": "Groth16 verifier for private gift settlement and public gift exit proofs.",
+      "severity": "HIGH"
+    },
+    "maxEpochAuthStalenessBlocks": {
+      "description": "Maximum age in blocks of a superseded auth root accepted for epoch and private gift settlement proofs.",
+      "severity": "HIGH"
+    },
+    "maxForcedWithdrawalAuthStalenessBlocks": {
+      "description": "Maximum age in blocks of a superseded auth root accepted for public gift exits. Despite its legacy name, this does not govern forced withdrawals, which check the live auth record at request time.",
+      "severity": "HIGH"
+    },
+    "portalSweepFeeBps": {
+      "description": "Portal sweep fee in basis points, paid to the sweeper and snapshotted when the deposit is requested."
+    }
+  }
+}

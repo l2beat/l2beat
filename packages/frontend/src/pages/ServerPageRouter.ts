@@ -1,5 +1,9 @@
 import express from 'express'
 import { env } from '~/env'
+import {
+  ClearPageCacheMiddleware,
+  PageCacheMiddleware,
+} from '~/server/middlewares/PageCacheMiddleware'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
@@ -20,6 +24,7 @@ import { createInteropRouter } from './interop/InteropRouter'
 import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
+import { NotFoundHandler } from './not-found/NotFoundHandler'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -42,6 +47,10 @@ export function createServerPageRouter(
     res.setHeaders(headers)
     next()
   })
+
+  // Cloudflare edge-caches HTML only when the origin sends Cache-Control.
+  // Routes that must not be cached override it later in the chain.
+  router.use('/', PageCacheMiddleware())
 
   if (!env.CLIENT_SIDE_HOME_PAGE) {
     // Temporary redirect so browsers drop the previously cached 301 before
@@ -85,6 +94,10 @@ export function createServerPageRouter(
       router.use('/', subRouter)
     }
   }
+
+  // Anything reaching here is a 404 and must not be edge-cached.
+  router.use('/', ClearPageCacheMiddleware())
+  router.use('/', NotFoundHandler(manifest, render))
 
   return router
 }

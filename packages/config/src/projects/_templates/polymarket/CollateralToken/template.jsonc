@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CollateralToken",
+  "description": "Upgradeable ERC20 ({{ symbol }}) that wraps either of two immutable supported assets one-for-one, transferring deposits to an immutable vault. Wrapper-role holders can wrap and unwrap; minter-role holders can mint without depositing an asset and burn their own balance.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the minter role, bit 1 (value 2) the wrapper role.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the token implementation, and grant or revoke the minter and wrapper roles."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "VAULT": {
+      "description": "Immutable address that receives supported assets during wrapping and from which they are pulled via allowance during unwrapping.",
+      "severity": "HIGH"
+    },
+    "totalSupply": {
+      "description": "Total supply of the collateral token.",
+      "ignoreInWatchMode": true
+    },
+    "symbol": { "description": "Ticker of the wrapped collateral token." }
+  }
+}

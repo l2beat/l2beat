@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Receives committee-consensus lists of validators that staking modules must exit and emits the exit requests. SRv3 accounts for the validators' effective-balance weights and key indices when applying per-report and replenishing exit limits.",
   "category": "core",
+  "canActIndependently": false,
   "ignoreMethods": ["getLastProcessingRefSlot"],
   "ignoreInWatchMode": [
     "getConsensusReport",

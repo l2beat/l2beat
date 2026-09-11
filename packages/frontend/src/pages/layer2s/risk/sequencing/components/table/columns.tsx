@@ -1,16 +1,35 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import type { ReactNode } from 'react'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
+import { TableTooltip } from '~/components/table/TableTooltip'
 import type { L2RiskSequencingEntry } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
+import { formatDate, formatTimestamp } from '~/utils/dates'
 
 const columnHelper = createColumnHelper<L2RiskSequencingEntry>()
 
 function getSequencingHref(entry: L2RiskSequencingEntry) {
+  if (entry.slug === 'ethereum') {
+    return '/data-availability/projects/ethereum/ethereum'
+  }
   return `/layer2s/projects/${entry.slug}#sequencing`
+}
+
+function getStakeDistributionTooltip(
+  date: NonNullable<L2RiskSequencingEntry['stakeDistributionDate']>,
+): string {
+  if (date.dateType === 'snapshot') {
+    return `Stake distribution snapshot: ${formatDate(date.date)}.`
+  }
+  return `Stake distribution fetched: ${formatTimestamp(
+    UnixTime.fromDate(new Date(date.date)),
+    { mode: 'datetime' },
+  )}.`
 }
 
 type SequencingTableValueKey =
@@ -18,13 +37,17 @@ type SequencingTableValueKey =
   | 'blockProductionAccess'
   | 'entryPolicy'
   | 'blockTime'
-  | 'rotation'
   | 'blockProduction'
+  | 'rotation'
   | 'deterministicCrGadget'
   | 'additionalCrGadgets'
 
 const tableValueColumns = [
-  { key: 'sequencerCount', header: 'Set\nsize' },
+  {
+    key: 'sequencerCount',
+    header: 'Set\nsize',
+    cell: (entry) => <SequencerCountCell entry={entry} />,
+  },
   {
     key: 'blockProductionAccess',
     header: 'Block production\naccess',
@@ -39,8 +62,13 @@ const tableValueColumns = [
   },
   {
     key: 'blockTime',
-    header: 'L2 block\ntime',
-    tooltip: 'Interval between successive L2 blocks.',
+    header: 'Block\ntime',
+    tooltip: 'Interval between successive blocks.',
+  },
+  {
+    key: 'blockProduction',
+    header: 'Block\nproduction',
+    tooltip: 'Who controls inclusion and transaction ordering for a block.',
   },
   {
     key: 'rotation',
@@ -49,16 +77,10 @@ const tableValueColumns = [
       'How often block production rights move to another proposer and, where applicable, how often a new committee is selected.',
   },
   {
-    key: 'blockProduction',
-    header: 'Block\nproduction',
-    tooltip:
-      'The model used to estimate inclusion under partial live-chain censorship.',
-  },
-  {
     key: 'deterministicCrGadget',
     header: 'Deterministic\nCR',
     tooltip:
-      'Whether there is a deterministic censorship-resistance gadget, such as a bounded forced-inclusion path.',
+      'Whether there is a deterministic censorship-resistance gadget, such as a forced-inclusion path.',
   },
   {
     key: 'additionalCrGadgets',
@@ -70,15 +92,22 @@ const tableValueColumns = [
   key: SequencingTableValueKey
   header: string
   tooltip?: string
+  /** Overrides the default table-value cell. */
+  cell?: (entry: L2RiskSequencingEntry) => ReactNode
 }[]
 
 export const l2SequencingColumns = [
   ...getL2CommonProjectColumns(columnHelper, getSequencingHref),
-  ...tableValueColumns.map(({ key, header, tooltip }) =>
+  ...tableValueColumns.map(({ key, header, tooltip, cell }) =>
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
       id: key,
       header,
-      cell: (ctx) => <TableValueCell value={ctx.row.original[key]} />,
+      cell: (ctx) =>
+        cell ? (
+          cell(ctx.row.original)
+        ) : (
+          <TableValueCell value={ctx.row.original[key]} />
+        ),
       meta: tooltip ? { tooltip } : undefined,
       sortDescFirst: true,
       sortUndefined: 'last',
@@ -86,3 +115,16 @@ export const l2SequencingColumns = [
     }),
   ),
 ]
+
+function SequencerCountCell({ entry }: { entry: L2RiskSequencingEntry }) {
+  return (
+    <div className="flex items-center gap-1">
+      <TableValueCell value={entry.sequencerCount} />
+      {entry.stakeDistributionDate && (
+        <TableTooltip>
+          {getStakeDistributionTooltip(entry.stakeDistributionDate)}
+        </TableTooltip>
+      )}
+    </div>
+  )
+}

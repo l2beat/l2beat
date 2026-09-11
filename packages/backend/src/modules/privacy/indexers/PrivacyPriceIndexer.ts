@@ -1,9 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { PrivacyPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
+import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {

@@ -45,7 +45,7 @@ export const apechain: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.apechain.com/http',
-        callsPerMinute: 300,
+        callsPerMinute: 1200,
       },
       { type: 'etherscan', chainId: 33139 },
     ],

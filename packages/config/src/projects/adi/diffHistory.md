@@ -1,4 +1,180 @@
-Generated with discovered.json: 0xe0ab9103f54b76834d67f87058c5e9652a9f2864
+Generated with discovered.json: 0xb7f123e125de3c921f2b821ca8e28d047af6d0c6
+
+# Diff at Thu, 10 Sep 2026 12:10:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f7783cd20948876b6d5829b7513d3f4c00170b8a block: 1788432287
+- current timestamp: 1789042187
+
+## Description
+
+Used governance proposals to upgrade to v0.30.2, which modified only the verifier. New verifiers are not yet reproduced.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.7:
++        ["2026-09-09T08:38:23.000Z","0xb8aa1631290b261ab7bbc2d789cfcaec178946b0ec7c9231b139ad9ce23ea8c7",["eth:0xf9DD56364E3878056654C756cEBA692e577f8466","eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07","eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708","eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"]]
+      values.$upgradeCount:
+-        7
++        8
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        128849018881
++        128849018882
+      values.getSemverProtocolVersion.2:
+-        1
++        2
+      values.getVerifier:
+-        "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE"
++        "eth:0xccbdfd7f9A8e60d0C1e79fa620205d14121e7a39"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZKsyncOSVerifierPlonk (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract ZKsyncOSChainTypeManager (eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA) [adi/ChainTypeManager] {
+    +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2.
+      description:
+-        "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1."
++        "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,2."
+      values.getSemverProtocolVersion.2:
+-        1
++        2
+      values.initialCutHash:
+-        "0xedf457bf18d9feac26a2fb4a43686971a5eb0f0e21d80393cc8118ecaff31e29"
++        "0x8c06a7a3d4ce7eb8b62ffded867bcd4db8cbd092b1c1517d3ecaa6d02e6d1f55"
+      values.protocolVersion:
+-        128849018881
++        128849018882
+    }
+```
+
+```diff
+    EOA (eth:0x3740B047227a94AcB5eCeCc5b7D6148857C81ecE) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x3740B047227a94AcB5eCeCc5b7D6148857C81ecE","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xff0ef90d99405cd840d320a84642ddf007aa9a3fb9beee8bffd76cd39679a196","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZKsyncOSDualVerifier (eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE) [adi/ZKsyncOSDualVerifier_post_v30]
+    +++ description: A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.
+```
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        12
++        15
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        12
++        15
+    }
+```
+
+```diff
+    contract ServerNotifier (eth:0xd477bd7f14F9A26ebd51827EFB1d40a41f71b70C) [adi/ServerNotifier] {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
++++ description: Scheduled upgrade timestamps for specific protocol versions.
++++ severity: HIGH
+      values.upgradeTimestamps.0:
++        {"chainId":36900,"protocolVersion":128849018881,"upgradeTimestamp":1}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSVerifierPlonk (eth:0xC1288A84C5b2c93Ed4bF712fF4Bb96D862b32aa9) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSDualVerifier (eth:0xccbdfd7f9A8e60d0C1e79fa620205d14121e7a39) [adi/ZKsyncOSDualVerifier_post_v30]
+    +++ description: A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.
+```
+
+## Source code changes
+
+```diff
+.../ZKsyncOSVerifierPlonk.sol                      | 66 +++++++++++-----------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
+```
+
+Generated with discovered.json: 0x4ee7991a5136ba56e8445426838d0db1a3770603
+
+# Diff at Thu, 03 Sep 2026 10:45:52 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9f7b07492346f74d16743dd75dd367045293d930 block: 1780586199
+- current timestamp: 1788432287
+
+## Description
+
+Executed two Governance proposals:
+- https://tools.l2beat.com/decoder-new/?hash=0x72cd8876128636f521ee95d874b59f0ce2c6e7f621bca48e342262f4285e40f0&data=AwA changed security council from an EOA to a 2/3 Safe.
+- https://tools.l2beat.com/decoder-new/?hash=0xbbec72e508d41c1bae51c7c5a0624bb5d7bd7b72778e1701f96b09bab032c1ed&data=AwA changed governance execution delay from 0 to 3 days.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        10
++        12
++++ severity: HIGH
+      values.minDelay:
+-        0
++        259200
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        10
++        12
++++ severity: HIGH
+      values.securityCouncil:
+-        "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
++        "eth:0x95f0c748f60624ddAd536d979993fA23FD86021a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x95f0c748f60624ddAd536d979993fA23FD86021a) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 4 files changed, 1258 insertions(+)
+```
+
+Generated with discovered.json: 0xfbc64b521e846220b75c16cfb5df3e2726c48c37
 
 # Diff at Mon, 10 Aug 2026 13:06:53 GMT:
 

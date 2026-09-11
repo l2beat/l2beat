@@ -41,7 +41,7 @@ export const lumia: ScalingProject = agglayer({
       {
         type: 'rpc',
         url: 'https://mainnet-rpc.lumia.org',
-        callsPerMinute: 300,
+        callsPerMinute: 4800,
       },
     ],
   },

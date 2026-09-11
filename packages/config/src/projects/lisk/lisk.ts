@@ -18,10 +18,14 @@ export const lisk: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Lisk',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the superchain registry snapshot embedded in the op-program release that the dispute games commit to, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     slug: 'lisk',
+    headerWarning:
+      'Lisk Chain will shut down on October 31, 2026. See the [announcement](https://lisk.com/blog/posts/introducing-the-new-lisk) and withdraw your funds to Ethereum.',
     description:
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
@@ -46,6 +50,14 @@ export const lisk: ScalingProject = opStackL2({
   },
   milestones: [
     {
+      title: 'Lisk Chain shutdown announcement',
+      url: 'https://lisk.com/blog/posts/introducing-the-new-lisk',
+      date: '2026-08-25T00:00:00Z',
+      description:
+        'Lisk announces its chain will shut down on October 31, 2026. Live projects will migrate to Celo.',
+      type: 'general',
+    },
+    {
       title: 'Mainnet Launch',
       url: 'https://lisk.com/blog/posts/lisk-user-mainnet-is-live/',
       date: '2024-11-12T00:00:00Z',
@@ -67,7 +79,7 @@ export const lisk: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.api.lisk.com',
-        callsPerMinute: 300,
+        callsPerMinute: 200,
       },
     ],
   },

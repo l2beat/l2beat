@@ -85,8 +85,11 @@ const FEATURES: Record<string, string[]> = {
     'IndexerState',
     'IndexerConfiguration',
     'PrivacyBlockTimestamp',
+    'PrivacyAnonymitySetEvent',
     'PrivacyFlowEvent',
     'PrivacyPrice',
+    'PrivacyRelayerActivity',
+    'PrivacyRelayerSample',
   ],
 }
 

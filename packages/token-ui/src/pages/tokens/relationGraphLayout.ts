@@ -2,6 +2,15 @@ import * as d3 from 'd3'
 
 const CLUSTER_PADDING = 60
 const SIMULATION_TICKS = 300
+const LINK_DISTANCE = 100
+const LINK_STRENGTH = 0.45
+/**
+ * Virtual links hold a node with the cluster it was assigned to without an
+ * observed relation, so they are longer and looser than real links: the node
+ * belongs to the cluster but sits a bit outside it.
+ */
+const VIRTUAL_LINK_DISTANCE = 170
+const VIRTUAL_LINK_STRENGTH = 0.15
 
 export interface LayoutNode extends d3.SimulationNodeDatum {
   id: string
@@ -11,6 +20,12 @@ export interface LayoutLink<Node extends LayoutNode>
   extends d3.SimulationLinkDatum<Node> {
   source: Node
   target: Node
+  /**
+   * A layout-only attachment, not an observed relation: it groups its nodes
+   * into one cluster and holds them loosely together, but no edge is drawn
+   * for it.
+   */
+  virtual?: boolean
 }
 
 interface Bounds {
@@ -157,8 +172,12 @@ function layoutCluster<Node extends LayoutNode, Link extends LayoutLink<Node>>(
       d3
         .forceLink<Node, Link>(cluster.links)
         .id((node) => node.id)
-        .distance(100)
-        .strength(0.45),
+        .distance((link) =>
+          link.virtual ? VIRTUAL_LINK_DISTANCE : LINK_DISTANCE,
+        )
+        .strength((link) =>
+          link.virtual ? VIRTUAL_LINK_STRENGTH : LINK_STRENGTH,
+        ),
     )
     .force('charge', d3.forceManyBody().strength(-130))
     .force('center', d3.forceCenter(0, 0))

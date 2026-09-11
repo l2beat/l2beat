@@ -1,4 +1,86 @@
-Generated with discovered.json: 0x94236009956d8830d25b76c3462e7d0cae0a4799
+Generated with discovered.json: 0x8169f64e253bb883d8f03a74696dde05f9dace02
+
+# Diff at Mon, 07 Sep 2026 15:05:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@041f4be232de31648e9a26f8b80fa8f2d65fc60d block: 1788265075
+- current timestamp: 1788793431
+
+## Description
+
+Minters added.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) [tokens/circle/USDC] {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.27:
++        "eth:0x89661a593106fF15B24B8DD25ab8Efad63cFEEA7"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.28:
++        "eth:0xe898a5C06C1166178495e0faf27dae8dd4C97096"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.29:
++        "eth:0x93Cb3290185Be000AfAeAd63c47C40EBcE86Bf7E"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.30:
++        "eth:0x7BdDBa3607517a3a06B75C1Fad1744D571De9A2D"
+    }
+```
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter] {
+    +++ description: None
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.37:
++        "eth:0xFe1e61E23698d619235B88936eF670AcF9FB398B"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.38:
++        "eth:0x162Bd3604c3bAfF49F91bA845ad79c6B2Cc7682E"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.39:
++        "eth:0x3F1d9e1b241C918eFd1564018eE0e1Dc3C429d2f"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.40:
++        "eth:0x6e1965bA05D34E0772754779B9e8Fb5EF7e73F2D"
+    }
+```
+
+Generated with discovered.json: 0x9ee3fb3bbe2758a687b27294533d2123d3062164
+
+# Diff at Tue, 01 Sep 2026 12:19:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1785844480
+- current timestamp: 1788265075
+
+## Description
+
+Minters added.
+
+## Watched changes
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [shared-circle/MasterMinter] {
+    +++ description: None
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.33:
++        "eth:0x9138a70014749f7F3f9B7a5b5c159b14779EdB6d"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.34:
++        "eth:0xD05850359114bfE0b37A0Af048E1E8F9f7ce8275"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.35:
++        "eth:0xfe0F536D7Ea2eD598fd54993F03208B03de1916E"
++++ description: Can manage minters in USDC contracts refering to this contract as masterMinter
+      values.controllers.36:
++        "eth:0x86274d6Ed4301f40d5E28D5805cEa0E7DC4ee049"
+    }
+```
+
+Generated with discovered.json: 0x061709928cfddc7e1223ac5c7bc1b4fa6436a8c9
 
 # Diff at Tue, 04 Aug 2026 13:19:46 GMT:
 

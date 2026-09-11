@@ -305,6 +305,7 @@ describe(PrivacyPriceIndexer.name, () => {
         priceId: 'ethereum',
         sinceTimestamp: UnixTime(123),
       })
+      expect(id1).toEqual('3953373a477a')
       expect(id1).toEqual(id2)
     })
   })

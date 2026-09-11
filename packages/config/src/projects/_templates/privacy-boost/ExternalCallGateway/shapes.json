@@ -1,0 +1,8 @@
+{
+  "ExternalCallGateway": {
+    "hash": "0x6ca52f3dc9fa66a455c3ff9e302855d7dca4176fae2d1b25ab9379049a1b2a08",
+    "address": "oeth:0x54B576782d3CE325CAc9861E17bB5d7926e41955",
+    "chain": "optimism",
+    "blockNumber": 156585066
+  }
+}

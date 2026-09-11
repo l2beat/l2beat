@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NegRiskOperator",
+  "description": "Permissioned operator between the resolution adapter and the multi-outcome adapter. Anyone can finalize an unflagged reported question after {{ delayPeriodFormatted }}; admins can flag or unflag a question and force an outcome of their choosing after the same delay. This implementation hardcodes the delay to zero, so it enforces no waiting time after reporting or flagging.",
+  "fields": {
+    "delayPeriodFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function DELAY_PERIOD() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "admins": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed admin, address indexed member)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+        }
+      },
+      "severity": "HIGH",
+      "description": "Can prepare markets and questions, flag or unflag questions to control public resolution, and force an arbitrary outcome on a flagged question after the delay period, which this implementation hardcodes to zero.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the {{ delayPeriodFormatted }} delay period."
+        }
+      ]
+    },
+    "oracle": {
+      "severity": "HIGH",
+      "description": "Address allowed to report question outcomes to this operator. Can only be set once.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report the boolean outcome of any prepared question."
+        }
+      ]
+    },
+    "nrAdapter": {
+      "description": "Multi-outcome adapter that this operator prepares markets on and reports outcomes to."
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewAdmin(address indexed admin, address indexed member)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+          }
+        ]
+      },
+      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. The authorization mixin grants admin in the constructor without emitting an event, so such an admin is invisible in the added/removed sets and only shows up here. The list is historical and not a live permission set - confirm current status with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

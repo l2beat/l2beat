@@ -1,18 +1,24 @@
 import type {
   Project,
+  ProjectCentralizedSequencingSpec,
   ProjectInclusionDelayChart,
+  ProjectInclusionDelayChartStakeDistribution,
+  ProjectSequencerSetSpec,
   TableReadyValue,
 } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
-import type { CommonL2Entry } from '~/server/features/layer2s/getCommonL2Entry'
+import { assert, notUndefined, ProjectId } from '@l2beat/shared-pure'
 import { getCommonL2Entry } from '~/server/features/layer2s/getCommonL2Entry'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
+import { getEthereumCommonEntry } from '~/server/features/utils/getEthereumCommonEntry'
 import { ps } from '~/server/projects'
-import type { InclusionDelayChartDataPoint } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import type {
+  InclusionDelayChartDataPoint,
+  InclusionDelayEntityMarker,
+} from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
-  getEthereumComparisonDelay,
-  getProjectInclusionDelay,
+  getInclusionDelayData,
   mergeInclusionDelaySeries,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
@@ -21,8 +27,11 @@ type L2RiskSequencingProject = Project<
   'contracts'
 >
 
-export interface L2RiskSequencingEntry extends CommonL2Entry {
+export interface L2RiskSequencingEntry extends CommonProjectEntry {
   sequencerCount: TableReadyValue | undefined
+  stakeDistributionDate:
+    | Pick<ProjectInclusionDelayChartStakeDistribution, 'dateType' | 'date'>
+    | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
   blockTime: TableReadyValue | undefined
@@ -32,25 +41,36 @@ export interface L2RiskSequencingEntry extends CommonL2Entry {
   additionalCrGadgets: TableReadyValue | undefined
 }
 
+export interface L2RiskCentralizedSequencingEntry
+  extends CommonProjectEntry,
+    Omit<ProjectCentralizedSequencingSpec, 'type'> {}
+
 export interface InclusionDelayComparisonSeries {
   key: string
   label: string
   type: 'project' | 'ethereum'
 }
 
+export interface InclusionDelayComparisonEntityMarker
+  extends InclusionDelayEntityMarker {
+  seriesKey: string
+}
+
 export interface InclusionDelayComparison {
   data: InclusionDelayChartDataPoint[]
   series: InclusionDelayComparisonSeries[]
+  entityMarkers: InclusionDelayComparisonEntityMarker[]
   maxCensorFraction: number
 }
 
 export interface L2RiskSequencingPageData {
-  entries: L2RiskSequencingEntry[]
+  decentralizedEntries: L2RiskSequencingEntry[]
+  centralizedEntries: L2RiskCentralizedSequencingEntry[]
   inclusionDelayComparison: InclusionDelayComparison | undefined
 }
 
 export async function getL2RiskSequencingEntries(): Promise<L2RiskSequencingPageData> {
-  const [projectsChangeReport, projects] = await Promise.all([
+  const [projectsChangeReport, projects, ethereum] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
       select: [
@@ -64,11 +84,42 @@ export async function getL2RiskSequencingEntries(): Promise<L2RiskSequencingPage
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
     }),
+    ps.getProject({
+      id: ProjectId.ETHEREUM,
+      select: ['display', 'scalingTechnology'],
+    }),
   ])
 
-  const entries = projects
+  // Ethereum is the baseline row and the baseline chart series. Its config is
+  // always populated, so a missing spec or chart is a config error.
+  assert(ethereum, 'Ethereum sequencing configuration not found')
+  const ethereumSpec = ethereum.scalingTechnology.sequencing?.sequencingSpec
+  assert(
+    ethereumSpec?.type === 'sequencer-set' && ethereumSpec.inclusionDelayChart,
+    'Ethereum sequencer set specification with inclusion delay chart not found',
+  )
+
+  const decentralizedEntries: L2RiskSequencingEntry[] = [
+    {
+      ...getEthereumCommonEntry({
+        description: ethereum.display.description,
+      }),
+      ...getSequencingValues(ethereumSpec),
+    },
+    ...projects
+      .map((project) =>
+        getL2RiskSequencingEntry(
+          project,
+          projectsChangeReport.getChanges(project.id),
+        ),
+      )
+      .filter(notUndefined)
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  ]
+
+  const centralizedEntries = projects
     .map((project) =>
-      getL2RiskSequencingEntry(
+      getL2RiskCentralizedSequencingEntry(
         project,
         projectsChangeReport.getChanges(project.id),
       ),
@@ -77,82 +128,101 @@ export async function getL2RiskSequencingEntries(): Promise<L2RiskSequencingPage
     .sort((a, b) => a.name.localeCompare(b.name))
 
   return {
-    entries,
-    inclusionDelayComparison: getInclusionDelayComparison(projects),
+    decentralizedEntries,
+    centralizedEntries,
+    inclusionDelayComparison: getInclusionDelayComparison(
+      projects,
+      ethereumSpec.inclusionDelayChart,
+    ),
   }
 }
 
-const ETHEREUM_SERIES_KEY = 'ethereum'
+interface InclusionDelaySeriesInput extends InclusionDelayComparisonSeries {
+  chart: ProjectInclusionDelayChart
+}
 
 function getInclusionDelayComparison(
   projects: L2RiskSequencingProject[],
+  ethereumChart: ProjectInclusionDelayChart,
 ): InclusionDelayComparison | undefined {
-  const projectDelays = projects
-    .map((project) => {
-      const sequencing = project.scalingTechnology.sequencing
-      const chart = sequencing?.inclusionDelayChart
-      if (!sequencing?.sequencerSetSpec || !chart) {
+  const projectInputs = projects
+    .map((project): InclusionDelaySeriesInput | undefined => {
+      const spec = project.scalingTechnology.sequencing?.sequencingSpec
+      if (spec?.type !== 'sequencer-set' || !spec.inclusionDelayChart) {
         return undefined
       }
       return {
-        slug: project.slug,
-        name: project.name,
-        points: getProjectInclusionDelay(chart),
-        maxCensorFraction: chart.maxCensorFraction,
-        target: chart.target,
+        key: project.slug,
+        label: project.name,
+        type: 'project',
+        chart: spec.inclusionDelayChart,
       }
     })
     .filter(notUndefined)
-    .sort((a, b) => a.name.localeCompare(b.name))
+    .sort((a, b) => a.label.localeCompare(b.label))
 
-  const [first] = projectDelays
-  if (!first) {
+  if (projectInputs.length === 0) {
     return undefined
   }
 
-  const maxCensorFraction = Math.max(
-    ...projectDelays.map((delay) => delay.maxCensorFraction),
-  )
-  // All sequencing projects compare against the same confidence target, so a
-  // single Ethereum reference spanning the widest range serves every line.
-  const ethereumPoints = getEthereumComparisonDelay(
-    maxCensorFraction,
-    first.target,
-  )
-
-  const data = mergeInclusionDelaySeries([
-    ...projectDelays.map((delay) => ({
-      key: delay.slug,
-      points: delay.points,
-    })),
-    { key: ETHEREUM_SERIES_KEY, points: ethereumPoints },
-  ])
-
-  const series: InclusionDelayComparisonSeries[] = [
-    ...projectDelays.map((delay) => ({
-      key: delay.slug,
-      label: delay.name,
-      type: 'project' as const,
-    })),
-    { key: ETHEREUM_SERIES_KEY, label: 'Ethereum', type: 'ethereum' as const },
+  const inputs: InclusionDelaySeriesInput[] = [
+    {
+      key: 'ethereum',
+      label: 'Ethereum',
+      type: 'ethereum',
+      chart: ethereumChart,
+    },
+    ...projectInputs,
   ]
+  const computed = inputs.map((input) => ({
+    ...input,
+    delay: getInclusionDelayData(input.chart),
+  }))
 
-  return { data, series, maxCensorFraction }
+  return {
+    data: mergeInclusionDelaySeries(
+      computed.map(({ key, delay }) => ({ key, points: delay.projectPoints })),
+    ),
+    series: computed.map(({ key, label, type }) => ({ key, label, type })),
+    entityMarkers: computed.flatMap(({ key, delay }) =>
+      delay.entityMarkers.map((marker) => ({
+        ...marker,
+        id: `${key}-${marker.id}`,
+        seriesKey: key,
+      })),
+    ),
+    maxCensorFraction: Math.max(
+      ...computed.map(({ chart }) => chart.maxCensorFraction),
+    ),
+  }
 }
 
 function getL2RiskSequencingEntry(
   project: L2RiskSequencingProject,
   changes: ProjectChanges,
 ): L2RiskSequencingEntry | undefined {
-  const sequencing = project.scalingTechnology.sequencing
-  const spec = sequencing?.sequencerSetSpec
-  if (!sequencing || !spec) {
+  const spec = project.scalingTechnology.sequencing?.sequencingSpec
+  if (spec?.type !== 'sequencer-set') {
     return undefined
   }
 
   return {
     ...getCommonL2Entry({ project, changes }),
+    ...getSequencingValues(spec),
+  }
+}
+
+type SequencingValues = Omit<L2RiskSequencingEntry, keyof CommonProjectEntry>
+
+function getSequencingValues(spec: ProjectSequencerSetSpec): SequencingValues {
+  const stakeDistribution = spec.inclusionDelayChart?.stakeDistribution
+
+  return {
     sequencerCount: spec.sequencerCount,
+    stakeDistributionDate: stakeDistribution && {
+      dateType: stakeDistribution.dateType,
+      date: stakeDistribution.date,
+    },
     blockProductionAccess: spec.blockProductionAccess,
     entryPolicy: withSecondLine(spec.stakePerValidator, spec.rateLimit),
     blockTime: spec.blockTime,
@@ -160,9 +230,25 @@ function getL2RiskSequencingEntry(
       spec.proposerRotationTime,
       spec.committeeRotationTime,
     ),
-    blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
+    blockProduction: getBlockProduction(spec.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
+  }
+}
+
+function getL2RiskCentralizedSequencingEntry(
+  project: L2RiskSequencingProject,
+  changes: ProjectChanges,
+): L2RiskCentralizedSequencingEntry | undefined {
+  const sequencing = project.scalingTechnology.sequencing
+  if (sequencing?.sequencingSpec?.type !== 'centralized') {
+    return undefined
+  }
+  const { type: _, ...spec } = sequencing.sequencingSpec
+
+  return {
+    ...getCommonL2Entry({ project, changes }),
+    ...spec,
   }
 }
 
@@ -197,7 +283,7 @@ function getBlockProduction(
     value: 'Single proposer rotation',
     secondLine: `${chart.slotSeconds}s slots`,
     description:
-      'A single proposer is randomly selected for each slot from the proof-of-stake validator set.',
+      'A single proposer is selected for each slot from the proof-of-stake validator set. The proposer controls the final payload choice and can order transactions locally or through a builder.',
     sentiment: 'good',
   }
 }

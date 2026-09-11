@@ -198,7 +198,8 @@
         "decimals": 18,
         "sinceTimestamp": 1724198400,
         "address": "0x3f710cBd0F4268719C6c2E5E078a4CAfAeED7d45",
-        "chain": "sanko"
+        "chain": "sanko",
+        "untilTimestamp": 1777420800
       },
       "category": "other",
       "source": "native",

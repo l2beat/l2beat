@@ -65,7 +65,6 @@ export function TvsValueChart({
           fill="url(#tvs-value-fill)"
           fillOpacity={1}
           stroke="url(#tvs-value-stroke)"
-          strokeWidth={2}
           isAnimationActive={false}
         />
         <ChartTooltip filterNull={false} content={<TvsValueChartTooltip />} />

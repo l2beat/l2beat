@@ -28,8 +28,18 @@ const RAILGUN_DEPOSIT_EVENT =
 const RAILGUN_WITHDRAWAL_EVENT =
   '0xd93cf895c7d5b2cd7dc7a098b678b3089f37d91f48d9b83a0800a91cbdf05284'
 
-const TRACKED_TOKENS = [
-  { address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH' },
+interface TrackedToken {
+  address: string
+  symbol: string
+  minimumAmounts?: string[]
+}
+
+const TRACKED_TOKENS: TrackedToken[] = [
+  {
+    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    symbol: 'WETH',
+    minimumAmounts: ['100000000000000000', '10000000000000000000'],
+  },
   { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', symbol: 'USDT' },
   { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', symbol: 'USDC' },
   { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', symbol: 'DAI' },
@@ -125,6 +135,10 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
           railgunCore.sinceTimestamp ?? 0,
           resolved.coingeckoListingTimestamp,
         ),
+        anonymitySet:
+          token.minimumAmounts === undefined
+            ? undefined
+            : { minimumAmounts: token.minimumAmounts },
         deposit: {
           event: RAILGUN_DEPOSIT_EVENT,
           extractor: 'railgunShield',
@@ -225,6 +239,13 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     tokens: privacyTokens,
+    relayerTracking: {
+      type: 'railgunWaku',
+      chainId: 1,
+      // Sampling observes the current network state, so there is no history
+      // to backfill before the first deployment of the sampler.
+      sinceTimestamp: UnixTime(1788134400), // 2026-08-31T00:00:00Z
+    },
     exitWindow: {
       value: formatSeconds(executionStartOffset),
       sentiment: 'warning',
@@ -278,5 +299,6 @@ export const railgun: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [discovery.getContract('RailgunSmartWallet').address],
   },
 }

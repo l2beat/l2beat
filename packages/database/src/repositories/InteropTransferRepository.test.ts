@@ -176,14 +176,38 @@ describeDatabase(InteropTransferRepository.name, (db) => {
   })
 
   describe(InteropTransferRepository.prototype.getTokenRoutes.name, () => {
-    it('aggregates transfers into one row per token pair and bridge-type evidence', async () => {
+    it('aggregates transfers into one row per plugin, token pair and bridge-type evidence', async () => {
       const srcToken = EthereumAddress.random()
       const dstToken = EthereumAddress.random()
       const otherDstToken = EthereumAddress.random()
 
       const first = transfer('plugin1', 'transfer1', 'type', UnixTime(100))
       const second = transfer('plugin1', 'transfer2', 'type', UnixTime(200))
-      for (const record of [first, second]) {
+      const otherPlugin = transfer(
+        'plugin2',
+        'transfer4',
+        'type',
+        UnixTime(400),
+      )
+      // Larger transfer ids than transfer2, but missing tx hashes — the
+      // sample must stay on the fully hashed row.
+      const partiallyHashed = transfer(
+        'plugin1',
+        'transfer8',
+        'type',
+        UnixTime(500),
+      )
+      partiallyHashed.dstTxHash = undefined
+      const unhashed = transfer('plugin1', 'transfer9', 'type', UnixTime(600))
+      unhashed.srcTxHash = undefined
+      unhashed.dstTxHash = undefined
+      for (const record of [
+        first,
+        second,
+        otherPlugin,
+        partiallyHashed,
+        unhashed,
+      ]) {
         record.srcTokenAddress = srcToken
         record.dstTokenAddress = dstToken
         record.bridgeType = 'lockAndMint'
@@ -195,12 +219,20 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       third.srcWasBurned = true
       third.dstWasMinted = true
 
-      await repository.insertMany([first, second, third])
+      await repository.insertMany([
+        first,
+        second,
+        third,
+        otherPlugin,
+        partiallyHashed,
+        unhashed,
+      ])
 
       const routes = await repository.getTokenRoutes()
 
       expect(routes).toEqualUnsorted([
         {
+          plugin: 'plugin1',
           srcChain: 'ethereum',
           srcTokenAddress: srcToken,
           dstChain: 'arbitrum',
@@ -208,10 +240,27 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           bridgeType: 'lockAndMint',
           srcWasBurned: false,
           dstWasMinted: false,
-          transferCount: 2,
+          transferCount: 4,
           sampleTransferId: 'transfer2',
+          sampleSrcTxHash: '0xtransfer2src',
+          sampleDstTxHash: '0xtransfer2dst',
         },
         {
+          plugin: 'plugin2',
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: dstToken,
+          bridgeType: 'lockAndMint',
+          srcWasBurned: false,
+          dstWasMinted: false,
+          transferCount: 1,
+          sampleTransferId: 'transfer4',
+          sampleSrcTxHash: '0xtransfer4src',
+          sampleDstTxHash: '0xtransfer4dst',
+        },
+        {
+          plugin: 'plugin1',
           srcChain: 'ethereum',
           srcTokenAddress: srcToken,
           dstChain: 'arbitrum',
@@ -221,6 +270,50 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           dstWasMinted: true,
           transferCount: 1,
           sampleTransferId: 'transfer3',
+          sampleSrcTxHash: '0xtransfer3src',
+          sampleDstTxHash: '0xtransfer3dst',
+        },
+      ])
+    })
+
+    it('falls back to a partially hashed sample when no fully hashed transfer exists', async () => {
+      const srcToken = EthereumAddress.random()
+      const dstToken = EthereumAddress.random()
+
+      const partiallyHashed = transfer(
+        'plugin1',
+        'transfer1',
+        'type',
+        UnixTime(100),
+      )
+      partiallyHashed.dstTxHash = undefined
+      const unhashed = transfer('plugin1', 'transfer2', 'type', UnixTime(200))
+      unhashed.srcTxHash = undefined
+      unhashed.dstTxHash = undefined
+      for (const record of [partiallyHashed, unhashed]) {
+        record.srcTokenAddress = srcToken
+        record.dstTokenAddress = dstToken
+        record.bridgeType = 'lockAndMint'
+      }
+
+      await repository.insertMany([partiallyHashed, unhashed])
+
+      const routes = await repository.getTokenRoutes()
+
+      expect(routes).toEqual([
+        {
+          plugin: 'plugin1',
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: dstToken,
+          bridgeType: 'lockAndMint',
+          srcWasBurned: false,
+          dstWasMinted: false,
+          transferCount: 2,
+          sampleTransferId: 'transfer1',
+          sampleSrcTxHash: '0xtransfer1src',
+          sampleDstTxHash: undefined,
         },
       ])
     })

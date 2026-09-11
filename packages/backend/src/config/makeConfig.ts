@@ -88,7 +88,7 @@ export async function makeConfig(
         },
     notifications:
       flags.isEnabled('notifications') &&
-      getNotificationsConfig(env, flags, clockOffsetSeconds, deploymentEnv),
+      getNotificationsConfig(env, flags, deploymentEnv),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -130,7 +130,8 @@ export async function makeConfig(
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
-    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
+    daBeat:
+      flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env, flags)),
     ecosystems:
       flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
@@ -164,7 +165,8 @@ export async function makeConfig(
       activeChains,
     ),
     privacy:
-      flags.isEnabled('privacy') && (await getPrivacyConfig(ps, env, flags)),
+      flags.isEnabled('privacy') &&
+      (await getPrivacyConfig(ps, env, flags, chains)),
     backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
@@ -175,7 +177,6 @@ export async function makeConfig(
 function getNotificationsConfig(
   env: Env,
   flags: FeatureFlags,
-  clockOffsetSeconds: number,
   deploymentEnv: DeploymentEnvironment,
 ): Config['notifications'] {
   return {
@@ -199,25 +200,6 @@ function getNotificationsConfig(
       discordWebhookUrl: env.string(
         'NOTIFICATIONS_ETHEREUM_BLOBS_DISCORD_WEBHOOK_URL',
       ),
-    },
-    dailyChecks: flags.isEnabled('notifications', 'dailyChecks') && {
-      discordWebhookUrl: env.string(
-        'NOTIFICATIONS_DAILY_CHECKS_DISCORD_WEBHOOK_URL',
-      ),
-      discordUserIds: env
-        .string('NOTIFICATIONS_DAILY_CHECKS_DISCORD_USER_IDS')
-        .split(',')
-        .map((id) => id.trim())
-        .filter((id) => id.length > 0),
-      timezone: env.string(
-        'NOTIFICATIONS_DAILY_CHECKS_TIMEZONE',
-        'Europe/Warsaw',
-      ),
-      hour:
-        (env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9) -
-          clockOffsetSeconds / UnixTime.HOUR +
-          24) %
-        24,
     },
   }
 }

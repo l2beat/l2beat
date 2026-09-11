@@ -1,0 +1,14 @@
+{
+  "UmaAddressWhitelist": {
+    "hash": "0xc16e299e2f606898493b6e91ac040d4714a1b9d5b83dce57e8c8e651bcb6893a",
+    "address": "matic:0x1020Ae36548ab28Bc0c41Fd2a08D24132C82cc55",
+    "chain": "polygonpos",
+    "blockNumber": 91186243
+  },
+  "UmaAddressWhitelistV2": {
+    "hash": "0xa87e7461021d077d640bc312623caf5c914572ac90f111bf5ceba3ca4b04b554",
+    "address": "matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  }
+}

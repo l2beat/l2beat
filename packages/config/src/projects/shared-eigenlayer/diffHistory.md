@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x120ffc86c2920b00e16078ab806128d17aa8c340
+
+# Diff at Wed, 09 Sep 2026 08:50:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2af5f3bcc4a7752b7cfae3db79baaa5588b97771 block: 1785420260
+- current timestamp: 1788943774
+
+## Description
+
+DelegationManager upgraded to v1.13.1 ([ELIP-019](https://github.com/eigenfoundation/ELIPs/blob/main/ELIPs/ELIP-019_Queued-Slash-Share-Accounting-Fix.md)): fixes queued-slash share accounting in `queueWithdrawals` - slashable scaled shares are now recomputed from withdrawable shares, 0 when the operator is fully slashed. [Diff](https://disco.l2beat.com/diff/eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75/eth:0x6a8BEd4062C895130E2d09bA442D3eCEAd5Df6c2)
+
+ProtocolRegistry `version` updated from `1.13.0` to `1.13.1`.
+
+## Watched changes
+
+```diff
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129) [eigenlayer/ProtocolRegistry] {
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+      values.version:
+-        "1.13.0"
++        "1.13.1"
+    }
+```
+
+```diff
+    contract DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) [eigenlayer/DelegationManager] {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      sourceHashes.1:
+-        "0x2876ad926c0041bb58be266172b9bb1bf7450f4e7c3a54bd9b4fa01e2255bbcc"
++        "0xdddae48af6d01c9b6de028e9ad3cecc35efdaae12031aa6ecfbf6ca558d65c91"
+      values.$implementation:
+-        "eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75"
++        "eth:0x6a8BEd4062C895130E2d09bA442D3eCEAd5Df6c2"
+      values.$pastUpgrades.6:
++        ["2026-08-27T22:55:35.000Z","0x4dc0d2af7c481fb2ac2371fecbe3e9bb2a79ec311594bedfea7c6a696f2cfd8e",["eth:0x6a8BEd4062C895130E2d09bA442D3eCEAd5Df6c2"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.version:
+-        "1.9.0"
++        "1.13.1"
+      implementationNames.eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75:
+-        "DelegationManager"
+      implementationNames.eth:0x6a8BEd4062C895130E2d09bA442D3eCEAd5Df6c2:
++        "DelegationManager"
+    }
+```
+
+## Source code changes
+
+```diff
+.../DelegationManager/DelegationManager.sol        | 54 +++++++++++++++++++---
+ 1 file changed, 48 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0xc4f7bb3a64a890defcc2472d25cb338060b763ac
+
+# Diff at Thu, 27 Aug 2026 08:52:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1785420260
+- current timestamp: 1785420260
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785420260 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xd30c18ab8d72684ccf9fb49faaec99b652988e9d
 
 # Diff at Wed, 15 Jul 2026 13:40:40 GMT:

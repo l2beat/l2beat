@@ -100,10 +100,14 @@ export function PrivacyProjectPage({
                     >
                       <PrivacyProjectStats
                         totalValueLockedUsd={entry.summary.totalValueLockedUsd}
+                        totalValueLockedChange7d={
+                          entry.summary.totalValueLockedChange7d
+                        }
                         hasTvl={entry.hasTvl}
                         assetsCount={entry.assetsCount}
                         bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}
+                        relayerStat={entry.summary.relayerStat}
                       />
 
                       <PrivacyProjectRiskProfile

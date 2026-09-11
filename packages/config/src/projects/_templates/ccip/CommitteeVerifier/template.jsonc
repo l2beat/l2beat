@@ -1,0 +1,152 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Committee-based cross-chain verifier used by CCIP 2.0. On the source chain it accepts messages only from the Router-selected OnRamp, applies RMN and optional sender-allowlist checks, and returns its version tag. On the destination chain it applies RMN checks and requires the configured per-source-chain signature quorum over the version and message hash.",
+  "category": "core",
+  "ignoreMethods": ["getAllSignatureConfigs"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace each source chain's committee signers and signature threshold."
+        },
+        {
+          "type": "interact",
+          "description": "add or reconfigure remote-chain verification parameters, including the Router, fees, verification gas, payload size, and sender-allowlist state."
+        },
+        {
+          "type": "interact",
+          "description": "change the allowed finality policy, fee aggregator, and sender-allowlist administrator, and directly update sender allowlists."
+        }
+      ]
+    },
+    "signatureConfigs": {
+      "description": "Current committee threshold and signer set for each source chain, reconstructed from SignatureConfigSet events. A message needs at least threshold valid signatures ordered by signer address; the signed hash commits to this verifier's version tag and the message hash.",
+      "handler": {
+        "type": "event",
+        "groupBy": "sourceChainSelector",
+        "select": ["threshold", "signers"],
+        "set": {
+          "event": "event SignatureConfigSet(uint64 indexed sourceChainSelector, address[] signers, uint8 threshold)"
+        }
+      },
+      "edit": [
+        "pipe",
+        ["map_values", ["set", "signers", ["sort"]]],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ],
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign CCIP 2.0 message hashes for the source-chain committees in which they are configured; the displayed per-chain threshold is required."
+        }
+      ]
+    },
+    "remoteChainSelectors": {
+      "description": "Remote chain selectors with verifier configuration, reconstructed from RemoteChainConfigSet events and used to read the complete current configuration for each chain.",
+      "handler": {
+        "type": "event",
+        "select": "remoteChainSelector",
+        "add": {
+          "event": "event RemoteChainConfigSet(uint64 indexed remoteChainSelector, address router, bool allowlistEnabled)"
+        }
+      }
+    },
+    "remoteChainConfigs": {
+      "description": "Current verifier configuration for every remote chain observed in RemoteChainConfigSet events: Router, allowlist state, fee in USD cents, destination gas reserved for verification, verifier-result payload size, and allowed senders.",
+      "handler": {
+        "type": "array",
+        "method": "function getRemoteChainConfig(uint64 remoteChainSelector) view returns ((address router, uint64 remoteChainSelector, bool allowlistEnabled, uint16 feeUSDCents, uint32 gasForVerification, uint16 payloadSizeBytes) remoteChainConfig, address[] allowedSendersList)",
+        "indices": "{{ remoteChainSelectors }}"
+      },
+      "edit": [
+        "pipe",
+        [
+          "map",
+          [
+            "pipe",
+            ["shape", "remoteChainConfig", "allowedSendersList"],
+            [
+              "set",
+              ["remoteChainConfig", "remoteChainSelector"],
+              ["format", "CCIPChainName"]
+            ]
+          ]
+        ],
+        ["sort", ["get", "remoteChainConfig", "remoteChainSelector"]]
+      ]
+    },
+    "routeRouters": {
+      "description": "Router configured for each remote chain. Its ramp registrations determine which OnRamp can invoke outbound verification and which OffRamp can invoke inbound verification.",
+      "copy": "remoteChainConfigs",
+      "edit": [
+        "pipe",
+        [
+          "map",
+          [
+            "pipe",
+            ["shape", "remoteChainConfig", "allowedSendersList"],
+            ["get", "remoteChainConfig"],
+            ["pick", "remoteChainSelector", "router"],
+            ["set", "remoteChainSelector", ["format", "CCIPChainName"]]
+          ]
+        ],
+        ["sort", ["get", "remoteChainSelector"]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain."
+        }
+      ]
+    },
+    "allowedSenders": {
+      "description": "Per-destination-chain sender allowlists reconstructed from add and remove events. These lists are enforced only for chains whose current allowlist flag is enabled.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": "senders",
+        "add": {
+          "event": "event AllowListSendersAdded(uint64 indexed destChainSelector, address senders)"
+        },
+        "remove": {
+          "event": "event AllowListSendersRemoved(uint64 indexed destChainSelector, address senders)"
+        }
+      },
+      "edit": ["map_keys", ["format", "CCIPChainName"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "send messages through this verifier on routes where its sender allowlist is enabled."
+        }
+      ]
+    },
+    "allowlistAdmin": {
+      "description": "Account that can add or remove allowed senders and toggle their per-chain allowlist state; the owner shares this authority.",
+      "copy": "getDynamicConfig",
+      "edit": ["get", "allowlistAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove allowed senders and toggle sender allowlists for remote chains."
+        }
+      ]
+    },
+    "getStorageLocationsAdmin": {
+      "description": "Account that can replace the offchain storage-location identifiers advertised by this verifier and nominate its successor.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the offchain storage-location identifiers and nominate a successor storage-locations administrator."
+        }
+      ]
+    },
+    "getAllowedFinalityConfig": {
+      "description": "Finality modes accepted by this verifier. Full finality is always accepted; the decoded fields additionally show support for the safe head, the minimum block depth, and any currently unassigned flags.",
+      "edit": ["format", "CCIPAllowedFinality"]
+    },
+    "versionTag": {
+      "description": "Four-byte version committed to committee signatures and used by the resolver to select the inbound verifier implementation."
+    }
+  }
+}

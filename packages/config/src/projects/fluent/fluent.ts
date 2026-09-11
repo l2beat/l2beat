@@ -273,7 +273,9 @@ export const fluent: ScalingProject = {
     chainId: 25363,
     sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
     gasTokens: ['ETH'],
-    apis: [{ type: 'rpc', url: 'https://rpc.fluent.xyz', callsPerMinute: 120 }],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.fluent.xyz', callsPerMinute: 2000 },
+    ],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [

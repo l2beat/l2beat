@@ -1,3 +1,7 @@
+import {
+  MANUAL_RELATION_PLUGIN,
+  ManualRelationEvidence,
+} from '@l2beat/shared-pure'
 import type { Plan, RouterOutputs } from '@l2beat/token-backend'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
@@ -487,8 +491,8 @@ function GraphRelationDetails({
       <DetailsSection title="Delete relation">
         <p className="text-muted-foreground text-sm">
           Remove this relation if it was ingested from an incorrect interop
-          transfer. The graph keeps its current layout — refresh the page to see
-          the re-clustered graph.
+          transfer or added manually by mistake. The graph keeps its current
+          layout — refresh the page to see the re-clustered graph.
         </p>
         <ButtonWithSpinner
           variant="destructive"
@@ -547,6 +551,46 @@ function RelationEvidence({
   relation: RelationDetails
   chains: Chain[]
 }) {
+  // The plugin sentinel — not the evidence JSON — says which shape the
+  // evidence has; the parse is just the assertion. Should it ever fail
+  // (hand-edited row), the raw JSON below still shows everything.
+  if (relation.plugin === MANUAL_RELATION_PLUGIN) {
+    const manualEvidence = ManualRelationEvidence.safeParse(relation.transfer)
+    return (
+      <DetailsSection title="Manual entry evidence">
+        {manualEvidence.success && (
+          <DetailRows>
+            <DetailRow label="Added by">{manualEvidence.data.user}</DetailRow>
+            {manualEvidence.data.bridge && (
+              <DetailRow label="Bridge">
+                {manualEvidence.data.bridge.name}
+              </DetailRow>
+            )}
+            {manualEvidence.data.bridge?.chain &&
+              manualEvidence.data.bridge.address && (
+                <DetailRow label="Bridge contract">
+                  <AddressValue
+                    chain={manualEvidence.data.bridge.chain}
+                    address={manualEvidence.data.bridge.address}
+                    explorerUrl={findExplorerUrl(
+                      chains,
+                      manualEvidence.data.bridge.chain,
+                    )}
+                  />
+                </DetailRow>
+              )}
+            {manualEvidence.data.comment && (
+              <DetailRow label="Comment">
+                {manualEvidence.data.comment}
+              </DetailRow>
+            )}
+          </DetailRows>
+        )}
+        <JsonDetails label="Raw evidence" value={relation.transfer} />
+      </DetailsSection>
+    )
+  }
+
   const evidence = readTransferEvidence(relation.transfer)
 
   return (

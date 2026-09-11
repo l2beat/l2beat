@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CollateralOfframp",
+  "description": "Lets anyone burn collateral tokens and release an equal amount of a supported asset from the configured collateral token's vault while that asset is not paused. Admins can pause or unpause unwrapping per asset with no delay.",
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the admin role that can pause unwrapping per asset.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can grant and revoke the admin role that can pause unwrapping of supported assets through this contract with no delay."
+        }
+      ],
+      "severity": "HIGH"
+    }
+  }
+}

@@ -6,6 +6,7 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
+  entriesForDiffPair,
 } from '@l2beat/discovery'
 import { canTrackedTxsBeAffected } from '../../UpdateNotifier'
 
@@ -56,7 +57,7 @@ export async function getDiff(
 
   let diff: DiscoveryDiff[] = []
   if (latest?.discovery.entries) {
-    diff = diffDiscovery(discovery.entries, latest.discovery.entries)
+    diff = diffDiscovery(...entriesForDiffPair(discovery, latest.discovery))
   }
   return diff
 }

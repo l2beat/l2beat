@@ -14,7 +14,8 @@
         "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
         "chain": "everclear",
         "decimals": 18,
-        "sinceTimestamp": 1736899200
+        "sinceTimestamp": 1736899200,
+        "untilTimestamp": 1746134029
       },
       "category": "other",
       "source": "external",

@@ -43,6 +43,7 @@ import {
   type InteropTransferIndex,
   type InteropTransferMatch,
   normalizeInteropTokenAddress,
+  summarizeTransferPlugins,
   type TokenAddress,
 } from './tokenIngestionUtils'
 
@@ -481,6 +482,7 @@ export class TokenIngestionProcessor {
       total: sumTransferCounts(transfers),
       nonSwapping: sumTransferCounts(usableNonSwapping),
       abstractTokens: transferRefs,
+      plugins: summarizeTransferPlugins(transfers),
     })
 
     if (transferRefs.length > 1) {

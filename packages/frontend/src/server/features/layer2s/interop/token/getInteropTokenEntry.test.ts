@@ -65,6 +65,53 @@ describe(getInteropTokenEntry.name, () => {
       },
     ])
   })
+
+  it('skips manually added relations when resolving minters', () => {
+    const entry = getInteropTokenEntry(
+      'ether',
+      [],
+      [],
+      [
+        project({
+          id: 'zeta',
+          interopName: 'Zeta bridge',
+          plugins: [{ plugin: 'cctp-v2', bridgeType: 'burnAndMint' }],
+        }),
+      ],
+      [
+        deployment({
+          mintingPlugins: [
+            {
+              plugin: 'manual',
+              bridgeType: 'lockAndMint',
+              relatedChain: 'ethereum',
+            },
+            {
+              plugin: 'cctp-v2',
+              bridgeType: 'burnAndMint',
+              relatedChain: 'ethereum',
+            },
+          ],
+        }),
+      ],
+    )
+
+    const section = entry.sections.find(
+      (section) => section.type === 'InteropTokenOnchainDeploymentsSection',
+    )
+    assert(section?.type === 'InteropTokenOnchainDeploymentsSection')
+
+    const minters = section.props.deployments[0]?.minters
+    assert(minters)
+    expect(minters).toEqual([
+      {
+        id: ProjectId('zeta'),
+        name: 'Zeta bridge',
+        iconUrl: '/icons/zeta.png',
+        href: '/interop/protocols/zeta',
+      },
+    ])
+  })
 })
 
 function deployment(

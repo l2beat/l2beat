@@ -108,7 +108,7 @@ export const tornadoCash: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: {
-      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds. Visit the official TORN DAO telegram channel for more info: https://t.me/TornadoCashOfficialDAO.',
+      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds. See Secure frontend section below.',
     },
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -181,6 +181,14 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: BUCKETS.map((bucket) => ({
+        address: bucket.address,
+        sinceTimestamp: bucket.sinceTimestamp,
+        extractor: 'tornadoCashWithdrawal',
+      })),
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
@@ -230,6 +238,13 @@ export const tornadoCash: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContract('Verifier').address,
+      discovery.getContract('BatchTreeUpdateVerifier').address,
+      discovery.getContract('TreeUpdateVerifier').address,
+      discovery.getContract('RewardVerifier').address,
+      discovery.getContract('WithdrawVerifier').address,
+    ],
   },
 }
 
@@ -267,6 +282,9 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       address: bucket.address,
       sinceTimestamp: bucket.sinceTimestamp,
       denomination: bucket.denomination,
+      anonymitySet: {
+        minimumAmounts: [bucket.denominationAmount],
+      },
       deposit: {
         event: bucket.depositEvent,
         extractor: 'fixedAmount',

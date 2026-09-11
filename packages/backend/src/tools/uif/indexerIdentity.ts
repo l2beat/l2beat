@@ -7,6 +7,7 @@ export const INDEXER_NAMES = {
   DA2: 'da_indexer_v2',
   BLOB: 'blob_indexer',
   ECOSYSTEM_TOKEN: 'ecosystem_token_indexer',
+  INTEROP_RELAY: 'relay_indexer',
   INTEROP_RECENT_PRICES: 'interop_recent_prices_indexer',
   // TVS
   TVS_BLOCK_TIMESTAMP: 'tvs_block_timestamp_indexer',
@@ -17,9 +18,10 @@ export const INDEXER_NAMES = {
   TVS_CLEANER: 'tvs_cleaner',
   PRIVACY_BLOCK_TIMESTAMP: 'privacy_block_timestamp_indexer',
   PRIVACY_FLOW: 'privacy_flow_indexer',
+  PRIVACY_ANONYMITY_SET: 'privacy_anonymity_set_indexer',
   PRIVACY_STARKNET_FLOW: 'privacy_starknet_flow_indexer',
   PRIVACY_PRICE: 'privacy_price_indexer',
+  PRIVACY_RELAYER_ACTIVITY: 'privacy_relayer_activity_indexer',
   PRIVACY_BUCKET_VALUE: 'privacy_bucket_value_indexer',
   ETHEREUM_BLOB_NOTIFIER: 'ethereum_blob_notifier',
-  DAILY_CHECKS_NOTIFIER: 'daily_checks_notifier',
 }

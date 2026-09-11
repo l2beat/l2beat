@@ -23,6 +23,10 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
+const ETH_ANONYMITY_SET_MINIMUM_AMOUNTS = [
+  '100000000000000000',
+  '10000000000000000000',
+]
 
 interface PrivacyPoolsAssetConfig {
   minimumDepositAmount: string | number
@@ -42,11 +46,17 @@ interface PrivacyPoolBucket {
   }
   sinceTimestamp: UnixTime
   feeConfig: PrivacyPoolsAssetConfig
+  minimumAmounts?: string[]
   depositEvent: string
   withdrawalEvent: string
 }
 
 const BUCKETS = getPrivacyPoolBuckets()
+const ENTRYPOINT = discovery.getContract('PrivacyPoolsEntrypoint')
+assert(
+  ENTRYPOINT.sinceTimestamp !== undefined,
+  'PrivacyPoolsEntrypoint must have a sinceTimestamp',
+)
 const PRIVACY_POOLS_SINCE_TIMESTAMP = UnixTime(
   Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
 )
@@ -141,6 +151,16 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: [
+        {
+          address: ENTRYPOINT.address,
+          sinceTimestamp: UnixTime(ENTRYPOINT.sinceTimestamp),
+          extractor: 'privacyPoolsWithdrawalRelayed',
+        },
+      ],
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
@@ -181,6 +201,10 @@ export const privacyPools: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContract('WithdrawalVerifier').address,
+      discovery.getContract('RagequitVerifier').address,
+    ],
   },
 }
 
@@ -217,6 +241,10 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       label: `${bucket.tokenInfo.symbol} pool`,
       address: bucket.address,
       sinceTimestamp: bucket.sinceTimestamp,
+      anonymitySet:
+        bucket.minimumAmounts === undefined
+          ? undefined
+          : { minimumAmounts: bucket.minimumAmounts },
       deposit: {
         event: bucket.depositEvent,
         extractor: 'privacyPoolsValue',
@@ -270,6 +298,9 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
       },
       sinceTimestamp: UnixTime(pool.sinceTimestamp ?? 0),
       feeConfig,
+      minimumAmounts: isNativeEth
+        ? ETH_ANONYMITY_SET_MINIMUM_AMOUNTS
+        : undefined,
       depositEvent: PRIVACY_POOLS_DEPOSIT_EVENT,
       withdrawalEvent: PRIVACY_POOLS_WITHDRAWAL_EVENT,
     }

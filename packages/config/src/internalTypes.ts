@@ -25,6 +25,7 @@ import type {
   ProjectLivenessConfig,
   ProjectLivenessInfo,
   ProjectPermissions,
+  ProjectPrivacyInfo,
   ProjectRedWarning,
   ProjectReviewStatus,
   ProjectRiskView,
@@ -37,6 +38,7 @@ import type {
   ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
+  ProjectSequencingTechnologyChoice,
   ProjectTechnologyChoice,
   ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
@@ -106,6 +108,8 @@ export interface ScalingProject {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** Interop configuration */
   interopConfig?: InteropConfig
+  /** Privacy data - if defined, the project is also shown on the privacy dashboard */
+  privacyInfo?: ProjectPrivacyInfo
 }
 
 export interface ProjectScalingConfig {
@@ -170,7 +174,7 @@ export interface ProjectScalingTechnology {
   /** What are the details about project operator(s) */
   operator?: ProjectTechnologyChoice
   /** What are the details about project sequencing */
-  sequencing?: ProjectTechnologyChoice
+  sequencing?: ProjectSequencingTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
   forceTransactions?: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */

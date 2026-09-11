@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x9f6afab07e493a9978da2efad6e38a0083508aab
+Generated with discovered.json: 0xb9cf5f20fd40bcfe5effd115df25ea747ae01542
+
+# Diff at Thu, 10 Sep 2026 12:09:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f7783cd20948876b6d5829b7513d3f4c00170b8a block: 1788530106
+- current timestamp: 1789042096
+
+## Description
+
+Created these two funding proposals:
+
+- https://www.tally.xyz/gov/zksync/proposal/26841071117409907139848935459753246787270287837068168394696134464253012067875?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160
+- https://www.tally.xyz/gov/zksync/proposal/9292342771625757633615945374579493617267631975721787105265494990446454241296?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        18
++        19
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x1ddfe918922bea62696e17572d100772dd25041c
+
+# Diff at Fri, 04 Sep 2026 13:56:11 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48e31e2bc53412fcaaefb47c7ce1970ccdb072a8 block: 1787738139
+- current timestamp: 1788530106
+
+## Description
+
+Added new member to zk foundation ms.
+
+## Watched changes
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x2696e6B444Be2f1C99A8C84f16397cAEa0d546Dc"
++        "eth:0x64FEca7976955a512aB9159f91E7dD1D55425293"
+    }
+```
+
+Generated with discovered.json: 0x18c189bcb88d6c0c951b0b975ec2935fe307b34f
 
 # Diff at Wed, 26 Aug 2026 09:56:44 GMT:
 

@@ -173,17 +173,51 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
         }
       })
 
+      const endpointNodes = tokenKeys.map((key): RelationsGraphNode => {
+        const token = tokenMap.get(tokenKey(key))
+        return {
+          id: tokenKey(key),
+          chain: key.chain,
+          address: key.address,
+          symbol: token?.symbol ?? null,
+          abstractTokenId: token?.abstractTokenId ?? null,
+          isDeployed: token !== undefined,
+          hasRelations: true,
+        }
+      })
+
+      // Deployed tokens manually assigned to an abstract token but observed
+      // in no relation. The graph places each one beside the cluster whose
+      // most common abstract token matches its assignment, so only tokens
+      // whose abstract token appears among the endpoints are shipped — one
+      // whose abstract token has no cluster at all has nowhere to go.
+      const endpointAbstractTokenIds = new Set(
+        endpointNodes.flatMap((node) => node.abstractTokenId ?? []),
+      )
+      const endpointIds = new Set(endpointNodes.map((node) => node.id))
+      const nodesWithoutRelations = (await ctx.tokenDb.deployedToken.getAll())
+        .filter(
+          (token) =>
+            !token.ignored &&
+            token.abstractTokenId !== null &&
+            endpointAbstractTokenIds.has(token.abstractTokenId) &&
+            !endpointIds.has(tokenKey(token)),
+        )
+        .map(
+          (token): RelationsGraphNode => ({
+            id: tokenKey(token),
+            chain: token.chain,
+            address: token.address,
+            symbol: token.symbol,
+            abstractTokenId: token.abstractTokenId,
+            isDeployed: true,
+            hasRelations: false,
+          }),
+        )
+        .sort((a, b) => a.id.localeCompare(b.id))
+
       return {
-        nodes: tokenKeys.map((key) => {
-          const token = tokenMap.get(tokenKey(key))
-          return {
-            id: tokenKey(key),
-            chain: key.chain,
-            address: key.address,
-            symbol: token?.symbol ?? null,
-            isDeployed: token !== undefined,
-          }
-        }),
+        nodes: [...endpointNodes, ...nodesWithoutRelations],
         relations: graphRelations,
       }
     }),
@@ -233,6 +267,22 @@ function sortRelations<
   )
 }
 
+export interface RelationsGraphNode {
+  id: string
+  chain: string
+  address: string
+  symbol: string | null
+  abstractTokenId: string | null
+  isDeployed: boolean
+  /**
+   * False for a node appended because of its abstract token assignment
+   * rather than an observed relation. The UI draws such nodes hollow and
+   * attaches them to the cluster of their abstract token with a layout-only
+   * link.
+   */
+  hasRelations: boolean
+}
+
 function isGraphRelation(relation: { bridgeType: string }): boolean {
   return (
     relation.bridgeType === 'burnAndMint' ||
@@ -256,9 +306,11 @@ function tokenRelationRole(
   token: { chain: string; address: string },
 ): 'locked' | 'minted' | 'unknown' {
   if (relation.bridgeType === 'burnAndMint') return 'minted'
-  // Anything that is neither burnAndMint nor lockAndMint (a human-added
-  // nonMinting relation) mints nothing and has no locked side to name — it
-  // must not claim a minter, consistently with `getMintingPluginsFor`.
+  // Anything that is neither burnAndMint nor lockAndMint mints nothing and
+  // has no locked side to name — it must not claim a minter, consistently
+  // with `getMintingPluginsFor`. No writer produces such a row (ingestion
+  // keeps only the non-swapping types and the add planner rejects the rest),
+  // but this reader does not assume that.
   if (relation.bridgeType !== 'lockAndMint') return 'unknown'
   if (relation.lockedToken === null) return 'unknown'
 

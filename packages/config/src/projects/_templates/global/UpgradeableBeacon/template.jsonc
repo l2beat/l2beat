@@ -2,6 +2,12 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "A beacon with an upgradeable implementation currently set as {{implementation}}. Beacon proxy contracts pointing to this beacon will all use its implementation.",
   "fields": {
+    "implementation": {
+      // a beacon implementation change upgrades the code of every proxy
+      // pointing to this beacon, equivalent to a proxy implementation
+      // upgrade (which is automatically HIGH severity).
+      "severity": "HIGH"
+    },
     "owner": {
       "permissions": [
         {
