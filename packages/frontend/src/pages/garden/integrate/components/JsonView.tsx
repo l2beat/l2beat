@@ -45,7 +45,10 @@ function Node({ value, depth }: { value: ExampleValue; depth: number }) {
         open="["
         close="]"
         depth={depth}
-        items={value.map((item) => <Node value={item} depth={depth + 1} />)}
+        items={value.map((item, index) => (
+          // Positional: the index is the identity of a JSON entry.
+          <Node key={index} value={item} depth={depth + 1} />
+        ))}
       />
     )
   }
@@ -55,11 +58,11 @@ function Node({ value, depth }: { value: ExampleValue; depth: number }) {
       close="}"
       depth={depth}
       items={Object.entries(value).map(([key, item]) => (
-        <>
+        <Fragment key={key}>
           <span className={TOKEN.key}>{JSON.stringify(key)}</span>
           <span className={TOKEN.punct}>: </span>
           <Node value={item} depth={depth + 1} />
-        </>
+        </Fragment>
       ))}
     />
   )
