@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x5e7e68b4f911e3e0d3054cc80ad6225fb38b3651
+
+# Diff at Fri, 11 Sep 2026 11:12:51 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7986b4839481ea2355805001fa4ee4bdab501ea1 block: 1788793617
+- current timestamp: 1789125106
+
+## Description
+
+Both VerificationKeySetters were moved into SETTING state by their EOA owners, thus preventing the possibility of changing Railgun contract verification keys to an older version by a single EOA without DAO participation.
+
+## Watched changes
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
++++ description: Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier.
++++ severity: HIGH
+      values.state:
+-        2
++        0
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
++++ description: Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier.
++++ severity: HIGH
+      values.state:
+-        2
++        0
+    }
+```
+
 Generated with discovered.json: 0x9a741caf14a980385ac26bf86c3f1d3331702152
 
 # Diff at Mon, 07 Sep 2026 15:08:09 GMT:

@@ -238,6 +238,13 @@ export const tornadoCash: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContract('Verifier').address,
+      discovery.getContract('BatchTreeUpdateVerifier').address,
+      discovery.getContract('TreeUpdateVerifier').address,
+      discovery.getContract('RewardVerifier').address,
+      discovery.getContract('WithdrawVerifier').address,
+    ],
   },
 }
 
