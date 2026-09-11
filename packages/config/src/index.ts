@@ -54,6 +54,7 @@ export {
   getSchemaUrl,
   type HexString,
 } from './crops/eas'
+export { GARDEN_ORDER } from './crops/gardenOrder'
 export {
   type ChainIdByName,
   type CropsApiFile,

@@ -1,10 +1,12 @@
 import type { Project, ResolvedCrops } from '@l2beat/config'
 import {
+  GARDEN_ORDER,
   getAttestationsMeta,
   getGardenProjectPath,
   qualifiesForGarden,
   resolveProjectCrops,
 } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -14,9 +16,6 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-
-// Editorial display order; anything else is appended alphabetically.
-const CURATED_ORDER = ['tornado-cash', 'aztecnetwork', 'umbra', 'uniswapv3']
 
 export interface GardenMetric {
   kind: 'usd' | 'count'
@@ -101,11 +100,11 @@ export async function getGardenData(
 }
 
 function compareByCuratedOrder(
-  a: { slug: string; name: string },
-  b: { slug: string; name: string },
+  a: { id: ProjectId; name: string },
+  b: { id: ProjectId; name: string },
 ): number {
-  const aIndex = CURATED_ORDER.indexOf(a.slug)
-  const bIndex = CURATED_ORDER.indexOf(b.slug)
+  const aIndex = GARDEN_ORDER.indexOf(a.id)
+  const bIndex = GARDEN_ORDER.indexOf(b.id)
   if (aIndex !== -1 && bIndex !== -1) {
     return aIndex - bIndex
   }

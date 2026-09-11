@@ -26,13 +26,15 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             title="The Infinite Garden"
             description="Each project is evaluated across the CROPS framework: Censorship Resistance, Open source, Privacy, and Security. Hover a plant for the reasoning behind its evaluation."
           />
-          <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
-            <GardenTable entries={entries} />
-          </div>
-          <AttestationNotice attestation={attestation} />
-          <GardenCallouts />
-          <PlantLegendSection />
-          <CropsSection />
+          <main>
+            <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
+              <GardenTable entries={entries} />
+            </div>
+            <AttestationNotice attestation={attestation} />
+            <GardenCallouts />
+            <PlantLegendSection />
+            <CropsSection />
+          </main>
         </div>
         <ScrollToTopButton />
       </SideNavLayout>
