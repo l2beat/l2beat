@@ -615,8 +615,8 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
       clingo-wasm:
-        specifier: 0.3.2
-        version: 0.3.2
+        specifier: 0.6.0
+        version: 0.6.0
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0(supports-color@8.1.1)
@@ -4756,9 +4756,6 @@ packages:
   '@types/diff@7.0.2':
     resolution: {integrity: sha512-JSWRMozjFKsGlEjiiKajUjIJVKuKdE3oVy2DNtK+fUo8q82nhFZ2CPQwicAIkXrofahDXrWJ7mjelvZphMS98Q==}
 
-  '@types/emscripten@1.40.0':
-    resolution: {integrity: sha512-MD2JJ25S4tnjnhjWyalMS6K6p0h+zQV6+Ylm+aGbiS8tSn/aHLSGNzBgduj6FB4zH0ax2GRMGYi/8G1uOxhXWA==}
-
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -5537,8 +5534,9 @@ packages:
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
-  clingo-wasm@0.3.2:
-    resolution: {integrity: sha512-0ZdaGgekZaO8hLF3PE0fcs4FjR+GAdVeMTTzVgm8L1OuCl4A8+/H1V8urBMJYlV6+HH+gAweDxFq1MVgM4lDKQ==}
+  clingo-wasm@0.6.0:
+    resolution: {integrity: sha512-W9SeUtT726D/LMA/qwhsU/H0/f27QX7lTcUqGMgA8MSRZZYx97Y/B4D20ZS2wfgHwgvZPE8nbPgI0W8PEM6toQ==}
+    engines: {node: '>=22'}
 
   cliui@7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
@@ -12581,8 +12579,6 @@ snapshots:
 
   '@types/diff@7.0.2': {}
 
-  '@types/emscripten@1.40.0': {}
-
   '@types/estree@1.0.8': {}
 
   '@types/etag@1.8.3':
@@ -13484,9 +13480,7 @@ snapshots:
 
   client-only@0.0.1: {}
 
-  clingo-wasm@0.3.2:
-    dependencies:
-      '@types/emscripten': 1.40.0
+  clingo-wasm@0.6.0: {}
 
   cliui@7.0.4:
     dependencies:
