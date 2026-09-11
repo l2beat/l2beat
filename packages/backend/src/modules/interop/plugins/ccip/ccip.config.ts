@@ -187,8 +187,8 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       this.http.fetchRaw(LANES_URL, { timeout: 10_000 }),
     ])
 
-    const chainsJson: ChainsJson = await chainsResponse.json()
-    const lanes: LanesJson = await lanesResponse.json()
+    const chainsJson = (await chainsResponse.json()) as ChainsJson
+    const lanes = (await lanesResponse.json()) as LanesJson
 
     // Build selector → readable name map for ALL chains (including untracked)
     const chainSelectorToName: Record<string, string> = {}

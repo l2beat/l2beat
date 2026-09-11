@@ -15,7 +15,6 @@ export async function fetchFlatSources(
 ): Promise<FlatSourcesApiResponse> {
   const httpClient = new HttpClient()
   const response = await httpClient.fetchRaw(`${backendUrl}${ENDPOINT}`, {
-    compress: true,
     timeout: 0,
   })
 
@@ -26,7 +25,7 @@ export async function fetchFlatSources(
     finishProgress(logger, p)
   })
 
-  return FlatSourcesApiResponse.parse(await response.json())
+  return FlatSourcesApiResponse.parse(await progress.response.json())
 }
 
 function printProgress(logger: Logger, progress: ProgressEvent) {

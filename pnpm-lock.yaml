@@ -252,9 +252,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      node-fetch:
-        specifier: ^2.6.7
-        version: 2.7.0(encoding@0.1.13)
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -304,9 +301,6 @@ importers:
       '@types/lodash':
         specifier: ^4.14.191
         version: 4.17.13
-      '@types/node-fetch':
-        specifier: ^2.6.2
-        version: 2.6.11
       '@types/react':
         specifier: ^19.0.10
         version: 19.0.10
@@ -514,9 +508,6 @@ importers:
       '@types/lodash':
         specifier: ^4.17.12
         version: 4.17.13
-      '@types/node-fetch':
-        specifier: ^2.6.11
-        version: 2.6.11
       alpinejs:
         specifier: ^3.14.9
         version: 3.14.9
@@ -532,9 +523,6 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      node-fetch:
-        specifier: ^2.6.7
-        version: 2.7.0(encoding@0.1.13)
       tsx:
         specifier: ^4.9.3
         version: 4.19.2
@@ -632,9 +620,6 @@ importers:
       mkdirp:
         specifier: ^3.0.0
         version: 3.0.1
-      node-fetch:
-        specifier: ^2.6.7
-        version: 2.7.0(encoding@0.1.13)
       rimraf:
         specifier: ^5.0.0
         version: 5.0.10
@@ -651,9 +636,6 @@ importers:
       '@types/mock-fs':
         specifier: ^4.13.4
         version: 4.13.4
-      '@types/node-fetch':
-        specifier: ^2.6.4
-        version: 2.6.11
       mock-fs:
         specifier: ^5.2.0
         version: 5.4.0
@@ -940,15 +922,9 @@ importers:
       fflate:
         specifier: ^0.7.4
         version: 0.7.4
-      form-data:
-        specifier: 4.0.4
-        version: 4.0.4
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      node-fetch:
-        specifier: ^2.6.7
-        version: 2.7.0(encoding@0.1.13)
       readline-sync:
         specifier: ^1.4.10
         version: 1.4.10
@@ -977,9 +953,6 @@ importers:
       '@types/mock-fs':
         specifier: ^4.13.4
         version: 4.13.4
-      '@types/node-fetch':
-        specifier: ^2.6.11
-        version: 2.6.11
       '@types/readline-sync':
         specifier: ^1.4.8
         version: 1.4.8
@@ -1171,9 +1144,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      node-fetch:
-        specifier: ^2.6.7
-        version: 2.7.0(encoding@0.1.13)
       stream-chain:
         specifier: ^2.2.5
         version: 2.2.5
@@ -1193,18 +1163,12 @@ importers:
       '@types/lodash':
         specifier: ^4.17.12
         version: 4.17.13
-      '@types/node-fetch':
-        specifier: ^2.6.2
-        version: 2.6.11
       '@types/stream-chain':
         specifier: ^2.1.0
         version: 2.1.0
       '@types/stream-json':
         specifier: ^1.7.7
         version: 1.7.7
-      nock:
-        specifier: ^13.5.5
-        version: 13.5.5(supports-color@8.1.1)
 
   packages/shared-pure:
     dependencies:
@@ -4833,9 +4797,6 @@ packages:
 
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
-
-  '@types/node-fetch@2.6.11':
-    resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
 
   '@types/node@20.17.2':
     resolution: {integrity: sha512-OOHK4sjXqkL7yQ7VEEHcf6+0jSvKjWqwnaCtY7AKD/VLEvRHMsxxu7eI8ErnjxHS8VwmekD4PeVCpu4qZEZSxg==}
@@ -12674,11 +12635,6 @@ snapshots:
       '@types/node': 20.17.2
 
   '@types/ms@0.7.34': {}
-
-  '@types/node-fetch@2.6.11':
-    dependencies:
-      '@types/node': 20.17.2
-      form-data: 4.0.4
 
   '@types/node@20.17.2':
     dependencies:

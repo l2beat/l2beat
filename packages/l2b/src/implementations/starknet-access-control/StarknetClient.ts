@@ -99,7 +99,6 @@ export class StarknetClient {
     }
 
     const request = await this.httpClient.fetchRaw(`${this.endpoint}`, {
-      compress: true,
       timeout: 0,
       body: JSON.stringify(body),
       method: 'POST',
