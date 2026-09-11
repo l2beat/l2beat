@@ -13,7 +13,6 @@ describe('canonicalCrops', () => {
       expect(resolveCropEvaluation({ sentiment: 'good' })).toEqual({
         sentiment: 'good',
         status: 'reviewed',
-        license: undefined,
         points: [],
         missing: [],
         additionalConsiderations: [],

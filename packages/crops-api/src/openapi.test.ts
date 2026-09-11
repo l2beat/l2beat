@@ -59,6 +59,15 @@ describe('OpenAPI agreement', () => {
     expect(JSON.stringify(document)).not.toInclude('#/definitions/')
   })
 
+  it('carries field descriptions into the component schemas, checked on a stamp field', () => {
+    const response = document.components.schemas.ProjectResponse as {
+      properties: Record<string, { description?: string }>
+    }
+    expect(response.properties.generatedAt?.description).toEqual(
+      'Unix seconds.',
+    )
+  })
+
   it('fills the network section into the prose from openapi.md', () => {
     expect(document.info.description).toInclude('## Attestations are on ')
     expect(document.info.description).not.toInclude('{{')

@@ -41,7 +41,7 @@ export function resolveCropsProjects(
     .sort((a, b) => a.id.localeCompare(b.id))
 }
 
-export function resolveCropsProject(
+function resolveCropsProject(
   project: CropsSourceProject,
   meta: CropsAttestationsMeta,
 ): CropsApiProject {

@@ -28,8 +28,8 @@ const GREY_STATUSES: ProjectCropStatus[] = ['notReviewed', 'fullyTransparent']
 export interface ResolvedCropEvaluation {
   sentiment: CropSentiment
   status: ProjectCropStatus
-  /** Only ever set on the Open source crop, and only when the license is confirmed. Absent from JSON otherwise. */
-  license?: OsiLicense | undefined
+  /** Only on the Open source crop, and only when the license is confirmed; absent otherwise. */
+  license?: OsiLicense
   points: string[]
   missing: string[]
   additionalConsiderations: string[]
@@ -45,20 +45,20 @@ export function resolveCropEvaluation(
   evaluation: ProjectOpenSourceCropEvaluation,
 ): ResolvedCropEvaluation {
   const status: ProjectCropStatus = evaluation.status ?? 'reviewed'
-  return {
+  const resolved: ResolvedCropEvaluation = {
     sentiment: GREY_STATUSES.includes(status)
       ? 'neutral'
       : (evaluation.sentiment ?? 'neutral'),
     status,
-    license:
-      evaluation.license === undefined
-        ? undefined
-        : getOsiLicense(evaluation.license),
     points: evaluation.points ?? [],
     missing: evaluation.missing ?? [],
     additionalConsiderations: evaluation.additionalConsiderations ?? [],
     notReviewed: evaluation.notReviewed ?? [],
   }
+  if (evaluation.license !== undefined) {
+    resolved.license = getOsiLicense(evaluation.license)
+  }
+  return resolved
 }
 
 export type ResolvedCrops = Record<CropKey, ResolvedCropEvaluation>

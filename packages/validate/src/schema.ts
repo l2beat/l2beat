@@ -15,19 +15,45 @@ export function toJsonSchema(
   topLevel: Record<string, Parser<unknown>> = {},
   options: JsonSchemaOptions = {},
 ): object {
+  const state = createState(topLevel, options)
+  const decomposed = decompose(schema as Imp<unknown>, state)
+  if (state.remaining.length === 0) {
+    return { $schema: SCHEMA_VERSION, ...decomposed }
+  }
+  return {
+    $schema: SCHEMA_VERSION,
+    definitions: decomposeRemaining(state),
+    ...decomposed,
+  }
+}
+
+/**
+ * Only the named schemas, for a caller that embeds them in its own document,
+ * e.g. under OpenAPI `components.schemas` with a matching `refPrefix`.
+ */
+export function toJsonSchemaDefinitions(
+  topLevel: Record<string, Parser<unknown>>,
+  options: JsonSchemaOptions = {},
+): Record<string, object> {
+  return decomposeRemaining(createState(topLevel, options))
+}
+
+function createState(
+  topLevel: Record<string, Parser<unknown>>,
+  options: JsonSchemaOptions,
+): State {
   const refPrefix = options.refPrefix ?? '#/definitions/'
   const remaining = Object.entries(topLevel) as [string, Imp<unknown>][]
-  const state: State = {
+  return {
     refs: new Map(remaining.map(([k, v]) => [v, `${refPrefix}${k}`])),
     refPrefix,
     lazyCounter: 0,
     remaining,
     skipRefs: false,
   }
-  const decomposed = decompose(schema as Imp<unknown>, state)
-  if (state.remaining.length === 0) {
-    return { $schema: SCHEMA_VERSION, ...decomposed }
-  }
+}
+
+function decomposeRemaining(state: State): Record<string, object> {
   const definitions: Record<string, object> = {}
   while (state.remaining.length > 0) {
     // biome-ignore lint/style/noNonNullAssertion: It's there
@@ -36,11 +62,7 @@ export function toJsonSchema(
     state.skipRefs = true
     definitions[key] = decompose(unpacked, state)
   }
-  return {
-    $schema: SCHEMA_VERSION,
-    definitions,
-    ...decomposed,
-  }
+  return definitions
 }
 
 interface State {

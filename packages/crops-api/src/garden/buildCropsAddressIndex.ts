@@ -4,17 +4,17 @@ import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 // ProjectService call and the memoization are gone, and instead of a lookup
 // it returns every entry: the generator writes one file per address.
 
-export interface CropsAddressMatch<T> {
-  project: T
+export interface CropsAddressMatch {
+  projectId: string
   /** Discovery's name for the contract or permission at this address. */
   targetName: string
 }
 
-export interface CropsAddressEntry<T> {
+export interface CropsAddressEntry {
   /** Long chain name. */
   chain: string
   address: EthereumAddress
-  matches: CropsAddressMatch<T>[]
+  matches: CropsAddressMatch[]
 }
 
 // Only the fields the index needs, so tests can supply plain fixtures.
@@ -45,18 +45,15 @@ export interface IndexedProject {
  * Address -> reviewed project, from the contracts and permissions of every
  * project with crops. Keyed by long chain name and checksummed address.
  */
-export function buildCropsAddressIndex<T extends IndexedProject>(
-  projects: T[],
-): CropsAddressEntry<T>[] {
-  const byChain = new Map<
-    string,
-    Map<EthereumAddress, CropsAddressMatch<T>[]>
-  >()
+export function buildCropsAddressIndex(
+  projects: IndexedProject[],
+): CropsAddressEntry[] {
+  const byChain = new Map<string, Map<EthereumAddress, CropsAddressMatch[]>>()
 
   function add(
     chain: string,
     address: ChainSpecificAddress,
-    match: CropsAddressMatch<T>,
+    match: CropsAddressMatch,
   ) {
     let byAddress = byChain.get(chain)
     if (!byAddress) {
@@ -70,7 +67,7 @@ export function buildCropsAddressIndex<T extends IndexedProject>(
       byAddress.set(bare, matches)
     }
     // A shared contract belongs to several projects, but each claims it once.
-    if (!matches.some((x) => x.project.id === match.project.id)) {
+    if (!matches.some((x) => x.projectId === match.projectId)) {
       matches.push(match)
     }
   }
@@ -80,7 +77,7 @@ export function buildCropsAddressIndex<T extends IndexedProject>(
       project.contracts?.addresses ?? {},
     )) {
       for (const contract of contracts) {
-        const match = { project, targetName: contract.name }
+        const match = { projectId: project.id, targetName: contract.name }
         add(chain, contract.address, match)
         for (const implementation of contract.upgradeability?.implementations ??
           []) {
@@ -97,7 +94,10 @@ export function buildCropsAddressIndex<T extends IndexedProject>(
         ...(permissions?.roles ?? []),
       ]) {
         for (const account of permission.accounts) {
-          add(chain, account.address, { project, targetName: permission.name })
+          add(chain, account.address, {
+            projectId: project.id,
+            targetName: permission.name,
+          })
         }
       }
     }

@@ -1,4 +1,4 @@
-import { toJsonSchema, type Validator, v } from '@l2beat/validate'
+import { toJsonSchemaDefinitions, type Validator } from '@l2beat/validate'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import {
@@ -97,13 +97,14 @@ function toPathRegex(template: string): RegExp {
 }
 
 /** The prose lives in openapi.md; only the network section depends on the ledger. */
-const OPENAPI_PROSE = readFileSync(resolve(__dirname, '../openapi.md'), 'utf8')
-
 export function buildOpenApiDescription(ledger: CropsAttestationsMeta) {
-  return OPENAPI_PROSE.replace(
-    '{{ATTESTATION_NETWORK_SECTION}}',
-    attestationNetworkSection(ledger),
-  ).trim()
+  const prose = readFileSync(resolve(__dirname, '../openapi.md'), 'utf8')
+  return prose
+    .replace(
+      '{{ATTESTATION_NETWORK_SECTION}}',
+      attestationNetworkSection(ledger),
+    )
+    .trim()
 }
 
 /** Derived from the same ledger as every data file, so the caveat cannot outlive the testnet. */
@@ -131,7 +132,12 @@ export function buildOpenApiDocument(ledger: CropsAttestationsMeta) {
         { get: toOperation(route) },
       ]),
     ),
-    components: { schemas: toComponentSchemas() },
+    components: {
+      // Every named validator, with `$ref`s already pointing under components.
+      schemas: toJsonSchemaDefinitions(NAMED_SCHEMAS, {
+        refPrefix: COMPONENT_SCHEMAS_REF,
+      }),
+    },
   }
 }
 
@@ -163,12 +169,4 @@ function toOperation(route: PublishedRoute) {
     })),
     responses,
   }
-}
-
-/** Every named validator, with `$ref`s already pointing under components. */
-function toComponentSchemas(): Record<string, unknown> {
-  const { definitions } = toJsonSchema(v.unknown(), NAMED_SCHEMAS, {
-    refPrefix: COMPONENT_SCHEMAS_REF,
-  }) as { definitions: Record<string, unknown> }
-  return definitions
 }

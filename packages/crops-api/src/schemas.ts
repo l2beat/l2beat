@@ -11,6 +11,9 @@ import { type Validator, v } from '@l2beat/validate'
 // them, the TS types below are inferred from them, and every generated file
 // is parsed with them in tests. Objects are strict so a field config adds
 // but the spec does not know fails the test instead of leaking.
+//
+// `describe` names a schema under components; only `meta({ description })`
+// reaches the document as field prose.
 
 export type CropsAttestationsMeta = v.infer<typeof AttestationsMetaSchema>
 export type CropsApiAttestation = v.infer<typeof AttestationSchema>
@@ -18,33 +21,41 @@ export type CropsApiProject = v.infer<typeof ProjectSchema>
 /** Sentiment and status only - the prose lives on the per-project endpoint. */
 export type CropsApiSummary = v.infer<typeof CropsSummarySchema>
 export type AddressMatch = v.infer<typeof AddressMatchSchema>
+/** What every JSON file carries besides its own data. */
+export type Stamp = v.infer<typeof StampSchema>
+
+const unixSeconds = () => v.number().meta({ description: 'Unix seconds.' })
 
 const AttestationsMetaSchema = v
   .strictObject({
-    network: v.string().describe('EAS network the attestation lives on.'),
+    network: v
+      .string()
+      .meta({ description: 'EAS network the attestation lives on.' }),
     chainId: v.number(),
     isTestnet: v
       .boolean()
-      .describe('True while attestations are on a testnet.'),
-    eas: v.string().describe('EAS contract address.'),
+      .meta({ description: 'True while attestations are on a testnet.' }),
+    eas: v.string().meta({ description: 'EAS contract address.' }),
     schemaUid: v.string(),
-    schema: v.string().describe('EAS schema definition string.'),
+    schema: v.string().meta({ description: 'EAS schema definition string.' }),
     attester: v
       .union([v.string(), v.null()])
-      .describe('Null until the first attestation is published.'),
+      .meta({ description: 'Null until the first attestation is published.' }),
     current: v
       .union([
         v.strictObject({
           uid: v.string(),
           revision: v.number(),
-          reviewedAt: v.number().describe('Unix seconds.'),
-          projectIds: v.array(v.string()).describe('Sorted.'),
+          reviewedAt: unixSeconds(),
+          projectIds: v.array(v.string()).meta({ description: 'Sorted.' }),
           txHash: v.string(),
           explorerUrl: v.string(),
         }),
         v.null(),
       ])
-      .describe('The live attestation naming the reviewed set, or null.'),
+      .meta({
+        description: 'The live attestation naming the reviewed set, or null.',
+      }),
   })
   .describe('AttestationsMeta')
 
@@ -77,7 +88,10 @@ const CropEvaluationSchema: Validator<ResolvedCropEvaluation> = v
         categories: v.array(v.string()),
       })
       .optional()
-      .describe('Only on the open source crop, once the license is confirmed.'),
+      .meta({
+        description:
+          'Only on the open source crop, once the license is confirmed.',
+      }),
     points: v.array(v.string()),
     missing: v.array(v.string()),
     additionalConsiderations: v.array(v.string()),
@@ -112,7 +126,7 @@ const AttestationSchema = v
   .strictObject({
     uid: v.string(),
     revision: v.number(),
-    reviewedAt: v.number().describe('Unix seconds.'),
+    reviewedAt: unixSeconds(),
     explorerUrl: v.string(),
   })
   .describe('Attestation')
@@ -121,26 +135,30 @@ const projectFields = {
   id: v.string(),
   slug: v.string(),
   name: v.string(),
-  href: v
-    .union([v.string(), v.null()])
-    .describe('The L2BEAT project page, or null when there is none.'),
+  href: v.union([v.string(), v.null()]).meta({
+    description: 'The L2BEAT project page, or null when there is none.',
+  }),
   crops: CropsSchema,
-  inGarden: v
-    .boolean()
-    .describe('False while any crop is bad, even though it is reviewed.'),
+  inGarden: v.boolean().meta({
+    description: 'False while any crop is bad, even though it is reviewed.',
+  }),
   attested: v.boolean(),
   attestation: v
     .union([AttestationSchema, v.null()])
-    .describe('Null unless the project is in the attested set.'),
+    .meta({ description: 'Null unless the project is in the attested set.' }),
 }
 
 const ProjectSchema = v.strictObject(projectFields).describe('Project')
 
 const stampFields = {
   attestations: AttestationsMetaSchema,
-  generatedAt: v.number().describe('Unix seconds.'),
-  commit: v.string().describe('The l2beat/l2beat commit the data came from.'),
+  generatedAt: unixSeconds(),
+  commit: v.string().meta({
+    description: 'The l2beat/l2beat commit the data came from.',
+  }),
 }
+
+const StampSchema = v.strictObject(stampFields)
 
 export const CropsResponseSchema = v
   .strictObject({ ...stampFields, projects: v.array(ProjectSchema) })
@@ -156,9 +174,9 @@ export const AddressMatchSchema = v
     slug: v.string(),
     name: v.string(),
     href: v.union([v.string(), v.null()]),
-    contractName: v
-      .string()
-      .describe('The contract or permission the address was matched as.'),
+    contractName: v.string().meta({
+      description: 'The contract or permission the address was matched as.',
+    }),
     crops: CropsSummarySchema,
     attestation: v.union([
       v.strictObject({ uid: v.string(), revision: v.number() }),
@@ -171,33 +189,46 @@ export const AddressResponseSchema = v
   .strictObject({
     ...stampFields,
     chainId: v.number(),
-    address: v.string().describe('Lowercase.'),
-    matches: v
-      .array(AddressMatchSchema)
-      .describe('Every reviewed project that claims the address.'),
+    address: v.string().meta({ description: 'Lowercase.' }),
+    matches: v.array(AddressMatchSchema).meta({
+      description: 'Every reviewed project that claims the address.',
+    }),
   })
   .describe('AddressResponse')
 
 export const AddressesResponseSchema = v
   .strictObject({
     ...stampFields,
-    addresses: v
-      .record(v.string(), v.array(AddressMatchSchema))
-      .describe('Keyed by `chainId:address`, the address lowercase.'),
+    addresses: v.record(v.string(), v.array(AddressMatchSchema)).meta({
+      description: 'Keyed by `chainId:address`, the address lowercase.',
+    }),
   })
   .describe('AddressesResponse')
 
 /** Everything published under components.schemas, keyed by its `describe` name. */
-export const NAMED_SCHEMAS = {
-  AttestationsMeta: AttestationsMetaSchema,
-  CropEvaluation: CropEvaluationSchema,
-  Crops: CropsSchema,
-  CropsSummary: CropsSummarySchema,
-  Attestation: AttestationSchema,
-  Project: ProjectSchema,
-  CropsResponse: CropsResponseSchema,
-  ProjectResponse: ProjectResponseSchema,
-  AddressMatch: AddressMatchSchema,
-  AddressResponse: AddressResponseSchema,
-  AddressesResponse: AddressesResponseSchema,
+export const NAMED_SCHEMAS = byName([
+  AttestationsMetaSchema,
+  CropEvaluationSchema,
+  CropsSchema,
+  CropsSummarySchema,
+  AttestationSchema,
+  ProjectSchema,
+  CropsResponseSchema,
+  ProjectResponseSchema,
+  AddressMatchSchema,
+  AddressResponseSchema,
+  AddressesResponseSchema,
+])
+
+function byName(
+  schemas: Validator<unknown>[],
+): Record<string, Validator<unknown>> {
+  return Object.fromEntries(
+    schemas.map((schema) => {
+      if (!schema.description) {
+        throw new Error('A published schema needs a describe() name')
+      }
+      return [schema.description, schema]
+    }),
+  )
 }
