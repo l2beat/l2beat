@@ -30,9 +30,6 @@ export const STATIC_PAGE_PATHS = [
   '/data-availability/liveness',
   '/data-availability/archived',
   '/privacy/summary',
-  '/garden',
-  '/garden/submit',
-  '/garden/integrate',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -57,6 +54,9 @@ export async function getPagePaths(): Promise<PagePath[]> {
   }
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
+  }
+  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
+    paths.push('/garden', '/garden/submit', '/garden/integrate')
   }
   paths.push(...(await getDynamicPagePaths()))
   return paths
