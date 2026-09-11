@@ -14,7 +14,8 @@
         "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1734426759
+        "sinceTimestamp": 1734426759,
+        "untilTimestamp": 1785940019
       },
       "category": "other",
       "source": "external",
@@ -73,7 +74,8 @@
         "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733506437
+        "sinceTimestamp": 1733506437,
+        "untilTimestamp": 1785940019
       },
       "category": "ether",
       "source": "external",
@@ -99,7 +101,8 @@
         "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733506553
+        "sinceTimestamp": 1733506553,
+        "untilTimestamp": 1785940019
       },
       "category": "ether",
       "source": "external",
@@ -125,7 +128,8 @@
         "address": "0xc3eACf0612346366Db554C991D7858716db09f58",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733927053
+        "sinceTimestamp": 1733927053,
+        "untilTimestamp": 1785940019
       },
       "category": "ether",
       "source": "external",
@@ -151,7 +155,8 @@
         "address": "0x939f1cC163fDc38a77571019eb4Ad1794873bf8c",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733830079
+        "sinceTimestamp": 1733830079,
+        "untilTimestamp": 1785940019
       },
       "category": "other",
       "source": "external",
@@ -177,7 +182,8 @@
         "address": "0x18d33689AE5d02649a859A1CF16c9f0563975258",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733840453
+        "sinceTimestamp": 1733840453,
+        "untilTimestamp": 1785940019
       },
       "category": "ether",
       "source": "external",
@@ -203,7 +209,8 @@
         "address": "0x9ab96A4668456896d45c301Bc3A15Cee76AA7B8D",
         "chain": "swell",
         "decimals": 6,
-        "sinceTimestamp": 1745971200
+        "sinceTimestamp": 1745971200,
+        "untilTimestamp": 1785940019
       },
       "category": "stablecoin",
       "source": "external",
@@ -229,7 +236,8 @@
         "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733628351
+        "sinceTimestamp": 1733628351,
+        "untilTimestamp": 1785940019
       },
       "category": "btc",
       "source": "external",
@@ -255,7 +263,8 @@
         "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1734390799
+        "sinceTimestamp": 1734390799,
+        "untilTimestamp": 1785940019
       },
       "category": "stablecoin",
       "source": "external",
@@ -308,7 +317,8 @@
         "address": "0x2826D136F5630adA89C1678b64A61620Aab77Aea",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733824053
+        "sinceTimestamp": 1733824053,
+        "untilTimestamp": 1785940019
       },
       "category": "other",
       "source": "external",
@@ -334,7 +344,8 @@
         "address": "0x09341022ea237a4DB1644DE7CCf8FA0e489D85B7",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1734454115
+        "sinceTimestamp": 1734454115,
+        "untilTimestamp": 1785940019
       },
       "category": "ether",
       "source": "external",
@@ -360,7 +371,8 @@
         "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1734473115
+        "sinceTimestamp": 1734473115,
+        "untilTimestamp": 1785940019
       },
       "category": "btc",
       "source": "external",
@@ -386,7 +398,8 @@
         "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1734369971
+        "sinceTimestamp": 1734369971,
+        "untilTimestamp": 1785940019
       },
       "category": "stablecoin",
       "source": "external",
@@ -412,7 +425,8 @@
         "address": "0xb89c6ED617f5F46175E41551350725A09110bbCE",
         "chain": "swell",
         "decimals": 6,
-        "sinceTimestamp": 1733520817
+        "sinceTimestamp": 1733520817,
+        "untilTimestamp": 1785940019
       },
       "category": "stablecoin",
       "source": "external",
@@ -438,7 +452,8 @@
         "address": "0xA6cB988942610f6731e664379D15fFcfBf282b44",
         "chain": "swell",
         "decimals": 18,
-        "sinceTimestamp": 1733783363
+        "sinceTimestamp": 1733783363,
+        "untilTimestamp": 1785940019
       },
       "category": "ether",
       "source": "external",

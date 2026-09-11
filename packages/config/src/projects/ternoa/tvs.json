@@ -17,7 +17,8 @@
         "address": "0x68791CFE079814c46e0E25C19Bcc5BFC71A744f7",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -35,7 +36,8 @@
         "address": "0xa9F2988D152f193b1B36bCeDDECC9C4f622E0904",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -72,7 +74,8 @@
         "address": "0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -90,7 +93,8 @@
         "address": "0x7a213bfCb354A110964aF0d475165A1F2930c0b7",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -107,7 +111,8 @@
         "address": "0x5A77f1443D16ee5761d310e38b62f77f726bC71c",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       },
       "isAssociated": false
     },
@@ -126,7 +131,8 @@
         "address": "0xa2036f0538221a77A3937F1379699f44945018d0",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -144,7 +150,8 @@
         "address": "0x61733989180f5340BC94357294eF09C7CD3f5653",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -162,7 +169,8 @@
         "address": "0xA23390ab60fE5482e9230245eb817a8117528b38",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -180,7 +188,8 @@
         "address": "0x69e7cE2db8E59C70b25Fe9F7b36B6F8892ebd7E9",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -198,7 +207,8 @@
         "address": "0x22B21BedDef74FE62F031D2c5c8F7a9F8a4b304D",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -235,7 +245,8 @@
         "address": "0x2e28B04Bed55F89d867c0966Dcd5dD2C61236349",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -253,7 +264,8 @@
         "address": "0xBF8A05cB73e1a80095dFb337981571BB4e48461D",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -290,7 +302,8 @@
         "address": "0x2548C94A3092494dB3aF864cc2cF781a72f55678",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -308,7 +321,8 @@
         "address": "0x8bFB2223b87E03aD701Ce5D00C2817637BdE2845",
         "chain": "ternoa",
         "decimals": 4,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -326,7 +340,8 @@
         "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
         "chain": "ternoa",
         "decimals": 6,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -344,7 +359,8 @@
         "address": "0xBfE55a77Cb773229610830226b6c54bDCf36761E",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -362,7 +378,8 @@
         "address": "0x1E4a5963aBFD975d8c9021ce480b42188849D41d",
         "chain": "ternoa",
         "decimals": 6,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     },
     {
@@ -377,7 +394,8 @@
         "address": "0xABb9adE1Bd2A3bDcCD4c91FB149685936aCb758E",
         "chain": "ternoa",
         "decimals": 18,
-        "sinceTimestamp": 1754133432
+        "sinceTimestamp": 1754133432,
+        "untilTimestamp": 1783879200
       },
       "category": "ether",
       "source": "external",
@@ -402,7 +420,8 @@
         "address": "0xac8dDbc1f261eE4632518a1A62c23cD2b5a52BAd",
         "chain": "ternoa",
         "decimals": 6,
-        "sinceTimestamp": 1753378509
+        "sinceTimestamp": 1753378509,
+        "untilTimestamp": 1783879200
       },
       "category": "stablecoin",
       "source": "external",
@@ -427,7 +446,8 @@
         "address": "0x5453e111aCE935Ba404b9474E14fe7a883B97519",
         "chain": "ternoa",
         "decimals": 6,
-        "sinceTimestamp": 1752325126
+        "sinceTimestamp": 1752325126,
+        "untilTimestamp": 1783879200
       },
       "category": "stablecoin",
       "source": "external",
@@ -452,7 +472,8 @@
         "address": "0x593A86cB824e0e3546fAE6bbC56e6f3f3EB6213E",
         "chain": "ternoa",
         "decimals": 8,
-        "sinceTimestamp": 1754132656
+        "sinceTimestamp": 1754132656,
+        "untilTimestamp": 1783879200
       },
       "category": "btc",
       "source": "external",
@@ -480,7 +501,8 @@
         "address": "0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1",
         "chain": "ternoa",
         "decimals": 8,
-        "sinceTimestamp": 1735650935
+        "sinceTimestamp": 1735650935,
+        "untilTimestamp": 1783879200
       }
     }
   ]

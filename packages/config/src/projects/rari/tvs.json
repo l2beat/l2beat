@@ -275,7 +275,8 @@
         "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
         "chain": "rari",
         "decimals": 6,
-        "sinceTimestamp": 1716939237
+        "sinceTimestamp": 1716939237,
+        "untilTimestamp": 1782813784
       },
       "category": "stablecoin",
       "source": "external",
@@ -360,7 +361,8 @@
         "address": "0x362FAE9A75B27BBc550aAc28a7c1F96C8D483120",
         "chain": "rari",
         "decimals": 6,
-        "sinceTimestamp": 1716939239
+        "sinceTimestamp": 1716939239,
+        "untilTimestamp": 1782813784
       },
       "category": "stablecoin",
       "source": "external",

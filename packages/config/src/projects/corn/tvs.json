@@ -42,7 +42,8 @@
         "decimals": 18,
         "sinceTimestamp": 1743120000,
         "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
-        "chain": "corn"
+        "chain": "corn",
+        "untilTimestamp": 1782850213
       },
       "category": "other",
       "source": "external",
@@ -68,7 +69,8 @@
         "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
         "chain": "corn",
         "decimals": 8,
-        "sinceTimestamp": 1733771467
+        "sinceTimestamp": 1733771467,
+        "untilTimestamp": 1782850213
       },
       "category": "btc",
       "source": "external",
@@ -94,7 +96,8 @@
         "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
         "chain": "corn",
         "decimals": 8,
-        "sinceTimestamp": 1733245117
+        "sinceTimestamp": 1733245117,
+        "untilTimestamp": 1782850213
       },
       "category": "btc",
       "source": "external",
@@ -120,7 +123,8 @@
         "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
         "chain": "corn",
         "decimals": 18,
-        "sinceTimestamp": 1734006126
+        "sinceTimestamp": 1734006126,
+        "untilTimestamp": 1782850213
       },
       "category": "btc",
       "source": "external",
@@ -146,7 +150,8 @@
         "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
         "chain": "corn",
         "decimals": 18,
-        "sinceTimestamp": 1734006360
+        "sinceTimestamp": 1734006360,
+        "untilTimestamp": 1782850213
       },
       "category": "btc",
       "source": "external",
@@ -172,7 +177,8 @@
         "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
         "chain": "corn",
         "decimals": 18,
-        "sinceTimestamp": 1734072451
+        "sinceTimestamp": 1734072451,
+        "untilTimestamp": 1782850213
       },
       "category": "btc",
       "source": "external",
@@ -198,7 +204,8 @@
         "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
         "chain": "corn",
         "decimals": 6,
-        "sinceTimestamp": 1741375647
+        "sinceTimestamp": 1741375647,
+        "untilTimestamp": 1782850213
       },
       "category": "stablecoin",
       "source": "external",
@@ -224,7 +231,8 @@
         "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
         "chain": "corn",
         "decimals": 6,
-        "sinceTimestamp": 1733450235
+        "sinceTimestamp": 1733450235,
+        "untilTimestamp": 1782850213
       },
       "category": "stablecoin",
       "source": "external",
@@ -277,7 +285,8 @@
         "address": "0x85aDfA60dDf86b67E6fD493Bd2c774b2eD772D14",
         "chain": "corn",
         "decimals": 18,
-        "sinceTimestamp": 1733425962
+        "sinceTimestamp": 1733425962,
+        "untilTimestamp": 1782850213
       },
       "category": "ether",
       "source": "external",
@@ -303,7 +312,8 @@
         "address": "0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
         "chain": "corn",
         "decimals": 18,
-        "sinceTimestamp": 1733432431
+        "sinceTimestamp": 1733432431,
+        "untilTimestamp": 1782850213
       },
       "category": "ether",
       "source": "external",
