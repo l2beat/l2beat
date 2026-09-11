@@ -5,6 +5,7 @@ import { getCollectionEntry } from '~/content/getCollection'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getPublicationsData } from './getPublicationsData'
 import { getGovernancePublicationData } from './governance/getGovernancePublicationData'
 import { getMonthlyUpdateData } from './monthly-updates/getMonthlyUpdateData'
@@ -21,7 +22,7 @@ export function createPublicationsRouter(
     const data = await getPublicationsData(manifest, req.originalUrl)
 
     if (!data) {
-      res.status(404).send('Not found')
+      await sendNotFoundPage(manifest, render, req.originalUrl, res)
       return
     }
     const html = await render(data, req.originalUrl)
@@ -71,7 +72,7 @@ export function createPublicationsRouter(
       }
 
       if (!data) {
-        res.status(404).send('Not found')
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)
