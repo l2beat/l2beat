@@ -11,7 +11,7 @@ const OPTIONAL = [
   'permissions',
   'discoveryInfo',
   'discoveryUpdates',
-  'crops',
+  'gardenInfo',
   'zkCatalogInfo',
 ] as const
 

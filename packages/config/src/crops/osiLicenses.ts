@@ -1,7 +1,5 @@
 import licenses from './osiLicenses.json'
 
-// Imported by the frontend and the l2b CLI; keep it dependency-free.
-
 export interface OsiLicense {
   spdxId: string
   name: string

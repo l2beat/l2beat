@@ -1,9 +1,6 @@
-import type { AttestationNetworkConfig } from '@l2beat/config'
-import {
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_RESOLVER,
-  ATTESTATION_SCHEMA_REVOCABLE,
-  ATTESTATION_SCHEMA_UID,
+import type {
+  AttestationNetworkConfig,
+  CropAttestationSchema,
 } from '@l2beat/config'
 import {
   type Address,
@@ -19,6 +16,12 @@ import {
   type WalletClient,
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
+
+/** The contracts of one network and the schema the set is attested under. */
+export interface EasTarget {
+  network: AttestationNetworkConfig
+  schema: CropAttestationSchema
+}
 
 export const ZERO_UID: Hex = `0x${'0'.repeat(64)}`
 export const ZERO_ADDRESS: Address =
@@ -67,6 +70,17 @@ export interface Revocation {
   schema: Hex
 }
 
+export function getAttestationUrl(
+  network: AttestationNetworkConfig,
+  uid: string,
+): string {
+  return `${network.explorer}/attestation/view/${uid}`
+}
+
+export function getSchemaUrl(target: EasTarget): string {
+  return `${target.network.explorer}/schema/view/${target.schema.uid}`
+}
+
 export function createReader(rpcUrl: string): PublicClient {
   return createPublicClient({ transport: http(rpcUrl) })
 }
@@ -90,42 +104,42 @@ export function createSigner(rpcUrl: string): WalletClient {
 
 export async function isSchemaRegistered(
   reader: PublicClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
 ): Promise<boolean> {
   const record = await reader.readContract({
-    address: network.schemaRegistry,
+    address: target.network.schemaRegistry,
     abi: SCHEMA_REGISTRY_ABI,
     functionName: 'getSchema',
-    args: [ATTESTATION_SCHEMA_UID],
+    args: [target.schema.uid],
   })
   return record.uid !== ZERO_UID
 }
 
 export async function registerSchema(
   signer: WalletClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
 ): Promise<Hex> {
   return await signer.writeContract({
     chain: null,
     account: signer.account ?? null,
-    address: network.schemaRegistry,
+    address: target.network.schemaRegistry,
     abi: SCHEMA_REGISTRY_ABI,
     functionName: 'register',
     args: [
-      ATTESTATION_SCHEMA,
-      ATTESTATION_SCHEMA_RESOLVER,
-      ATTESTATION_SCHEMA_REVOCABLE,
+      target.schema.definition,
+      target.schema.resolver,
+      target.schema.revocable,
     ],
   })
 }
 
 export async function getAttestation(
   reader: PublicClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
   uid: Hex,
 ): Promise<OnchainAttestation | undefined> {
   const result = await reader.readContract({
-    address: network.eas,
+    address: target.network.eas,
     abi: EAS_ABI,
     functionName: 'getAttestation',
     args: [uid],
@@ -146,11 +160,11 @@ export async function getAttestation(
 
 // No recipient (the subject is a protocol, not an account) and no expiry
 // (revocation is the only way an attestation stops being valid).
-function multiAttestArgs(attestations: NewAttestation[]) {
+function multiAttestArgs(schemaUid: Hex, attestations: NewAttestation[]) {
   return [
     [
       {
-        schema: ATTESTATION_SCHEMA_UID,
+        schema: schemaUid,
         data: attestations.map((attestation) => ({
           recipient: ZERO_ADDRESS,
           expirationTime: 0n,
@@ -182,28 +196,28 @@ function multiRevokeArgs(revocations: Revocation[]) {
 
 export async function multiAttest(
   signer: WalletClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
   attestations: NewAttestation[],
 ): Promise<Hex> {
   return await signer.writeContract({
     chain: null,
     account: signer.account ?? null,
-    address: network.eas,
+    address: target.network.eas,
     abi: EAS_ABI,
     functionName: 'multiAttest',
-    args: multiAttestArgs(attestations),
+    args: multiAttestArgs(target.schema.uid, attestations),
   })
 }
 
 export async function multiRevoke(
   signer: WalletClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
   revocations: Revocation[],
 ): Promise<Hex> {
   return await signer.writeContract({
     chain: null,
     account: signer.account ?? null,
-    address: network.eas,
+    address: target.network.eas,
     abi: EAS_ABI,
     functionName: 'multiRevoke',
     args: multiRevokeArgs(revocations),
@@ -212,7 +226,7 @@ export async function multiRevoke(
 
 export async function estimateGas(
   reader: PublicClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
   account: Address,
   work: { attestations: NewAttestation[]; revoke: Revocation[] },
 ): Promise<bigint> {
@@ -220,7 +234,7 @@ export async function estimateGas(
   if (work.revoke.length > 0) {
     total += await reader.estimateContractGas({
       account,
-      address: network.eas,
+      address: target.network.eas,
       abi: EAS_ABI,
       functionName: 'multiRevoke',
       args: multiRevokeArgs(work.revoke),
@@ -229,10 +243,10 @@ export async function estimateGas(
   if (work.attestations.length > 0) {
     total += await reader.estimateContractGas({
       account,
-      address: network.eas,
+      address: target.network.eas,
       abi: EAS_ABI,
       functionName: 'multiAttest',
-      args: multiAttestArgs(work.attestations),
+      args: multiAttestArgs(target.schema.uid, work.attestations),
     })
   }
   return total
@@ -248,14 +262,14 @@ export function readAttestedUids(logs: Log[]): Hex[] {
 /** attester and schemaUID are both indexed on Attested, so eth_getLogs is enough. */
 export async function scanAttestedUids(
   reader: PublicClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
   attester: Address,
   fromBlock: bigint,
 ): Promise<Hex[]> {
   const logs = await reader.getLogs({
-    address: network.eas,
+    address: target.network.eas,
     event: ATTESTED_EVENT,
-    args: { attester, schemaUID: ATTESTATION_SCHEMA_UID },
+    args: { attester, schemaUID: target.schema.uid },
     fromBlock,
     toBlock: 'latest',
   })

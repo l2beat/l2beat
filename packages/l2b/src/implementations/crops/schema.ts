@@ -1,31 +1,27 @@
-import {
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_RESOLVER,
-  ATTESTATION_SCHEMA_REVOCABLE,
-  ATTESTATION_SCHEMA_UID,
-} from '@l2beat/config'
-import { encodePacked, type Hex, keccak256 } from 'viem'
+import type { CropAttestationSchema, HexString } from '@l2beat/config'
+import { encodePacked, keccak256 } from 'viem'
 
 /**
  * The same computation SchemaRegistry._getUID performs:
  * keccak256(abi.encodePacked(schema, resolver, revocable)).
  */
 export function computeSchemaUid(
-  schema = ATTESTATION_SCHEMA,
-  resolver = ATTESTATION_SCHEMA_RESOLVER,
-  revocable = ATTESTATION_SCHEMA_REVOCABLE,
-): Hex {
+  schema: Omit<CropAttestationSchema, 'uid'>,
+): HexString {
   return keccak256(
-    encodePacked(['string', 'address', 'bool'], [schema, resolver, revocable]),
+    encodePacked(
+      ['string', 'address', 'bool'],
+      [schema.definition, schema.resolver, schema.revocable],
+    ),
   )
 }
 
-/** The uid in @l2beat/config is hardcoded; this stops it drifting from the schema. */
-export function assertSchemaUid(): void {
-  const computed = computeSchemaUid()
-  if (computed !== ATTESTATION_SCHEMA_UID) {
+/** The uid in @l2beat/config is hardcoded; this stops it drifting from the definition. */
+export function assertSchemaUid(schema: CropAttestationSchema): void {
+  const computed = computeSchemaUid(schema)
+  if (computed !== schema.uid) {
     throw new Error(
-      `ATTESTATION_SCHEMA_UID is stale: schema hashes to ${computed}, config says ${ATTESTATION_SCHEMA_UID}. Update packages/config/src/crops/eas.ts.`,
+      `The attestation schema uid is stale: the definition hashes to ${computed}, config says ${schema.uid}. Update packages/config/src/crops/attestations.ts.`,
     )
   }
 }

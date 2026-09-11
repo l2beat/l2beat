@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { unlinkSync } from 'fs'
+import { getCropAttestations } from './crops/attestations'
 import { ProjectDatabase } from './ProjectDatabase'
 import { ProjectService } from './ProjectService'
 import type { BaseProject, ProjectScalingInfo } from './types'
@@ -38,6 +39,7 @@ describe(ProjectService.name, () => {
     for (const project of projects) {
       await db.saveProject(project)
     }
+    await db.saveCropAttestations(getCropAttestations())
   })
   after(() => {
     unlinkSync(TEMP_PATH)
@@ -81,6 +83,11 @@ describe(ProjectService.name, () => {
       scalingInfo: {} as ProjectScalingInfo,
       archivedAt: UnixTime(1112470620),
     })
+  })
+
+  it('returns the crop attestations the build stored', async () => {
+    const ps = new ProjectService(TEMP_PATH)
+    expect(await ps.getCropAttestations()).toEqual(getCropAttestations())
   })
 
   it('returns multiple projects', async () => {

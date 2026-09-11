@@ -1,12 +1,11 @@
-import { ATTESTATION_NETWORK, ATTESTATION_NETWORKS } from '@l2beat/config'
-import { boolean, flag, option, optional } from 'cmd-ts'
-import { AttestationNetworkValue, HttpUrl } from '../../commands/types'
+import { boolean, flag, option, optional, string } from 'cmd-ts'
+import { HttpUrl } from '../../commands/types'
 
 export const networkOption = option({
-  type: AttestationNetworkValue,
+  type: optional(string),
   long: 'network',
-  description: 'which network the attestations live on.',
-  defaultValue: () => ATTESTATION_NETWORKS[ATTESTATION_NETWORK],
+  description:
+    'which network the attestations live on. Defaults to the one config reads.',
 })
 
 export const rpcUrlOption = option({

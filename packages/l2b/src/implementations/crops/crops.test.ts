@@ -1,8 +1,7 @@
-import type { CropAttestation } from '@l2beat/config'
-import {
-  ATTESTATION_NETWORKS,
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_UID,
+import type {
+  AttestationNetworkConfig,
+  CropAttestation,
+  CropAttestationSchema,
 } from '@l2beat/config'
 import { expect } from 'earl'
 import type { Hex } from 'viem'
@@ -21,32 +20,46 @@ import { assertSchemaUid, computeSchemaUid } from './schema'
 const IDS = ['aztecnetwork', 'tornado-cash', 'uniswapv3']
 const OLD_SCHEMA = `0x${'99'.repeat(32)}` as Hex
 
+// The schema registered on sepolia; its uid is a known vector for computeSchemaUid.
+const SCHEMA: CropAttestationSchema = {
+  definition: 'string[] projectIds,uint64 reviewedAt,uint32 revision',
+  resolver: '0x0000000000000000000000000000000000000000',
+  revocable: true,
+  uid: '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb',
+}
+
+const SEPOLIA: AttestationNetworkConfig = {
+  name: 'sepolia',
+  chainId: 11155111,
+  eas: '0xC2679fBD37d54388Ce493F1DB75320D236e1815e',
+  schemaRegistry: '0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0',
+  explorer: 'https://sepolia.easscan.org',
+  isTestnet: true,
+}
+
+const ETHEREUM: AttestationNetworkConfig = {
+  ...SEPOLIA,
+  name: 'ethereum',
+  chainId: 1,
+  isTestnet: false,
+}
+
 describe('crop attestations', () => {
   describe('schema', () => {
-    it('the uid committed in config matches the schema string', () => {
-      expect(() => assertSchemaUid()).not.toThrow()
-      expect(computeSchemaUid()).toEqual(ATTESTATION_SCHEMA_UID)
+    it('hashes the definition as SchemaRegistry does', () => {
+      expect(computeSchemaUid(SCHEMA)).toEqual(SCHEMA.uid)
+      expect(() => assertSchemaUid(SCHEMA)).not.toThrow()
     })
 
-    it('a different schema hashes to a different uid', () => {
-      expect(computeSchemaUid('string projectId')).not.toEqual(
-        ATTESTATION_SCHEMA_UID,
-      )
+    it('rejects a uid that drifted from the definition', () => {
+      expect(() =>
+        assertSchemaUid({ ...SCHEMA, definition: 'string projectId' }),
+      ).toThrow(/stale/)
     })
 
     it('revocability is part of the uid', () => {
-      expect(
-        computeSchemaUid(
-          undefined,
-          '0x0000000000000000000000000000000000000000',
-          false,
-        ),
-      ).not.toEqual(ATTESTATION_SCHEMA_UID)
-    })
-
-    it('attests the set and nothing about a rating', () => {
-      expect(ATTESTATION_SCHEMA).toEqual(
-        'string[] projectIds,uint64 reviewedAt,uint32 revision',
+      expect(computeSchemaUid({ ...SCHEMA, revocable: false })).not.toEqual(
+        SCHEMA.uid,
       )
     })
   })
@@ -100,15 +113,13 @@ describe('crop attestations', () => {
     })
 
     it('refuses to sign a set that names us on a testnet', () => {
-      expect(() =>
-        assertAnonymous(ATTESTATION_NETWORKS.sepolia, 'The set', 'l2beat-test'),
-      ).toThrow(/must not appear onchain/)
+      expect(() => assertAnonymous(SEPOLIA, 'The set', 'l2beat-test')).toThrow(
+        /must not appear onchain/,
+      )
     })
 
     it('does not apply on mainnet', () => {
-      expect(() =>
-        assertAnonymous(ATTESTATION_NETWORKS.ethereum, 'The set', 'l2beat'),
-      ).not.toThrow()
+      expect(() => assertAnonymous(ETHEREUM, 'The set', 'l2beat')).not.toThrow()
     })
   })
 
@@ -121,7 +132,7 @@ describe('crop attestations', () => {
     ): OnchainAttestation {
       return {
         uid,
-        schema: ATTESTATION_SCHEMA_UID,
+        schema: SCHEMA.uid,
         attester: '0x0000000000000000000000000000000000000001',
         time: 1700000000,
         revocationTime: 0,
@@ -134,7 +145,7 @@ describe('crop attestations', () => {
     function entry(overrides: Partial<CropAttestation> = {}): CropAttestation {
       return {
         uid,
-        schema: ATTESTATION_SCHEMA_UID,
+        schema: SCHEMA.uid,
         revision: 2,
         reviewedAt: 1700000000,
         projectIds: IDS,
@@ -149,6 +160,7 @@ describe('crop attestations', () => {
         projectIds: IDS,
         ledger: [],
         onchain: new Map(),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('new')
@@ -162,6 +174,7 @@ describe('crop attestations', () => {
         projectIds: IDS,
         ledger: [entry()],
         onchain: new Map([[uid, onchain()]]),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('unchanged')
@@ -175,6 +188,7 @@ describe('crop attestations', () => {
         projectIds: grown,
         ledger: [entry()],
         onchain: new Map([[uid, onchain()]]),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('changed')
@@ -182,7 +196,7 @@ describe('crop attestations', () => {
       expect(plan.removed).toEqual([])
       expect(plan.payload?.revision).toEqual(3)
       expect(plan.payload?.reviewedAt).toEqual(now)
-      expect(plan.revoke).toEqual([{ uid, schema: ATTESTATION_SCHEMA_UID }])
+      expect(plan.revoke).toEqual([{ uid, schema: SCHEMA.uid }])
     })
 
     it('replaces the attestation when a project leaves the set', () => {
@@ -190,6 +204,7 @@ describe('crop attestations', () => {
         projectIds: IDS.slice(1),
         ledger: [entry()],
         onchain: new Map([[uid, onchain()]]),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('changed')
@@ -209,11 +224,12 @@ describe('crop attestations', () => {
             }),
           ],
         ]),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('changed')
       expect(plan.payload?.projectIds).toEqual(IDS)
-      expect(plan.revoke).toEqual([{ uid, schema: ATTESTATION_SCHEMA_UID }])
+      expect(plan.revoke).toEqual([{ uid, schema: SCHEMA.uid }])
     })
 
     it('revokes under the schema an attestation was made with, not the current one', () => {
@@ -223,6 +239,7 @@ describe('crop attestations', () => {
         onchain: new Map([
           [uid, onchain({ schema: OLD_SCHEMA, data: '0xdead' })],
         ]),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('changed')
@@ -243,6 +260,7 @@ describe('crop attestations', () => {
           [uid, onchain()],
           [stale, onchain({ uid: stale, schema: OLD_SCHEMA, data: '0xdead' })],
         ]),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('changed')
@@ -256,6 +274,7 @@ describe('crop attestations', () => {
         projectIds: IDS,
         ledger: [entry()],
         onchain: new Map([[uid, onchain({ revocationTime: 1750000000 })]]),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.kind).toEqual('new')
@@ -268,6 +287,7 @@ describe('crop attestations', () => {
         projectIds: IDS,
         ledger: [entry({ revision: 7 })],
         onchain: new Map(),
+        schemaUid: SCHEMA.uid,
         now,
       })
       expect(plan.payload?.revision).toEqual(8)

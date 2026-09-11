@@ -4,7 +4,7 @@ import {
   type LegacyToken,
 } from '@l2beat/shared-pure'
 import sqlite3 from 'sqlite3'
-import type { BaseProject } from './types'
+import type { BaseProject, CropAttestations } from './types'
 
 type SqliteType =
   | 'TEXT PRIMARY KEY'
@@ -57,6 +57,7 @@ const schema = {
   externalDependencies: 'TEXT',
 
   crops: 'TEXT',
+  gardenInfo: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
@@ -96,6 +97,10 @@ export class ProjectDatabase {
     await this.query(`
       CREATE TABLE IF NOT EXISTS tokens (
         id TEXT PRIMARY KEY,
+        data TEXT NOT NULL
+      )`)
+    await this.query(`
+      CREATE TABLE IF NOT EXISTS crop_attestations (
         data TEXT NOT NULL
       )`)
   }
@@ -207,6 +212,20 @@ export class ProjectDatabase {
     return rows.map(
       (row): LegacyToken => JSON.parse((row as { data: string }).data),
     )
+  }
+
+  async saveCropAttestations(attestations: CropAttestations) {
+    await this.query('INSERT INTO crop_attestations(data) VALUES(?)', [
+      JSON.stringify(attestations),
+    ])
+  }
+
+  async getCropAttestations(): Promise<CropAttestations | undefined> {
+    const rows = await this.query('SELECT data FROM crop_attestations')
+    const row = rows[0]
+    if (row) {
+      return JSON.parse((row as { data: string }).data) as CropAttestations
+    }
   }
 
   private query(query: string, values?: unknown[]): Promise<unknown[]> {

@@ -47,8 +47,8 @@ export async function getCropsAddressIndex(): Promise<CropsAddressIndex> {
     return index
   }
   const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
+    where: ['gardenInfo'],
+    select: ['gardenInfo'],
     optional: ['contracts', 'permissions'],
   })
   index = buildCropsAddressIndex(projects)

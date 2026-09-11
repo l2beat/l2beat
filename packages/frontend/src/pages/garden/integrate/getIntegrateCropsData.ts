@@ -9,9 +9,10 @@ export async function getIntegrateCropsData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, examples] = await Promise.all([
+  const [appLayoutProps, examples, attestations] = await Promise.all([
     getAppLayoutProps(),
     getIntegrateExamples(),
+    getAttestationsMeta(),
   ])
   return {
     head: {
@@ -30,7 +31,7 @@ export async function getIntegrateCropsData(
       page: 'IntegrateCropsPage',
       props: {
         ...appLayoutProps,
-        attestations: getAttestationsMeta(),
+        attestations,
         examples,
       },
     },

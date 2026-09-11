@@ -28,10 +28,11 @@ export interface GardenLookupResult {
 }
 
 export async function getGardenLookupApiData(queries: string[]) {
-  const [index, projects, chains] = await Promise.all([
+  const [index, projects, chains, attestations] = await Promise.all([
     getCropsAddressIndex(),
     getCropsProjects(),
     getChainLookup(),
+    getAttestationsMeta(),
   ])
   const projectById = new Map(projects.map((x) => [x.id, x]))
 
@@ -74,5 +75,5 @@ export async function getGardenLookupApiData(queries: string[]) {
     return { query, matches }
   })
 
-  return { attestations: getAttestationsMeta(), results }
+  return { attestations, results }
 }

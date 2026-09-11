@@ -1,13 +1,13 @@
 import type {
-  AttestationNetworkConfig,
   CropAttestation,
   CropAttestationLedger,
   RevokedCropAttestation,
 } from '@l2beat/config'
-import { ATTESTATION_SCHEMA_UID, getAttestationUrl } from '@l2beat/config'
 import chalk from 'chalk'
 import type { Address, PublicClient, WalletClient } from 'viem'
 import {
+  type EasTarget,
+  getAttestationUrl,
   multiAttest,
   multiRevoke,
   type NewAttestation,
@@ -19,7 +19,7 @@ export interface ExecuteInput {
   reader: PublicClient
   signer: WalletClient
   attester: Address
-  network: AttestationNetworkConfig
+  target: EasTarget
   plan: AttestPlan
   /** Encoded from `plan.payload`; empty when the keeper already says it. */
   attestations: NewAttestation[]
@@ -47,7 +47,7 @@ export async function executePlan(
     ledger?.firstBlock ?? Number.POSITIVE_INFINITY,
   )
   return {
-    network: input.network.name,
+    network: input.target.network.name,
     attester: input.attester,
     firstBlock: Number.isFinite(firstBlock) ? firstBlock : 0,
     live,
@@ -56,8 +56,8 @@ export async function executePlan(
 }
 
 async function revoke(input: ExecuteInput): Promise<RevokedCropAttestation[]> {
-  const { reader, signer, network, plan, ledger } = input
-  const txHash = await multiRevoke(signer, network, plan.revoke)
+  const { reader, signer, target, plan, ledger } = input
+  const txHash = await multiRevoke(signer, target, plan.revoke)
   const receipt = await reader.waitForTransactionReceipt({ hash: txHash })
   console.log(
     chalk.green('revoked'),
@@ -81,8 +81,8 @@ async function attest(
   input: ExecuteInput,
   payload: NonNullable<AttestPlan['payload']>,
 ): Promise<CropAttestation> {
-  const { reader, signer, network, attestations } = input
-  const txHash = await multiAttest(signer, network, attestations)
+  const { reader, signer, target, attestations } = input
+  const txHash = await multiAttest(signer, target, attestations)
   const receipt = await reader.waitForTransactionReceipt({ hash: txHash })
   const uids = readAttestedUids([...receipt.logs])
   const uid = uids[0]
@@ -92,10 +92,10 @@ async function attest(
     )
   }
   console.log(chalk.green('attested'), txHash)
-  console.log(`  ${getAttestationUrl(network, uid)}`)
+  console.log(`  ${getAttestationUrl(target.network, uid)}`)
   return {
     uid,
-    schema: ATTESTATION_SCHEMA_UID,
+    schema: target.schema.uid,
     revision: payload.revision,
     reviewedAt: payload.reviewedAt,
     projectIds: payload.projectIds,

@@ -1,6 +1,7 @@
-import type { AttestationNetworkConfig, CropAttestation } from '@l2beat/config'
+import type { CropAttestation } from '@l2beat/config'
 import type { Address, Hex, PublicClient } from 'viem'
 import {
+  type EasTarget,
   getAttestation,
   type OnchainAttestation,
   scanAttestedUids,
@@ -9,7 +10,7 @@ import {
 /** By uid. `--scan` also walks the attester's logs for uids the ledger does not know. */
 export async function loadOnchainState(
   reader: PublicClient,
-  network: AttestationNetworkConfig,
+  target: EasTarget,
   ledger: CropAttestation[],
   options: { scan: boolean; attester?: Address; fromBlock?: number },
 ): Promise<Map<string, OnchainAttestation>> {
@@ -23,7 +24,7 @@ export async function loadOnchainState(
     }
     const scanned = await scanAttestedUids(
       reader,
-      network,
+      target,
       options.attester,
       BigInt(options.fromBlock ?? 0),
     )
@@ -34,7 +35,7 @@ export async function loadOnchainState(
 
   const state = new Map<string, OnchainAttestation>()
   for (const uid of uids) {
-    const attestation = await getAttestation(reader, network, uid)
+    const attestation = await getAttestation(reader, target, uid)
     if (attestation) {
       state.set(uid, attestation)
     }

@@ -1,10 +1,3 @@
-import {
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_RESOLVER,
-  ATTESTATION_SCHEMA_REVOCABLE,
-  ATTESTATION_SCHEMA_UID,
-  getSchemaUrl,
-} from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
@@ -15,8 +8,14 @@ import {
   rpcUrlOption,
 } from '../implementations/crops/args'
 import {
+  loadCropAttestations,
+  pickNetwork,
+} from '../implementations/crops/attestations'
+import {
   createReader,
   createSigner,
+  type EasTarget,
+  getSchemaUrl,
   isSchemaRegistered,
   registerSchema,
 } from '../implementations/crops/easClient'
@@ -33,23 +32,26 @@ export const CropsSchema = command({
     execute: executeFlag,
   },
   handler: async (args) => {
-    assertSchemaUid()
+    const config = await loadCropAttestations()
+    assertSchemaUid(config.schema)
 
-    const network = args.network
+    const network = pickNetwork(config, args.network)
+    const target: EasTarget = { network, schema: config.schema }
     const rpcUrl = args.rpcUrl ?? defaultRpcUrl(network)
     // Before any RPC work, so a missing key fails first.
     const signer = args.execute ? createSigner(rpcUrl) : undefined
 
-    assertAnonymous(network, 'The attestation schema', ATTESTATION_SCHEMA)
-    console.log(chalk.bold('schema  '), ATTESTATION_SCHEMA)
-    console.log(chalk.bold('resolver'), ATTESTATION_SCHEMA_RESOLVER)
-    console.log(chalk.bold('revocable'), ATTESTATION_SCHEMA_REVOCABLE)
-    console.log(chalk.bold('uid     '), ATTESTATION_SCHEMA_UID)
+    const { schema } = config
+    assertAnonymous(network, 'The attestation schema', schema.definition)
+    console.log(chalk.bold('schema  '), schema.definition)
+    console.log(chalk.bold('resolver'), schema.resolver)
+    console.log(chalk.bold('revocable'), schema.revocable)
+    console.log(chalk.bold('uid     '), schema.uid)
     console.log(chalk.bold('network '), `${network.name} (${network.chainId})`)
-    console.log(chalk.bold('explorer'), getSchemaUrl(network))
+    console.log(chalk.bold('explorer'), getSchemaUrl(target))
 
     const reader = createReader(rpcUrl)
-    if (await isSchemaRegistered(reader, network)) {
+    if (await isSchemaRegistered(reader, target)) {
       console.log(chalk.green('\nAlready registered on this network.'))
       return
     }
@@ -72,7 +74,7 @@ export const CropsSchema = command({
       return
     }
 
-    const txHash = await registerSchema(signer, network)
+    const txHash = await registerSchema(signer, target)
     console.log(chalk.green('registered'), txHash)
   },
 })

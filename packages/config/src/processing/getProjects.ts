@@ -16,6 +16,7 @@ import {
   formatChallengePeriod,
   formatExecutionDelay,
 } from '../common/formatDelays'
+import { getGardenInfo } from '../crops/getGardenInfo'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
   Bridge,
@@ -61,11 +62,18 @@ export function getProjects(): BaseProject[] {
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
     .map(withDiscoveryUpdates)
+    .map(withGardenInfo)
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
   const discoveryUpdates = loadDiscoveryUpdates(project.id)
   return discoveryUpdates ? { ...project, discoveryUpdates } : project
+}
+
+function withGardenInfo(project: BaseProject): BaseProject {
+  return project.crops
+    ? { ...project, gardenInfo: getGardenInfo(project.crops) }
+    : project
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {

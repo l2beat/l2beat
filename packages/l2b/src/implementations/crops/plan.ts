@@ -1,5 +1,4 @@
-import type { CropAttestation } from '@l2beat/config'
-import { ATTESTATION_SCHEMA_UID } from '@l2beat/config'
+import type { CropAttestation, HexString } from '@l2beat/config'
 import type { OnchainAttestation, Revocation } from './easClient'
 import { type CropPayload, decodePayload, diffSet, setMatches } from './payload'
 
@@ -26,6 +25,8 @@ export interface PlanInput {
   ledger: CropAttestation[]
   /** By uid. */
   onchain: Map<string, OnchainAttestation>
+  /** Anything attested under another schema is superseded. */
+  schemaUid: HexString
   now: number
 }
 
@@ -44,7 +45,7 @@ export function planAttestation(input: PlanInput): AttestPlan {
   // The ledger is a cache; the chain decides.
   const keeper = live.find(
     ({ onchain }) =>
-      isCurrentSchema(onchain.schema) &&
+      isCurrentSchema(onchain.schema, input.schemaUid) &&
       setMatches(decodePayload(onchain.data).projectIds, input.projectIds),
   )
 
@@ -85,8 +86,8 @@ export function planAttestation(input: PlanInput): AttestPlan {
   }
 }
 
-function isCurrentSchema(schema: string): boolean {
-  return schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase()
+function isCurrentSchema(schema: string, schemaUid: string): boolean {
+  return schema.toLowerCase() === schemaUid.toLowerCase()
 }
 
 function coveredIds(ledger: CropAttestation[]): string[] {

@@ -172,7 +172,7 @@ export async function getL2ProjectEntry(
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
-    | 'crops'
+    | 'gardenInfo'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectL2Entry> {
@@ -400,7 +400,7 @@ export async function getL2ProjectEntry(
 
   const projectWithIcon = withProjectIcon(project)
 
-  const gardenCropsSection = getGardenCropsSection(project.crops)
+  const gardenCropsSection = getGardenCropsSection(project.gardenInfo)
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }

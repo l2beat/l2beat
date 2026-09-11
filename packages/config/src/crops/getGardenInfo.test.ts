@@ -1,19 +1,14 @@
 import { expect } from 'earl'
 import type { ProjectCrops } from '../types'
-import {
-  qualifiesForGarden,
-  resolveCropEvaluation,
-  resolveProjectCrops,
-} from './canonicalCrops'
+import { getGardenInfo, resolveCropEvaluation } from './getGardenInfo'
 import { OSI_LICENSES } from './osiLicenses'
 
-describe('canonicalCrops', () => {
+describe(getGardenInfo.name, () => {
   describe(resolveCropEvaluation.name, () => {
     it('defaults a missing status to reviewed', () => {
       expect(resolveCropEvaluation({ sentiment: 'good' })).toEqual({
         sentiment: 'good',
         status: 'reviewed',
-        license: undefined,
         points: [],
         missing: [],
         additionalConsiderations: [],
@@ -60,7 +55,7 @@ describe('canonicalCrops', () => {
     })
   })
 
-  describe(qualifiesForGarden.name, () => {
+  describe('inGarden', () => {
     const crops = (overrides: Partial<ProjectCrops> = {}): ProjectCrops => ({
       censorshipResistance: { sentiment: 'good' },
       openSource: { sentiment: 'good' },
@@ -70,27 +65,31 @@ describe('canonicalCrops', () => {
     })
 
     it('lets a project in when no crop is red', () => {
-      const resolved = resolveProjectCrops(
+      const info = getGardenInfo(
         crops({
           privacy: { status: 'fullyTransparent' },
           security: { sentiment: 'warning', status: 'partiallyReviewed' },
         }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(true)
+      expect(info.inGarden).toEqual(true)
     })
 
     it('keeps a project out when any crop is red', () => {
-      const resolved = resolveProjectCrops(
-        crops({ security: { sentiment: 'bad' } }),
-      )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      const info = getGardenInfo(crops({ security: { sentiment: 'bad' } }))
+      expect(info.inGarden).toEqual(false)
     })
 
     it('keeps it out even when the red crop is only partially reviewed', () => {
-      const resolved = resolveProjectCrops(
+      const info = getGardenInfo(
         crops({ security: { sentiment: 'bad', status: 'partiallyReviewed' } }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      expect(info.inGarden).toEqual(false)
+    })
+
+    it('still resolves every crop of a project that is kept out', () => {
+      const info = getGardenInfo(crops({ security: { sentiment: 'bad' } }))
+      expect(info.crops.security.sentiment).toEqual('bad')
+      expect(info.crops.privacy.status).toEqual('reviewed')
     })
   })
 })

@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { unlinkSync } from 'fs'
+import { getCropAttestations } from './crops/attestations'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject, ProjectScalingInfo } from './types'
 
@@ -101,6 +102,14 @@ describe(ProjectDatabase.name, () => {
     await db.saveToken(token)
     expect(await db.getToken(token.id)).toEqual(token)
     expect(await db.getTokens()).toEqual([token])
+  })
+
+  it('can add and retrieve the crop attestations', async () => {
+    const attestations = getCropAttestations()
+
+    await db.saveCropAttestations(attestations)
+
+    expect(await db.getCropAttestations()).toEqual(attestations)
   })
 
   it('rolls back a failed transaction', async () => {

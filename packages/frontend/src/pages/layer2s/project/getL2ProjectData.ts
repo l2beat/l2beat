@@ -68,7 +68,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       'daTrackingConfig',
       'costsInfo',
       'activityConfig',
-      'crops',
+      'gardenInfo',
     ],
   })
   if (!project) return undefined

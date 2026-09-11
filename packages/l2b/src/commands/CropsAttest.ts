@@ -1,5 +1,3 @@
-import type { AttestationNetworkConfig } from '@l2beat/config'
-import { ATTESTATION_SCHEMA, CROP_ATTESTATIONS } from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
@@ -11,8 +9,13 @@ import {
   scanFlag,
 } from '../implementations/crops/args'
 import {
+  loadCropAttestations,
+  pickNetwork,
+} from '../implementations/crops/attestations'
+import {
   createReader,
   createSigner,
+  type EasTarget,
   estimateGas,
   isSchemaRegistered,
   type NewAttestation,
@@ -40,27 +43,29 @@ export const CropsAttest = command({
     execute: executeFlag,
   },
   handler: async (args) => {
-    assertSchemaUid()
+    const config = await loadCropAttestations()
+    assertSchemaUid(config.schema)
 
-    const network = args.network
+    const network = pickNetwork(config, args.network)
+    const target: EasTarget = { network, schema: config.schema }
     const rpcUrl = args.rpcUrl ?? defaultRpcUrl(network)
     const reader = createReader(rpcUrl)
     // Before any RPC work, so a missing key fails first.
     const signer = args.execute ? createSigner(rpcUrl) : undefined
-    const ledger = CROP_ATTESTATIONS[network.name]
+    const ledger = config.ledgers[network.name]
     const attester = signer?.account?.address ?? ledger?.attester
 
     const projectIds = await getAttestedProjectIds()
-    const onchain = await loadOnchainState(
-      reader,
-      network,
-      ledger?.live ?? [],
-      { scan: args.scan, attester, fromBlock: ledger?.firstBlock },
-    )
+    const onchain = await loadOnchainState(reader, target, ledger?.live ?? [], {
+      scan: args.scan,
+      attester,
+      fromBlock: ledger?.firstBlock,
+    })
     const plan = planAttestation({
       projectIds,
       ledger: ledger?.live ?? [],
       onchain,
+      schemaUid: config.schema.uid,
       now: Math.floor(Date.now() / 1000),
     })
 
@@ -70,7 +75,7 @@ export const CropsAttest = command({
       return
     }
 
-    const attestations = toAttestations(plan, network)
+    const attestations = toAttestations(plan, target)
     if (!signer?.account) {
       console.log(
         chalk.dim(
@@ -82,14 +87,14 @@ export const CropsAttest = command({
 
     if (
       attestations.length > 0 &&
-      !(await isSchemaRegistered(reader, network))
+      !(await isSchemaRegistered(reader, target))
     ) {
       throw new Error(
         `The schema is not registered on ${network.name}. Run \`l2b crops-schema --execute\` first.`,
       )
     }
 
-    const gas = await estimateGas(reader, network, signer.account.address, {
+    const gas = await estimateGas(reader, target, signer.account.address, {
       attestations,
       revoke: plan.revoke,
     })
@@ -111,12 +116,12 @@ export const CropsAttest = command({
       reader,
       signer,
       attester: signer.account.address,
-      network,
+      target,
       plan,
       attestations,
       ledger,
     })
-    writeLedger({ ...CROP_ATTESTATIONS, [network.name]: next })
+    writeLedger({ ...config.ledgers, [network.name]: next })
     console.log(
       chalk.green('\nwrote'),
       getLedgerPath(),
@@ -126,16 +131,17 @@ export const CropsAttest = command({
 })
 
 /** The payload as EAS takes it, once the anonymity guard has passed. */
-function toAttestations(
-  plan: AttestPlan,
-  network: AttestationNetworkConfig,
-): NewAttestation[] {
+function toAttestations(plan: AttestPlan, target: EasTarget): NewAttestation[] {
   if (!plan.payload) {
     return []
   }
-  assertAnonymous(network, 'The attestation schema', ATTESTATION_SCHEMA)
   assertAnonymous(
-    network,
+    target.network,
+    'The attestation schema',
+    target.schema.definition,
+  )
+  assertAnonymous(
+    target.network,
     'The attested set',
     plan.payload.projectIds.join(' '),
   )

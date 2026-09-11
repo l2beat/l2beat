@@ -1,7 +1,7 @@
 import type { AssetId, LegacyToken, ProjectId } from '@l2beat/shared-pure'
 import { join } from 'path'
 import { ProjectDatabase } from './ProjectDatabase'
-import type { BaseProject } from './types'
+import type { BaseProject, CropAttestations } from './types'
 
 type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
 type Key = Exclude<keyof BaseProject, BasicKeys>
@@ -66,5 +66,13 @@ export class ProjectService {
 
   async getTokens(): Promise<LegacyToken[]> {
     return await this.db.getTokens()
+  }
+
+  async getCropAttestations(): Promise<CropAttestations> {
+    const attestations = await this.db.getCropAttestations()
+    if (!attestations) {
+      throw new Error('No crop attestations in the database. Rebuild config.')
+    }
+    return attestations
   }
 }

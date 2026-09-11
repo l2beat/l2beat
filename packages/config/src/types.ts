@@ -16,7 +16,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
-import type { OsiLicenseId } from './crops/osiLicenses'
+import type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -259,7 +259,9 @@ export interface BaseProject {
   externalDependencies?: ProjectExternalDependency[]
 
   // crops data
+  /** What the reviewer wrote. The build resolves it into `gardenInfo`; read that. */
   crops?: ProjectCrops
+  gardenInfo?: ProjectGardenInfo
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1277,6 +1279,114 @@ export interface ProjectCrops {
   openSource: ProjectOpenSourceCropEvaluation
   privacy: ProjectCropEvaluation
   security: ProjectCropEvaluation
+}
+
+export type CropKey = keyof ProjectCrops
+
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
+/** A `ProjectCropEvaluation` with every optional field resolved to a concrete value. */
+export interface ResolvedCropEvaluation {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  /** Only on the Open source crop, and only when the license is confirmed; absent otherwise. */
+  license?: OsiLicense
+  points: string[]
+  missing: string[]
+  additionalConsiderations: string[]
+  notReviewed: string[]
+}
+
+export type ResolvedCrops = Record<CropKey, ResolvedCropEvaluation>
+
+/**
+ * Resolved from `crops` by the config build, so the site, the API and the
+ * attestations read the same defaults and the same garden rule.
+ */
+export interface ProjectGardenInfo {
+  /** A single red crop keeps a project out, whatever the other three say. */
+  inGarden: boolean
+  crops: ResolvedCrops
+}
+
+// The reviewed set is attested onchain with the Ethereum Attestation Service.
+
+/** Typed so viem's `Hex` and `Address` accept these values without a cast. */
+export type HexString = `0x${string}`
+
+export type AttestationNetwork = 'sepolia' | 'ethereum'
+
+export interface AttestationNetworkConfig {
+  name: AttestationNetwork
+  chainId: number
+  eas: HexString
+  schemaRegistry: HexString
+  explorer: string
+  isTestnet: boolean
+}
+
+export interface CropAttestationSchema {
+  /** The EAS schema string. */
+  definition: string
+  resolver: HexString
+  revocable: boolean
+  /** keccak256(abi.encodePacked(definition, resolver, revocable)), as SchemaRegistry computes it. */
+  uid: HexString
+}
+
+export interface CropAttestation {
+  uid: HexString
+  /** Recorded because EAS only accepts a revocation naming the original schema. */
+  schema: HexString
+  /** Bumped every time the attested set changes. Starts at 1. */
+  revision: number
+  reviewedAt: number
+  /** Sorted. */
+  projectIds: string[]
+  txHash: HexString
+  block: number
+}
+
+export interface RevokedCropAttestation {
+  uid: HexString
+  schema: HexString
+  revision: number
+  projectIds: string[]
+  revokedTxHash: HexString
+  revokedBlock: number
+}
+
+export interface CropAttestationLedger {
+  network: AttestationNetwork
+  attester: HexString
+  /** Block of the earliest attestation - the default start for `--scan`. */
+  firstBlock: number
+  /**
+   * Steady state is exactly one. More than one means an interrupted run or a
+   * schema change; `l2b crops-attest` revokes the extras on its next run.
+   */
+  live: CropAttestation[]
+  revoked: RevokedCropAttestation[]
+}
+
+export type CropAttestationLedgers = Partial<
+  Record<AttestationNetwork, CropAttestationLedger>
+>
+
+/** Written by the config build and read with `ProjectService.getCropAttestations`. */
+export interface CropAttestations {
+  /** The network the garden and the API read. */
+  network: AttestationNetwork
+  schema: CropAttestationSchema
+  networks: Record<AttestationNetwork, AttestationNetworkConfig>
+  /**
+   * A cache of onchain state written by `l2b crops-attest --execute`, committed
+   * so no reader needs an RPC call; `l2b crops-verify` checks it against the chain.
+   */
+  ledgers: CropAttestationLedgers
+  /** Live under the current schema on `network`. Anything else in that ledger awaits revocation. */
+  current?: CropAttestation
 }
 
 // #endregion

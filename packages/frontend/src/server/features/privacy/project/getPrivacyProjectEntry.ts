@@ -140,7 +140,7 @@ export async function getPrivacyProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  const gardenCropsSection = getGardenCropsSection(details.crops)
+  const gardenCropsSection = getGardenCropsSection(details.gardenInfo)
   if (gardenCropsSection) {
     sections.push(gardenCropsSection)
   }

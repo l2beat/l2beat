@@ -1,14 +1,15 @@
-import {
-  ATTESTATION_SCHEMA_UID,
-  CROP_ATTESTATIONS,
-  getAttestationUrl,
-} from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
 import { networkOption, rpcUrlOption } from '../implementations/crops/args'
 import {
+  loadCropAttestations,
+  pickNetwork,
+} from '../implementations/crops/attestations'
+import {
   createReader,
+  type EasTarget,
   getAttestation,
+  getAttestationUrl,
 } from '../implementations/crops/easClient'
 import {
   decodePayload,
@@ -29,10 +30,12 @@ export const CropsVerify = command({
     rpcUrl: rpcUrlOption,
   },
   handler: async (args) => {
-    assertSchemaUid()
+    const config = await loadCropAttestations()
+    assertSchemaUid(config.schema)
 
-    const network = args.network
-    const ledger = CROP_ATTESTATIONS[network.name]
+    const network = pickNetwork(config, args.network)
+    const target: EasTarget = { network, schema: config.schema }
+    const ledger = config.ledgers[network.name]
     if (!ledger || ledger.live.length === 0) {
       console.log(chalk.dim(`Nothing attested on ${network.name} yet.`))
       return
@@ -44,7 +47,7 @@ export const CropsVerify = command({
 
     for (const record of ledger.live) {
       const label = `rev ${record.revision} (${record.uid})`
-      const onchain = await getAttestation(reader, network, record.uid)
+      const onchain = await getAttestation(reader, target, record.uid)
       if (!onchain) {
         problems.push(`${label}: does not exist`)
         continue
@@ -59,9 +62,7 @@ export const CropsVerify = command({
         )
         continue
       }
-      if (
-        onchain.schema.toLowerCase() !== ATTESTATION_SCHEMA_UID.toLowerCase()
-      ) {
+      if (onchain.schema.toLowerCase() !== config.schema.uid.toLowerCase()) {
         problems.push(
           `${label}: attested under superseded schema ${onchain.schema} - revoke it with \`l2b crops-attest --execute\``,
         )

@@ -1,5 +1,4 @@
 import type { Project, ResolvedCrops } from '@l2beat/config'
-import { qualifiesForGarden, resolveProjectCrops } from '@l2beat/config'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -36,7 +35,7 @@ export interface GardenEntry {
 }
 
 type GardenProject = Project<
-  'crops',
+  'gardenInfo',
   'scalingInfo' | 'privacyInfo' | 'defiInfo' | 'daLayer'
 >
 
@@ -44,13 +43,14 @@ export async function getGardenData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
+  const reviewed = await ps.getProjects({
+    where: ['gardenInfo'],
+    select: ['gardenInfo'],
     optional: ['scalingInfo', 'privacyInfo', 'defiInfo', 'daLayer'],
   })
+  const projects = reviewed.filter((p) => p.gardenInfo.inGarden)
 
-  const [tvsBreakdown, depositCounts] = await Promise.all([
+  const [tvsBreakdown, depositCounts, attestation] = await Promise.all([
     get7dTvsBreakdown({
       type: 'projects',
       projectIds: projects.map((p) => p.id),
@@ -58,6 +58,7 @@ export async function getGardenData(
     getTotalDepositCounts(
       projects.filter((p) => p.privacyInfo).map((p) => p.id),
     ),
+    getGardenAttestation(),
   ])
 
   const entries: GardenEntry[] = projects
@@ -68,10 +69,9 @@ export async function getGardenData(
       href: getGardenProjectPath(project),
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      crops: resolveProjectCrops(project.crops),
+      crops: project.gardenInfo.crops,
       metric: getMetric(project, tvsBreakdown, depositCounts),
     }))
-    .filter((entry) => qualifiesForGarden(entry.crops))
 
   return {
     head: {
@@ -91,7 +91,7 @@ export async function getGardenData(
       props: {
         ...(await getAppLayoutProps()),
         entries,
-        attestation: getGardenAttestation(),
+        attestation,
       },
     },
   }

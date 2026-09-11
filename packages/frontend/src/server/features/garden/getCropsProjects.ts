@@ -1,20 +1,10 @@
 import type {
+  AttestationNetworkConfig,
   CropKey,
   ResolvedCropEvaluation,
   ResolvedCrops,
 } from '@l2beat/config'
-import {
-  ATTESTATION_NETWORK,
-  ATTESTATION_NETWORKS,
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_UID,
-  CROP_ATTESTATIONS,
-  CROP_KEYS,
-  getAttestationUrl,
-  getCurrentCropAttestation,
-  qualifiesForGarden,
-  resolveProjectCrops,
-} from '@l2beat/config'
+import { CROP_COLUMNS } from '~/components/garden/crops'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { ps } from '~/server/projects'
 import { getGardenProjectPath } from './getGardenProjectPath'
@@ -37,18 +27,19 @@ export interface CropsAttestationsMeta {
   } | null
 }
 
-export function getAttestationsMeta(): CropsAttestationsMeta {
-  const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
-  const ledger = CROP_ATTESTATIONS[ATTESTATION_NETWORK]
-  const current = getCurrentCropAttestation(ATTESTATION_NETWORK)
+/** Read from the config build, so no RPC call is needed. */
+export async function getAttestationsMeta(): Promise<CropsAttestationsMeta> {
+  const { network, schema, networks, ledgers, current } =
+    await ps.getCropAttestations()
+  const config = networks[network]
   return {
-    network: network.name,
-    chainId: network.chainId,
-    isTestnet: network.isTestnet,
-    eas: network.eas,
-    schemaUid: ATTESTATION_SCHEMA_UID,
-    schema: ATTESTATION_SCHEMA,
-    attester: ledger?.attester ?? null,
+    network: config.name,
+    chainId: config.chainId,
+    isTestnet: config.isTestnet,
+    eas: config.eas,
+    schemaUid: schema.uid,
+    schema: schema.definition,
+    attester: ledgers[network]?.attester ?? null,
     current: current
       ? {
           uid: current.uid,
@@ -56,10 +47,17 @@ export function getAttestationsMeta(): CropsAttestationsMeta {
           reviewedAt: current.reviewedAt,
           projectIds: current.projectIds,
           txHash: current.txHash,
-          explorerUrl: getAttestationUrl(network, current.uid),
+          explorerUrl: getAttestationUrl(config, current.uid),
         }
       : null,
   }
+}
+
+export function getAttestationUrl(
+  network: AttestationNetworkConfig,
+  uid: string,
+): string {
+  return `${network.explorer}/attestation/view/${uid}`
 }
 
 export interface CropsApiAttestation {
@@ -76,7 +74,7 @@ export interface CropsApiProject {
   /** Null for projects without a page. */
   href: string | null
   crops: ResolvedCrops
-  /** False while any crop is red - see `qualifiesForGarden`. */
+  /** False while any crop is red - see `ProjectGardenInfo`. */
   inGarden: boolean
   attested: boolean
   /** One attestation names the whole set, so this is the same for every attested project. */
@@ -90,28 +88,28 @@ export type CropsApiSummary = Record<
 >
 
 export async function getCropsProjects(): Promise<CropsApiProject[]> {
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
-    optional: ['scalingInfo', 'privacyInfo'],
-  })
-  const attestation = getAttestation()
-  const attested = new Set(
-    getCurrentCropAttestation(ATTESTATION_NETWORK)?.projectIds ?? [],
-  )
+  const [projects, attestations] = await Promise.all([
+    ps.getProjects({
+      where: ['gardenInfo'],
+      select: ['gardenInfo'],
+      optional: ['scalingInfo', 'privacyInfo'],
+    }),
+    getAttestationsMeta(),
+  ])
+  const attestation = toApiAttestation(attestations)
+  const attested = new Set(attestations.current?.projectIds ?? [])
 
   return projects
     .map((project) => {
       const path = getGardenProjectPath(project)
-      const crops = resolveProjectCrops(project.crops)
       const isAttested = attested.has(project.id)
       return {
         id: project.id,
         slug: project.slug,
         name: project.name,
         href: path ? `${PRODUCTION_ORIGIN}${path}` : null,
-        crops,
-        inGarden: qualifiesForGarden(crops),
+        crops: project.gardenInfo.crops,
+        inGarden: project.gardenInfo.inGarden,
         attested: isAttested,
         attestation: isAttested ? attestation : null,
       }
@@ -121,7 +119,7 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
 
 export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {
   const summary = {} as CropsApiSummary
-  for (const key of CROP_KEYS) {
+  for (const { key } of CROP_COLUMNS) {
     summary[key] = {
       sentiment: crops[key].sentiment,
       status: crops[key].status,
@@ -130,18 +128,16 @@ export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {
   return summary
 }
 
-function getAttestation(): CropsApiAttestation | null {
-  const attestation = getCurrentCropAttestation(ATTESTATION_NETWORK)
-  if (!attestation) {
+function toApiAttestation(
+  meta: CropsAttestationsMeta,
+): CropsApiAttestation | null {
+  if (!meta.current) {
     return null
   }
   return {
-    uid: attestation.uid,
-    revision: attestation.revision,
-    reviewedAt: attestation.reviewedAt,
-    explorerUrl: getAttestationUrl(
-      ATTESTATION_NETWORKS[ATTESTATION_NETWORK],
-      attestation.uid,
-    ),
+    uid: meta.current.uid,
+    revision: meta.current.revision,
+    reviewedAt: meta.current.reviewedAt,
+    explorerUrl: meta.current.explorerUrl,
   }
 }

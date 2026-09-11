@@ -4,20 +4,21 @@ import {
 } from '~/server/features/garden/getCropsProjects'
 
 export async function getGardenCropsApiData() {
-  return {
-    attestations: getAttestationsMeta(),
-    projects: await getCropsProjects(),
-  }
+  const [attestations, projects] = await Promise.all([
+    getAttestationsMeta(),
+    getCropsProjects(),
+  ])
+  return { attestations, projects }
 }
 
 export async function getGardenCropsProjectApiData(slug: string) {
-  const projects = await getCropsProjects()
+  const [attestations, projects] = await Promise.all([
+    getAttestationsMeta(),
+    getCropsProjects(),
+  ])
   const project = projects.find((x) => x.slug === slug || x.id === slug)
   if (!project) {
     return undefined
   }
-  return {
-    attestations: getAttestationsMeta(),
-    ...project,
-  }
+  return { attestations, ...project }
 }

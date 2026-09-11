@@ -1,3 +1,4 @@
+import { getCropAttestations } from './crops/attestations'
 import { ProjectDatabase } from './ProjectDatabase'
 import { getProjects } from './processing/getProjects'
 import { getTokenList } from './tokens/tokens'
@@ -21,5 +22,7 @@ async function main() {
     for (const token of tokenList) {
       await db.saveToken(token)
     }
+
+    await db.saveCropAttestations(getCropAttestations())
   })
 }
