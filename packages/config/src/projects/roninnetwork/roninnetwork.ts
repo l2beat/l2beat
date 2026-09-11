@@ -18,25 +18,20 @@ const genesisTimestamp = UnixTime(1778598960)
 
 // 2026-09-07 (block 25924899, tx 0x7f1b7013…cded482): the RoninConduitOwner
 // Safe (Guardian) called setRespectedGameType(1) on the AnchorStateRegistry,
-// moving the respected game from KailuaGame (1337) back to the
-// PermissionedDisputeGame (1). The Kailua contracts stay deployed and
-// game1337 stays registered, but withdrawals now settle against permissioned
-// proposals, so the page is modelled on the permissioned game: the template
-// derives the proof system, risk view and program hash (op-program v1.3.1
-// prestate from the factory's gameArgs(1)) from respectedGameType, and the
-// Kailua-specific badge, zk verifiers and program hashes are dropped.
-// The v1.3.1 prestate cannot execute for chain 2020 (see
-// technologyOtherConsiderations3.md), hence NO_PROOFS, the same modelling
-// Ronin had before the Kailua cutover on 2026-07-01 (#12200).
+// moving the respected game from KailuaGame (1337) to the
+// PermissionedDisputeGame (1). game1337 stays registered but is not respected.
+// The type-1 game commits to the op-program v1.3.1 prestate (gameArgs(1)),
+// whose registry snapshot has no chain 2020, so the program cannot execute
+// for Ronin (verified by reproducible build + boot test, 2026-09-11):
+// NO_PROOFS + NO_DA_ORACLE, no Kailua badge/verifiers/program hashes.
 
-export const roninNetwork: ScalingProject = opStackL2({
+const roninTemplate = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1754639625),
   discovery,
   genesisTimestamp,
-  // No DA certificate verification in the live proof path: the permissioned
-  // game's op-program v1.3.1 predates EigenDA support; the DACert verifier
-  // (Hokulea) only ran inside the Kailua guest program.
+  // No DA certificate verification on the live proof path: op-program v1.3.1
+  // predates EigenDA support; the DACert verifier only ran in the Kailua guest.
   daProvider: EIGENDA_DA_PROVIDER(false),
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Other.MigratedFromL1],
   associatedTokens: ['RON'],
@@ -48,7 +43,7 @@ export const roninNetwork: ScalingProject = opStackL2({
   display: {
     name: 'Ronin',
     warning:
-      'Since 2026-09-07 withdrawals settle against the PermissionedDisputeGame instead of the Kailua ZK game. The fault proof system is deployed but is not functional: the permissioned dispute game commits to the op-program v1.3.1 prestate, whose embedded superchain registry snapshot does not include Ronin (chain ID 2020), so no dispute can be resolved by execution. Security relies entirely on the permissioned proposer and challenger.',
+      'Since 2026-09-07 withdrawals settle against the PermissionedDisputeGame instead of the Kailua ZK game. The fault proof system is deployed but is not functional: the permissioned dispute game commits to the op-program v1.3.1 prestate, whose embedded superchain registry snapshot does not include Ronin (chain ID 2020), so no dispute can be resolved correctly by execution. Security relies entirely on the honesty of the permissioned proposer.',
     aliases: ['Sky Mavis', 'Axie Infinity'],
     slug: 'ronin-network',
     description:
@@ -74,7 +69,7 @@ export const roninNetwork: ScalingProject = opStackL2({
       stage0: {
         callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
+        stateVerificationOnL1: false,
         daAttestedByIndependentParty: false,
         nodeSourceAvailable: true,
         fraudProofSystemAtLeast5Outsiders: false,
@@ -254,3 +249,12 @@ export const roninNetwork: ScalingProject = opStackL2({
   },
   isNodeAvailable: 'UnderReview',
 })
+
+export const roninNetwork: ScalingProject = {
+  ...roninTemplate,
+  stateValidation: roninTemplate.stateValidation && {
+    ...roninTemplate.stateValidation,
+    description:
+      'Since 2026-09-07 withdrawals are settled against the PermissionedDisputeGame (game type 1). Only the permissioned proposer can create state root proposals and only the permissioned proposer and challenger can dispute them. The game commits to the op-program v1.3.1 absolute prestate, whose embedded superchain-registry snapshot does not include chain ID 2020, so the fault proof program cannot execute the Ronin state transition and no dispute can be resolved correctly by execution. The Kailua ZK game (game type 1337) remains deployed and registered in the DisputeGameFactory but is not the respected game type, so its proposals are not used for withdrawals.',
+  },
+}

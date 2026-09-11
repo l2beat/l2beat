@@ -50,10 +50,9 @@
     "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607": {
       "description": "5-of-6 joint Ronin/Conduit Safe."
     },
-    // PermissionedDisputeGame (type 1) is the respected game again since
-    // 2026-09-07, so its proposer/challenger are live actors. The DGF
-    // template resolves them from gameArgs(1) but only emits permissions
-    // when a project opts in (see the PermissionedDisputeGame template).
+    // PermissionedDisputeGame (type 1) is the respected game since 2026-09-07.
+    // The DGF template resolves its proposer/challenger from gameArgs(1) but
+    // emits permissions only where a project opts in.
     "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": {
       "fields": {
         "proposerFromDGF": {
