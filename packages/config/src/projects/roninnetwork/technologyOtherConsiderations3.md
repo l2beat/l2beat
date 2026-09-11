@@ -1,3 +1,0 @@
-The respected game type is the PermissionedDisputeGame. The Kailua contracts remain deployed and registered, but Kailua games are no longer respected for withdrawals.
-
-The permissioned games commit to the op-program v1.3.1 absolute prestate (`0x038512e0…6764d54c`), whose embedded superchain-registry snapshot does not include chain ID 2020. The program panics at boot, so no dispute can be resolved correctly by execution. Only the permissioned proposer can create proposals and only the permissioned proposer and challenger can move or step, so the proof system reduces to an operator-attested delay timer. Fixing this requires games with a chain-specific prestate, or returning the respected game type to Kailua.

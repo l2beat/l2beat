@@ -9,7 +9,6 @@ import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
-import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('roninnetwork')
 
@@ -24,6 +23,27 @@ const genesisTimestamp = UnixTime(1778598960)
 // whose registry snapshot has no chain 2020, so the program cannot execute
 // for Ronin (verified by reproducible build + boot test, 2026-09-11):
 // NO_PROOFS + NO_DA_ORACLE, no Kailua badge/verifiers/program hashes.
+
+const proofSystemReferences = [
+  {
+    title: 'setRespectedGameType(1) - Etherscan',
+    url: 'https://etherscan.io/tx/0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482',
+  },
+  {
+    title:
+      'absolutePrestate hash registered in superchain-registry as op-program v1.3.1',
+    url: 'https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml',
+  },
+  {
+    title: 'op-program v1.3.1 release (commit e3c2f04, 2024-08-23)',
+    url: 'https://github.com/ethereum-optimism/optimism/releases/tag/op-program%2Fv1.3.1',
+  },
+  {
+    title:
+      'superchain-registry snapshot pinned at op-program v1.3.1 build (42bd03ba8313)',
+    url: 'https://github.com/ethereum-optimism/superchain-registry/blob/42bd03ba8313/chainList.json',
+  },
+]
 
 const roninTemplate = opStackL2({
   capability: 'universal',
@@ -210,35 +230,6 @@ const roninTemplate = opStackL2({
           },
         ],
       },
-      {
-        name: 'Proof system cannot execute for this chain',
-        description: readProjectMarkdown(
-          'roninnetwork',
-          'technologyOtherConsiderations3',
-        ),
-        risks: [],
-        references: [
-          {
-            title:
-              'setRespectedGameType(1) by the RoninConduitOwner Safe - Etherscan',
-            url: 'https://etherscan.io/tx/0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482',
-          },
-          {
-            title:
-              'absolutePrestate hash registered in superchain-registry as op-program v1.3.1',
-            url: 'https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml',
-          },
-          {
-            title: 'op-program v1.3.1 release (commit e3c2f04, 2024-08-23)',
-            url: 'https://github.com/ethereum-optimism/optimism/releases/tag/op-program%2Fv1.3.1',
-          },
-          {
-            title:
-              'superchain-registry snapshot pinned at op-program v1.3.1 build (42bd03ba8313)',
-            url: 'https://github.com/ethereum-optimism/superchain-registry/blob/42bd03ba8313/chainList.json',
-          },
-        ],
-      },
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
@@ -254,6 +245,17 @@ export const roninNetwork: ScalingProject = {
   ...roninTemplate,
   stateValidation: roninTemplate.stateValidation && {
     ...roninTemplate.stateValidation,
+    categories: roninTemplate.stateValidation.categories.map((category) =>
+      category.title === 'Challenges'
+        ? {
+            ...category,
+            references: [
+              ...(category.references ?? []),
+              ...proofSystemReferences,
+            ],
+          }
+        : category,
+    ),
     description:
       'Since 2026-09-07 withdrawals are settled against the PermissionedDisputeGame (game type 1). Only the permissioned proposer can create state root proposals and only the permissioned proposer and challenger can dispute them. The game commits to the op-program v1.3.1 absolute prestate, whose embedded superchain-registry snapshot does not include chain ID 2020, so the fault proof program cannot execute the Ronin state transition and no dispute can be resolved correctly by execution. The Kailua ZK game (game type 1337) remains deployed and registered in the DisputeGameFactory but is not the respected game type, so its proposals are not used for withdrawals.',
   },
