@@ -32,16 +32,13 @@ function Sun({ className }: { className?: string }) {
       width={112}
       height={112}
       viewBox="0 0 112 112"
-      className={cn(
-        'overflow-visible text-[#ffd54a] dark:text-[#c9a437]',
-        className,
-      )}
+      className={cn('overflow-visible text-garden-sun', className)}
     >
       <circle
         cx="56"
         cy="56"
         r="52"
-        className="fill-[#ffd54a]/25 dark:fill-[#ffd54a]/10"
+        className="fill-garden-sun/25 dark:fill-garden-sun/10"
       />
       <g
         style={{

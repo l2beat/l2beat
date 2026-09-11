@@ -222,7 +222,7 @@ function Sky({ inGarden }: { inGarden: boolean }) {
         )}
       />
       {inGarden && (
-        <span className="absolute top-3 right-4 size-14 rounded-full bg-[#ffd54a]/70 blur-[2px] dark:hidden" />
+        <span className="absolute top-3 right-4 size-14 rounded-full bg-garden-sun/70 blur-[2px] dark:hidden" />
       )}
       <svg
         className="absolute inset-x-0 bottom-0 h-10 w-full"

@@ -132,7 +132,7 @@ function Flower({ delay }: { delay: number }) {
               fill="currentColor"
             />
           ))}
-          <circle cx="17" cy="9" r="2.05" className="fill-[#ffd54a]" />
+          <circle cx="17" cy="9" r="2.05" className="fill-garden-sun" />
         </g>
       </g>
     </g>

@@ -18,7 +18,7 @@ export function PlotBackground() {
       {POLLEN.map((pollen) => (
         <span
           key={pollen.left}
-          className="absolute size-1.5 rounded-full bg-[#e0b84a]/50 max-md:hidden dark:bg-[#ffd54a]/25"
+          className="absolute size-1.5 rounded-full bg-garden-sun/50 max-md:hidden dark:bg-garden-sun/25"
           style={{
             left: pollen.left,
             bottom: pollen.bottom,
@@ -115,7 +115,7 @@ function Seedling({
       height={size}
       viewBox="0 0 34 34"
       className={cn(
-        'block overflow-visible text-[#7fae6a]/60 dark:text-[#3f6b3a]/70',
+        'block overflow-visible text-garden-sprout/60 dark:text-garden-sprout/70',
         className,
       )}
     >
@@ -192,7 +192,7 @@ function Trellis({ className }: { className?: string }) {
         fill="none"
         strokeWidth="3"
         strokeLinecap="round"
-        className="stroke-[#7fae6a]/50 dark:stroke-[#3f6b3a]/60"
+        className="stroke-garden-sprout/50 dark:stroke-garden-sprout/60"
       />
       {[
         { cx: 50, cy: 138 },
@@ -207,7 +207,7 @@ function Trellis({ className }: { className?: string }) {
           rx="9"
           ry="5"
           transform={`rotate(-28 ${leaf.cx} ${leaf.cy})`}
-          className="fill-[#7fae6a]/45 dark:fill-[#3f6b3a]/55"
+          className="fill-garden-sprout/45 dark:fill-garden-sprout/55"
         />
       ))}
     </svg>

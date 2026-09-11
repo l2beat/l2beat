@@ -15,7 +15,7 @@ const TONE: Record<
     icon: 'text-garden-accent',
   },
   brand: {
-    card: 'border-[#e2ccef] bg-gradient-to-br from-[#f7effc] via-surface-primary to-surface-primary dark:border-[#3a2547] dark:from-[#1d1226]',
+    card: 'border-purple-300 bg-gradient-to-br from-purple-300/40 via-surface-primary to-surface-primary dark:border-purple-700 dark:from-purple-800/60',
     glow: 'bg-purple-450/30 dark:bg-pink-200/20',
     chip: 'bg-purple-300 dark:bg-pink-200/15',
     icon: 'text-purple-100 dark:text-pink-200',
