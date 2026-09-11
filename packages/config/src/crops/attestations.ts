@@ -30,8 +30,6 @@ export interface RevokedCropAttestation {
 export interface CropAttestationLedger {
   network: AttestationNetwork
   attester: HexString
-  /** Block of the earliest attestation - the default start for `--scan`. */
-  firstBlock: number
   /**
    * Steady state is exactly one. More than one means an interrupted run or a
    * schema change; `l2b crops-attest` revokes the extras on its next run.
@@ -45,7 +43,7 @@ export type CropAttestationLedgers = Partial<
 >
 
 /**
- * A cache of onchain state written by `l2b crops-attest --execute`, committed
+ * A cache of onchain state written by `l2b crops-attest`, committed
  * so the API needs no RPC call. JSON cannot carry the hex and network literal
  * types, so it is asserted once here; `l2b crops-verify` checks it against
  * the chain.

@@ -1,115 +1,171 @@
-import type { CropAttestation } from '@l2beat/config'
+import type { CropAttestation, CropAttestationLedger } from '@l2beat/config'
 import { isCurrentSchema } from '@l2beat/config'
-import type { OnchainAttestation, Revocation } from './easClient'
-import { type CropPayload, decodePayload, diffSet, setMatches } from './payload'
+import type { Hex } from 'viem'
+import { type CropPayload, decodePayload, type OnchainAttestation } from './eas'
 
-export type AttestPlanKind = 'unchanged' | 'new' | 'changed'
-
-export interface AttestPlan {
-  kind: AttestPlanKind
-  /** Sorted. */
-  projectIds: string[]
-  /** The live attestation that already says exactly that, if there is one. */
-  keeper: CropAttestation | undefined
-  /** Against what the ledger currently covers. */
-  added: string[]
-  removed: string[]
-  revoke: Revocation[]
-  /** Absent when the keeper already says it. */
-  payload: CropPayload | undefined
-  reason: string
-}
-
-export interface PlanInput {
-  /** Sorted. */
-  projectIds: string[]
-  ledger: CropAttestation[]
-  /** By uid. */
-  onchain: Map<string, OnchainAttestation>
-  now: number
+/** A live ledger entry to revoke, under the schema the chain says it was attested with. */
+export interface Revocation {
+  entry: CropAttestation
+  schema: Hex
 }
 
 /**
  * One decision: is exactly one attestation live, under the current schema,
- * naming exactly the projects config names? Anything else is replaced, and
- * every other live uid is revoked in the same run - two live attestations
- * would leave a reader unable to tell which one speaks for us.
+ * by our attester, naming exactly the projects config names? That one is
+ * the keeper. Every other live uid is revoked, and a new attestation is
+ * issued only when there is no keeper. Each variant carries exactly what
+ * executing it needs.
  */
+export type AttestPlan =
+  | { kind: 'unchanged'; keeper: CropAttestation }
+  | { kind: 'prune'; keeper: CropAttestation; revoke: Revocation[] }
+  | {
+      kind: 'attest'
+      revoke: Revocation[]
+      payload: CropPayload
+      added: string[]
+      removed: string[]
+      reason: string
+    }
+
+export interface PlanInput {
+  /** Sorted. */
+  projectIds: string[]
+  ledger: CropAttestationLedger | undefined
+  /** By uid. */
+  onchain: Map<Hex, OnchainAttestation>
+  now: number
+}
+
 export function planAttestation(input: PlanInput): AttestPlan {
-  const live = input.ledger.flatMap((entry) => {
+  const entries = input.ledger?.live ?? []
+  // The ledger is a cache; the chain decides what is live and what it says.
+  const live = entries.flatMap((entry) => {
     const onchain = input.onchain.get(entry.uid)
     return onchain && onchain.revocationTime === 0 ? [{ entry, onchain }] : []
   })
-
-  // The ledger is a cache; the chain decides.
   const keeper = live.find(
     ({ onchain }) =>
       isCurrentSchema(onchain.schema) &&
+      isSameAddress(onchain.attester, input.ledger?.attester) &&
       setMatches(decodePayload(onchain.data).projectIds, input.projectIds),
   )
-
   const revoke: Revocation[] = live
-    .filter((x) => x.entry.uid !== keeper?.entry.uid)
-    .map((x) => ({ uid: x.entry.uid, schema: x.onchain.schema }))
+    .filter((x) => x !== keeper)
+    .map((x) => ({ entry: x.entry, schema: x.onchain.schema }))
 
-  const { added, removed } = diffSet(input.projectIds, coveredIds(input.ledger))
-
-  if (keeper && revoke.length === 0) {
-    return {
-      kind: 'unchanged',
-      projectIds: input.projectIds,
-      keeper: keeper.entry,
-      added: [],
-      removed: [],
-      revoke: [],
-      payload: undefined,
-      reason: 'matches config',
-    }
+  if (keeper) {
+    return revoke.length === 0
+      ? { kind: 'unchanged', keeper: keeper.entry }
+      : { kind: 'prune', keeper: keeper.entry, revoke }
   }
 
-  return {
-    kind: live.length === 0 ? 'new' : 'changed',
-    projectIds: input.projectIds,
-    keeper: keeper?.entry,
-    added,
-    removed,
-    revoke,
-    payload: keeper
-      ? undefined
-      : {
-          projectIds: input.projectIds,
-          reviewedAt: input.now,
-          revision: nextRevision(input.ledger),
-        },
-    reason: reasonFor(live.length, keeper !== undefined, added, removed),
-  }
-}
-
-function coveredIds(ledger: CropAttestation[]): string[] {
-  return [...new Set(ledger.flatMap((x) => x.projectIds))].sort()
-}
-
-function nextRevision(ledger: CropAttestation[]): number {
-  return Math.max(0, ...ledger.map((x) => x.revision)) + 1
-}
-
-function reasonFor(
-  liveCount: number,
-  hasKeeper: boolean,
-  added: string[],
-  removed: string[],
-): string {
-  if (liveCount === 0) {
-    return 'nothing attested yet'
-  }
-  if (hasKeeper) {
-    return 'set is current, but older attestations are still live'
-  }
+  const covered = live.flatMap(({ onchain }) =>
+    isCurrentSchema(onchain.schema)
+      ? decodePayload(onchain.data).projectIds
+      : [],
+  )
+  const { added, removed } = diffSet(input.projectIds, covered)
   const changes = [
     ...added.map((id) => `+${id}`),
     ...removed.map((id) => `-${id}`),
   ]
-  return changes.length > 0
-    ? changes.join(' ')
-    : 'attested under a superseded schema'
+  return {
+    kind: 'attest',
+    revoke,
+    payload: {
+      projectIds: [...input.projectIds].sort(),
+      reviewedAt: input.now,
+      revision: nextRevision(entries),
+    },
+    added,
+    removed,
+    reason:
+      live.length === 0
+        ? 'nothing is live onchain'
+        : changes.length > 0
+          ? changes.join(' ')
+          : 'attested under a superseded schema or by another attester',
+  }
+}
+
+/** One line per plan, for the header of crops-attest and the verdict of crops-verify. */
+export function describePlan(plan: AttestPlan): string {
+  switch (plan.kind) {
+    case 'unchanged':
+      return `revision ${plan.keeper.revision} matches config`
+    case 'prune':
+      return `revision ${plan.keeper.revision} matches config, but ${plan.revoke.length} older attestation(s) are still live`
+    case 'attest':
+      return `revision ${plan.payload.revision} needed: ${plan.reason}`
+  }
+}
+
+/**
+ * Where the committed ledger disagrees with the chain it caches. crops-attest
+ * plans from the chain and rewrites the ledger, so it never minds; crops-verify
+ * fails, because the API serves the ledger.
+ */
+export function findLedgerDrift(
+  ledger: CropAttestationLedger,
+  onchain: Map<Hex, OnchainAttestation>,
+): string[] {
+  const problems: string[] = []
+  for (const entry of ledger.live) {
+    const label = `rev ${entry.revision} (${entry.uid})`
+    const found = onchain.get(entry.uid)
+    if (!found) {
+      problems.push(`${label}: does not exist onchain`)
+      continue
+    }
+    if (found.revocationTime !== 0) {
+      problems.push(`${label}: is revoked onchain but live in the ledger`)
+      continue
+    }
+    if (!isSameAddress(found.attester, ledger.attester)) {
+      problems.push(
+        `${label}: attested by ${found.attester}, the ledger says ${ledger.attester}`,
+      )
+    }
+    if (!isSameAddress(found.schema, entry.schema)) {
+      problems.push(
+        `${label}: attested under schema ${found.schema}, the ledger says ${entry.schema}`,
+      )
+    } else if (isCurrentSchema(found.schema)) {
+      const named = decodePayload(found.data).projectIds
+      if (!setMatches(named, entry.projectIds)) {
+        problems.push(
+          `${label}: names ${named.length} projects onchain, the ledger says ${entry.projectIds.length}`,
+        )
+      }
+    }
+  }
+  return problems
+}
+
+export function setMatches(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) {
+    return false
+  }
+  const sortedB = [...b].sort()
+  return [...a].sort().every((id, i) => id === sortedB[i])
+}
+
+export function diffSet(
+  wanted: string[],
+  current: string[],
+): { added: string[]; removed: string[] } {
+  return {
+    added: wanted.filter((x) => !current.includes(x)),
+    removed: current.filter((x) => !wanted.includes(x)),
+  }
+}
+
+/** Hex from the chain is lowercase; config keeps checksums. */
+function isSameAddress(a: string, b: string | undefined): boolean {
+  return b !== undefined && a.toLowerCase() === b.toLowerCase()
+}
+
+function nextRevision(entries: CropAttestation[]): number {
+  return Math.max(0, ...entries.map((x) => x.revision)) + 1
 }

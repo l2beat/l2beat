@@ -13,12 +13,14 @@ import {
   type Chain,
   createPublicClient,
   createWalletClient,
+  decodeAbiParameters,
+  encodeAbiParameters,
   type Hex,
   http,
   type Log,
   type PublicClient,
   parseAbi,
-  parseAbiItem,
+  parseAbiParameters,
   parseEventLogs,
   publicActions,
   zeroAddress,
@@ -41,15 +43,41 @@ export const EAS_ABI = parseAbi([
   'event Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaUID)',
 ])
 
-export const ATTESTED_EVENT = parseAbiItem(
-  'event Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaUID)',
-)
-
 export const SCHEMA_REGISTRY_ABI = parseAbi([
   'struct SchemaRecord { bytes32 uid; address resolver; bool revocable; string schema; }',
   'function register(string schema, address resolver, bool revocable) returns (bytes32)',
   'function getSchema(bytes32 uid) view returns (SchemaRecord)',
 ])
+
+/** Parsed from the one schema string config registers, so the codec cannot disagree with it. */
+export const ATTESTATION_PARAMS = parseAbiParameters(ATTESTATION_SCHEMA)
+
+export interface CropPayload {
+  /** Sorted. */
+  projectIds: string[]
+  reviewedAt: number
+  revision: number
+}
+
+export function encodePayload(payload: CropPayload): Hex {
+  return encodeAbiParameters(ATTESTATION_PARAMS, [
+    payload.projectIds,
+    BigInt(payload.reviewedAt),
+    payload.revision,
+  ])
+}
+
+export function decodePayload(data: Hex): CropPayload {
+  const [projectIds, reviewedAt, revision] = decodeAbiParameters(
+    ATTESTATION_PARAMS,
+    data,
+  )
+  return {
+    projectIds: [...projectIds],
+    reviewedAt: Number(reviewedAt),
+    revision: Number(revision),
+  }
+}
 
 export interface OnchainAttestation {
   uid: Hex
@@ -156,6 +184,22 @@ export async function getAttestation(
   }
 }
 
+/** By uid; a uid EAS does not know is simply absent. */
+export async function getAttestations(
+  reader: PublicClient,
+  network: AttestationNetworkConfig,
+  uids: Hex[],
+): Promise<Map<Hex, OnchainAttestation>> {
+  const found = new Map<Hex, OnchainAttestation>()
+  for (const uid of uids) {
+    const attestation = await getAttestation(reader, network, uid)
+    if (attestation) {
+      found.set(uid, attestation)
+    }
+  }
+  return found
+}
+
 // No recipient (the subject is a protocol, not an account) and no expiry
 // (revocation is the only way an attestation stops being valid).
 function multiAttestArgs(attestations: NewAttestation[]) {
@@ -225,21 +269,4 @@ export function readAttestedUids(logs: Log[]): Hex[] {
   return parseEventLogs({ abi: EAS_ABI, eventName: 'Attested', logs }).map(
     (log) => log.args.uid,
   )
-}
-
-/** attester and schemaUID are both indexed on Attested, so eth_getLogs is enough. */
-export async function scanAttestedUids(
-  reader: PublicClient,
-  network: AttestationNetworkConfig,
-  attester: Address,
-  fromBlock: bigint,
-): Promise<Hex[]> {
-  const logs = await reader.getLogs({
-    address: network.eas,
-    event: ATTESTED_EVENT,
-    args: { attester, schemaUID: ATTESTATION_SCHEMA_UID },
-    fromBlock,
-    toBlock: 'latest',
-  })
-  return logs.map((log) => log.args.uid).filter((uid): uid is Hex => !!uid)
 }

@@ -2,7 +2,6 @@
   "sepolia": {
     "network": "sepolia",
     "attester": "0xb55D684Be25227b722a007F6bB8AA706ca18BdDA",
-    "firstBlock": 11515690,
     "live": [
       {
         "uid": "0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d",
