@@ -1,6 +1,6 @@
 export { fromJsonSchema, type JsonSchema } from './fromJsonSchema.js'
 export {
-  type JsonSchemaOptions,
+  type JsonSchemaDefinitionsOptions,
   toJsonSchema,
   toJsonSchemaDefinitions,
 } from './schema.js'

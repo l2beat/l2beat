@@ -341,31 +341,6 @@ describe('toJsonSchema', () => {
     })
   })
 
-  it('toplevel with a custom ref prefix', () => {
-    const Vector = v.object({ x: v.number(), y: v.number() })
-    const input = v.object({ position: Vector })
-    expect(
-      toJsonSchema(input, { Vector }, { refPrefix: '#/components/schemas/' }),
-    ).toEqual({
-      $schema: SCHEMA_VERSION,
-      definitions: {
-        Vector: {
-          type: 'object',
-          properties: {
-            x: { type: 'number' },
-            y: { type: 'number' },
-          },
-          required: ['x', 'y'],
-        },
-      },
-      type: 'object',
-      properties: {
-        position: { $ref: '#/components/schemas/Vector' },
-      },
-      required: ['position'],
-    })
-  })
-
   it('definitions only, with a custom ref prefix', () => {
     const Vector = v.object({ x: v.number(), y: v.number() })
     const Line = v.object({ from: Vector, to: Vector })

@@ -2,20 +2,11 @@ import type { Imp, Parser } from './validate.js'
 
 export const SCHEMA_VERSION = 'https://json-schema.org/draft-07/schema#'
 
-export interface JsonSchemaOptions {
-  /**
-   * Where `$ref`s point, e.g. `#/components/schemas/` for a document whose
-   * caller moves `definitions` under OpenAPI components.
-   */
-  refPrefix?: string
-}
-
 export function toJsonSchema(
   schema: Parser<unknown>,
   topLevel: Record<string, Parser<unknown>> = {},
-  options: JsonSchemaOptions = {},
 ): object {
-  const state = createState(topLevel, options)
+  const state = createState(topLevel, '#/definitions/')
   const decomposed = decompose(schema as Imp<unknown>, state)
   if (state.remaining.length === 0) {
     return { $schema: SCHEMA_VERSION, ...decomposed }
@@ -27,22 +18,31 @@ export function toJsonSchema(
   }
 }
 
+export interface JsonSchemaDefinitionsOptions {
+  /**
+   * Where `$ref`s point, e.g. `#/components/schemas/` when the caller embeds
+   * the definitions under OpenAPI components. Defaults to `#/definitions/`.
+   */
+  refPrefix?: string
+}
+
 /**
- * Only the named schemas, for a caller that embeds them in its own document,
- * e.g. under OpenAPI `components.schemas` with a matching `refPrefix`.
+ * Only the named schemas, for a caller that embeds them in its own document.
+ * `toJsonSchema` always emits `definitions` at the top level, so a custom
+ * prefix is offered here alone, where the caller controls the location.
  */
 export function toJsonSchemaDefinitions(
   topLevel: Record<string, Parser<unknown>>,
-  options: JsonSchemaOptions = {},
+  options: JsonSchemaDefinitionsOptions = {},
 ): Record<string, object> {
-  return decomposeRemaining(createState(topLevel, options))
+  const state = createState(topLevel, options.refPrefix ?? '#/definitions/')
+  return decomposeRemaining(state)
 }
 
 function createState(
   topLevel: Record<string, Parser<unknown>>,
-  options: JsonSchemaOptions,
+  refPrefix: string,
 ): State {
-  const refPrefix = options.refPrefix ?? '#/definitions/'
   const remaining = Object.entries(topLevel) as [string, Imp<unknown>][]
   return {
     refs: new Map(remaining.map(([k, v]) => [v, `${refPrefix}${k}`])),
