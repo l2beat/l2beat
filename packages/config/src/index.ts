@@ -38,7 +38,7 @@ export {
   getAttestationsMeta,
   L2BEAT_ORIGIN,
   type ProjectResponse,
-  resolveCropsProjects,
+  resolveCropsProject,
 } from './crops/cropsApi'
 export {
   ATTESTATION_NETWORK,

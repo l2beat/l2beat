@@ -273,15 +273,6 @@ export interface CropsSourceProject {
   scalingInfo?: ProjectScalingInfo | undefined
 }
 
-export function resolveCropsProjects(
-  projects: readonly CropsSourceProject[],
-  meta: CropsAttestationsMeta,
-): CropsApiProject[] {
-  return projects
-    .map((project) => resolveCropsProject(project, meta))
-    .sort((a, b) => a.id.localeCompare(b.id))
-}
-
 export function resolveCropsProject(
   project: CropsSourceProject,
   meta: CropsAttestationsMeta,

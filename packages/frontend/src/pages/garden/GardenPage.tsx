@@ -1,11 +1,9 @@
+import type { CropsAttestationsMeta } from '@l2beat/config'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { GardenBackground } from './assets/GardenBackground'
-import {
-  AttestationNotice,
-  type GardenAttestation,
-} from './components/AttestationNotice'
+import { AttestationNotice } from './components/AttestationNotice'
 import { CropsSection } from './components/CropsSection'
 import { GardenCallouts } from './components/GardenCallouts'
 import { GardenPageHeader } from './components/GardenPageHeader'
@@ -15,8 +13,8 @@ import type { GardenEntry } from './getGardenData'
 
 interface Props extends AppLayoutProps {
   entries: GardenEntry[]
-  /** Absent until the set has been attested for the first time. */
-  attestation: GardenAttestation | undefined
+  /** Null until the set has been attested for the first time. */
+  attestation: CropsAttestationsMeta['current']
 }
 
 export function GardenPage({ entries, attestation, ...props }: Props) {

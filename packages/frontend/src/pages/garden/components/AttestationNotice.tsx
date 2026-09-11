@@ -1,18 +1,12 @@
+import type { CropsAttestationsMeta } from '@l2beat/config'
 import { formatTimestamp } from '~/utils/dates'
 import { SproutIcon } from './SproutIcon'
 
-export interface GardenAttestation {
-  revision: number
-  reviewedAt: number
-  /** The reviewed set, not the garden: a project with a red crop is attested but not planted. */
-  projectCount: number
-  explorerUrl: string
-}
-
+/** Counts the reviewed set, not the garden: a project with a red crop is attested but not planted. */
 export function AttestationNotice({
   attestation,
 }: {
-  attestation: GardenAttestation | undefined
+  attestation: CropsAttestationsMeta['current']
 }) {
   if (!attestation) {
     return null
@@ -24,8 +18,8 @@ export function AttestationNotice({
         <p className="text-paragraph-14 md:text-paragraph-15">
           <span className="font-bold">Every review is attested onchain.</span>{' '}
           <span className="text-secondary">
-            Revision {attestation.revision} covers {attestation.projectCount}{' '}
-            reviewed projects, as of{' '}
+            Revision {attestation.revision} covers{' '}
+            {attestation.projectIds.length} reviewed projects, as of{' '}
             {formatTimestamp(attestation.reviewedAt, { mode: 'date' })}.
           </span>
         </p>

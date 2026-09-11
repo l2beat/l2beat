@@ -1,25 +1,13 @@
+import type { ReactNode } from 'react'
 import { CopyButton } from '~/components/CopyButton'
 import { cn } from '~/utils/cn'
-import { type CodeLanguage, type TokenKind, tokenize } from './codeHighlight'
-
-const TOKEN_CLASS: Record<TokenKind, string> = {
-  key: 'text-[#0d5aa7] dark:text-[#7cc4ff]',
-  string: 'text-[#16863f] dark:text-[#3fe07f]',
-  number: 'text-[#b06a00] dark:text-[#ffb454]',
-  keyword: 'text-[#7e41cc] dark:text-[#db8bf7]',
-  tag: 'text-[#b3266b] dark:text-[#ff7ab2]',
-  attr: 'text-[#7e41cc] dark:text-[#db8bf7]',
-  punct: 'text-[#8b9099] dark:text-[#6b7079]',
-  elision: 'text-[#a6abb3] dark:text-[#5a5f68]',
-  plain: '',
-}
 
 interface Props {
-  language: CodeLanguage
-  code: string
+  /** The body. Omit for a snippet that is only a header, like a request line. */
+  children?: ReactNode
   label?: string
   /** Replaces the label. */
-  header?: React.ReactNode
+  header?: ReactNode
   /** No copy button when absent. */
   copy?: string
   copyText?: string
@@ -28,8 +16,7 @@ interface Props {
 }
 
 export function CodeSnippet({
-  language,
-  code,
+  children,
   label,
   header,
   copy,
@@ -37,9 +24,8 @@ export function CodeSnippet({
   wrap,
   className,
 }: Props) {
-  const tokens = tokenize(code, language)
   const hasHeader = header !== undefined || label !== undefined
-  const hasBody = code.length > 0
+  const hasBody = children !== undefined
 
   return (
     <div
@@ -77,17 +63,7 @@ export function CodeSnippet({
             wrap && 'whitespace-pre-wrap break-all',
           )}
         >
-          <code>
-            {tokens.map((token, index) => (
-              <span
-                // Tokens are positional; the index is the identity.
-                key={index}
-                className={TOKEN_CLASS[token.kind]}
-              >
-                {token.text}
-              </span>
-            ))}
-          </code>
+          <code>{children}</code>
         </pre>
       )}
     </div>

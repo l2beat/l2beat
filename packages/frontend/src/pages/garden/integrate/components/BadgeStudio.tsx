@@ -63,12 +63,12 @@ export function BadgeStudio({ href }: { href: string }) {
 
       <CodeSnippet
         className="rounded-none border-0 border-divider border-t"
-        language="html"
-        code={snippet}
         label="html"
         copy={snippet}
         copyText="Copy badge"
-      />
+      >
+        {snippet}
+      </CodeSnippet>
     </div>
   )
 }

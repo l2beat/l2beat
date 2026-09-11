@@ -1,10 +1,13 @@
 import type { Project, ResolvedCrops } from '@l2beat/config'
-import { qualifiesForGarden, resolveProjectCrops } from '@l2beat/config'
+import {
+  getAttestationsMeta,
+  getGardenProjectPath,
+  qualifiesForGarden,
+  resolveProjectCrops,
+} from '@l2beat/config'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getGardenAttestation } from '~/server/features/garden/getGardenAttestation'
-import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
@@ -91,7 +94,7 @@ export async function getGardenData(
       props: {
         ...(await getAppLayoutProps()),
         entries,
-        attestation: getGardenAttestation(),
+        attestation: getAttestationsMeta().current,
       },
     },
   }

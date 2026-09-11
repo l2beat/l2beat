@@ -1,187 +1,193 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
-  type CropsApiProject,
+  type CropsApiFile,
+  type CropsApiInputProject,
+  type CropsApiRouteKey,
   type CropsAttestationsMeta,
+  generateCropsApiFiles,
   getAttestationsMeta,
-  getCropsProjects,
-  toCropsSummary,
-} from '~/server/features/garden/getCropsProjects'
+  resolveCropsProject,
+} from '@l2beat/config'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
-import { CROPS_API_URL, ENDPOINTS, type IntegrateEndpoint } from './content'
+import { CROPS_API_URL } from './content'
+
+/** A JSON value, possibly with parts cut short - see `Elision`. */
+export type ExampleValue =
+  | null
+  | boolean
+  | number
+  | string
+  | ExampleValue[]
+  | ExampleObject
+
+export type ExampleObject = { [key: string]: ExampleValue }
+
+export type ElisionKind = 'value' | 'object' | 'array'
+
+/**
+ * Where an example leaves something out, kept as data so the page can render
+ * `…`, `{ … }` or `[ … ]` without parsing, and tests can assert on the rest.
+ * The key is one no response has, since every response schema is strict.
+ */
+export type Elision = { '…': ElisionKind }
+
+export function elided(kind: ElisionKind): Elision {
+  return { '…': kind }
+}
+
+export function getElision(value: ExampleValue): ElisionKind | undefined {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    return undefined
+  }
+  const kind = value['…']
+  return typeof kind === 'string' ? (kind as ElisionKind) : undefined
+}
 
 export interface IntegrateExample {
   request: string
   /** Abbreviated where it repeats itself. */
-  response: string
+  response: ExampleObject
 }
 
-export type IntegrateExamples = Record<IntegrateEndpoint, IntegrateExample>
-
-export interface SampleContract {
-  chainId: number
-  address: string
-  name: string
-}
-
-/** A reviewed protocol and one of its contracts, shown in every example. */
-export interface IntegrateSample {
-  project: CropsApiProject
-  contract: SampleContract
-}
+export type IntegrateExamples = Record<CropsApiRouteKey, IntegrateExample>
 
 const ETHEREUM_CHAIN_ID = 1
 
 /** Keeps the docs rendering when no reviewed project has an Ethereum contract. */
-const PLACEHOLDER_CONTRACT: SampleContract = {
-  chainId: ETHEREUM_CHAIN_ID,
-  address: '0x0000000000000000000000000000000000000000',
+const PLACEHOLDER_CONTRACT = {
+  address: ChainSpecificAddress(
+    'eth:0x0000000000000000000000000000000000000000',
+  ),
   name: 'Contract',
 }
 
 /**
- * Built from the same config the generator reads rather than typed into the
- * docs, so the sample protocol and its ratings cannot drift. The shapes
- * mirror crops-api's schemas until the garden helpers move into config.
+ * The real generator run on one reviewed protocol, so the examples are the
+ * files the API serves and cannot drift from them.
  */
 export async function getIntegrateExamples(): Promise<IntegrateExamples> {
-  const sample = await pickSample(await getCropsProjects())
+  const projects = await ps.getProjects({
+    where: ['crops'],
+    select: ['crops'],
+    optional: ['scalingInfo', 'privacyInfo', 'contracts'],
+  })
+  const meta = getAttestationsMeta()
   return buildIntegrateExamples(
-    sample,
-    getAttestationsMeta(),
+    pickSample(projects, meta),
+    meta,
     Math.floor(Date.now() / 1000),
   )
 }
 
 export function buildIntegrateExamples(
-  { project, contract }: IntegrateSample,
-  attestations: CropsAttestationsMeta,
+  sample: CropsApiInputProject,
+  meta: CropsAttestationsMeta,
   generatedAt: number,
 ): IntegrateExamples {
-  const stamp = { attestations, generatedAt, commit: ELIDED_VALUE }
-  const address = contract.address.toLowerCase()
-  const match = {
-    id: project.id,
-    slug: project.slug,
-    name: project.name,
-    href: project.href,
-    contractName: contract.name,
-    crops: toCropsSummary(project.crops),
-    attestation: project.attestation
-      ? { uid: project.attestation.uid, revision: project.attestation.revision }
-      : null,
-  }
-
-  return {
-    address: {
-      request: toRequestUrl('address', {
-        chainId: String(contract.chainId),
-        address,
-      }),
-      response: toExample(
-        { ...stamp, chainId: contract.chainId, address, matches: [match] },
-        ['attestations'],
-      ),
-    },
-    project: {
-      request: toRequestUrl('project', { id: project.slug }),
-      response: toExample({ ...stamp, ...project }, ['attestations']),
-    },
-    crops: {
-      request: toRequestUrl('crops'),
-      response: toExample({ ...stamp, projects: [project] }, ['projects']),
-    },
-  }
-}
-
-/** The documented path with its `{param}` placeholders filled in, on the static host. */
-function toRequestUrl(
-  endpoint: IntegrateEndpoint,
-  params: Record<string, string> = {},
-): string {
-  const doc = ENDPOINTS.find((x) => x.key === endpoint)
-  if (!doc) {
-    throw new Error(`Undocumented endpoint ${endpoint}`)
-  }
-  const path = doc.path.replace(/\{(\w+)\}/g, (_, name: string) => {
-    const value = params[name]
-    if (value === undefined) {
-      throw new Error(`Missing ${name} for ${doc.path}`)
-    }
-    return value
+  const files = generateCropsApiFiles({
+    projects: [sample],
+    chains: { ethereum: ETHEREUM_CHAIN_ID },
+    ledger: meta,
+    commit: '',
+    generatedAt,
   })
-  return `${CROPS_API_URL}${path}`
+  const file = <K extends CropsApiRouteKey>(route: K, path?: string) => {
+    const found = files.find(
+      (x) => x.route === route && (path === undefined || x.path === path),
+    )
+    if (!found) {
+      throw new Error(`The generator wrote no ${route} file for ${sample.id}`)
+    }
+    return found
+  }
+  return {
+    address: toExample(file('address'), ['attestations', 'commit']),
+    project: toExample(file('project', `v1/project/${sample.slug}.json`), [
+      'attestations',
+      'commit',
+    ]),
+    crops: toExample(file('crops'), ['projects', 'commit']),
+  }
 }
 
 /** Prefers a protocol both attested and in the garden that has an Ethereum contract. */
-async function pickSample(
-  projects: CropsApiProject[],
-): Promise<IntegrateSample> {
-  const contracts = await loadEthereumContracts()
-  const candidates = [
-    ...projects.filter((x) => x.attested && x.inGarden),
-    ...projects.filter((x) => x.attested),
-    ...projects,
-  ]
-  for (const project of candidates) {
-    const contract = contracts.get(project.id)
-    if (contract) {
-      return { project, contract }
-    }
-  }
-  const project = candidates[0]
-  if (!project) {
+function pickSample(
+  projects: CropsApiInputProject[],
+  meta: CropsAttestationsMeta,
+): CropsApiInputProject {
+  const ranked = projects
+    .map((source) => ({ source, api: resolveCropsProject(source, meta) }))
+    .sort(
+      (a, b) =>
+        Number(!a.api.attestation) * 2 +
+        Number(!a.api.inGarden) -
+        (Number(!b.api.attestation) * 2 + Number(!b.api.inGarden)),
+    )
+  const first = ranked[0]
+  if (!first) {
     throw new Error('No reviewed project to build the CROPS examples from')
   }
-  return { project, contract: PLACEHOLDER_CONTRACT }
-}
-
-async function loadEthereumContracts(): Promise<Map<string, SampleContract>> {
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    optional: ['contracts'],
-  })
-  const contracts = new Map<string, SampleContract>()
-  for (const project of projects) {
-    const contract = project.contracts?.addresses.ethereum?.[0]
+  for (const { source } of ranked) {
+    const contract = source.contracts?.addresses.ethereum?.[0]
     if (contract) {
-      contracts.set(project.id, {
-        chainId: ETHEREUM_CHAIN_ID,
-        address: ChainSpecificAddress.address(contract.address),
-        name: contract.name,
-      })
+      return withOneContract(source, contract)
     }
   }
-  return contracts
+  return withOneContract(first.source, PLACEHOLDER_CONTRACT)
 }
 
-// Sentinels no real value can equal, swapped for elisions once stringified.
-const ELIDED_OBJECT = ' elided object'
-const ELIDED_ARRAY = ' elided array'
-const ELIDED_VALUE = ' elided value'
-const AND_MORE = ' and more'
+/** One address file is enough for the docs, and the generator needs a chain id for every other chain. */
+function withOneContract(
+  project: CropsApiInputProject,
+  contract: { address: ChainSpecificAddress; name: string },
+): CropsApiInputProject {
+  return {
+    ...project,
+    contracts: { addresses: { ethereum: [contract] } },
+    permissions: undefined,
+  }
+}
 
-/** JSON with the keys in `elide` collapsed and every list of prose cut to its first entry. */
-function toExample(value: unknown, elide: string[]): string {
-  const json = JSON.stringify(
-    value,
-    (key, item: unknown) => {
-      if (elide.includes(key)) {
-        return Array.isArray(item) ? ELIDED_ARRAY : ELIDED_OBJECT
-      }
-      if (
-        Array.isArray(item) &&
-        item.length > 1 &&
-        item.every((x) => typeof x === 'string')
-      ) {
-        return [item[0], AND_MORE]
-      }
-      return item
-    },
-    2,
+function toExample(file: CropsApiFile, elide: string[]): IntegrateExample {
+  return {
+    request: `${CROPS_API_URL}/${file.path}`,
+    response: abbreviateObject(file.body, new Set(elide)),
+  }
+}
+
+function abbreviateObject(value: object, elide: Set<string>): ExampleObject {
+  return Object.fromEntries(
+    Object.entries(value).map(([key, item]) => [
+      key,
+      abbreviate(item, elide, key),
+    ]),
   )
-  return json
-    .replaceAll(JSON.stringify(ELIDED_OBJECT), '{ … }')
-    .replaceAll(JSON.stringify(ELIDED_ARRAY), '[ … ]')
-    .replaceAll(JSON.stringify(ELIDED_VALUE), '"…"')
-    .replaceAll(JSON.stringify(AND_MORE), '…')
+}
+
+/** The keys in `elide` collapsed, and every list of prose cut to its first entry. */
+function abbreviate(
+  value: unknown,
+  elide: Set<string>,
+  key?: string,
+): ExampleValue {
+  if (key !== undefined && elide.has(key)) {
+    return elided(elisionKindOf(value))
+  }
+  if (Array.isArray(value)) {
+    const isProse =
+      value.length > 1 && value.every((x) => typeof x === 'string')
+    return isProse
+      ? [abbreviate(value[0], elide), elided('value')]
+      : value.map((item) => abbreviate(item, elide))
+  }
+  if (value !== null && typeof value === 'object') {
+    return abbreviateObject(value, elide)
+  }
+  return value as ExampleValue
+}
+
+function elisionKindOf(value: unknown): ElisionKind {
+  if (Array.isArray(value)) return 'array'
+  if (value !== null && typeof value === 'object') return 'object'
+  return 'value'
 }

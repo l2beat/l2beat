@@ -1,16 +1,17 @@
+import type { CropsApiRoute, CropsAttestationsMeta } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { CropsAttestationsMeta } from '~/server/features/garden/getCropsProjects'
 import { GardenPageHeader } from '../components/GardenPageHeader'
 import { SectionHeading } from '../components/SectionHeading'
 import { SproutIcon } from '../components/SproutIcon'
 import { GARDEN_PATH } from '../paths'
 import { BadgeStudio } from './components/BadgeStudio'
 import { CodeSnippet, RequestHeader } from './components/CodeSnippet'
+import { JsonView } from './components/JsonView'
 import { WalletMock } from './components/WalletMock'
 import {
   API_NOTES,
@@ -18,8 +19,6 @@ import {
   CROPS_API_DOCS_URL,
   CROPS_API_SPEC_URL,
   CROPS_API_URL,
-  ENDPOINTS,
-  type EndpointDoc,
   VERIFY_STEPS,
 } from './content'
 import type {
@@ -29,6 +28,7 @@ import type {
 
 export interface IntegrateCropsPageProps extends AppLayoutProps {
   attestations: CropsAttestationsMeta
+  endpoints: CropsApiRoute[]
   examples: IntegrateExamples
 }
 
@@ -40,6 +40,7 @@ const BADGE_HREF = `${PRODUCTION_ORIGIN}${GARDEN_PATH}`
 
 export function IntegrateCropsPage({
   attestations,
+  endpoints,
   examples,
   ...props
 }: IntegrateCropsPageProps) {
@@ -50,7 +51,11 @@ export function IntegrateCropsPage({
           <GardenPageHeader title="Integrate CROPS" />
           <main>
             <AudiencePicker />
-            <ConsumerSections attestations={attestations} examples={examples} />
+            <ConsumerSections
+              attestations={attestations}
+              endpoints={endpoints}
+              examples={examples}
+            />
             <ProtocolSection />
           </main>
         </div>
@@ -156,9 +161,11 @@ function BadgeArt() {
 
 function ConsumerSections({
   attestations,
+  endpoints,
   examples,
 }: {
   attestations: CropsAttestationsMeta
+  endpoints: CropsApiRoute[]
   examples: IntegrateExamples
 }) {
   return (
@@ -171,7 +178,7 @@ function ConsumerSections({
         />
         <ApiNotes />
         <div className="mt-4 flex flex-col gap-4 md:mt-6 md:gap-6">
-          {ENDPOINTS.map((endpoint) => (
+          {endpoints.map((endpoint) => (
             <EndpointCard
               key={endpoint.key}
               endpoint={endpoint}
@@ -235,7 +242,7 @@ function EndpointCard({
   endpoint,
   example,
 }: {
-  endpoint: EndpointDoc
+  endpoint: CropsApiRoute
   example: IntegrateExample
 }) {
   return (
@@ -245,7 +252,7 @@ function EndpointCard({
       <p className="mt-1 max-w-3xl text-paragraph-14 text-secondary md:text-paragraph-16">
         <Markup text={endpoint.description} />
       </p>
-      {endpoint.params && (
+      {endpoint.params.length > 0 && (
         <dl className="mt-4 flex flex-col gap-2">
           {endpoint.params.map((param) => (
             <div key={param.name}>
@@ -257,22 +264,27 @@ function EndpointCard({
               </dd>
             </div>
           ))}
+          {endpoint.notFound && (
+            <div>
+              <dt className="font-semibold text-paragraph-14">
+                <Code>404</Code>
+              </dt>
+              <dd className="text-paragraph-14 text-secondary">
+                {endpoint.notFound}
+              </dd>
+            </div>
+          )}
         </dl>
       )}
       <CodeSnippet
         className="mt-4"
-        language="text"
-        code=""
         header={<RequestHeader url={example.request} />}
         copy={example.request}
         copyText="Copy URL"
       />
-      <CodeSnippet
-        className="mt-3"
-        language="json"
-        code={example.response}
-        label="response"
-      />
+      <CodeSnippet className="mt-3" label="response">
+        <JsonView value={example.response} />
+      </CodeSnippet>
     </PrimaryCard>
   )
 }
@@ -322,13 +334,13 @@ function AttestationsSection({
         </dl>
         <CodeSnippet
           className="mt-4"
-          language="text"
-          code={attestations.schema}
           label="schema"
           copy={attestations.schema}
           copyText="Copy schema"
           wrap
-        />
+        >
+          {attestations.schema}
+        </CodeSnippet>
         <ol className="mt-5 flex list-decimal flex-col gap-3 pl-5">
           {VERIFY_STEPS.map((step) => (
             <li
