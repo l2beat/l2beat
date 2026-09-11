@@ -18,6 +18,11 @@ describe('tvs', () => {
       .filter((p) => p.chainConfig)
       .map((c) => [c.chainConfig!.name, c.chainConfig!.sinceTimestamp]),
   )
+  const chainUntilTimestamps = new Map(
+    getProjects()
+      .filter((p) => p.chainConfig?.untilTimestamp)
+      .map((c) => [c.chainConfig!.name, c.chainConfig!.untilTimestamp!]),
+  )
   const supportedChains = new Set(chainSinceTimestamps.keys())
 
   it('throws when token config has wrong schema', () => {
@@ -141,6 +146,22 @@ describe('tvs', () => {
           }
         }
 
+        // chain.untilTimestamp (set when a project is archived) is not applied
+        // at runtime, so an onchain leg without its own cutoff keeps polling
+        // the stopped chain's RPC forever. Regenerate tvs.json after archiving.
+        const untilBeforeChainCutoff: FormulaTest = (formula) => {
+          if (isOnchainAmountFormula(formula)) {
+            const chainUntil = chainUntilTimestamps.get(formula.chain)
+            if (chainUntil !== undefined) {
+              assert(
+                formula.untilTimestamp !== undefined &&
+                  formula.untilTimestamp <= chainUntil,
+                `Chain ${formula.chain} stopped at ${chainUntil} but token ${token.id} has untilTimestamp ${formula.untilTimestamp}. Run pnpm tvs:generate ${project.id} in packages/backend`,
+              )
+            }
+          }
+        }
+
         // first argument of diff should have the earliest sinceTimestamp
         const diffWithHasCorrectSince: FormulaTest = (formula) => {
           if (formula.type === 'calculation' && formula.operator === 'diff') {
@@ -161,6 +182,7 @@ describe('tvs', () => {
           noMixedArguments,
           chainIsSupported,
           sinceAfterChainGenesis,
+          untilBeforeChainCutoff,
           diffWithHasCorrectSince,
         ]
 

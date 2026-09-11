@@ -291,5 +291,6 @@ export const railgun: BaseProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [discovery.getContract('RailgunSmartWallet').address],
   },
 }

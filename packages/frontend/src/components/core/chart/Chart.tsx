@@ -209,7 +209,23 @@ function SimpleChartContainer({
 }
 SimpleChartContainer.displayName = 'Chart'
 
-const ChartTooltip = RechartsPrimitive.Tooltip
+function ChartTooltip(props: RechartsPrimitive.TooltipProps<number, string>) {
+  const coordinate = RechartsPrimitive.useActiveTooltipCoordinate()
+  const plotArea = RechartsPrimitive.usePlotArea()
+  const showOnLeft =
+    coordinate !== undefined &&
+    plotArea !== undefined &&
+    coordinate.x > plotArea.x + plotArea.width / 2
+
+  return (
+    <RechartsPrimitive.Tooltip
+      allowEscapeViewBox={{ x: true, y: true }}
+      reverseDirection={{ x: showOnLeft }}
+      offset={16}
+      {...props}
+    />
+  )
+}
 type CustomChartTooltipProps = Omit<
   RechartsPrimitive.DefaultTooltipContentProps<number, string>,
   'accessibilityLayer'

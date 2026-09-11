@@ -60,6 +60,24 @@ export const lighterprover: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0x9530037e124168a708c4fc7d4545cae1889e94488cadbd32b0ff348e42062095',
+        name: 'Lighter verifier',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x4E6505D3AE8Aa910e5d35557c76F567077622a6A',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        verificationSteps:
+          'The sources for the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
         hash: '0x4fd08a9ad74918c2052e6ea7c6b71ce71e62e07bec2bc539c0933579683f59c7',
         name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,

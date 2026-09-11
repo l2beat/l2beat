@@ -1,4 +1,9 @@
-export type PercentageChangePeriod = '1D' | '7D' | 'last24h' | 'last30d'
+export type PercentageChangePeriod =
+  | '1D'
+  | '7D'
+  | 'last24h'
+  | 'last7d'
+  | 'last30d'
 
 export function calculatePercentageChange(now: number, then: number) {
   if (now === then || then === 0 || now < 0.01) {

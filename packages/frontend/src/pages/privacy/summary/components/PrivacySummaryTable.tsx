@@ -8,6 +8,7 @@ import {
 import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import { PercentChange } from '~/components/PercentChange'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -18,6 +19,7 @@ import {
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import {
   adjustTableValue,
   sortTableValues,
@@ -92,28 +94,45 @@ const columns = [
       headClassName: 'pl-4',
     },
   }),
-  columnHelper.accessor('totalValueLockedUsd', {
-    id: 'totalValueLockedUsd',
-    header: 'TVL',
-    cell: (ctx) => {
-      if (!ctx.row.original.hasTvl) {
-        return <NotApplicableBadge />
-      }
+  ...withChangeSort(
+    columnHelper,
+    columnHelper.accessor('totalValueLockedUsd', {
+      id: 'totalValueLockedUsd',
+      header: 'TVL',
+      cell: (ctx) => {
+        if (!ctx.row.original.hasTvl) {
+          return <NotApplicableBadge />
+        }
 
-      const value = ctx.getValue()
-      return (
-        <MetricCell>
-          {value === undefined ? undefined : formatCurrency(value, 'usd')}
-        </MetricCell>
-      )
-    },
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      tooltip:
-        'Total USD value currently held across all tracked assets for the protocol.',
-    },
-  }),
+        const value = ctx.getValue()
+        return (
+          <MetricCell>
+            {value === undefined ? undefined : (
+              <div className="flex items-center justify-end gap-2">
+                {formatCurrency(value, 'usd')}
+                {ctx.row.original.totalValueLockedChange7d !== undefined && (
+                  <PercentChange
+                    value={ctx.row.original.totalValueLockedChange7d}
+                    period="7D"
+                  />
+                )}
+              </div>
+            )}
+          </MetricCell>
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'Total USD value currently held across all tracked assets for the protocol.',
+      },
+    }),
+    (row) => ({
+      change: row.totalValueLockedChange7d,
+      period: '7D',
+    }),
+  ),
   columnHelper.accessor('totalDeposits', {
     header: 'Deposits',
     cell: (ctx) => {

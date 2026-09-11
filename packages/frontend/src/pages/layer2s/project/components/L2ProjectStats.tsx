@@ -59,6 +59,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               </Tooltip>
             )}
             <ValueWithPercentageChange
+              containerClassName="flex-nowrap"
               className="!text-base !font-medium !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
@@ -85,6 +86,7 @@ export function ProjectL2Stats({ project, className }: Props) {
       value={
         project.header.activity ? (
           <ValueWithPercentageChange
+            containerClassName="flex-nowrap"
             change={project.header.activity.uopsWeeklyChange}
             changePeriod={project.header.activity.uopsWeeklyChangePeriod}
             className="text-nowrap font-medium! text-base! leading-[100%]!"
@@ -169,8 +171,8 @@ export function ProjectL2Stats({ project, className }: Props) {
     <div
       className={cn(
         'grid h-fit grid-cols-1 gap-x-6 gap-y-3',
-        groups === 3 && 'md:grid-cols-3',
-        groups === 4 && 'md:grid-cols-4',
+        groups === 3 && 'md:grid-cols-[repeat(3,auto)]',
+        groups === 4 && 'md:grid-cols-[repeat(4,auto)]',
         className,
       )}
     >
