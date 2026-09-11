@@ -1,5 +1,4 @@
 import { EventEmitter } from 'events'
-import type { Response } from 'node-fetch'
 
 export interface ProgressEvent {
   total: number
@@ -17,7 +16,13 @@ interface EmittedEvents {
   finish: (progress: ProgressEvent) => void
 }
 
+/**
+ * Counts downloaded bytes as they stream through. Read the body from
+ * `response`, not from the one passed in, since a web stream can only have one
+ * consumer.
+ */
 export class ResponseProgress extends EventEmitter {
+  readonly response: Response
   private total: number
   private done: number
   private startedAt: number
@@ -41,17 +46,23 @@ export class ResponseProgress extends EventEmitter {
     this.total = Number(response.headers.get('content-length'))
     this.done = 0
     this.startedAt = Date.now()
+    this.response = response.body
+      ? new Response(response.body.pipeThrough(this.counting()), response)
+      : response
+  }
 
-    response.body?.on('data', (chunk) => {
-      this.done += chunk.length
-      const progressEvent = this.getProgressEvent()
-      this.emit('progress', progressEvent)
-    })
-
-    response.body?.on('end', () => {
-      const progressEvent = this.getProgressEvent()
-      this.emit('progress', progressEvent)
-      this.emit('finish', progressEvent)
+  private counting(): TransformStream<Uint8Array, Uint8Array> {
+    return new TransformStream({
+      transform: (chunk, controller) => {
+        this.done += chunk.length
+        this.emit('progress', this.getProgressEvent())
+        controller.enqueue(chunk)
+      },
+      flush: () => {
+        const progressEvent = this.getProgressEvent()
+        this.emit('progress', progressEvent)
+        this.emit('finish', progressEvent)
+      },
     })
   }
 

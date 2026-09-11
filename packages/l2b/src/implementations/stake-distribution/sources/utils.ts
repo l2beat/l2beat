@@ -1,6 +1,5 @@
 import { isDateOnly } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import fetch from 'node-fetch'
 import type { StakingEntity } from '../types'
 
 // Stake amounts may arrive as numbers or numeric strings.

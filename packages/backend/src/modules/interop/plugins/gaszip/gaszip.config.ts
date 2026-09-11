@@ -316,7 +316,7 @@ export class GasZipConfigPlugin
       throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
     }
 
-    const json: GasZipApiResponse = await response.json()
+    const json = (await response.json()) as GasZipApiResponse
     const usedNames = new Set<string>()
     const networks: GasZipChain[] = []
 

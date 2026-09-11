@@ -1,48 +1,54 @@
 import { expect } from 'earl'
-import nock from 'nock'
 import { HttpClient, sanitizeUrl } from './HttpClient'
+import { withServer } from './testServer'
 
 describe(HttpClient.name, () => {
   describe(HttpClient.prototype.fetch.name, () => {
     it('parses json', async () => {
       const http = new HttpClient()
-      nock('https://api')
-        .get('/')
-        .reply(200, JSON.stringify({ a: 1, b: 2 }))
-
-      const parsed = await http.fetch('https://api', {})
+      const parsed = await withServer(
+        (_, res) => res.end(JSON.stringify({ a: 1, b: 2 })),
+        (url) => http.fetch(url, {}),
+      )
       expect(parsed).toEqual({ a: 1, b: 2 })
     })
 
     it('throws error with context', async () => {
       const http = new HttpClient()
-      nock('https://api').get('/').times(2).reply(404)
-
-      await expect(
-        async () => await http.fetch('https://api', {}),
-      ).toBeRejectedWith('HTTP error: 404 Not Found')
+      await withServer(
+        (_, res) => res.writeHead(404).end(),
+        async (url) =>
+          expect(async () => await http.fetch(url, {})).toBeRejectedWith(
+            'HTTP error: 404 Not Found',
+          ),
+      )
     })
 
     it('attaches the sanitized url as the error cause', async () => {
       const http = new HttpClient()
-      nock('https://api').get('/feed').query({ key: 'secret' }).reply(404)
-
-      const error = await http
-        .fetch('https://api/feed?key=secret', {})
-        .catch((e: unknown) => e)
+      const error = await withServer(
+        (_, res) => res.writeHead(404).end(),
+        (url) =>
+          http.fetch(`${url}/feed?key=secret`, {}).catch((e: unknown) => e),
+      )
 
       expect((error as Error).cause).toEqual({
-        url: 'https://api/feed?key=REDACTED',
+        url: expect.a(String),
       })
+      expect(((error as Error).cause as { url: string }).url).toInclude(
+        '/feed?key=REDACTED',
+      )
     })
 
-    it('supports custom timeout', async function () {
+    it('supports custom timeout', async () => {
       const http = new HttpClient()
-      nock('https://api').get('/').delay(3).reply(200, { data: 'some data' })
-
-      await expect(
-        async () => await http.fetch('https://api', { timeout: 2 }),
-      ).toBeRejected()
+      await withServer(
+        (_, res) => setTimeout(() => res.end('{}'), 50),
+        async (url) =>
+          expect(
+            async () => await http.fetch(url, { timeout: 5 }),
+          ).toBeRejectedWith(/Timeout: no data from .* for 5ms/),
+      )
     })
   })
 

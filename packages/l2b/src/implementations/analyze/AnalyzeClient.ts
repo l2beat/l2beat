@@ -5,18 +5,8 @@ import {
 } from '@l2beat/shared-pure'
 import { type Validator, v } from '@l2beat/validate'
 import { zipSync } from 'fflate'
-import FormData from 'form-data'
-import fetch, {
-  Headers,
-  type RequestInfo,
-  type RequestInit,
-  type Response,
-} from 'node-fetch'
 
-export type FetchFn = (
-  url: RequestInfo,
-  init?: RequestInit,
-) => Promise<Response>
+export type FetchFn = (url: string, init?: RequestInit) => Promise<Response>
 
 const UpstreamErrorResponse = v.object({
   error: v.object({
@@ -46,10 +36,13 @@ export class AnalyzeClient {
     input: { files: Record<string, Uint8Array>; entrypoint: string },
   ): Promise<AnalyzerResultApiResponse> {
     const body = new FormData()
-    body.append('archive', createSourcesArchive(input.files), {
-      filename: 'sources.zip',
-      contentType: 'application/zip',
-    })
+    body.append(
+      'archive',
+      new Blob([createSourcesArchive(input.files)], {
+        type: 'application/zip',
+      }),
+      'sources.zip',
+    )
     body.append('entrypoint', input.entrypoint)
 
     return await this.requestJson(
