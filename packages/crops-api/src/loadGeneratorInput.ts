@@ -2,20 +2,20 @@ import { ProjectService } from '@l2beat/config'
 import { execSync } from 'child_process'
 import { resolve } from 'path'
 import { getAttestationsMeta } from './garden/getAttestationsMeta'
-import type { ChainLookup, GeneratorInput } from './generateCropsSite'
+import type { ChainIdByName, GeneratorInput } from './generateCropsSite'
 
 // Built by `pnpm build:dependencies`, like the frontend's ProjectService.
 const DB_PATH = resolve(__dirname, '../../config/build/db.sqlite')
 
 export async function loadGeneratorInput(): Promise<GeneratorInput> {
-  const ps = new ProjectService(DB_PATH)
+  const projectService = new ProjectService(DB_PATH)
   const [projects, chains] = await Promise.all([
-    ps.getProjects({
+    projectService.getProjects({
       where: ['crops'],
       select: ['crops'],
       optional: ['contracts', 'permissions', 'scalingInfo', 'privacyInfo'],
     }),
-    loadChains(ps),
+    loadChains(projectService),
   ])
   return {
     projects,
@@ -26,9 +26,13 @@ export async function loadGeneratorInput(): Promise<GeneratorInput> {
   }
 }
 
-async function loadChains(ps: ProjectService): Promise<ChainLookup> {
-  const projects = await ps.getProjects({ select: ['chainConfig'] })
-  const chains: ChainLookup = {}
+async function loadChains(
+  projectService: ProjectService,
+): Promise<ChainIdByName> {
+  const projects = await projectService.getProjects({
+    select: ['chainConfig'],
+  })
+  const chains: ChainIdByName = {}
   for (const { chainConfig } of projects) {
     if (chainConfig.chainId !== undefined) {
       chains[chainConfig.name] = chainConfig.chainId

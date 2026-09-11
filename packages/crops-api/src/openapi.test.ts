@@ -1,11 +1,11 @@
 import { expect } from 'earl'
 import { generateCropsSite } from './generateCropsSite'
-import { FIXTURE_INPUT } from './generateCropsSite.test'
 import {
   buildOpenApiDocument,
   findPublishedRoute,
   PUBLISHED_ROUTES,
 } from './openapi'
+import { FIXTURE_INPUT } from './test/fixtures'
 
 describe('OpenAPI agreement', () => {
   const files = generateCropsSite(FIXTURE_INPUT)
@@ -56,6 +56,11 @@ describe('OpenAPI agreement', () => {
       expect(schemas[name]).not.toBeNullish()
     }
     expect(JSON.stringify(document)).not.toInclude('#/definitions/')
+  })
+
+  it('fills the network section into the prose from openapi.md', () => {
+    expect(document.info.description).toInclude('## Attestations are on ')
+    expect(document.info.description).not.toInclude('{{')
   })
 
   it('is OpenAPI 3.1 with production and staging servers', () => {

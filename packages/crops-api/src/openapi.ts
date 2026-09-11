@@ -1,4 +1,7 @@
+import { CROPS } from '@l2beat/config'
 import { toJsonSchema, type Validator, v } from '@l2beat/validate'
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
 import {
   AddressesResponseSchema,
   AddressResponseSchema,
@@ -6,6 +9,8 @@ import {
   NAMED_SCHEMAS,
   ProjectResponseSchema,
 } from './schemas'
+
+const COMPONENT_SCHEMAS_REF = '#/components/schemas/'
 
 export const SERVERS = [
   { url: 'https://crops.l2beat.com', description: 'Production' },
@@ -17,7 +22,7 @@ export interface PublishedRoute {
   path: string
   summary: string
   description: string
-  params: { name: string; description: string }[]
+  params: { name: string; type: 'string' | 'integer'; description: string }[]
   result: Validator<unknown>
   /** Set on lookups, where a missing file means "not reviewed". */
   notFound?: string
@@ -37,7 +42,13 @@ export const PUBLISHED_ROUTES: PublishedRoute[] = [
     summary: 'Everything about one protocol',
     description:
       'The crop evaluations of one protocol, with the reasoning behind each rating.',
-    params: [{ name: 'id', description: 'The project id or its slug.' }],
+    params: [
+      {
+        name: 'id',
+        type: 'string',
+        description: 'The project id or its slug.',
+      },
+    ],
     result: ProjectResponseSchema,
     notFound: 'L2BEAT has not reviewed this project.',
   },
@@ -49,9 +60,14 @@ export const PUBLISHED_ROUTES: PublishedRoute[] = [
     params: [
       {
         name: 'chainId',
+        type: 'integer',
         description: 'EIP-155 chain id, e.g. 1 for Ethereum.',
       },
-      { name: 'address', description: 'Lowercase 0x-prefixed address.' },
+      {
+        name: 'address',
+        type: 'string',
+        description: 'Lowercase 0x-prefixed address.',
+      },
     ],
     result: AddressResponseSchema,
     notFound: 'The address is not part of any reviewed protocol.',
@@ -80,31 +96,25 @@ function toPathRegex(template: string): RegExp {
   return new RegExp(`^${escaped}$`)
 }
 
-export const OPENAPI_DESCRIPTION = `
-CROPS is L2BEAT's review of a protocol along four crops: censorship resistance, open source, privacy and security. Each crop gets a sentiment (good, warning, bad or neutral) and a status saying how far the review went. A protocol is in the garden when no crop is bad. Separately, the set of reviewed protocols is attested onchain with the Ethereum Attestation Service.
+const ATTESTATION_NETWORK =
+  CROPS.eas.ATTESTATION_NETWORKS[CROPS.eas.ATTESTATION_NETWORK]
 
-Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.
+/** Derived from the network constant so the caveat cannot outlive the testnet. */
+const ATTESTATION_NETWORK_SECTION = ATTESTATION_NETWORK.isTestnet
+  ? `## Attestations are on ${ATTESTATION_NETWORK.name}
 
-## Not found means not reviewed
+The attestation currently lives on the ${ATTESTATION_NETWORK.name} testnet (chain id ${ATTESTATION_NETWORK.chainId}); \`attestations.isTestnet\` in every response says so. It proves the set L2BEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.`
+  : `## Attestations are on ${ATTESTATION_NETWORK.name}
 
-\`/v1/project/{id}.json\` and \`/v1/address/{chainId}/{address}.json\` answer 404 with an empty body when L2BEAT has not reviewed the project or the address. Treat 404 as "not reviewed", not as an error.
+The attestation lives on ${ATTESTATION_NETWORK.name} (chain id ${ATTESTATION_NETWORK.chainId}). It proves the set L2BEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.`
 
-## Address lookups
-
-Address files are keyed by EIP-155 chain id and lowercase address, both in the path and in the \`addresses\` map of \`/v1/addresses.json\` (as \`chainId:address\`). Lowercase the address before you build the URL. A contract, a proxy implementation behind it, and a permission holder such as a governance multisig all resolve to the protocol. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.
-
-## Attestations are on Sepolia
-
-The attestation currently lives on the Sepolia testnet; \`attestations.isTestnet\` in every response says so. It proves the set L2BEAT named, not that the ratings are attested: ratings change as protocols change and are served here without a transaction.
-
-## Verifying the set onchain
-
-1. Read the attestation from the EAS contract with the uid in \`attestations.current\`: \`getAttestation(uid)\`.
-2. Check \`revocationTime == 0\`. When the set changes L2BEAT revokes the old attestation and issues the next revision, so a revoked attestation is a stale claim and must not be shown.
-3. Check \`attester\` and \`schema\` against \`attestations.attester\` and \`attestations.schemaUid\`, so an attestation someone else made cannot be mistaken for L2BEAT's.
-4. Decode \`projectIds\` - these are the protocols L2BEAT has reviewed, as of \`reviewedAt\`, at revision \`revision\`.
-5. For the rating per crop, the reasoning and what was not looked at, read \`/v1/project/{id}.json\`.
-`.trim()
+/** The prose lives in openapi.md; only the network section is computed. */
+export const OPENAPI_DESCRIPTION = readFileSync(
+  resolve(__dirname, '../openapi.md'),
+  'utf8',
+)
+  .replace('{{ATTESTATION_NETWORK_SECTION}}', ATTESTATION_NETWORK_SECTION)
+  .trim()
 
 export function buildOpenApiDocument() {
   return {
@@ -131,7 +141,9 @@ function toOperation(route: PublishedRoute) {
       description: 'Successful response',
       content: {
         'application/json': {
-          schema: { $ref: `#/components/schemas/${route.result.description}` },
+          schema: {
+            $ref: `${COMPONENT_SCHEMAS_REF}${route.result.description}`,
+          },
         },
       },
     },
@@ -147,24 +159,16 @@ function toOperation(route: PublishedRoute) {
       in: 'path',
       required: true,
       description: param.description,
-      schema: { type: 'string' },
+      schema: { type: param.type },
     })),
     responses,
   }
 }
 
-/**
- * `toJsonSchema` emits every named validator under `definitions` and refers
- * to them as `#/definitions/X`; OpenAPI wants them under components.
- */
+/** Every named validator, with `$ref`s already pointing under components. */
 function toComponentSchemas(): Record<string, unknown> {
-  const { definitions } = toJsonSchema(v.unknown(), NAMED_SCHEMAS) as {
-    definitions: Record<string, unknown>
-  }
-  return JSON.parse(
-    JSON.stringify(definitions).replaceAll(
-      '#/definitions/',
-      '#/components/schemas/',
-    ),
-  )
+  const { definitions } = toJsonSchema(v.unknown(), NAMED_SCHEMAS, {
+    refPrefix: COMPONENT_SCHEMAS_REF,
+  }) as { definitions: Record<string, unknown> }
+  return definitions
 }

@@ -3,27 +3,28 @@ import type {
   IndexedProject,
 } from './garden/buildCropsAddressIndex'
 import { buildCropsAddressIndex } from './garden/buildCropsAddressIndex'
-import type { CropsAttestationsMeta } from './garden/getAttestationsMeta'
-import type {
-  CropsApiProject,
-  CropsSourceProject,
-} from './garden/resolveCropsProjects'
+import type { CropsSourceProject } from './garden/resolveCropsProjects'
 import {
+  resolveCropsProject,
   resolveCropsProjects,
   toCropsSummary,
 } from './garden/resolveCropsProjects'
 import { buildOpenApiDocument } from './openapi'
-import type { AddressMatch } from './schemas'
+import type {
+  AddressMatch,
+  CropsApiProject,
+  CropsAttestationsMeta,
+} from './schemas'
 
 /** A project with crops plus whatever the address index and page path need. */
 export interface CropsProject extends CropsSourceProject, IndexedProject {}
 
 /** Long chain name -> EIP-155 chain id. */
-export type ChainLookup = Record<string, number>
+export type ChainIdByName = Record<string, number>
 
 export interface GeneratorInput {
   projects: CropsProject[]
-  chains: ChainLookup
+  chains: ChainIdByName
   ledger: CropsAttestationsMeta
   commit: string
   /** Unix seconds. */
@@ -34,6 +35,11 @@ export interface GeneratedFile {
   /** Relative to the site root, no leading slash. */
   path: string
   body: unknown
+}
+
+/** What every JSON file carries besides its own data. */
+type Stamp = Pick<GeneratorInput, 'commit' | 'generatedAt'> & {
+  attestations: CropsAttestationsMeta
 }
 
 /**
@@ -50,14 +56,10 @@ export function generateCropsSite(input: GeneratorInput): GeneratedFile[] {
   const files: GeneratedFile[] = [
     { path: 'v1/crops.json', body: { ...stamp, projects } },
     ...projectFiles(projects, stamp),
-    ...addressFiles(input, projects, stamp),
+    ...addressFiles(input, stamp),
     { path: 'v1/openapi.json', body: buildOpenApiDocument() },
   ]
   return files.sort((a, b) => a.path.localeCompare(b.path))
-}
-
-type Stamp = Pick<GeneratorInput, 'commit' | 'generatedAt'> & {
-  attestations: CropsAttestationsMeta
 }
 
 function projectFiles(
@@ -65,7 +67,6 @@ function projectFiles(
   stamp: Stamp,
 ): GeneratedFile[] {
   return projects.flatMap((project) =>
-    // When id equals slug it is one file.
     [...new Set([project.id, project.slug])].map((key) => ({
       path: `v1/project/${key}.json`,
       body: { ...stamp, ...project },
@@ -73,12 +74,7 @@ function projectFiles(
   )
 }
 
-function addressFiles(
-  input: GeneratorInput,
-  projects: CropsApiProject[],
-  stamp: Stamp,
-): GeneratedFile[] {
-  const projectById = new Map(projects.map((x) => [x.id, x]))
+function addressFiles(input: GeneratorInput, stamp: Stamp): GeneratedFile[] {
   const entries = buildCropsAddressIndex(input.projects).map((entry) => {
     const chainId = input.chains[entry.chain]
     if (chainId === undefined) {
@@ -89,7 +85,9 @@ function addressFiles(
     return {
       chainId,
       address: entry.address.toLowerCase(),
-      matches: entry.matches.map((match) => toAddressMatch(match, projectById)),
+      matches: entry.matches.map((match) =>
+        toAddressMatch(match, input.ledger),
+      ),
     }
   })
 
@@ -109,14 +107,10 @@ function addressFiles(
 }
 
 function toAddressMatch(
-  match: CropsAddressMatch,
-  projectById: Map<string, CropsApiProject>,
+  match: CropsAddressMatch<CropsProject>,
+  ledger: CropsAttestationsMeta,
 ): AddressMatch {
-  const project = projectById.get(match.projectId)
-  if (!project) {
-    // Every indexed project came from the same list, so this cannot happen.
-    throw new Error(`Unknown project ${match.projectId}`)
-  }
+  const project = resolveCropsProject(match.project, ledger)
   return {
     id: project.id,
     slug: project.slug,

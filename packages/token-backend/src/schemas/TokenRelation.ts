@@ -4,12 +4,12 @@ import type {
   TokenRelationUpdateable as DbTokenRelationUpdateable,
   JsonValue,
 } from '@l2beat/database'
+import type { Equal, Expect } from '@l2beat/shared-pure'
 import {
   InteropBridgeTypeValues,
   ManualRelationBridge,
 } from '@l2beat/shared-pure'
 import { type Validator, v } from '@l2beat/validate'
-import type { Equal, Expect } from '../utils/expectEqual'
 
 const JsonValue: Validator<JsonValue> = v.lazy(() =>
   v.union([
