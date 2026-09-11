@@ -1,6 +1,6 @@
 {
   "name": "settlus",
-  "timestamp": 1788792449,
+  "timestamp": 1789044573,
   "configHash": "0xc83c14a3494535c9c935f5261524f563c27d7c200217e0093c3f791a586348d3",
   "entries": [
     {
@@ -86,11 +86,6 @@
     },
     {
       "address": "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -623,13 +618,13 @@
         ],
         "$upgradeCount": 2,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0xee972F1210a1F2D8bd8bc69E0a59e03E8B227Ef1",
+        "anchorGame": "eth:0xeF11d0453cA28E7a039521532271c3507ec11000",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x0a0e28b0ffa515522466de69f538db575e0ef937db4d05f4d6639a80aee06c3b",
-          48012507
+          "0x0fd3ed879b82f505fbdbfda56349a59559809c8f14269616de3937ea3a9c3536",
+          48262851
         ],
         "getStartingAnchorRoot": {
           "root": "0xc424cd12a1242e670af134a4a3ac7f1fb0f3e6ce6dbaba109618d9293040f07c",
@@ -1072,7 +1067,7 @@
           "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-          "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
+          "eth:0xd91530dB01c60C6B3b824707D33fb0771aB85930",
           "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6"
@@ -1084,7 +1079,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 64,
+        "nonce": 65,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1208,6 +1203,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xd91530dB01c60C6B3b824707D33fb0771aB85930",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AddressManager",
       "address": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "type": "Contract",
@@ -1283,7 +1283,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 8984,
+        "gameCount": 9031,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1298,7 +1298,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb90863e956115f7618a95bb968ecef2e72e99cdba80f3f1ce63c69d437fdd9f5d5ad294f677a1b7db08b00000000000000000000000000000000000000000000000000000000000014fb1bc6df949b8edc8ee61adb99d578a7a6e6ff7310a4fb12d15eb85dc9284a7df0adbc8b696edbbf1d",
-        "permissionedGamesTotal": 8984,
+        "permissionedGamesTotal": 9031,
         "proposerFromDGF": "eth:0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310",
         "proxyAdmin": "eth:0xd35FeF329Bb6569baa373BDa702F3dfF59D57321",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -2491,8 +2491,8 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25926168 },
-  "permissionsConfigHash": "0x7e8308171f5773b408cfd3fd67d0e38e4bac742837838ec8817c95b8c71b8707",
+  "usedBlockNumbers": { "ethereum": 25947093 },
+  "permissionsConfigHash": "0xdc014bd9248e77d28deb646f29466529c7f5aa88fc33c688630549e537151ccf",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
