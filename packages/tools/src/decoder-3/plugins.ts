@@ -2,8 +2,33 @@ import { getCreate2Address, toFunctionSelector } from 'viem'
 import { type DecodedValue, decodeType } from './decode'
 import { decodePacked, type PackedSchema } from './packed'
 import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
+import { SAFE_EXEC_ABI } from './safe'
 
-const plugins = [packedArgumentPlugin, multiSendPlugin, create2FactoryPlugin]
+const plugins = [
+  safeBatchPlugin,
+  packedArgumentPlugin,
+  multiSendPlugin,
+  create2FactoryPlugin,
+]
+
+// Fixed ABIs keep Safe hash verification independent of signature lookup services.
+const SAFE_BATCH_ABIS = [
+  SAFE_EXEC_ABI,
+  'function aggregate3Value((address target, bool allowFailure, uint256 value, bytes callData)[] calls)',
+  'function aggregate3((address target, bool allowFailure, bytes callData)[] calls)',
+  'function aggregate((address target, bytes callData)[] calls)',
+]
+
+function safeBatchPlugin(
+  data: `0x${string}`,
+  chainId: number,
+  address?: `0x${string}`,
+) {
+  const abi = SAFE_BATCH_ABIS.find(
+    (abi) => toFunctionSelector(abi) === data.slice(0, 10).toLowerCase(),
+  )
+  if (abi) return decodeType(abi, data, chainId, address)
+}
 
 export function decode(
   data: `0x${string}`,

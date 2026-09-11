@@ -37,6 +37,21 @@ export function createDecoderRouter(
     res.json(result)
   })
 
+  router.post('/api/safe-state', express.json(), async (req, res) => {
+    const query = AddressRequest.parse(req.body)
+    if (!chains.some((chain) => chain.chainId === query.chainId)) {
+      res.status(400).json({ error: 'Unknown chain id' })
+      return
+    }
+    try {
+      res.json(await controller.getSafeState(query.chainId, query.address))
+    } catch {
+      res
+        .status(502)
+        .json({ error: 'Could not read Safe version and nonce from RPC.' })
+    }
+  })
+
   router.post('/api/lookup-preimages', express.json(), (req, res) => {
     const query = PreimageRequest.parse(req.body)
     const result = controller.lookupPreimages(query)

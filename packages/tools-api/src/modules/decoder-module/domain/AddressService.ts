@@ -7,6 +7,7 @@ import type {
   ContractInfo,
   EtherscanClient,
 } from '../../../third-party/EtherscanClient'
+import { type AddressAlias, findAddressAlias } from './addressAlias'
 
 export interface FunctionAbi {
   selector: `0x${string}`
@@ -16,6 +17,7 @@ export interface FunctionAbi {
 export interface AddressInfo {
   address: Address
   name?: string
+  alias?: AddressAlias
   explorerLink: string
   eoa?: boolean
   unverified?: boolean
@@ -91,6 +93,7 @@ export class AddressService implements IAddressService {
     return {
       address,
       name,
+      alias: findAddressAlias(noprefix, chain.chainId, this.discovered.names),
       eoa: isEoa,
       fromDiscovery: !!discoveryName || !!discoveryAbi,
       unverified,
