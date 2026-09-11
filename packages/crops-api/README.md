@@ -71,4 +71,4 @@ curl -si $HOST/v1/address/1/0x0000000000000000000000000000000000000000.json
 ```
 
 Every response, including the 404, must carry `access-control-allow-origin: *`
-and `cache-control: public, max-age=300` from `static/_headers`.
+and `cache-control: public, max-age=60` from `static/_headers`.

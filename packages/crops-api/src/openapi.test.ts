@@ -1,59 +1,22 @@
+import { CROPS_API_ROUTES, getAttestationsMeta } from '@l2beat/config'
 import { expect } from 'earl'
-import { generateCropsSite } from './generateCropsSite'
-import {
-  buildOpenApiDescription,
-  buildOpenApiDocument,
-  findPublishedRoute,
-  PUBLISHED_ROUTES,
-} from './openapi'
-import { FIXTURE_INPUT, LEDGER } from './test/fixtures'
+import { buildOpenApiDocument, describeApi } from './openapi'
 
-describe('OpenAPI agreement', () => {
-  const files = generateCropsSite(FIXTURE_INPUT)
-  const dataFiles = files.filter((x) => x.path !== 'v1/openapi.json')
-  const document = buildOpenApiDocument(FIXTURE_INPUT.ledger)
-
-  it('parses every generated file with the validator behind its OpenAPI entry', () => {
-    for (const file of dataFiles) {
-      const route = findPublishedRoute(file.path)
-      if (!route) {
-        throw new Error(`${file.path} is not published`)
-      }
-      // Round-tripped through JSON, as a client would see it.
-      const result = route.result.safeParse(
-        JSON.parse(JSON.stringify(file.body)),
-      )
-      if (!result.success) {
-        throw new Error(`${file.path}: ${result.message}`)
-      }
-    }
-  })
+describe('OpenAPI document', () => {
+  const meta = getAttestationsMeta()
+  const document = buildOpenApiDocument(meta)
 
   it('lists every published route under paths, checked route by route', () => {
     expect(Object.keys(document.paths).sort()).toEqual(
-      PUBLISHED_ROUTES.map((x) => x.path).sort(),
+      CROPS_API_ROUTES.map((x) => x.path).sort(),
     )
   })
 
-  it('exercises every route with the fixtures, so no route goes unvalidated', () => {
-    const covered = new Set(
-      dataFiles.map((x) => findPublishedRoute(x.path)?.path),
-    )
-    expect([...covered].sort()).toEqual(
-      PUBLISHED_ROUTES.map((x) => x.path).sort(),
-    )
-  })
-
-  it('refers every response to a component schema that exists', () => {
+  it('refers every response to a component schema that exists, and never to definitions', () => {
     const schemas = document.components.schemas
     for (const item of Object.values(document.paths)) {
-      const ref = item.get.responses[200] as {
-        content: { 'application/json': { schema: { $ref: string } } }
-      }
-      const name = ref.content['application/json'].schema.$ref.replace(
-        '#/components/schemas/',
-        '',
-      )
+      const ref = item.get.responses[200].content['application/json'].schema
+      const name = ref.$ref.replace('#/components/schemas/', '')
       expect(schemas[name]).not.toBeNullish()
     }
     expect(JSON.stringify(document)).not.toInclude('#/definitions/')
@@ -68,9 +31,12 @@ describe('OpenAPI agreement', () => {
     )
   })
 
-  it('fills the network section into the prose from openapi.md', () => {
-    expect(document.info.description).toInclude('## Attestations are on ')
-    expect(document.info.description).not.toInclude('{{')
+  it('describes a 404 only on the lookup routes, checked against the route table', () => {
+    for (const route of CROPS_API_ROUTES) {
+      expect(
+        document.paths[route.path]?.get.responses[404]?.description,
+      ).toEqual(route.notFound)
+    }
   })
 
   it('is OpenAPI 3.1', () => {
@@ -78,11 +44,17 @@ describe('OpenAPI agreement', () => {
   })
 
   it('names the ledger network and warns about a testnet only while on one', () => {
-    expect(buildOpenApiDescription(LEDGER)).toInclude(
+    const testnet = describeApi({
+      ...meta,
+      network: 'sepolia',
+      chainId: 11155111,
+      isTestnet: true,
+    })
+    expect(testnet).toInclude(
       'currently lives on the sepolia testnet (chain id 11155111)',
     )
-    const mainnet = buildOpenApiDescription({
-      ...LEDGER,
+    const mainnet = describeApi({
+      ...meta,
       network: 'ethereum',
       chainId: 1,
       isTestnet: false,

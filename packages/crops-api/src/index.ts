@@ -1,8 +1,9 @@
+import { generateCropsApiFiles } from '@l2beat/config'
 import { cpSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import { dirname, join, resolve } from 'path'
 import { absolutePath as swaggerUiPath } from 'swagger-ui-dist'
-import { type GeneratedFile, generateCropsSite } from './generateCropsSite'
 import { loadGeneratorInput } from './loadGeneratorInput'
+import { buildOpenApiDocument } from './openapi'
 
 const OUT_DIR = resolve(__dirname, '../out')
 const STATIC_DIR = resolve(__dirname, '../static')
@@ -21,30 +22,31 @@ main().catch((error) => {
 
 async function main() {
   const input = await loadGeneratorInput()
-  const files = generateCropsSite(input)
+  const files = generateCropsApiFiles(input)
 
   rmSync(OUT_DIR, { recursive: true, force: true })
-  writeJsonFiles(OUT_DIR, files)
+  for (const file of files) {
+    writeJson(file.path, file.body)
+  }
+  writeJson('v1/openapi.json', buildOpenApiDocument(input.ledger))
   cpSync(STATIC_DIR, OUT_DIR, { recursive: true })
-  copySwaggerUi(OUT_DIR)
+  copySwaggerUi()
 
   console.log(
-    `Wrote ${files.length} files for ${input.projects.length} projects at ${input.commit} to ${OUT_DIR}`,
+    `Wrote ${files.length + 1} files for ${input.projects.length} projects at ${input.commit} to ${OUT_DIR}`,
   )
 }
 
-function writeJsonFiles(outDir: string, files: GeneratedFile[]) {
-  for (const file of files) {
-    const target = join(outDir, file.path)
-    mkdirSync(dirname(target), { recursive: true })
-    writeFileSync(target, JSON.stringify(file.body))
-  }
+function writeJson(path: string, body: unknown) {
+  const target = join(OUT_DIR, path)
+  mkdirSync(dirname(target), { recursive: true })
+  writeFileSync(target, JSON.stringify(body))
 }
 
 /** Bundled at build time so the site has no third-party runtime dependency. */
-function copySwaggerUi(outDir: string) {
+function copySwaggerUi() {
   const source = swaggerUiPath()
   for (const asset of SWAGGER_UI_ASSETS) {
-    cpSync(join(source, asset), join(outDir, asset))
+    cpSync(join(source, asset), join(OUT_DIR, asset))
   }
 }
