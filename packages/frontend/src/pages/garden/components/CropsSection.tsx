@@ -1,4 +1,3 @@
-import type { ResolvedCropEvaluation } from '@l2beat/config'
 import { CropBadge } from '~/components/garden/CropBadge'
 import { CROP_COLUMNS, type CropDefinition } from '~/components/garden/crops'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -31,19 +30,6 @@ export function CropsSection() {
   )
 }
 
-/** A healthy plant, with the crop's one-line summary behind its tooltip. */
-function sampleEvaluation(summary: string): ResolvedCropEvaluation {
-  return {
-    sentiment: 'good',
-    status: 'reviewed',
-    license: undefined,
-    points: [summary],
-    missing: [],
-    additionalConsiderations: [],
-    notReviewed: [],
-  }
-}
-
 function CropCard({
   column,
   criteria,
@@ -57,11 +43,16 @@ function CropCard({
     <PrimaryCard className="md:p-8">
       <div className="flex items-start gap-4 md:gap-5">
         <CropBadge
-          label={column.label}
-          note={column.note}
-          evaluation={sampleEvaluation(criteria.summary)}
+          status="reviewed"
+          sentiment="good"
           delay={index * 0.12}
-        />
+          label={column.label}
+        >
+          <p className="font-medium text-base text-crop-good-ink">
+            {column.label}
+          </p>
+          <p className="mt-1.5">{criteria.summary}</p>
+        </CropBadge>
         <div>
           <h3 className="font-bold text-heading-20 md:text-heading-24">
             {column.label}

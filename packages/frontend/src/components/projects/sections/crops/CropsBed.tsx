@@ -46,8 +46,8 @@ export function CropsBed({
       >
         <Sky inGarden={inGarden} />
         <div className="relative grid grid-cols-4 items-end pt-7">
-          {entries.map((entry) => (
-            <Plant key={entry.key} entry={entry} />
+          {entries.map((entry, index) => (
+            <Plant key={entry.definition.key} entry={entry} index={index} />
           ))}
         </div>
         <Soil />
@@ -60,19 +60,19 @@ export function CropsBed({
           '@max-[519.9px]:grid-cols-1',
         )}
       >
-        {entries.map((entry) => (
-          <Findings key={entry.key} entry={entry} />
+        {entries.map((entry, index) => (
+          <Findings key={entry.definition.key} entry={entry} index={index} />
         ))}
       </div>
     </div>
   )
 }
 
-function Plant({ entry }: { entry: CropEntry }) {
-  const { definition, evaluation, index } = entry
+function Plant({ entry, index }: { entry: CropEntry; index: number }) {
+  const { definition, evaluation } = entry
   return (
     <a
-      href={`#crop-${entry.key}`}
+      href={`#crop-${definition.key}`}
       aria-label={`${definition.label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
       className="flex flex-col items-center gap-1.5 pb-2"
     >
@@ -83,17 +83,23 @@ function Plant({ entry }: { entry: CropEntry }) {
         width={80}
         className="@max-[519.9px]:[&>svg]:h-[62px] @max-[519.9px]:[&>svg]:w-[53px]"
       />
-      <LetterChip entry={entry} className="size-7 text-[11px]" />
+      <LetterChip
+        entry={entry}
+        delay={index * 0.12}
+        className="size-7 text-[11px]"
+      />
     </a>
   )
 }
 
-/** The letter under the plant, as on the garden badge. Dashed when the review is not final. */
+/** The crop's letter under its plant. Dashed when the review is not final. */
 function LetterChip({
   entry,
+  delay,
   className,
 }: {
   entry: CropEntry
+  delay: number
   className?: string
 }) {
   const { status, sentiment } = entry.evaluation
@@ -103,14 +109,12 @@ function LetterChip({
       className={cn(
         'relative grid place-items-center rounded-full border-[1.5px] font-bold',
         // A solid backdrop under the tint keeps the sky from showing through.
-        'bg-[var(--crop-plant-bg,var(--surface-primary))]',
+        'bg-surface-primary',
         CROP_INK[sentiment],
         isDashed ? 'border-crop-neutral border-dashed' : CROP_BORDER[sentiment],
         className,
       )}
-      style={{
-        animation: `garden-pop .5s ease-out ${entry.index * 0.12}s both`,
-      }}
+      style={{ animation: `garden-pop .5s ease-out ${delay}s both` }}
     >
       <span
         aria-hidden
@@ -121,11 +125,11 @@ function LetterChip({
   )
 }
 
-function Findings({ entry }: { entry: CropEntry }) {
+function Findings({ entry, index }: { entry: CropEntry; index: number }) {
   const { definition, evaluation } = entry
   return (
     <div
-      id={`crop-${entry.key}`}
+      id={`crop-${definition.key}`}
       className={cn(
         'scroll-mt-24',
         '@min-[720px]:px-3 @min-[720px]:pt-5 @min-[720px]:pb-2 @min-[720px]:first:pl-0 @min-[720px]:last:pr-0',
@@ -135,6 +139,7 @@ function Findings({ entry }: { entry: CropEntry }) {
       <h3 className="flex items-center gap-2 font-bold text-paragraph-15 leading-tight">
         <LetterChip
           entry={entry}
+          delay={index * 0.12}
           className={'@max-[719.9px]:grid hidden size-[22px] text-[10px]'}
         />
         {definition.label}
@@ -191,7 +196,7 @@ function Verdict({
         <span className="flex gap-1" aria-hidden>
           {entries.map((entry) => (
             <span
-              key={entry.key}
+              key={entry.definition.key}
               title={entry.definition.label}
               className={cn(
                 'h-2 w-5 rounded-sm',

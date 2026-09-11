@@ -1,6 +1,12 @@
+import type { ResolvedCropEvaluation } from '@l2beat/config'
 import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
 import { CropBadge } from '~/components/garden/CropBadge'
-import { CROP_COLUMNS } from '~/components/garden/crops'
+import { CropEvaluationDetails } from '~/components/garden/CropFindings'
+import {
+  CROP_COLUMNS,
+  type CropDefinition,
+  getCropStatusText,
+} from '~/components/garden/crops'
 import { PercentChange } from '~/components/PercentChange'
 import { Table, TableBody, TableCell, TableRow } from '~/components/table/Table'
 import { cn } from '~/utils/cn'
@@ -18,10 +24,9 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
             <TableCell className="py-3">
               <div className="flex gap-3.5">
                 {CROP_COLUMNS.map((column, columnIndex) => (
-                  <CropBadge
+                  <EvaluatedCrop
                     key={column.key}
-                    label={column.label}
-                    note={column.note}
+                    column={column}
                     evaluation={entry.crops[column.key]}
                     delay={columnIndex * 0.09 + rowIndex * 0.05}
                   />
@@ -35,6 +40,32 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
         ))}
       </TableBody>
     </Table>
+  )
+}
+
+function EvaluatedCrop({
+  column,
+  evaluation,
+  delay,
+}: {
+  column: CropDefinition
+  evaluation: ResolvedCropEvaluation
+  delay: number
+}) {
+  const statusText = getCropStatusText(evaluation.status, evaluation.sentiment)
+  return (
+    <CropBadge
+      status={evaluation.status}
+      sentiment={evaluation.sentiment}
+      delay={delay}
+      label={`${column.label}: ${statusText}`}
+    >
+      <CropEvaluationDetails
+        label={column.label}
+        note={column.note}
+        evaluation={evaluation}
+      />
+    </CropBadge>
   )
 }
 

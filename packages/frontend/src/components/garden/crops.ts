@@ -2,12 +2,14 @@ import type {
   CropKey,
   CropSentiment,
   ProjectCropStatus,
+  ResolvedCropEvaluation,
   ResolvedCrops,
 } from '@l2beat/config'
 
-// Kept here rather than in @l2beat/config: client components import this, and
-// a value import of the config build breaks hydration (tsc emits
-// `exports.X = void 0` then assigns, which cjs-module-lexer cannot see).
+// Kept here rather than in @l2beat/config: client components import this,
+// and the browser cannot load a value from the CommonJS config build (it
+// broke hydration once, see the history of this file). crops.test.ts pins
+// the set and order of CROP_COLUMNS to config's CROP_KEYS instead.
 
 export interface CropDefinition {
   key: CropKey
@@ -75,16 +77,12 @@ export function getCropStatusText(
 /** A crop's definition and its evaluation together, in garden order. */
 export interface CropEntry {
   definition: CropDefinition
-  key: CropKey
-  evaluation: ResolvedCrops[CropKey]
-  index: number
+  evaluation: ResolvedCropEvaluation
 }
 
 export function toCropEntries(crops: ResolvedCrops): CropEntry[] {
-  return CROP_COLUMNS.map((definition, index) => ({
+  return CROP_COLUMNS.map((definition) => ({
     definition,
-    key: definition.key,
     evaluation: crops[definition.key],
-    index,
   }))
 }

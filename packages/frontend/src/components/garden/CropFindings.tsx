@@ -1,6 +1,31 @@
 import type { OsiLicense, ResolvedCropEvaluation } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
+import { CROP_INK } from './cropPalette'
+import { getCropStatusText } from './crops'
+
+/** The verdict in the crop's colour, the standing caveat, then the findings. */
+export function CropEvaluationDetails({
+  label,
+  note,
+  evaluation,
+}: {
+  label: string
+  note: string | undefined
+  evaluation: ResolvedCropEvaluation
+}) {
+  return (
+    <>
+      <p
+        className={cn('font-medium text-base', CROP_INK[evaluation.sentiment])}
+      >
+        {label}: {getCropStatusText(evaluation.status, evaluation.sentiment)}
+      </p>
+      <CropNote note={note} />
+      <CropFindings evaluation={evaluation} />
+    </>
+  )
+}
 
 /** Shared by the garden tooltip and the project page, so the two cannot drift. */
 export function CropFindings({

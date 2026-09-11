@@ -1,50 +1,42 @@
-import type { ResolvedCropEvaluation } from '@l2beat/config'
+import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import type { ReactNode } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { SentimentText } from '~/components/SentimentText'
-import { CropFindings, CropNote } from './CropFindings'
 import { CropPlant } from './CropPlant'
-import { getCropStatusText } from './crops'
 
-/** The plant with its findings behind a tooltip, for the garden table. */
+/** A plant with whatever explains it behind a tooltip. */
 export function CropBadge({
-  label,
-  note,
-  evaluation,
+  status,
+  sentiment,
   delay,
+  label,
+  children,
 }: {
-  label: string
-  note?: string
-  evaluation: ResolvedCropEvaluation
+  status: ProjectCropStatus
+  sentiment: CropSentiment
   delay: number
+  /** Read out instead of the art. */
+  label: string
+  /** The tooltip. */
+  children: ReactNode
 }) {
-  const statusText = getCropStatusText(evaluation.status, evaluation.sentiment)
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <span className="hover:-translate-y-0.5 transition-transform duration-200">
           <CropPlant
-            status={evaluation.status}
-            sentiment={evaluation.sentiment}
+            status={status}
+            sentiment={sentiment}
             delay={delay}
-            label={`${label}: ${statusText}`}
+            label={label}
             className="h-14 w-14 justify-center"
           />
         </span>
       </TooltipTrigger>
-      <TooltipContent className="max-w-[360px]">
-        <SentimentText
-          sentiment={evaluation.sentiment}
-          className="font-medium text-base"
-        >
-          {`${label}: ${statusText}`}
-        </SentimentText>
-        <CropNote note={note} />
-        <CropFindings evaluation={evaluation} />
-      </TooltipContent>
+      <TooltipContent className="max-w-[360px]">{children}</TooltipContent>
     </Tooltip>
   )
 }
