@@ -6,15 +6,15 @@ import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 export const privacyPoolsAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides which deposit funds which withdrawal, for deposits the association set approves. Everything else is public.',
+    text: 'Hides which deposit funds which withdrawal for deposits that the permissioned association set provider approves. Everything else is public.',
   },
   cells: {
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'Which approved deposit a withdrawal spends is hidden. Deposits, withdrawals and the list of approved deposits are public.',
+        'Which approved deposit a withdrawal spends is hidden. Partial withdrawals with change notes are supported and indistinguishable from full withdrawals, but cannot consume more than a single deposit.',
       advice:
-        'Withdraw through a relayer. Ragequit only untouched deposits; ragequitting a change note reveals the withdrawal it came from.',
+        'Withdraw through a relayer. Use partial withdrawals to fresh addresses. Ragequit only untouched deposits. Ragequitting a change note reveals the withdrawal it came from.',
       sources: [
         { contract: 'PrivacyPoolsEntrypoint' },
         {
@@ -28,7 +28,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposure:
         'The approved set at any block is public, so the candidates for a withdrawal are known exactly and matched by amount and timing. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. The anonymity set differs sharply between pools.',
       advice:
-        'Use a pool with a large anonymity set; withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
+        'Use a pool with a large anonymity set. Withdraw common amounts rather than everything at once, wait before withdrawing, and use a fresh address.',
       sources: [
         {
           title: 'Blockchain Privacy and Regulatory Compliance (design paper)',
@@ -41,9 +41,10 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'good',
+      sentiment: 'bad',
       exposure:
-        "Event sync runs through 0xbow's own proxy, not a public node. The relayers, Fast Relay and Cloaked, only submit the finished withdrawal.",
+        "Event sync is forced through 0xbow's own proxy with no option for a public node. On login it looks up the block of each of your deposits, then polls your wallet balance and the withdrawal receipt from the same session. The relayers, Fast Relay and Cloaked, only submit the finished withdrawal.",
+      advice: 'Use a client with an RPC setting, such as the raw SDK, pointed at your own node. Nothing in the website avoids the block lookups.',
       sources: [
         {
           title: 'Relayer request',
