@@ -1,5 +1,12 @@
+import type { Validator } from '@l2beat/validate'
 import { expect } from 'earl'
 import { type GeneratedFile, generateCropsSite } from './generateCropsSite'
+import {
+  AddressesResponseSchema,
+  AddressResponseSchema,
+  CropsResponseSchema,
+  ProjectResponseSchema,
+} from './schemas'
 import {
   ARBITRUM_CONTRACT,
   ATTESTATION_UID,
@@ -7,22 +14,24 @@ import {
   FIXTURE_INPUT,
   IMPLEMENTATION,
   LEDGER,
+  lowerAddress,
   MULTISIG,
   PROXY,
 } from './test/fixtures'
 
-const lower = (chainSpecific: string) =>
-  chainSpecific.slice(chainSpecific.indexOf(':') + 1).toLowerCase()
+const addressPath = (address: typeof FACTORY, chainId = 1) =>
+  `v1/address/${chainId}/${lowerAddress(address)}.json`
 
 describe(generateCropsSite.name, () => {
   const files = generateCropsSite(FIXTURE_INPUT)
   const paths = files.map((x) => x.path).sort()
-  const read = (path: string) => {
+  /** Parsed with the response schema, so every read is also a contract check. */
+  const read = <T>(path: string, schema: Validator<T>): T => {
     const file = files.find((x) => x.path === path)
     if (!file) {
       throw new Error(`Missing ${path}`)
     }
-    return file.body as Record<string, unknown>
+    return schema.parse(file.body)
   }
 
   it('writes the whole file set, checked by listing every path', () => {
@@ -32,11 +41,11 @@ describe(generateCropsSite.name, () => {
         'v1/project/uniswapv3.json',
         'v1/project/uniswap-v3.json',
         'v1/project/other.json',
-        `v1/address/1/${lower(FACTORY)}.json`,
-        `v1/address/1/${lower(PROXY)}.json`,
-        `v1/address/1/${lower(IMPLEMENTATION)}.json`,
-        `v1/address/1/${lower(MULTISIG)}.json`,
-        `v1/address/42161/${lower(ARBITRUM_CONTRACT)}.json`,
+        addressPath(FACTORY),
+        addressPath(PROXY),
+        addressPath(IMPLEMENTATION),
+        addressPath(MULTISIG),
+        addressPath(ARBITRUM_CONTRACT, 42161),
         'v1/addresses.json',
         'v1/openapi.json',
       ].sort(),
@@ -50,10 +59,11 @@ describe(generateCropsSite.name, () => {
   })
 
   it('writes the same project body under id and slug, checked by deep equality', () => {
-    expect(read('v1/project/uniswapv3.json')).toEqual(
-      read('v1/project/uniswap-v3.json'),
+    const byId = read('v1/project/uniswapv3.json', ProjectResponseSchema)
+    expect(byId).toEqual(
+      read('v1/project/uniswap-v3.json', ProjectResponseSchema),
     )
-    expect(read('v1/project/uniswapv3.json')).toHaveSubset({
+    expect(byId).toHaveSubset({
       id: 'uniswapv3',
       slug: 'uniswap-v3',
       inGarden: true,
@@ -68,33 +78,27 @@ describe(generateCropsSite.name, () => {
   })
 
   it('keys addresses by chain id and lowercase address, checked against the index keys', () => {
-    const { addresses } = read('v1/addresses.json') as {
-      addresses: Record<string, unknown>
-    }
+    const { addresses } = read('v1/addresses.json', AddressesResponseSchema)
     expect(Object.keys(addresses).sort()).toEqual(
       [
-        `1:${lower(FACTORY)}`,
-        `1:${lower(PROXY)}`,
-        `1:${lower(IMPLEMENTATION)}`,
-        `1:${lower(MULTISIG)}`,
-        `42161:${lower(ARBITRUM_CONTRACT)}`,
+        `1:${lowerAddress(FACTORY)}`,
+        `1:${lowerAddress(PROXY)}`,
+        `1:${lowerAddress(IMPLEMENTATION)}`,
+        `1:${lowerAddress(MULTISIG)}`,
+        `42161:${lowerAddress(ARBITRUM_CONTRACT)}`,
       ].sort(),
     )
   })
 
   it('serves the same matches per address and in the index, checked by comparing both', () => {
-    const file = read(`v1/address/1/${lower(PROXY)}.json`)
-    const { addresses } = read('v1/addresses.json') as {
-      addresses: Record<string, unknown>
-    }
-    expect(file).toHaveSubset({ chainId: 1, address: lower(PROXY) })
-    expect(file.matches).toEqual(addresses[`1:${lower(PROXY)}`])
+    const file = read(addressPath(PROXY), AddressResponseSchema)
+    const { addresses } = read('v1/addresses.json', AddressesResponseSchema)
+    expect(file).toHaveSubset({ chainId: 1, address: lowerAddress(PROXY) })
+    expect(addresses[`1:${lowerAddress(PROXY)}`]).toEqual(file.matches)
   })
 
   it('lists each project once for a shared contract, with its own contract name', () => {
-    const file = read(`v1/address/1/${lower(FACTORY)}.json`) as {
-      matches: { id: string; contractName: string }[]
-    }
+    const file = read(addressPath(FACTORY), AddressResponseSchema)
     expect(file.matches.map((x) => [x.id, x.contractName]).sort()).toEqual([
       ['other', 'SharedFactory'],
       ['uniswapv3', 'UniswapV3Factory'],
@@ -103,23 +107,20 @@ describe(generateCropsSite.name, () => {
 
   it('resolves an implementation and a permission holder to the project', () => {
     const implementation = read(
-      `v1/address/1/${lower(IMPLEMENTATION)}.json`,
-    ) as { matches: { id: string; contractName: string }[] }
+      addressPath(IMPLEMENTATION),
+      AddressResponseSchema,
+    )
     expect(implementation.matches).toEqual([
       expect.subset({ id: 'uniswapv3', contractName: 'Router' }),
     ])
-    const multisig = read(`v1/address/1/${lower(MULTISIG)}.json`) as {
-      matches: { id: string; contractName: string }[]
-    }
+    const multisig = read(addressPath(MULTISIG), AddressResponseSchema)
     expect(multisig.matches).toEqual([
       expect.subset({ id: 'uniswapv3', contractName: 'Governance' }),
     ])
   })
 
   it('gives a match the crops summary, page link and attestation, checked on the attested project', () => {
-    const file = read(`v1/address/1/${lower(MULTISIG)}.json`) as {
-      matches: unknown[]
-    }
+    const file = read(addressPath(MULTISIG), AddressResponseSchema)
     expect(file.matches[0]).toEqual({
       id: 'uniswapv3',
       slug: 'uniswap-v3',
@@ -137,9 +138,7 @@ describe(generateCropsSite.name, () => {
   })
 
   it('marks a red-cropped, unattested project without a page, checked in crops.json', () => {
-    const { projects } = read('v1/crops.json') as {
-      projects: Record<string, unknown>[]
-    }
+    const { projects } = read('v1/crops.json', CropsResponseSchema)
     expect(projects.map((x) => x.id)).toEqual(['other', 'uniswapv3'])
     expect(projects[0]).toEqual(
       expect.subset({

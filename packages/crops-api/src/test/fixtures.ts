@@ -1,18 +1,32 @@
 import type { ProjectCrops, ProjectScalingInfo } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { CropsAttestationsMeta } from '../garden/getAttestationsMeta'
 import type { CropsProject, GeneratorInput } from '../generateCropsSite'
+import type { CropsAttestationsMeta } from '../schemas'
 
 // Plain fixtures shared by the generator and the OpenAPI agreement tests:
 // contracts, a proxy with an implementation, a permission holder, a shared
 // contract, a project without a page, and an attested and an unattested project.
 
-export const FACTORY = 'eth:0x1F98431c8aD98523631AE4a59f267346ea31F984'
-export const PROXY = 'eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc'
-export const IMPLEMENTATION = 'eth:0x03893a7c7463AE47D46bc7f091665f1893656003'
-export const MULTISIG = 'eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730'
-export const ARBITRUM_CONTRACT =
-  'arb1:0x1F98431c8aD98523631AE4a59f267346ea31F984'
+export const FACTORY = ChainSpecificAddress(
+  'eth:0x1F98431c8aD98523631AE4a59f267346ea31F984',
+)
+export const PROXY = ChainSpecificAddress(
+  'eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc',
+)
+export const IMPLEMENTATION = ChainSpecificAddress(
+  'eth:0x03893a7c7463AE47D46bc7f091665f1893656003',
+)
+export const MULTISIG = ChainSpecificAddress(
+  'eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730',
+)
+export const ARBITRUM_CONTRACT = ChainSpecificAddress(
+  'arb1:0x1F98431c8aD98523631AE4a59f267346ea31F984',
+)
+
+/** How the generated site keys an address, without the chain prefix. */
+export function lowerAddress(address: ChainSpecificAddress): string {
+  return ChainSpecificAddress.address(address).toLowerCase()
+}
 
 const ALL_GOOD: ProjectCrops = {
   censorshipResistance: { sentiment: 'good' },
@@ -56,25 +70,18 @@ export const UNISWAP: CropsProject = {
   contracts: {
     addresses: {
       ethereum: [
-        { address: ChainSpecificAddress(FACTORY), name: 'UniswapV3Factory' },
+        { address: FACTORY, name: 'UniswapV3Factory' },
         {
-          address: ChainSpecificAddress(PROXY),
+          address: PROXY,
           name: 'Router',
-          upgradeability: {
-            implementations: [ChainSpecificAddress(IMPLEMENTATION)],
-          },
+          upgradeability: { implementations: [IMPLEMENTATION] },
         },
       ],
     },
   },
   permissions: {
     ethereum: {
-      actors: [
-        {
-          name: 'Governance',
-          accounts: [{ address: ChainSpecificAddress(MULTISIG) }],
-        },
-      ],
+      actors: [{ name: 'Governance', accounts: [{ address: MULTISIG }] }],
     },
   },
 }
@@ -87,15 +94,8 @@ export const OTHER: CropsProject = {
   crops: ONE_BAD,
   contracts: {
     addresses: {
-      ethereum: [
-        { address: ChainSpecificAddress(FACTORY), name: 'SharedFactory' },
-      ],
-      arbitrum: [
-        {
-          address: ChainSpecificAddress(ARBITRUM_CONTRACT),
-          name: 'ArbitrumThing',
-        },
-      ],
+      ethereum: [{ address: FACTORY, name: 'SharedFactory' }],
+      arbitrum: [{ address: ARBITRUM_CONTRACT, name: 'ArbitrumThing' }],
     },
   },
 }
