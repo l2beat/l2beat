@@ -2,7 +2,6 @@ import type { Validator } from '@l2beat/validate'
 import { expect } from 'earl'
 import { type GeneratedFile, generateCropsSite } from './generateCropsSite'
 import {
-  AddressesResponseSchema,
   AddressResponseSchema,
   CropsResponseSchema,
   ProjectResponseSchema,
@@ -46,7 +45,6 @@ describe(generateCropsSite.name, () => {
         addressPath(IMPLEMENTATION),
         addressPath(MULTISIG),
         addressPath(ARBITRUM_CONTRACT, 42161),
-        'v1/addresses.json',
         'v1/openapi.json',
       ].sort(),
     )
@@ -77,24 +75,9 @@ describe(generateCropsSite.name, () => {
     })
   })
 
-  it('keys addresses by chain id and lowercase address, checked against the index keys', () => {
-    const { addresses } = read('v1/addresses.json', AddressesResponseSchema)
-    expect(Object.keys(addresses).sort()).toEqual(
-      [
-        `1:${lowerAddress(FACTORY)}`,
-        `1:${lowerAddress(PROXY)}`,
-        `1:${lowerAddress(IMPLEMENTATION)}`,
-        `1:${lowerAddress(MULTISIG)}`,
-        `42161:${lowerAddress(ARBITRUM_CONTRACT)}`,
-      ].sort(),
-    )
-  })
-
-  it('serves the same matches per address and in the index, checked by comparing both', () => {
+  it('keys an address file by chain id and lowercase address, checked in path and body', () => {
     const file = read(addressPath(PROXY), AddressResponseSchema)
-    const { addresses } = read('v1/addresses.json', AddressesResponseSchema)
     expect(file).toHaveSubset({ chainId: 1, address: lowerAddress(PROXY) })
-    expect(addresses[`1:${lowerAddress(PROXY)}`]).toEqual(file.matches)
   })
 
   it('lists each project once for a shared contract, with its own contract name', () => {

@@ -8,7 +8,7 @@ Every response is a static file generated from the L2BEAT repository, so it is s
 
 ## Address lookups
 
-Address files are keyed by EIP-155 chain id and lowercase address, both in the path and in the `addresses` map of `/v1/addresses.json` (as `chainId:address`). Lowercase the address before you build the URL. A contract, a proxy implementation behind it, and a permission holder such as a governance multisig all resolve to the protocol. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.
+Address files are keyed by EIP-155 chain id and lowercase address. Lowercase the address before you build the URL. A contract, a proxy implementation behind it, and a permission holder such as a governance multisig all resolve to the protocol. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.
 
 {{ATTESTATION_NETWORK_SECTION}}
 

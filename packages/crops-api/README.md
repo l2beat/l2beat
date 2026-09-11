@@ -62,10 +62,9 @@ a person has to do this once:
 HOST=https://crops-staging.l2beat.com
 curl -si $HOST/v1/crops.json | head -20
 curl -si $HOST/v1/project/uniswapv3.json | head -20
-curl -si $HOST/v1/addresses.json | head -20
 curl -si $HOST/v1/openapi.json | head -20
 curl -si $HOST/ | head -20                     # Swagger UI
-# pick any chainId/address pair from addresses.json for a hit
+# any reviewed contract address is a hit
 curl -si $HOST/v1/address/1/0x000000000022d473030f116ddee9f6b43ac78ba3.json | head -20
 # a missing address is an empty 404
 curl -si $HOST/v1/address/1/0x0000000000000000000000000000000000000000.json
