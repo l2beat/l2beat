@@ -127,6 +127,27 @@ describe(extractAddressesFromTokenConfig.name, () => {
     })
   })
 
+  it('should not expose aggregate escrow addresses as token addresses', () => {
+    const tokenAddress = EthereumAddress.random()
+    const escrowAddresses = [EthereumAddress.random(), EthereumAddress.random()]
+
+    const result = extractAddressesFromTokenConfig(
+      mockToken({
+        type: 'balanceOfEscrows',
+        address: tokenAddress,
+        escrowAddresses,
+        chain: 'arbitrum',
+        sinceTimestamp: 0,
+        decimals: 18,
+      }),
+    )
+
+    expect(result).toEqual({
+      addresses: [{ address: tokenAddress, chain: 'arbitrum' }],
+      escrows: [],
+    })
+  })
+
   it('should return empty array for types with no addresses', () => {
     const token = mockToken({
       type: 'calculation',

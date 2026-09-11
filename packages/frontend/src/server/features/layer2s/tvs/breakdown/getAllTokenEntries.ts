@@ -157,9 +157,15 @@ type FormulaWithMeta =
   | (Omit<Extract<Formula, { type: 'calculation' }>, 'arguments'> & {
       arguments: FormulaWithMeta[]
     })
+  | (Omit<Extract<Formula, { type: 'balanceOfEscrows' }>, 'escrowAddresses'> & {
+      addressMeta: AddressData
+      escrowCount: number
+    })
   | (Extract<
       Formula,
-      { type: 'circulatingSupply' | 'totalSupply' | 'starknetTotalSupply' }
+      {
+        type: 'circulatingSupply' | 'totalSupply' | 'starknetTotalSupply'
+      }
     > & {
       addressMeta: AddressData
     })
@@ -203,6 +209,21 @@ function withExplorerUrl(
           withExplorerUrl(arg, chains, projectContracts),
         ),
       }
+    case 'balanceOfEscrows': {
+      const { escrowAddresses, ...rest } = formula
+      return {
+        ...rest,
+        escrowCount: escrowAddresses.length,
+        addressMeta: processAddress(
+          {
+            address: formula.address,
+            chain: formula.chain,
+          },
+          chains,
+          projectContracts,
+        ),
+      }
+    }
     case 'circulatingSupply':
     case 'totalSupply':
     case 'starknetTotalSupply': {

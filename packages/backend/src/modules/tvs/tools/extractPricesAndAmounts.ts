@@ -1,6 +1,7 @@
 import type {
   AmountFormula,
   BalanceOfEscrowAmountFormula,
+  BalanceOfEscrowsAmountFormula,
   CalculationFormula,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
@@ -248,6 +249,7 @@ function clampAmountToChainRange(
 export function createAmountConfig(
   formula:
     | BalanceOfEscrowAmountFormula
+    | BalanceOfEscrowsAmountFormula
     | TotalSupplyAmountFormula
     | StarknetTotalSupplyAmountFormula
     | StarknetBalanceOfAmountFormula
@@ -263,6 +265,17 @@ export function createAmountConfig(
           formula.chain,
           formula.decimals.toString(),
           formula.escrowAddress,
+        ]),
+        ...formula,
+      }
+    case 'balanceOfEscrows':
+      return {
+        id: generateConfigurationId([
+          formula.type,
+          formula.address,
+          formula.chain,
+          formula.decimals.toString(),
+          ...[...formula.escrowAddresses].sort(),
         ]),
         ...formula,
       }
