@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x2d817fb85e1dcf69bb1f0faf8dd3bad197a2d682
+
+# Diff at Thu, 10 Sep 2026 12:52:45 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1787820501
+- current timestamp: 1789044680
+
+## Description
+
+L1Block: past upgrade record from 2025-05-12 backfilled, not a new upgrade.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787820501 (main branch discovery), not current.
+
+```diff
+    contract L1Block (zircuit:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.$pastUpgrades.0:
++        ["2025-05-12T16:00:01.000Z","0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",["zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0xa618ee499deb0e2706496228adf8529d17b13eb2
 
 # Diff at Thu, 27 Aug 2026 08:51:59 GMT:
