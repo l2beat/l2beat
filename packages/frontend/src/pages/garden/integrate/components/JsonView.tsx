@@ -3,7 +3,7 @@ import {
   type ElisionKind,
   type ExampleValue,
   getElision,
-} from '../getIntegrateExamples'
+} from '../exampleValue'
 
 const TOKEN = {
   key: 'text-[#0d5aa7] dark:text-[#7cc4ff]',

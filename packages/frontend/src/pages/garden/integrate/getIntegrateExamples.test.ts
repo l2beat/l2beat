@@ -6,7 +6,8 @@ import type {
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { CROPS_API_URL } from './content'
-import { buildIntegrateExamples, elided } from './getIntegrateExamples'
+import { elided } from './exampleValue'
+import { buildIntegrateExamples } from './getIntegrateExamples'
 
 const ATTESTATION_UID =
   '0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d'
