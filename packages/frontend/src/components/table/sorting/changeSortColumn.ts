@@ -6,6 +6,7 @@ const CHANGE_SORT_HEADERS: Record<PercentageChangePeriod, string> = {
   '1D': '1D%',
   '7D': '7D%',
   last24h: '24H%',
+  last7d: '7D%',
   last30d: '30D%',
 }
 

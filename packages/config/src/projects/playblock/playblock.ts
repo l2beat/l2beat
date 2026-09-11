@@ -12,7 +12,7 @@ export const playblock: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: 'nova',
   discovery,
-  additionalBadges: [BADGES.L3ParentChain.Nova, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.L3ParentChain.Nova, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

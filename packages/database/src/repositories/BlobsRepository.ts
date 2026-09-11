@@ -134,7 +134,7 @@ export class BlobsRepository extends BaseRepository {
     const result = await this.db.deleteFrom('Blob').executeTakeFirst()
 
     const resetIdQuery =
-      sql`ALTER SEQUENCE public."Blob_id_seq" RESTART WITH 1`.compile(this.db)
+      sql`ALTER SEQUENCE "Blob_id_seq" RESTART WITH 1`.compile(this.db)
     await this.db.executeQuery(resetIdQuery)
 
     return Number(result.numDeletedRows)

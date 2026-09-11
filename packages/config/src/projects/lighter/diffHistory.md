@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xaa52707e8c3be3c79db5869df938934f20f92ed9
+
+# Diff at Thu, 10 Sep 2026 12:08:42 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f7783cd20948876b6d5829b7513d3f4c00170b8a block: 1788432281
+- current timestamp: 1789042027
+
+## Description
+
+New verifier deployed (no sources published yet).
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        68
++        69
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x6a9f25dcb10a9155c210780fa3cb38f68ba814f2a1c593ce45855a2ad56d10b1"
++        "0xd6bd16e71487e79b2b73fdcd4ac6274826c2eea864e60a68d0527898b6aa449e"
+      values.$implementation:
+-        "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C"
++        "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A"
+      values.getTarget:
+-        "eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C"
++        "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A"
+      implementationNames.eth:0xA437933830d65a61F8Beaa7D4C65f424bBe90b4C:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x048f41ce81f16e49a2ebd4287ec80541f4bfdd33
 
 # Diff at Thu, 03 Sep 2026 10:46:39 GMT:
