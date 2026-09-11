@@ -42,7 +42,7 @@ export function L2SummaryRollupsTable({ entries }: Props) {
     [isLoading],
   )
 
-  const table = useTable({
+  const table = useTable('L2SummaryRollupsTable', {
     data: tableEntries,
     columns,
     getCoreRowModel: getCoreRowModel(),

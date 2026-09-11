@@ -83,7 +83,7 @@ export function InteropTransfersTableView({
     setPagination((prev) => ({ ...prev, pageIndex: 0 }))
   }
 
-  const table = useTable<TransferRow>({
+  const table = useTable<TransferRow>('InteropTransfersTableView', {
     data: fetchedItems,
     columns,
     getCoreRowModel: getCoreRowModel(),

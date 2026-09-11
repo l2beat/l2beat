@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function ProgramHashesTable({ entries }: Props) {
-  const table = useTable({
+  const table = useTable('ProgramHashesTable', {
     data: entries,
     columns: programHashesColumns,
     getCoreRowModel: getCoreRowModel(),

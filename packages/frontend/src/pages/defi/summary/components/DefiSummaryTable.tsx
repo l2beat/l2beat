@@ -87,7 +87,7 @@ const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
 export function DefiSummaryTable({ entries }: { entries: DefiSummaryEntry[] }) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
 
-  const table = useTable({
+  const table = useTable('DefiSummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
