@@ -28,8 +28,8 @@ const GREY_STATUSES: ProjectCropStatus[] = ['notReviewed', 'fullyTransparent']
 export interface ResolvedCropEvaluation {
   sentiment: CropSentiment
   status: ProjectCropStatus
-  /** Only ever set on the Open source crop, and only when the license is confirmed. */
-  license: OsiLicense | undefined
+  /** Only ever set on the Open source crop, and only when the license is confirmed. Absent from JSON otherwise. */
+  license?: OsiLicense | undefined
   points: string[]
   missing: string[]
   additionalConsiderations: string[]

@@ -1,11 +1,33 @@
-import { v } from '@l2beat/validate'
+import type {
+  CropSentiment,
+  ProjectCropStatus,
+  ResolvedCropEvaluation,
+  ResolvedCrops,
+} from '@l2beat/config'
+import { type Validator, v } from '@l2beat/validate'
 
-// One validator per response shape. The OpenAPI document is built from these,
-// and every generated file is parsed with them in tests, so spec and data
-// cannot drift.
+// The validators are the API contract: the OpenAPI document is built from
+// them, the TS types below are inferred from them, and every generated file
+// is parsed with them in tests. Objects are strict so a field config adds
+// but the spec does not know fails the test instead of leaking.
+
+export type CropsAttestationsMeta = v.infer<typeof AttestationsMetaSchema>
+export type CropsApiAttestation = v.infer<typeof AttestationSchema>
+export type CropsApiProject = v.infer<typeof ProjectSchema>
+/** Sentiment and status only - the prose lives on the per-project endpoint. */
+export type CropsApiSummary = v.infer<typeof CropsSummarySchema>
+export type AddressMatch = v.infer<typeof AddressMatchSchema>
+
+// `Expect<Equals<X, Y>>` fails to compile unless X and Y are the same type,
+// so an enum below cannot silently gain or lose a value config has.
+type Expect<T extends true> = T
+type Equals<A, B> =
+  (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
+    ? true
+    : false
 
 const AttestationsMetaSchema = v
-  .object({
+  .strictObject({
     network: v.string().describe('EAS network the attestation lives on.'),
     chainId: v.number(),
     isTestnet: v
@@ -19,7 +41,7 @@ const AttestationsMetaSchema = v
       .describe('Null until the first attestation is published.'),
     current: v
       .union([
-        v.object({
+        v.strictObject({
           uid: v.string(),
           revision: v.number(),
           reviewedAt: v.number().describe('Unix seconds.'),
@@ -40,13 +62,21 @@ const CropStatusSchema = v.enum([
   'notReviewed',
   'fullyTransparent',
 ])
+type _SentimentMatchesConfig = Expect<
+  Equals<v.infer<typeof CropSentimentSchema>, CropSentiment>
+>
+type _StatusMatchesConfig = Expect<
+  Equals<v.infer<typeof CropStatusSchema>, ProjectCropStatus>
+>
 
-const CropEvaluationSchema = v
-  .object({
+// Annotated with the config types so a crop key or field the schema misses
+// fails to compile.
+const CropEvaluationSchema: Validator<ResolvedCropEvaluation> = v
+  .strictObject({
     sentiment: CropSentimentSchema,
     status: CropStatusSchema,
     license: v
-      .object({
+      .strictObject({
         spdxId: v.string(),
         name: v.string(),
         url: v.string(),
@@ -61,8 +91,8 @@ const CropEvaluationSchema = v
   })
   .describe('CropEvaluation')
 
-const CropsSchema = v
-  .object({
+const CropsSchema: Validator<ResolvedCrops> = v
+  .strictObject({
     censorshipResistance: CropEvaluationSchema,
     openSource: CropEvaluationSchema,
     privacy: CropEvaluationSchema,
@@ -70,13 +100,13 @@ const CropsSchema = v
   })
   .describe('Crops')
 
-const CropSummarySchema = v.object({
+const CropSummarySchema = v.strictObject({
   sentiment: CropSentimentSchema,
   status: CropStatusSchema,
 })
 
 const CropsSummarySchema = v
-  .object({
+  .strictObject({
     censorshipResistance: CropSummarySchema,
     openSource: CropSummarySchema,
     privacy: CropSummarySchema,
@@ -85,7 +115,7 @@ const CropsSummarySchema = v
   .describe('CropsSummary')
 
 const AttestationSchema = v
-  .object({
+  .strictObject({
     uid: v.string(),
     revision: v.number(),
     reviewedAt: v.number().describe('Unix seconds.'),
@@ -110,7 +140,7 @@ const projectFields = {
     .describe('Null unless the project is in the attested set.'),
 }
 
-const ProjectSchema = v.object(projectFields).describe('Project')
+const ProjectSchema = v.strictObject(projectFields).describe('Project')
 
 const stampFields = {
   attestations: AttestationsMetaSchema,
@@ -119,15 +149,15 @@ const stampFields = {
 }
 
 export const CropsResponseSchema = v
-  .object({ ...stampFields, projects: v.array(ProjectSchema) })
+  .strictObject({ ...stampFields, projects: v.array(ProjectSchema) })
   .describe('CropsResponse')
 
 export const ProjectResponseSchema = v
-  .object({ ...stampFields, ...projectFields })
+  .strictObject({ ...stampFields, ...projectFields })
   .describe('ProjectResponse')
 
 export const AddressMatchSchema = v
-  .object({
+  .strictObject({
     id: v.string(),
     slug: v.string(),
     name: v.string(),
@@ -137,15 +167,14 @@ export const AddressMatchSchema = v
       .describe('The contract or permission the address was matched as.'),
     crops: CropsSummarySchema,
     attestation: v.union([
-      v.object({ uid: v.string(), revision: v.number() }),
+      v.strictObject({ uid: v.string(), revision: v.number() }),
       v.null(),
     ]),
   })
   .describe('AddressMatch')
-export type AddressMatch = v.infer<typeof AddressMatchSchema>
 
 export const AddressResponseSchema = v
-  .object({
+  .strictObject({
     ...stampFields,
     chainId: v.number(),
     address: v.string().describe('Lowercase.'),
@@ -156,7 +185,7 @@ export const AddressResponseSchema = v
   .describe('AddressResponse')
 
 export const AddressesResponseSchema = v
-  .object({
+  .strictObject({
     ...stampFields,
     addresses: v
       .record(v.string(), v.array(AddressMatchSchema))

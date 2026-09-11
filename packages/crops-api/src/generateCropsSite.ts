@@ -3,18 +3,18 @@ import type {
   IndexedProject,
 } from './garden/buildCropsAddressIndex'
 import { buildCropsAddressIndex } from './garden/buildCropsAddressIndex'
-import type { CropsAttestationsMeta } from './garden/getAttestationsMeta'
-import type {
-  CropsApiProject,
-  CropsSourceProject,
-} from './garden/resolveCropsProjects'
+import type { CropsSourceProject } from './garden/resolveCropsProjects'
 import {
   resolveCropsProject,
   resolveCropsProjects,
   toCropsSummary,
 } from './garden/resolveCropsProjects'
 import { buildOpenApiDocument } from './openapi'
-import type { AddressMatch } from './schemas'
+import type {
+  AddressMatch,
+  CropsApiProject,
+  CropsAttestationsMeta,
+} from './schemas'
 
 /** A project with crops plus whatever the address index and page path need. */
 export interface CropsProject extends CropsSourceProject, IndexedProject {}

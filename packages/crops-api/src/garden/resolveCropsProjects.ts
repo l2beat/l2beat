@@ -1,13 +1,16 @@
 import type {
-  CropKey,
   ProjectCrops,
   ProjectPrivacyInfo,
   ProjectScalingInfo,
-  ResolvedCropEvaluation,
   ResolvedCrops,
 } from '@l2beat/config'
 import { CROPS } from '@l2beat/config'
-import type { CropsAttestationsMeta } from './getAttestationsMeta'
+import type {
+  CropsApiAttestation,
+  CropsApiProject,
+  CropsApiSummary,
+  CropsAttestationsMeta,
+} from '../schemas'
 import { getGardenProjectPath } from './getGardenProjectPath'
 
 // Copied from the frontend's getCropsProjects until the garden helpers move
@@ -28,33 +31,6 @@ export interface CropsSourceProject {
   privacyInfo?: ProjectPrivacyInfo | undefined
   scalingInfo?: ProjectScalingInfo | undefined
 }
-
-export interface CropsApiAttestation {
-  uid: string
-  revision: number
-  reviewedAt: number
-  explorerUrl: string
-}
-
-export interface CropsApiProject {
-  id: string
-  slug: string
-  name: string
-  /** Null for projects without a page. */
-  href: string | null
-  crops: ResolvedCrops
-  /** False while any crop is red - see `qualifiesForGarden`. */
-  inGarden: boolean
-  attested: boolean
-  /** One attestation names the whole set, so this is the same for every attested project. */
-  attestation: CropsApiAttestation | null
-}
-
-/** Sentiment and status only - the prose lives on the per-project endpoint. */
-export type CropsApiSummary = Record<
-  CropKey,
-  Pick<ResolvedCropEvaluation, 'sentiment' | 'status'>
->
 
 export function resolveCropsProjects(
   projects: CropsSourceProject[],

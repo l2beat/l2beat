@@ -1,7 +1,7 @@
 import type { ProjectCrops, ProjectScalingInfo } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { CropsAttestationsMeta } from '../garden/getAttestationsMeta'
 import type { CropsProject, GeneratorInput } from '../generateCropsSite'
+import type { CropsAttestationsMeta } from '../schemas'
 
 // Plain fixtures shared by the generator and the OpenAPI agreement tests:
 // contracts, a proxy with an implementation, a permission holder, a shared
