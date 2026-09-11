@@ -22,7 +22,7 @@ export function NotFoundPage(props: AppLayoutProps) {
             </p>
           </div>
           <Button variant="fill" asChild>
-            <PlainLink href={HOME_LINK}>Go to L2BEAT</PlainLink>
+            <PlainLink href={HOME_LINK}>Go to main page</PlainLink>
           </Button>
         </PrimaryCard>
       </SideNavLayout>
