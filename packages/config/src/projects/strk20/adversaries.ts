@@ -10,7 +10,7 @@ const POOL =
 export const strk20Adversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides amounts and senders inside the pool, and the link between deposit and withdrawal. Deposits, withdrawals and first contacts are public.',
+    text: 'Hides amounts and senders inside the pool, and the link between deposit and withdrawal. First contacts are public.',
   },
   cells: {
     publicObserver: {
