@@ -33,7 +33,7 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'warning',
       exposure:
-        "Each address receives once and is spent once, change goes to another address of the same account, and every exit is relayed through one shared contract by few submitters, so the set of exits is trivially enumerable. The anonymity set is small.",
+        'Each address receives once and is spent once, change goes to another address of the same account, and every exit is relayed through one shared contract by few submitters, so the set of exits is trivially enumerable. The anonymity set is small.',
       advice:
         'Wait before spending, exit one address at a time, and send to destinations that have no link to you.',
       sources: [

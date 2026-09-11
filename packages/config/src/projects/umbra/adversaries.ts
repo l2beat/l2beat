@@ -28,8 +28,7 @@ export const umbraAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       exposure:
         'The anonymity set is very small since the onchain announcement ties every transaction to this protocol.',
-      advice:
-        'Use a stealth address protocol with a larger anonymity set.',
+      advice: 'Use a stealth address protocol with a larger anonymity set.',
       sources: [
         { contract: 'StealthKeyRegistry' },
         {

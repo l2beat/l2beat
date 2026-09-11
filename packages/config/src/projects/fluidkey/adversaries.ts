@@ -33,7 +33,7 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'warning',
       exposure:
-        "Every receiving address is a Safe deployed and relayed by the service, and the ones using auto-earn can be listed in full from a single contract, on every chain, without any key. That gives the analyst the whole population to work from. Hide Trail moves funds through two centralized exchanges, which breaks the public trail but hands it to them.",
+        'Every receiving address is a Safe deployed and relayed by the service, and the ones using auto-earn can be listed in full from a single contract, on every chain, without any key. That gives the analyst the whole population to work from. Hide Trail moves funds through two centralized exchanges, which breaks the public trail but hands it to them.',
       advice:
         'Wait before spending, spend from one Safe at a time, and send to destinations that have no link to you.',
       sources: [
