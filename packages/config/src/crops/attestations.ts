@@ -56,7 +56,10 @@ export const CROP_ATTESTATIONS = data as CropAttestationLedgers
 export function getCurrentCropAttestation(
   network: AttestationNetwork,
 ): CropAttestation | undefined {
-  return CROP_ATTESTATIONS[network]?.live.find(
-    (x) => x.schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase(),
-  )
+  return CROP_ATTESTATIONS[network]?.live.find((x) => isCurrentSchema(x.schema))
+}
+
+/** Case-insensitive: EAS returns uids in lowercase, config may not. */
+export function isCurrentSchema(schema: string): boolean {
+  return schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase()
 }
