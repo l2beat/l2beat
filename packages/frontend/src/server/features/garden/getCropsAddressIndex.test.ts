@@ -1,7 +1,7 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { buildCropsAddressIndex } from './getCropsAddressIndex'
-import { type ChainLookup, parseCropsAddressWith } from './parseCropsAddress'
+import { type ChainLookup, parseCropsAddress } from './parseCropsAddress'
 
 const FACTORY = 'eth:0x1F98431c8aD98523631AE4a59f267346ea31F984'
 const PROXY = 'eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc'
@@ -131,7 +131,7 @@ describe(buildCropsAddressIndex.name, () => {
   })
 })
 
-describe(parseCropsAddressWith.name, () => {
+describe(parseCropsAddress.name, () => {
   const chains: ChainLookup = {
     byChainId: new Map([
       [1, 'ethereum'],
@@ -139,7 +139,7 @@ describe(parseCropsAddressWith.name, () => {
     ]),
     longNames: new Set(['ethereum', 'arbitrum']),
   }
-  const parse = (input: string) => parseCropsAddressWith(input, chains)
+  const parse = (input: string) => parseCropsAddress(input, chains)
   const expected = {
     chain: 'ethereum',
     address: EthereumAddress(FACTORY.slice(4)),

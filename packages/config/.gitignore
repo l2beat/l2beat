@@ -2,3 +2,4 @@ node_modules
 build
 .env
 src/projects/_templates/**/shapes/
+src/db.sqlite

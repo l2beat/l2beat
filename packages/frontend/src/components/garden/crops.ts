@@ -1,4 +1,9 @@
-import type { CropKey, CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import type {
+  CropKey,
+  CropSentiment,
+  ProjectCropStatus,
+  ResolvedCrops,
+} from '@l2beat/config'
 
 // Kept here rather than in @l2beat/config: client components import this, and
 // a value import of the config build breaks hydration (tsc emits
@@ -49,4 +54,37 @@ export const CROP_STATUS_LABELS: Record<ProjectCropStatus, string> = {
   partiallyReviewed: 'Partially reviewed',
   notReviewed: 'Not reviewed',
   fullyTransparent: 'Fully transparent',
+}
+
+export function getCropStatusText(
+  status: ProjectCropStatus,
+  sentiment: CropSentiment,
+): string {
+  if (status === 'notReviewed') {
+    return CROP_STATUS_LABELS.notReviewed
+  }
+  if (status === 'fullyTransparent') {
+    return CROP_STATUS_LABELS.fullyTransparent
+  }
+  if (status === 'partiallyReviewed') {
+    return `${CROP_SENTIMENT_LABELS[sentiment]} · ${CROP_STATUS_LABELS.partiallyReviewed}`
+  }
+  return CROP_SENTIMENT_LABELS[sentiment]
+}
+
+/** A crop's definition and its evaluation together, in garden order. */
+export interface CropEntry {
+  definition: CropDefinition
+  key: CropKey
+  evaluation: ResolvedCrops[CropKey]
+  index: number
+}
+
+export function toCropEntries(crops: ResolvedCrops): CropEntry[] {
+  return CROP_COLUMNS.map((definition, index) => ({
+    definition,
+    key: definition.key,
+    evaluation: crops[definition.key],
+    index,
+  }))
 }

@@ -1,31 +1,35 @@
-import { CROP_ATTESTATION_DATA } from './attestationData'
-import { ATTESTATION_SCHEMA_UID, type AttestationNetwork } from './eas'
+import data from './attestationData.json'
+import {
+  ATTESTATION_SCHEMA_UID,
+  type AttestationNetwork,
+  type HexString,
+} from './eas'
 
 export interface CropAttestation {
-  uid: string
+  uid: HexString
   /** Recorded because EAS only accepts a revocation naming the original schema. */
-  schema: string
+  schema: HexString
   /** Bumped every time the attested set changes. Starts at 1. */
   revision: number
   reviewedAt: number
   /** Sorted. */
   projectIds: string[]
-  txHash: string
+  txHash: HexString
   block: number
 }
 
 export interface RevokedCropAttestation {
-  uid: string
-  schema: string
+  uid: HexString
+  schema: HexString
   revision: number
   projectIds: string[]
-  revokedTxHash: string
+  revokedTxHash: HexString
   revokedBlock: number
 }
 
 export interface CropAttestationLedger {
   network: AttestationNetwork
-  attester: string
+  attester: HexString
   /** Block of the earliest attestation - the default start for `--scan`. */
   firstBlock: number
   /**
@@ -36,15 +40,17 @@ export interface CropAttestationLedger {
   revoked: RevokedCropAttestation[]
 }
 
-export const CROP_ATTESTATIONS: Partial<
+export type CropAttestationLedgers = Partial<
   Record<AttestationNetwork, CropAttestationLedger>
-> = CROP_ATTESTATION_DATA
+>
 
-export function getCropAttestationLedger(
-  network: AttestationNetwork,
-): CropAttestationLedger | undefined {
-  return CROP_ATTESTATIONS[network]
-}
+/**
+ * A cache of onchain state written by `l2b crops-attest --execute`, committed
+ * so the API needs no RPC call. JSON cannot carry the hex and network literal
+ * types, so it is asserted once here; `l2b crops-verify` checks it against
+ * the chain.
+ */
+export const CROP_ATTESTATIONS = data as CropAttestationLedgers
 
 /** Live and under the current schema. Anything else in `live` awaits revocation. */
 export function getCurrentCropAttestation(
@@ -53,11 +59,4 @@ export function getCurrentCropAttestation(
   return CROP_ATTESTATIONS[network]?.live.find(
     (x) => x.schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase(),
   )
-}
-
-export function isProjectAttested(
-  network: AttestationNetwork,
-  projectId: string,
-): boolean {
-  return !!getCurrentCropAttestation(network)?.projectIds.includes(projectId)
 }

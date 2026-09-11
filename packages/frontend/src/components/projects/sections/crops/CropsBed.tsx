@@ -1,19 +1,18 @@
 import type { ResolvedCrops } from '@l2beat/config'
+import { CropFindings, CropNote } from '~/components/garden/CropFindings'
+import { CropPlant } from '~/components/garden/CropPlant'
 import {
-  CropFindings,
-  CropNote,
-  CropPlantArt,
-  getCropStatusText,
-} from '~/pages/garden/components/CropBadge'
-import { cn } from '~/utils/cn'
+  CROP_BORDER,
+  CROP_INK,
+  CROP_SWATCH,
+  CROP_TINT,
+} from '~/components/garden/cropPalette'
 import {
   type CropEntry,
-  SENTIMENT_BORDER,
-  SENTIMENT_SWATCH,
-  SENTIMENT_TEXT,
-  SENTIMENT_TINT,
+  getCropStatusText,
   toCropEntries,
-} from './cropsShared'
+} from '~/components/garden/crops'
+import { cn } from '~/utils/cn'
 
 // Layout follows the section's own width (container queries), because the
 // side nav collapsing under 1200px makes a landscape tablet wider than a 13"
@@ -77,7 +76,7 @@ function Plant({ entry }: { entry: CropEntry }) {
       aria-label={`${definition.label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
       className="flex flex-col items-center gap-1.5 pb-2"
     >
-      <CropPlantArt
+      <CropPlant
         status={evaluation.status}
         sentiment={evaluation.sentiment}
         delay={index * 0.12}
@@ -105,10 +104,8 @@ function LetterChip({
         'relative grid place-items-center rounded-full border-[1.5px] font-bold',
         // A solid backdrop under the tint keeps the sky from showing through.
         'bg-[var(--crop-plant-bg,var(--surface-primary))]',
-        SENTIMENT_TEXT[sentiment],
-        isDashed
-          ? 'border-crop-neutral border-dashed'
-          : SENTIMENT_BORDER[sentiment],
+        CROP_INK[sentiment],
+        isDashed ? 'border-crop-neutral border-dashed' : CROP_BORDER[sentiment],
         className,
       )}
       style={{
@@ -117,10 +114,7 @@ function LetterChip({
     >
       <span
         aria-hidden
-        className={cn(
-          'absolute inset-0 rounded-full',
-          SENTIMENT_TINT[sentiment],
-        )}
+        className={cn('absolute inset-0 rounded-full', CROP_TINT[sentiment])}
       />
       <span className="relative">{entry.definition.letter}</span>
     </span>
@@ -148,7 +142,7 @@ function Findings({ entry }: { entry: CropEntry }) {
       <p
         className={cn(
           'mt-0.5 font-semibold text-[11px] uppercase tracking-[.14em]',
-          SENTIMENT_TEXT[evaluation.sentiment],
+          CROP_INK[evaluation.sentiment],
         )}
       >
         {getCropStatusText(evaluation.status, evaluation.sentiment)}
@@ -201,7 +195,7 @@ function Verdict({
               title={entry.definition.label}
               className={cn(
                 'h-2 w-5 rounded-sm',
-                SENTIMENT_SWATCH[entry.evaluation.sentiment],
+                CROP_SWATCH[entry.evaluation.sentiment],
               )}
             />
           ))}

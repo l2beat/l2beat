@@ -1,18 +1,7 @@
-import type {
-  CropSentiment,
-  OsiLicense,
-  ProjectCropStatus,
-  ResolvedCropEvaluation,
-} from '@l2beat/config'
-import type { CSSProperties, ReactNode } from 'react'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
-import { SentimentText } from '~/components/SentimentText'
+import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import type { CSSProperties } from 'react'
 import { cn } from '~/utils/cn'
-import { CROP_SENTIMENT_LABELS, CROP_STATUS_LABELS } from '../crops'
+import { CROP_PLANT_COLOR } from './cropPalette'
 
 type PlantShape = 'flower' | 'bud' | 'wilt'
 
@@ -23,228 +12,29 @@ const PLANT_SHAPE: Record<CropSentiment, PlantShape> = {
   bad: 'wilt',
 }
 
-const PALETTE: Record<CropSentiment, { plant: string }> = {
-  good: { plant: 'text-crop-good' },
-  warning: { plant: 'text-crop-warning' },
-  bad: { plant: 'text-crop-bad' },
-  neutral: { plant: 'text-crop-neutral' },
-}
-
-interface Props {
-  label: string
-  note?: string
-  evaluation: ResolvedCropEvaluation
-  delay: number
-}
-
-export function CropBadge({ label, note, evaluation, delay }: Props) {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <span className="hover:-translate-y-0.5 transition-transform duration-200">
-          <CropPlantBadge
-            label={label}
-            status={evaluation.status}
-            sentiment={evaluation.sentiment}
-            delay={delay}
-          />
-        </span>
-      </TooltipTrigger>
-      <TooltipContent className="max-w-[360px]">
-        <SentimentText
-          sentiment={evaluation.sentiment}
-          className="font-medium text-base"
-        >
-          {`${label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
-        </SentimentText>
-        <CropNote note={note} />
-        <CropFindings evaluation={evaluation} />
-      </TooltipContent>
-    </Tooltip>
-  )
-}
-
-/** The plant without the tooltip, for where the findings are on the page. */
-export function CropPlantBadge({
-  label,
+/** The plant at any size; height follows the 34:40 viewBox. */
+export function CropPlant({
   status,
   sentiment,
   delay,
-  compact,
+  width = 46,
+  label,
+  className,
 }: {
-  label: string
   status: ProjectCropStatus
   sentiment: CropSentiment
   delay: number
-  compact?: boolean
+  width?: number
+  /** Read out instead of the art. */
+  label?: string
+  className?: string
 }) {
   return (
     <span
-      className={cn(
-        'flex items-end justify-center',
-        compact ? 'size-8' : 'h-14 w-14',
-        PALETTE[sentiment].plant,
-      )}
-      aria-label={`${label}: ${getCropStatusText(status, sentiment)}`}
+      className={cn('flex items-end', CROP_PLANT_COLOR[sentiment], className)}
+      aria-label={label}
     >
-      <CropPlant
-        status={status}
-        sentiment={sentiment}
-        delay={delay}
-        compact={compact}
-      />
-    </span>
-  )
-}
-
-/** Shared by the garden tooltip and the project page, so the two cannot drift. */
-export function CropFindings({
-  evaluation,
-}: {
-  evaluation: ResolvedCropEvaluation
-}) {
-  return (
-    <>
-      <CropSection
-        title="What's good"
-        items={evaluation.points}
-        license={evaluation.license}
-      />
-      <CropSection title="What is missing" items={evaluation.missing} />
-      <CropSection
-        title="Additional considerations"
-        items={evaluation.additionalConsiderations}
-      />
-      <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
-    </>
-  )
-}
-
-function CropLicenseText({ license }: { license: OsiLicense }) {
-  return (
-    <>
-      {'License: '}
-      <a
-        href={license.url}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="text-link underline"
-      >
-        {license.name}
-      </a>
-      <span className="text-secondary">{` (${license.spdxId}, OSI approved)`}</span>
-    </>
-  )
-}
-
-/** The standing caveat for a crop - see `CropDefinition.note`. */
-export function CropNote({
-  note,
-  className,
-}: {
-  note: string | undefined
-  className?: string
-}) {
-  if (!note) {
-    return null
-  }
-  return <p className={cn('mt-1.5 text-secondary', className)}>{note}</p>
-}
-
-function CropSection({
-  title,
-  items,
-  license,
-}: {
-  title: string
-  items: string[]
-  /** Rendered as the first bullet. */
-  license?: OsiLicense | undefined
-}) {
-  if (!license && items.length === 0) {
-    return null
-  }
-  return (
-    <>
-      <p className="mt-2.5 font-semibold text-[10px] text-secondary uppercase tracking-wider">
-        {title}
-      </p>
-      <ul className="mt-1 flex flex-col gap-1">
-        {license && (
-          <CropBullet>
-            <CropLicenseText license={license} />
-          </CropBullet>
-        )}
-        {items.map((item) => (
-          <CropBullet key={item}>{item}</CropBullet>
-        ))}
-      </ul>
-    </>
-  )
-}
-
-function CropBullet({ children }: { children: ReactNode }) {
-  return (
-    <li className="flex gap-2 text-primary">
-      <span
-        aria-hidden
-        className="mt-[7px] size-1 shrink-0 rounded-full bg-current opacity-50"
-      />
-      <span>{children}</span>
-    </li>
-  )
-}
-
-export function getCropStatusText(
-  status: ProjectCropStatus,
-  sentiment: CropSentiment,
-): string {
-  if (status === 'notReviewed') {
-    return CROP_STATUS_LABELS.notReviewed
-  }
-  if (status === 'fullyTransparent') {
-    return CROP_STATUS_LABELS.fullyTransparent
-  }
-  if (status === 'partiallyReviewed') {
-    return `${CROP_SENTIMENT_LABELS[sentiment]} · ${CROP_STATUS_LABELS.partiallyReviewed}`
-  }
-  return CROP_SENTIMENT_LABELS[sentiment]
-}
-
-/** The plant without the chip, for the legend. */
-export function CropPlantSample({
-  status,
-  sentiment,
-  delay,
-}: {
-  status: ProjectCropStatus
-  sentiment: CropSentiment
-  delay: number
-}) {
-  return (
-    <span className={cn('flex h-10 items-end', PALETTE[sentiment].plant)}>
-      <CropPlant status={status} sentiment={sentiment} delay={delay} />
-    </span>
-  )
-}
-
-/** The bare plant at any size, for layouts where it is the hero rather than a badge. */
-export function CropPlantArt({
-  status,
-  sentiment,
-  delay,
-  width,
-  className,
-}: {
-  status: ProjectCropStatus
-  sentiment: CropSentiment
-  delay: number
-  width: number
-  className?: string
-}) {
-  return (
-    <span className={cn('flex items-end', PALETTE[sentiment].plant, className)}>
-      <CropPlant
+      <PlantArt
         status={status}
         sentiment={sentiment}
         delay={delay}
@@ -254,19 +44,16 @@ export function CropPlantArt({
   )
 }
 
-function CropPlant({
+function PlantArt({
   status,
   sentiment,
   delay,
-  compact,
   width,
 }: {
   status: ProjectCropStatus
   sentiment: CropSentiment
   delay: number
-  compact?: boolean
-  /** Overrides the badge sizes; height follows the 34:40 viewBox. */
-  width?: number
+  width: number
 }) {
   const grow: CSSProperties = {
     transformBox: 'fill-box',
@@ -295,12 +82,11 @@ function CropPlant({
   })
 
   const shape = PLANT_SHAPE[sentiment]
-  const svgWidth = width ?? (compact ? 27 : 46)
 
   return (
     <svg
-      width={svgWidth}
-      height={(svgWidth * 40) / 34}
+      width={width}
+      height={(width * 40) / 34}
       viewBox="0 0 34 40"
       className="block overflow-visible"
       aria-hidden

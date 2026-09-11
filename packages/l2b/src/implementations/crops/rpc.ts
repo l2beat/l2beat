@@ -1,4 +1,4 @@
-import type { AttestationNetworkConfig } from '@l2beat/config/build/crops/eas'
+import type { AttestationNetworkConfig } from '@l2beat/config'
 
 const DEFAULT_RPCS: Record<string, string> = {
   sepolia: 'https://ethereum-sepolia-rpc.publicnode.com',

@@ -1,5 +1,8 @@
-// Deep-imported by the frontend, so kept dependency-free: the schema uid is
+// Imported by the frontend, so kept dependency-free: the schema uid is
 // hardcoded here and recomputed by the l2b tests, which fail if it drifts.
+
+/** Typed so viem's `Hex` and `Address` accept these values without a cast. */
+export type HexString = `0x${string}`
 
 /**
  * One attestation covers the whole reviewed set - the project ids, when they
@@ -14,13 +17,13 @@ export const ATTESTATION_SCHEMA = [
   'uint32 revision',
 ].join(',')
 
-export const ATTESTATION_SCHEMA_RESOLVER =
+export const ATTESTATION_SCHEMA_RESOLVER: HexString =
   '0x0000000000000000000000000000000000000000'
 
 export const ATTESTATION_SCHEMA_REVOCABLE = true
 
 /** keccak256(abi.encodePacked(schema, resolver, revocable)), as SchemaRegistry computes it. */
-export const ATTESTATION_SCHEMA_UID =
+export const ATTESTATION_SCHEMA_UID: HexString =
   '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb'
 
 export type AttestationNetwork = 'sepolia' | 'ethereum'
@@ -28,8 +31,8 @@ export type AttestationNetwork = 'sepolia' | 'ethereum'
 export interface AttestationNetworkConfig {
   name: AttestationNetwork
   chainId: number
-  eas: string
-  schemaRegistry: string
+  eas: HexString
+  schemaRegistry: HexString
   explorer: string
   isTestnet: boolean
 }
@@ -62,7 +65,7 @@ export const ATTESTATION_NETWORK: AttestationNetwork = 'sepolia'
 export function getAttestationNetwork(
   name: string,
 ): AttestationNetworkConfig | undefined {
-  return ATTESTATION_NETWORKS[name as AttestationNetwork]
+  return Object.values(ATTESTATION_NETWORKS).find((x) => x.name === name)
 }
 
 export function getAttestationUrl(

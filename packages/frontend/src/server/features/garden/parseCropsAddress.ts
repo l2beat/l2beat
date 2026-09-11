@@ -14,7 +14,8 @@ export interface ChainLookup {
 
 let chains: ChainLookup | undefined
 
-async function loadChains(): Promise<ChainLookup> {
+/** Memoized for the process, like getContractUtils. */
+export async function getChainLookup(): Promise<ChainLookup> {
   if (!chains) {
     const projects = await ps.getProjects({ select: ['chainConfig'] })
     const byChainId = new Map<number, string>()
@@ -30,18 +31,12 @@ async function loadChains(): Promise<ChainLookup> {
   return chains
 }
 
-export async function parseCropsAddress(
-  input: string,
-): Promise<ParsedCropsAddress | undefined> {
-  return parseCropsAddressWith(input, await loadChains())
-}
-
 /**
  * Accepts an ERC-3770 short name (`eth:0x…`), a long chain name
  * (`ethereum:0x…`) or a chain id (`1:0x…`). Returns undefined rather than
  * throwing, so one bad entry in a batch does not fail the whole request.
  */
-export function parseCropsAddressWith(
+export function parseCropsAddress(
   input: string,
   chains: ChainLookup,
 ): ParsedCropsAddress | undefined {

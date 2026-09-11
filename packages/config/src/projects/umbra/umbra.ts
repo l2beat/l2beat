@@ -1,5 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { CROPS } from '../../common/crops'
+import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -143,8 +143,8 @@ export const umbra: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        CROPS.infiniteExitWindow,
-        CROPS.passesWalkawayTest(
+        CROP_NOTES.infiniteExitWindow,
+        CROP_NOTES.passesWalkawayTest(
           'nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed.',
         ),
         'Nobody can censor an individual user - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',

@@ -8,7 +8,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
+import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -140,17 +140,9 @@ export async function getPrivacyProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  // First: the CROPS verdict is a reading of the whole protocol.
-  const gardenCrops = getProjectGardenCrops(details.crops)
-  if (gardenCrops) {
-    sections.push({
-      type: 'GardenCropsSection',
-      props: {
-        id: 'crops',
-        title: 'CROPS',
-        ...gardenCrops,
-      },
-    })
+  const gardenCropsSection = getGardenCropsSection(details.crops)
+  if (gardenCropsSection) {
+    sections.push(gardenCropsSection)
   }
 
   if (details.detailedDescription) {

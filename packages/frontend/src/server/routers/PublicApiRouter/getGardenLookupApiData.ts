@@ -5,7 +5,10 @@ import {
   getCropsProjects,
   toCropsSummary,
 } from '~/server/features/garden/getCropsProjects'
-import { parseCropsAddress } from '~/server/features/garden/parseCropsAddress'
+import {
+  getChainLookup,
+  parseCropsAddress,
+} from '~/server/features/garden/parseCropsAddress'
 
 export interface GardenLookupMatch {
   id: string
@@ -25,23 +28,22 @@ export interface GardenLookupResult {
 }
 
 export async function getGardenLookupApiData(queries: string[]) {
-  const [index, projects] = await Promise.all([
+  const [index, projects, chains] = await Promise.all([
     getCropsAddressIndex(),
     getCropsProjects(),
+    getChainLookup(),
   ])
   const projectById = new Map(projects.map((x) => [x.id, x]))
 
-  const results: GardenLookupResult[] = []
-  for (const query of queries) {
-    const parsed = await parseCropsAddress(query)
+  const results: GardenLookupResult[] = queries.map((query) => {
+    const parsed = parseCropsAddress(query, chains)
     if (!parsed) {
-      results.push({
+      return {
         query,
         matches: [],
         error:
           'Expected chain:address, where chain is a short name (eth), a long name (ethereum) or a chain id (1).',
-      })
-      continue
+      }
     }
 
     const matches = index
@@ -69,8 +71,8 @@ export async function getGardenLookupApiData(queries: string[]) {
         ]
       })
 
-    results.push({ query, matches })
-  }
+    return { query, matches }
+  })
 
   return { attestations: getAttestationsMeta(), results }
 }

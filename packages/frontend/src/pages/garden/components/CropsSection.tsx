@@ -1,4 +1,6 @@
 import type { ResolvedCropEvaluation } from '@l2beat/config'
+import { CropBadge } from '~/components/garden/CropBadge'
+import { CROP_COLUMNS, type CropDefinition } from '~/components/garden/crops'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import {
@@ -6,8 +8,6 @@ import {
   type CropCriteria,
   REFERENCE_SLOT,
 } from '../cropCriteria'
-import { CROP_COLUMNS, type CropDefinition } from '../crops'
-import { CropBadge } from './CropBadge'
 import { SectionHeading } from './SectionHeading'
 
 export function CropsSection() {

@@ -1,7 +1,4 @@
-import {
-  ATTESTATION_NETWORK,
-  ATTESTATION_NETWORKS,
-} from '@l2beat/config/build/crops/eas'
+import { ATTESTATION_NETWORK, ATTESTATION_NETWORKS } from '@l2beat/config'
 import { boolean, flag, option, optional } from 'cmd-ts'
 import { AttestationNetworkValue, HttpUrl } from '../../commands/types'
 

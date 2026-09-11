@@ -1,13 +1,14 @@
 import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { CropsAttestationsMeta } from '~/server/features/garden/getCropsProjects'
 import { GardenPageHeader } from '../components/GardenPageHeader'
 import { SectionHeading } from '../components/SectionHeading'
 import { SproutIcon } from '../components/SproutIcon'
-import { GARDEN_PATH } from '../submit/links'
+import { GARDEN_PATH } from '../paths'
 import { BadgeStudio } from './components/BadgeStudio'
 import { CodeSnippet, RequestHeader } from './components/CodeSnippet'
 import { WalletMock } from './components/WalletMock'
@@ -31,7 +32,7 @@ const CONSUMERS_ID = 'for-apps'
 const PROTOCOLS_ID = 'for-protocols'
 
 // Pasted into other sites, so it must link to production even from a preview.
-const BADGE_HREF = `https://l2beat.com${GARDEN_PATH}`
+const BADGE_HREF = `${PRODUCTION_ORIGIN}${GARDEN_PATH}`
 
 export function IntegrateCropsPage({
   attestations,

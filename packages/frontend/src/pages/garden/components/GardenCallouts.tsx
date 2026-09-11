@@ -1,4 +1,4 @@
-import { INTEGRATE_CROPS_PATH, SUBMIT_PROTOCOL_PATH } from '../submit/links'
+import { INTEGRATE_CROPS_PATH, SUBMIT_PROTOCOL_PATH } from '../paths'
 import { CalloutCard } from './CalloutCard'
 
 export function GardenCallouts() {

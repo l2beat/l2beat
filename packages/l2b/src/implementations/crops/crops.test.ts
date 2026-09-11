@@ -1,9 +1,9 @@
-import type { CropAttestation } from '@l2beat/config/build/crops/attestations'
+import type { CropAttestation } from '@l2beat/config'
 import {
   ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
-} from '@l2beat/config/build/crops/eas'
+} from '@l2beat/config'
 import { expect } from 'earl'
 import type { Hex } from 'viem'
 import { assertAnonymous, findIdentifyingStrings } from './anonymity'
@@ -25,12 +25,12 @@ describe('crop attestations', () => {
   describe('schema', () => {
     it('the uid committed in config matches the schema string', () => {
       expect(() => assertSchemaUid()).not.toThrow()
-      expect(computeSchemaUid()).toEqual(ATTESTATION_SCHEMA_UID as Hex)
+      expect(computeSchemaUid()).toEqual(ATTESTATION_SCHEMA_UID)
     })
 
     it('a different schema hashes to a different uid', () => {
       expect(computeSchemaUid('string projectId')).not.toEqual(
-        ATTESTATION_SCHEMA_UID as Hex,
+        ATTESTATION_SCHEMA_UID,
       )
     })
 
@@ -41,7 +41,7 @@ describe('crop attestations', () => {
           '0x0000000000000000000000000000000000000000',
           false,
         ),
-      ).not.toEqual(ATTESTATION_SCHEMA_UID as Hex)
+      ).not.toEqual(ATTESTATION_SCHEMA_UID)
     })
 
     it('attests the set and nothing about a rating', () => {
@@ -121,7 +121,7 @@ describe('crop attestations', () => {
     ): OnchainAttestation {
       return {
         uid,
-        schema: ATTESTATION_SCHEMA_UID as Hex,
+        schema: ATTESTATION_SCHEMA_UID,
         attester: '0x0000000000000000000000000000000000000001',
         time: 1700000000,
         revocationTime: 0,
@@ -182,9 +182,7 @@ describe('crop attestations', () => {
       expect(plan.removed).toEqual([])
       expect(plan.payload?.revision).toEqual(3)
       expect(plan.payload?.reviewedAt).toEqual(now)
-      expect(plan.revoke).toEqual([
-        { uid, schema: ATTESTATION_SCHEMA_UID as Hex },
-      ])
+      expect(plan.revoke).toEqual([{ uid, schema: ATTESTATION_SCHEMA_UID }])
     })
 
     it('replaces the attestation when a project leaves the set', () => {
@@ -215,9 +213,7 @@ describe('crop attestations', () => {
       })
       expect(plan.kind).toEqual('changed')
       expect(plan.payload?.projectIds).toEqual(IDS)
-      expect(plan.revoke).toEqual([
-        { uid, schema: ATTESTATION_SCHEMA_UID as Hex },
-      ])
+      expect(plan.revoke).toEqual([{ uid, schema: ATTESTATION_SCHEMA_UID }])
     })
 
     it('revokes under the schema an attestation was made with, not the current one', () => {

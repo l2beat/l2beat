@@ -1,6 +1,5 @@
-import type { CropAttestation } from '@l2beat/config/build/crops/attestations'
-import { ATTESTATION_SCHEMA_UID } from '@l2beat/config/build/crops/eas'
-import type { Hex } from 'viem'
+import type { CropAttestation } from '@l2beat/config'
+import { ATTESTATION_SCHEMA_UID } from '@l2beat/config'
 import type { OnchainAttestation, Revocation } from './easClient'
 import { type CropPayload, decodePayload, diffSet, setMatches } from './payload'
 
@@ -51,7 +50,7 @@ export function planAttestation(input: PlanInput): AttestPlan {
 
   const revoke: Revocation[] = live
     .filter((x) => x.entry.uid !== keeper?.entry.uid)
-    .map((x) => ({ uid: x.entry.uid as Hex, schema: x.onchain.schema }))
+    .map((x) => ({ uid: x.entry.uid, schema: x.onchain.schema }))
 
   const { added, removed } = diffSet(input.projectIds, coveredIds(input.ledger))
 

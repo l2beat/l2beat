@@ -1,9 +1,6 @@
 import type { LogLevel } from '@l2beat/backend-tools'
-import type { AttestationNetworkConfig } from '@l2beat/config/build/crops/eas'
-import {
-  ATTESTATION_NETWORKS,
-  getAttestationNetwork,
-} from '@l2beat/config/build/crops/eas'
+import type { AttestationNetworkConfig } from '@l2beat/config'
+import { ATTESTATION_NETWORKS, getAttestationNetwork } from '@l2beat/config'
 import {
   assert,
   ChainSpecificAddress,

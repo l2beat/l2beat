@@ -21,7 +21,7 @@ import {
 import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
-import { getProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
+import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -400,17 +400,9 @@ export async function getL2ProjectEntry(
 
   const projectWithIcon = withProjectIcon(project)
 
-  // First: the CROPS verdict is a reading of the whole protocol.
-  const gardenCrops = getProjectGardenCrops(project.crops)
-  if (gardenCrops) {
-    sections.push({
-      type: 'GardenCropsSection',
-      props: {
-        id: 'crops',
-        title: 'CROPS',
-        ...gardenCrops,
-      },
-    })
+  const gardenCropsSection = getGardenCropsSection(project.crops)
+  if (gardenCropsSection) {
+    sections.push(gardenCropsSection)
   }
 
   if (l2TvsSection && tvsProjectStats) {

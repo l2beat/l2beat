@@ -1,8 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import {
-  BASE_URL,
-  getCropsProjects,
-} from '~/server/features/garden/getCropsProjects'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
+import { getCropsProjects } from '~/server/features/garden/getCropsProjects'
 import { ps } from '~/server/projects'
 import {
   getGardenCropsApiData,
@@ -43,15 +41,15 @@ export async function getIntegrateExamples(): Promise<IntegrateExamples> {
 
   return {
     lookup: {
-      request: `${BASE_URL}/api/garden/project/lookup?addresses=${query}`,
+      request: `${PRODUCTION_ORIGIN}/api/garden/project/lookup?addresses=${query}`,
       response: toExample(lookup, ['attestations']),
     },
     project: {
-      request: `${BASE_URL}/api/garden/project/${slug}`,
+      request: `${PRODUCTION_ORIGIN}/api/garden/project/${slug}`,
       response: toExample(project, ['attestations']),
     },
     crops: {
-      request: `${BASE_URL}/api/garden/crops`,
+      request: `${PRODUCTION_ORIGIN}/api/garden/crops`,
       response: toExample(crops, ['projects']),
     },
   }

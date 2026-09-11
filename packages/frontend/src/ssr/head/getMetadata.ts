@@ -1,3 +1,4 @@
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { env } from '~/env'
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
@@ -44,7 +45,7 @@ export function getMetadata(
     url: baseUrl + strippedPath,
     openGraph: getOpenGraph(manifest, baseUrl, openGraph),
     // We want canonical to always point to the production URL
-    canonicalUrl: 'https://l2beat.com' + strippedPath,
+    canonicalUrl: PRODUCTION_ORIGIN + strippedPath,
     ...rest,
   }
 }
@@ -61,7 +62,7 @@ function getOpenGraph(
 }
 
 function getBaseUrl() {
-  if (env.DEPLOYMENT_ENV === 'production') return 'https://l2beat.com'
+  if (env.DEPLOYMENT_ENV === 'production') return PRODUCTION_ORIGIN
   if (env.DEPLOYMENT_ENV === 'staging') return 'https://fe-stag.l2beat.com'
   if (env.COOLIFY_URL) return env.COOLIFY_URL
   return 'http://localhost:3000'
