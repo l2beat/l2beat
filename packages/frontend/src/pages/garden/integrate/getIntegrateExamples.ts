@@ -1,13 +1,13 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
-import { getCropsProjects } from '~/server/features/garden/getCropsProjects'
-import { ps } from '~/server/projects'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
-  getGardenCropsApiData,
-  getGardenCropsProjectApiData,
-} from '~/server/routers/PublicApiRouter/getGardenCropsApiData'
-import { getGardenLookupApiData } from '~/server/routers/PublicApiRouter/getGardenLookupApiData'
-import type { IntegrateEndpoint } from './content'
+  type CropsApiProject,
+  type CropsAttestationsMeta,
+  getAttestationsMeta,
+  getCropsProjects,
+  toCropsSummary,
+} from '~/server/features/garden/getCropsProjects'
+import { ps } from '~/server/projects'
+import { CROPS_API_URL, ENDPOINTS, type IntegrateEndpoint } from './content'
 
 export interface IntegrateExample {
   request: string
@@ -17,59 +17,147 @@ export interface IntegrateExample {
 
 export type IntegrateExamples = Record<IntegrateEndpoint, IntegrateExample>
 
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+export interface SampleContract {
+  chainId: number
+  address: string
+  name: string
+}
+
+/** A reviewed protocol and one of its contracts, shown in every example. */
+export interface IntegrateSample {
+  project: CropsApiProject
+  contract: SampleContract
+}
+
+const ETHEREUM_CHAIN_ID = 1
+
+/** Keeps the docs rendering when no reviewed project has an Ethereum contract. */
+const PLACEHOLDER_CONTRACT: SampleContract = {
+  chainId: ETHEREUM_CHAIN_ID,
+  address: '0x0000000000000000000000000000000000000000',
+  name: 'Contract',
+}
 
 /**
- * Taken from the API itself rather than typed into the docs, so the examples
- * cannot drift. The sample is a protocol both attested and in the garden.
+ * Built from the same config the generator reads rather than typed into the
+ * docs, so the sample protocol and its ratings cannot drift. The shapes
+ * mirror crops-api's schemas until the garden helpers move into config.
  */
 export async function getIntegrateExamples(): Promise<IntegrateExamples> {
-  const projects = await getCropsProjects()
-  const sample =
-    projects.find((x) => x.attested && x.inGarden) ??
-    projects.find((x) => x.attested) ??
-    projects[0]
-  const slug = sample?.slug ?? 'tornado-cash'
-  const address = sample ? await getSampleAddress(sample.id) : ZERO_ADDRESS
-  const query = `eth:${address}`
+  const sample = await pickSample(await getCropsProjects())
+  return buildIntegrateExamples(
+    sample,
+    getAttestationsMeta(),
+    Math.floor(Date.now() / 1000),
+  )
+}
 
-  const [lookup, project, crops] = await Promise.all([
-    getGardenLookupApiData([query]),
-    getGardenCropsProjectApiData(slug),
-    getGardenCropsApiData(),
-  ])
+export function buildIntegrateExamples(
+  { project, contract }: IntegrateSample,
+  attestations: CropsAttestationsMeta,
+  generatedAt: number,
+): IntegrateExamples {
+  const stamp = { attestations, generatedAt, commit: ELIDED_VALUE }
+  const address = contract.address.toLowerCase()
+  const match = {
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    href: project.href,
+    contractName: contract.name,
+    crops: toCropsSummary(project.crops),
+    attestation: project.attestation
+      ? { uid: project.attestation.uid, revision: project.attestation.revision }
+      : null,
+  }
 
   return {
-    lookup: {
-      request: `${PRODUCTION_ORIGIN}/api/garden/project/lookup?addresses=${query}`,
-      response: toExample(lookup, ['attestations']),
+    address: {
+      request: toRequestUrl('address', {
+        chainId: String(contract.chainId),
+        address,
+      }),
+      response: toExample(
+        { ...stamp, chainId: contract.chainId, address, matches: [match] },
+        ['attestations'],
+      ),
     },
     project: {
-      request: `${PRODUCTION_ORIGIN}/api/garden/project/${slug}`,
-      response: toExample(project, ['attestations']),
+      request: toRequestUrl('project', { id: project.slug }),
+      response: toExample({ ...stamp, ...project }, ['attestations']),
     },
     crops: {
-      request: `${PRODUCTION_ORIGIN}/api/garden/crops`,
-      response: toExample(crops, ['projects']),
+      request: toRequestUrl('crops'),
+      response: toExample({ ...stamp, projects: [project] }, ['projects']),
     },
   }
 }
 
-async function getSampleAddress(projectId: string): Promise<string> {
-  const [project] = await ps.getProjects({
-    ids: [ProjectId(projectId)],
+/** The documented path with its `{param}` placeholders filled in, on the static host. */
+function toRequestUrl(
+  endpoint: IntegrateEndpoint,
+  params: Record<string, string> = {},
+): string {
+  const doc = ENDPOINTS.find((x) => x.key === endpoint)
+  if (!doc) {
+    throw new Error(`Undocumented endpoint ${endpoint}`)
+  }
+  const path = doc.path.replace(/\{(\w+)\}/g, (_, name: string) => {
+    const value = params[name]
+    if (value === undefined) {
+      throw new Error(`Missing ${name} for ${doc.path}`)
+    }
+    return value
+  })
+  return `${CROPS_API_URL}${path}`
+}
+
+/** Prefers a protocol both attested and in the garden that has an Ethereum contract. */
+async function pickSample(
+  projects: CropsApiProject[],
+): Promise<IntegrateSample> {
+  const contracts = await loadEthereumContracts()
+  const candidates = [
+    ...projects.filter((x) => x.attested && x.inGarden),
+    ...projects.filter((x) => x.attested),
+    ...projects,
+  ]
+  for (const project of candidates) {
+    const contract = contracts.get(project.id)
+    if (contract) {
+      return { project, contract }
+    }
+  }
+  const project = candidates[0]
+  if (!project) {
+    throw new Error('No reviewed project to build the CROPS examples from')
+  }
+  return { project, contract: PLACEHOLDER_CONTRACT }
+}
+
+async function loadEthereumContracts(): Promise<Map<string, SampleContract>> {
+  const projects = await ps.getProjects({
+    where: ['crops'],
     optional: ['contracts'],
   })
-  const contract = project?.contracts?.addresses.ethereum?.[0]
-  if (!contract) {
-    return ZERO_ADDRESS
+  const contracts = new Map<string, SampleContract>()
+  for (const project of projects) {
+    const contract = project.contracts?.addresses.ethereum?.[0]
+    if (contract) {
+      contracts.set(project.id, {
+        chainId: ETHEREUM_CHAIN_ID,
+        address: ChainSpecificAddress.address(contract.address),
+        name: contract.name,
+      })
+    }
   }
-  return contract.address.slice(contract.address.indexOf(':') + 1)
+  return contracts
 }
 
 // Sentinels no real value can equal, swapped for elisions once stringified.
 const ELIDED_OBJECT = ' elided object'
 const ELIDED_ARRAY = ' elided array'
+const ELIDED_VALUE = ' elided value'
 const AND_MORE = ' and more'
 
 /** JSON with the keys in `elide` collapsed and every list of prose cut to its first entry. */
@@ -94,5 +182,6 @@ function toExample(value: unknown, elide: string[]): string {
   return json
     .replaceAll(JSON.stringify(ELIDED_OBJECT), '{ … }')
     .replaceAll(JSON.stringify(ELIDED_ARRAY), '[ … ]')
+    .replaceAll(JSON.stringify(ELIDED_VALUE), '"…"')
     .replaceAll(JSON.stringify(AND_MORE), '…')
 }

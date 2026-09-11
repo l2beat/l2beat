@@ -2,21 +2,58 @@ import type { Imp, Parser } from './validate.js'
 
 export const SCHEMA_VERSION = 'https://json-schema.org/draft-07/schema#'
 
+export interface JsonSchemaOptions {
+  /**
+   * Where `$ref`s point, e.g. `#/components/schemas/` for a document whose
+   * caller moves `definitions` under OpenAPI components.
+   */
+  refPrefix?: string
+}
+
 export function toJsonSchema(
   schema: Parser<unknown>,
   topLevel: Record<string, Parser<unknown>> = {},
+  options: JsonSchemaOptions = {},
 ): object {
-  const remaining = Object.entries(topLevel) as [string, Imp<unknown>][]
-  const state: State = {
-    refs: new Map(remaining.map(([k, v]) => [v, `#/definitions/${k}`])),
-    lazyCounter: 0,
-    remaining,
-    skipRefs: false,
-  }
+  const state = createState(topLevel, options)
   const decomposed = decompose(schema as Imp<unknown>, state)
   if (state.remaining.length === 0) {
     return { $schema: SCHEMA_VERSION, ...decomposed }
   }
+  return {
+    $schema: SCHEMA_VERSION,
+    definitions: decomposeRemaining(state),
+    ...decomposed,
+  }
+}
+
+/**
+ * Only the named schemas, for a caller that embeds them in its own document,
+ * e.g. under OpenAPI `components.schemas` with a matching `refPrefix`.
+ */
+export function toJsonSchemaDefinitions(
+  topLevel: Record<string, Parser<unknown>>,
+  options: JsonSchemaOptions = {},
+): Record<string, object> {
+  return decomposeRemaining(createState(topLevel, options))
+}
+
+function createState(
+  topLevel: Record<string, Parser<unknown>>,
+  options: JsonSchemaOptions,
+): State {
+  const refPrefix = options.refPrefix ?? '#/definitions/'
+  const remaining = Object.entries(topLevel) as [string, Imp<unknown>][]
+  return {
+    refs: new Map(remaining.map(([k, v]) => [v, `${refPrefix}${k}`])),
+    refPrefix,
+    lazyCounter: 0,
+    remaining,
+    skipRefs: false,
+  }
+}
+
+function decomposeRemaining(state: State): Record<string, object> {
   const definitions: Record<string, object> = {}
   while (state.remaining.length > 0) {
     // biome-ignore lint/style/noNonNullAssertion: It's there
@@ -25,16 +62,13 @@ export function toJsonSchema(
     state.skipRefs = true
     definitions[key] = decompose(unpacked, state)
   }
-  return {
-    $schema: SCHEMA_VERSION,
-    definitions,
-    ...decomposed,
-  }
+  return definitions
 }
 
 interface State {
   remaining: [string, Imp<unknown>][]
   refs: Map<Imp<unknown>, string>
+  refPrefix: string
   lazyCounter: number
   skipRefs: boolean
 }
@@ -138,7 +172,7 @@ function decomposeCore(
     case 'lazy': {
       state.lazyCounter++
       const key = `__lazy_${state.lazyCounter}`
-      const $ref = `#/definitions/${key}`
+      const $ref = `${state.refPrefix}${key}`
       state.refs.set(imp, $ref)
       state.remaining.push([key, imp])
       return { $ref }

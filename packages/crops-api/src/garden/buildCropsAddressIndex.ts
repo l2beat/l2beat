@@ -1,5 +1,8 @@
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { ps } from '~/server/projects'
+
+// Copied from the frontend until the garden helpers move into config. The
+// ProjectService call and the memoization are gone, and instead of a lookup
+// it returns every entry: the generator writes one file per address.
 
 export interface CropsAddressMatch {
   projectId: string
@@ -7,8 +10,11 @@ export interface CropsAddressMatch {
   targetName: string
 }
 
-export interface CropsAddressIndex {
-  lookup(chain: string, address: EthereumAddress): CropsAddressMatch[]
+export interface CropsAddressEntry {
+  /** Long chain name. */
+  chain: string
+  address: EthereumAddress
+  matches: CropsAddressMatch[]
 }
 
 // Only the fields the index needs, so tests can supply plain fixtures.
@@ -35,29 +41,13 @@ export interface IndexedProject {
     | undefined
 }
 
-let index: CropsAddressIndex | undefined
-
 /**
  * Address -> reviewed project, from the contracts and permissions of every
- * project with crops. Keyed by long chain name and checksummed address, and
- * memoized for the process like getContractUtils.
+ * project with crops. Keyed by long chain name and checksummed address.
  */
-export async function getCropsAddressIndex(): Promise<CropsAddressIndex> {
-  if (index) {
-    return index
-  }
-  const projects = await ps.getProjects({
-    where: ['crops'],
-    select: ['crops'],
-    optional: ['contracts', 'permissions'],
-  })
-  index = buildCropsAddressIndex(projects)
-  return index
-}
-
 export function buildCropsAddressIndex(
   projects: IndexedProject[],
-): CropsAddressIndex {
+): CropsAddressEntry[] {
   const byChain = new Map<string, Map<EthereumAddress, CropsAddressMatch[]>>()
 
   function add(
@@ -113,9 +103,7 @@ export function buildCropsAddressIndex(
     }
   }
 
-  return {
-    lookup(chain, address) {
-      return byChain.get(chain)?.get(address) ?? []
-    },
-  }
+  return [...byChain].flatMap(([chain, byAddress]) =>
+    [...byAddress].map(([address, matches]) => ({ chain, address, matches })),
+  )
 }

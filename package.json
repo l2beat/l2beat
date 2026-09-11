@@ -25,6 +25,7 @@
     "build:dependencies:discovery": "turbo run build --filter=@l2beat/discovery^...",
     "build:dependencies:config": "turbo run build --filter=@l2beat/config^...",
     "build:dependencies:public-api": "turbo run build --filter=@l2beat/public-api^...",
+    "build:dependencies:crops-api": "turbo run build --filter=@l2beat/crops-api^...",
     "build:dependencies:token-backend": "turbo run build --filter=@l2beat/token-backend^...",
     "build:dependencies:token-ui": "turbo run build --filter=@l2beat/token-ui^...",
     "build:dependencies:backoffice": "turbo run build --filter=@l2beat/backoffice^...",

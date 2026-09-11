@@ -13,7 +13,11 @@ import { BadgeStudio } from './components/BadgeStudio'
 import { CodeSnippet, RequestHeader } from './components/CodeSnippet'
 import { WalletMock } from './components/WalletMock'
 import {
+  API_NOTES,
   BADGE_RULES,
+  CROPS_API_DOCS_URL,
+  CROPS_API_SPEC_URL,
+  CROPS_API_URL,
   ENDPOINTS,
   type EndpointDoc,
   VERIFY_STEPS,
@@ -161,8 +165,12 @@ function ConsumerSections({
     <>
       <SectionDivider id={CONSUMERS_ID} label="For wallets and interfaces" />
       <section className="mt-6 md:mt-8">
-        <SectionHeading title="Endpoints" />
-        <div className="flex flex-col gap-4 md:gap-6">
+        <SectionHeading
+          title="Endpoints"
+          description={`Static JSON files on ${CROPS_API_URL}, regenerated on every change to the reviews.`}
+        />
+        <ApiNotes />
+        <div className="mt-4 flex flex-col gap-4 md:mt-6 md:gap-6">
           {ENDPOINTS.map((endpoint) => (
             <EndpointCard
               key={endpoint.key}
@@ -175,6 +183,51 @@ function ConsumerSections({
 
       <AttestationsSection attestations={attestations} />
     </>
+  )
+}
+
+function ApiNotes() {
+  return (
+    <PrimaryCard className="max-md:mx-4 md:p-8">
+      <ul className="flex flex-col gap-3">
+        {API_NOTES.map((note) => (
+          <li
+            key={note}
+            className="flex gap-3 text-paragraph-14 text-secondary md:text-paragraph-16"
+          >
+            <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
+            <span>
+              <Markup text={note} />
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-4 text-paragraph-14 text-secondary md:text-paragraph-16">
+        Browse the{' '}
+        <ExternalLink href={CROPS_API_DOCS_URL}>interactive docs</ExternalLink>{' '}
+        or read the{' '}
+        <ExternalLink href={CROPS_API_SPEC_URL}>OpenAPI spec</ExternalLink>.
+      </p>
+    </PrimaryCard>
+  )
+}
+
+function ExternalLink({
+  href,
+  children,
+}: {
+  href: string
+  children: ReactNode
+}) {
+  return (
+    <a
+      href={href}
+      className="underline underline-offset-2"
+      target="_blank"
+      rel="noreferrer"
+    >
+      {children}
+    </a>
   )
 }
 
@@ -234,7 +287,7 @@ function AttestationsSection({
     <section className="mt-8 md:mt-12">
       <SectionHeading
         title="Verifying the set onchain"
-        description="One attestation on Ethereum Attestation Service names every protocol we have reviewed. Ask the API for details."
+        description={describeAttestation(attestations)}
       />
       <PrimaryCard className="max-md:mx-4 md:p-8">
         <dl className="grid gap-x-8 gap-y-3 md:grid-cols-[auto_1fr]">
@@ -289,6 +342,14 @@ function AttestationsSection({
       </PrimaryCard>
     </section>
   )
+}
+
+// Says the same thing as the OpenAPI description: the set is attested, the ratings are not.
+function describeAttestation(attestations: CropsAttestationsMeta): string {
+  const where = attestations.isTestnet
+    ? `It currently lives on the ${attestations.network} testnet.`
+    : `It lives on ${attestations.network}.`
+  return `One attestation on Ethereum Attestation Service names every protocol we have reviewed. ${where} It proves the set we named, not the ratings: ratings change as protocols change and are served by the API without a transaction.`
 }
 
 function ProtocolSection() {
