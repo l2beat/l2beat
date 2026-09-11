@@ -149,7 +149,6 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: strk20Adversaries,
-    quantumResistant: true,
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('strk20', 'upgradesAndGovernance'),
