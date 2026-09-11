@@ -1,15 +1,9 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { env } from '~/env'
 import { ActivityProjectFilterType } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
 import { TvsProjectFilterType } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { optionToRange } from '~/utils/range/range'
 import { validateRoute } from '~/utils/validateRoute'
-import {
-  getGardenCropsApiData,
-  getGardenCropsProjectApiData,
-} from './getGardenCropsApiData'
-import { getGardenLookupApiData } from './getGardenLookupApiData'
 import { getL2ActivityApiData } from './getL2ActivityApiData'
 import { getL2ActivityProjectApiData } from './getL2ActivityProjectApiData'
 import { getL2SummaryApiData } from './getL2SummaryApiData'
@@ -19,8 +13,6 @@ import { getL2TvsProjectBreakdownApiData } from './getL2TvsProjectBreakdownApiDa
 
 const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
 const ActivityRangeSchema = v.enum(['30d', '90d', '180d', '1y', 'max'])
-
-const MAX_LOOKUP_ADDRESSES = 50
 
 export function createPublicApiRouter() {
   const router = express.Router()
@@ -138,66 +130,10 @@ export function createPublicApiRouter() {
     },
   )
 
-  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
-    addGardenRoutes(router)
-  }
-
   router.get('/api/scaling/summary', async (_, res) => {
     const data = await getL2SummaryApiData()
     res.json(data)
   })
 
   return router
-}
-
-function addGardenRoutes(router: express.Router) {
-  // The garden endpoints are keyless on purpose, so wallets need no onboarding.
-  router.get('/api/garden/crops', async (_, res) => {
-    res.json(await getGardenCropsApiData())
-  })
-
-  // Must be registered before /api/garden/project/:id, or "lookup" is read as
-  // a project id and every call 404s.
-  router.get(
-    '/api/garden/project/lookup',
-    validateRoute({
-      query: v.object({ addresses: v.string() }),
-    }),
-    async (req, res) => {
-      const queries = req.query.addresses
-        .split(',')
-        .map((x) => x.trim())
-        .filter((x) => x.length > 0)
-
-      if (queries.length === 0) {
-        res.status(400).json({ error: 'addresses must not be empty' })
-        return
-      }
-      if (queries.length > MAX_LOOKUP_ADDRESSES) {
-        res.status(400).json({
-          error: `at most ${MAX_LOOKUP_ADDRESSES} addresses per request, got ${queries.length}`,
-        })
-        return
-      }
-
-      res.json(await getGardenLookupApiData(queries))
-    },
-  )
-
-  router.get(
-    '/api/garden/project/:id',
-    validateRoute({
-      params: v.object({ id: v.string() }),
-    }),
-    async (req, res) => {
-      const data = await getGardenCropsProjectApiData(req.params.id)
-      if (!data) {
-        res
-          .status(404)
-          .json({ error: `No crops evaluation for ${req.params.id}` })
-        return
-      }
-      res.json(data)
-    },
-  )
 }
