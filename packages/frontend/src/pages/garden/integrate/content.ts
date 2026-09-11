@@ -3,7 +3,7 @@ export const CROPS_API_URL = 'https://crops.l2beat.com'
 export const CROPS_API_DOCS_URL = `${CROPS_API_URL}/`
 export const CROPS_API_SPEC_URL = `${CROPS_API_URL}/v1/openapi.json`
 
-export type IntegrateEndpoint = 'address' | 'addresses' | 'project' | 'crops'
+export type IntegrateEndpoint = 'address' | 'project' | 'crops'
 
 export interface EndpointDoc {
   key: IntegrateEndpoint
@@ -17,7 +17,7 @@ export interface EndpointDoc {
 export const API_NOTES = [
   'Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.',
   'Not found means not reviewed. The project and address files answer 404 with an empty body when we have not reviewed the project or the address - treat it as "not reviewed", not as an error.',
-  'Address files are keyed by EIP-155 chain id and lowercase address, both in the path and in the `addresses` map of `/v1/addresses.json` (as `chainId:address`). Lowercase the address before you build the URL.',
+  'Address files are keyed by EIP-155 chain id and lowercase address. Lowercase the address before you build the URL.',
 ]
 
 /** The prose only; the request and response are built from config at render time. */
@@ -38,13 +38,6 @@ export const ENDPOINTS: EndpointDoc[] = [
         description: 'Lowercase 0x-prefixed address.',
       },
     ],
-  },
-  {
-    key: 'addresses',
-    path: '/v1/addresses.json',
-    summary: 'Every reviewed address',
-    description:
-      'The whole address index in one file, keyed by `chainId:address`, so you can download it once and answer lookups offline.',
   },
   {
     key: 'project',

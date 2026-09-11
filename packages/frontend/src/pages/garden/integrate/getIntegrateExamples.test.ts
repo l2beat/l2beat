@@ -69,9 +69,6 @@ describe(buildIntegrateExamples.name, () => {
     expect(examples.address.request).toEqual(
       `${CROPS_API_URL}/v1/address/1/${FACTORY.toLowerCase()}.json`,
     )
-    expect(examples.addresses.request).toEqual(
-      `${CROPS_API_URL}/v1/addresses.json`,
-    )
     expect(examples.project.request).toEqual(
       `${CROPS_API_URL}/v1/project/uniswap-v3.json`,
     )
@@ -100,13 +97,6 @@ describe(buildIntegrateExamples.name, () => {
         },
         attestation: { uid: ATTESTATION_UID, revision: 3 },
       },
-    ])
-  })
-
-  it('shows the aggregate index keyed as chainId:address', () => {
-    const response = parseExample(examples.addresses.response)
-    expect(Object.keys(response.addresses as object)).toEqual([
-      `1:${FACTORY.toLowerCase()}`,
     ])
   })
 

@@ -82,16 +82,6 @@ export function buildIntegrateExamples(
         ['attestations'],
       ),
     },
-    addresses: {
-      request: toRequestUrl('addresses'),
-      response: toExample(
-        {
-          ...stamp,
-          addresses: { [`${contract.chainId}:${address}`]: [match] },
-        },
-        ['attestations'],
-      ),
-    },
     project: {
       request: toRequestUrl('project', { id: project.slug }),
       response: toExample({ ...stamp, ...project }, ['attestations']),
