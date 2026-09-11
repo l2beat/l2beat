@@ -1,11 +1,14 @@
-import { existsSync, readFileSync } from 'fs'
+import { existsSync, readdirSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import type {
   AuditSummaryJson,
   DeployedJson,
   ManifestJson,
   ManifestSource,
+  ZkSourceEntry,
 } from './types.js'
+
+const ZK_DIR = path.join('deployed-contracts', '_zk')
 
 /** A directory with audit-summary.json and audited-sources/: a project or a libs/<vendor>. */
 export interface AuditedSourcesDir {
@@ -36,6 +39,28 @@ export function readAuditedSourcesDir(dir: string): AuditedSourcesDir {
 export function readProjectDir(dir: string): ProjectDir {
   const deployed = readJson<DeployedJson>(path.join(dir, 'deployed.json'))
   return { ...readAuditedSourcesDir(dir), deployed }
+}
+
+/** Entries of `deployed-contracts/_zk/zk-sources.json`, empty when absent. */
+export function readZkSources(dir: string): ZkSourceEntry[] {
+  const file = path.join(dir, ZK_DIR, 'zk-sources.json')
+  return existsSync(file) ? readJson<ZkSourceEntry[]>(file) : []
+}
+
+/** Source files of one zk entry, as paths relative to the project directory. */
+export function listZkSourceFiles(dir: string, entry: ZkSourceEntry): string[] {
+  const root = path.join(dir, ZK_DIR, entry.path)
+  if (!existsSync(root)) return []
+  const files: string[] = []
+  const walk = (current: string) => {
+    for (const name of readdirSync(current).sort()) {
+      const full = path.join(current, name)
+      if (statSync(full).isDirectory()) walk(full)
+      else files.push(path.relative(dir, full).split(path.sep).join('/'))
+    }
+  }
+  walk(root)
+  return files
 }
 
 /** Reads a file referenced from `manifest.sources[].files[].file`. */

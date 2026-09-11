@@ -1,5 +1,6 @@
 import type {
   AuditStatusCounts,
+  AuditsUnitEntry,
   AuditUnitStatus,
 } from '~/server/features/audits/types'
 
@@ -52,3 +53,18 @@ export function formatShare(part: number, total: number): string {
   if (total === 0) return '-'
   return `${Math.round((part / total) * 1000) / 10}%`
 }
+
+/**
+ * The deployed unit equals an audited revision for which the report recorded
+ * major findings. Since the code is unchanged, the fix for those findings is
+ * not present in the deployed unit.
+ */
+export function hasUnresolvedMajorFinding(unit: AuditsUnitEntry): boolean {
+  return (
+    (unit.status === 'identical' || unit.status === 'library') &&
+    (unit.match?.majorFindings ?? 0) > 0
+  )
+}
+
+export const MAJOR_FINDING_DESCRIPTION =
+  'The deployed code is identical to an audited revision for which the audit report recorded major findings. Because the code is unchanged, the fix for those findings is not present in the deployed unit. Open the audit report to check the finding.'

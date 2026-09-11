@@ -19,6 +19,8 @@ export const UnitKind = v.enum([
   'interface',
   'library',
   'file-level',
+  /** A whole non-Solidity source file, e.g. a zk circuit. */
+  'program',
 ])
 export type UnitKind = v.infer<typeof UnitKind>
 
@@ -149,17 +151,28 @@ export type UnitCoverage = v.infer<typeof UnitCoverage>
 export const SourceFileCoverage = v.object({
   /** Relative to the dataset project directory. */
   path: v.string(),
-  role: v.enum(['implementation', 'proxy']),
+  role: v.enum(['implementation', 'proxy', 'program']),
   lines: v.number(),
   units: v.array(UnitCoverage),
 })
 export type SourceFileCoverage = v.infer<typeof SourceFileCoverage>
 
+/** Present when the entry is a zk verifier / program from `_zk/zk-sources.json` rather than a deployed contract. */
+export const ZkSourceInfo = v.object({
+  type: v.enum(['verifier', 'program']),
+  /** GitHub link the sources were fetched from. */
+  link: v.string(),
+  commit: v.string(),
+})
+export type ZkSourceInfo = v.infer<typeof ZkSourceInfo>
+
 export const ContractCoverage = v.object({
   name: v.string(),
+  /** Empty for zk programs without an onchain deployment. */
   address: v.string(),
   chain: v.string(),
   template: v.string().optional(),
+  zk: ZkSourceInfo.optional(),
   noSource: v.boolean(),
   summary: CoverageSummary,
   files: v.array(SourceFileCoverage),

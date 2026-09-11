@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "projectId": "ethscriptions",
   "slug": "ethscriptions",
-  "generatedAt": 1788878774,
-  "datasetRevision": "229e67d6690542cfe17483af1df645b93e168e4d-dirty",
+  "generatedAt": 1789132748,
+  "datasetRevision": "f4752b50a5019d2284689fda9737e8e50e328c0a",
   "discoveryTimestamp": 1788860322,
   "contractSelection": "critical",
   "summary": {
@@ -11,20 +11,20 @@
     "contractsWithoutSource": 0,
     "units": {
       "identical": 1,
-      "library": 16,
-      "differs": 18,
+      "library": 17,
+      "differs": 17,
       "unaudited": 50
     },
     "uniqueUnits": {
       "identical": 1,
-      "library": 10,
-      "differs": 13,
+      "library": 11,
+      "differs": 12,
       "unaudited": 29
     },
     "lines": {
       "total": 15759,
-      "covered": 4831,
-      "uncovered": 10928
+      "covered": 4883,
+      "uncovered": 10876
     }
   },
   "reports": [
@@ -38,14 +38,14 @@
       "origin": "project"
     },
     {
-      "id": "contracts__audits__2018-10",
-      "title": "OpenZeppelin v2.0 Security Audit",
-      "auditor": "Level K",
-      "reportDate": "2018-10-21",
-      "reportFile": "contracts__audits__2018-10.md",
-      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/libs/openzeppelin/reports/contracts__audits__2018-10.pdf",
+      "id": "certora-safe-1-3-0",
+      "title": "Safe Smart Account v1.3.0 Security Assessment",
+      "auditor": "Certora",
+      "reportDate": "2026-07-29",
+      "reportFile": "safe-core__docs__Safe_Audit_Report_1_3_0_Certora.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/gnosis/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf",
       "origin": "library",
-      "libraryId": "openzeppelin"
+      "libraryId": "gnosis"
     },
     {
       "id": "contracts__audits__2023-10-v5.0",
@@ -53,7 +53,7 @@
       "auditor": "OpenZeppelin",
       "reportDate": "2023-10-03",
       "reportFile": "contracts__audits__2023-10-v5.0.md",
-      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf",
       "origin": "library",
       "libraryId": "openzeppelin"
     },
@@ -63,7 +63,7 @@
       "auditor": "OpenZeppelin",
       "reportDate": "2024-10-03",
       "reportFile": "contracts__audits__2024-10-v5.1.md",
-      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf",
       "origin": "library",
       "libraryId": "openzeppelin"
     },
@@ -73,7 +73,17 @@
       "auditor": "OpenZeppelin",
       "reportDate": "2025-04-03",
       "reportFile": "contracts__audits__2025-04-v5.3.md",
-      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf",
+      "origin": "library",
+      "libraryId": "openzeppelin"
+    },
+    {
+      "id": "contracts__audits__2025-07-v5.4",
+      "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2025-07-17",
+      "reportFile": "contracts__audits__2025-07-v5.4.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2025-07-v5.4.pdf",
       "origin": "library",
       "libraryId": "openzeppelin"
     },
@@ -83,7 +93,7 @@
       "auditor": "OpenZeppelin",
       "reportDate": "2026-02-27",
       "reportFile": "contracts__audits__2026-02-v5.6.md",
-      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf",
       "origin": "library",
       "libraryId": "openzeppelin"
     },
@@ -110,6 +120,10 @@
     {
       "id": "openzeppelin",
       "name": "OpenZeppelin Contracts"
+    },
+    {
+      "id": "gnosis",
+      "name": "gnosis"
     }
   ],
   "contracts": [
@@ -1475,20 +1489,20 @@
               "coveredLines": 11,
               "match": {
                 "origin": "library",
-                "libraryId": "openzeppelin",
+                "libraryId": "gnosis",
                 "matchedBy": "name",
                 "auditedName": "IERC165",
                 "similarity": 1,
-                "reportId": "contracts__audits__2018-10",
-                "repository": "openzeppelin-solidity",
-                "path": "contracts/introspection/IERC165.sol",
-                "commit": "dac5bccf803696d9d98d269b8c27c7aac5fa1c5c",
-                "commitTimestamp": "2018-09-18T22:22:04Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-solidity/blob/dac5bccf803696d9d98d269b8c27c7aac5fa1c5c/contracts/introspection/IERC165.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "Initial audit",
-                "coverage": "Full review of every contract under contracts/.",
-                "majorFindings": 1,
+                "reportId": "certora-safe-1-3-0",
+                "repository": "safe-smart-account",
+                "path": "contracts/interfaces/IERC165.sol",
+                "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+                "commitTimestamp": "2021-11-17T16:53:12Z",
+                "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/IERC165.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "Manual audit",
+                "coverage": "Full manual review of the scoped source.",
+                "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -1496,105 +1510,39 @@
               "diff": {
                 "added": 0,
                 "removed": 0,
-                "ignoredAdded": 9,
-                "ignoredRemoved": 11,
+                "ignoredAdded": 1,
+                "ignoredRemoved": 1,
                 "unchanged": 11,
                 "ignoredOnly": true,
                 "hunks": [
                   {
-                    "oldStart": 1,
-                    "oldLines": 13,
-                    "newStart": 1,
-                    "newLines": 11,
+                    "oldStart": 2,
+                    "oldLines": 7,
+                    "newStart": 2,
+                    "newLines": 7,
                     "lines": [
                       {
                         "type": " ",
-                        "oldLine": 1,
-                        "newLine": 1,
-                        "text": "interface IERC165 {"
-                      },
-                      {
-                        "type": "-",
                         "oldLine": 2,
-                        "text": "",
-                        "ignored": true
+                        "newLine": 2,
+                        "text": "    /**"
                       },
                       {
-                        "type": "-",
+                        "type": " ",
                         "oldLine": 3,
-                        "text": "  /**",
-                        "ignored": true
+                        "newLine": 3,
+                        "text": "     * @dev Returns true if this contract implements the interface defined by"
                       },
                       {
-                        "type": "-",
+                        "type": " ",
                         "oldLine": 4,
-                        "text": "   * @notice Query if a contract implements an interface",
-                        "ignored": true
+                        "newLine": 4,
+                        "text": "     * `interfaceId`. See the corresponding"
                       },
                       {
                         "type": "-",
                         "oldLine": 5,
-                        "text": "   * @param interfaceId The interface identifier, as specified in ERC-165",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 6,
-                        "text": "   * @dev Interface identification is specified in ERC-165. This function",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 7,
-                        "text": "   * uses less than 30,000 gas.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 8,
-                        "text": "   */",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 9,
-                        "text": "  function supportsInterface(bytes4 interfaceId)",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 10,
-                        "text": "    external",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 11,
-                        "text": "    view",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 12,
-                        "text": "    returns (bool);",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 2,
-                        "text": "    /**",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 3,
-                        "text": "     * @dev Returns true if this contract implements the interface defined by",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 4,
-                        "text": "     * `interfaceId`. See the corresponding",
+                        "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
                         "ignored": true
                       },
                       {
@@ -1604,40 +1552,22 @@
                         "ignored": true
                       },
                       {
-                        "type": "+",
+                        "type": " ",
+                        "oldLine": 6,
                         "newLine": 6,
-                        "text": "     * to learn more about how these ids are created.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 7,
-                        "text": "     *",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 8,
-                        "text": "     * This function call must use less than 30 000 gas.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 9,
-                        "text": "     */",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 10,
-                        "text": "    function supportsInterface(bytes4 interfaceId) external view returns (bool);",
-                        "ignored": true
+                        "text": "     * to learn more about how these ids are created."
                       },
                       {
                         "type": " ",
-                        "oldLine": 13,
-                        "newLine": 11,
-                        "text": "}"
+                        "oldLine": 7,
+                        "newLine": 7,
+                        "text": "     *"
+                      },
+                      {
+                        "type": " ",
+                        "oldLine": 8,
+                        "newLine": 8,
+                        "text": "     * This function call must use less than 30 000 gas."
                       }
                     ]
                   }
@@ -4009,20 +3939,20 @@
         "contractsWithoutSource": 0,
         "units": {
           "identical": 0,
-          "library": 9,
-          "differs": 8,
+          "library": 10,
+          "differs": 7,
           "unaudited": 18
         },
         "uniqueUnits": {
           "identical": 0,
-          "library": 9,
-          "differs": 8,
+          "library": 10,
+          "differs": 7,
           "unaudited": 18
         },
         "lines": {
           "total": 7818,
-          "covered": 3377,
-          "uncovered": 4441
+          "covered": 3429,
+          "uncovered": 4389
         }
       },
       "files": [
@@ -5081,419 +5011,27 @@
               "endLine": 2266,
               "lines": 747,
               "source": "library Math {\n    enum Rounding {\n        Floor, // Toward negative infinity\n        Ceil, // Toward positive infinity\n        Trunc, // Toward zero\n        Expand // Away from zero\n\n    }\n\n    /**\n     * @dev Return the 512-bit addition of two uint256.\n     *\n     * The result is stored in two 256 variables such that sum = high * 2²⁵⁶ + low.\n     */\n    function add512(uint256 a, uint256 b) internal pure returns (uint256 high, uint256 low) {\n        assembly (\"memory-safe\") {\n            low := add(a, b)\n            high := lt(low, a)\n        }\n    }\n\n    /**\n     * @dev Return the 512-bit multiplication of two uint256.\n     *\n     * The result is stored in two 256 variables such that product = high * 2²⁵⁶ + low.\n     */\n    function mul512(uint256 a, uint256 b) internal pure returns (uint256 high, uint256 low) {\n        // 512-bit multiply [high low] = x * y. Compute the product mod 2²⁵⁶ and mod 2²⁵⁶ - 1, then use\n        // the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256\n        // variables such that product = high * 2²⁵⁶ + low.\n        assembly (\"memory-safe\") {\n            let mm := mulmod(a, b, not(0))\n            low := mul(a, b)\n            high := sub(sub(mm, low), lt(mm, low))\n        }\n    }\n\n    /**\n     * @dev Returns the addition of two unsigned integers, with a success flag (no overflow).\n     */\n    function tryAdd(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {\n        unchecked {\n            uint256 c = a + b;\n            success = c >= a;\n            result = c * SafeCast.toUint(success);\n        }\n    }\n\n    /**\n     * @dev Returns the subtraction of two unsigned integers, with a success flag (no overflow).\n     */\n    function trySub(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {\n        unchecked {\n            uint256 c = a - b;\n            success = c <= a;\n            result = c * SafeCast.toUint(success);\n        }\n    }\n\n    /**\n     * @dev Returns the multiplication of two unsigned integers, with a success flag (no overflow).\n     */\n    function tryMul(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {\n        unchecked {\n            uint256 c = a * b;\n            assembly (\"memory-safe\") {\n                // Only true when the multiplication doesn't overflow\n                // (c / a == b) || (a == 0)\n                success := or(eq(div(c, a), b), iszero(a))\n            }\n            // equivalent to: success ? c : 0\n            result = c * SafeCast.toUint(success);\n        }\n    }\n\n    /**\n     * @dev Returns the division of two unsigned integers, with a success flag (no division by zero).\n     */\n    function tryDiv(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {\n        unchecked {\n            success = b > 0;\n            assembly (\"memory-safe\") {\n                // The `DIV` opcode returns zero when the denominator is 0.\n                result := div(a, b)\n            }\n        }\n    }\n\n    /**\n     * @dev Returns the remainder of dividing two unsigned integers, with a success flag (no division by zero).\n     */\n    function tryMod(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {\n        unchecked {\n            success = b > 0;\n            assembly (\"memory-safe\") {\n                // The `MOD` opcode returns zero when the denominator is 0.\n                result := mod(a, b)\n            }\n        }\n    }\n\n    /**\n     * @dev Unsigned saturating addition, bounds to `2²⁵⁶ - 1` instead of overflowing.\n     */\n    function saturatingAdd(uint256 a, uint256 b) internal pure returns (uint256) {\n        (bool success, uint256 result) = tryAdd(a, b);\n        return ternary(success, result, type(uint256).max);\n    }\n\n    /**\n     * @dev Unsigned saturating subtraction, bounds to zero instead of overflowing.\n     */\n    function saturatingSub(uint256 a, uint256 b) internal pure returns (uint256) {\n        (, uint256 result) = trySub(a, b);\n        return result;\n    }\n\n    /**\n     * @dev Unsigned saturating multiplication, bounds to `2²⁵⁶ - 1` instead of overflowing.\n     */\n    function saturatingMul(uint256 a, uint256 b) internal pure returns (uint256) {\n        (bool success, uint256 result) = tryMul(a, b);\n        return ternary(success, result, type(uint256).max);\n    }\n\n    /**\n     * @dev Branchless ternary evaluation for `a ? b : c`. Gas costs are constant.\n     *\n     * IMPORTANT: This function may reduce bytecode size and consume less gas when used standalone.\n     * However, the compiler may optimize Solidity ternary operations (i.e. `a ? b : c`) to only compute\n     * one branch when needed, making this function more expensive.\n     */\n    function ternary(bool condition, uint256 a, uint256 b) internal pure returns (uint256) {\n        unchecked {\n            // branchless ternary works because:\n            // b ^ (a ^ b) == a\n            // b ^ 0 == b\n            return b ^ ((a ^ b) * SafeCast.toUint(condition));\n        }\n    }\n\n    /**\n     * @dev Returns the largest of two numbers.\n     */\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\n        return ternary(a > b, a, b);\n    }\n\n    /**\n     * @dev Returns the smallest of two numbers.\n     */\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\n        return ternary(a < b, a, b);\n    }\n\n    /**\n     * @dev Returns the average of two numbers. The result is rounded towards\n     * zero.\n     */\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\n        // (a + b) / 2 can overflow.\n        return (a & b) + (a ^ b) / 2;\n    }\n\n    /**\n     * @dev Returns the ceiling of the division of two numbers.\n     *\n     * This differs from standard division with `/` in that it rounds towards infinity instead\n     * of rounding towards zero.\n     */\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\n        if (b == 0) {\n            // Guarantee the same behavior as in a regular Solidity division.\n            Panic.panic(Panic.DIVISION_BY_ZERO);\n        }\n\n        // The following calculation ensures accurate ceiling division without overflow.\n        // Since a is non-zero, (a - 1) / b will not overflow.\n        // The largest possible result occurs when (a - 1) / b is type(uint256).max,\n        // but the largest value we can obtain is type(uint256).max - 1, which happens\n        // when a = type(uint256).max and b = 1.\n        unchecked {\n            return SafeCast.toUint(a > 0) * ((a - 1) / b + 1);\n        }\n    }\n\n    /**\n     * @dev Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or\n     * denominator == 0.\n     *\n     * Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv) with further edits by\n     * Uniswap Labs also under MIT license.\n     */\n    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {\n        unchecked {\n            (uint256 high, uint256 low) = mul512(x, y);\n\n            // Handle non-overflow cases, 256 by 256 division.\n            if (high == 0) {\n                // Solidity will revert if denominator == 0, unlike the div opcode on its own.\n                // The surrounding unchecked block does not change this fact.\n                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.\n                return low / denominator;\n            }\n\n            // Make sure the result is less than 2²⁵⁶. Also prevents denominator == 0.\n            if (denominator <= high) {\n                Panic.panic(ternary(denominator == 0, Panic.DIVISION_BY_ZERO, Panic.UNDER_OVERFLOW));\n            }\n\n            ///////////////////////////////////////////////\n            // 512 by 256 division.\n            ///////////////////////////////////////////////\n\n            // Make division exact by subtracting the remainder from [high low].\n            uint256 remainder;\n            assembly (\"memory-safe\") {\n                // Compute remainder using mulmod.\n                remainder := mulmod(x, y, denominator)\n\n                // Subtract 256 bit number from 512 bit number.\n                high := sub(high, gt(remainder, low))\n                low := sub(low, remainder)\n            }\n\n            // Factor powers of two out of denominator and compute largest power of two divisor of denominator.\n            // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.\n\n            uint256 twos = denominator & (0 - denominator);\n            assembly (\"memory-safe\") {\n                // Divide denominator by twos.\n                denominator := div(denominator, twos)\n\n                // Divide [high low] by twos.\n                low := div(low, twos)\n\n                // Flip twos such that it is 2²⁵⁶ / twos. If twos is zero, then it becomes one.\n                twos := add(div(sub(0, twos), twos), 1)\n            }\n\n            // Shift in bits from high into low.\n            low |= high * twos;\n\n            // Invert denominator mod 2²⁵⁶. Now that denominator is an odd number, it has an inverse modulo 2²⁵⁶ such\n            // that denominator * inv ≡ 1 mod 2²⁵⁶. Compute the inverse by starting with a seed that is correct for\n            // four bits. That is, denominator * inv ≡ 1 mod 2⁴.\n            uint256 inverse = (3 * denominator) ^ 2;\n\n            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also\n            // works in modular arithmetic, doubling the correct bits in each step.\n            inverse *= 2 - denominator * inverse; // inverse mod 2⁸\n            inverse *= 2 - denominator * inverse; // inverse mod 2¹⁶\n            inverse *= 2 - denominator * inverse; // inverse mod 2³²\n            inverse *= 2 - denominator * inverse; // inverse mod 2⁶⁴\n            inverse *= 2 - denominator * inverse; // inverse mod 2¹²⁸\n            inverse *= 2 - denominator * inverse; // inverse mod 2²⁵⁶\n\n            // Because the division is now exact we can divide by multiplying with the modular inverse of denominator.\n            // This will give us the correct result modulo 2²⁵⁶. Since the preconditions guarantee that the outcome is\n            // less than 2²⁵⁶, this is the final result. We don't need to compute the high bits of the result and high\n            // is no longer required.\n            result = low * inverse;\n            return result;\n        }\n    }\n\n    /**\n     * @dev Calculates x * y / denominator with full precision, following the selected rounding direction.\n     */\n    function mulDiv(uint256 x, uint256 y, uint256 denominator, Rounding rounding) internal pure returns (uint256) {\n        return mulDiv(x, y, denominator) + SafeCast.toUint(unsignedRoundsUp(rounding) && mulmod(x, y, denominator) > 0);\n    }\n\n    /**\n     * @dev Calculates floor(x * y >> n) with full precision. Throws if result overflows a uint256.\n     */\n    function mulShr(uint256 x, uint256 y, uint8 n) internal pure returns (uint256 result) {\n        unchecked {\n            (uint256 high, uint256 low) = mul512(x, y);\n            if (high >= 1 << n) {\n                Panic.panic(Panic.UNDER_OVERFLOW);\n            }\n            return (high << (256 - n)) | (low >> n);\n        }\n    }\n\n    /**\n     * @dev Calculates x * y >> n with full precision, following the selected rounding direction.\n     */\n    function mulShr(uint256 x, uint256 y, uint8 n, Rounding rounding) internal pure returns (uint256) {\n        return mulShr(x, y, n) + SafeCast.toUint(unsignedRoundsUp(rounding) && mulmod(x, y, 1 << n) > 0);\n    }\n\n    /**\n     * @dev Calculate the modular multiplicative inverse of a number in Z/nZ.\n     *\n     * If n is a prime, then Z/nZ is a field. In that case all elements are inversible, except 0.\n     * If n is not a prime, then Z/nZ is not a field, and some elements might not be inversible.\n     *\n     * If the input value is not inversible, 0 is returned.\n     *\n     * NOTE: If you know for sure that n is (big) a prime, it may be cheaper to use Fermat's little theorem and get the\n     * inverse using `Math.modExp(a, n - 2, n)`. See {invModPrime}.\n     */\n    function invMod(uint256 a, uint256 n) internal pure returns (uint256) {\n        unchecked {\n            if (n == 0) {\n                return 0;\n            }\n\n            // The inverse modulo is calculated using the Extended Euclidean Algorithm (iterative version)\n            // Used to compute integers x and y such that: ax + ny = gcd(a, n).\n            // When the gcd is 1, then the inverse of a modulo n exists and it's x.\n            // ax + ny = 1\n            // ax = 1 + (-y)n\n            // ax ≡ 1 (mod n) # x is the inverse of a modulo n\n\n            // If the remainder is 0 the gcd is n right away.\n            uint256 remainder = a % n;\n            uint256 gcd = n;\n\n            // Therefore the initial coefficients are:\n            // ax + ny = gcd(a, n) = n\n            // 0a + 1n = n\n            int256 x = 0;\n            int256 y = 1;\n\n            while (remainder != 0) {\n                uint256 quotient = gcd / remainder;\n\n                (gcd, remainder) = (\n                    // The old remainder is the next gcd to try.\n                    remainder,\n                    // Compute the next remainder.\n                    // Can't overflow given that (a % gcd) * (gcd // (a % gcd)) <= gcd\n                    // where gcd is at most n (capped to type(uint256).max)\n                    gcd - remainder * quotient\n                );\n\n                (x, y) = (\n                    // Increment the coefficient of a.\n                    y,\n                    // Decrement the coefficient of n.\n                    // Can overflow, but the result is casted to uint256 so that the\n                    // next value of y is \"wrapped around\" to a value between 0 and n - 1.\n                    x - y * int256(quotient)\n                );\n            }\n\n            if (gcd != 1) {\n                return 0;\n            } // No inverse exists.\n            return ternary(x < 0, n - uint256(-x), uint256(x)); // Wrap the result if it's negative.\n        }\n    }\n\n    /**\n     * @dev Variant of {invMod}. More efficient, but only works if `p` is known to be a prime greater than `2`.\n     *\n     * From https://en.wikipedia.org/wiki/Fermat%27s_little_theorem[Fermat's little theorem], we know that if p is\n     * prime, then `a**(p-1) ≡ 1 mod p`. As a consequence, we have `a * a**(p-2) ≡ 1 mod p`, which means that\n     * `a**(p-2)` is the modular multiplicative inverse of a in Fp.\n     *\n     * NOTE: this function does NOT check that `p` is a prime greater than `2`.\n     */\n    function invModPrime(uint256 a, uint256 p) internal view returns (uint256) {\n        unchecked {\n            return Math.modExp(a, p - 2, p);\n        }\n    }\n\n    /**\n     * @dev Returns the modular exponentiation of the specified base, exponent and modulus (b ** e % m)\n     *\n     * Requirements:\n     * - modulus can't be zero\n     * - underlying staticcall to precompile must succeed\n     *\n     * IMPORTANT: The result is only valid if the underlying call succeeds. When using this function, make\n     * sure the chain you're using it on supports the precompiled contract for modular exponentiation\n     * at address 0x05 as specified in https://eips.ethereum.org/EIPS/eip-198[EIP-198]. Otherwise,\n     * the underlying function will succeed given the lack of a revert, but the result may be incorrectly\n     * interpreted as 0.\n     */\n    function modExp(uint256 b, uint256 e, uint256 m) internal view returns (uint256) {\n        (bool success, uint256 result) = tryModExp(b, e, m);\n        if (!success) {\n            Panic.panic(Panic.DIVISION_BY_ZERO);\n        }\n        return result;\n    }\n\n    /**\n     * @dev Returns the modular exponentiation of the specified base, exponent and modulus (b ** e % m).\n     * It includes a success flag indicating if the operation succeeded. Operation will be marked as failed if trying\n     * to operate modulo 0 or if the underlying precompile reverted.\n     *\n     * IMPORTANT: The result is only valid if the success flag is true. When using this function, make sure the chain\n     * you're using it on supports the precompiled contract for modular exponentiation at address 0x05 as specified in\n     * https://eips.ethereum.org/EIPS/eip-198[EIP-198]. Otherwise, the underlying function will succeed given the lack\n     * of a revert, but the result may be incorrectly interpreted as 0.\n     */\n    function tryModExp(uint256 b, uint256 e, uint256 m) internal view returns (bool success, uint256 result) {\n        if (m == 0) {\n            return (false, 0);\n        }\n        assembly (\"memory-safe\") {\n            let ptr := mload(0x40)\n            // | Offset    | Content    | Content (Hex)                                                      |\n            // |-----------|------------|--------------------------------------------------------------------|\n            // | 0x00:0x1f | size of b  | 0x0000000000000000000000000000000000000000000000000000000000000020 |\n            // | 0x20:0x3f | size of e  | 0x0000000000000000000000000000000000000000000000000000000000000020 |\n            // | 0x40:0x5f | size of m  | 0x0000000000000000000000000000000000000000000000000000000000000020 |\n            // | 0x60:0x7f | value of b | 0x<.............................................................b> |\n            // | 0x80:0x9f | value of e | 0x<.............................................................e> |\n            // | 0xa0:0xbf | value of m | 0x<.............................................................m> |\n            mstore(ptr, 0x20)\n            mstore(add(ptr, 0x20), 0x20)\n            mstore(add(ptr, 0x40), 0x20)\n            mstore(add(ptr, 0x60), b)\n            mstore(add(ptr, 0x80), e)\n            mstore(add(ptr, 0xa0), m)\n\n            // Given the result < m, it's guaranteed to fit in 32 bytes,\n            // so we can use the memory scratch space located at offset 0.\n            success := staticcall(gas(), 0x05, ptr, 0xc0, 0x00, 0x20)\n            result := mload(0x00)\n        }\n    }\n\n    /**\n     * @dev Variant of {modExp} that supports inputs of arbitrary length.\n     */\n    function modExp(bytes memory b, bytes memory e, bytes memory m) internal view returns (bytes memory) {\n        (bool success, bytes memory result) = tryModExp(b, e, m);\n        if (!success) {\n            Panic.panic(Panic.DIVISION_BY_ZERO);\n        }\n        return result;\n    }\n\n    /**\n     * @dev Variant of {tryModExp} that supports inputs of arbitrary length.\n     */\n    function tryModExp(bytes memory b, bytes memory e, bytes memory m)\n        internal\n        view\n        returns (bool success, bytes memory result)\n    {\n        if (_zeroBytes(m)) {\n            return (false, new bytes(0));\n        }\n\n        uint256 mLen = m.length;\n\n        // Encode call args in result and move the free memory pointer\n        result = abi.encodePacked(b.length, e.length, mLen, b, e, m);\n\n        assembly (\"memory-safe\") {\n            let dataPtr := add(result, 0x20)\n            // Write result on top of args to avoid allocating extra memory.\n            success := staticcall(gas(), 0x05, dataPtr, mload(result), dataPtr, mLen)\n            // Overwrite the length.\n            // result.length > returndatasize() is guaranteed because returndatasize() == m.length\n            mstore(result, mLen)\n            // Set the memory pointer after the returned data.\n            mstore(0x40, add(dataPtr, mLen))\n        }\n    }\n\n    /**\n     * @dev Returns whether the provided byte array is zero.\n     */\n    function _zeroBytes(bytes memory byteArray) private pure returns (bool) {\n        for (uint256 i = 0; i < byteArray.length; ++i) {\n            if (byteArray[i] != 0) {\n                return false;\n            }\n        }\n        return true;\n    }\n\n    /**\n     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded\n     * towards zero.\n     *\n     * This method is based on Newton's method for computing square roots; the algorithm is restricted to only\n     * using integer operations.\n     */\n    function sqrt(uint256 a) internal pure returns (uint256) {\n        unchecked {\n            // Take care of easy edge cases when a == 0 or a == 1\n            if (a <= 1) {\n                return a;\n            }\n\n            // In this function, we use Newton's method to get a root of `f(x) := x² - a`. It involves building a\n            // sequence x_n that converges toward sqrt(a). For each iteration x_n, we also define the error between\n            // the current value as `ε_n = | x_n - sqrt(a) |`.\n            //\n            // For our first estimation, we consider `e` the smallest power of 2 which is bigger than the square root\n            // of the target. (i.e. `2**(e-1) ≤ sqrt(a) < 2**e`). We know that `e ≤ 128` because `(2¹²⁸)² = 2²⁵⁶` is\n            // bigger than any uint256.\n            //\n            // By noticing that\n            // `2**(e-1) ≤ sqrt(a) < 2**e → (2**(e-1))² ≤ a < (2**e)² → 2**(2*e-2) ≤ a < 2**(2*e)`\n            // we can deduce that `e - 1` is `log2(a) / 2`. We can thus compute `x_n = 2**(e-1)` using a method similar\n            // to the msb function.\n            uint256 aa = a;\n            uint256 xn = 1;\n\n            if (aa >= (1 << 128)) {\n                aa >>= 128;\n                xn <<= 64;\n            }\n            if (aa >= (1 << 64)) {\n                aa >>= 64;\n                xn <<= 32;\n            }\n            if (aa >= (1 << 32)) {\n                aa >>= 32;\n                xn <<= 16;\n            }\n            if (aa >= (1 << 16)) {\n                aa >>= 16;\n                xn <<= 8;\n            }\n            if (aa >= (1 << 8)) {\n                aa >>= 8;\n                xn <<= 4;\n            }\n            if (aa >= (1 << 4)) {\n                aa >>= 4;\n                xn <<= 2;\n            }\n            if (aa >= (1 << 2)) {\n                xn <<= 1;\n            }\n\n            // We now have x_n such that `x_n = 2**(e-1) ≤ sqrt(a) < 2**e = 2 * x_n`. This implies ε_n ≤ 2**(e-1).\n            //\n            // We can refine our estimation by noticing that the middle of that interval minimizes the error.\n            // If we move x_n to equal 2**(e-1) + 2**(e-2), then we reduce the error to ε_n ≤ 2**(e-2).\n            // This is going to be our x_0 (and ε_0)\n            xn = (3 * xn) >> 1; // ε_0 := | x_0 - sqrt(a) | ≤ 2**(e-2)\n\n            // From here, Newton's method give us:\n            // x_{n+1} = (x_n + a / x_n) / 2\n            //\n            // One should note that:\n            // x_{n+1}² - a = ((x_n + a / x_n) / 2)² - a\n            //              = ((x_n² + a) / (2 * x_n))² - a\n            //              = (x_n⁴ + 2 * a * x_n² + a²) / (4 * x_n²) - a\n            //              = (x_n⁴ + 2 * a * x_n² + a² - 4 * a * x_n²) / (4 * x_n²)\n            //              = (x_n⁴ - 2 * a * x_n² + a²) / (4 * x_n²)\n            //              = (x_n² - a)² / (2 * x_n)²\n            //              = ((x_n² - a) / (2 * x_n))²\n            //              ≥ 0\n            // Which proves that for all n ≥ 1, sqrt(a) ≤ x_n\n            //\n            // This gives us the proof of quadratic convergence of the sequence:\n            // ε_{n+1} = | x_{n+1} - sqrt(a) |\n            //         = | (x_n + a / x_n) / 2 - sqrt(a) |\n            //         = | (x_n² + a - 2*x_n*sqrt(a)) / (2 * x_n) |\n            //         = | (x_n - sqrt(a))² / (2 * x_n) |\n            //         = | ε_n² / (2 * x_n) |\n            //         = ε_n² / | (2 * x_n) |\n            //\n            // For the first iteration, we have a special case where x_0 is known:\n            // ε_1 = ε_0² / | (2 * x_0) |\n            //     ≤ (2**(e-2))² / (2 * (2**(e-1) + 2**(e-2)))\n            //     ≤ 2**(2*e-4) / (3 * 2**(e-1))\n            //     ≤ 2**(e-3) / 3\n            //     ≤ 2**(e-3-log2(3))\n            //     ≤ 2**(e-4.5)\n            //\n            // For the following iterations, we use the fact that, 2**(e-1) ≤ sqrt(a) ≤ x_n:\n            // ε_{n+1} = ε_n² / | (2 * x_n) |\n            //         ≤ (2**(e-k))² / (2 * 2**(e-1))\n            //         ≤ 2**(2*e-2*k) / 2**e\n            //         ≤ 2**(e-2*k)\n            xn = (xn + a / xn) >> 1; // ε_1 := | x_1 - sqrt(a) | ≤ 2**(e-4.5)  -- special case, see above\n            xn = (xn + a / xn) >> 1; // ε_2 := | x_2 - sqrt(a) | ≤ 2**(e-9)    -- general case with k = 4.5\n            xn = (xn + a / xn) >> 1; // ε_3 := | x_3 - sqrt(a) | ≤ 2**(e-18)   -- general case with k = 9\n            xn = (xn + a / xn) >> 1; // ε_4 := | x_4 - sqrt(a) | ≤ 2**(e-36)   -- general case with k = 18\n            xn = (xn + a / xn) >> 1; // ε_5 := | x_5 - sqrt(a) | ≤ 2**(e-72)   -- general case with k = 36\n            xn = (xn + a / xn) >> 1; // ε_6 := | x_6 - sqrt(a) | ≤ 2**(e-144)  -- general case with k = 72\n\n            // Because e ≤ 128 (as discussed during the first estimation phase), we know have reached a precision\n            // ε_6 ≤ 2**(e-144) < 1. Given we're operating on integers, then we can ensure that xn is now either\n            // sqrt(a) or sqrt(a) + 1.\n            return xn - SafeCast.toUint(xn > a / xn);\n        }\n    }\n\n    /**\n     * @dev Calculates sqrt(a), following the selected rounding direction.\n     */\n    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = sqrt(a);\n            return result + SafeCast.toUint(unsignedRoundsUp(rounding) && result * result < a);\n        }\n    }\n\n    /**\n     * @dev Return the log in base 2 of a positive value rounded towards zero.\n     * Returns 0 if given 0.\n     */\n    function log2(uint256 x) internal pure returns (uint256 r) {\n        // If value has upper 128 bits set, log2 result is at least 128\n        r = SafeCast.toUint(x > 0xffffffffffffffffffffffffffffffff) << 7;\n        // If upper 64 bits of 128-bit half set, add 64 to result\n        r |= SafeCast.toUint((x >> r) > 0xffffffffffffffff) << 6;\n        // If upper 32 bits of 64-bit half set, add 32 to result\n        r |= SafeCast.toUint((x >> r) > 0xffffffff) << 5;\n        // If upper 16 bits of 32-bit half set, add 16 to result\n        r |= SafeCast.toUint((x >> r) > 0xffff) << 4;\n        // If upper 8 bits of 16-bit half set, add 8 to result\n        r |= SafeCast.toUint((x >> r) > 0xff) << 3;\n        // If upper 4 bits of 8-bit half set, add 4 to result\n        r |= SafeCast.toUint((x >> r) > 0xf) << 2;\n\n        // Shifts value right by the current result and use it as an index into this lookup table:\n        //\n        // | x (4 bits) |  index  | table[index] = MSB position |\n        // |------------|---------|-----------------------------|\n        // |    0000    |    0    |        table[0] = 0         |\n        // |    0001    |    1    |        table[1] = 0         |\n        // |    0010    |    2    |        table[2] = 1         |\n        // |    0011    |    3    |        table[3] = 1         |\n        // |    0100    |    4    |        table[4] = 2         |\n        // |    0101    |    5    |        table[5] = 2         |\n        // |    0110    |    6    |        table[6] = 2         |\n        // |    0111    |    7    |        table[7] = 2         |\n        // |    1000    |    8    |        table[8] = 3         |\n        // |    1001    |    9    |        table[9] = 3         |\n        // |    1010    |   10    |        table[10] = 3        |\n        // |    1011    |   11    |        table[11] = 3        |\n        // |    1100    |   12    |        table[12] = 3        |\n        // |    1101    |   13    |        table[13] = 3        |\n        // |    1110    |   14    |        table[14] = 3        |\n        // |    1111    |   15    |        table[15] = 3        |\n        //\n        // The lookup table is represented as a 32-byte value with the MSB positions for 0-15 in the last 16 bytes.\n        assembly (\"memory-safe\") {\n            r := or(r, byte(shr(r, x), 0x0000010102020202030303030303030300000000000000000000000000000000))\n        }\n    }\n\n    /**\n     * @dev Return the log in base 2, following the selected rounding direction, of a positive value.\n     * Returns 0 if given 0.\n     */\n    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = log2(value);\n            return result + SafeCast.toUint(unsignedRoundsUp(rounding) && 1 << result < value);\n        }\n    }\n\n    /**\n     * @dev Return the log in base 10 of a positive value rounded towards zero.\n     * Returns 0 if given 0.\n     */\n    function log10(uint256 value) internal pure returns (uint256) {\n        uint256 result = 0;\n        unchecked {\n            if (value >= 10 ** 64) {\n                value /= 10 ** 64;\n                result += 64;\n            }\n            if (value >= 10 ** 32) {\n                value /= 10 ** 32;\n                result += 32;\n            }\n            if (value >= 10 ** 16) {\n                value /= 10 ** 16;\n                result += 16;\n            }\n            if (value >= 10 ** 8) {\n                value /= 10 ** 8;\n                result += 8;\n            }\n            if (value >= 10 ** 4) {\n                value /= 10 ** 4;\n                result += 4;\n            }\n            if (value >= 10 ** 2) {\n                value /= 10 ** 2;\n                result += 2;\n            }\n            if (value >= 10 ** 1) {\n                result += 1;\n            }\n        }\n        return result;\n    }\n\n    /**\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\n     * Returns 0 if given 0.\n     */\n    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = log10(value);\n            return result + SafeCast.toUint(unsignedRoundsUp(rounding) && 10 ** result < value);\n        }\n    }\n\n    /**\n     * @dev Return the log in base 256 of a positive value rounded towards zero.\n     * Returns 0 if given 0.\n     *\n     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string.\n     */\n    function log256(uint256 x) internal pure returns (uint256 r) {\n        // If value has upper 128 bits set, log2 result is at least 128\n        r = SafeCast.toUint(x > 0xffffffffffffffffffffffffffffffff) << 7;\n        // If upper 64 bits of 128-bit half set, add 64 to result\n        r |= SafeCast.toUint((x >> r) > 0xffffffffffffffff) << 6;\n        // If upper 32 bits of 64-bit half set, add 32 to result\n        r |= SafeCast.toUint((x >> r) > 0xffffffff) << 5;\n        // If upper 16 bits of 32-bit half set, add 16 to result\n        r |= SafeCast.toUint((x >> r) > 0xffff) << 4;\n        // Add 1 if upper 8 bits of 16-bit half set, and divide accumulated result by 8\n        return (r >> 3) | SafeCast.toUint((x >> r) > 0xff);\n    }\n\n    /**\n     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.\n     * Returns 0 if given 0.\n     */\n    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {\n        unchecked {\n            uint256 result = log256(value);\n            return result + SafeCast.toUint(unsignedRoundsUp(rounding) && 1 << (result << 3) < value);\n        }\n    }\n\n    /**\n     * @dev Returns whether a provided rounding mode is considered rounding up for unsigned integers.\n     */\n    function unsignedRoundsUp(Rounding rounding) internal pure returns (bool) {\n        return uint8(rounding) % 2 == 1;\n    }\n}",
-              "status": "differs",
-              "coveredLines": 730,
+              "status": "library",
+              "coveredLines": 747,
               "match": {
                 "origin": "library",
                 "libraryId": "openzeppelin",
                 "matchedBy": "name",
                 "auditedName": "Math",
-                "similarity": 0.962,
+                "similarity": 1,
                 "reportId": "contracts__audits__2025-04-v5.3",
                 "repository": "openzeppelin-contracts",
                 "path": "contracts/utils/math/Math.sol",
-                "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
-                "commitTimestamp": "2025-04-03T16:31:04Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0/contracts/utils/math/Math.sol",
+                "commit": "d4b2e98c737f54a21961b39d6bba13b839f3b6f4",
+                "commitTimestamp": "2025-03-06T08:59:39Z",
+                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/d4b2e98c737f54a21961b39d6bba13b839f3b6f4/contracts/utils/math/Math.sol",
                 "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "Resolution review",
-                "coverage": "Review of implemented resolutions in the final audited codebase.",
+                "reviewPhase": "Initial audit",
+                "coverage": "Review of the release diff for this file.",
                 "majorFindings": 0,
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 8
-              },
-              "diff": {
-                "added": 17,
-                "removed": 9,
-                "ignoredAdded": 1,
-                "ignoredRemoved": 0,
-                "unchanged": 730,
-                "ignoredOnly": false,
-                "hunks": [
-                  {
-                    "oldStart": 4,
-                    "oldLines": 6,
-                    "newStart": 4,
-                    "newLines": 7,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 4,
-                        "newLine": 4,
-                        "text": "        Ceil, // Toward positive infinity"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 5,
-                        "newLine": 5,
-                        "text": "        Trunc, // Toward zero"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 6,
-                        "newLine": 6,
-                        "text": "        Expand // Away from zero"
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 7,
-                        "text": "",
-                        "ignored": true
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 7,
-                        "newLine": 8,
-                        "text": "    }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 8,
-                        "newLine": 9,
-                        "text": ""
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 9,
-                        "newLine": 10,
-                        "text": "    /**"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 303,
-                    "oldLines": 7,
-                    "newStart": 304,
-                    "newLines": 9,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 303,
-                        "newLine": 304,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 304,
-                        "newLine": 305,
-                        "text": "    function invMod(uint256 a, uint256 n) internal pure returns (uint256) {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 305,
-                        "newLine": 306,
-                        "text": "        unchecked {"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 306,
-                        "text": "            if (n == 0) return 0;",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 307,
-                        "text": "            if (n == 0) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 308,
-                        "text": "                return 0;",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 309,
-                        "text": "            }",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 307,
-                        "newLine": 310,
-                        "text": ""
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 308,
-                        "newLine": 311,
-                        "text": "            // The inverse modulo is calculated using the Extended Euclidean Algorithm (iterative version)"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 309,
-                        "newLine": 312,
-                        "text": "            // Used to compute integers x and y such that: ax + ny = gcd(a, n)."
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 344,
-                    "oldLines": 7,
-                    "newStart": 347,
-                    "newLines": 9,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 344,
-                        "newLine": 347,
-                        "text": "                );"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 345,
-                        "newLine": 348,
-                        "text": "            }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 346,
-                        "newLine": 349,
-                        "text": ""
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 347,
-                        "text": "            if (gcd != 1) return 0; // No inverse exists.",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 350,
-                        "text": "            if (gcd != 1) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 351,
-                        "text": "                return 0;",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 352,
-                        "text": "            } // No inverse exists.",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 348,
-                        "newLine": 353,
-                        "text": "            return ternary(x < 0, n - uint256(-x), uint256(x)); // Wrap the result if it's negative."
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 349,
-                        "newLine": 354,
-                        "text": "        }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 350,
-                        "newLine": 355,
-                        "text": "    }"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 396,
-                    "oldLines": 7,
-                    "newStart": 401,
-                    "newLines": 9,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 396,
-                        "newLine": 401,
-                        "text": "     * of a revert, but the result may be incorrectly interpreted as 0."
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 397,
-                        "newLine": 402,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 398,
-                        "newLine": 403,
-                        "text": "    function tryModExp(uint256 b, uint256 e, uint256 m) internal view returns (bool success, uint256 result) {"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 399,
-                        "text": "        if (m == 0) return (false, 0);",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 404,
-                        "text": "        if (m == 0) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 405,
-                        "text": "            return (false, 0);",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 406,
-                        "text": "        }",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 400,
-                        "newLine": 407,
-                        "text": "        assembly (\"memory-safe\") {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 401,
-                        "newLine": 408,
-                        "text": "            let ptr := mload(0x40)"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 402,
-                        "newLine": 409,
-                        "text": "            // | Offset    | Content    | Content (Hex)                                                      |"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 435,
-                    "oldLines": 12,
-                    "newStart": 442,
-                    "newLines": 14,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 435,
-                        "newLine": 442,
-                        "text": "    /**"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 436,
-                        "newLine": 443,
-                        "text": "     * @dev Variant of {tryModExp} that supports inputs of arbitrary length."
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 437,
-                        "newLine": 444,
-                        "text": "     */"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 438,
-                        "text": "    function tryModExp(",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 439,
-                        "text": "        bytes memory b,",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 440,
-                        "text": "        bytes memory e,",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 441,
-                        "text": "        bytes memory m",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 442,
-                        "text": "    ) internal view returns (bool success, bytes memory result) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 443,
-                        "text": "        if (_zeroBytes(m)) return (false, new bytes(0));",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 445,
-                        "text": "    function tryModExp(bytes memory b, bytes memory e, bytes memory m)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 446,
-                        "text": "        internal",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 447,
-                        "text": "        view",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 448,
-                        "text": "        returns (bool success, bytes memory result)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 449,
-                        "text": "    {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 450,
-                        "text": "        if (_zeroBytes(m)) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 451,
-                        "text": "            return (false, new bytes(0));",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 452,
-                        "text": "        }",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 444,
-                        "newLine": 453,
-                        "text": ""
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 445,
-                        "newLine": 454,
-                        "text": "        uint256 mLen = m.length;"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 446,
-                        "newLine": 455,
-                        "text": ""
-                      }
-                    ]
-                  }
-                ]
               },
               "warnings": []
             },
@@ -5506,1138 +5044,572 @@
               "lines": 477,
               "source": "library Arrays {\n    using SlotDerivation for bytes32;\n    using StorageSlot for bytes32;\n\n    /**\n     * @dev Sort an array of uint256 (in memory) following the provided comparator function.\n     *\n     * This function does the sorting \"in place\", meaning that it overrides the input. The object is returned for\n     * convenience, but that returned value can be discarded safely if the caller has a memory pointer to the array.\n     *\n     * NOTE: this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the\n     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful\n     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may\n     * consume more gas than is available in a block, leading to potential DoS.\n     *\n     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.\n     */\n    function sort(uint256[] memory array, function(uint256, uint256) pure returns (bool) comp)\n        internal\n        pure\n        returns (uint256[] memory)\n    {\n        _quickSort(_begin(array), _end(array), comp);\n        return array;\n    }\n\n    /**\n     * @dev Variant of {sort} that sorts an array of uint256 in increasing order.\n     */\n    function sort(uint256[] memory array) internal pure returns (uint256[] memory) {\n        sort(array, Comparators.lt);\n        return array;\n    }\n\n    /**\n     * @dev Sort an array of address (in memory) following the provided comparator function.\n     *\n     * This function does the sorting \"in place\", meaning that it overrides the input. The object is returned for\n     * convenience, but that returned value can be discarded safely if the caller has a memory pointer to the array.\n     *\n     * NOTE: this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the\n     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful\n     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may\n     * consume more gas than is available in a block, leading to potential DoS.\n     *\n     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.\n     */\n    function sort(address[] memory array, function(address, address) pure returns (bool) comp)\n        internal\n        pure\n        returns (address[] memory)\n    {\n        sort(_castToUint256Array(array), _castToUint256Comp(comp));\n        return array;\n    }\n\n    /**\n     * @dev Variant of {sort} that sorts an array of address in increasing order.\n     */\n    function sort(address[] memory array) internal pure returns (address[] memory) {\n        sort(_castToUint256Array(array), Comparators.lt);\n        return array;\n    }\n\n    /**\n     * @dev Sort an array of bytes32 (in memory) following the provided comparator function.\n     *\n     * This function does the sorting \"in place\", meaning that it overrides the input. The object is returned for\n     * convenience, but that returned value can be discarded safely if the caller has a memory pointer to the array.\n     *\n     * NOTE: this function's cost is `O(n · log(n))` in average and `O(n²)` in the worst case, with n the length of the\n     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful\n     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may\n     * consume more gas than is available in a block, leading to potential DoS.\n     *\n     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.\n     */\n    function sort(bytes32[] memory array, function(bytes32, bytes32) pure returns (bool) comp)\n        internal\n        pure\n        returns (bytes32[] memory)\n    {\n        sort(_castToUint256Array(array), _castToUint256Comp(comp));\n        return array;\n    }\n\n    /**\n     * @dev Variant of {sort} that sorts an array of bytes32 in increasing order.\n     */\n    function sort(bytes32[] memory array) internal pure returns (bytes32[] memory) {\n        sort(_castToUint256Array(array), Comparators.lt);\n        return array;\n    }\n\n    /**\n     * @dev Performs a quick sort of a segment of memory. The segment sorted starts at `begin` (inclusive), and stops\n     * at end (exclusive). Sorting follows the `comp` comparator.\n     *\n     * Invariant: `begin <= end`. This is the case when initially called by {sort} and is preserved in subcalls.\n     *\n     * IMPORTANT: Memory locations between `begin` and `end` are not validated/zeroed. This function should\n     * be used only if the limits are within a memory array.\n     */\n    function _quickSort(uint256 begin, uint256 end, function(uint256, uint256) pure returns (bool) comp) private pure {\n        unchecked {\n            if (end - begin < 0x40) {\n                return;\n            }\n\n            // Use first element as pivot\n            uint256 pivot = _mload(begin);\n            // Position where the pivot should be at the end of the loop\n            uint256 pos = begin;\n\n            for (uint256 it = begin + 0x20; it < end; it += 0x20) {\n                if (comp(_mload(it), pivot)) {\n                    // If the value stored at the iterator's position comes before the pivot, we increment the\n                    // position of the pivot and move the value there.\n                    pos += 0x20;\n                    _swap(pos, it);\n                }\n            }\n\n            _swap(begin, pos); // Swap pivot into place\n            _quickSort(begin, pos, comp); // Sort the left side of the pivot\n            _quickSort(pos + 0x20, end, comp); // Sort the right side of the pivot\n        }\n    }\n\n    /**\n     * @dev Pointer to the memory location of the first element of `array`.\n     */\n    function _begin(uint256[] memory array) private pure returns (uint256 ptr) {\n        assembly (\"memory-safe\") {\n            ptr := add(array, 0x20)\n        }\n    }\n\n    /**\n     * @dev Pointer to the memory location of the first memory word (32bytes) after `array`. This is the memory word\n     * that comes just after the last element of the array.\n     */\n    function _end(uint256[] memory array) private pure returns (uint256 ptr) {\n        unchecked {\n            return _begin(array) + array.length * 0x20;\n        }\n    }\n\n    /**\n     * @dev Load memory word (as a uint256) at location `ptr`.\n     */\n    function _mload(uint256 ptr) private pure returns (uint256 value) {\n        assembly {\n            value := mload(ptr)\n        }\n    }\n\n    /**\n     * @dev Swaps the elements memory location `ptr1` and `ptr2`.\n     */\n    function _swap(uint256 ptr1, uint256 ptr2) private pure {\n        assembly {\n            let value1 := mload(ptr1)\n            let value2 := mload(ptr2)\n            mstore(ptr1, value2)\n            mstore(ptr2, value1)\n        }\n    }\n\n    /// @dev Helper: low level cast address memory array to uint256 memory array\n    function _castToUint256Array(address[] memory input) private pure returns (uint256[] memory output) {\n        assembly {\n            output := input\n        }\n    }\n\n    /// @dev Helper: low level cast bytes32 memory array to uint256 memory array\n    function _castToUint256Array(bytes32[] memory input) private pure returns (uint256[] memory output) {\n        assembly {\n            output := input\n        }\n    }\n\n    /// @dev Helper: low level cast address comp function to uint256 comp function\n    function _castToUint256Comp(function(address, address) pure returns (bool) input)\n        private\n        pure\n        returns (function(uint256, uint256) pure returns (bool) output)\n    {\n        assembly {\n            output := input\n        }\n    }\n\n    /// @dev Helper: low level cast bytes32 comp function to uint256 comp function\n    function _castToUint256Comp(function(bytes32, bytes32) pure returns (bool) input)\n        private\n        pure\n        returns (function(uint256, uint256) pure returns (bool) output)\n    {\n        assembly {\n            output := input\n        }\n    }\n\n    /**\n     * @dev Searches a sorted `array` and returns the first index that contains\n     * a value greater or equal to `element`. If no such index exists (i.e. all\n     * values in the array are strictly less than `element`), the array length is\n     * returned. Time complexity O(log n).\n     *\n     * NOTE: The `array` is expected to be sorted in ascending order, and to\n     * contain no repeated elements.\n     *\n     * IMPORTANT: Deprecated. This implementation behaves as {lowerBound} but lacks\n     * support for repeated elements in the array. The {lowerBound} function should\n     * be used instead.\n     */\n    function findUpperBound(uint256[] storage array, uint256 element) internal view returns (uint256) {\n        uint256 low = 0;\n        uint256 high = array.length;\n\n        if (high == 0) {\n            return 0;\n        }\n\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n\n            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)\n            // because Math.average rounds towards zero (it does integer division with truncation).\n            if (unsafeAccess(array, mid).value > element) {\n                high = mid;\n            } else {\n                low = mid + 1;\n            }\n        }\n\n        // At this point `low` is the exclusive upper bound. We will return the inclusive upper bound.\n        if (low > 0 && unsafeAccess(array, low - 1).value == element) {\n            return low - 1;\n        } else {\n            return low;\n        }\n    }\n\n    /**\n     * @dev Searches an `array` sorted in ascending order and returns the first\n     * index that contains a value greater or equal than `element`. If no such index\n     * exists (i.e. all values in the array are strictly less than `element`), the array\n     * length is returned. Time complexity O(log n).\n     *\n     * See C++'s https://en.cppreference.com/w/cpp/algorithm/lower_bound[lower_bound].\n     */\n    function lowerBound(uint256[] storage array, uint256 element) internal view returns (uint256) {\n        uint256 low = 0;\n        uint256 high = array.length;\n\n        if (high == 0) {\n            return 0;\n        }\n\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n\n            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)\n            // because Math.average rounds towards zero (it does integer division with truncation).\n            if (unsafeAccess(array, mid).value < element) {\n                // this cannot overflow because mid < high\n                unchecked {\n                    low = mid + 1;\n                }\n            } else {\n                high = mid;\n            }\n        }\n\n        return low;\n    }\n\n    /**\n     * @dev Searches an `array` sorted in ascending order and returns the first\n     * index that contains a value strictly greater than `element`. If no such index\n     * exists (i.e. all values in the array are strictly less than `element`), the array\n     * length is returned. Time complexity O(log n).\n     *\n     * See C++'s https://en.cppreference.com/w/cpp/algorithm/upper_bound[upper_bound].\n     */\n    function upperBound(uint256[] storage array, uint256 element) internal view returns (uint256) {\n        uint256 low = 0;\n        uint256 high = array.length;\n\n        if (high == 0) {\n            return 0;\n        }\n\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n\n            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)\n            // because Math.average rounds towards zero (it does integer division with truncation).\n            if (unsafeAccess(array, mid).value > element) {\n                high = mid;\n            } else {\n                // this cannot overflow because mid < high\n                unchecked {\n                    low = mid + 1;\n                }\n            }\n        }\n\n        return low;\n    }\n\n    /**\n     * @dev Same as {lowerBound}, but with an array in memory.\n     */\n    function lowerBoundMemory(uint256[] memory array, uint256 element) internal pure returns (uint256) {\n        uint256 low = 0;\n        uint256 high = array.length;\n\n        if (high == 0) {\n            return 0;\n        }\n\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n\n            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)\n            // because Math.average rounds towards zero (it does integer division with truncation).\n            if (unsafeMemoryAccess(array, mid) < element) {\n                // this cannot overflow because mid < high\n                unchecked {\n                    low = mid + 1;\n                }\n            } else {\n                high = mid;\n            }\n        }\n\n        return low;\n    }\n\n    /**\n     * @dev Same as {upperBound}, but with an array in memory.\n     */\n    function upperBoundMemory(uint256[] memory array, uint256 element) internal pure returns (uint256) {\n        uint256 low = 0;\n        uint256 high = array.length;\n\n        if (high == 0) {\n            return 0;\n        }\n\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n\n            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)\n            // because Math.average rounds towards zero (it does integer division with truncation).\n            if (unsafeMemoryAccess(array, mid) > element) {\n                high = mid;\n            } else {\n                // this cannot overflow because mid < high\n                unchecked {\n                    low = mid + 1;\n                }\n            }\n        }\n\n        return low;\n    }\n\n    /**\n     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.\n     *\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\n     */\n    function unsafeAccess(address[] storage arr, uint256 pos) internal pure returns (StorageSlot.AddressSlot storage) {\n        bytes32 slot;\n        assembly (\"memory-safe\") {\n            slot := arr.slot\n        }\n        return slot.deriveArray().offset(pos).getAddressSlot();\n    }\n\n    /**\n     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.\n     *\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\n     */\n    function unsafeAccess(bytes32[] storage arr, uint256 pos) internal pure returns (StorageSlot.Bytes32Slot storage) {\n        bytes32 slot;\n        assembly (\"memory-safe\") {\n            slot := arr.slot\n        }\n        return slot.deriveArray().offset(pos).getBytes32Slot();\n    }\n\n    /**\n     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.\n     *\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\n     */\n    function unsafeAccess(uint256[] storage arr, uint256 pos) internal pure returns (StorageSlot.Uint256Slot storage) {\n        bytes32 slot;\n        assembly (\"memory-safe\") {\n            slot := arr.slot\n        }\n        return slot.deriveArray().offset(pos).getUint256Slot();\n    }\n\n    /**\n     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.\n     *\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\n     */\n    function unsafeMemoryAccess(address[] memory arr, uint256 pos) internal pure returns (address res) {\n        assembly {\n            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))\n        }\n    }\n\n    /**\n     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.\n     *\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\n     */\n    function unsafeMemoryAccess(bytes32[] memory arr, uint256 pos) internal pure returns (bytes32 res) {\n        assembly {\n            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))\n        }\n    }\n\n    /**\n     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.\n     *\n     * WARNING: Only use if you are certain `pos` is lower than the array length.\n     */\n    function unsafeMemoryAccess(uint256[] memory arr, uint256 pos) internal pure returns (uint256 res) {\n        assembly {\n            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))\n        }\n    }\n\n    /**\n     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.\n     *\n     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased.\n     */\n    function unsafeSetLength(address[] storage array, uint256 len) internal {\n        assembly (\"memory-safe\") {\n            sstore(array.slot, len)\n        }\n    }\n\n    /**\n     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.\n     *\n     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased.\n     */\n    function unsafeSetLength(bytes32[] storage array, uint256 len) internal {\n        assembly (\"memory-safe\") {\n            sstore(array.slot, len)\n        }\n    }\n\n    /**\n     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.\n     *\n     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased.\n     */\n    function unsafeSetLength(uint256[] storage array, uint256 len) internal {\n        assembly (\"memory-safe\") {\n            sstore(array.slot, len)\n        }\n    }\n}",
               "status": "differs",
-              "coveredLines": 442,
+              "coveredLines": 477,
               "match": {
                 "origin": "library",
                 "libraryId": "openzeppelin",
                 "matchedBy": "name",
                 "auditedName": "Arrays",
-                "similarity": 0.877,
-                "reportId": "contracts__audits__2024-10-v5.1",
+                "similarity": 0.937,
+                "reportId": "contracts__audits__2025-07-v5.4",
                 "repository": "openzeppelin-contracts",
                 "path": "contracts/utils/Arrays.sol",
-                "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
-                "commitTimestamp": "2024-07-24T08:37:16Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/utils/Arrays.sol",
+                "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+                "commitTimestamp": "2025-06-13T18:37:42Z",
+                "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/Arrays.sol",
                 "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "Phase 1",
-                "coverage": "Review limited to changes since v5.0.0.",
+                "reviewPhase": "Initial audit",
+                "coverage": "Review of the release diff for this file.",
                 "majorFindings": 0,
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 5
               },
               "diff": {
-                "added": 35,
-                "removed": 26,
-                "ignoredAdded": 9,
-                "ignoredRemoved": 10,
-                "unchanged": 442,
+                "added": 0,
+                "removed": 34,
+                "ignoredAdded": 0,
+                "ignoredRemoved": 36,
+                "unchanged": 477,
                 "ignoredOnly": false,
                 "hunks": [
                   {
-                    "oldStart": 12,
-                    "oldLines": 11,
-                    "newStart": 12,
-                    "newLines": 14,
+                    "oldStart": 414,
+                    "oldLines": 32,
+                    "newStart": 414,
+                    "newLines": 6,
                     "lines": [
                       {
                         "type": " ",
-                        "oldLine": 12,
-                        "newLine": 12,
-                        "text": "     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 13,
-                        "newLine": 13,
-                        "text": "     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 14,
-                        "newLine": 14,
-                        "text": "     * consume more gas than is available in a block, leading to potential DoS."
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 15,
-                        "text": "     *",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 16,
-                        "text": "     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.",
-                        "ignored": true
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 15,
-                        "newLine": 17,
-                        "text": "     */"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 16,
-                        "text": "    function sort(",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 17,
-                        "text": "        uint256[] memory array,",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 18,
-                        "text": "        function(uint256, uint256) pure returns (bool) comp",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 19,
-                        "text": "    ) internal pure returns (uint256[] memory) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 18,
-                        "text": "    function sort(uint256[] memory array, function(uint256, uint256) pure returns (bool) comp)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 19,
-                        "text": "        internal",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 20,
-                        "text": "        pure",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 21,
-                        "text": "        returns (uint256[] memory)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 22,
-                        "text": "    {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 20,
-                        "newLine": 23,
-                        "text": "        _quickSort(_begin(array), _end(array), comp);"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 21,
-                        "newLine": 24,
-                        "text": "        return array;"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 22,
-                        "newLine": 25,
-                        "text": "    }"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 39,
-                    "oldLines": 11,
-                    "newStart": 42,
-                    "newLines": 14,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 39,
-                        "newLine": 42,
-                        "text": "     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 40,
-                        "newLine": 43,
-                        "text": "     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 41,
-                        "newLine": 44,
-                        "text": "     * consume more gas than is available in a block, leading to potential DoS."
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 45,
-                        "text": "     *",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 46,
-                        "text": "     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.",
-                        "ignored": true
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 42,
-                        "newLine": 47,
-                        "text": "     */"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 43,
-                        "text": "    function sort(",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 44,
-                        "text": "        address[] memory array,",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 45,
-                        "text": "        function(address, address) pure returns (bool) comp",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 46,
-                        "text": "    ) internal pure returns (address[] memory) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 48,
-                        "text": "    function sort(address[] memory array, function(address, address) pure returns (bool) comp)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 49,
-                        "text": "        internal",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 50,
-                        "text": "        pure",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 51,
-                        "text": "        returns (address[] memory)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 52,
-                        "text": "    {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 47,
-                        "newLine": 53,
-                        "text": "        sort(_castToUint256Array(array), _castToUint256Comp(comp));"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 48,
-                        "newLine": 54,
-                        "text": "        return array;"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 49,
-                        "newLine": 55,
-                        "text": "    }"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 66,
-                    "oldLines": 11,
-                    "newStart": 72,
-                    "newLines": 14,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 66,
-                        "newLine": 72,
-                        "text": "     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 67,
-                        "newLine": 73,
-                        "text": "     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 68,
-                        "newLine": 74,
-                        "text": "     * consume more gas than is available in a block, leading to potential DoS."
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 75,
-                        "text": "     *",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 76,
-                        "text": "     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.",
-                        "ignored": true
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 69,
-                        "newLine": 77,
-                        "text": "     */"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 70,
-                        "text": "    function sort(",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 71,
-                        "text": "        bytes32[] memory array,",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 72,
-                        "text": "        function(bytes32, bytes32) pure returns (bool) comp",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 73,
-                        "text": "    ) internal pure returns (bytes32[] memory) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 78,
-                        "text": "    function sort(bytes32[] memory array, function(bytes32, bytes32) pure returns (bool) comp)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 79,
-                        "text": "        internal",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 80,
-                        "text": "        pure",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 81,
-                        "text": "        returns (bytes32[] memory)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 82,
-                        "text": "    {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 74,
-                        "newLine": 83,
-                        "text": "        sort(_castToUint256Array(array), _castToUint256Comp(comp));"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 75,
-                        "newLine": 84,
-                        "text": "        return array;"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 76,
-                        "newLine": 85,
-                        "text": "    }"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 94,
-                    "oldLines": 7,
-                    "newStart": 103,
-                    "newLines": 9,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 94,
-                        "newLine": 103,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 95,
-                        "newLine": 104,
-                        "text": "    function _quickSort(uint256 begin, uint256 end, function(uint256, uint256) pure returns (bool) comp) private pure {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 96,
-                        "newLine": 105,
-                        "text": "        unchecked {"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 97,
-                        "text": "            if (end - begin < 0x40) return;",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 106,
-                        "text": "            if (end - begin < 0x40) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 107,
-                        "text": "                return;",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 108,
-                        "text": "            }",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 98,
-                        "newLine": 109,
-                        "text": ""
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 99,
-                        "newLine": 110,
-                        "text": "            // Use first element as pivot"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 100,
-                        "newLine": 111,
-                        "text": "            uint256 pivot = _mload(begin);"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 120,
-                    "oldLines": 8,
-                    "newStart": 131,
-                    "newLines": 7,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 120,
-                        "newLine": 131,
-                        "text": "     * @dev Pointer to the memory location of the first element of `array`."
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 121,
-                        "newLine": 132,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 122,
-                        "newLine": 133,
-                        "text": "    function _begin(uint256[] memory array) private pure returns (uint256 ptr) {"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 123,
-                        "text": "        /// @solidity memory-safe-assembly",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 124,
-                        "text": "        assembly {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 134,
-                        "text": "        assembly (\"memory-safe\") {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 125,
-                        "newLine": 135,
-                        "text": "            ptr := add(array, 0x20)"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 126,
-                        "newLine": 136,
-                        "text": "        }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 127,
-                        "newLine": 137,
-                        "text": "    }"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 172,
-                    "oldLines": 18,
-                    "newStart": 182,
-                    "newLines": 22,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 172,
-                        "newLine": 182,
-                        "text": "    }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 173,
-                        "newLine": 183,
-                        "text": ""
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 174,
-                        "newLine": 184,
-                        "text": "    /// @dev Helper: low level cast address comp function to uint256 comp function"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 175,
-                        "text": "    function _castToUint256Comp(",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 176,
-                        "text": "        function(address, address) pure returns (bool) input",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 177,
-                        "text": "    ) private pure returns (function(uint256, uint256) pure returns (bool) output) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 185,
-                        "text": "    function _castToUint256Comp(function(address, address) pure returns (bool) input)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 186,
-                        "text": "        private",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 187,
-                        "text": "        pure",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 188,
-                        "text": "        returns (function(uint256, uint256) pure returns (bool) output)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 189,
-                        "text": "    {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 178,
-                        "newLine": 190,
-                        "text": "        assembly {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 179,
-                        "newLine": 191,
-                        "text": "            output := input"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 180,
-                        "newLine": 192,
-                        "text": "        }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 181,
-                        "newLine": 193,
-                        "text": "    }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 182,
-                        "newLine": 194,
-                        "text": ""
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 183,
-                        "newLine": 195,
-                        "text": "    /// @dev Helper: low level cast bytes32 comp function to uint256 comp function"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 184,
-                        "text": "    function _castToUint256Comp(",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 185,
-                        "text": "        function(bytes32, bytes32) pure returns (bool) input",
-                        "ignored": false
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 186,
-                        "text": "    ) private pure returns (function(uint256, uint256) pure returns (bool) output) {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 196,
-                        "text": "    function _castToUint256Comp(function(bytes32, bytes32) pure returns (bool) input)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 197,
-                        "text": "        private",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 198,
-                        "text": "        pure",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 199,
-                        "text": "        returns (function(uint256, uint256) pure returns (bool) output)",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 200,
-                        "text": "    {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 187,
-                        "newLine": 201,
-                        "text": "        assembly {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 188,
-                        "newLine": 202,
-                        "text": "            output := input"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 189,
-                        "newLine": 203,
-                        "text": "        }"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 363,
-                    "oldLines": 8,
-                    "newStart": 377,
-                    "newLines": 7,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 363,
-                        "newLine": 377,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 364,
-                        "newLine": 378,
-                        "text": "    function unsafeAccess(address[] storage arr, uint256 pos) internal pure returns (StorageSlot.AddressSlot storage) {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 365,
-                        "newLine": 379,
-                        "text": "        bytes32 slot;"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 366,
-                        "text": "        /// @solidity memory-safe-assembly",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 367,
-                        "text": "        assembly {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 380,
-                        "text": "        assembly (\"memory-safe\") {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 368,
-                        "newLine": 381,
-                        "text": "            slot := arr.slot"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 369,
-                        "newLine": 382,
-                        "text": "        }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 370,
-                        "newLine": 383,
-                        "text": "        return slot.deriveArray().offset(pos).getAddressSlot();"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 377,
-                    "oldLines": 8,
-                    "newStart": 390,
-                    "newLines": 7,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 377,
-                        "newLine": 390,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 378,
-                        "newLine": 391,
-                        "text": "    function unsafeAccess(bytes32[] storage arr, uint256 pos) internal pure returns (StorageSlot.Bytes32Slot storage) {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 379,
-                        "newLine": 392,
-                        "text": "        bytes32 slot;"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 380,
-                        "text": "        /// @solidity memory-safe-assembly",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 381,
-                        "text": "        assembly {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 393,
-                        "text": "        assembly (\"memory-safe\") {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 382,
-                        "newLine": 394,
-                        "text": "            slot := arr.slot"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 383,
-                        "newLine": 395,
-                        "text": "        }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 384,
-                        "newLine": 396,
-                        "text": "        return slot.deriveArray().offset(pos).getBytes32Slot();"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 391,
-                    "oldLines": 8,
-                    "newStart": 403,
-                    "newLines": 7,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 391,
-                        "newLine": 403,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 392,
-                        "newLine": 404,
-                        "text": "    function unsafeAccess(uint256[] storage arr, uint256 pos) internal pure returns (StorageSlot.Uint256Slot storage) {"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 393,
-                        "newLine": 405,
-                        "text": "        bytes32 slot;"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 394,
-                        "text": "        /// @solidity memory-safe-assembly",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 395,
-                        "text": "        assembly {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 406,
-                        "text": "        assembly (\"memory-safe\") {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 396,
-                        "newLine": 407,
-                        "text": "            slot := arr.slot"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 397,
-                        "newLine": 408,
-                        "text": "        }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 398,
-                        "newLine": 409,
-                        "text": "        return slot.deriveArray().offset(pos).getUint256Slot();"
-                      }
-                    ]
-                  },
-                  {
-                    "oldStart": 432,
-                    "oldLines": 37,
-                    "newStart": 443,
-                    "newLines": 34,
-                    "lines": [
-                      {
-                        "type": " ",
-                        "oldLine": 432,
-                        "newLine": 443,
-                        "text": "    }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 433,
-                        "newLine": 444,
-                        "text": ""
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 434,
-                        "newLine": 445,
-                        "text": "    /**"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 435,
-                        "text": "     * @dev Helper to set the length of an dynamic array. Directly writing to `.length` is forbidden.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 446,
-                        "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
-                        "ignored": true
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 436,
-                        "newLine": 447,
+                        "oldLine": 414,
+                        "newLine": 414,
                         "text": "     *"
                       },
                       {
                         "type": " ",
-                        "oldLine": 437,
-                        "newLine": 448,
-                        "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased."
+                        "oldLine": 415,
+                        "newLine": 415,
+                        "text": "     * WARNING: Only use if you are certain `pos` is lower than the array length."
                       },
                       {
                         "type": " ",
-                        "oldLine": 438,
-                        "newLine": 449,
+                        "oldLine": 416,
+                        "newLine": 416,
                         "text": "     */"
                       },
                       {
-                        "type": " ",
+                        "type": "-",
+                        "oldLine": 417,
+                        "text": "    function unsafeAccess(bytes[] storage arr, uint256 pos) internal pure returns (StorageSlot.BytesSlot storage) {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 418,
+                        "text": "        bytes32 slot;",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 419,
+                        "text": "        assembly (\"memory-safe\") {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 420,
+                        "text": "            slot := arr.slot",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 421,
+                        "text": "        }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 422,
+                        "text": "        return slot.deriveArray().offset(pos).getBytesSlot();",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 423,
+                        "text": "    }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 424,
+                        "text": "",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 425,
+                        "text": "    /**",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 426,
+                        "text": "     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 427,
+                        "text": "     *",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 428,
+                        "text": "     * WARNING: Only use if you are certain `pos` is lower than the array length.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 429,
+                        "text": "     */",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 430,
+                        "text": "    function unsafeAccess(string[] storage arr, uint256 pos) internal pure returns (StorageSlot.StringSlot storage) {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 431,
+                        "text": "        bytes32 slot;",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 432,
+                        "text": "        assembly (\"memory-safe\") {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 433,
+                        "text": "            slot := arr.slot",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 434,
+                        "text": "        }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 435,
+                        "text": "        return slot.deriveArray().offset(pos).getStringSlot();",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 436,
+                        "text": "    }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 437,
+                        "text": "",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 438,
+                        "text": "    /**",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
                         "oldLine": 439,
-                        "newLine": 450,
-                        "text": "    function unsafeSetLength(address[] storage array, uint256 len) internal {"
+                        "text": "     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.",
+                        "ignored": true
                       },
                       {
                         "type": "-",
                         "oldLine": 440,
-                        "text": "        /// @solidity memory-safe-assembly",
+                        "text": "     *",
                         "ignored": true
                       },
                       {
                         "type": "-",
                         "oldLine": 441,
-                        "text": "        assembly {",
-                        "ignored": false
+                        "text": "     * WARNING: Only use if you are certain `pos` is lower than the array length.",
+                        "ignored": true
                       },
                       {
-                        "type": "+",
-                        "newLine": 451,
-                        "text": "        assembly (\"memory-safe\") {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
+                        "type": "-",
                         "oldLine": 442,
-                        "newLine": 452,
-                        "text": "            sstore(array.slot, len)"
+                        "text": "     */",
+                        "ignored": true
                       },
                       {
                         "type": " ",
                         "oldLine": 443,
-                        "newLine": 453,
-                        "text": "        }"
+                        "newLine": 417,
+                        "text": "    function unsafeMemoryAccess(address[] memory arr, uint256 pos) internal pure returns (address res) {"
                       },
                       {
                         "type": " ",
                         "oldLine": 444,
-                        "newLine": 454,
-                        "text": "    }"
+                        "newLine": 418,
+                        "text": "        assembly {"
                       },
                       {
                         "type": " ",
                         "oldLine": 445,
-                        "newLine": 455,
-                        "text": ""
-                      },
+                        "newLine": 419,
+                        "text": "            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))"
+                      }
+                    ]
+                  },
+                  {
+                    "oldStart": 469,
+                    "oldLines": 28,
+                    "newStart": 443,
+                    "newLines": 6,
+                    "lines": [
                       {
                         "type": " ",
-                        "oldLine": 446,
-                        "newLine": 456,
-                        "text": "    /**"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 447,
-                        "text": "     * @dev Helper to set the length of an dynamic array. Directly writing to `.length` is forbidden.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 457,
-                        "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
-                        "ignored": true
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 448,
-                        "newLine": 458,
-                        "text": "     *"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 449,
-                        "newLine": 459,
-                        "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased."
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 450,
-                        "newLine": 460,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 451,
-                        "newLine": 461,
-                        "text": "    function unsafeSetLength(bytes32[] storage array, uint256 len) internal {"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 452,
-                        "text": "        /// @solidity memory-safe-assembly",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 453,
-                        "text": "        assembly {",
-                        "ignored": false
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 462,
-                        "text": "        assembly (\"memory-safe\") {",
-                        "ignored": false
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 454,
-                        "newLine": 463,
-                        "text": "            sstore(array.slot, len)"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 455,
-                        "newLine": 464,
-                        "text": "        }"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 456,
-                        "newLine": 465,
+                        "oldLine": 469,
+                        "newLine": 443,
                         "text": "    }"
                       },
                       {
                         "type": " ",
-                        "oldLine": 457,
-                        "newLine": 466,
+                        "oldLine": 470,
+                        "newLine": 444,
                         "text": ""
                       },
                       {
                         "type": " ",
-                        "oldLine": 458,
-                        "newLine": 467,
+                        "oldLine": 471,
+                        "newLine": 445,
                         "text": "    /**"
                       },
                       {
                         "type": "-",
-                        "oldLine": 459,
-                        "text": "     * @dev Helper to set the length of an dynamic array. Directly writing to `.length` is forbidden.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 468,
-                        "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
-                        "ignored": true
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 460,
-                        "newLine": 469,
-                        "text": "     *"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 461,
-                        "newLine": 470,
-                        "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased."
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 462,
-                        "newLine": 471,
-                        "text": "     */"
-                      },
-                      {
-                        "type": " ",
-                        "oldLine": 463,
-                        "newLine": 472,
-                        "text": "    function unsafeSetLength(uint256[] storage array, uint256 len) internal {"
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 464,
-                        "text": "        /// @solidity memory-safe-assembly",
+                        "oldLine": 472,
+                        "text": "     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.",
                         "ignored": true
                       },
                       {
                         "type": "-",
-                        "oldLine": 465,
+                        "oldLine": 473,
+                        "text": "     *",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 474,
+                        "text": "     * WARNING: Only use if you are certain `pos` is lower than the array length.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 475,
+                        "text": "     */",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 476,
+                        "text": "    function unsafeMemoryAccess(bytes[] memory arr, uint256 pos) internal pure returns (bytes memory res) {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 477,
                         "text": "        assembly {",
                         "ignored": false
                       },
                       {
-                        "type": "+",
-                        "newLine": 473,
-                        "text": "        assembly (\"memory-safe\") {",
+                        "type": "-",
+                        "oldLine": 478,
+                        "text": "            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))",
                         "ignored": false
                       },
                       {
+                        "type": "-",
+                        "oldLine": 479,
+                        "text": "        }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 480,
+                        "text": "    }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 481,
+                        "text": "",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 482,
+                        "text": "    /**",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 483,
+                        "text": "     * @dev Access an array in an \"unsafe\" way. Skips solidity \"index-out-of-range\" check.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 484,
+                        "text": "     *",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 485,
+                        "text": "     * WARNING: Only use if you are certain `pos` is lower than the array length.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 486,
+                        "text": "     */",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 487,
+                        "text": "    function unsafeMemoryAccess(string[] memory arr, uint256 pos) internal pure returns (string memory res) {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 488,
+                        "text": "        assembly {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 489,
+                        "text": "            res := mload(add(add(arr, 0x20), mul(pos, 0x20)))",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 490,
+                        "text": "        }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 491,
+                        "text": "    }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 492,
+                        "text": "",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 493,
+                        "text": "    /**",
+                        "ignored": true
+                      },
+                      {
                         "type": " ",
-                        "oldLine": 466,
+                        "oldLine": 494,
+                        "newLine": 446,
+                        "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden."
+                      },
+                      {
+                        "type": " ",
+                        "oldLine": 495,
+                        "newLine": 447,
+                        "text": "     *"
+                      },
+                      {
+                        "type": " ",
+                        "oldLine": 496,
+                        "newLine": 448,
+                        "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased."
+                      }
+                    ]
+                  },
+                  {
+                    "oldStart": 522,
+                    "oldLines": 26,
+                    "newStart": 474,
+                    "newLines": 4,
+                    "lines": [
+                      {
+                        "type": " ",
+                        "oldLine": 522,
                         "newLine": 474,
                         "text": "            sstore(array.slot, len)"
                       },
                       {
                         "type": " ",
-                        "oldLine": 467,
+                        "oldLine": 523,
                         "newLine": 475,
                         "text": "        }"
                       },
                       {
                         "type": " ",
-                        "oldLine": 468,
+                        "oldLine": 524,
                         "newLine": 476,
                         "text": "    }"
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 525,
+                        "text": "",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 526,
+                        "text": "    /**",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 527,
+                        "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 528,
+                        "text": "     *",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 529,
+                        "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 530,
+                        "text": "     */",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 531,
+                        "text": "    function unsafeSetLength(bytes[] storage array, uint256 len) internal {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 532,
+                        "text": "        assembly (\"memory-safe\") {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 533,
+                        "text": "            sstore(array.slot, len)",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 534,
+                        "text": "        }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 535,
+                        "text": "    }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 536,
+                        "text": "",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 537,
+                        "text": "    /**",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 538,
+                        "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 539,
+                        "text": "     *",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 540,
+                        "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased.",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 541,
+                        "text": "     */",
+                        "ignored": true
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 542,
+                        "text": "    function unsafeSetLength(string[] storage array, uint256 len) internal {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 543,
+                        "text": "        assembly (\"memory-safe\") {",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 544,
+                        "text": "            sstore(array.slot, len)",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 545,
+                        "text": "        }",
+                        "ignored": false
+                      },
+                      {
+                        "type": "-",
+                        "oldLine": 546,
+                        "text": "    }",
+                        "ignored": false
+                      },
+                      {
+                        "type": " ",
+                        "oldLine": 547,
+                        "newLine": 477,
+                        "text": "}"
                       }
                     ]
                   }
@@ -7336,20 +6308,20 @@
               "coveredLines": 11,
               "match": {
                 "origin": "library",
-                "libraryId": "openzeppelin",
+                "libraryId": "gnosis",
                 "matchedBy": "name",
                 "auditedName": "IERC165",
                 "similarity": 1,
-                "reportId": "contracts__audits__2018-10",
-                "repository": "openzeppelin-solidity",
-                "path": "contracts/introspection/IERC165.sol",
-                "commit": "dac5bccf803696d9d98d269b8c27c7aac5fa1c5c",
-                "commitTimestamp": "2018-09-18T22:22:04Z",
-                "url": "https://github.com/OpenZeppelin/openzeppelin-solidity/blob/dac5bccf803696d9d98d269b8c27c7aac5fa1c5c/contracts/introspection/IERC165.sol",
-                "auditStatus": "audited_with_major_findings",
-                "reviewPhase": "Initial audit",
-                "coverage": "Full review of every contract under contracts/.",
-                "majorFindings": 1,
+                "reportId": "certora-safe-1-3-0",
+                "repository": "safe-smart-account",
+                "path": "contracts/interfaces/IERC165.sol",
+                "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+                "commitTimestamp": "2021-11-17T16:53:12Z",
+                "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/IERC165.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "Manual audit",
+                "coverage": "Full manual review of the scoped source.",
+                "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -7357,105 +6329,39 @@
               "diff": {
                 "added": 0,
                 "removed": 0,
-                "ignoredAdded": 9,
-                "ignoredRemoved": 11,
+                "ignoredAdded": 1,
+                "ignoredRemoved": 1,
                 "unchanged": 11,
                 "ignoredOnly": true,
                 "hunks": [
                   {
-                    "oldStart": 1,
-                    "oldLines": 13,
-                    "newStart": 1,
-                    "newLines": 11,
+                    "oldStart": 2,
+                    "oldLines": 7,
+                    "newStart": 2,
+                    "newLines": 7,
                     "lines": [
                       {
                         "type": " ",
-                        "oldLine": 1,
-                        "newLine": 1,
-                        "text": "interface IERC165 {"
-                      },
-                      {
-                        "type": "-",
                         "oldLine": 2,
-                        "text": "",
-                        "ignored": true
+                        "newLine": 2,
+                        "text": "    /**"
                       },
                       {
-                        "type": "-",
+                        "type": " ",
                         "oldLine": 3,
-                        "text": "  /**",
-                        "ignored": true
+                        "newLine": 3,
+                        "text": "     * @dev Returns true if this contract implements the interface defined by"
                       },
                       {
-                        "type": "-",
+                        "type": " ",
                         "oldLine": 4,
-                        "text": "   * @notice Query if a contract implements an interface",
-                        "ignored": true
+                        "newLine": 4,
+                        "text": "     * `interfaceId`. See the corresponding"
                       },
                       {
                         "type": "-",
                         "oldLine": 5,
-                        "text": "   * @param interfaceId The interface identifier, as specified in ERC-165",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 6,
-                        "text": "   * @dev Interface identification is specified in ERC-165. This function",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 7,
-                        "text": "   * uses less than 30,000 gas.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 8,
-                        "text": "   */",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 9,
-                        "text": "  function supportsInterface(bytes4 interfaceId)",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 10,
-                        "text": "    external",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 11,
-                        "text": "    view",
-                        "ignored": true
-                      },
-                      {
-                        "type": "-",
-                        "oldLine": 12,
-                        "text": "    returns (bool);",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 2,
-                        "text": "    /**",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 3,
-                        "text": "     * @dev Returns true if this contract implements the interface defined by",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 4,
-                        "text": "     * `interfaceId`. See the corresponding",
+                        "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
                         "ignored": true
                       },
                       {
@@ -7465,40 +6371,22 @@
                         "ignored": true
                       },
                       {
-                        "type": "+",
+                        "type": " ",
+                        "oldLine": 6,
                         "newLine": 6,
-                        "text": "     * to learn more about how these ids are created.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 7,
-                        "text": "     *",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 8,
-                        "text": "     * This function call must use less than 30 000 gas.",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 9,
-                        "text": "     */",
-                        "ignored": true
-                      },
-                      {
-                        "type": "+",
-                        "newLine": 10,
-                        "text": "    function supportsInterface(bytes4 interfaceId) external view returns (bool);",
-                        "ignored": true
+                        "text": "     * to learn more about how these ids are created."
                       },
                       {
                         "type": " ",
-                        "oldLine": 13,
-                        "newLine": 11,
-                        "text": "}"
+                        "oldLine": 7,
+                        "newLine": 7,
+                        "text": "     *"
+                      },
+                      {
+                        "type": " ",
+                        "oldLine": 8,
+                        "newLine": 8,
+                        "text": "     * This function call must use less than 30 000 gas."
                       }
                     ]
                   }

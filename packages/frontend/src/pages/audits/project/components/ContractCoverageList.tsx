@@ -1,5 +1,10 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { ChevronIcon } from '~/icons/Chevron'
 import type {
   AuditsContractEntry,
@@ -10,6 +15,8 @@ import { UnitStatusBar } from '../../components/AuditCoverageBar'
 import {
   AUDIT_STATUS_META,
   AUDIT_STATUS_ORDER,
+  hasUnresolvedMajorFinding,
+  MAJOR_FINDING_DESCRIPTION,
   totalUnits,
 } from '../../components/auditStatus'
 import { UnitRow } from './UnitRow'
@@ -23,6 +30,13 @@ interface Props {
  * One collapsible row per deployed contract, expanding to its source files
  * and their units. Filtering by status and unit name is local state.
  */
+/** A zk entry can share the address of its deployed verifier contract. */
+function rowKey(contract: AuditsContractEntry): string {
+  return contract.zk
+    ? `zk:${contract.name}`
+    : `${contract.chain}:${contract.address}`
+}
+
 export function ContractCoverageList({ slug, contracts }: Props) {
   const [statuses, setStatuses] = useState<Set<AuditUnitStatus>>(
     () => new Set(AUDIT_STATUS_ORDER),
@@ -73,7 +87,7 @@ export function ContractCoverageList({ slug, contracts }: Props) {
           <button
             type="button"
             className="text-secondary hover:text-primary"
-            onClick={() => setOpen(new Set(contracts.map((c) => c.address)))}
+            onClick={() => setOpen(new Set(contracts.map(rowKey)))}
           >
             Expand all
           </button>
@@ -117,16 +131,23 @@ export function ContractCoverageList({ slug, contracts }: Props) {
 
       <div className="flex flex-col gap-2">
         {filtered.map(({ contract, files }) => {
-          const isOpen = open.has(contract.address)
+          const key = rowKey(contract)
+          const isOpen = open.has(key)
           const visibleUnits = files.reduce((n, f) => n + f.units.length, 0)
+          const majorFindingUnits = contract.files
+            .flatMap((f) => f.units)
+            .filter(hasUnresolvedMajorFinding).length
           return (
             <div
-              key={contract.address}
-              className="rounded-lg border border-divider"
+              key={key}
+              className={cn(
+                'rounded-lg border',
+                majorFindingUnits > 0 ? 'border-negative' : 'border-divider',
+              )}
             >
               <button
                 type="button"
-                onClick={() => toggleOpen(contract.address)}
+                onClick={() => toggleOpen(key)}
                 className="grid w-full grid-cols-[16px_minmax(0,1fr)] items-center gap-3 px-3 py-2 text-left hover:bg-surface-secondary md:grid-cols-[16px_minmax(200px,1.5fr)_minmax(0,1fr)_160px]"
               >
                 <ChevronIcon
@@ -140,6 +161,11 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                     <span className="truncate font-bold text-sm">
                       {contract.name}
                     </span>
+                    {contract.zk && (
+                      <span className="rounded border border-chart-stacked-blue px-1 font-medium text-[10px] text-chart-stacked-blue uppercase">
+                        zk {contract.zk.type}
+                      </span>
+                    )}
                     {contract.files.some((f) => f.role === 'proxy') && (
                       <span className="rounded border border-divider px-1 font-medium text-[10px] text-secondary uppercase">
                         proxy
@@ -150,9 +176,29 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                         no source
                       </span>
                     )}
+                    {majorFindingUnits > 0 && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="rounded border border-negative bg-negative/10 px-1 font-medium text-[10px] text-negative uppercase">
+                            major finding
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-[360px]">
+                          <div className="mb-1 font-medium">
+                            {majorFindingUnits}{' '}
+                            {majorFindingUnits === 1 ? 'unit' : 'units'} of this
+                            contract {majorFindingUnits === 1 ? 'has' : 'have'}{' '}
+                            an unresolved major finding.
+                          </div>
+                          {MAJOR_FINDING_DESCRIPTION}
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
                   </div>
                   <div className="truncate font-mono text-secondary text-xs">
-                    {contract.chain}:{contract.address}
+                    {contract.address
+                      ? `${contract.chain}:${contract.address}`
+                      : contract.zk?.link}
                     {contract.template && (
                       <span className="ml-2 font-sans">
                         template {contract.template}
@@ -185,10 +231,31 @@ export function ContractCoverageList({ slug, contracts }: Props) {
               {isOpen && (
                 <div className="border-divider border-t">
                   <div className="flex flex-wrap items-baseline gap-x-3 px-3 py-1.5 text-xs">
-                    <span className="text-secondary">Address</span>
-                    <span className="select-all font-mono">
-                      {contract.chain}:{contract.address}
-                    </span>
+                    {contract.address && (
+                      <>
+                        <span className="text-secondary">Address</span>
+                        <span className="select-all font-mono">
+                          {contract.chain}:{contract.address}
+                        </span>
+                      </>
+                    )}
+                    {contract.zk && (
+                      <span className="text-secondary">
+                        sources{' '}
+                        <a
+                          href={contract.zk.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono hover:text-primary hover:underline"
+                        >
+                          {contract.zk.link.replace('https://github.com/', '')}
+                        </a>{' '}
+                        @{' '}
+                        <span className="font-mono">
+                          {contract.zk.commit.slice(0, 8)}
+                        </span>
+                      </span>
+                    )}
                     {contract.template && (
                       <span className="text-secondary">
                         template{' '}
@@ -199,7 +266,9 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                   {visibleUnits === 0 && (
                     <p className="px-3 py-2 text-secondary text-xs">
                       {contract.noSource
-                        ? 'No verified source for this contract.'
+                        ? contract.zk
+                          ? 'No source files were fetched for this entry.'
+                          : 'No verified source for this contract.'
                         : 'No units match the current filter.'}
                     </p>
                   )}
@@ -208,9 +277,9 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                       <div key={file.path}>
                         <div className="flex items-center gap-2 bg-surface-secondary px-3 py-1 font-mono text-secondary text-xs">
                           {file.path}
-                          {file.role === 'proxy' && (
+                          {file.role !== 'implementation' && (
                             <span className="rounded border border-divider px-1 font-medium font-sans text-[10px] uppercase">
-                              proxy
+                              {file.role}
                             </span>
                           )}
                           <span className="ml-auto font-sans">

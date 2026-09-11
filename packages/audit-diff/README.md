@@ -24,8 +24,11 @@ pnpm --filter @l2beat/audit-diff generate \
   version with the highest similarity is used (newest on ties), so code copied from an older
   release is compared with that release. `laterAuditedVersionExists` flags that a newer audited
   revision exists.
-- Project audits take precedence over standard library audits (`libs/<vendor>`); libraries are
+- Project audits take precedence over standard library audits (`_libs/<vendor>`); libraries are
   matched by exact unit name only.
+- zk verifiers and programs listed in `deployed-contracts/_zk/zk-sources.json` appear as extra
+  rows; each fetched file is one whole-file unit compared with the audited file of the same
+  basename (circuits and other non-Solidity audited files are indexed the same way).
 
 `audit-diff.config.json` holds `datasetRepoUrl` (base URL used to link report files) and per-project overrides: `aliases` map a deployed unit name to the
 audited unit name when a contract was renamed, and `slug` overrides the L2BEAT slug when it differs

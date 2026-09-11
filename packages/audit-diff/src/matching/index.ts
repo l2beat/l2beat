@@ -1,3 +1,4 @@
+import path from 'path'
 import type { MatchOrigin } from '../contract/schema.js'
 import {
   type AuditedSourcesDir,
@@ -10,6 +11,7 @@ import type { AuditReport } from '../dataset/types.js'
 import {
   comparableLines,
   comparableText,
+  countLines,
   normalizeSource,
 } from '../diffing/normalize.js'
 import { type ExtractedUnit, extractUnits } from '../solidity/extractUnits.js'
@@ -48,6 +50,11 @@ export interface AuditedIndex {
   libraryName?: string
   /** Unit name → versions, newest first. */
   units: Map<string, AuditedUnitVersion[]>
+  /**
+   * Non-Solidity audited files (circuits, programs) as whole-file units,
+   * keyed by file basename, newest first.
+   */
+  programFiles: Map<string, AuditedUnitVersion[]>
   reports: Map<string, AuditReport>
 }
 
@@ -70,6 +77,7 @@ export function buildAuditedIndex(
   log: IndexLog = { skippedVersions: [], parseErrors: [] },
 ): AuditedIndex {
   const units = new Map<string, AuditedUnitVersion[]>()
+  const programFiles = new Map<string, AuditedUnitVersion[]>()
   const reports = new Map<string, AuditReport>()
   // Same (repo, path, commit) can be scoped by several reports; extract once.
   const seen = new Set<string>()
@@ -104,17 +112,26 @@ export function buildAuditedIndex(
             versionIndex,
           )
           for (const file of source.files) {
-            if (!file.file.endsWith('.sol')) continue
             const repoPath = auditedFileRepoPath(source, file.file)
+            const content = readAuditedFile(data.dir, file.file)
             let extracted: ExtractedUnit[]
-            try {
-              extracted = extractUnits(readAuditedFile(data.dir, file.file))
-            } catch (e) {
-              log.parseErrors.push(`${file.file}: ${String(e)}`)
-              continue
+            let target = units
+            if (file.file.endsWith('.sol')) {
+              try {
+                extracted = extractUnits(content)
+              } catch (e) {
+                log.parseErrors.push(`${file.file}: ${String(e)}`)
+                continue
+              }
+            } else {
+              // circuits and other programs: the whole file is one unit
+              extracted = [
+                wholeFileUnit(path.posix.basename(repoPath), content),
+              ]
+              target = programFiles
             }
             for (const unit of extracted) {
-              const list = units.get(unit.name) ?? []
+              const list = target.get(unit.name) ?? []
               const normalized = normalizeSource(unit.source)
               list.push({
                 unit,
@@ -133,7 +150,7 @@ export function buildAuditedIndex(
                 majorFindings: version.major_findings,
                 order,
               })
-              units.set(unit.name, list)
+              target.set(unit.name, list)
             }
           }
         })
@@ -141,7 +158,7 @@ export function buildAuditedIndex(
     }
   }
 
-  for (const list of units.values()) {
+  for (const list of [...units.values(), ...programFiles.values()]) {
     list.sort((a, b) => b.order - a.order)
   }
 
@@ -152,7 +169,20 @@ export function buildAuditedIndex(
     libraryId: library?.id,
     libraryName: library?.name,
     units,
+    programFiles,
     reports,
+  }
+}
+
+/** A non-Solidity source file treated as a single unit named by its basename. */
+export function wholeFileUnit(name: string, content: string): ExtractedUnit {
+  const normalized = normalizeSource(content)
+  return {
+    name,
+    kind: 'program',
+    startLine: 1,
+    endLine: Math.max(1, countLines(normalized)),
+    source: normalized,
   }
 }
 

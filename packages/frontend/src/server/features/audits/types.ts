@@ -9,6 +9,8 @@ export type AuditUnitKind =
   | 'interface'
   | 'library'
   | 'file-level'
+  /** A whole non-Solidity source file, e.g. a zk circuit. */
+  | 'program'
 
 export type AuditStatusCounts = Record<AuditUnitStatus, number>
 
@@ -54,6 +56,8 @@ export interface AuditsUnitMatchEntry {
   reportId: string
   reportTitle: string
   auditor: string
+  /** Report file (pdf when available) in the dataset repository. */
+  reportUrl?: string
   repository: string
   path: string
   commit: string
@@ -90,16 +94,19 @@ export interface AuditsUnitEntry {
 
 export interface AuditsFileEntry {
   path: string
-  role: 'implementation' | 'proxy'
+  role: 'implementation' | 'proxy' | 'program'
   lines: number
   units: AuditsUnitEntry[]
 }
 
 export interface AuditsContractEntry {
   name: string
+  /** Empty for zk programs without an onchain deployment. */
   address: string
   chain: string
   template?: string
+  /** Set for zk verifier / program sources instead of a deployed contract. */
+  zk?: { type: 'verifier' | 'program'; link: string; commit: string }
   noSource: boolean
   coverage: AuditCoverageNumbers
   files: AuditsFileEntry[]

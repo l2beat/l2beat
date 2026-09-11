@@ -58,6 +58,18 @@ export interface AuditVersion {
   major_findings: number
 }
 
+/** One entry of `deployed-contracts/_zk/zk-sources.json`. */
+export interface ZkSourceEntry {
+  type: 'verifier' | 'program'
+  name: string
+  link: string
+  commit: string
+  /** Chain-specific address, e.g. `eth:0x...`, verifiers only. */
+  address?: string
+  /** Directory inside `_zk` holding the fetched sources. */
+  path: string
+}
+
 export interface ManifestJson {
   sources: ManifestSource[]
 }
