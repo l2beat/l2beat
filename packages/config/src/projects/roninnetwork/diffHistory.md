@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xed71541febc8b629f23a76b9cae711c8f0f401cd
+
+# Diff at Thu, 10 Sep 2026 22:04:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1787834376
+- current timestamp: 1789077777
+
+## Description
+
+`respectedGameType` switched from `1337` (KailuaGame) to `1` (PermissionedDisputeGame) on the AnchorStateRegistry (and therefore the OptimismPortal2): the RoninConduitOwner Safe (Guardian, 5/6) called `setRespectedGameType(1)` in tx `0x7f1b7013…cded482` at block 25924899 (2026-09-07 10:31 UTC). Plain setter call, no implementation change, no `retireAllExistingGames`/blacklist. Withdrawals now settle against permissioned proposals instead of Kailua ZK proposals; the last Kailua game was created ~6h before the flip and the proposer has posted type-1 games every ~12h since.
+
+`game1337` (KailuaGame impl `eth:0x296e7aD6…`) stays registered in the DisputeGameFactory but is dormant. Descriptions on KailuaGame/KailuaTreasury updated accordingly.
+
+Config: re-added the `interact` permissions on the DGF's `proposerFromDGF` (EOA `eth:0xD379de94…`, also the Kailua vanguard) and `challengerFromDGF` (Conduit Multisig 1) that #12237 dropped while the permissioned game was dormant; they are the live actors again.
+
+Project page re-modelled off Kailua (badge, zk verifiers, program hashes) onto the permissioned game. The type-1 games commit to the op-program v1.3.1 prestate, which cannot execute for chain 2020, so the project is back to NO_PROOFS + NO_DA_ORACLE with `EIGENDA_DA_PROVIDER(false)`, as before #12200.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        "KailuaGame"
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1337
++        1
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        "KailuaGame"
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1337
++        1
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834376 (main branch discovery), not current.
+
+```diff
+    contract KailuaGame (eth:0x296e7aD6D441b0627768bC0650179a4206479444) [risc0/KailuaGame] {
+    +++ description: Implementation of the KailuaGame (game type 1337). Still registered in the DisputeGameFactory, but not the respected game type since 2026-09-07: new Kailua proposals stopped and games created from now on are not usable for withdrawals.
+      description:
+-        "Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal."
++        "Implementation of the KailuaGame (game type 1337). Still registered in the DisputeGameFactory, but not the respected game type since 2026-09-07: new Kailua proposals stopped and games created from now on are not usable for withdrawals."
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}]
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury] {
+    +++ description: Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned. Dormant since the respected game type moved back to the PermissionedDisputeGame on 2026-09-07.
+      description:
+-        "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
++        "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned. Dormant since the respected game type moved back to the PermissionedDisputeGame on 2026-09-07."
+    }
+```
+
+```diff
+    EOA (eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposerFromDGF"}
+    }
+```
+
 Generated with discovered.json: 0x6b26e1d73ae584826037f2d0ea48854d6abd6bee
 
 # Diff at Thu, 27 Aug 2026 12:41:08 GMT:
