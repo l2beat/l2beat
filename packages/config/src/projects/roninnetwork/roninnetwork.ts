@@ -3,9 +3,8 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS } from '../../common'
+import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -16,58 +15,55 @@ const discovery = new ProjectDiscovery('roninnetwork')
 // L2Migration hardfork activates at Ronin block 55,577,490 on 2026-05-12 ~15:16 UTC
 const genesisTimestamp = UnixTime(1778598960)
 
-const respectedGameType = discovery.getContractValue<number>(
-  'OptimismPortal2',
-  'respectedGameType',
-)
-const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
-  'DisputeGameFactory',
-  `game${respectedGameType}`,
-)
-const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
-  activeKailuaGame,
-  'KAILUA_TREASURY',
-)
-const activeKailuaVerifier = discovery.getContractValue<ChainSpecificAddress>(
-  activeKailuaTreasury,
-  'KAILUA_VERIFIER',
-)
-const kailuaSetBuilderProgramHash = discovery.getContractValue<string[]>(
-  'RiscZeroSetVerifier',
-  'imageInfo',
-)[0]
+// 2026-09-07 (block 25924899, tx 0x7f1b7013…cded482): the RoninConduitOwner
+// Safe (Guardian) called setRespectedGameType(1) on the AnchorStateRegistry,
+// moving the respected game from KailuaGame (1337) to the
+// PermissionedDisputeGame (1). game1337 stays registered but is not respected.
+// The type-1 game commits to the op-program v1.3.1 prestate (gameArgs(1)),
+// whose registry snapshot has no chain 2020, so the program cannot execute
+// for Ronin (verified by reproducible build + boot test, 2026-09-11):
+// NO_PROOFS + NO_DA_ORACLE, no Kailua badge/verifiers/program hashes.
 
-// Selectors of the RiscZero verifier versions the Kailua guest actually calls
-// through the RiscZeroVerifierRouter. Kept in sync with BOB's selection.
-const KAILUA_VERIFIER_SELECTORS = ['bb001d44', '73c457ba'] as const
+const proofSystemReferences = [
+  {
+    title: 'setRespectedGameType(1) - Etherscan',
+    url: 'https://etherscan.io/tx/0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482',
+  },
+  {
+    title:
+      'absolutePrestate hash registered in superchain-registry as op-program v1.3.1',
+    url: 'https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml',
+  },
+  {
+    title: 'op-program v1.3.1 release (commit e3c2f04, 2024-08-23)',
+    url: 'https://github.com/ethereum-optimism/optimism/releases/tag/op-program%2Fv1.3.1',
+  },
+  {
+    title:
+      'superchain-registry snapshot pinned at op-program v1.3.1 build (42bd03ba8313)',
+    url: 'https://github.com/ethereum-optimism/superchain-registry/blob/42bd03ba8313/chainList.json',
+  },
+]
 
-function getVerifiers(): ChainSpecificAddress[] {
-  return KAILUA_VERIFIER_SELECTORS.map((selector) => {
-    const emergencyStop = discovery.getContractValue<ChainSpecificAddress>(
-      'RiscZeroVerifierRouter',
-      `verifier_${selector}`,
-    )
-    return discovery.getContractValue<ChainSpecificAddress>(
-      emergencyStop,
-      'verifier',
-    )
-  })
-}
-
-export const roninNetwork: ScalingProject = opStackL2({
+const roninTemplate = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1754639625),
   discovery,
   genesisTimestamp,
-  daProvider: EIGENDA_DA_PROVIDER(true),
-  additionalBadges: [
-    BADGES.RaaS.Conduit,
-    BADGES.Other.MigratedFromL1,
-    BADGES.Stack.OPKailua,
-  ],
+  // No DA certificate verification on the live proof path: op-program v1.3.1
+  // predates EigenDA support; the DACert verifier only ran in the Kailua guest.
+  daProvider: EIGENDA_DA_PROVIDER(false),
+  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Other.MigratedFromL1],
   associatedTokens: ['RON'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
+  stateValidationImage: 'opfp',
   display: {
     name: 'Ronin',
+    warning:
+      'Since 2026-09-07 withdrawals settle against the PermissionedDisputeGame instead of the Kailua ZK game. The fault proof system is deployed but is not functional: the permissioned dispute game commits to the op-program v1.3.1 prestate, whose embedded superchain registry snapshot does not include Ronin (chain ID 2020), so no dispute can be resolved correctly by execution. Security relies entirely on the honesty of the permissioned proposer.',
     aliases: ['Sky Mavis', 'Axie Infinity'],
     slug: 'ronin-network',
     description:
@@ -93,10 +89,10 @@ export const roninNetwork: ScalingProject = opStackL2({
       stage0: {
         callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
+        stateVerificationOnL1: false,
+        daAttestedByIndependentParty: false,
         nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: true,
+        fraudProofSystemAtLeast5Outsiders: false,
       },
       stage1: {
         principle: false,
@@ -160,6 +156,22 @@ export const roninNetwork: ScalingProject = opStackL2({
         'Ronin hard-forks at block 55,577,490 to become an OP Stack Optimium using EigenDA.',
       type: 'general',
     },
+    {
+      title: 'Kailua ZK proofs enabled',
+      url: 'https://etherscan.io/tx/0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d',
+      date: '2026-07-01T00:00:00.00Z',
+      description:
+        'Respected game type moves from the PermissionedDisputeGame to the Kailua ZK game (type 1337).',
+      type: 'general',
+    },
+    {
+      title: 'Withdrawals fall back to the permissioned game',
+      url: 'https://etherscan.io/tx/0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482',
+      date: '2026-09-07T00:00:00.00Z',
+      description:
+        'Guardian moves the respected game type back to the PermissionedDisputeGame; Kailua proposals stop.',
+      type: 'general',
+    },
   ],
   nonTemplateEscrows: [
     // Legacy multi-sig bridge — residual escrow, drained over time as users
@@ -221,13 +233,6 @@ export const roninNetwork: ScalingProject = opStackL2({
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
-  nonTemplateZkVerifiers: getVerifiers(),
-  nonTemplateProgramHashes: [
-    PROGRAM_HASHES(
-      discovery.getContractValue<string>(activeKailuaVerifier, 'FPVM_IMAGE_ID'),
-    ),
-    PROGRAM_HASHES(kailuaSetBuilderProgramHash),
-  ],
   activityConfig: {
     type: 'block',
     startBlock: 55577490,
@@ -235,3 +240,23 @@ export const roninNetwork: ScalingProject = opStackL2({
   },
   isNodeAvailable: 'UnderReview',
 })
+
+export const roninNetwork: ScalingProject = {
+  ...roninTemplate,
+  stateValidation: roninTemplate.stateValidation && {
+    ...roninTemplate.stateValidation,
+    categories: roninTemplate.stateValidation.categories.map((category) =>
+      category.title === 'Challenges'
+        ? {
+            ...category,
+            references: [
+              ...(category.references ?? []),
+              ...proofSystemReferences,
+            ],
+          }
+        : category,
+    ),
+    description:
+      'Since 2026-09-07 withdrawals are settled against the PermissionedDisputeGame (game type 1). Only the permissioned proposer can create state root proposals and only the permissioned proposer and challenger can dispute them. The game commits to the op-program v1.3.1 absolute prestate, whose embedded superchain-registry snapshot does not include chain ID 2020, so the fault proof program cannot execute the Ronin state transition and no dispute can be resolved correctly by execution. The Kailua ZK game (game type 1337) remains deployed and registered in the DisputeGameFactory but is not the respected game type, so its proposals are not used for withdrawals.',
+  },
+}
