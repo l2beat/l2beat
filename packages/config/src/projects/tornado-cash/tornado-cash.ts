@@ -18,6 +18,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { tornadoCashAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('tornado-cash')
 
@@ -203,17 +204,8 @@ export const tornadoCash: BaseProject = {
       description:
         'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
     },
-    privacy: {
-      value: 'Unconditional',
-      sentiment: 'good',
-      description:
-        'There is no protocol-level compliance mechanism or way to compromise user privacy.',
-    },
-    noteDiscovery: {
-      description:
-        "A Tornado Cash note is generated locally at deposit time and kept by the user, so normally nothing has to be discovered to spend it. Users can additionally back up notes onchain: the note is encrypted to a user's private key and is emitted as an `EncryptedNote` event on `TornadoRouter`. The recovery downloads all such events and tries to decrypt each one locally. Because every event is requested, the RPC provider learns neither which events belong to the user, nor into which pool the user has deposited from the queries alone.",
-    },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
+    adversaries: tornadoCashAdversaries,
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),

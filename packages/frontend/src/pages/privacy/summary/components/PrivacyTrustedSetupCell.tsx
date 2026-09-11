@@ -6,6 +6,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyTrustedSetup } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
+import { DotWithLabel } from './DotWithLabel'
 
 export function PrivacyTrustedSetupCell({
   trustedSetup,
@@ -14,20 +15,21 @@ export function PrivacyTrustedSetupCell({
 }) {
   return (
     <Tooltip>
-      <TooltipTrigger
-        className="inline-flex flex-col items-center justify-center gap-1"
-        aria-label={trustedSetup.name}
-      >
-        <TrustedSetupRiskDot
-          risk={trustedSetup.risk}
-          size="sm"
-          className="shrink-0"
+      <TooltipTrigger aria-label={trustedSetup.name}>
+        <DotWithLabel
+          dot={
+            <TrustedSetupRiskDot
+              risk={trustedSetup.risk}
+              size="sm"
+              className="shrink-0"
+            />
+          }
+          label={
+            trustedSetup.participantCount === undefined
+              ? undefined
+              : `${formatInteger(trustedSetup.participantCount)} participants`
+          }
         />
-        {trustedSetup.participantCount !== undefined && (
-          <span className="font-medium text-[11px] text-secondary leading-none">
-            {formatInteger(trustedSetup.participantCount)} participants
-          </span>
-        )}
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">
         <div className="space-y-2">

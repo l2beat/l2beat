@@ -113,7 +113,7 @@ export function PrivacyProjectPage({
                       <PrivacyProjectRiskProfile
                         trustedSetup={entry.trustedSetup}
                         exitWindow={entry.exitWindow}
-                        privacy={entry.privacy}
+                        adversaries={entry.adversaries}
                         reproducibility={entry.reproducibility}
                         className="mt-4"
                       />

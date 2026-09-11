@@ -1,4 +1,13 @@
-import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import type {
+  PrivacyAdversaryId,
+  PrivacyAdversarySentiment,
+  PrivacyExposure,
+  PrivacyField,
+  PrivacyPromise,
+  Project,
+  ProjectPrivacyAdversaries,
+  ProjectZkCatalogInfo,
+} from '@l2beat/config'
 
 export type PrivacyProject = Project<
   'display' | 'privacyInfo' | 'statuses',
@@ -59,4 +68,62 @@ export interface PrivacyAsset {
   }
   depositedValueUsd: PrivacyDepositedValueUsd
   buckets: PrivacyBucket[]
+}
+
+/** One adversary cell, reduced to what tooltips and dots need. */
+export interface PrivacyAdversarySummaryCell {
+  id: PrivacyAdversaryId
+  label: string
+  description: string
+  value: string
+  sentiment: PrivacyAdversarySentiment
+  exposure: string
+  /** Other fields leaking beyond the public observer, with their labels. */
+  alsoExposed: {
+    field: PrivacyField
+    label: string
+    exposure: PrivacyExposure
+  }[]
+}
+
+export interface PrivacyAdversariesSummary {
+  promise: PrivacyPromise
+  /** Fields in display order, for legends. */
+  fields: ProjectPrivacyAdversaries['fields']
+  /** In spine order: public observer, chain analyst, network observer, insider, future. */
+  cells: PrivacyAdversarySummaryCell[]
+}
+
+function interiorExposure(
+  cell: ProjectPrivacyAdversaries['cells'][PrivacyAdversaryId],
+  field: PrivacyField,
+): PrivacyExposure {
+  const leak = cell.interior?.[field]
+  if (leak === undefined) return 'private'
+  return typeof leak === 'string' ? leak : leak.verdict
+}
+
+export function toPrivacyAdversariesSummary(
+  adversaries: ProjectPrivacyAdversaries,
+): PrivacyAdversariesSummary {
+  return {
+    promise: adversaries.promise,
+    fields: adversaries.fields,
+    cells: adversaries.adversaries.map((adversary) => {
+      const cell = adversaries.cells[adversary.id]
+      return {
+        id: adversary.id,
+        label: adversary.label,
+        description: adversary.description,
+        value: cell.value,
+        sentiment: cell.sentiment,
+        exposure: cell.exposure,
+        alsoExposed: cell.alsoExposed.map((field) => ({
+          field,
+          label: adversaries.fields.find((f) => f.id === field)?.label ?? field,
+          exposure: interiorExposure(cell, field),
+        })),
+      }
+    }),
+  }
 }

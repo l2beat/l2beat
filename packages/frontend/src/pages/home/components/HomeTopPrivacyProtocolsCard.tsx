@@ -8,6 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTooltipContent'
 import { BasicTable } from '~/components/table/BasicTable'
 import {
@@ -18,8 +19,8 @@ import { getCommonProjectColumns } from '~/components/table/common-project-colum
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
+import { PrivacyAdversaryDots } from '~/pages/privacy/adversaries/PrivacyAdversaryDots'
 import { PrivacyWalkawayTestTooltipContent } from '~/pages/privacy/PrivacyWalkawayTestIcon'
-import { PRIVACY_ASSESSMENT } from '~/pages/privacy/privacyAssessment'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
 import {
   type TrustedSetupRisk,
@@ -107,7 +108,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        'Key properties of the protocol: trusted setup, exit window, privacy, and reproducibility. Hover over each dot for details.',
+        'Key properties of the protocol: trusted setup, exit window and reproducibility, then privacy against each adversary: public observer, chain analyst, network observer, privileged insider, future adversary. Hover over each dot for details.',
     },
   }),
   columnHelper.accessor('totalValueLockedUsd', {
@@ -151,12 +152,6 @@ function PropertiesCell({ entry }: { entry: PrivacySummaryEntry }) {
         />
       </PropertyDot>
       <PropertyDot
-        label={PRIVACY_ASSESSMENT.title}
-        risk={sentimentToRiskDot(entry.privacy.sentiment)}
-      >
-        <ProjectRiskTooltipContent risk={entry.privacy} variant="table" />
-      </PropertyDot>
-      <PropertyDot
         label="Reproducibility"
         risk={sentimentToRiskDot(entry.reproducibility.sentiment)}
       >
@@ -165,6 +160,8 @@ function PropertiesCell({ entry }: { entry: PrivacySummaryEntry }) {
           variant="table"
         />
       </PropertyDot>
+      <VerticalSeparator className="mx-1 h-4" />
+      <PrivacyAdversaryDots adversaries={entry.adversaries} />
     </div>
   )
 }

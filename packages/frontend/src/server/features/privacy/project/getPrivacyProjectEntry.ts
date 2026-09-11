@@ -26,7 +26,11 @@ import {
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
-import type { PrivacyRelayerStat } from '../types'
+import {
+  type PrivacyAdversariesSummary,
+  type PrivacyRelayerStat,
+  toPrivacyAdversariesSummary,
+} from '../types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -56,7 +60,7 @@ export interface ProjectPrivacyEntry {
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
-  privacy: PrivacySummaryValue
+  adversaries: PrivacyAdversariesSummary
   reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number | undefined
@@ -152,20 +156,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.noteDiscovery) {
-    sections.push({
-      type: 'MarkdownSection',
-      props: {
-        id: 'note-discovery',
-        title: 'Note discovery',
-        content: details.noteDiscovery.description,
-        risks: details.noteDiscovery.risks?.map((text) => ({
-          text,
-          isCritical: false,
-        })),
-      },
-    })
-  }
+  sections.push({
+    type: 'PrivacyAdversariesSection',
+    props: {
+      id: 'privacy-adversaries',
+      title: 'Privacy against adversaries',
+      adversaries: details.adversaries,
+    },
+  })
 
   const chartProject = {
     id: details.id,
@@ -325,7 +323,7 @@ export async function getPrivacyProjectEntry(
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
-    privacy: details.privacy,
+    adversaries: toPrivacyAdversariesSummary(details.adversaries),
     reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd: details.hasTvl
