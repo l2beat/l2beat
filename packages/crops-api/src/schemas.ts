@@ -4,6 +4,7 @@ import type {
   ResolvedCropEvaluation,
   ResolvedCrops,
 } from '@l2beat/config'
+import type { Equal, Expect } from '@l2beat/shared-pure'
 import { type Validator, v } from '@l2beat/validate'
 
 // The validators are the API contract: the OpenAPI document is built from
@@ -17,14 +18,6 @@ export type CropsApiProject = v.infer<typeof ProjectSchema>
 /** Sentiment and status only - the prose lives on the per-project endpoint. */
 export type CropsApiSummary = v.infer<typeof CropsSummarySchema>
 export type AddressMatch = v.infer<typeof AddressMatchSchema>
-
-// `Expect<Equals<X, Y>>` fails to compile unless X and Y are the same type,
-// so an enum below cannot silently gain or lose a value config has.
-type Expect<T extends true> = T
-type Equals<A, B> =
-  (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
-    ? true
-    : false
 
 const AttestationsMetaSchema = v
   .strictObject({
@@ -62,11 +55,12 @@ const CropStatusSchema = v.enum([
   'notReviewed',
   'fullyTransparent',
 ])
+// So an enum cannot silently gain or lose a value config has.
 type _SentimentMatchesConfig = Expect<
-  Equals<v.infer<typeof CropSentimentSchema>, CropSentiment>
+  Equal<v.infer<typeof CropSentimentSchema>, CropSentiment>
 >
 type _StatusMatchesConfig = Expect<
-  Equals<v.infer<typeof CropStatusSchema>, ProjectCropStatus>
+  Equal<v.infer<typeof CropStatusSchema>, ProjectCropStatus>
 >
 
 // Annotated with the config types so a crop key or field the schema misses
