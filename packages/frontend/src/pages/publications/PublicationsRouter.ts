@@ -5,6 +5,7 @@ import { getCollectionEntry } from '~/content/getCollection'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
+import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
 import { getPublicationsData } from './getPublicationsData'
 import { getGovernancePublicationData } from './governance/getGovernancePublicationData'
 import { getMonthlyUpdateData } from './monthly-updates/getMonthlyUpdateData'
@@ -17,11 +18,11 @@ export function createPublicationsRouter(
 ) {
   const router = express.Router()
 
-  router.get('/publications', async (req, res, next) => {
+  router.get('/publications', async (req, res) => {
     const data = await getPublicationsData(manifest, req.originalUrl)
 
     if (!data) {
-      next()
+      await renderNotFoundPage(manifest, render, req.originalUrl, res)
       return
     }
     const html = await render(data, req.originalUrl)
@@ -33,7 +34,7 @@ export function createPublicationsRouter(
     validateRoute({
       params: v.object({ id: v.string() }),
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const governancePublication = getCollectionEntry(
         'governance-publications',
         req.params.id,
@@ -71,7 +72,7 @@ export function createPublicationsRouter(
       }
 
       if (!data) {
-        next()
+        await renderNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)

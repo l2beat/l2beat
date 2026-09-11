@@ -5,6 +5,7 @@ import { env } from '~/env'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
 import { getDefiProjectData } from './project/getDefiProjectData'
 import { getDefiSummaryData } from './summary/getDefiSummaryData'
 
@@ -41,7 +42,7 @@ export function createDefiRouter(
     validateRoute({
       params: v.object({ slug: v.string() }),
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const data = await cache.get(
         {
           key: ['defi', 'projects', req.params.slug],
@@ -52,7 +53,7 @@ export function createDefiRouter(
       )
 
       if (!data) {
-        next()
+        await renderNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
 

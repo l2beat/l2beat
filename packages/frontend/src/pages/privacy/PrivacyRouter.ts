@@ -4,6 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
 import { getPrivacyProjectData } from './project/getPrivacyProjectData'
 import { getPrivacySummaryData } from './summary/getPrivacySummaryData'
 
@@ -37,7 +38,7 @@ export function createPrivacyRouter(
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const data = await getPrivacyProjectData(
         manifest,
         req.params.slug,
@@ -47,7 +48,7 @@ export function createPrivacyRouter(
       )
 
       if (!data) {
-        next()
+        await renderNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
 

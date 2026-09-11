@@ -4,6 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
+import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
 import { getZkCatalogData } from './v2/getZkCatalogData'
 import { getZkCatalogProjectData } from './v2/project/getZkCatalogProjectData'
 
@@ -25,7 +26,7 @@ export function createZkCatalogRouter(
     validateRoute({
       params: v.object({ slug: v.string() }),
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const data = await cache.get(
         {
           key: ['zk-catalog', 'v2', 'projects', req.params.slug],
@@ -36,7 +37,7 @@ export function createZkCatalogRouter(
           getZkCatalogProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
-        next()
+        await renderNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)

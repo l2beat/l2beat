@@ -5,6 +5,7 @@ import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
@@ -106,7 +107,7 @@ export function createInteropRouter(
       params: v.object({ slug: v.string() }),
       query: v.object({ update: v.string().optional() }),
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const project = await ps.getProject({
         slug: req.params.slug,
         optional: ['scalingInfo', 'interopConfig'],
@@ -121,7 +122,7 @@ export function createInteropRouter(
 
       const data = await getInteropProtocolPageData(req, manifest, cache)
       if (!data) {
-        next()
+        await renderNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)
@@ -157,10 +158,10 @@ export function createInteropRouter(
       params: v.object({ slug: v.string() }),
       query: InteropQuery,
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const data = await getInteropTokenPageData(req, manifest, cache)
       if (!data) {
-        next()
+        await renderNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)

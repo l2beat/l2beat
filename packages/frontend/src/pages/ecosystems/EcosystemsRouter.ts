@@ -4,6 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
+import { renderNotFoundPage } from '../not-found/renderNotFoundPage'
 import { getEcosystemProjectData } from './project/getEcosystemProjectData'
 
 export function createEcosystemsRouter(
@@ -18,7 +19,7 @@ export function createEcosystemsRouter(
     validateRoute({
       params: v.object({ slug: v.string() }),
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const data = await cache.get(
         {
           key: ['ecosystems', req.params.slug],
@@ -29,7 +30,7 @@ export function createEcosystemsRouter(
           getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
-        next()
+        await renderNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
       const html = await render(data, req.originalUrl)
