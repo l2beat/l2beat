@@ -20,6 +20,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getPrivacyProject } from './getPrivacyProjects'
 import type {
@@ -62,6 +63,7 @@ export interface PrivacyProjectDetails {
     deposits: {
       total: number
       last7d: number
+      change7d: number
       last30d: number
     }
     depositedValueUsd: {
@@ -273,6 +275,16 @@ export async function getPrivacyProjectDetails(
       deposits: {
         total: summaryDepositsTotal,
         last7d: summaryDeposits7d,
+        change7d: calculatePercentageChange(
+          summaryDeposits7d,
+          daily30d
+            .filter(
+              (row) =>
+                row.timestamp >= last7dCutoff - 7 * UnixTime.DAY &&
+                row.timestamp < last7dCutoff,
+            )
+            .reduce((sum, row) => sum + row.depositCount, 0),
+        ),
         last30d: summaryDeposits30d,
       },
       depositedValueUsd: {

@@ -60,9 +60,11 @@ export interface ProjectPrivacyEntry {
   reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number | undefined
+    totalValueLockedChange7d: number | undefined
     deposits: {
       total: number
       last7d: number
+      change7d: number
       last30d: number
     }
     relayerStat?: PrivacyRelayerStat
@@ -82,22 +84,21 @@ export async function getPrivacyProjectEntry(
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [contractUtils, allProjects, tvs, totalValueLockedUsd] =
-    await Promise.all([
-      getContractUtils(),
-      ps.getProjects({
-        optional: [
-          'display',
-          'daBridge',
-          'scalingInfo',
-          'daLayer',
-          'privacyInfo',
-          'defiInfo',
-        ],
-      }),
-      get7dTvsBreakdown({ type: 'all' }),
-      getTotalValueLockedUsd(details, helpers, defaultChartRange),
-    ])
+  const [contractUtils, allProjects, tvs] = await Promise.all([
+    getContractUtils(),
+    ps.getProjects({
+      optional: [
+        'display',
+        'daBridge',
+        'scalingInfo',
+        'daLayer',
+        'privacyInfo',
+        'defiInfo',
+      ],
+    }),
+    get7dTvsBreakdown({ type: 'all' }),
+    prefetchCharts(details, helpers, defaultChartRange),
+  ])
 
   const permissionsSection = getPermissionsSection(
     {
@@ -327,7 +328,12 @@ export async function getPrivacyProjectEntry(
     privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
-      totalValueLockedUsd,
+      totalValueLockedUsd: details.hasTvl
+        ? tvs.projects[details.id]?.breakdown.total
+        : undefined,
+      totalValueLockedChange7d: details.hasTvl
+        ? tvs.projects[details.id]?.change.total
+        : undefined,
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },
@@ -342,11 +348,11 @@ export async function getPrivacyProjectEntry(
   }
 }
 
-async function getTotalValueLockedUsd(
+async function prefetchCharts(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
   range: ChartRange,
-): Promise<number | undefined> {
+): Promise<void> {
   const flowsPrefetch =
     details.assets.length > 0
       ? helpers.queryClient.prefetchQuery(
@@ -363,7 +369,7 @@ async function getTotalValueLockedUsd(
   }
 
   // The flows chart prefetch rides along so both charts are dehydrated for the client
-  const [tvlChart] = await Promise.all([
+  await Promise.all([
     helpers.queryClient.fetchQuery(
       helpers.trpc.tvs.chartByProjects.queryOptions({
         projectIds: [details.id],
@@ -372,6 +378,4 @@ async function getTotalValueLockedUsd(
     ),
     flowsPrefetch,
   ])
-
-  return tvlChart.chart.at(-1)?.[1][details.id] ?? undefined
 }
