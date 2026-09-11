@@ -120,8 +120,6 @@ export function buildOpenApiDocument(ledger: CropsAttestationsMeta) {
       version: '1.0.0',
       description: buildOpenApiDescription(ledger),
     },
-    // No `servers` on purpose: without them every client, Swagger UI included, resolves paths
-    // against the host that served the spec, so staging can never accidentally call production.
     paths: Object.fromEntries(
       PUBLISHED_ROUTES.map((route) => [
         route.path,

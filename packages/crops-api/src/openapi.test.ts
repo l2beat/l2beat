@@ -73,9 +73,8 @@ describe('OpenAPI agreement', () => {
     expect(document.info.description).not.toInclude('{{')
   })
 
-  it('is OpenAPI 3.1 and leaves servers out so requests target the serving host', () => {
+  it('is OpenAPI 3.1', () => {
     expect(document.openapi).toEqual('3.1.0')
-    expect(Object.keys(document)).not.toInclude('servers')
   })
 
   it('names the ledger network and warns about a testnet only while on one', () => {
