@@ -8,13 +8,9 @@ Generated with discovered.json: 0xed71541febc8b629f23a76b9cae711c8f0f401cd
 
 ## Description
 
-`respectedGameType` switched from `1337` (KailuaGame) to `1` (PermissionedDisputeGame) on the AnchorStateRegistry and OptimismPortal2: the RoninConduitOwner Safe (Guardian, 5/6) called `setRespectedGameType(1)` in tx `0x7f1b7013…cded482` at block 25924899 (2026-09-07 10:31 UTC). No implementation change, no game retirement or blacklist. Withdrawals now settle against permissioned proposals; the last Kailua game was created 6h before the call and type-1 games have been created every ~12h since.
+`respectedGameType` switched from `1337` (KailuaGame) to `1` (PermissionedDisputeGame) on the AnchorStateRegistry and OptimismPortal2. No implementation change, no game retirement or blacklist. Withdrawals now settle against permissioned proposals.
 
-`game1337` (KailuaGame impl `eth:0x296e7aD6…`) stays registered but is not respected; KailuaGame and KailuaTreasury descriptions note this.
-
-Re-added the `interact` permissions on the DGF's `proposerFromDGF` (EOA `eth:0xD379de94…`) and `challengerFromDGF` (Conduit Multisig 1) removed in #12237 while the permissioned game was dormant.
-
-Project modelled on the permissioned game: OPKailua badge, Kailua zk verifiers and program hashes removed; the type-1 prestate is op-program v1.3.1 (`0x038512e0…`), which cannot execute for chain 2020, so the project returns to NO_PROOFS + NO_DA_ORACLE with `EIGENDA_DA_PROVIDER(false)` as before #12200.
+The type-1 prestate is op-program v1.3.1 (`0x038512e0…`), which cannot execute for chain 2020.
 
 ## Watched changes
 
