@@ -17,10 +17,6 @@ export function NotFoundHandler(manifest: Manifest, render: RenderFunction) {
       next()
       return
     }
-    try {
-      await renderNotFoundPage(manifest, render, req.originalUrl, res)
-    } catch (error) {
-      next(error)
-    }
+    await renderNotFoundPage(manifest, render, req.originalUrl, res)
   }
 }
