@@ -7,7 +7,10 @@ image=postgres:18
 
 assert_postgres_version() {
     local server_version_num
-    server_version_num=$(docker exec "${name}" psql -U postgres -tAc 'SHOW server_version_num')
+    if ! server_version_num=$(docker exec "${name}" psql -U postgres -tAc 'SHOW server_version_num' 2>/dev/null); then
+        echo "${name} is not accepting connections yet, skipping the PostgreSQL 18 check."
+        return 0
+    fi
     if [[ "${server_version_num}" != 18* ]]; then
         echo "${name} runs PostgreSQL ${server_version_num}, but this checkout requires PostgreSQL 18."
         echo "Major versions cannot reuse data directories. Migrate or remove the old container, then rerun this script."
