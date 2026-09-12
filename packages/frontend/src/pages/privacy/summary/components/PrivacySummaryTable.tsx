@@ -273,7 +273,7 @@ export function PrivacySummaryTable({
 }) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
 
-  const table = useTable({
+  const table = useTable('PrivacySummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

@@ -48,7 +48,7 @@ export function AllProtocolsTable({
     ],
   )
 
-  const table = useTable<ProtocolRow>({
+  const table = useTable<ProtocolRow>('AllProtocolsTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

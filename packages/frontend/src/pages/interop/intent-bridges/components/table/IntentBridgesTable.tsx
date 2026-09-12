@@ -30,7 +30,7 @@ export function IntentBridgesTable({
   )
 
   const columns = useMemo(() => getIntentBridgeColumns(transfer), [transfer])
-  const table = useTable<IntentBridgeRow>({
+  const table = useTable<IntentBridgeRow>('IntentBridgesTable', {
     data: rows,
     columns,
     getCoreRowModel: getCoreRowModel(),

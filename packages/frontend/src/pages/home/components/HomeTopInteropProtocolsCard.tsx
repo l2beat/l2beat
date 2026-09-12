@@ -57,7 +57,7 @@ export function HomeTopInteropProtocolsCard({
 
   const columns = useMemo(() => getHomeTopInteropProtocolsColumns(), [])
 
-  const table = useTable<ProtocolRow>({
+  const table = useTable<ProtocolRow>('HomeTopInteropProtocolsCard', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

@@ -20,19 +20,21 @@ interface Props<T> {
 }
 
 export function ColumnsControls<T>({ columns }: Props<T>) {
+  const pickerColumns = columns
+    .flatMap((column) => column.getLeafColumns())
+    .filter((column) => column.getCanHide())
+  const hiddenCount = pickerColumns.filter(
+    (column) => !column.getIsVisible(),
+  ).length
+
   const trigger = (
     <div className="mb-1 flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-secondary p-2 font-semibold text-base">
       <SlidersIcon className="size-4 fill-secondary" />
       <span className="text-label-value-14 md:text-label-value-15">
-        Columns
+        Columns{hiddenCount > 0 && ` (${hiddenCount} hidden)`}
       </span>
     </div>
   )
-  const pickerColumns = columns
-    .flatMap((column) =>
-      column.columns.length > 0 ? column.columns : [column],
-    )
-    .filter((column) => column.getCanHide())
 
   return (
     <>

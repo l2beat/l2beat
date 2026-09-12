@@ -12,7 +12,7 @@ interface Props {
 
 export function CentralizedSequencingTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
-  const table = useTable({
+  const table = useTable('CentralizedSequencingTable', {
     data: entries,
     columns: l2CentralizedSequencingColumns,
     getCoreRowModel: getCoreRowModel(),

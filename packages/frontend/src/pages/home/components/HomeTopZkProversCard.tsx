@@ -30,7 +30,7 @@ interface Props {
 }
 
 export function HomeTopZkProversCard({ entries }: Props) {
-  const table = useTable({
+  const table = useTable('HomeTopZkProversCard', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

@@ -15,6 +15,8 @@ declare global {
  * together with the type of the value stored under it.
  */
 type LocalStorageSchema = {
+  [K in `table-hidden-columns-${string}`]: string[]
+} & {
   [K in `whats-new-${string}`]: boolean
 } & {
   [K in `top-banner-${string}-is-hidden`]: boolean
