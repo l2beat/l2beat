@@ -1,9 +1,7 @@
 import type { MintingPluginRecord } from '@l2beat/database'
-import { Address32 } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { getTokenDb } from '~/server/tokenDb'
-import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
+import { deploymentKey } from '../utils/deploymentKey'
 
 export interface InteropTokenOnchainDeployment {
   chain: string
@@ -14,9 +12,6 @@ export interface InteropTokenOnchainDeployment {
     'plugin' | 'bridgeType' | 'relatedChain'
   >[]
   isSupported: boolean
-  volume: number | null
-  transferCount: number | null
-  avgDuration: number | null
 }
 
 export async function getInteropTokenOnchainDeployments(
@@ -26,7 +21,6 @@ export async function getInteropTokenOnchainDeployments(
   if (env.MOCK) {
     return MOCK_INTEROP_TOKEN_DEPLOYMENTS
   }
-  const db = getDb()
   const tokenDb = getTokenDb()
 
   const deployedTokens = (
@@ -34,39 +28,18 @@ export async function getInteropTokenOnchainDeployments(
   ).filter((token) => !token.ignored)
   if (deployedTokens.length === 0) return []
 
-  // Aggregates store token addresses in Address32 format,
-  // deployed tokens store them in long format.
-  const statsKeys = deployedTokens.flatMap((token) => {
-    const tokenAddress = Address32.fromOrUndefined(token.address)
-    return tokenAddress ? [{ tokenChain: token.chain, tokenAddress }] : []
-  })
-
-  const [stats, mintingPlugins] = await Promise.all([
-    (async () => {
-      const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-      return snapshotTimestamp
-        ? db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
-            snapshotTimestamp,
-            statsKeys,
-          )
-        : []
-    })(),
-    tokenDb.tokenRelation.getMintingPluginsForMany(
-      deployedTokens.map((token) => ({
-        chain: token.chain,
-        address: token.address,
-      })),
-    ),
-  ])
-  const statsMap = new Map(
-    stats.map((stat) => [`${stat.tokenChain}|${stat.tokenAddress}`, stat]),
+  const mintingPlugins = await tokenDb.tokenRelation.getMintingPluginsForMany(
+    deployedTokens.map((token) => ({
+      chain: token.chain,
+      address: token.address,
+    })),
   )
   const mintingPluginsMap = new Map<
     string,
     InteropTokenOnchainDeployment['mintingPlugins']
   >()
   for (const record of mintingPlugins) {
-    const key = deploymentKey(record.chain, record.address)
+    const key = deploymentKey(record)
     const plugins = mintingPluginsMap.get(key) ?? []
     plugins.push({
       plugin: record.plugin,
@@ -77,36 +50,13 @@ export async function getInteropTokenOnchainDeployments(
   }
   const supportedChains = new Set(supportedChainIds)
 
-  const deployments = deployedTokens.map((token) => {
-    const tokenAddress = Address32.fromOrUndefined(token.address)
-    const stat = tokenAddress
-      ? statsMap.get(`${token.chain}|${tokenAddress}`)
-      : undefined
-    const isSupported = supportedChains.has(token.chain)
-    return {
-      chain: token.chain,
-      address: token.address,
-      symbol: token.symbol,
-      mintingPlugins:
-        mintingPluginsMap.get(deploymentKey(token.chain, token.address)) ?? [],
-      isSupported,
-      volume: stat?.volume ?? (isSupported ? 0 : null),
-      transferCount: stat?.transferCount ?? (isSupported ? 0 : null),
-      avgDuration:
-        stat && stat.transfersWithDurationCount > 0
-          ? Math.round(stat.totalDurationSum / stat.transfersWithDurationCount)
-          : null,
-    }
-  })
-
-  return deployments.sort(
-    (a, b) =>
-      (b.volume ?? -1) - (a.volume ?? -1) || a.chain.localeCompare(b.chain),
-  )
-}
-
-function deploymentKey(chain: string, address: string): string {
-  return `${chain}|${address.toLowerCase()}`
+  return deployedTokens.map((token) => ({
+    chain: token.chain,
+    address: token.address,
+    symbol: token.symbol,
+    mintingPlugins: mintingPluginsMap.get(deploymentKey(token)) ?? [],
+    isSupported: supportedChains.has(token.chain),
+  }))
 }
 
 const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
@@ -116,9 +66,6 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     symbol: 'USDC',
     mintingPlugins: [],
     isSupported: true,
-    volume: 2_170_000,
-    transferCount: 403,
-    avgDuration: 24,
   },
   {
     chain: 'arbitrum',
@@ -137,9 +84,6 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
       },
     ],
     isSupported: true,
-    volume: 392_430,
-    transferCount: 125,
-    avgDuration: 19,
   },
   {
     chain: 'base',
@@ -153,8 +97,5 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
       },
     ],
     isSupported: false,
-    volume: null,
-    transferCount: null,
-    avgDuration: null,
   },
 ]
