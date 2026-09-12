@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "eETH",
+  "category": "core",
+  "description": "Rebasing liquid staking token. Balances are shares \u00d7 the LiquidityPool exchange rate and total supply tracks pooled ETH. Only the LiquidityPool can mint and burn.",
+  "ignoreMethods": ["proxiableUUID"]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiNode",
+  "category": "core",
+  "description": "Per-node implementation (behind a beacon) that holds an EigenLayer EigenPod and splits validator rewards. EigenLayer contracts are external.",
+  "ignoreMethods": ["proxiableUUID"]
+}

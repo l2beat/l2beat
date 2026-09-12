@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RevokeAdmin",
+  "category": "gov",
+  "description": "Contract that can revoke admin and other roles in an emergency.",
+  "ignoreMethods": ["proxiableUUID"]
+}

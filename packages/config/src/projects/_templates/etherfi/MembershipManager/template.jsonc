@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MembershipManager",
+  "category": "gov",
+  "description": "Manages membership NFTs recording loyalty points and tiers for depositors.",
+  "ignoreMethods": [
+    "allTimeHighDepositAmount",
+    "hasMetBurnFeeWaiverPeriod",
+    "tokenData",
+    "tokenDeposits",
+    "proxiableUUID"
+  ]
+}

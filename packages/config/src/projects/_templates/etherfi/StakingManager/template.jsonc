@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StakingManager",
+  "category": "core",
+  "description": "Registers validators and creates EtherFiNode instances (behind a beacon). Batches beacon-chain deposits from LiquidityPool ETH.",
+  "ignoreMethods": ["proxiableUUID"],
+  "canActIndependently": false
+}

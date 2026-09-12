@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiAdmin",
+  "category": "gov",
+  "description": "Executor that validates and applies EtherFiOracle reports (rebase, withdrawal finalization, validator approvals) subject to per-task bounds.",
+  "ignoreMethods": ["proxiableUUID"]
+}

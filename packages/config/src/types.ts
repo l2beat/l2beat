@@ -1027,7 +1027,6 @@ export type ProjectDefiCategory =
   | 'Liquid Staking'
   | 'Oracle'
   | 'Stablecoin'
-  | 'Liquid Staking'
   | 'Prediction market'
 
 export interface ProjectDefiInfo {

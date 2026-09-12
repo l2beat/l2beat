@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WithdrawRequestNFT",
+  "category": "core",
+  "description": "The eETH withdrawal queue. Burning eETH mints an NFT claim that the oracle and admin finalize, after which holders redeem it for ETH.",
+  "ignoreMethods": [
+    "frozenRateFor",
+    "getClaimableAmount",
+    "getRequest",
+    "isFinalized",
+    "proxiableUUID"
+  ]
+}
