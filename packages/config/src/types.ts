@@ -1058,6 +1058,8 @@ export type ProjectExternalDependency =
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
+  /** Each chain needs a project with a matching chainConfig for its icon. */
+  deployedOn: string[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through
