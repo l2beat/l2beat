@@ -146,6 +146,36 @@ export class IndexerConfigurationRepository extends BaseRepository {
       .execute()
   }
 
+  async updateCurrentHeightsByIds(
+    indexerId: string,
+    configurationIds: string[],
+    currentHeight: number,
+  ): Promise<void> {
+    if (configurationIds.length === 0) return
+
+    await this.batch(configurationIds, 10_000, async (batch) => {
+      await this.db
+        .updateTable('IndexerConfiguration')
+        .set('currentHeight', currentHeight)
+        .where('indexerId', '=', indexerId)
+        .where('id', 'in', batch)
+        .where('minHeight', '<=', currentHeight)
+        .where((eb) =>
+          eb.or([
+            eb('maxHeight', 'is', null),
+            eb('maxHeight', '>=', currentHeight),
+          ]),
+        )
+        .where((eb) =>
+          eb.or([
+            eb('currentHeight', 'is', null),
+            eb('currentHeight', '<', currentHeight),
+          ]),
+        )
+        .execute()
+    })
+  }
+
   async deleteConfigurations(
     indexerId: string,
     ids: string[],

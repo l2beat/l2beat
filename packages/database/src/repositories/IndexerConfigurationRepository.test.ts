@@ -173,6 +173,39 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     },
   )
 
+  it(
+    IndexerConfigurationRepository.prototype.updateCurrentHeightsByIds.name,
+    async () => {
+      const records = [
+        config('a', 1, null, 10), // update: in ids & current < toUpdate
+        config('b', 1, null, null), // update: in ids & current == null
+        config('c', 1, null, 10), // do not update: not in ids
+        config('d', 1_000, null, null), // do not update: min > toUpdate
+        config('e', 1, 10, null), // do not update: max < toUpdate
+        { ...config('f', 1, null, 10), indexerId: 'other' }, // do not update: other indexer
+      ]
+
+      await repository.upsertMany(records)
+
+      await repository.updateCurrentHeightsByIds(
+        'indexer',
+        ['a', 'b', 'd', 'e', 'f'].map((id) => id.repeat(12)),
+        100,
+      )
+
+      const result = await repository.getAll()
+
+      expect(result).toEqualUnsorted([
+        { ...records[0]!, currentHeight: 100 },
+        { ...records[1]!, currentHeight: 100 },
+        records[2]!,
+        records[3]!,
+        records[4]!,
+        records[5]!,
+      ])
+    },
+  )
+
   describe(
     IndexerConfigurationRepository.prototype.deleteConfigurations.name,
     () => {

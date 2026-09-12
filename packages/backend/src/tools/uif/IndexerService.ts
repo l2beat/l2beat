@@ -85,6 +85,18 @@ export class IndexerService {
     )
   }
 
+  async updateConfigurationsCurrentHeightByIds(
+    indexerId: string,
+    configurationIds: string[],
+    currentHeight: number,
+  ): Promise<void> {
+    await this.db.indexerConfiguration.updateCurrentHeightsByIds(
+      indexerId,
+      configurationIds,
+      currentHeight,
+    )
+  }
+
   async deleteConfigurations(
     indexerId: string,
     configurationIds: string[],

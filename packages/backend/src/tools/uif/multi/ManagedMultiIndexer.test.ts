@@ -220,6 +220,45 @@ describe(ManagedMultiIndexer.name, () => {
       expect(newHeight).toEqual(1100)
     })
 
+    it('does not advance current height of quarantined configurations', async () => {
+      const indexerService = mockObject<IndexerService>({
+        getSavedConfigurations: async () => [
+          saved('a', 100, null, 1000),
+          saved('b', 100, null, 1000),
+        ],
+        updateConfigurationsCurrentHeight: async () => {},
+        updateConfigurationsCurrentHeightByIds: async () => {},
+      })
+
+      const db = mockObject<Database>({
+        transaction: async (fun) => await fun(),
+      })
+
+      const indexer = new TestIndexer(
+        {
+          ...common,
+          db,
+          indexerService,
+          configurations: [actual('a', 100, null), actual('b', 100, null)],
+        },
+        Logger.SILENT,
+      )
+
+      await indexer.initialize()
+      indexer.quarantine('b'.repeat(12))
+
+      const newHeight = await indexer.update(1001, 1100)
+
+      expect(
+        indexerService.updateConfigurationsCurrentHeight,
+      ).not.toHaveBeenCalled()
+      expect(
+        indexerService.updateConfigurationsCurrentHeightByIds,
+      ).toHaveBeenOnlyCalledWith(INDEXER_ID, ['a'.repeat(12)], 1100)
+
+      expect(newHeight).toEqual(1100)
+    })
+
     it('cannot return more than currentHeight', async () => {
       const indexer = new TestIndexer({ ...common }, Logger.SILENT)
 
@@ -422,6 +461,57 @@ describe(ManagedMultiIndexer.name, () => {
         saved('b', 200, 500, 500),
         saved('c', 400, null, 600),
         saved('d', 100, null, 600),
+      ])
+    })
+
+    it('update with quarantined configuration heals after restart', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('a', 100, null, 550), saved('b', 100, null, 550)],
+        [actual('a', 100, null), actual('b', 100, null)],
+        db,
+      )
+      await indexer.start()
+
+      // 'b' starts failing, the implementation quarantines it
+      indexer.quarantine('b'.repeat(12))
+
+      const target = 600
+      let current = 550
+      while (current + 1 < target) {
+        current = await indexer.update(current + 1, target)
+      }
+
+      // 'a' and the indexer keep advancing, 'b' is frozen at its last
+      // successfully synced height
+      expect(await getSavedConfigurations(indexerService)).toEqualUnsorted([
+        saved('a', 100, null, 600),
+        saved('b', 100, null, 550),
+      ])
+
+      // simulate a restart
+      _TEST_ONLY_resetUniqueIds()
+      const restarted = await initializeMockIndexer(
+        indexerService,
+        [],
+        [actual('a', 100, null), actual('b', 100, null)],
+        db,
+      )
+      await restarted.start()
+
+      current = 550
+      while (current + 1 < target) {
+        current = await restarted.update(current + 1, target)
+      }
+
+      // only 'b' is re-synced for the range it missed, 'a' is not re-fetched
+      expect(restarted.multiUpdate).toHaveBeenOnlyCalledWith(551, 600, [
+        actual('b', 100, null),
+      ])
+
+      expect(await getSavedConfigurations(indexerService)).toEqualUnsorted([
+        saved('a', 100, null, 600),
+        saved('b', 100, null, 600),
       ])
     })
 
@@ -631,6 +721,10 @@ class TestIndexer extends ManagedMultiIndexer<string> {
     mockFn<ManagedMultiIndexer<string>['trimData']>().resolvesTo(undefined)
   override wipeData =
     mockFn<ManagedMultiIndexer<string>['wipeData']>().resolvesTo(undefined)
+
+  quarantine(configurationId: string) {
+    this.quarantineConfiguration(configurationId)
+  }
 }
 
 function actual(

@@ -289,6 +289,189 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(safeHeight).toEqual(adjustedTo)
     })
 
+    it('quarantines failing configurations and keeps syncing the others', async () => {
+      const from = 100
+      const to = 300
+      const adjustedTo = 250
+
+      const configs = [
+        config('config-1', 'token-1', 2),
+        config('config-2', 'bad', 2),
+        config('config-3', 'token-3', 2),
+        config('config-4', 'token-4', 2),
+        config('config-5', 'token-5', 2),
+        config('config-6', 'token-6', 2),
+      ]
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getAdjustedTo: mockFn().returns(adjustedTo),
+        getCirculatingSupplies: mockFn(async (coingeckoId: CoingeckoId) => {
+          if (coingeckoId === CoingeckoId('bad')) {
+            throw new Error('Network error')
+          }
+          return [{ timestamp: UnixTime(150), value: 100 }]
+        }),
+      })
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returns([UnixTime(150)]),
+        shouldTimestampBeSynced: mockFn().returns(true),
+      })
+
+      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+        upsertMany: mockFn().returns(undefined),
+      })
+
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: configs,
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, to, configs)
+      const safeHeight = await updateFn()
+
+      // the failing configuration does not block the others
+      expect(safeHeight).toEqual(adjustedTo)
+      expect(tvsAmountRepository.upsertMany).toHaveBeenNthCalledWith(
+        1,
+        configs
+          .filter((c) => c.properties.apiId !== 'bad')
+          .map((c) => ({
+            configurationId: c.id,
+            timestamp: UnixTime(150),
+            amount: BigInt(100 * 10 ** 2),
+          })),
+      )
+      expect(
+        circulatingSupplyProvider.getCirculatingSupplies,
+      ).toHaveBeenCalledTimes(6)
+
+      // the quarantined configuration is skipped on subsequent updates
+      const updateFn2 = await indexer.multiUpdate(from, to, configs)
+      await updateFn2()
+
+      expect(
+        circulatingSupplyProvider.getCirculatingSupplies,
+      ).toHaveBeenCalledTimes(11)
+    })
+
+    it('quarantines configurations when amount conversion fails', async () => {
+      const from = 100
+      const to = 300
+      const adjustedTo = 250
+
+      const configs = [
+        config('config-1', 'token-1', 2),
+        config('config-2', 'venice-token', 2),
+        config('config-3', 'token-3', 2),
+        config('config-4', 'token-4', 2),
+        config('config-5', 'token-5', 2),
+        config('config-6', 'token-6', 2),
+      ]
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getAdjustedTo: mockFn().returns(adjustedTo),
+        getCirculatingSupplies: mockFn(async (coingeckoId: CoingeckoId) => {
+          if (coingeckoId === CoingeckoId('venice-token')) {
+            // broken Coingecko data can end up as NaN which makes
+            // the BigInt conversion throw a RangeError
+            return [{ timestamp: UnixTime(150), value: Number.NaN }]
+          }
+          return [{ timestamp: UnixTime(150), value: 100 }]
+        }),
+      })
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returns([UnixTime(150)]),
+        shouldTimestampBeSynced: mockFn().returns(true),
+      })
+
+      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+        upsertMany: mockFn().returns(undefined),
+      })
+
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: configs,
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, to, configs)
+      const safeHeight = await updateFn()
+
+      expect(safeHeight).toEqual(adjustedTo)
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
+        configs
+          .filter((c) => c.properties.apiId !== 'venice-token')
+          .map((c) => ({
+            configurationId: c.id,
+            timestamp: UnixTime(150),
+            amount: BigInt(100 * 10 ** 2),
+          })),
+      )
+    })
+
+    it('rethrows when too many configurations fail', async () => {
+      const from = 100
+      const to = 300
+      const adjustedTo = 250
+
+      // 2 out of 6 failing configurations exceed the allowed
+      // quarantined ratio, so the error is treated as systemic
+      const configs = [
+        config('config-1', 'token-1', 2),
+        config('config-2', 'bad-1', 2),
+        config('config-3', 'bad-2', 2),
+        config('config-4', 'token-4', 2),
+        config('config-5', 'token-5', 2),
+        config('config-6', 'token-6', 2),
+      ]
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getAdjustedTo: mockFn().returns(adjustedTo),
+        getCirculatingSupplies: mockFn(async (coingeckoId: CoingeckoId) => {
+          if (String(coingeckoId).startsWith('bad')) {
+            throw new Error('Network error')
+          }
+          return [{ timestamp: UnixTime(150), value: 100 }]
+        }),
+      })
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returns([UnixTime(150)]),
+        shouldTimestampBeSynced: mockFn().returns(true),
+      })
+
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: configs,
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      await expect(async () => {
+        await indexer.multiUpdate(from, to, configs)
+      }).toBeRejectedWith('Network error')
+    })
+
     it('rethrows other errors', async () => {
       const from = 100
       const to = 300
