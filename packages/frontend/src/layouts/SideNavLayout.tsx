@@ -82,18 +82,22 @@ export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
   variant?: SideNavLayoutVariant
+  /** Scenery behind the whole page, nav included - see `PageBackdrop`. */
+  backdrop?: React.ReactNode
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
   variant = 'default',
+  backdrop,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
 
   return (
-    <SidebarProvider>
+    <SidebarProvider transparent={backdrop !== undefined}>
+      {backdrop}
       <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
         <MobileTopNavbar

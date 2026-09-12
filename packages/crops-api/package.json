@@ -1,0 +1,30 @@
+{
+  "name": "@l2beat/crops-api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:crops-api",
+    "clean": "rm -rf build out *.tsbuildinfo",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "generate": "tsx src/index.ts",
+    "dev": "pnpm generate && wrangler dev",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@l2beat/config": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
+    "swagger-ui-dist": "^5.29.1"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/swagger-ui-dist": "^3.30.6",
+    "tsx": "^4.9.3",
+    "wrangler": "^4.40.0"
+  }
+}

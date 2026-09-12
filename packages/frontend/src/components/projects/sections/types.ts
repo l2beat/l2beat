@@ -5,6 +5,7 @@ import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
+import type { GardenCropsSectionProps } from './GardenCropsSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
@@ -79,6 +80,7 @@ type SectionId =
   | 'privacy-assets-breakdown'
   | 'external-dependencies'
   | 'note-discovery'
+  | 'crops'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -251,6 +253,11 @@ interface ProjectDetailsGroup {
   props: ProjectDetailsProps<GroupSectionProps>
 }
 
+interface ProjectDetailsGardenCropsSection {
+  type: 'GardenCropsSection'
+  props: ProjectDetailsProps<GardenCropsSectionProps>
+}
+
 interface ProjectDetailsGrissiniRiskAnalysisSection {
   type: 'GrissiniRiskAnalysisSection'
   props: ProjectDetailsProps<GrissiniRiskAnalysisSectionProps>
@@ -313,6 +320,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsContractsSection
   | ProjectDetailsDataPostedSection
   | ProjectDetailsGroup
+  | ProjectDetailsGardenCropsSection
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
   | ProjectDetailsL2TvsSection

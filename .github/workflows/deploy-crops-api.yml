@@ -1,0 +1,76 @@
+name: Deploy crops-api
+
+concurrency:
+  group: crops-api-deployment-${{ github.event.inputs.environment || 'production' }}
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Cloudflare environment"
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - production
+      force:
+        description: "Force deployment"
+        required: true
+        default: true
+        type: boolean
+  push:
+    branches:
+      - main
+
+jobs:
+  check-changes:
+    uses: ./.github/workflows/check-changes.yml
+    with:
+      package: '@l2beat/crops-api'
+      force: ${{ github.event.inputs.force == 'true' }}
+
+  deploy:
+    name: Deploy to ${{ github.event.inputs.environment || 'production' }}
+    needs: check-changes
+    if: ${{ always() && (needs.check-changes.result != 'success' || needs.check-changes.outputs.should_deploy == 'true') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_API: ${{ secrets.TURBO_API_RW }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build dependencies
+        run: pnpm build:dependencies:crops-api
+
+      - name: Generate site
+        run: pnpm --filter @l2beat/crops-api generate
+
+      - name: Deploy with Wrangler
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: packages/crops-api
+          environment: ${{ github.event.inputs.environment || 'production' }}
+          command: deploy

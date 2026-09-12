@@ -1,4 +1,6 @@
 import type { LogLevel } from '@l2beat/backend-tools'
+import type { AttestationNetworkConfig } from '@l2beat/config'
+import { ATTESTATION_NETWORKS, getAttestationNetwork } from '@l2beat/config'
 import {
   assert,
   ChainSpecificAddress,
@@ -113,3 +115,15 @@ export const HttpUrl = extendType(string, {
     return url
   },
 })
+
+export const AttestationNetworkValue: Type<string, AttestationNetworkConfig> = {
+  // biome-ignore lint/suspicious/useAwait: cmd-ts types must return a promise
+  async from(name) {
+    const network = getAttestationNetwork(name)
+    assert(
+      network !== undefined,
+      `Unknown attestation network: ${name}. Known: ${Object.keys(ATTESTATION_NETWORKS).join(', ')}`,
+    )
+    return network
+  },
+}

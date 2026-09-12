@@ -1,0 +1,75 @@
+import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import { CropPlant } from '~/components/garden/CropPlant'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { SectionHeading } from './SectionHeading'
+
+const PLANTS: {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  title: string
+  description: string
+}[] = [
+  {
+    sentiment: 'good',
+    status: 'reviewed',
+    title: 'In bloom',
+    description:
+      'The crop clears the bar. Additional considerations may still be listed, but they do not undermine the property.',
+  },
+  {
+    sentiment: 'warning',
+    status: 'reviewed',
+    title: 'A bud',
+    description:
+      'The property mostly holds, but something is missing: check the tooltips and detailed pages for details.',
+  },
+  {
+    sentiment: 'bad',
+    status: 'reviewed',
+    title: 'Wilting',
+    description: 'The property does not hold in practice.',
+  },
+  {
+    sentiment: 'neutral',
+    status: 'notReviewed',
+    title: 'Not reviewed',
+    description: 'We have not reviewed the property yet.',
+  },
+  {
+    sentiment: 'neutral',
+    status: 'fullyTransparent',
+    title: 'Fully transparent',
+    description:
+      'Applies to Privacy only: the protocol makes no claim to the property and is fully transparent.',
+  },
+]
+
+export function PlantLegendSection() {
+  return (
+    <section className="mt-8 md:mt-12">
+      <SectionHeading
+        title="How to read a plant"
+        description="The shape and colour tell you the state of the property."
+        size="md"
+      />
+      <PrimaryCard className="md:p-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          {PLANTS.map((plant, index) => (
+            <article key={plant.title} className="flex flex-col gap-2">
+              <CropPlant
+                className="h-10"
+                sentiment={plant.sentiment}
+                status={plant.status}
+                delay={index * 0.14}
+              />
+              <h3 className="mt-1 font-bold text-heading-16">{plant.title}</h3>
+              <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
+                {plant.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </PrimaryCard>
+    </section>
+  )
+}

@@ -1,5 +1,9 @@
 import { expect } from 'earl'
-import { SCHEMA_VERSION, toJsonSchema } from './schema.js'
+import {
+  SCHEMA_VERSION,
+  toJsonSchema,
+  toJsonSchemaDefinitions,
+} from './schema.js'
 import { type Validator, v } from './validate.js'
 
 describe('toJsonSchema', () => {
@@ -334,6 +338,59 @@ describe('toJsonSchema', () => {
         velocity: { $ref: '#/definitions/Vector' },
       },
       required: ['position', 'velocity'],
+    })
+  })
+
+  it('toplevel with a custom ref prefix', () => {
+    const Vector = v.object({ x: v.number(), y: v.number() })
+    const input = v.object({ position: Vector })
+    expect(
+      toJsonSchema(input, { Vector }, { refPrefix: '#/components/schemas/' }),
+    ).toEqual({
+      $schema: SCHEMA_VERSION,
+      definitions: {
+        Vector: {
+          type: 'object',
+          properties: {
+            x: { type: 'number' },
+            y: { type: 'number' },
+          },
+          required: ['x', 'y'],
+        },
+      },
+      type: 'object',
+      properties: {
+        position: { $ref: '#/components/schemas/Vector' },
+      },
+      required: ['position'],
+    })
+  })
+
+  it('definitions only, with a custom ref prefix', () => {
+    const Vector = v.object({ x: v.number(), y: v.number() })
+    const Line = v.object({ from: Vector, to: Vector })
+    expect(
+      toJsonSchemaDefinitions(
+        { Vector, Line },
+        { refPrefix: '#/components/schemas/' },
+      ),
+    ).toEqual({
+      Vector: {
+        type: 'object',
+        properties: {
+          x: { type: 'number' },
+          y: { type: 'number' },
+        },
+        required: ['x', 'y'],
+      },
+      Line: {
+        type: 'object',
+        properties: {
+          from: { $ref: '#/components/schemas/Vector' },
+          to: { $ref: '#/components/schemas/Vector' },
+        },
+        required: ['from', 'to'],
+      },
     })
   })
 

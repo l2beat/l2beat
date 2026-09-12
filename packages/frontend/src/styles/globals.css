@@ -58,6 +58,22 @@
   --row-highlight: #ce66f466;
   --row-highlight-no-opacity: #e9bff8;
 
+  /* The Infinite Garden. `-ink` is the same hue adjusted to read as text. */
+  --crop-good: #1a9d4f;
+  --crop-good-ink: #16863f;
+  --crop-warning: #e0a52a;
+  --crop-warning-ink: #b07d18;
+  --crop-bad: #ef4d4d;
+  --crop-bad-ink: #d83a3a;
+  --crop-neutral: #bcbfc7;
+  --crop-neutral-ink: #aab0b8;
+  --garden-accent: #4a7a35;
+  --garden-border: #cfe3c0;
+  --garden-tint: #f2f9ec;
+  --garden-soil: #cfc4b0;
+  --garden-canvas: #eaf4e6;
+  --plot-canvas: #fdf1de;
+
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
@@ -128,6 +144,22 @@
 
   --row-highlight: #9521bf66;
   --row-highlight-no-opacity: #4b1d5f;
+
+  /* The Infinite Garden - see :root. */
+  --crop-good: #15ca60;
+  --crop-good-ink: #3fe07f;
+  --crop-warning: #ffc107;
+  --crop-warning-ink: #ffcf3a;
+  --crop-bad: #ff5d5d;
+  --crop-bad-ink: #ff8080;
+  --crop-neutral: #5a5f68;
+  --crop-neutral-ink: #6b7079;
+  --garden-accent: #8fd06a;
+  --garden-border: #2c3a22;
+  --garden-tint: #161f0e;
+  --garden-soil: #2a251d;
+  --garden-canvas: #141b10;
+  --plot-canvas: #1e1b12;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
@@ -470,6 +502,21 @@
   --color-chart-stacked-pink: var(--chart-stacked-pink);
   --color-chart-stacked-purple: var(--chart-stacked-purple);
 
+  --color-crop-good: var(--crop-good);
+  --color-crop-good-ink: var(--crop-good-ink);
+  --color-crop-warning: var(--crop-warning);
+  --color-crop-warning-ink: var(--crop-warning-ink);
+  --color-crop-bad: var(--crop-bad);
+  --color-crop-bad-ink: var(--crop-bad-ink);
+  --color-crop-neutral: var(--crop-neutral);
+  --color-crop-neutral-ink: var(--crop-neutral-ink);
+  --color-garden-accent: var(--garden-accent);
+  --color-garden-border: var(--garden-border);
+  --color-garden-tint: var(--garden-tint);
+  --color-garden-soil: var(--garden-soil);
+  --color-garden-canvas: var(--garden-canvas);
+  --color-plot-canvas: var(--plot-canvas);
+
   --color-branding-primary: var(--project-primary, var(--ecosystem-primary));
   --color-branding-secondary: var(
     --project-secondary,
@@ -811,6 +858,140 @@
     opacity: 0.8;
   }
   to {
+    opacity: 0;
+  }
+}
+
+/* Rubber-band overscroll reveals the root background, and only ever one flat
+   colour of it, so both ends of a backdrop page get its canvas. */
+html:has([data-backdrop="garden"]) {
+  background-color: var(--garden-canvas);
+}
+html:has([data-backdrop="plot"]) {
+  background-color: var(--plot-canvas);
+}
+
+/* The Infinite Garden. Referenced from inline styles in CropBadge and the backgrounds. */
+@keyframes garden-grow {
+  0% {
+    transform: scaleY(0.02);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes garden-leaf {
+  from {
+    transform: scale(0.01);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes garden-bloom {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes garden-pop {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.09);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes garden-sway {
+  0%,
+  100% {
+    transform: rotate(-2.6deg);
+  }
+  50% {
+    transform: rotate(2.6deg);
+  }
+}
+
+@keyframes garden-sway-s {
+  0%,
+  100% {
+    transform: rotate(-1.5deg);
+  }
+  50% {
+    transform: rotate(1.5deg);
+  }
+}
+
+@keyframes garden-wilt {
+  0%,
+  100% {
+    transform: rotate(-0.5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.6deg) translateY(0.5px);
+  }
+}
+
+@keyframes garden-ghost {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+
+@keyframes garden-spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes garden-drift {
+  0%,
+  100% {
+    transform: translateX(-20px);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+@keyframes garden-float {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-90px);
     opacity: 0;
   }
 }

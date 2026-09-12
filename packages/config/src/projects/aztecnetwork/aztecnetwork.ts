@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  CROP_NOTES,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -844,4 +845,49 @@ export const aztecnetwork: ScalingProject = {
       type: 'general',
     },
   ],
+  crops: {
+    censorshipResistance: {
+      sentiment: 'warning',
+      points: [
+        'Sequencing is permissionless with no single privileged actor.',
+        'Decentralised sequencing and private execution environment provide excellent realtime, probabilistic CR.',
+        'Exit window is infinite due to immutable core contracts + Escape Hatch.',
+        CROP_NOTES.passesWalkawayTest(),
+      ],
+      missing: [
+        'No deterministic CR: Self-proposal is probabilistic through the escape hatch.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      license: 'Apache-2.0',
+      points: [
+        'Onchain verifier has been reproduced.',
+        'Rollup is forkable onchain by design.',
+      ],
+    },
+    privacy: {
+      sentiment: 'good',
+      points: [
+        'Programmable privacy: private state, private and public smart contracts are protocol-native.',
+        'Private transactions are proven client-side (private inputs do not leave the device).',
+      ],
+      missing: [
+        'The complicated execution environment might leak some metadata.',
+      ],
+    },
+    security: {
+      sentiment: 'bad',
+      points: ['All state is validated with validity proofs on Ethereum.'],
+      missing: [
+        'The current proof system has known critical vulnerabilities',
+        'No multiproof system.',
+        'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
+      ],
+      notReviewed: [
+        CROP_NOTES.notReviewed.quantumSafety,
+        CROP_NOTES.notReviewed.circuitBreakers,
+      ],
+    },
+  },
 }

@@ -55,6 +55,9 @@ export async function getPagePaths(): Promise<PagePath[]> {
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
   }
+  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
+    paths.push('/garden', '/garden/submit', '/garden/integrate')
+  }
   paths.push(...(await getDynamicPagePaths()))
   return paths
 }

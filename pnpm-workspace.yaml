@@ -20,3 +20,4 @@ allowBuilds:
   prisma: true
   sharp: true
   sqlite3: true
+  workerd: true

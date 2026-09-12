@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
+  CROP_NOTES,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -317,6 +318,53 @@ export const ethscriptions: ScalingProject = {
         url: 'https://explorer.ethscriptions.com/api',
       },
     ],
+  },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      points: [
+        'A based rollup with no sequencer: L2 state is derived deterministically from ethscription activity on Ethereum, so ordering is decided by L1 and any user can force a transaction there.',
+        'The Rollup contract is not upgradeable and cannot be paused, so the exit window is infinite.',
+        'State proposing falls back to permissionless after a timeout.',
+      ],
+      notReviewed: [
+        'Whether transaction filters could live in the node state transition function.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      points: [
+        'The node, the modified geth, the zk fault proof stack and the onchain verifier are all published.',
+        'Both the verifier contracts and the program hashes can be independently regenerated from source.',
+      ],
+      notReviewed: [
+        'License permissiveness across the stack, so fork rights are unconfirmed.',
+        'Node build reproducibility, as distinct from the program hashes.',
+      ],
+    },
+    privacy: {
+      status: 'fullyTransparent',
+      points: [
+        'The protocol does not make privacy claims, and is fully transparent.',
+        'Ethscription activity and the L2 state derived from it are public on Ethereum.',
+      ],
+    },
+    security: {
+      sentiment: 'good',
+      points: [
+        'State is validated on L1 with SP1 validity proofs and the Rollup contract is immutable, putting it at Stage 2.',
+        'An application-specific chain with no general-purpose contract deployment, which keeps the surface small.',
+      ],
+      missing: [
+        'No canonical bridge, so asset movement depends on third-party bridges assessed separately.',
+      ],
+      notReviewed: [
+        'Audit coverage.',
+        'Trusted setup requirements of the proof system.',
+        'Prover decentralization and multiproof.',
+        CROP_NOTES.notReviewed.circuitBreakers,
+      ],
+    },
   },
   milestones: [
     {

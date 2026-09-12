@@ -21,6 +21,7 @@ import {
 import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
+import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -171,6 +172,7 @@ export async function getL2ProjectEntry(
     | 'discoveryInfo'
     | 'discoveryUpdates'
     | 'daTrackingConfig'
+    | 'crops'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectL2Entry> {
@@ -397,6 +399,11 @@ export async function getL2ProjectEntry(
       : undefined
 
   const projectWithIcon = withProjectIcon(project)
+
+  const gardenCropsSection = getGardenCropsSection(project.crops)
+  if (gardenCropsSection) {
+    sections.push(gardenCropsSection)
+  }
 
   if (l2TvsSection && tvsProjectStats) {
     sections.push({

@@ -19,6 +19,8 @@ const SIDEBAR_WIDTH_MOBILE = '100%'
 type SidebarContextProps = {
   openMobile: boolean
   setOpenMobile: (open: boolean) => void
+  /** The page draws its own scenery behind the nav, so the nav paints no background. */
+  transparent: boolean
 }
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
@@ -36,11 +38,13 @@ function SidebarProvider({
   className,
   style,
   children,
+  transparent = false,
   ...props
 }: React.ComponentProps<'div'> & {
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  transparent?: boolean
 }) {
   const [openMobile, setOpenMobile] = React.useState(false)
 
@@ -48,8 +52,9 @@ function SidebarProvider({
     () => ({
       openMobile,
       setOpenMobile,
+      transparent,
     }),
-    [openMobile],
+    [openMobile, transparent],
   )
 
   return (
@@ -63,6 +68,8 @@ function SidebarProvider({
         }
         className={cn(
           'group/sidebar-wrapper flex min-h-svh w-full flex-col bg-background',
+          // A stacking context, so a `PageBackdrop` stays above the background.
+          transparent && 'relative isolate',
           className,
         )}
         {...props}
@@ -79,7 +86,7 @@ function Sidebar({
   ...props
 }: React.ComponentProps<'div'>) {
   const breakpoint = useBreakpoint()
-  const { openMobile, setOpenMobile } = useSidebar()
+  const { openMobile, setOpenMobile, transparent } = useSidebar()
 
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
@@ -114,7 +121,12 @@ function Sidebar({
         )}
         {...props}
       >
-        <div className="flex size-full flex-col gap-6 bg-background">
+        <div
+          className={cn(
+            'flex size-full flex-col gap-6',
+            transparent ? 'bg-transparent' : 'bg-background',
+          )}
+        >
           {children}
         </div>
       </div>
