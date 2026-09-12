@@ -228,7 +228,7 @@ jobs:
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
-        image: mirror.gcr.io/postgres:17
+        image: mirror.gcr.io/postgres:18
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
