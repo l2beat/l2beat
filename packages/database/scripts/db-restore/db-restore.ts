@@ -33,6 +33,7 @@ const FEATURES: Record<string, string[]> = {
     'TokenValue',
     'SyncMetadata',
   ],
+  'defi-tvl': ['IndexerState', 'IndexerConfiguration', 'DefiTvl'],
   activity: [
     'IndexerState',
     'IndexerConfiguration',
