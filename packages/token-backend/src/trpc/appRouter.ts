@@ -7,6 +7,7 @@ import { planRouter } from './routers/plan'
 import { searchRouter } from './routers/search'
 import { tokenDbHistoryRouter } from './routers/tokenDbHistory'
 import { tokenIngestionQueueRouter } from './routers/tokenIngestionQueue'
+import { tvsCoverageRouter } from './routers/tvsCoverage'
 import { router } from './trpc'
 
 interface AppRouterDeps {
@@ -26,6 +27,7 @@ export function createAppRouter({
     search: searchRouter,
     tokenDbHistory: tokenDbHistoryRouter,
     tokenIngestionQueue: tokenIngestionQueueRouter,
+    tvsCoverage: tvsCoverageRouter({ coingeckoClient }),
   })
 }
 

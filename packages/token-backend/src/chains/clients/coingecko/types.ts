@@ -10,6 +10,13 @@ export const CoinSchema = v.object({
   platforms: v.record(v.string(), v.string()),
 })
 
+export type CoinMarketData = v.infer<typeof CoinMarketDataSchema>
+export const CoinMarketDataSchema = v.object({
+  id: v.string(),
+  circulating_supply: v.union([v.number(), v.null()]),
+  last_updated: v.union([v.string(), v.null()]),
+})
+
 export type CoinListEntry = v.infer<typeof CoinListEntrySchema>
 export const CoinListEntrySchema = v.object({
   id: v.string(),
