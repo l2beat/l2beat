@@ -6,7 +6,6 @@ export {
   CROP_ATTESTATIONS,
   type CropAttestation,
   type CropAttestationLedger,
-  type HexString,
   type RevokedCropAttestation,
 } from './crops/attestations'
 export { OSI_LICENSES } from './crops/osiLicenses'

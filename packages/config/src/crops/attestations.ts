@@ -1,7 +1,7 @@
 import data from './attestationData.json'
 
 /** Typed so viem's `Hex` and `Address` accept these values without a cast. */
-export type HexString = `0x${string}`
+type HexString = `0x${string}`
 
 export interface CropAttestation {
   uid: HexString

@@ -1,11 +1,11 @@
 import type {
   CropAttestation,
   CropAttestationLedger,
-  HexString,
   RevokedCropAttestation,
 } from '@l2beat/config'
 import { writeFileSync } from 'fs'
 import { dirname, join } from 'path'
+import type { Address } from 'viem'
 import {
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
@@ -25,7 +25,7 @@ export function getLedgerPath(): string {
  */
 export function ledgerFor(
   network: AttestationNetworkConfig,
-  attester: HexString,
+  attester: Address,
   committed: CropAttestationLedger,
 ): CropAttestationLedger {
   const sameNetwork = committed.network === network.name

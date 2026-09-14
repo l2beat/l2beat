@@ -1,4 +1,4 @@
-import type { HexString } from '@l2beat/config'
+import type { Address, Hex } from 'viem'
 
 // The EAS deployment l2b attests on. Config's ledger repeats what readers
 // need (network, schema, uid); this is where those values are decided.
@@ -13,13 +13,13 @@ import type { HexString } from '@l2beat/config'
 export const ATTESTATION_SCHEMA =
   'string[] projectIds,uint64 reviewedAt,uint32 revision'
 
-export const ATTESTATION_SCHEMA_RESOLVER: HexString =
+export const ATTESTATION_SCHEMA_RESOLVER: Address =
   '0x0000000000000000000000000000000000000000'
 
 export const ATTESTATION_SCHEMA_REVOCABLE = true
 
 /** keccak256(abi.encodePacked(schema, resolver, revocable)), as SchemaRegistry computes it. Pinned by crops.test.ts. */
-export const ATTESTATION_SCHEMA_UID: HexString =
+export const ATTESTATION_SCHEMA_UID: Hex =
   '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb'
 
 export const ATTESTATION_NETWORK_NAMES = ['sepolia', 'ethereum'] as const
@@ -28,8 +28,8 @@ export type AttestationNetwork = (typeof ATTESTATION_NETWORK_NAMES)[number]
 export interface AttestationNetworkConfig {
   name: AttestationNetwork
   chainId: number
-  eas: HexString
-  schemaRegistry: HexString
+  eas: Address
+  schemaRegistry: Address
   explorer: string
   isTestnet: boolean
 }
