@@ -121,7 +121,7 @@ function ChartContainer<T extends { timestamp: number }>({
   // chart measuring and re-rendering right after hydration was the longest
   // main-thread task on project pages. Mount each chart only when it is
   // about to be seen.
-  const isNear = useIsNearViewport(ref)
+  const shouldMountChart = useIsNearViewport(ref)
 
   const hasData = data && data.length > 1
 
@@ -145,9 +145,9 @@ function ChartContainer<T extends { timestamp: number }>({
             (isLoading || !hasData) && 'pointer-events-none',
           )}
         >
-          {isNear ? children : <div />}
+          {shouldMountChart ? children : <div />}
         </Slot>
-        {(!!isLoading || !isClient) && (
+        {(!!isLoading || !shouldMountChart) && (
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
@@ -156,13 +156,15 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!hasData && !isLoading && !(noDataSourcesSelected && isClient) && (
-          <ChartNoDataState size={size} />
-        )}
-        {noDataSourcesSelected && !isLoading && isClient && (
+        {!hasData &&
+          !isLoading &&
+          !(noDataSourcesSelected && shouldMountChart) && (
+            <ChartNoDataState size={size} />
+          )}
+        {noDataSourcesSelected && !isLoading && shouldMountChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
-        {isClient && size !== 'small' && (
+        {shouldMountChart && size !== 'small' && (
           <Logo
             animated={false}
             className={cn(
@@ -176,7 +178,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {isClient && size !== 'small' && project && (
+        {shouldMountChart && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(
