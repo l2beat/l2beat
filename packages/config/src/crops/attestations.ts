@@ -1,9 +1,5 @@
 import data from './attestationData.json'
-import {
-  ATTESTATION_SCHEMA_UID,
-  type AttestationNetwork,
-  type HexString,
-} from './eas'
+import type { AttestationNetwork, HexString } from './eas'
 
 export interface CropAttestation {
   uid: HexString
@@ -49,15 +45,3 @@ export type CropAttestationLedgers = Partial<
  * the chain.
  */
 export const CROP_ATTESTATIONS = data as CropAttestationLedgers
-
-/** Live and under the current schema. Anything else in `live` awaits revocation. */
-export function getCurrentCropAttestation(
-  network: AttestationNetwork,
-): CropAttestation | undefined {
-  return CROP_ATTESTATIONS[network]?.live.find((x) => isCurrentSchema(x.schema))
-}
-
-/** Case-insensitive: EAS returns uids in lowercase, config may not. */
-export function isCurrentSchema(schema: string): boolean {
-  return schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase()
-}

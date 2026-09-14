@@ -21,14 +21,3 @@ export type OsiLicense = v.infer<typeof OsiLicenseSchema>
 export const OSI_LICENSES = licenses satisfies Record<string, OsiLicense>
 
 export type OsiLicenseId = keyof typeof OSI_LICENSES
-
-/** Throws rather than render a green Open source crop nothing backs. */
-export function getOsiLicense(id: OsiLicenseId): OsiLicense {
-  const license: OsiLicense | undefined = OSI_LICENSES[id]
-  if (!license) {
-    throw new Error(
-      `${id} is not an OSI-approved license. Only licenses from https://opensource.org/licenses can back the Open source crop.`,
-    )
-  }
-  return license
-}

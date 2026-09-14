@@ -59,14 +59,3 @@ export const ATTESTATION_NETWORKS: Record<
 
 /** Moving to mainnet is a change here plus a fresh run of `l2b crops-attest`. */
 export const ATTESTATION_NETWORK: AttestationNetwork = 'sepolia'
-
-export function getAttestationUrl(
-  network: AttestationNetworkConfig,
-  uid: string,
-): string {
-  return `${network.explorer}/attestation/view/${uid}`
-}
-
-export function getSchemaUrl(network: AttestationNetworkConfig): string {
-  return `${network.explorer}/schema/view/${ATTESTATION_SCHEMA_UID}`
-}
