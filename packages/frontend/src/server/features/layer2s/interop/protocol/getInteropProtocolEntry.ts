@@ -8,6 +8,7 @@ import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
+import { toUpdatesSectionProps } from '~/server/features/projects/discovery-updates/toUpdatesSectionProps'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { ps } from '~/server/projects'
@@ -128,7 +129,7 @@ export async function getInteropProtocolEntry(
       props: {
         id: 'updates',
         title: 'Updates',
-        updates: discoveryUpdates,
+        ...toUpdatesSectionProps(project.id, discoveryUpdates),
       },
     })
   }

@@ -1,5 +1,6 @@
 import { v } from '@l2beat/validate'
 import { getL2BadgeDialogData } from '~/server/features/projects/badges/getL2BadgeDialogData'
+import { getDiscoveryUpdateSections } from '~/server/features/projects/discovery-updates/getDiscoveryUpdateSections'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { procedure, router } from '../trpc'
 
@@ -8,4 +9,7 @@ export const projectsRouter = router({
     .input(v.object({ badgeId: v.string() }))
     .query(({ input }) => getL2BadgeDialogData(input)),
   recentChanges: procedure.query(() => getRecentChangesOverview()),
+  discoveryUpdateSections: procedure
+    .input(v.object({ projectId: v.string(), updateIds: v.array(v.string()) }))
+    .query(({ input }) => getDiscoveryUpdateSections(input)),
 })

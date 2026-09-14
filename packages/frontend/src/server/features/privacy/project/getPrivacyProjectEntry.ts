@@ -9,6 +9,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import { toUpdatesSectionProps } from '~/server/features/projects/discovery-updates/toUpdatesSectionProps'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -280,7 +281,7 @@ export async function getPrivacyProjectEntry(
       props: {
         id: 'updates',
         title: 'Updates',
-        updates: discoveryUpdates,
+        ...toUpdatesSectionProps(details.id, discoveryUpdates),
       },
     })
   }

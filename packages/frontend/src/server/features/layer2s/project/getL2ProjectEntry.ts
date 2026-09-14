@@ -22,6 +22,7 @@ import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import { toUpdatesSectionProps } from '~/server/features/projects/discovery-updates/toUpdatesSectionProps'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -715,7 +716,7 @@ export async function getL2ProjectEntry(
       props: {
         id: 'updates',
         title: 'Updates',
-        updates: discoveryUpdates,
+        ...toUpdatesSectionProps(project.id, discoveryUpdates),
       },
     })
   }
