@@ -6,6 +6,7 @@ import type {
   MulticallV3Response,
 } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import {
   decodeFunctionResult,
   encodeFunctionData,
@@ -123,21 +124,23 @@ export function toChainName(chainlinkName: string): string {
   return `Unknown_${chainlinkName}`
 }
 
-interface ChainConfig {
-  router?: { address: string; version: string }
-  chainSelector: string
-  feeTokens?: string[]
-  armProxy?: { address: string; version: string }
-  tokenAdminRegistry?: { address: string; version: string }
-}
+const Deployment = v.object({ address: v.string(), version: v.string() })
 
-interface LaneConfig {
-  onRamp?: { address: string; version: string }
-  offRamp?: { address: string; version: string }
-}
+const ChainConfig = v.object({
+  router: Deployment.optional(),
+  chainSelector: v.string(),
+  feeTokens: v.array(v.string()).optional(),
+  armProxy: Deployment.optional(),
+  tokenAdminRegistry: Deployment.optional(),
+})
 
-type ChainsJson = Record<string, ChainConfig>
-type LanesJson = Record<string, Record<string, LaneConfig>>
+const LaneConfig = v.object({
+  onRamp: Deployment.optional(),
+  offRamp: Deployment.optional(),
+})
+
+const ChainsJson = v.record(v.string(), ChainConfig)
+const LanesJson = v.record(v.string(), v.record(v.string(), LaneConfig))
 
 export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
   provides = [CCIPConfig]
@@ -187,8 +190,8 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       this.http.fetchRaw(LANES_URL, { timeout: 10_000 }),
     ])
 
-    const chainsJson = (await chainsResponse.json()) as ChainsJson
-    const lanes = (await lanesResponse.json()) as LanesJson
+    const chainsJson = ChainsJson.parse(await chainsResponse.json())
+    const lanes = LanesJson.parse(await lanesResponse.json())
 
     // Build selector → readable name map for ALL chains (including untracked)
     const chainSelectorToName: Record<string, string> = {}
