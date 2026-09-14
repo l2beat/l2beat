@@ -121,7 +121,7 @@ function ChartContainer<T extends { timestamp: number }>({
   // chart measuring and re-rendering right after hydration was the longest
   // main-thread task on project pages. Mount each chart only when it is
   // about to be seen.
-  const isClient = useIsNearViewport(ref)
+  const isNear = useIsNearViewport(ref)
 
   const hasData = data && data.length > 1
 
@@ -145,7 +145,7 @@ function ChartContainer<T extends { timestamp: number }>({
             (isLoading || !hasData) && 'pointer-events-none',
           )}
         >
-          {isClient ? children : <div />}
+          {isNear ? children : <div />}
         </Slot>
         {(!!isLoading || !isClient) && (
           <ChartLoader
