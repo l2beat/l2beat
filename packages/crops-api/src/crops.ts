@@ -6,8 +6,8 @@ import type {
   ProjectCrops,
   ProjectOpenSourceCropEvaluation,
 } from '@l2beat/config'
-import { OSI_LICENSES, OsiLicenseSchema } from '@l2beat/config'
-import { v } from '@l2beat/validate'
+import { OSI_LICENSES } from '@l2beat/config'
+import { type Validator, v } from '@l2beat/validate'
 
 // Config leaves a crop's defaults implicit; the API serves a fully resolved
 // one. The frontend resolves the same way in its own copy of this file, so a
@@ -20,6 +20,16 @@ export const CropSentimentSchema = v.enum([
   'bad',
   'neutral',
 ] as const satisfies readonly (ProjectCropSentiment | 'neutral')[])
+
+/** Typed against config's interface, so the OpenAPI component cannot drift from the table it describes. */
+const OsiLicenseSchema: Validator<OsiLicense> = v.strictObject({
+  spdxId: v.string(),
+  name: v.string(),
+  url: v.string(),
+  categories: v
+    .array(v.string())
+    .meta({ description: "The OSI's own filing, e.g. 'superseded'." }),
+})
 
 export const CropStatusSchema = v.enum([
   'reviewed',

@@ -9,8 +9,7 @@ export {
   type HexString,
   type RevokedCropAttestation,
 } from './crops/attestations'
-export { GARDEN_ORDER } from './crops/gardenOrder'
-export { OSI_LICENSES, OsiLicenseSchema } from './crops/osiLicenses'
+export { OSI_LICENSES } from './crops/osiLicenses'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export {
   INTEROP_CHAINS,

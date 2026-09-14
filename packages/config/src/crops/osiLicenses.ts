@@ -1,16 +1,12 @@
-import { v } from '@l2beat/validate'
 import licenses from './osiLicenses.json'
 
-export const OsiLicenseSchema = v.strictObject({
-  spdxId: v.string(),
-  name: v.string(),
-  url: v.string(),
-  categories: v
-    .array(v.string())
-    .meta({ description: "The OSI's own filing, e.g. 'superseded'." }),
-})
-
-export type OsiLicense = v.infer<typeof OsiLicenseSchema>
+export interface OsiLicense {
+  spdxId: string
+  name: string
+  url: string
+  /** The OSI's own filing, e.g. 'superseded'. */
+  categories: string[]
+}
 
 /**
  * Every OSI-approved license, keyed by SPDX id, pulled from

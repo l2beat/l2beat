@@ -1,6 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { GARDEN_ORDER } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
@@ -17,6 +16,14 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+
+/** Editorial order of the garden table. Reviewed projects not named here follow alphabetically. */
+const GARDEN_ORDER: ProjectId[] = [
+  ProjectId('tornado-cash'),
+  ProjectId('aztecnetwork'),
+  ProjectId('umbra'),
+  ProjectId('uniswapv3'),
+]
 
 export interface GardenMetric {
   kind: 'usd' | 'count'
