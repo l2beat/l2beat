@@ -12,7 +12,6 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
@@ -96,7 +95,6 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
 }
 
 export async function getDaProjectEntry(
-  helpers: SsrHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
     'milestones' | 'archivedAt' | 'colors'
@@ -165,7 +163,6 @@ export async function getDaProjectEntry(
     projectsChangeReport,
     layerGrissiniValues,
     bridgeGrissiniValues,
-    helpers,
   })
   const latestThroughput = layer.daLayer.throughput
     ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -275,7 +272,6 @@ export async function getDaProjectEntry(
 }
 
 export async function getEthereumDaProjectEntry(
-  helpers: SsrHelpers,
   layer: Project<'daLayer' | 'display' | 'statuses', 'milestones'>,
   bridge: Project<'daBridge' | 'display', 'contracts' | 'permissions'>,
 ): Promise<EthereumDaProjectPageEntry> {
@@ -301,7 +297,6 @@ export async function getEthereumDaProjectEntry(
         isVerified: true,
         layerGrissiniValues,
         bridgeGrissiniValues,
-        helpers,
         interopData,
       }),
       getDaProjectValidators(layer.id, layer.daLayer.validators),

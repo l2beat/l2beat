@@ -6,7 +6,6 @@ import { getLiveness } from '~/server/features/layer2s/liveness/getLiveness'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -36,7 +35,6 @@ type RegularDetailsParams = {
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
-  helpers: SsrHelpers
 }
 
 export async function getRegularDaProjectSections({
@@ -46,7 +44,6 @@ export async function getRegularDaProjectSections({
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
-  helpers,
 }: RegularDetailsParams) {
   const [
     contractUtils,
@@ -57,7 +54,7 @@ export async function getRegularDaProjectSections({
     zkCatalogProjects,
   ] = await Promise.all([
     getContractUtils(),
-    getDaThroughputSection(helpers, layer),
+    getDaThroughputSection(layer),
     bridge ? getLiveness(bridge.id) : undefined,
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
@@ -296,7 +293,6 @@ type EthereumDetailsParams = {
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
-  helpers: SsrHelpers
   interopData: ProjectInteropData | undefined
 }
 
@@ -306,7 +302,6 @@ export async function getEthereumDaProjectSections({
   isVerified,
   layerGrissiniValues,
   bridgeGrissiniValues,
-  helpers,
   interopData,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
@@ -317,7 +312,7 @@ export async function getEthereumDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const throughputSection = await getDaThroughputSection(helpers, layer)
+  const throughputSection = await getDaThroughputSection(layer)
 
   if (interopData) {
     items.push({
