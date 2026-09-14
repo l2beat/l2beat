@@ -1,13 +1,16 @@
 import type {
-  AttestationNetwork,
   CropAttestation,
   CropAttestationLedger,
-  CropAttestationLedgers,
   HexString,
   RevokedCropAttestation,
 } from '@l2beat/config'
 import { writeFileSync } from 'fs'
 import { dirname, join } from 'path'
+import {
+  ATTESTATION_SCHEMA,
+  ATTESTATION_SCHEMA_UID,
+  type AttestationNetworkConfig,
+} from './easConfig'
 
 /** The source file behind CROP_ATTESTATIONS, found through the package rather than a directory depth. */
 export function getLedgerPath(): string {
@@ -15,11 +18,29 @@ export function getLedgerPath(): string {
   return join(configRoot, 'src', 'crops', 'attestationData.json')
 }
 
-export function emptyLedger(
-  network: AttestationNetwork,
+/**
+ * The committed ledger's entries under a header written from this code's
+ * constants, so a run always publishes the network and schema it attests
+ * with. A ledger for another network is dropped: its history stays in git.
+ */
+export function ledgerFor(
+  network: AttestationNetworkConfig,
   attester: HexString,
+  committed: CropAttestationLedger,
 ): CropAttestationLedger {
-  return { network, attester, live: [], revoked: [] }
+  const sameNetwork = committed.network === network.name
+  return {
+    network: network.name,
+    chainId: network.chainId,
+    isTestnet: network.isTestnet,
+    eas: network.eas,
+    explorer: network.explorer,
+    schema: ATTESTATION_SCHEMA,
+    schemaUid: ATTESTATION_SCHEMA_UID,
+    attester,
+    live: sameNetwork ? committed.live : [],
+    revoked: sameNetwork ? committed.revoked : [],
+  }
 }
 
 export function withRevoked(
@@ -42,29 +63,19 @@ export function withAttested(
 }
 
 export function writeLedger(
-  ledgers: CropAttestationLedgers,
+  ledger: CropAttestationLedger,
   path = getLedgerPath(),
 ): void {
-  writeFileSync(path, `${JSON.stringify(sorted(ledgers), null, 2)}\n`)
+  writeFileSync(path, `${JSON.stringify(sorted(ledger), null, 2)}\n`)
 }
 
 /** Deterministic order, so a run that changes nothing produces no diff. */
-export function sorted(
-  ledgers: CropAttestationLedgers,
-): CropAttestationLedgers {
-  const names = Object.keys(ledgers).sort() as AttestationNetwork[]
-  const result: CropAttestationLedgers = {}
-  for (const name of names) {
-    const ledger = ledgers[name]
-    if (ledger) {
-      result[name] = {
-        ...ledger,
-        live: byRevision(ledger.live),
-        revoked: byRevision(ledger.revoked),
-      }
-    }
+export function sorted(ledger: CropAttestationLedger): CropAttestationLedger {
+  return {
+    ...ledger,
+    live: byRevision(ledger.live),
+    revoked: byRevision(ledger.revoked),
   }
-  return result
 }
 
 function byRevision<T extends { revision: number }>(items: T[]): T[] {

@@ -6,7 +6,7 @@ export {
   CROP_ATTESTATIONS,
   type CropAttestation,
   type CropAttestationLedger,
-  type CropAttestationLedgers,
+  type HexString,
   type RevokedCropAttestation,
 } from './crops/attestations'
 export {
@@ -17,18 +17,6 @@ export {
   type CropSentiment,
   type CropStatus,
 } from './crops/crops'
-export {
-  ATTESTATION_NETWORK,
-  ATTESTATION_NETWORK_NAMES,
-  ATTESTATION_NETWORKS,
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_RESOLVER,
-  ATTESTATION_SCHEMA_REVOCABLE,
-  ATTESTATION_SCHEMA_UID,
-  type AttestationNetwork,
-  type AttestationNetworkConfig,
-  type HexString,
-} from './crops/eas'
 export { GARDEN_ORDER } from './crops/gardenOrder'
 export { OSI_LICENSES, OsiLicenseSchema } from './crops/osiLicenses'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'

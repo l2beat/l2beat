@@ -1,13 +1,3 @@
-import type {
-  AttestationNetwork,
-  AttestationNetworkConfig,
-} from '@l2beat/config'
-import {
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_RESOLVER,
-  ATTESTATION_SCHEMA_REVOCABLE,
-  ATTESTATION_SCHEMA_UID,
-} from '@l2beat/config'
 import {
   type Address,
   type Chain,
@@ -28,6 +18,14 @@ import {
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { mainnet, sepolia } from 'viem/chains'
+import {
+  ATTESTATION_SCHEMA,
+  ATTESTATION_SCHEMA_RESOLVER,
+  ATTESTATION_SCHEMA_REVOCABLE,
+  ATTESTATION_SCHEMA_UID,
+  type AttestationNetwork,
+  type AttestationNetworkConfig,
+} from './easConfig'
 
 const CHAINS: Record<AttestationNetwork, Chain> = { sepolia, ethereum: mainnet }
 

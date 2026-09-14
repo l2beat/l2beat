@@ -1,18 +1,9 @@
 import type {
-  AttestationNetworkConfig,
-  CropAttestation,
   ProjectCrops,
   ProjectPrivacyInfo,
   ProjectScalingInfo,
 } from '@l2beat/config'
-import {
-  ATTESTATION_NETWORK,
-  ATTESTATION_NETWORKS,
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_UID,
-  CROP_ATTESTATIONS,
-  CROP_KEYS,
-} from '@l2beat/config'
+import { CROP_ATTESTATIONS, CROP_KEYS } from '@l2beat/config'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
@@ -46,9 +37,7 @@ export const CropsAttestationsMetaSchema = v.strictObject({
   eas: v.string().meta({ description: 'EAS contract address.' }),
   schemaUid: v.string(),
   schema: v.string().meta({ description: 'EAS schema definition string.' }),
-  attester: v
-    .union([v.string(), v.null()])
-    .meta({ description: 'Null until the first attestation is published.' }),
+  attester: v.string(),
   current: v
     .union([
       v.strictObject({
@@ -236,19 +225,21 @@ export const CROPS_API_ROUTES: CropsApiRoute[] = [
   },
 ]
 
-/** Reads the committed ledger for the configured network, so no RPC call is needed. */
+/** Reads the committed ledger, so no RPC call is needed. */
 export function getAttestationsMeta(): CropsAttestationsMeta {
-  const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
-  const ledger = CROP_ATTESTATIONS[ATTESTATION_NETWORK]
-  const current = ledger?.live.find(isCurrentSchema)
+  const ledger = CROP_ATTESTATIONS
+  // Anything live under another schema awaits revocation by l2b. Case-insensitive: EAS returns uids in lowercase.
+  const current = ledger.live.find(
+    (x) => x.schema.toLowerCase() === ledger.schemaUid.toLowerCase(),
+  )
   return {
-    network: network.name,
-    chainId: network.chainId,
-    isTestnet: network.isTestnet,
-    eas: network.eas,
-    schemaUid: ATTESTATION_SCHEMA_UID,
-    schema: ATTESTATION_SCHEMA,
-    attester: ledger?.attester ?? null,
+    network: ledger.network,
+    chainId: ledger.chainId,
+    isTestnet: ledger.isTestnet,
+    eas: ledger.eas,
+    schemaUid: ledger.schemaUid,
+    schema: ledger.schema,
+    attester: ledger.attester,
     current: current
       ? {
           uid: current.uid,
@@ -256,7 +247,7 @@ export function getAttestationsMeta(): CropsAttestationsMeta {
           reviewedAt: current.reviewedAt,
           projectIds: current.projectIds,
           txHash: current.txHash,
-          explorerUrl: getAttestationUrl(network, current.uid),
+          explorerUrl: `${ledger.explorer}/attestation/view/${current.uid}`,
         }
       : null,
   }
@@ -296,20 +287,6 @@ export function resolveCropsProject(
           }
         : null,
   }
-}
-
-/** Live and under the current schema. Anything else in `live` awaits revocation by l2b. */
-function isCurrentSchema(attestation: CropAttestation): boolean {
-  return (
-    attestation.schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase()
-  )
-}
-
-function getAttestationUrl(
-  network: AttestationNetworkConfig,
-  uid: string,
-): string {
-  return `${network.explorer}/attestation/view/${uid}`
 }
 
 /**

@@ -35,14 +35,14 @@ export type AttestPlan =
 export interface PlanInput {
   /** Sorted. */
   projectIds: string[]
-  ledger: CropAttestationLedger | undefined
+  ledger: CropAttestationLedger
   /** By uid. */
   onchain: Map<Hex, OnchainAttestation>
   now: number
 }
 
 export function planAttestation(input: PlanInput): AttestPlan {
-  const entries = input.ledger?.live ?? []
+  const entries = input.ledger.live
   // The ledger is a cache; the chain decides what is live and what it says.
   const live = entries.flatMap((entry) => {
     const onchain = input.onchain.get(entry.uid)
@@ -51,7 +51,7 @@ export function planAttestation(input: PlanInput): AttestPlan {
   const keeper = live.find(
     ({ onchain }) =>
       isCurrentSchema(onchain.schema) &&
-      isSameAddress(onchain.attester, input.ledger?.attester) &&
+      isSameAddress(onchain.attester, input.ledger.attester) &&
       setMatches(decodePayload(onchain.data).projectIds, input.projectIds),
   )
   const revoke: Revocation[] = live

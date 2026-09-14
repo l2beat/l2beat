@@ -3,13 +3,8 @@ import type {
   CropAttestationLedger,
   RevokedCropAttestation,
 } from '@l2beat/config'
-import {
-  ATTESTATION_NETWORKS,
-  ATTESTATION_SCHEMA,
-  ATTESTATION_SCHEMA_UID,
-} from '@l2beat/config'
 import { expect } from 'earl'
-import type { Hex } from 'viem'
+import { encodePacked, type Hex, keccak256 } from 'viem'
 import { assertAnonymous, findIdentifyingStrings } from './anonymity'
 import {
   decodePayload,
@@ -17,7 +12,14 @@ import {
   multiRevokeArgs,
   type OnchainAttestation,
 } from './eas'
-import { sorted, withAttested, withRevoked } from './ledger'
+import {
+  ATTESTATION_NETWORKS,
+  ATTESTATION_SCHEMA,
+  ATTESTATION_SCHEMA_RESOLVER,
+  ATTESTATION_SCHEMA_REVOCABLE,
+  ATTESTATION_SCHEMA_UID,
+} from './easConfig'
+import { ledgerFor, sorted, withAttested, withRevoked } from './ledger'
 import { diffSet, findLedgerDrift, planAttestation, setMatches } from './plan'
 
 const IDS = ['aztecnetwork', 'tornado-cash', 'uniswapv3']
@@ -60,10 +62,43 @@ function entry(overrides: Partial<CropAttestation> = {}): CropAttestation {
 }
 
 function ledger(live: CropAttestation[]): CropAttestationLedger {
-  return { network: 'sepolia', attester: ATTESTER, live, revoked: [] }
+  return {
+    ...ledgerFor(ATTESTATION_NETWORKS.sepolia, ATTESTER, NOTHING_COMMITTED),
+    live,
+  }
+}
+
+/** A ledger from before any network was attested on, so ledgerFor keeps nothing. */
+const NOTHING_COMMITTED: CropAttestationLedger = {
+  network: '',
+  chainId: 0,
+  isTestnet: true,
+  eas: '0x',
+  explorer: '',
+  schema: '',
+  schemaUid: '0x',
+  attester: '0x',
+  live: [],
+  revoked: [],
 }
 
 describe('crop attestations', () => {
+  describe('schema uid', () => {
+    it('is keccak256(abi.encodePacked(schema, resolver, revocable)), as SchemaRegistry computes it', () => {
+      const computed = keccak256(
+        encodePacked(
+          ['string', 'address', 'bool'],
+          [
+            ATTESTATION_SCHEMA,
+            ATTESTATION_SCHEMA_RESOLVER,
+            ATTESTATION_SCHEMA_REVOCABLE,
+          ],
+        ),
+      )
+      expect(computed).toEqual(ATTESTATION_SCHEMA_UID)
+    })
+  })
+
   describe('payload', () => {
     it('round trips through the abi the schema string describes', () => {
       const payload = { projectIds: IDS, reviewedAt: 1700000000, revision: 3 }
@@ -144,7 +179,7 @@ describe('crop attestations', () => {
     it('attests at revision 1 when nothing is attested yet', () => {
       const plan = planAttestation({
         projectIds: IDS,
-        ledger: undefined,
+        ledger: ledger([]),
         onchain: new Map(),
         now,
       })
@@ -368,13 +403,24 @@ describe('crop attestations', () => {
       ])
     })
 
-    it('sorts networks by name and entries by revision, so a no-op run produces no diff', () => {
-      const out = sorted({
-        ethereum: ledger([entry({ revision: 5 }), entry({ revision: 4 })]),
-        sepolia: ledger([]),
-      })
-      expect(Object.keys(out)).toEqual(['ethereum', 'sepolia'])
-      expect(out.ethereum?.live.map((x) => x.revision)).toEqual([4, 5])
+    it('sorts entries by revision, so a no-op run produces no diff', () => {
+      const out = sorted(
+        ledger([entry({ revision: 5 }), entry({ revision: 4 })]),
+      )
+      expect(out.live.map((x) => x.revision)).toEqual([4, 5])
+    })
+
+    it('keeps the committed entries on the same network and drops them on another, checked with the header rewritten either way', () => {
+      const committed = ledger([entry()])
+      const same = ledgerFor(ATTESTATION_NETWORKS.sepolia, ATTESTER, committed)
+      expect(same.live).toEqual([entry()])
+      expect(same.schemaUid).toEqual(ATTESTATION_SCHEMA_UID)
+      const other = ledgerFor(
+        ATTESTATION_NETWORKS.ethereum,
+        ATTESTER,
+        committed,
+      )
+      expect(other).toHaveSubset({ network: 'ethereum', chainId: 1, live: [] })
     })
   })
 })

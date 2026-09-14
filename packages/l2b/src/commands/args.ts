@@ -1,5 +1,8 @@
-import { ATTESTATION_NETWORK, ATTESTATION_NETWORK_NAMES } from '@l2beat/config'
 import { number, oneOf, option, optional, string } from 'cmd-ts'
+import {
+  ATTESTATION_NETWORK,
+  ATTESTATION_NETWORK_NAMES,
+} from '../implementations/crops/easConfig'
 import { ExistingPath, HttpUrl } from './types'
 
 export const discoveryPath = option({

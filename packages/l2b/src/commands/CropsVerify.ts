@@ -1,4 +1,4 @@
-import { ATTESTATION_NETWORKS, CROP_ATTESTATIONS } from '@l2beat/config'
+import { CROP_ATTESTATIONS } from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
 import {
@@ -6,6 +6,7 @@ import {
   getAttestations,
   getAttestationUrl,
 } from '../implementations/crops/eas'
+import { ATTESTATION_NETWORKS } from '../implementations/crops/easConfig'
 import {
   describePlan,
   findLedgerDrift,
@@ -28,8 +29,8 @@ export const CropsVerify = command({
   },
   handler: async (args) => {
     const network = ATTESTATION_NETWORKS[args.network]
-    const ledger = CROP_ATTESTATIONS[network.name]
-    if (!ledger || ledger.live.length === 0) {
+    const ledger = CROP_ATTESTATIONS
+    if (ledger.network !== network.name || ledger.live.length === 0) {
       console.log(chalk.dim(`Nothing attested on ${network.name} yet.`))
       return
     }

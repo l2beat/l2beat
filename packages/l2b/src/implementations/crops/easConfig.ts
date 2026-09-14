@@ -1,15 +1,14 @@
-// Imported by the frontend, so kept dependency-free: the schema uid is
-// hardcoded here and recomputed by eas.test.ts, which fails if it drifts.
+import type { HexString } from '@l2beat/config'
 
-/** Typed so viem's `Hex` and `Address` accept these values without a cast. */
-export type HexString = `0x${string}`
+// The EAS deployment l2b attests on. Config's ledger repeats what readers
+// need (network, schema, uid); this is where those values are decided.
 
 /**
  * One attestation covers the whole reviewed set - the project ids, when they
  * were reviewed, and the revision. Ratings are deliberately not attested: they
  * change as protocols change, and the API serves them without a transaction.
  * While the attestations live on a testnet nothing here may name L2BEAT - see
- * the anonymity guard in packages/l2b.
+ * anonymity.ts.
  */
 export const ATTESTATION_SCHEMA =
   'string[] projectIds,uint64 reviewedAt,uint32 revision'
@@ -19,7 +18,7 @@ export const ATTESTATION_SCHEMA_RESOLVER: HexString =
 
 export const ATTESTATION_SCHEMA_REVOCABLE = true
 
-/** keccak256(abi.encodePacked(schema, resolver, revocable)), as SchemaRegistry computes it. */
+/** keccak256(abi.encodePacked(schema, resolver, revocable)), as SchemaRegistry computes it. Pinned by crops.test.ts. */
 export const ATTESTATION_SCHEMA_UID: HexString =
   '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb'
 

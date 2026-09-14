@@ -1,14 +1,9 @@
 import type {
-  AttestationNetworkConfig,
   CropAttestation,
   CropAttestationLedger,
   RevokedCropAttestation,
 } from '@l2beat/config'
-import {
-  ATTESTATION_NETWORKS,
-  ATTESTATION_SCHEMA_UID,
-  CROP_ATTESTATIONS,
-} from '@l2beat/config'
+import { CROP_ATTESTATIONS } from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
@@ -29,8 +24,13 @@ import {
   type Signer,
 } from '../implementations/crops/eas'
 import {
-  emptyLedger,
+  ATTESTATION_NETWORKS,
+  ATTESTATION_SCHEMA_UID,
+  type AttestationNetworkConfig,
+} from '../implementations/crops/easConfig'
+import {
   getLedgerPath,
+  ledgerFor,
   withAttested,
   withRevoked,
   writeLedger,
@@ -57,13 +57,26 @@ export const CropsAttest = command({
     const network = ATTESTATION_NETWORKS[args.network]
     const privateKey = readAttesterKey()
     const reader = createReader(network, args.rpcUrl)
-    const ledger = CROP_ATTESTATIONS[network.name]
+    // Until the key is known the header carries the committed attester; the
+    // signer replaces it before anything is written.
+    const ledger = ledgerFor(
+      network,
+      CROP_ATTESTATIONS.attester,
+      CROP_ATTESTATIONS,
+    )
+    if (CROP_ATTESTATIONS.network !== network.name) {
+      console.log(
+        chalk.yellow(
+          `The committed ledger is for ${CROP_ATTESTATIONS.network}; starting one for ${network.name}.`,
+        ),
+      )
+    }
 
     const projectIds = await getReviewedProjectIds()
     const onchain = await getAttestations(
       reader,
       network,
-      (ledger?.live ?? []).map((x) => x.uid),
+      ledger.live.map((x) => x.uid),
     )
     const plan = planAttestation({
       projectIds,
@@ -105,10 +118,10 @@ export const CropsAttest = command({
 
     // The ledger is written after every transaction, so a run that dies
     // halfway leaves a file that matches the chain and a rerun picks up.
-    let next = ledger ?? emptyLedger(network.name, signer.account.address)
+    let next = { ...ledger, attester: signer.account.address }
     const save = (updated: CropAttestationLedger) => {
       next = updated
-      writeLedger({ ...CROP_ATTESTATIONS, [network.name]: next })
+      writeLedger(next)
     }
 
     if (plan.kind === 'attest' && !schemaRegistered) {
