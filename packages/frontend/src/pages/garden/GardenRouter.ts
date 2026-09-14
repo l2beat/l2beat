@@ -25,12 +25,8 @@ export function createGardenRouter(
 
   router.get(GARDEN_PATH, async (req, res) => {
     const data = await cache.get(
-      {
-        key: ['garden', req.originalUrl],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getGardenData(manifest, req.originalUrl),
+      { key: ['garden'], ttl: 5 * 60, staleWhileRevalidate: 25 * 60 },
+      () => getGardenData(manifest, GARDEN_PATH),
     )
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
@@ -45,11 +41,11 @@ export function createGardenRouter(
   router.get(INTEGRATE_CROPS_PATH, async (req, res) => {
     const data = await cache.get(
       {
-        key: ['garden-integrate', req.originalUrl],
+        key: ['garden', 'integrate'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      () => getIntegrateCropsData(manifest, req.originalUrl),
+      () => getIntegrateCropsData(manifest, INTEGRATE_CROPS_PATH),
     )
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
