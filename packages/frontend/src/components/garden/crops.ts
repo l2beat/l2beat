@@ -1,10 +1,8 @@
+import type { CropKey, CropSentiment, ProjectCropStatus } from '@l2beat/config'
 import type {
-  CropKey,
-  CropSentiment,
-  ProjectCropStatus,
   ResolvedCropEvaluation,
   ResolvedCrops,
-} from '@l2beat/config'
+} from '~/server/features/garden/resolveCrops'
 
 // Kept here rather than in @l2beat/config: client components import this,
 // and the browser cannot load a value from the CommonJS config build (it

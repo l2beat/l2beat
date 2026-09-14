@@ -1,5 +1,6 @@
-import type { OsiLicense, ResolvedCropEvaluation } from '@l2beat/config'
+import type { OsiLicense } from '@l2beat/config'
 import type { ReactNode } from 'react'
+import type { ResolvedCropEvaluation } from '~/server/features/garden/resolveCrops'
 import { cn } from '~/utils/cn'
 import { CROP_INK } from './cropPalette'
 import { getCropStatusText } from './crops'

@@ -1,15 +1,22 @@
-import {
-  type CropsApiFile,
-  type CropsApiInputProject,
-  type CropsApiRouteKey,
-  type CropsAttestationsMeta,
-  generateCropsApiFiles,
-  getAttestationsMeta,
-  resolveCropsProject,
+import type {
+  ProjectCrops,
+  ProjectPrivacyInfo,
+  ProjectScalingInfo,
 } from '@l2beat/config'
+import { CROP_KEYS } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  type CropsAttestationsMeta,
+  getAttestationsMeta,
+} from '~/server/features/garden/getAttestationsMeta'
+import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
+import {
+  qualifiesForGarden,
+  type ResolvedCrops,
+  resolveProjectCrops,
+} from '~/server/features/garden/resolveCrops'
 import { ps } from '~/server/projects'
-import { CROPS_API_URL } from './content'
+import { CROPS_API_URL, type CropsApiEndpointKey } from './content'
 import {
   type ElisionKind,
   type ExampleObject,
@@ -23,7 +30,28 @@ export interface IntegrateExample {
   response: ExampleObject
 }
 
-export type IntegrateExamples = Record<CropsApiRouteKey, IntegrateExample>
+export type IntegrateExamples = Record<CropsApiEndpointKey, IntegrateExample>
+
+/** Only the fields the examples need, so tests can supply plain fixtures. */
+export interface ExampleProject {
+  id: string
+  slug: string
+  name: string
+  crops: ProjectCrops
+  privacyInfo?: ProjectPrivacyInfo | undefined
+  scalingInfo?: ProjectScalingInfo | undefined
+  contracts?:
+    | {
+        addresses: Record<
+          string,
+          { address: ChainSpecificAddress; name: string }[]
+        >
+      }
+    | undefined
+}
+
+/** API responses link to production whatever host served them. */
+const L2BEAT_ORIGIN = 'https://l2beat.com'
 
 const ETHEREUM_CHAIN_ID = 1
 
@@ -36,8 +64,9 @@ const PLACEHOLDER_CONTRACT = {
 }
 
 /**
- * The real generator run on one reviewed protocol, so the examples are the
- * files the API serves and cannot drift from them.
+ * The three files as crops-api writes them for one reviewed protocol. The
+ * shapes are spelled out here rather than imported: crops-api owns the
+ * generator, and its OpenAPI document is the contract these mirror.
  */
 export async function getIntegrateExamples(): Promise<IntegrateExamples> {
   const projects = await ps.getProjects({
@@ -54,43 +83,111 @@ export async function getIntegrateExamples(): Promise<IntegrateExamples> {
 }
 
 export function buildIntegrateExamples(
-  sample: CropsApiInputProject,
+  sample: ExampleProject,
   meta: CropsAttestationsMeta,
   generatedAt: number,
 ): IntegrateExamples {
-  const files = generateCropsApiFiles({
-    projects: [sample],
-    chains: { ethereum: ETHEREUM_CHAIN_ID },
-    ledger: meta,
-    commit: '',
-    generatedAt,
-  })
-  const file = <K extends CropsApiRouteKey>(route: K, path?: string) => {
-    const found = files.find(
-      (x) => x.route === route && (path === undefined || x.path === path),
-    )
-    if (!found) {
-      throw new Error(`The generator wrote no ${route} file for ${sample.id}`)
-    }
-    return found
-  }
+  const stamp = { attestations: meta, generatedAt, commit: '' }
+  const project = toApiProject(sample, meta)
+  const contract =
+    sample.contracts?.addresses.ethereum?.[0] ?? PLACEHOLDER_CONTRACT
+  const address = ChainSpecificAddress.address(contract.address).toLowerCase()
   return {
-    address: toExample(file('address'), ['attestations', 'commit']),
-    project: toExample(file('project', `v1/project/${sample.slug}.json`), [
-      'attestations',
+    address: toExample(
+      `v1/address/${ETHEREUM_CHAIN_ID}/${address}.json`,
+      {
+        ...stamp,
+        chainId: ETHEREUM_CHAIN_ID,
+        address,
+        matches: [
+          {
+            id: project.id,
+            slug: project.slug,
+            name: project.name,
+            href: project.href,
+            contractName: contract.name,
+            crops: toCropsSummary(project.crops),
+            attestation: project.attestation
+              ? {
+                  uid: project.attestation.uid,
+                  revision: project.attestation.revision,
+                }
+              : null,
+          },
+        ],
+      },
+      ['attestations', 'commit'],
+    ),
+    project: toExample(
+      `v1/project/${sample.slug}.json`,
+      { ...stamp, ...project },
+      ['attestations', 'commit'],
+    ),
+    crops: toExample('v1/crops.json', { ...stamp, projects: [project] }, [
+      'projects',
       'commit',
     ]),
-    crops: toExample(file('crops'), ['projects', 'commit']),
   }
+}
+
+interface ApiProject {
+  id: string
+  slug: string
+  name: string
+  href: string | null
+  crops: ResolvedCrops
+  inGarden: boolean
+  attestation: {
+    uid: string
+    revision: number
+    reviewedAt: number
+    explorerUrl: string
+  } | null
+}
+
+function toApiProject(
+  project: ExampleProject,
+  meta: CropsAttestationsMeta,
+): ApiProject {
+  const path = getGardenProjectPath(project)
+  const crops = resolveProjectCrops(project.crops)
+  const attested = meta.current?.projectIds.includes(project.id)
+  return {
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    href: path ? `${L2BEAT_ORIGIN}${path}` : null,
+    crops,
+    inGarden: qualifiesForGarden(crops),
+    attestation:
+      meta.current && attested
+        ? {
+            uid: meta.current.uid,
+            revision: meta.current.revision,
+            reviewedAt: meta.current.reviewedAt,
+            explorerUrl: meta.current.explorerUrl,
+          }
+        : null,
+  }
+}
+
+/** Sentiment and status only - the prose lives on the per-project endpoint. */
+function toCropsSummary(crops: ResolvedCrops) {
+  return Object.fromEntries(
+    CROP_KEYS.map((key) => [
+      key,
+      { sentiment: crops[key].sentiment, status: crops[key].status },
+    ]),
+  )
 }
 
 /** Prefers a protocol both attested and in the garden that has an Ethereum contract. */
 function pickSample(
-  projects: CropsApiInputProject[],
+  projects: ExampleProject[],
   meta: CropsAttestationsMeta,
-): CropsApiInputProject {
+): ExampleProject {
   const ranked = projects
-    .map((source) => ({ source, api: resolveCropsProject(source, meta) }))
+    .map((source) => ({ source, api: toApiProject(source, meta) }))
     .sort(
       (a, b) =>
         Number(!a.api.attestation) * 2 +
@@ -101,31 +198,20 @@ function pickSample(
   if (!first) {
     throw new Error('No reviewed project to build the CROPS examples from')
   }
-  for (const { source } of ranked) {
-    const contract = source.contracts?.addresses.ethereum?.[0]
-    if (contract) {
-      return withOneContract(source, contract)
-    }
-  }
-  return withOneContract(first.source, PLACEHOLDER_CONTRACT)
+  return (
+    ranked.find(({ source }) => source.contracts?.addresses.ethereum?.[0])
+      ?.source ?? first.source
+  )
 }
 
-/** One address file is enough for the docs, and the generator needs a chain id for every other chain. */
-function withOneContract(
-  project: CropsApiInputProject,
-  contract: { address: ChainSpecificAddress; name: string },
-): CropsApiInputProject {
+function toExample(
+  path: string,
+  body: object,
+  elide: string[],
+): IntegrateExample {
   return {
-    ...project,
-    contracts: { addresses: { ethereum: [contract] } },
-    permissions: undefined,
-  }
-}
-
-function toExample(file: CropsApiFile, elide: string[]): IntegrateExample {
-  return {
-    request: `${CROPS_API_URL}/${file.path}`,
-    response: abbreviateObject(file.body, new Set(elide)),
+    request: `${CROPS_API_URL}/${path}`,
+    response: abbreviateObject(body, new Set(elide)),
   }
 }
 

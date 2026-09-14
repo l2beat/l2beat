@@ -1,8 +1,9 @@
-import { CROPS_API_ROUTES, getAttestationsMeta } from '@l2beat/config'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { CROPS_API_ENDPOINTS } from './content'
 import { getIntegrateExamples } from './getIntegrateExamples'
 
 export async function getIntegrateCropsData(
@@ -31,7 +32,7 @@ export async function getIntegrateCropsData(
       props: {
         ...appLayoutProps,
         attestations: getAttestationsMeta(),
-        endpoints: CROPS_API_ROUTES,
+        endpoints: CROPS_API_ENDPOINTS,
         examples,
       },
     },

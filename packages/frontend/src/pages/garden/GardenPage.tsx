@@ -1,7 +1,7 @@
-import type { CropsAttestationsMeta } from '@l2beat/config'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { GardenBackground } from './assets/GardenBackground'
 import { AttestationNotice } from './components/AttestationNotice'
 import { CropsSection } from './components/CropsSection'

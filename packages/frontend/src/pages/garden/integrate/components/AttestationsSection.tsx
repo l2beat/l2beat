@@ -1,6 +1,6 @@
-import type { CropsAttestationsMeta } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { SectionHeading } from '../../components/SectionHeading'
 import { VERIFY_STEPS } from '../content'
 import { CodeSnippet } from './CodeSnippet'

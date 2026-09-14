@@ -1,19 +1,20 @@
-import type { CropsApiRoute, CropsAttestationsMeta } from '@l2beat/config'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { GardenPageHeader } from '../components/GardenPageHeader'
 import { GARDEN_PATH } from '../paths'
 import { AttestationsSection } from './components/AttestationsSection'
 import { AudiencePicker } from './components/AudiencePicker'
 import { BadgeSection } from './components/BadgeSection'
 import { EndpointsSection } from './components/EndpointsSection'
+import type { CropsApiEndpoint } from './content'
 import type { IntegrateExamples } from './getIntegrateExamples'
 
 export interface IntegrateCropsPageProps extends AppLayoutProps {
   attestations: CropsAttestationsMeta
-  endpoints: CropsApiRoute[]
+  endpoints: CropsApiEndpoint[]
   examples: IntegrateExamples
 }
 

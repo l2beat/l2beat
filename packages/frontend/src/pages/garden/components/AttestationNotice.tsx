@@ -1,4 +1,4 @@
-import type { CropsAttestationsMeta } from '@l2beat/config'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { formatTimestamp } from '~/utils/dates'
 import { SproutIcon } from './SproutIcon'
 

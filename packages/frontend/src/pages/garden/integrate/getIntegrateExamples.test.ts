@@ -1,13 +1,13 @@
-import type {
-  CropsApiInputProject,
-  CropsAttestationsMeta,
-  ProjectScalingInfo,
-} from '@l2beat/config'
+import type { ProjectScalingInfo } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { CropsAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { CROPS_API_URL } from './content'
 import { elided } from './exampleValue'
-import { buildIntegrateExamples } from './getIntegrateExamples'
+import {
+  buildIntegrateExamples,
+  type ExampleProject,
+} from './getIntegrateExamples'
 
 const ATTESTATION_UID =
   '0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d'
@@ -32,7 +32,7 @@ const META: CropsAttestationsMeta = {
 
 const FACTORY = '0x1F98431c8aD98523631AE4a59f267346ea31F984'
 
-const SAMPLE: CropsApiInputProject = {
+const SAMPLE: ExampleProject = {
   id: 'uniswapv3',
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
@@ -56,8 +56,8 @@ const SAMPLE: CropsApiInputProject = {
 }
 
 describe(buildIntegrateExamples.name, () => {
-  // The generator itself is tested in config; these tests check the examples
-  // are its output, addressed at the static host and cut short where agreed.
+  // crops-api tests its generator; these check the examples mirror its files,
+  // addressed at the static host and cut short where agreed.
   const examples = buildIntegrateExamples(SAMPLE, META, 1787200000)
 
   it('points every request at the static host, with the address lowercased', () => {
@@ -70,7 +70,7 @@ describe(buildIntegrateExamples.name, () => {
     expect(examples.crops.request).toEqual(`${CROPS_API_URL}/v1/crops.json`)
   })
 
-  it('shows the address match as the generator writes it', () => {
+  it('shows the address match as crops-api writes it', () => {
     expect(examples.address.response).toHaveSubset({
       chainId: 1,
       address: FACTORY.toLowerCase(),

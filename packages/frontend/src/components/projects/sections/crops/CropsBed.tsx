@@ -1,4 +1,3 @@
-import type { ResolvedCrops } from '@l2beat/config'
 import { CropFindings, CropNote } from '~/components/garden/CropFindings'
 import { CropPlant } from '~/components/garden/CropPlant'
 import {
@@ -12,6 +11,7 @@ import {
   getCropStatusText,
   toCropEntries,
 } from '~/components/garden/crops'
+import type { ResolvedCrops } from '~/server/features/garden/resolveCrops'
 import { cn } from '~/utils/cn'
 
 // Layout follows the section's own width (container queries), because the

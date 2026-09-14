@@ -1,4 +1,3 @@
-import type { ResolvedCropEvaluation } from '@l2beat/config'
 import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
 import { CropBadge } from '~/components/garden/CropBadge'
 import { CropEvaluationDetails } from '~/components/garden/CropFindings'
@@ -9,6 +8,7 @@ import {
 } from '~/components/garden/crops'
 import { PercentChange } from '~/components/PercentChange'
 import { Table, TableBody, TableCell, TableRow } from '~/components/table/Table'
+import type { ResolvedCropEvaluation } from '~/server/features/garden/resolveCrops'
 import { cn } from '~/utils/cn'
 import type { GardenEntry } from '../getGardenData'
 

@@ -1,8 +1,8 @@
-import type { CropsApiRoute } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { SectionHeading } from '../../components/SectionHeading'
 import { SproutIcon } from '../../components/SproutIcon'
+import type { CropsApiEndpoint } from '../content'
 import {
   API_NOTES,
   CROPS_API_DOCS_URL,
@@ -21,7 +21,7 @@ export function EndpointsSection({
   endpoints,
   examples,
 }: {
-  endpoints: CropsApiRoute[]
+  endpoints: CropsApiEndpoint[]
   examples: IntegrateExamples
 }) {
   return (
@@ -93,7 +93,7 @@ function EndpointCard({
   endpoint,
   example,
 }: {
-  endpoint: CropsApiRoute
+  endpoint: CropsApiEndpoint
   example: IntegrateExample
 }) {
   return (

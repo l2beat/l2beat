@@ -3,6 +3,55 @@ export const CROPS_API_URL = 'https://crops.l2beat.com'
 export const CROPS_API_DOCS_URL = `${CROPS_API_URL}/`
 export const CROPS_API_SPEC_URL = `${CROPS_API_URL}/v1/openapi.json`
 
+export type CropsApiEndpointKey = 'address' | 'project' | 'crops'
+
+export interface CropsApiEndpoint {
+  key: CropsApiEndpointKey
+  /** OpenAPI template, e.g. `/v1/project/{id}.json`. */
+  path: string
+  summary: string
+  description: string
+  params: { name: string; description: string }[]
+  /** On lookups, where a missing file means "not reviewed". */
+  notFound?: string
+}
+
+/** The published routes, in the order the docs present them. crops-api's route table says the same. */
+export const CROPS_API_ENDPOINTS: CropsApiEndpoint[] = [
+  {
+    key: 'address',
+    path: '/v1/address/{chainId}/{address}.json',
+    summary: 'Which protocol is this address?',
+    description:
+      'The reviewed protocols a contract, proxy implementation or permission holder belongs to, with a rating per crop. A shared contract lists every protocol that claims it, each once, with the name that protocol gives it.',
+    params: [
+      {
+        name: 'chainId',
+        description: 'EIP-155 chain id, e.g. 1 for Ethereum.',
+      },
+      { name: 'address', description: 'Lowercase 0x-prefixed address.' },
+    ],
+    notFound: 'The address is not part of any reviewed protocol.',
+  },
+  {
+    key: 'project',
+    path: '/v1/project/{id}.json',
+    summary: 'Everything about one protocol',
+    description:
+      'The crop evaluations of one protocol, with the reasoning behind each rating.',
+    params: [{ name: 'id', description: 'The project id or its slug.' }],
+    notFound: 'L2BEAT has not reviewed this project.',
+  },
+  {
+    key: 'crops',
+    path: '/v1/crops.json',
+    summary: 'The whole garden',
+    description:
+      'Every reviewed protocol in one response, with the full crop evaluations and the attestation that names them.',
+    params: [],
+  },
+]
+
 // The OpenAPI description in crops-api says the same, at length.
 export const API_NOTES = [
   'Every response is a static file generated from the L2BEAT repository, so it is served from a CDN with no API key and no rate limit.',
