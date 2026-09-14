@@ -2292,6 +2292,57 @@ describeDatabase(TokenValueRepository.name, (db) => {
         expect(reference[0]?.value).toEqual(300)
       })
 
+      it('picks the latest timestamp among tokens that pass the filters', async () => {
+        // optimism's newest hour only holds an associated token, so with
+        // associated tokens excluded the latest row must be the older hour
+        // that still has an included token, not an orphaned 7d-before row.
+        await metadataRepository.insertMany([
+          {
+            projectId: 'optimism',
+            tokenId: 'e',
+            source: 'canonical',
+            category: 'ether',
+            isAssociated: false,
+          },
+          {
+            projectId: 'optimism',
+            tokenId: 'f',
+            source: 'native',
+            category: 'other',
+            isAssociated: true,
+          },
+        ])
+        await repository.upsertMany([
+          tokenValue(
+            'e',
+            'optimism',
+            T0 + UnixTime.HOUR - 7 * DAY,
+            1,
+            5,
+            5,
+            5,
+            1,
+          ),
+          tokenValue('e', 'optimism', T0 + UnixTime.HOUR, 1, 7, 7, 7, 1),
+          tokenValue('f', 'optimism', T0 + 2 * UnixTime.HOUR, 1, 9, 9, 9, 1),
+        ])
+
+        const result =
+          await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
+            ['optimism'],
+            [T0, T0 + 3 * UnixTime.HOUR],
+            {
+              excludeAssociatedTokens: true,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+
+        expect(result.map((r) => [r.timestamp, r.value])).toEqual([
+          [T0 + UnixTime.HOUR - 7 * DAY, 5],
+          [T0 + UnixTime.HOUR, 7],
+        ])
+      })
+
       it('is scoped to the given projects', async () => {
         const result =
           await repository.getSummedByProjectAtLatestAndSevenDaysBefore(

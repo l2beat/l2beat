@@ -622,15 +622,55 @@ export class TokenValueRepository extends BaseRepository {
     }
     const [from, to] = range
 
-    let query = this.db
+    const withTokenFilters = <Q extends TokenFilterable>(query: Q): Q => {
+      let filtered = query
+      if (opts.excludeAssociatedTokens) {
+        filtered = filtered.where('TokenMetadata.isAssociated', '=', false)
+      }
+      if (opts.excludeRwaRestrictedTokens) {
+        filtered = filtered.where(
+          'TokenMetadata.category',
+          '!=',
+          'rwaRestricted',
+        )
+      }
+      return filtered
+    }
+
+    const query = this.db
+      // One backward index probe per project that stops at the newest row
+      // passing the token filters. Filtering here (not only in the sums)
+      // guarantees every returned project has a latest row, so the
+      // seven-days-before row can never be the only one. Taking max() over
+      // the whole range instead costs ~7x more on production-sized data.
       .with('latest', (eb) =>
         eb
-          .selectFrom('TokenValue')
-          .select((eb) => ['projectId', eb.fn.max('timestamp').as('timestamp')])
-          .where('projectId', 'in', projectIds)
-          .where('timestamp', '>=', UnixTime.toDate(from))
-          .where('timestamp', '<=', UnixTime.toDate(to))
-          .groupBy('projectId'),
+          .selectFrom(
+            sql<{
+              projectId: string
+            }>`(select unnest(${projectIds}::text[]) as "projectId")`.as('p'),
+          )
+          .innerJoinLateral(
+            (eb) =>
+              withTokenFilters(
+                eb
+                  .selectFrom('TokenValue')
+                  .innerJoin(
+                    'TokenMetadata',
+                    'TokenValue.tokenId',
+                    'TokenMetadata.tokenId',
+                  )
+                  .select('TokenValue.timestamp')
+                  .whereRef('TokenValue.projectId', '=', 'p.projectId')
+                  .where('TokenValue.timestamp', '>=', UnixTime.toDate(from))
+                  .where('TokenValue.timestamp', '<=', UnixTime.toDate(to)),
+              )
+                .orderBy('TokenValue.timestamp', 'desc')
+                .limit(1)
+                .as('l'),
+            (join) => join.onTrue(),
+          )
+          .select(['p.projectId', 'l.timestamp']),
       )
       // Two rows per project, so the join below hits the (projectId,
       // timestamp) index instead of scanning every hour of the project.
@@ -656,14 +696,7 @@ export class TokenValueRepository extends BaseRepository {
       .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
       .select((eb) => selectBreakdownSums(eb, 'valueForProject'))
 
-    if (opts.excludeAssociatedTokens) {
-      query = query.where('TokenMetadata.isAssociated', '=', false)
-    }
-    if (opts.excludeRwaRestrictedTokens) {
-      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
-    }
-
-    const rows = await query
+    const rows = await withTokenFilters(query)
       .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
       .orderBy('TokenValue.timestamp')
       .execute()
@@ -743,6 +776,11 @@ export class TokenValueRepository extends BaseRepository {
     const result = await query.executeTakeFirst()
     return result !== undefined
   }
+}
+
+interface TokenFilterable {
+  where(column: 'TokenMetadata.isAssociated', op: '=', value: boolean): this
+  where(column: 'TokenMetadata.category', op: '!=', value: string): this
 }
 
 export interface SummedByProjectRow {
