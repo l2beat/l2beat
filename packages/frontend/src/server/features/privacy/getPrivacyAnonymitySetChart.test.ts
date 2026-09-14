@@ -81,6 +81,7 @@ function makeSnapshot(): PrivacyAnonymitySetChartResponse {
       [DAY_3, 3],
     ],
     holdingDuration: [[7, 3]],
+    syncingTokens: [],
     syncedUntil: DAY_3,
   }
 }

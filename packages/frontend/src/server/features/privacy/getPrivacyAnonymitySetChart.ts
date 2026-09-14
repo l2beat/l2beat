@@ -19,7 +19,7 @@ import {
 } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import {
   getPrivacyAnonymitySetConfigurations,
-  getPrivacyAnonymitySetSyncedUntil,
+  getPrivacyAnonymitySetSyncStatus,
 } from './anonymity-set/getPrivacyAnonymitySetSync'
 
 export const PrivacyAnonymitySetChartParams = v.object({
@@ -38,6 +38,7 @@ export interface PrivacyAnonymitySetChartResponse {
   >[]
   history: PrivacyAnonymitySetHistoryPoint[]
   holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[]
+  syncingTokens: string[]
   syncedUntil: number | undefined
 }
 
@@ -80,26 +81,28 @@ async function getPrivacyAnonymitySetSnapshot(
   const configurations = await getPrivacyAnonymitySetConfigurations(db, [
     project,
   ])
-  const syncedUntil = getPrivacyAnonymitySetSyncedUntil(project, configurations)
-  if (syncedUntil === undefined) {
+  const { syncedSeries, syncingTokens } = getPrivacyAnonymitySetSyncStatus(
+    series,
+    configurations,
+    currentDay,
+  )
+  if (syncedSeries.length === 0) {
     return {
       ...emptyResponse(),
-      series: toResponseSeries(series),
+      syncingTokens,
     }
   }
 
   const firstSeriesDay = UnixTime.toStartOf(
-    Math.min(...series.map((item) => item.sinceTimestamp)),
+    Math.min(...syncedSeries.map((item) => item.sinceTimestamp)),
     'day',
   )
-  const holdingEndpoint = UnixTime.toStartOf(
-    Math.min(currentDay, syncedUntil),
-    'day',
-  )
+  const holdingEndpoint = currentDay
   if (holdingEndpoint < firstSeriesDay) {
     return {
       ...emptyResponse(),
-      series: toResponseSeries(series),
+      series: toResponseSeries(syncedSeries),
+      syncingTokens,
       syncedUntil: holdingEndpoint,
     }
   }
@@ -115,16 +118,17 @@ async function getPrivacyAnonymitySetSnapshot(
   )
 
   return {
-    series: toResponseSeries(series),
+    series: toResponseSeries(syncedSeries),
     history: trimLeadingEmptyAnonymitySetHistory(
-      calculateAnonymitySetHistory(rows, series, historyEndpoints),
+      calculateAnonymitySetHistory(rows, syncedSeries, historyEndpoints),
     ),
     holdingDuration: calculateAnonymitySetHoldingDuration(
       rows,
-      series,
+      syncedSeries,
       holdingEndpoint,
       HOLDING_DURATIONS,
     ),
+    syncingTokens,
     syncedUntil: holdingEndpoint,
   }
 }
@@ -170,6 +174,7 @@ function emptyResponse(): PrivacyAnonymitySetChartResponse {
     series: [],
     history: [],
     holdingDuration: [],
+    syncingTokens: [],
     syncedUntil: undefined,
   }
 }
@@ -197,6 +202,7 @@ function getMockResponse(
         ),
       ]
     }),
+    syncingTokens: [],
     syncedUntil: endpoint,
   }
 }

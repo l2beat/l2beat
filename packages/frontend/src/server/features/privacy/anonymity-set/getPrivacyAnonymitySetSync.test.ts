@@ -11,65 +11,62 @@ import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
 } from './getPrivacyAnonymitySetSeries'
-import { getPrivacyAnonymitySetSyncedUntil } from './getPrivacyAnonymitySetSync'
+import { getPrivacyAnonymitySetSyncStatus } from './getPrivacyAnonymitySetSync'
 
-describe(getPrivacyAnonymitySetSyncedUntil.name, () => {
-  it('returns the earliest height of all expected configurations', () => {
+describe(getPrivacyAnonymitySetSyncStatus.name, () => {
+  const target = UnixTime(2_000)
+
+  it('partitions series by whether their configuration reached the target', () => {
     const project = makeProject()
-    const [firstId, secondId] = getPrivacyAnonymitySetSeries(project).map(
-      (series) => series.configurationId,
+    const series = getPrivacyAnonymitySetSeries(project)
+    const [firstId, secondId] = series.map((series) => series.configurationId)
+
+    const result = getPrivacyAnonymitySetSyncStatus(
+      series,
+      [configuration(firstId!, target), configuration(secondId!, target - 1)],
+      target,
     )
-    const earlier = UnixTime(1_000)
 
-    const result = getPrivacyAnonymitySetSyncedUntil(project, [
-      configuration(firstId!, earlier),
-      configuration(secondId!, UnixTime(2_000)),
+    expect(result.syncedSeries.map((item) => item.bucketId)).toEqual(['first'])
+    expect(result.syncingSeries.map((item) => item.bucketId)).toEqual([
+      'second',
     ])
-
-    expect(result).toEqual(earlier)
+    expect(result.syncingTokens).toEqual(['ETH'])
   })
 
-  it('returns undefined when any expected configuration has not started', () => {
+  it('requires an active, started configuration', () => {
     const project = makeProject()
-    const [firstId, secondId] = getPrivacyAnonymitySetSeries(project).map(
-      (series) => series.configurationId,
+    const series = getPrivacyAnonymitySetSeries(project)
+    const [firstId, secondId] = series.map((series) => series.configurationId)
+
+    const result = getPrivacyAnonymitySetSyncStatus(
+      series,
+      [configuration(firstId!, null), configuration(secondId!, target, target)],
+      target,
     )
 
-    const result = getPrivacyAnonymitySetSyncedUntil(project, [
-      configuration(firstId!, UnixTime(1_000)),
-      configuration(secondId!, null),
-    ])
-
-    expect(result).toEqual(undefined)
+    expect(result.syncedSeries).toEqual([])
+    expect(result.syncingSeries).toEqual(series)
   })
 
   it('does not substitute an old configuration for the expected id', () => {
     const project = makeProject()
+    const series = getPrivacyAnonymitySetSeries(project)
 
-    const result = getPrivacyAnonymitySetSyncedUntil(project, [
-      configuration('old-configuration', UnixTime(2_000)),
-    ])
-
-    expect(result).toEqual(undefined)
-  })
-
-  it('does not treat an ended configuration as synced', () => {
-    const project = makeProject()
-    const [firstId, secondId] = getPrivacyAnonymitySetSeries(project).map(
-      (series) => series.configurationId,
+    const result = getPrivacyAnonymitySetSyncStatus(
+      series,
+      [configuration('old-configuration', target)],
+      target,
     )
 
-    const result = getPrivacyAnonymitySetSyncedUntil(project, [
-      configuration(firstId!, UnixTime(1_000), 2_000),
-      configuration(secondId!, UnixTime(1_000)),
-    ])
-
-    expect(result).toEqual(undefined)
+    expect(result.syncedSeries).toEqual([])
+    expect(result.syncingSeries).toEqual(series)
   })
 
-  it('keeps ingestion configuration ids stable when thresholds change', () => {
+  it('keeps thresholds on one ingestion configuration and reveals them together', () => {
     const initial = getPrivacyAnonymitySetSeries(makeProject(['1']))
     const changed = getPrivacyAnonymitySetSeries(makeProject(['1', '10']))
+    const firstConfigurationId = changed[0]!.configurationId
 
     expect(
       changed
@@ -79,6 +76,20 @@ describe(getPrivacyAnonymitySetSyncedUntil.name, () => {
     expect(
       new Set(changed.map((series) => series.configurationId)).size,
     ).toEqual(2)
+
+    const result = getPrivacyAnonymitySetSyncStatus(
+      changed,
+      [configuration(firstConfigurationId, target)],
+      target,
+    )
+    expect(result.syncedSeries.map((item) => item.minimumAmount)).toEqual([
+      '1',
+      '10',
+    ])
+    expect(result.syncingSeries.map((item) => item.minimumAmount)).toEqual([
+      '1',
+      '10',
+    ])
   })
 })
 

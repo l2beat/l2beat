@@ -9,7 +9,7 @@ import {
 } from './getPrivacyAnonymitySetSeries'
 import {
   getPrivacyAnonymitySetConfigurations,
-  getPrivacyAnonymitySetSyncedUntil,
+  getPrivacyAnonymitySetSyncStatus,
 } from './getPrivacyAnonymitySetSync'
 
 export type PrivacyAnonymitySetSummary =
@@ -17,6 +17,7 @@ export type PrivacyAnonymitySetSummary =
       status: 'available'
       value: number
       label: string
+      syncingTokens: string[]
     } & Pick<
       PrivacyAnonymitySetSeries,
       'bucketType' | 'chain' | 'formattedAmount' | 'token'
@@ -61,26 +62,29 @@ export async function getPrivacyAnonymitySetSummaries(
       }
 
       const series = getPrivacyAnonymitySetSeries(project)
-      const firstSeries = series[0]
-      if (firstSeries === undefined) {
+      if (series.length === 0) {
         return [project.id, { status: 'unavailable' }]
       }
 
-      const syncedUntil = getPrivacyAnonymitySetSyncedUntil(
-        project,
+      const { syncedSeries, syncingTokens } = getPrivacyAnonymitySetSyncStatus(
+        series,
         configurations,
+        currentDay,
       )
-      if (syncedUntil === undefined || syncedUntil < currentDay) {
+      const firstSeries = syncedSeries[0]
+      if (firstSeries === undefined) {
         return [project.id, { status: 'syncing' }]
       }
 
-      const point = calculateAnonymitySetHistory(rows, series, [currentDay])[0]
+      const point = calculateAnonymitySetHistory(rows, syncedSeries, [
+        currentDay,
+      ])[0]
       const values = point?.slice(1) ?? []
       let bestSeries = firstSeries
       let bestValue = values[0] ?? 0
       for (let i = 1; i < values.length; i++) {
         const value = values[i] ?? 0
-        const candidate = series[i]
+        const candidate = syncedSeries[i]
         if (candidate !== undefined && value > bestValue) {
           bestSeries = candidate
           bestValue = value
@@ -93,6 +97,7 @@ export async function getPrivacyAnonymitySetSummaries(
           status: 'available',
           value: bestValue,
           label: bestSeries.label,
+          syncingTokens,
           bucketType: bestSeries.bucketType,
           chain: bestSeries.chain,
           formattedAmount: bestSeries.formattedAmount,
@@ -123,6 +128,7 @@ function getMockSummaries(
             status: 'available',
             value: Math.round(Math.random() * 1_000),
             label: series[0].label,
+            syncingTokens: [],
             bucketType: series[0].bucketType,
             chain: series[0].chain,
             formattedAmount: series[0].formattedAmount,

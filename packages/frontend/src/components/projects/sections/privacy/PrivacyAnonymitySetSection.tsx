@@ -38,14 +38,14 @@ export function PrivacyAnonymitySetSection({
       ),
     [data],
   )
+  const hasSyncedSeries = (data?.series.length ?? 0) > 0
 
   return (
     <ProjectSection {...projectSectionProps}>
-      {data !== undefined && data.syncedUntil === undefined ? (
+      {data !== undefined && !hasSyncedSeries ? (
         <div className="rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
-          Historical anonymity-set data is still being indexed. Values will be
-          shown once every configured pool has indexed a common complete UTC
-          day.
+          Historical anonymity-set data is still being indexed. Charts will
+          appear once at least one configured token has complete history.
         </div>
       ) : (
         <>
@@ -58,6 +58,16 @@ export function PrivacyAnonymitySetSection({
             days. This metric is a proxy for the historic anonymity set and
             shows how it developed over time.
           </p>
+          {data !== undefined && data.syncingTokens.length > 0 && (
+            <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
+              Some configured token series are still being indexed and are
+              excluded until their history is complete:{' '}
+              <span className="font-medium text-primary">
+                {data.syncingTokens.join(', ')}
+              </span>
+              .
+            </div>
+          )}
           <ChartControlsWrapper className="mb-4">
             <ProjectChartTimeRange timeRange={timeRange} />
             <PrivacyAnonymitySetChartRangeControls

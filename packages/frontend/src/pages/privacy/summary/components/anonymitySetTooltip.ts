@@ -15,6 +15,14 @@ export function getAnonymitySetDescription(
   return `Number of unique depositors who deposited at least ${anonymitySet.formattedAmount} ${anonymitySet.token} during the last 30 complete UTC days.`
 }
 
+export function getAnonymitySetSyncingNote(
+  anonymitySet: AvailableAnonymitySetSummary,
+): string | undefined {
+  if (anonymitySet.syncingTokens.length === 0) return undefined
+
+  return `The displayed value excludes token series still being indexed: ${anonymitySet.syncingTokens.join(', ')}.`
+}
+
 export function getAnonymitySetSteps(
   anonymitySet: AvailableAnonymitySetSummary,
   projectName: string,

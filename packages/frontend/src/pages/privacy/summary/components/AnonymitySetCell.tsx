@@ -13,6 +13,7 @@ import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anony
 import {
   getAnonymitySetDescription,
   getAnonymitySetSteps,
+  getAnonymitySetSyncingNote,
 } from './anonymitySetTooltip'
 
 interface Props {
@@ -46,6 +47,8 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
 
   const displayValue = formatInteger(anonymitySet.value)
   const steps = getAnonymitySetSteps(anonymitySet, projectName)
+  const syncingNote = getAnonymitySetSyncingNote(anonymitySet)
+  const isUpdating = syncingNote !== undefined
 
   return (
     <Tooltip>
@@ -53,13 +56,14 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
         <button
           type="button"
           className="inline-flex flex-col items-end justify-center text-right"
-          aria-label={`${displayValue}, ${anonymitySet.label}`}
+          aria-label={`${displayValue}, ${anonymitySet.label}${isUpdating ? ', updating' : ''}`}
         >
           <span className="font-medium text-xs leading-[15px] md:text-sm md:leading-[1.2]">
             {displayValue}
           </span>
           <span className="whitespace-pre-line text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
             {anonymitySet.label}
+            {isUpdating && ' · updating'}
           </span>
         </button>
       </TooltipTrigger>
@@ -68,6 +72,9 @@ export function AnonymitySetCell({ anonymitySet, projectName }: Props) {
         <p className="mt-1 text-primary">
           {getAnonymitySetDescription(anonymitySet)}
         </p>
+        {syncingNote !== undefined && (
+          <p className="mt-2 text-secondary">{syncingNote}</p>
+        )}
         <Callout
           className="mt-2 px-3 py-2"
           color="purple"

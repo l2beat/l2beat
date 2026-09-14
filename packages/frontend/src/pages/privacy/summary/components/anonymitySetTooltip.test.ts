@@ -3,6 +3,7 @@ import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anony
 import {
   getAnonymitySetDescription,
   getAnonymitySetSteps,
+  getAnonymitySetSyncingNote,
 } from './anonymitySetTooltip'
 
 describe(getAnonymitySetSteps.name, () => {
@@ -31,17 +32,31 @@ describe(getAnonymitySetSteps.name, () => {
       'Withdraw to an unlinkable address. Make sure the withdrawal amount is not equal to the deposit amount, leaving a small amount still deposited.',
     ])
   })
+
+  it('explains which token series are excluded while syncing', () => {
+    const summary = makeSummary({
+      bucketType: 'pool',
+      syncingTokens: ['DAI', 'USDC'],
+    })
+
+    expect(getAnonymitySetSyncingNote(summary)).toEqual(
+      'The displayed value excludes token series still being indexed: DAI, USDC.',
+    )
+  })
 })
 
 function makeSummary({
   bucketType,
+  syncingTokens = [],
 }: {
   bucketType: 'pool' | 'denomination'
+  syncingTokens?: string[]
 }): Extract<PrivacyAnonymitySetSummary, { status: 'available' }> {
   return {
     status: 'available',
     value: 69,
     label: bucketType === 'pool' ? '≥0.1 ETH' : '0.1 ETH',
+    syncingTokens,
     bucketType,
     chain: 'ethereum',
     formattedAmount: '0.1',

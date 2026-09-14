@@ -1,8 +1,9 @@
 import type { Database, IndexerConfigurationRecord } from '@l2beat/database'
-import { UnixTime, unique } from '@l2beat/shared-pure'
+import { type UnixTime, unique } from '@l2beat/shared-pure'
 import {
   getPrivacyAnonymitySetSeries,
   type PrivacyAnonymitySetProject,
+  type PrivacyAnonymitySetSeries,
 } from './getPrivacyAnonymitySetSeries'
 
 export async function getPrivacyAnonymitySetConfigurations(
@@ -17,33 +18,32 @@ export async function getPrivacyAnonymitySetConfigurations(
   return await db.indexerConfiguration.getByConfigurationIds(configurationIds)
 }
 
-export function getPrivacyAnonymitySetSyncedUntil(
-  project: PrivacyAnonymitySetProject,
+export function getPrivacyAnonymitySetSyncStatus(
+  series: PrivacyAnonymitySetSeries[],
   configurations: IndexerConfigurationRecord[],
-): UnixTime | undefined {
-  const expectedConfigurationIds = unique(
-    getPrivacyAnonymitySetSeries(project).map(
-      (series) => series.configurationId,
-    ),
-  )
-  if (expectedConfigurationIds.length === 0) return undefined
-
+  target: UnixTime,
+) {
   const configurationsById = new Map(
     configurations.map((configuration) => [configuration.id, configuration]),
   )
-  const currentHeights: number[] = []
+  const syncedSeries: PrivacyAnonymitySetSeries[] = []
+  const syncingSeries: PrivacyAnonymitySetSeries[] = []
 
-  for (const id of expectedConfigurationIds) {
-    const configuration = configurationsById.get(id)
-    if (
-      configuration === undefined ||
-      configuration.maxHeight !== null ||
-      configuration.currentHeight === null
-    ) {
-      return undefined
-    }
-    currentHeights.push(configuration.currentHeight)
+  for (const item of series) {
+    const configuration = configurationsById.get(item.configurationId)
+    const destination =
+      configuration !== undefined &&
+      configuration.maxHeight === null &&
+      configuration.currentHeight !== null &&
+      configuration.currentHeight >= target
+        ? syncedSeries
+        : syncingSeries
+    destination.push(item)
   }
 
-  return UnixTime(Math.min(...currentHeights))
+  return {
+    syncedSeries,
+    syncingSeries,
+    syncingTokens: unique(syncingSeries.map((item) => item.token)),
+  }
 }
