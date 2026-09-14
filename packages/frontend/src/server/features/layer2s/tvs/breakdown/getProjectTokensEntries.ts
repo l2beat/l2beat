@@ -125,7 +125,7 @@ function getEntries(
     const tokenValue = tokenValuesMap.get(token.id)
     if (!tokenValue) continue
 
-    const { addresses } = extractAddressesFromTokenConfig(token)
+    const addresses = extractAddressesFromTokenConfig(token)
     const address = processAddresses(
       addresses,
       chains,

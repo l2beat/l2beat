@@ -1,21 +1,14 @@
 import {
-  type AmountFormula,
-  type CalculationFormula,
   type ChainConfig,
-  type Formula,
   type ProjectContract,
   ProjectService,
-  type TvsToken,
-  type ValueFormula,
 } from '@l2beat/config'
-import {
-  assert,
-  assertUnreachable,
-  ChainSpecificAddress,
-  TokenId,
-} from '@l2beat/shared-pure'
-import uniqBy from 'lodash/uniqBy'
+import { assert, ChainSpecificAddress, TokenId } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
+import {
+  type Address,
+  extractAddressesFromTokenConfig,
+} from '~/server/features/layer2s/tvs/breakdown/extractAddressesFromTokenConfig'
 import { getTvsTargetTimestamp } from '~/server/features/layer2s/tvs/utils/getTvsTargetTimestamp'
 
 /**
@@ -79,7 +72,7 @@ export async function getInternalTokenBreakdown() {
       const tokenValue = tokenValuesMap.get(token.id)
       if (!tokenValue) continue
 
-      const { addresses } = extractAddressesFromTokenConfig(token)
+      const addresses = extractAddressesFromTokenConfig(token)
       const address = processAddresses(addresses, chains)
       const project = projects.find((p) => p.id === tokenValue.projectId)
       assert(project, 'Project not found')
@@ -147,74 +140,6 @@ function flatten(data: Record<string, unknown>) {
 
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
-type Address = {
-  address: string
-  chain: string
-}
-
-function extractAddressesFromTokenConfig(token: TvsToken): {
-  addresses: Address[]
-  escrows: Address[]
-} {
-  if (!token.amount) return { addresses: [], escrows: [] }
-
-  const result = collectAddressesFromFormula(token.amount as Formula)
-
-  return {
-    addresses: uniqBy(result.addresses, 'address'),
-    escrows: uniqBy(result.escrows, 'address'),
-  }
-}
-
-function collectAddressesFromFormula(
-  formula: CalculationFormula | ValueFormula | AmountFormula,
-): { addresses: Address[]; escrows: Address[] } {
-  const addresses: Address[] = []
-  const escrows: Address[] = []
-
-  switch (formula.type) {
-    case 'calculation':
-      formula.arguments.forEach((arg) => {
-        const result = collectAddressesFromFormula(arg)
-        addresses.push(...result.addresses)
-        escrows.push(...result.escrows)
-      })
-      break
-    case 'balanceOfEscrow':
-    case 'starknetBalanceOf':
-      if (formula.address !== 'native') {
-        addresses.push({
-          address: formula.address,
-          chain: formula.chain,
-        })
-      }
-      escrows.push({
-        address: formula.escrowAddress,
-        chain: formula.chain,
-      })
-      break
-    case 'totalSupply':
-    case 'starknetTotalSupply':
-    case 'circulatingSupply':
-    case 'balanceOfEscrows':
-      if (formula.address !== 'native') {
-        addresses.push({
-          address: formula.address,
-          chain: formula.chain,
-        })
-      }
-      break
-    case 'const':
-    case 'value':
-      // These types don't contain addresses
-      break
-    default:
-      assertUnreachable(formula)
-  }
-
-  return { addresses, escrows }
 }
 
 function processAddresses(

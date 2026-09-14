@@ -13,65 +13,34 @@ export type Address = {
   chain: string
 }
 
-export function extractAddressesFromTokenConfig(token: TvsToken): {
-  addresses: Address[]
-  escrows: Address[]
-} {
-  if (!token.amount) return { addresses: [], escrows: [] }
+/** Token contract addresses referenced by the token's amount formula. */
+export function extractAddressesFromTokenConfig(token: TvsToken): Address[] {
+  if (!token.amount) return []
 
-  const result = collectAddressesFromFormula(token.amount as Formula)
-
-  return {
-    addresses: uniqBy(result.addresses, 'address'),
-    escrows: uniqBy(result.escrows, 'address'),
-  }
+  return uniqBy(collectAddressesFromFormula(token.amount as Formula), 'address')
 }
 
 function collectAddressesFromFormula(
   formula: CalculationFormula | ValueFormula | AmountFormula,
-): { addresses: Address[]; escrows: Address[] } {
-  const addresses: Address[] = []
-  const escrows: Address[] = []
-
+): Address[] {
   switch (formula.type) {
     case 'calculation':
-      formula.arguments.forEach((arg) => {
-        const result = collectAddressesFromFormula(arg)
-        addresses.push(...result.addresses)
-        escrows.push(...result.escrows)
-      })
-      break
+      return formula.arguments.flatMap((arg) =>
+        collectAddressesFromFormula(arg),
+      )
     case 'balanceOfEscrow':
     case 'starknetBalanceOf':
-      if (formula.address !== 'native') {
-        addresses.push({
-          address: formula.address,
-          chain: formula.chain,
-        })
-      }
-      escrows.push({
-        address: formula.escrowAddress,
-        chain: formula.chain,
-      })
-      break
+    case 'balanceOfEscrows':
     case 'totalSupply':
     case 'starknetTotalSupply':
     case 'circulatingSupply':
-    case 'balanceOfEscrows':
-      if (formula.address !== 'native') {
-        addresses.push({
-          address: formula.address,
-          chain: formula.chain,
-        })
-      }
-      break
+      if (formula.address === 'native') return []
+      return [{ address: formula.address, chain: formula.chain }]
     case 'const':
     case 'value':
       // These types don't contain addresses
-      break
+      return []
     default:
       assertUnreachable(formula)
   }
-
-  return { addresses, escrows }
 }
