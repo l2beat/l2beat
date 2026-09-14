@@ -24,7 +24,7 @@ export class HttpClient {
     return (await res.json()) as json
   }
 
-  async fetchRaw(url: string, init: FetchInit): Promise<Response> {
-    return await fetchWithTimeout(url, init)
+  fetchRaw(url: string, init: FetchInit): Promise<Response> {
+    return fetchWithTimeout(url, init)
   }
 }

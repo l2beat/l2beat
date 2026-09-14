@@ -38,7 +38,7 @@ export async function fetchWithTimeout(
   }
 
   const controller = new AbortController()
-  const timer = new IdleTimer(timeout, () =>
+  const timer = idleTimer(timeout, () =>
     controller.abort(new HttpTimeoutError(url, timeout)),
   )
   const signal = rest.signal
@@ -88,37 +88,21 @@ function describeCause(cause: unknown): string {
   return String(cause)
 }
 
-class IdleTimer {
-  private handle: NodeJS.Timeout
-
-  constructor(
-    private readonly ms: number,
-    private readonly onTimeout: () => void,
-  ) {
-    this.handle = this.start()
+// unref: a request nobody is reading anymore must not keep a CLI alive
+function idleTimer(ms: number, onTimeout: () => void) {
+  let handle = setTimeout(onTimeout, ms).unref()
+  const stop = () => clearTimeout(handle)
+  const restart = () => {
+    stop()
+    handle = setTimeout(onTimeout, ms).unref()
   }
-
-  restartPerChunk(): TransformStream<Uint8Array, Uint8Array> {
-    return new TransformStream({
+  const restartPerChunk = () =>
+    new TransformStream<Uint8Array, Uint8Array>({
       transform: (chunk, controller) => {
-        this.restart()
+        restart()
         controller.enqueue(chunk)
       },
-      flush: () => this.stop(),
+      flush: stop,
     })
-  }
-
-  restart() {
-    this.stop()
-    this.handle = this.start()
-  }
-
-  stop() {
-    clearTimeout(this.handle)
-  }
-
-  // unref: a request nobody is reading anymore must not keep a CLI alive
-  private start() {
-    return setTimeout(this.onTimeout, this.ms).unref()
-  }
+  return { stop, restartPerChunk }
 }
