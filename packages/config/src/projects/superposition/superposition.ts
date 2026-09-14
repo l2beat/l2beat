@@ -50,7 +50,7 @@ export const superposition: ScalingProject = orbitStackL3({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.superposition.so',
+        url: 'https://explorer.superposition.so/rpc',
         callsPerMinute: 300,
       },
       { type: 'blockscout', url: 'https://explorer.superposition.so/api' },
