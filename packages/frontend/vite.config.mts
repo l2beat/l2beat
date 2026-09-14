@@ -24,6 +24,8 @@ export default defineConfig(({ command }) => {
       outDir: CLIENT_OUTPUT_DIR,
       assetsDir: CLIENT_ASSETS_DIR,
       emptyOutDir: true,
+      // Read by PagePreloads to emit modulepreload tags per page.
+      manifest: true,
       rollupOptions: {
         output: {
           experimentalMinChunkSize: 1024,
