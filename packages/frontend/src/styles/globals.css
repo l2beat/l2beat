@@ -615,6 +615,26 @@
     }
   }
 }
+/* Mapped here, after the block above has reset --color-*: imports are hoisted
+   to the top of the file, so a mapping inside ./garden.css is wiped by it. */
+@theme inline {
+  --color-crop-good: var(--crop-good);
+  --color-crop-good-ink: var(--crop-good-ink);
+  --color-crop-warning: var(--crop-warning);
+  --color-crop-warning-ink: var(--crop-warning-ink);
+  --color-crop-bad: var(--crop-bad);
+  --color-crop-bad-ink: var(--crop-bad-ink);
+  --color-crop-neutral: var(--crop-neutral);
+  --color-crop-neutral-ink: var(--crop-neutral-ink);
+  --color-garden-accent: var(--garden-accent);
+  --color-garden-border: var(--garden-border);
+  --color-garden-tint: var(--garden-tint);
+  --color-garden-soil: var(--garden-soil);
+  --color-garden-canvas: var(--garden-canvas);
+  --color-plot-canvas: var(--plot-canvas);
+  --color-garden-sun: var(--garden-sun);
+  --color-garden-sprout: var(--garden-sprout);
+}
 
 @utility scrollbar-gutter-stable {
   scrollbar-gutter: stable;
