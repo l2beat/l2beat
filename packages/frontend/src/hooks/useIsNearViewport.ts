@@ -1,13 +1,9 @@
 import { type RefCallback, startTransition, useCallback, useState } from 'react'
 
 /**
- * False on the server and during hydration, true once the observed element
- * comes within `rootMargin` of the viewport. The flip happens in a transition
- * so React can time-slice whatever the caller mounts in response instead of
- * rendering it in one synchronous pass.
- *
- * Returns a callback ref so the observer follows the element across remounts
- * without an effect that has to be re-run by hand.
+ * False on the server and during hydration, true once the element comes
+ * within `rootMargin` of the viewport. The flip happens in a transition so
+ * React can time-slice whatever the caller mounts in response.
  */
 export function useIsNearViewport(
   rootMargin = '300px',
@@ -17,16 +13,14 @@ export function useIsNearViewport(
   const ref: RefCallback<Element> = useCallback(
     (element) => {
       if (!element || isNear) return
-      const reveal = () => startTransition(() => setIsNear(true))
       if (typeof IntersectionObserver === 'undefined') {
-        reveal()
+        startTransition(() => setIsNear(true))
         return
       }
       const observer = new IntersectionObserver(
         (entries) => {
           if (entries.some((entry) => entry.isIntersecting)) {
-            reveal()
-            observer.disconnect()
+            startTransition(() => setIsNear(true))
           }
         },
         { rootMargin },
