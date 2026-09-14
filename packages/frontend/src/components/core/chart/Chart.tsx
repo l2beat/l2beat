@@ -4,7 +4,7 @@ import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
-import { useIsClient } from '~/hooks/useIsClient'
+import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../OverflowWrapper'
@@ -117,7 +117,11 @@ function ChartContainer<T extends { timestamp: number }>({
   noDataSourceMessage?: string
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
-  const isClient = useIsClient()
+  // Recharts renders nothing until it has measured its container, and every
+  // chart measuring and re-rendering right after hydration was the longest
+  // main-thread task on project pages. Mount each chart only when it is
+  // about to be seen.
+  const isClient = useIsNearViewport(ref)
 
   const hasData = data && data.length > 1
 
@@ -141,7 +145,7 @@ function ChartContainer<T extends { timestamp: number }>({
             (isLoading || !hasData) && 'pointer-events-none',
           )}
         >
-          {children}
+          {isClient ? children : <div />}
         </Slot>
         {(!!isLoading || !isClient) && (
           <ChartLoader
