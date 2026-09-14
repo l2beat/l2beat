@@ -3,18 +3,24 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { PrivacyProject } from '../types'
 import { calculateAnonymitySetHistory } from './calculateAnonymitySets'
-import { getPrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
+import {
+  getPrivacyAnonymitySetSeries,
+  type PrivacyAnonymitySetSeries,
+} from './getPrivacyAnonymitySetSeries'
 import {
   getPrivacyAnonymitySetConfigurations,
   getPrivacyAnonymitySetSyncedUntil,
 } from './getPrivacyAnonymitySetSync'
 
 export type PrivacyAnonymitySetSummary =
-  | {
+  | ({
       status: 'available'
       value: number
       label: string
-    }
+    } & Pick<
+      PrivacyAnonymitySetSeries,
+      'bucketType' | 'chain' | 'formattedAmount' | 'token'
+    >)
   | {
       status: 'not-applicable'
       description: string
@@ -87,6 +93,10 @@ export async function getPrivacyAnonymitySetSummaries(
           status: 'available',
           value: bestValue,
           label: bestSeries.label,
+          bucketType: bestSeries.bucketType,
+          chain: bestSeries.chain,
+          formattedAmount: bestSeries.formattedAmount,
+          token: bestSeries.token,
         },
       ]
     }),
@@ -113,6 +123,10 @@ function getMockSummaries(
             status: 'available',
             value: Math.round(Math.random() * 1_000),
             label: series[0].label,
+            bucketType: series[0].bucketType,
+            chain: series[0].chain,
+            formattedAmount: series[0].formattedAmount,
+            token: series[0].token,
           },
         ]
       }

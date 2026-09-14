@@ -116,7 +116,9 @@ async function getPrivacyAnonymitySetSnapshot(
 
   return {
     series: toResponseSeries(series),
-    history: calculateAnonymitySetHistory(rows, series, historyEndpoints),
+    history: trimLeadingEmptyAnonymitySetHistory(
+      calculateAnonymitySetHistory(rows, series, historyEndpoints),
+    ),
     holdingDuration: calculateAnonymitySetHoldingDuration(
       rows,
       series,
@@ -125,6 +127,16 @@ async function getPrivacyAnonymitySetSnapshot(
     ),
     syncedUntil: holdingEndpoint,
   }
+}
+
+export function trimLeadingEmptyAnonymitySetHistory(
+  history: PrivacyAnonymitySetHistoryPoint[],
+): PrivacyAnonymitySetHistoryPoint[] {
+  const firstNonZeroIndex = history.findIndex(([, ...values]) =>
+    values.some((value) => value !== 0),
+  )
+
+  return firstNonZeroIndex === -1 ? [] : history.slice(firstNonZeroIndex)
 }
 
 export function selectPrivacyAnonymitySetChartRange(

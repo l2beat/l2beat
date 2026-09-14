@@ -18,15 +18,35 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
     const [series] = getPrivacyAnonymitySetSeries(project)
 
     expect(series?.label).toEqual('≥42 TOKEN')
+    expect(series?.formattedAmount).toEqual('42')
+    expect(series?.bucketType).toEqual('pool')
+  })
+
+  it('keeps denomination metadata separate from the display label', () => {
+    const project = makeProject({
+      decimals: 6,
+      minimumAmount: '200000000',
+      bucketType: 'denomination',
+    })
+
+    const [series] = getPrivacyAnonymitySetSeries(project)
+
+    expect(series?.label).toEqual('200 TOKEN')
+    expect(series?.formattedAmount).toEqual('200')
+    expect(series?.bucketType).toEqual('denomination')
+    expect(series?.chain).toEqual('ethereum')
+    expect(series?.token).toEqual('TOKEN')
   })
 })
 
 function makeProject({
   decimals,
   minimumAmount,
+  bucketType = 'pool',
 }: {
   decimals: number
   minimumAmount: string
+  bucketType?: 'pool' | 'denomination'
 }): PrivacyAnonymitySetProject {
   const privacyInfo = mockObject<ProjectPrivacyInfo>({
     tokens: [
@@ -42,7 +62,7 @@ function makeProject({
         buckets: [
           {
             id: 'bucket',
-            type: 'pool',
+            type: bucketType,
             label: 'Token pool',
             address: ChainSpecificAddress.fromLong(
               'ethereum',
