@@ -2172,6 +2172,141 @@ describeDatabase(TokenValueRepository.name, (db) => {
     )
   })
 
+  describe(
+    TokenValueRepository.prototype.getSummedByProjectAtLatestAndSevenDaysBefore
+      .name,
+    () => {
+      const metadataRepository = db.tvsTokenMetadata
+      const DAY = UnixTime.DAY
+      const T0 = UnixTime(1_000_000)
+
+      beforeEach(async () => {
+        await metadataRepository.insertMany([
+          {
+            projectId: 'arbitrum',
+            tokenId: 'a',
+            source: 'canonical',
+            category: 'ether',
+            isAssociated: false,
+          },
+          {
+            projectId: 'arbitrum',
+            tokenId: 'b',
+            source: 'external',
+            category: 'stablecoin',
+            isAssociated: true,
+          },
+          {
+            projectId: 'base',
+            tokenId: 'c',
+            source: 'native',
+            category: 'other',
+            isAssociated: false,
+          },
+        ])
+        await repository.upsertMany([
+          // arbitrum: hourly rows over the range, latest at T0 + 2h, and a
+          // matching row exactly seven days before the latest one.
+          tokenValue('a', 'arbitrum', T0, 1, 100, 100, 100, 1),
+          tokenValue('a', 'arbitrum', T0 + UnixTime.HOUR, 1, 200, 200, 200, 1),
+          tokenValue(
+            'a',
+            'arbitrum',
+            T0 + 2 * UnixTime.HOUR,
+            1,
+            300,
+            300,
+            300,
+            1,
+          ),
+          tokenValue('b', 'arbitrum', T0 + 2 * UnixTime.HOUR, 1, 50, 50, 50, 1),
+          tokenValue(
+            'a',
+            'arbitrum',
+            T0 + 2 * UnixTime.HOUR - 7 * DAY,
+            1,
+            30,
+            30,
+            30,
+            1,
+          ),
+          // A seven-days-before row that matches an older, non-latest hour
+          // must not be returned.
+          tokenValue('a', 'arbitrum', T0 - 7 * DAY, 1, 10, 10, 10, 1),
+          // base: only has a latest row, nothing seven days before.
+          tokenValue('c', 'base', T0 + UnixTime.HOUR, 1, 500, 500, 500, 1),
+          // Outside the range: must not become the latest.
+          tokenValue(
+            'a',
+            'arbitrum',
+            T0 + 5 * UnixTime.HOUR,
+            1,
+            999,
+            999,
+            999,
+            1,
+          ),
+        ])
+      })
+
+      afterEach(async () => {
+        await metadataRepository.deleteAll()
+      })
+
+      it('sums each project at its latest timestamp in range and seven days before it', async () => {
+        const result =
+          await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
+            ['arbitrum', 'base'],
+            [T0, T0 + 3 * UnixTime.HOUR],
+            {
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: true,
+            },
+          )
+
+        expect(result.map((r) => [r.project, r.timestamp, r.value])).toEqual([
+          ['arbitrum', T0 + 2 * UnixTime.HOUR - 7 * DAY, 30],
+          ['base', T0 + UnixTime.HOUR, 500],
+          ['arbitrum', T0 + 2 * UnixTime.HOUR, 350],
+        ])
+      })
+
+      it('applies the same breakdown and filters as getSummedByProjectForRanges', async () => {
+        const opts = {
+          excludeAssociatedTokens: true,
+          excludeRwaRestrictedTokens: true,
+        }
+        const result =
+          await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
+            ['arbitrum'],
+            [T0, T0 + 3 * UnixTime.HOUR],
+            opts,
+          )
+        const reference = await repository.getSummedByProjectForRanges(
+          ['arbitrum'],
+          [[T0 + 2 * UnixTime.HOUR, T0 + 2 * UnixTime.HOUR]],
+          opts,
+        )
+
+        expect(result.filter((r) => r.timestamp >= T0)).toEqual(reference)
+        expect(reference[0]?.value).toEqual(300)
+      })
+
+      it('is scoped to the given projects', async () => {
+        const result =
+          await repository.getSummedByProjectAtLatestAndSevenDaysBefore(
+            ['base'],
+            [T0, T0 + 3 * UnixTime.HOUR],
+            {
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+        expect(result.map((r) => r.project)).toEqual(['base'])
+      })
+    },
+  )
+
   afterEach(async () => {
     await repository.deleteAll()
   })
