@@ -13,8 +13,11 @@ export {
 } from './crops/attestations'
 export {
   CROP_KEYS,
+  CROP_SENTIMENTS,
+  CROP_STATUSES,
   type CropKey,
   type CropSentiment,
+  type CropStatus,
   qualifiesForGarden,
   type ResolvedCropEvaluation,
   type ResolvedCrops,
@@ -64,6 +67,7 @@ export {
   generateCropsApiFiles,
 } from './crops/generateCropsApiFiles'
 export { getGardenProjectPath } from './crops/getGardenProjectPath'
+export { OSI_LICENSES, OsiLicenseSchema } from './crops/osiLicenses'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export {
   INTEROP_CHAINS,
