@@ -1,9 +1,9 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
-import { useEventListener } from '~/hooks/useEventListener'
+import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { ChevronIcon } from '~/icons/Chevron'
 import { GeneralMilestoneIcon } from '~/icons/GeneralMilestone'
@@ -33,21 +33,13 @@ export function ChartMilestones<T extends { timestamp: number }>({
   milestones,
 }: Props<T>) {
   const ref = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState<number>()
+  // A ResizeObserver reports after layout. Reading the width in an effect
+  // forced a layout of the whole page inside React's commit instead.
+  const { width } = useResizeObserver({ ref })
   const timestampedMilestones = useMemo(
     () => getTimestampedMilestones(data, milestones),
     [data, milestones],
   )
-
-  useEffect(() => {
-    if (!ref.current) return
-    setWidth(ref.current.getBoundingClientRect().width)
-  }, [])
-
-  useEventListener('resize', () => {
-    if (!ref.current) return
-    setWidth(ref.current.getBoundingClientRect().width)
-  })
 
   if (timestampedMilestones.length < 2) return null
 

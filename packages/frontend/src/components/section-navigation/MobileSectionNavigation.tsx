@@ -25,6 +25,9 @@ export function MobileSectionNavigation({ sections }: Props) {
   useEffect(() => {
     if (!selectedItem.current || !overflowContainer.current || !currentSection)
       return
+    // The page hides this navigation from the lg breakpoint up. Scrolling a
+    // hidden list still forces a layout on every section change.
+    if (window.matchMedia('(min-width: 1024px)').matches) return
     scrollToItem(selectedItem.current, overflowContainer.current)
   }, [scrollToItem, currentSection])
 
