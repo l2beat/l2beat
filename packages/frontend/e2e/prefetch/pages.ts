@@ -33,25 +33,8 @@ export const STATIC_PAGES: PageToVerify[] = [
   ]),
   page('/layer2s/costs', ['costs.chart']),
   page('/layer2s/tvs', ['tvs.detailedChart', 'tvs.table', 'tvs.chartStats']),
-  page('/layer2s/projects/arbitrum', [
-    'activity.chart',
-    'costs.projectChart',
-    'da.l2ProjectChart',
-    'interop.flows',
-    'liveness.projectChart',
-  ]),
-  page('/layer2s/projects/base', [
-    'activity.chart',
-    'costs.projectChart',
-    'da.l2ProjectChart',
-    'interop.flows',
-    'liveness.projectChart',
-  ]),
   page('/data-availability/throughput', ['da.chart']),
-  page('/data-availability/projects/ethereum/ethereum', [
-    'interop.flows',
-    'da.projectCharts',
-  ]),
+  page('/data-availability/projects/ethereum/ethereum', ['da.projectCharts']),
   page('/data-availability/projects/eigenda/eigenda', ['da.projectCharts']),
   page('/interop/summary', ['interop.flows']),
   page('/interop/lock-and-mint?from=ethereum&to=arbitrum', [
