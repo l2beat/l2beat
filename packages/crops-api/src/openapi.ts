@@ -1,10 +1,10 @@
+import { toJsonSchemaDefinitions } from '@l2beat/validate'
 import {
   CROPS_API_ROUTES,
   CROPS_API_SCHEMAS,
   type CropsApiRoute,
   type CropsAttestationsMeta,
-} from '@l2beat/config'
-import { toJsonSchemaDefinitions } from '@l2beat/validate'
+} from './api'
 
 const COMPONENT_SCHEMAS_REF = '#/components/schemas/'
 

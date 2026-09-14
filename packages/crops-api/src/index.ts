@@ -1,7 +1,7 @@
-import { generateCropsApiFiles } from '@l2beat/config'
 import { cpSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import { dirname, join, resolve } from 'path'
 import { absolutePath as swaggerUiPath } from 'swagger-ui-dist'
+import { generateCropsApiFiles } from './generateCropsApiFiles'
 import { loadGeneratorInput } from './loadGeneratorInput'
 import { buildOpenApiDocument } from './openapi'
 

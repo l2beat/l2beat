@@ -1,5 +1,5 @@
-import { CROPS_API_ROUTES, getAttestationsMeta } from '@l2beat/config'
 import { expect } from 'earl'
+import { CROPS_API_ROUTES, getAttestationsMeta } from './api'
 import { buildOpenApiDocument, describeApi } from './openapi'
 
 describe('OpenAPI document', () => {

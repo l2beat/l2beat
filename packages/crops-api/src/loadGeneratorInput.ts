@@ -1,10 +1,7 @@
-import {
-  type ChainIdByName,
-  type CropsApiInput,
-  getAttestationsMeta,
-  ProjectService,
-} from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { execSync } from 'child_process'
+import { getAttestationsMeta } from './api'
+import type { ChainIdByName, CropsApiInput } from './generateCropsApiFiles'
 
 export async function loadGeneratorInput(): Promise<CropsApiInput> {
   const projectService = new ProjectService()
