@@ -30,7 +30,16 @@ export const CropsVerify = command({
   handler: async (args) => {
     const network = ATTESTATION_NETWORKS[args.network]
     const ledger = CROP_ATTESTATIONS
-    if (ledger.network !== network.name || ledger.live.length === 0) {
+    if (ledger.network !== network.name && ledger.live.length > 0) {
+      console.log(
+        chalk.red(
+          `The committed ledger is for ${ledger.network}, not ${network.name}. Pass --network ${ledger.network}, or change the default in easConfig.ts and re-attest.`,
+        ),
+      )
+      process.exitCode = 1
+      return
+    }
+    if (ledger.live.length === 0) {
       console.log(chalk.dim(`Nothing attested on ${network.name} yet.`))
       return
     }
