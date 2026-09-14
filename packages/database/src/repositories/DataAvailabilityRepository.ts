@@ -101,6 +101,24 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async checkIfExists(
+    projectId: string,
+    fromInclusive?: UnixTime,
+  ): Promise<boolean> {
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select('projectId')
+      .where('projectId', '=', projectId)
+      .limit(1)
+
+    if (fromInclusive !== undefined) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    const result = await query.executeTakeFirst()
+    return result !== undefined
+  }
+
   async getByProjectIdsAndTimeRange(
     projectIds: string[],
     timeRange: [UnixTime | null, UnixTime],

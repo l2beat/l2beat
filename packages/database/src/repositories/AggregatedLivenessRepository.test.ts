@@ -128,6 +128,33 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
+  describe(AggregatedLivenessRepository.prototype.checkIfExists.name, () => {
+    it('is true for a project and subtype with records', async () => {
+      expect(
+        await repository.checkIfExists(PROJECT_A, 'batchSubmissions'),
+      ).toEqual(true)
+    })
+
+    it('is false for a subtype the project has no records for', async () => {
+      expect(
+        await repository.checkIfExists(PROJECT_B, 'batchSubmissions'),
+      ).toEqual(false)
+    })
+
+    it('only counts records at or after fromInclusive', async () => {
+      expect(
+        await repository.checkIfExists(
+          PROJECT_A,
+          'batchSubmissions',
+          START + UnixTime.HOUR,
+        ),
+      ).toEqual(false)
+      expect(
+        await repository.checkIfExists(PROJECT_A, 'batchSubmissions', START),
+      ).toEqual(true)
+    })
+  })
+
   describe(AggregatedLivenessRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
       const results = await repository.getAll()

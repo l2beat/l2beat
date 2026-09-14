@@ -82,6 +82,32 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
+  describe(DataAvailabilityRepository.prototype.checkIfExists.name, () => {
+    it('is true when the project has any record', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', 'config-id', START, 100n),
+      ])
+      expect(await repository.checkIfExists('project-a')).toEqual(true)
+    })
+
+    it('is scoped to the project', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', 'config-id', START, 100n),
+      ])
+      expect(await repository.checkIfExists('project-b')).toEqual(false)
+    })
+
+    it('only counts records at or after fromInclusive', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', 'config-id', START - UnixTime.DAY, 1n),
+      ])
+      expect(await repository.checkIfExists('project-a', START)).toEqual(false)
+      expect(
+        await repository.checkIfExists('project-a', START - UnixTime.DAY),
+      ).toEqual(true)
+    })
+  })
+
   describe(
     DataAvailabilityRepository.prototype.getForDaLayerInTimeRange.name,
     () => {
