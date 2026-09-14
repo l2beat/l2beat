@@ -12,6 +12,7 @@ import type {
   RunInfo,
   RunListItem,
   RunRequest,
+  SolveInfo,
   UnitInfo,
 } from '../shared/types'
 
@@ -122,6 +123,16 @@ export const api = {
   },
   explain: (req: ExplainRequest) =>
     postJson<ExplainResult>('/api/explain', req),
+  solve: (
+    id: string,
+    via: string,
+    entry: string,
+    effect: string,
+    addr?: string,
+  ) =>
+    getJson<SolveInfo>(
+      `/api/run/solve?${qs({ id, via, entry, effect, addr })}`,
+    ),
   askConfig: () => getJson<AskConfig>('/api/ask/config'),
   asks: (id: string) => getJson<AskRecord[]>(`/api/asks?${qs({ id })}`),
   askDetail: (id: string, ask: string) =>

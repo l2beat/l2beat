@@ -214,7 +214,7 @@ function summary(runDir: string, meta: RunMeta): string {
     const contracts = readRelation(runDir, 'contract')
     const entries = readRelation(runDir, 'entryPoint')
     lines.push(
-      `One source file, ${meta.input.name}: ${contracts.length} contracts/interfaces/libraries, ${entries.length} entry points. No discovery snapshot: the project relations (layers 7-9) are empty; work with the unit relations.`,
+      `One source file, ${meta.input.name}: ${contracts.length} contracts/interfaces/libraries, ${entries.length} entry points. No discovery snapshot: the project and verdict relations (layers 7-9) are empty; work with the unit relations (structure, writes, guards).`,
     )
     for (const c of contracts) lines.push(`- ${c[2]} ${c[0]}`)
   }
@@ -222,7 +222,7 @@ function summary(runDir: string, meta: RunMeta): string {
 }
 
 export function briefing(runDir: string, meta: RunMeta, lib: Library): string {
-  return `You answer a researcher's question from inside one run of a static-analysis pipeline: your working directory. The pipeline compiled every source file, wrote solc's syntax tree and storage layout down as facts, ran a library of Datalog (Soufflé) rules over them and over discovery's snapshot of the deployed contracts' values, and wrote every derived relation to disk. Every tuple has a proof down to those facts.
+  return `You answer a researcher's question from inside one run of a static-analysis pipeline: your working directory. The pipeline compiled every source file, wrote solc's syntax tree and storage layout down as facts, ran a library of Datalog (Soufflé) rules over them and over discovery's snapshot of the deployed contracts' values, walked every entry function of every deployed contract symbolically and asked an SMT solver (Z3) which senders can make each storage write persist, and wrote every derived relation to disk. Every tuple has a proof: a Datalog derivation down to the facts, or, for the solver's rows (solved*), the paths, the formula and the model in the solve folder.
 
 Your only way to make a claim is a tuple. Read the catalogue, write Datalog rules that compute exactly what the question asks, run them, and cite the tuples they derive. The source code is there to understand what a rule should say, never to answer from.
 
@@ -232,13 +232,14 @@ Your only way to make a claim is a tuple. Read the catalogue, write Datalog rule
 - ./q rows <relation> [text...] [--limit N] rows containing every text (case-insensitive), as atoms — for finding names and shapes
 - ./q run <file.dl> [--name n]              run your rules against the run: prints the tuples of every relation the file declares, or Soufflé's error
 - ./q why '<atom>'                          why a tuple holds: its proof tree, down to solc facts and discovery values; leaves derived in another stage tell you how to continue
+- ./q solve <addr> <entry> [<write>]        the solver's account of one entry function: the paths, who passes (with which inputs), who is excluded, the residuals — the evidence behind canChange / cannotChange / unknownFor
 - ./q source <id> | <unit> <a>-<b>          source lines of a function or variable id, or of a unit
 - ./q units                                 the source files (units) of this run
 Do not read program.dl, derived/*.csv or facts/*.facts directly: ./q rows and ./q show print the same rows with their meaning.
 
 ## Work in this order (aim for under ten commands)
 1. One or two ./q rows calls to pin the exact spelling of the names in the question (an address, a function id). Do not browse relation after relation: the catalogue below already says what each one means.
-2. Write one query file with the relations that answer the question: the actors and paths, and the gaps that bound them (unresolvedCheck, crossCallGap, unknownAt, unmatchedValue filtered to the contracts on the path).
+2. Write one query file over the verdict relations, filtered to the contracts and variables the question names: verdict (one line per sender and variable: can | cannot | unknown), canChange (with How and the entry Via/H used), cannotChange, unknownFor, unknownChange (the residuals: what is unknown and where), indirectlyCanChange (the closure: who can change the storage the guards read). Join stateVariable / deployed / eoa for names.
 3. ./q run it; fix Soufflé's error if any; adjust until the rows say what you need.
 4. ./q why on one to three key tuples to see what they rest on.
 5. Answer.
@@ -251,15 +252,18 @@ Do not read program.dl, derived/*.csv or facts/*.facts directly: ./q rows and ./
 
 ## Evidence
 - A claim is an atom copied verbatim from ./q output, in backticks. Anything without an atom is an opinion: label it.
-- Tiers in \`allowed\`/\`finding\` rows say what a row rests on: checked (a guaranteed sender check + a discovered value) · checked-or · signature / signature-lead (whoever holds a signature by that address) · lead (a check that runs on some paths only) · discovered (a proxy's own functions admit the admin discovery read from the slot) · open (no sender or signature check the rules recognise) · guaranteed / structural / may / heuristic / unknown for unit findings.
-- "Nobody else can" is a closed-world statement: make it only relative to the rules, and name the gaps that cap it: unresolvedCheck, crossCallGap, opaqueWrites, unmatchedValue, and unknown effects (delegatecall, unresolved sstore) in the relevant units.
+- Three verdicts, never a default. canChange(A, Addr, V, E, Via, H, How): sender A, calling entry H of address Via, makes write E of V at Addr persist; How is witness (a concrete execution with the recorded state), robust (for every value of what discovery did not record), open (every address: the row has A = "anyone"), or "signer of <Safe>" (A signs for an admitted Safe, per discovery's snapshot). cannotChange(A, Addr, V): excluded on every write of V through every entry, with the unrecorded state free. unknownFor(A, Addr, V): neither; unknownChange says why (depends-on a value discovery did not record, a budget, opaque assembly, an unresolved call target, a solver timeout).
+- "Anyone" is a claim, not a default: state it only from a canChange row with A = "anyone". Never conclude it from the absence of checks. "Nobody else" is cannotChange for every listed sender plus "outsider" (every address outside the discovered set); it holds only when no unknownFor row remains.
+- A contract as a sender: canChange(S, …) with S a contract means S itself would have to call. Whether someone can make S call is answered by rows with Via = S (the solver walked S's entry functions into the callee), and for Safes by the "signer of" rows.
+- Why: ./q why on a canChange / cannotChange tuple ends in solved* facts; ./q solve <addr> <entry> prints what they rest on (paths, witnesses, exclusions, residuals). The guard structure a path took is in guard / callGuard / fnGuard (rules/2-guards.dl).
 - Every value is discovery's snapshot at one block; Safe signer semantics (acts) rest on discovery's fields, not on the Safe's code.
 
 ## Answer format (Markdown)
-1. Verdict in one or two sentences.
-2. **Evidence**: bullets; each bullet ends with the one atom in backticks that states it (quote the tier when there is one).
-3. **Rules written**: the query file names and one line each on what they compute.
-4. **Not covered**: the gaps that bound the answer, with their atoms when there are any.
+1. Verdict: three sets, each on one line, empty sets stated as empty — **can** (each sender with its How and the entry it uses), **cannot**, **unknown** (each with the residual kind from unknownChange).
+2. **Evidence**: bullets; each bullet ends with the one atom in backticks that states it (quote How when there is one).
+3. **Closure**: who can change what the guards read (indirectlyCanChange), or "none".
+4. **Rules written**: the query file names and one line each on what they compute.
+5. **Not covered**: the residuals (unknownChange), unresolved call targets (crossCallGap), unknown effects (unknownAt) and unmatched values (unmatchedValue) on the contracts in question, with their atoms.
 No preamble, no restating the question, no closing summary.
 
 ## The run
@@ -360,6 +364,10 @@ export function verifyClaims(
     if (!parsed || parsed.cols.length === 0) continue
     // variables (capitalised bare words) mean a rule, not a tuple
     if (parsed.cols.some((c) => /^[A-Z_]\w*$/.test(c))) continue
+    // `setScore(uint256)`: a function signature or code, not a claim — nothing quoted, no relation of that name
+    const quotesAtom =
+      /"/.test(text) || parsed.cols.every((c) => /^-?\d+$/.test(c))
+    if (!quotesAtom && !lib.relations.has(parsed.relation)) continue
     seen.add(text)
     const inQuery = queryDirs.some((d) => {
       const r = JSON.parse(

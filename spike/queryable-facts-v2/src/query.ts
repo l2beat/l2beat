@@ -25,7 +25,12 @@ import {
   type ProgramDecl,
   parseProgram,
 } from './program'
-import { formatDecl, type Library, type RelationRecord } from './rules'
+import {
+  formatDecl,
+  type Library,
+  type RelationRecord,
+  stagePath,
+} from './rules'
 import { readTsv, runSouffle, SouffleError } from './souffle'
 
 export type QueryLevel = 'project' | 'unit'
@@ -87,11 +92,7 @@ function mentioned(text: string): { heads: Set<string>; bodies: Set<string> } {
 
 /** Where a library relation's rows live in a run (project stage), as a path Soufflé can read. */
 function projectPath(runDir: string, rel: RelationRecord): string {
-  if (rel.stage === 'project')
-    return rel.kind === 'input'
-      ? join(runDir, 'facts', `${rel.name}.facts`)
-      : join(runDir, 'derived', `${rel.name}.csv`)
-  return join(runDir, 'facts', `${rel.name}.facts`)
+  return stagePath(runDir, rel)
 }
 
 function unitPath(runDir: string, slug: string, rel: RelationRecord): string {

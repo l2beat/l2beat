@@ -1,0 +1,11 @@
+{
+  "case": "opaque assembly check on one path, the gate on the other: cccc passes through the gate whatever the assembly does; everyone else depends on it",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": [],
+  "unknown": "all-others",
+  "residuals": ["opaque", "depends-on"]
+}

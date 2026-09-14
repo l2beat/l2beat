@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { Stage } from '../../shared/types'
 import { buildCards, type CardSection, RuleCard } from '../components/RuleCards'
 import { ms, Stat } from '../components/ui'
 import { useApp } from '../lib/context'
 
 interface StagedSection extends CardSection {
-  stage: 'unit' | 'project'
+  stage: Stage
   tuples: number
 }
 
@@ -14,7 +15,7 @@ export function RulesScreen({ focus }: { focus?: string }) {
   const [query, setQuery] = useState('')
   const [current, setCurrent] = useState<string | undefined>()
   const sections = useMemo<StagedSection[]>(() => {
-    const stage = (items: CardSection[], s: 'unit' | 'project') =>
+    const stage = (items: CardSection[], s: Stage) =>
       items
         .filter((sec) => sec.cards.length > 0)
         .map((sec) => ({
@@ -25,6 +26,7 @@ export function RulesScreen({ focus }: { focus?: string }) {
     return [
       ...stage(buildCards(run.library.unit.items), 'unit'),
       ...stage(buildCards(run.library.project.items), 'project'),
+      ...stage(buildCards(run.library.verdict.items), 'verdict'),
     ]
   }, [run])
   useEffect(() => {
@@ -49,7 +51,8 @@ export function RulesScreen({ focus }: { focus?: string }) {
       : sections
   const rules =
     run.library.unit.items.filter((i) => i.kind === 'clause').length +
-    run.library.project.items.filter((i) => i.kind === 'clause').length
+    run.library.project.items.filter((i) => i.kind === 'clause').length +
+    run.library.verdict.items.filter((i) => i.kind === 'clause').length
   return (
     <div className="screen two-col">
       <div className="side">
@@ -87,7 +90,7 @@ export function RulesScreen({ focus }: { focus?: string }) {
             title={s.text}
           >
             <span className={`st stage-${s.stage}`}>
-              {s.stage === 'unit' ? '▪' : '▫'}
+              {s.stage === 'unit' ? '▪' : s.stage === 'project' ? '▫' : '◆'}
             </span>
             <span>{s.title}</span>
             <span className="muted small">{s.tuples.toLocaleString()}</span>
@@ -98,15 +101,20 @@ export function RulesScreen({ focus }: { focus?: string }) {
         <div className="panel intro">
           <div className="panel-body">
             <p>
-              One library, read as one list of layers. Soufflé evaluates it in
-              two stages: layers 1–6 once per file over that file's facts, then
-              layers 7–9 once over the union of the files' exported relations
-              and discovery's facts. A relation is{' '}
+              One library, read as one list of layers, evaluated in four stages:
+              layers 1–6 and the guard layer once per file over that file's
+              facts; layers 7–8 once over the union of the files' exported
+              relations and discovery's facts; then the solver walks every entry
+              function of every deployed contract and asks Z3 who can make each
+              storage write persist; then layer 9 turns its answers into
+              verdicts (<span className="tag verdict">verdict</span>: canChange,
+              cannotChange, unknownFor). A relation is{' '}
               <span className="tag exported">exported</span> when it is keyed by
               names (unit-prefixed) rather than by solc node ids, so its rows
               from different files can be put together. Every tuple is
               clickable: Soufflé shows the rule and the tuples it rests on, down
-              to the facts.
+              to the facts; a solver fact opens the paths, witnesses and
+              residuals it rests on.
             </p>
             <div className="stats">
               <Stat
@@ -119,7 +127,19 @@ export function RulesScreen({ focus }: { focus?: string }) {
               />
               <Stat
                 value={run.meta.counts.projectDerivedRows.toLocaleString()}
-                label="project tuples (layers 7–9)"
+                label="project tuples (layers 7–8)"
+              />
+              <Stat
+                value={Object.values(run.meta.counts.solved ?? {})
+                  .reduce((a, b) => a + b, 0)
+                  .toLocaleString()}
+                label={`solver facts (${run.meta.solve?.effects ?? 0} writes, ${run.meta.solve?.checks ?? 0} Z3 checks)`}
+              />
+              <Stat
+                value={(
+                  run.meta.counts.verdictDerivedRows ?? 0
+                ).toLocaleString()}
+                label="verdict tuples (layer 9)"
               />
               <Stat
                 value={`${(run.meta.timings.unitsMs / 1000).toFixed(1)} s`}
@@ -128,6 +148,14 @@ export function RulesScreen({ focus }: { focus?: string }) {
               <Stat
                 value={ms(run.meta.timings.souffleMs)}
                 label="project stage Soufflé"
+              />
+              <Stat
+                value={ms(run.meta.timings.solveMs ?? 0)}
+                label="solve stage (walk + Z3)"
+              />
+              <Stat
+                value={ms(run.meta.timings.verdictMs ?? 0)}
+                label="verdict stage Soufflé"
               />
             </div>
           </div>

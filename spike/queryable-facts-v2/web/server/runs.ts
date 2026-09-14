@@ -30,7 +30,8 @@ import {
   unitDir,
 } from '../../src/pipeline'
 import { listQueries } from '../../src/query'
-import type { Library } from '../../src/rules'
+import { type Library, stagePath } from '../../src/rules'
+import { loadEffectResult } from '../../src/solve'
 import { readTsv } from '../../src/souffle'
 import type {
   AskDetail,
@@ -40,6 +41,7 @@ import type {
   RunInfo,
   RunListItem,
   RunRequest,
+  SolveInfo,
   StorageEntry,
   UnitInfo,
 } from '../shared/types'
@@ -117,12 +119,8 @@ function relationCounts(
   const counts: Record<string, number> = {}
   const okUnits = meta.units.filter((u) => u.status === 'ok')
   for (const rec of lib.relations.values()) {
-    if (rec.stage === 'project')
-      counts[rec.name] = lineCount(
-        rec.kind === 'input'
-          ? join(runDir, 'facts', `${rec.name}.facts`)
-          : join(runDir, 'derived', `${rec.name}.csv`),
-      )
+    if (rec.stage === 'project' || rec.stage === 'verdict')
+      counts[rec.name] = lineCount(stagePath(runDir, rec))
     else if (rec.exported)
       counts[rec.name] = lineCount(join(runDir, 'facts', `${rec.name}.facts`))
     else {
@@ -145,6 +143,7 @@ function libraryInfo(lib: Library): LibraryInfo {
     files: lib.files,
     unit: lib.unit,
     project: lib.project,
+    verdict: lib.verdict,
     relations: [...lib.relations.values()],
     exported: lib.exported,
   }
@@ -269,7 +268,7 @@ export function rowsPage(
     const rec = lib.relations.get(relation)
     if (!rec) throw new Error(`unknown relation ${relation}`)
     if (opts.unit) rows = readRelation(runDir, relation, opts.unit)
-    else if (rec.stage === 'project' || rec.exported)
+    else if (rec.stage !== 'unit' || rec.exported)
       rows = readRelation(runDir, relation)
     else {
       rows = []
@@ -339,6 +338,31 @@ export async function startRun(
     onProgress: emit,
   })
   return runInfo(id)
+}
+
+/** The solver's result for one write through one entry (the evidence behind a solved* fact). */
+export function solveInfo(
+  id: string,
+  via: string,
+  entry: string,
+  effect: string,
+  addr?: string,
+): SolveInfo {
+  const runDir = runDirOf(id)
+  const loaded = loadEffectResult(runDir, via, entry, effect, addr || via)
+  if (!loaded)
+    throw new Error(
+      `the solver has no result for ${effect} through ${entry} at ${via}`,
+    )
+  const read = (name: string) => {
+    const p = join(loaded.dir, name)
+    return existsSync(p) ? readFileSync(p, 'utf8') : undefined
+  }
+  return {
+    result: loaded.result,
+    dir: loaded.dir.replace(`${runDir}/`, ''),
+    scripts: { a: read('a.smt2'), b: read('b.smt2') },
+  }
 }
 
 export function askDetail(id: string, ask: string): AskDetail {

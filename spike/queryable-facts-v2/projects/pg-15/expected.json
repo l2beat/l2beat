@@ -1,0 +1,21 @@
+{
+  "case": "AccessControl with the roles recorded by discovery: the SCORER_ROLE members can set the score; the DEFAULT_ADMIN_ROLE member can change who has the role",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": [
+    "eth:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "eth:0xcccccccccccccccccccccccccccccccccccccccc"
+  ],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": [],
+  "indirect": [
+    {
+      "actor": "eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "address": "eth:0x1111111111111111111111111111111111111111",
+      "variable": "_roles"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Guards.sol:Guards	Guards.sol:Guards._mustBeAdmin()	Guards.sol:Guards._mustBeAdmin()@841:41	true	require
+Guards.sol:Guards	Guards.sol:Guards.afterCheck()	Guards.sol:Guards.afterCheck()@753:27	true	require
+Guards.sol:Guards	Guards.sol:Guards.ifAbort(uint256)	Guards.sol:Guards.ifAbort(uint256)@1404:26	false	if-abort
+Guards.sol:Guards	Guards.sol:Guards.ifAbort(uint256)	Guards.sol:Guards.ifAbort(uint256)@1440:87	true	if-abort
+Guards.sol:Guards	Guards.sol:Guards.lowLevel(uint256,bytes)	Guards.sol:Guards.lowLevel(uint256,bytes)@3573:26	true	require
+Guards.sol:Guards	Guards.sol:Guards.onlyOwner()	Guards.sol:Guards.onlyOwner()@496:41	true	require
+Guards.sol:Guards	Guards.sol:Guards.ownerOrForward()	Guards.sol:Guards.ownerOrForward()@597:101	true	if-abort
+Guards.sol:Guards	Guards.sol:Guards.requireAround(uint256)	Guards.sol:Guards.requireAround(uint256)@1008:22	true	require
+Guards.sol:Guards	Guards.sol:Guards.requireAround(uint256)	Guards.sol:Guards.requireAround(uint256)@1055:22	true	require
+Guards.sol:Guards	Guards.sol:Guards.viaAfterModifier(uint256)	Guards.sol:Guards.afterCheck()@753:27	true	require
+Guards.sol:Guards	Guards.sol:Guards.viaBranchModifier(uint256)	Guards.sol:Guards.ownerOrForward()@597:101	true	if-abort
+Guards.sol:Guards	Guards.sol:Guards.viaHelper(uint256)	Guards.sol:Guards._mustBeAdmin()@841:41	true	require
+Guards.sol:Guards	Guards.sol:Guards.viaModifier(uint256)	Guards.sol:Guards.onlyOwner()@496:41	true	require

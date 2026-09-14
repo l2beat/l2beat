@@ -1,0 +1,11 @@
+{
+  "case": "loop over gates[] with both entries recorded (OwnerGate, OpenGate): the guards conjoin, only cccc passes",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": []
+}

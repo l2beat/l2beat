@@ -1,0 +1,50 @@
+// =============================================================================
+// Layer 0, verdict stage: what the solver said — src/solve.ts, read back as facts.
+//
+// For every entry function H of a deployed address Via, the solve stage walked H symbolically (calls
+// into other deployed contracts included) and asked Z3, for every write E it performs on the storage
+// of Addr (Addr = Via for the contract's own writes, another address when the write happens inside a
+// call), who can make E persist. These rows are its answers; the proof of a row is the solver
+// artefact (solve/<via>/<entry>/<effect>/result.json, a.smt2, b.smt2), not a Datalog derivation.
+// `Addr`, `Via`, `H`, `E` match codeOf / entryAt / effect.
+// =============================================================================
+
+// Write E on Addr's storage, performed by calling H at Via: how many completing paths perform it (Paths),
+// and whether every execution was explored ("explored") or some were left out by a budget or opaque code ("partial").
+.decl solvedEffect(Addr: symbol, Via: symbol, H: symbol, E: symbol, Paths: symbol, Explored: symbol)
+.input solvedEffect
+
+// Sender A, calling H at Via, can make write E on Addr persist. How: "witness" (a concrete execution with
+// recorded state) or "robust" (for every value of what discovery did not record). A is a discovered address.
+.decl solvedAdmits(Addr: symbol, Via: symbol, H: symbol, E: symbol, A: symbol, How: symbol)
+.input solvedAdmits
+
+// Sender A, calling H at Via, cannot make write E on Addr persist on any path, whatever the unrecorded
+// state. A is a discovered address, or "outsider" for every address outside the discovered set.
+.decl solvedExcludes(Addr: symbol, Via: symbol, H: symbol, E: symbol, A: symbol)
+.input solvedExcludes
+
+// Write E on Addr through H at Via is open to every address outside the discovered set (proven: no such
+// address fails, with the inputs a witness used). The claim "anyone" rests on this row alone.
+.decl solvedOpen(Addr: symbol, Via: symbol, H: symbol, E: symbol, How: symbol)
+.input solvedOpen
+
+// What keeps write E on Addr through H at Via from a full verdict: Kind is depends-on (a value discovery
+// did not record decides), too-many-paths / loop-bound / call-depth (a budget), opaque (assembly or
+// delegatecall on the way), solver-timeout, solver-error (the walk failed on this entry), open-unproven,
+// unsupported-stmt, no-code. Where says which.
+.decl solvedResidual(Addr: symbol, Via: symbol, H: symbol, E: symbol, Kind: symbol, Where: symbol)
+.input solvedResidual
+
+// The storage the conditions on the way to write E read: variable V2 at Addr2. Who can change those can
+// change who can perform E (the closure, indirectlyCanChange).
+.decl solvedReads(Addr: symbol, Via: symbol, H: symbol, E: symbol, Addr2: symbol, V2: symbol)
+.input solvedReads
+
+// One completing path P of H at Via performing E, as the trace of what it did.
+.decl solvedPath(Addr: symbol, Via: symbol, H: symbol, E: symbol, P: symbol, Text: symbol)
+.input solvedPath
+
+// The inputs the witness for sender A used (`name=value`, or "(no inputs matter)").
+.decl solvedWitness(Addr: symbol, Via: symbol, H: symbol, E: symbol, A: symbol, Text: symbol)
+.input solvedWitness

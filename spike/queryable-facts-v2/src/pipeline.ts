@@ -8,6 +8,8 @@
 //   <run>/discovered.json       the discovery snapshot (project runs)
 //   <run>/facts/*.facts         the project stage's input: discovery as facts + every exported unit relation
 //   <run>/program.dl            the project program; derived/*.csv what it derived
+//   <run>/solve/                the solve stage's paths, SMT scripts and results (see solve.ts)
+//   <run>/facts/solved/*.facts  the solver's answers as facts; program-verdict.dl derives layer 9 into derived/
 //   <run>/asks/<n>/             one folder per question asked (see agent.ts)
 
 import {
@@ -18,6 +20,7 @@ import {
   readdirSync,
   readFileSync,
   realpathSync,
+  statSync,
   writeFileSync,
 } from 'fs'
 import { basename, join } from 'path'
@@ -31,7 +34,8 @@ import {
 } from './discovery'
 import { emitFacts, Facts } from './emit'
 import { ROOT as SPIKE } from './paths'
-import { type Library, loadLibrary, RULE_FILES } from './rules'
+import { type Library, loadLibrary, RULE_FILES, verdictProgram } from './rules'
+import { runSolve, type SolveSummary } from './solve'
 import {
   readTsv,
   runSouffle,
@@ -86,7 +90,8 @@ export type RunProgress =
       status: 'failed'
       error: string
     }
-  | { type: 'project'; status: 'facts' | 'souffle' }
+  | { type: 'project'; status: 'facts' | 'souffle' | 'solve' | 'verdict' }
+  | { type: 'solve'; done: number; total: number; what: string }
 
 export interface UnitTimings {
   resolveMs: number
@@ -134,14 +139,20 @@ export interface RunMeta {
     discoveryRows: Record<string, number>
     imported: Record<string, number>
     projectDerivedRows: number
+    /** Rows per solved relation (facts/solved), and of the verdict program's outputs. */
+    solved?: Record<string, number>
+    verdictDerivedRows?: number
   }
   timings: {
     unitsMs: number
     factsMs: number
     souffleMs: number
+    solveMs?: number
+    verdictMs?: number
     totalMs: number
   }
   souffle: { version: string; command: string; stderr: string }
+  solve?: SolveSummary
 }
 
 /**
@@ -182,14 +193,18 @@ export function runLibrary(runDir: string): Library {
   return loadLibrary(join(runDir, 'rules'))
 }
 
-function countRows(dir: string): number {
-  if (!existsSync(dir)) return 0
+/** Rows in a directory of .csv/.facts files, or in one such file. */
+function countRows(path: string): number {
+  if (!existsSync(path)) return 0
+  const lines = (text: string) =>
+    text.length === 0
+      ? 0
+      : text.split('\n').length - (text.endsWith('\n') ? 1 : 0)
+  if (statSync(path).isFile()) return lines(readFileSync(path, 'utf8'))
   let n = 0
-  for (const f of readdirSync(dir)) {
+  for (const f of readdirSync(path)) {
     if (!f.endsWith('.csv') && !f.endsWith('.facts')) continue
-    const text = readFileSync(join(dir, f), 'utf8')
-    if (text.length === 0) continue
-    n += text.split('\n').length - (text.endsWith('\n') ? 1 : 0)
+    n += lines(readFileSync(join(path, f), 'utf8'))
   }
   return n
 }
@@ -471,6 +486,32 @@ export async function runAll(opts: RunOptions): Promise<RunMeta> {
     jobs: opts.jobs,
   })
 
+  // 4. the solve stage: who can drive each write, per Z3 (needs deployed code: project runs)
+  opts.onProgress?.({ type: 'project', status: 'solve' })
+  const solve = runSolve(outDir, summaries, {
+    onProgress: (done, total, what) =>
+      opts.onProgress?.({ type: 'solve', done, total, what }),
+  })
+  const solvedCounts: Record<string, number> = {}
+  const solvedDir = join(outDir, 'facts', 'solved')
+  if (existsSync(solvedDir))
+    for (const f of readdirSync(solvedDir))
+      if (f.endsWith('.facts'))
+        solvedCounts[basename(f, '.facts')] = countRows(join(solvedDir, f))
+
+  // 5. the verdict program: layer 9 over everything above plus the solver's facts
+  opts.onProgress?.({ type: 'project', status: 'verdict' })
+  const before = countRows(derivedDir)
+  const verdictPath = join(outDir, 'program-verdict.dl')
+  writeFileSync(verdictPath, verdictProgram(lib, outDir))
+  const verdict = runSouffle({
+    program: verdictPath,
+    facts: solvedDir,
+    out: derivedDir,
+    souffle: opts.souffle,
+    jobs: opts.jobs,
+  })
+
   const discoveryRows: Record<string, number> = {}
   for (const r of Object.keys(DISCOVERY_RELATIONS))
     discoveryRows[r] = discovery.count(r)
@@ -495,19 +536,24 @@ export async function runAll(opts: RunOptions): Promise<RunMeta> {
       unitDerivedRows: summaries.reduce((n, s) => n + (s.derivedRows ?? 0), 0),
       discoveryRows,
       imported,
-      projectDerivedRows: countRows(derivedDir),
+      projectDerivedRows: before,
+      solved: solvedCounts,
+      verdictDerivedRows: countRows(derivedDir) - before,
     },
     timings: {
       unitsMs,
       factsMs,
       souffleMs: souffle.ms,
+      solveMs: solve.ms,
+      verdictMs: verdict.ms,
       totalMs: performance.now() - started,
     },
     souffle: {
       version: souffleVersion(opts.souffle),
       command: souffle.command,
-      stderr: souffle.stderr,
+      stderr: [souffle.stderr, verdict.stderr].filter(Boolean).join('\n'),
     },
+    solve,
   }
   writeFileSync(join(outDir, 'run.json'), JSON.stringify(meta, null, 2))
   installQ(outDir)
@@ -524,5 +570,7 @@ export function readRelation(
   const dir = slug ? unitDir(runDir, slug) : runDir
   const derived = join(dir, 'derived', `${relation}.csv`)
   if (existsSync(derived)) return readTsv(derived)
-  return readTsv(join(dir, 'facts', `${relation}.facts`))
+  const facts = join(dir, 'facts', `${relation}.facts`)
+  if (existsSync(facts)) return readTsv(facts)
+  return readTsv(join(dir, 'facts', 'solved', `${relation}.facts`))
 }

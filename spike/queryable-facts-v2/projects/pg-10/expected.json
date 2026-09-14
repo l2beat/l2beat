@@ -1,0 +1,11 @@
+{
+  "case": "write followed by an unconditional revert: no completing execution performs it, nobody can",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": [],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "pg-10",
+  "timestamp": 1789000000,
+  "entries": [
+    {
+      "name": "Playground",
+      "address": "eth:0x1111111111111111111111111111111111111111",
+      "type": "Contract",
+      "proxyType": "immutable",
+      "description": "Synthetic. The write is always reverted afterwards: it never persists.",
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "score": 42,
+        "gate": "eth:0x2222222222222222222222222222222222222222"
+      },
+      "implementationNames": {
+        "eth:0x1111111111111111111111111111111111111111": "Playground"
+      }
+    },
+    {
+      "name": "OwnerGate",
+      "address": "eth:0x2222222222222222222222222222222222222222",
+      "type": "Contract",
+      "proxyType": "immutable",
+      "description": "Synthetic. Lets exactly one address through: its owner.",
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xcccccccccccccccccccccccccccccccccccccccc"
+      },
+      "implementationNames": {
+        "eth:0x2222222222222222222222222222222222222222": "OwnerGate"
+      }
+    },
+    {
+      "name": "ClosedGate",
+      "address": "eth:0x3333333333333333333333333333333333333333",
+      "type": "Contract",
+      "proxyType": "immutable",
+      "description": "Synthetic. Lets nobody through.",
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0x3333333333333333333333333333333333333333": "ClosedGate"
+      }
+    },
+    {
+      "address": "eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcccccccccccccccccccccccccccccccccccccccc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+Guards.sol:Guards	Guards.sol:Guards.viaAfterModifier(uint256)	Guards.sol:Guards.afterCheck()
+Guards.sol:Guards	Guards.sol:Guards.viaBranchModifier(uint256)	Guards.sol:Guards.ownerOrForward()
+Guards.sol:Guards	Guards.sol:Guards.viaHelper(uint256)	Guards.sol:Guards._mustBeAdmin()
+Guards.sol:Guards	Guards.sol:Guards.viaModifier(uint256)	Guards.sol:Guards.onlyOwner()

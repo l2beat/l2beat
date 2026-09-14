@@ -19,6 +19,7 @@ import type {
 import type { Home } from '../../src/proof'
 import type { QueryResult } from '../../src/query'
 import type { RelationRecord, Stage } from '../../src/rules'
+import type { EffectResult } from '../../src/solve'
 import type { ProofNode } from '../../src/souffle'
 
 export type {
@@ -28,6 +29,7 @@ export type {
   AskRequest,
   Claim,
   Column,
+  EffectResult,
   Home,
   Program,
   ProgramClause,
@@ -98,8 +100,18 @@ export interface LibraryInfo {
   files: Array<{ name: string; text: string }>
   unit: Program
   project: Program
+  verdict: Program
   relations: RelationRecord[]
   exported: string[]
+}
+
+/** The solver's account of one write reached through one entry function (see src/solve.ts). */
+export interface SolveInfo {
+  result: EffectResult
+  /** The evidence folder, relative to the run. */
+  dir: string
+  /** The SMT-LIB scripts sent to Z3: a (who passes), b (robustness), when present. */
+  scripts: { a?: string; b?: string }
 }
 
 export interface StorageEntry {

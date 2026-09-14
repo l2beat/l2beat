@@ -1,0 +1,254 @@
+// =============================================================================
+// Layer 2g: guard structure — what must hold for a write to persist, read off the statement tree.
+//
+// Nothing here recognises a check by what it compares. A *guard* of an effect E is a condition
+// whose truth every completing execution that performs E depends on, or an external call whose
+// normal completion such an execution depends on. What the conditions mean is decided later by
+// the solve stage (src/solve.ts, Z3) with discovery's values substituted; these relations say which
+// conditions, in which polarity, and why, and the proof drawer shows them as the evidence.
+//
+// Everything is per deployable contract C (modifiers and internal calls resolve by dispatch), per
+// effect E (a write site), and structural: statement tree plus source order, no CFG. What is stated
+// here holds on *every* path through E, so the per-path formulas of the solve stage contain it;
+// what only some paths do (branches, loops, try) is described (pathSplit, loopAround) and left to
+// the solve stage, which walks the same tree path by path.
+//
+// Vocabulary: a *statement* is a row of `stmt`; a *site* (write, call) sits in a statement (`at`);
+// a *plain block* only sequences its children; S is *straight* in block B when every statement
+// between them is a plain block (entering B and not leaving the function early runs S).
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// 2g-a. Effects: the writes worth asking "who can make this persist?" about
+// ---------------------------------------------------------------------------
+
+// Write site E in function F, running in deployable C, changes state variable V: directly, through a
+// storage reference that aliases V, or through an `sstore` whose slot names V.
+.decl effect(C: symbol, E: symbol, F: symbol, V: symbol)
+effect(C, E, F, V) :- reachableIn(C, F), writeSite(E, S, F, V, _), S != "", stateVariable(V, _, _, _, _, _).
+effect(C, E, F, V) :- reachableIn(C, F), writeSite(E, S, F, R, _), S != "", aliases(R, V).
+effect(C, K, F, V) :- reachableIn(C, F), assembly(A, F, _), asmSstore(K, A, _, T, _), yulSlotOf(C, A, T, V).
+
+// Site X (a write, a call, an sstore) sits in statement S; a statement sits in itself.
+.decl at(X: symbol, S: symbol)
+at(W, S) :- writeSite(W, S, _, _, _), S != "".
+at(K, S) :- callSite(K, S, _, _, _, _), S != "".
+at(K, A) :- asmSstore(K, A, _, _, _).
+at(S, S) :- stmt(S, _, _, _, _).
+
+// ---------------------------------------------------------------------------
+// 2g-b. Structure: blocks, order, branches, loops, exits
+// ---------------------------------------------------------------------------
+
+.decl plainBlock(B: symbol)
+plainBlock(B) :- stmt(B, _, K, _, _), (K = "Block" ; K = "UncheckedBlock").
+
+// S is straight in block B (B excluded, S included): every statement between them is a plain block.
+.decl straightIn(S: symbol, B: symbol)
+straightIn(S, B) :- stmt(S, _, _, B, _), plainBlock(B).
+straightIn(S, B) :- stmt(S, _, _, P, _), plainBlock(P), straightIn(P, B).
+
+// Plain block B encloses statement S at any depth.
+.decl region(S: symbol, B: symbol)
+region(S, B) :- within(B, S), plainBlock(B).
+
+// Source order of two statements of the same function.
+.decl before(S: symbol, T: symbol)
+before(S, T) :- stmt(S, F, _, _, _), stmt(T, F, _, _, _), sourceLoc(S, _, _, _, PS, _), sourceLoc(T, _, _, _, PT, _), PS < PT.
+
+// A `return`, `break` or `continue` lies between S and T (either order), at any nesting: an execution
+// that runs the earlier one may leave before the later one.
+.decl exitBetween(S: symbol, T: symbol)
+exitBetween(S, T) :- stmt(S, F, _, _, _), stmt(T, F, _, _, _), stmt(R, F, K, _, _), (K = "Return" ; K = "Break" ; K = "Continue"),
+                     sourceLoc(S, _, _, _, PS, _), sourceLoc(T, _, _, _, PT, _), sourceLoc(R, _, _, _, PR, _),
+                     ((PS < PR, PR < PT) ; (PT < PR, PR < PS)).
+
+// Statement X runs on every execution that runs statement S and completes the function: X is straight
+// in a block enclosing S and either comes before S (reaching S means having run X) or after it with
+// no return/break/continue in between (completing after S means running X). X is not an ancestor of S.
+.decl covers(X: symbol, S: symbol)
+covers(X, S) :- straightIn(X, B), region(S, B), !within(X, S), before(X, S).
+covers(X, S) :- straightIn(X, B), region(S, B), !within(X, S), before(S, X), !exitBetween(S, X).
+
+// T sits in the then ("true") or else ("false") branch of IfStatement If.
+.decl inBranch(T: symbol, If: symbol, Pol: symbol)
+inBranch(T, If, "true")  :- stmt(If, _, "IfStatement", _, _), stmt(B, _, _, If, 0), (T = B ; within(B, T)).
+inBranch(T, If, "false") :- stmt(If, _, "IfStatement", _, _), stmt(B, _, _, If, 1), (T = B ; within(B, T)).
+
+// T sits in the body (or step expression) of loop L of kind Kind. For `for`/`while` the condition held
+// on entry; a do-while runs its body once regardless.
+.decl inLoop(T: symbol, L: symbol, Kind: symbol)
+inLoop(T, L, K) :- stmt(L, _, K, _, _), loopPart(K, I), stmt(B, _, _, L, I), (T = B ; within(B, T)).
+.decl loopPart(Kind: symbol, Index: number)
+loopPart("ForStatement", 1). loopPart("ForStatement", 2). loopPart("WhileStatement", 0). loopPart("DoWhileStatement", 0).
+
+// T sits in clause Index of TryStatement Try: 0 is the success clause, the rest are catch clauses.
+.decl inTry(T: symbol, Try: symbol, Index: number)
+inTry(T, Try, I) :- stmt(Try, _, "TryStatement", _, _), stmt(B, _, _, Try, I), (T = B ; within(B, T)).
+// The external call a try statement guards.
+.decl tryCall(K: symbol, Try: symbol)
+tryCall(K, Try) :- isStmt(TN), node(TN, "TryStatement"), child(TN, "externalCall", 0, KN), siteId(KN, K), siteId(TN, Try).
+
+// Statement B leaves its surroundings on every execution: an abort (revert), a return, or a break/continue
+// itself, or a plain block with a straight one inside.
+.decl exits(B: symbol, Kind: symbol)
+exits(S, "abort")  :- aborts(S).
+exits(S, "return") :- stmt(S, _, "Return", _, _).
+exits(S, "break")  :- stmt(S, _, K, _, _), (K = "Break" ; K = "Continue").
+exits(B, Kind)     :- plainBlock(B), straightIn(S, B), exits(S, Kind).
+// Branch Pol of If always leaves the function, by Kind.
+.decl exitBranch(If: symbol, Pol: symbol, Kind: symbol)
+exitBranch(If, "true", Kind)  :- stmt(If, _, "IfStatement", _, _), stmt(B, _, _, If, 0), exits(B, Kind).
+exitBranch(If, "false", Kind) :- stmt(If, _, "IfStatement", _, _), stmt(B, _, _, If, 1), exits(B, Kind).
+.decl exitsSomewhere(If: symbol)
+exitsSomewhere(If) :- exitBranch(If, _, _).
+.decl abortsSomewhere(If: symbol)
+abortsSomewhere(If) :- exitBranch(If, _, "abort").
+
+// ---------------------------------------------------------------------------
+// 2g-c. What must complete: functions, and guards of a function's completion
+// ---------------------------------------------------------------------------
+
+.decl internalKind(Kind: symbol)
+internalKind("internal"). internalKind("internalExplicit"). internalKind("library").
+
+// Modifier M runs around F in C (dispatch resolves overridden modifiers).
+.decl modifierOf(C: symbol, F: symbol, M: symbol)
+modifierOf(C, F, M) :- reachableIn(C, F), callSite(_, "", F, "modifier", M0, _), dispatch(C, F, M0, M).
+
+// Every completing execution of F (in C) completes G: its modifiers, and the functions it calls in a
+// statement that runs on every completing execution.
+.decl alwaysCalls(C: symbol, F: symbol, G: symbol)
+alwaysCalls(C, F, M) :- modifierOf(C, F, M).
+alwaysCalls(C, F, G) :- reachableIn(C, F), callSite(_, S, F, Kind, G0, _), internalKind(Kind), S != "", alwaysExecuted(S), dispatch(C, F, G0, G).
+alwaysCalls(C, F, H) :- alwaysCalls(C, F, G), alwaysCalls(C, G, H).
+
+// Condition X must be Pol on every completing execution of G in C: a require/assert or an `if` that
+// aborts on one side, always executed in G or in a function G always calls. This is what a caller
+// needs to know about a callee: "authorize() completes only if `caller == owner`".
+.decl fnGuard(C: symbol, G: symbol, X: symbol, Pol: symbol, Why: symbol)
+fnGuard(C, G, K, "true", "require") :- reachableIn(C, G), callSite(K, S, G, "builtin", B, _), (B = "require" ; B = "assert"), S != "", alwaysExecuted(S).
+fnGuard(C, G, If, "false", "if-abort") :- reachableIn(C, G), stmt(If, G, "IfStatement", _, _), alwaysExecuted(If), exitBranch(If, "true", "abort").
+fnGuard(C, G, If, "true", "if-abort")  :- reachableIn(C, G), stmt(If, G, "IfStatement", _, _), alwaysExecuted(If), exitBranch(If, "false", "abort"), !exitBranch(If, "true", "abort").
+fnGuard(C, G, X, Pol, Why) :- alwaysCalls(C, G, H), fnGuard(C, H, X, Pol, Why).
+// External call K completes on every completing execution of G (unless a try catches its failure).
+.decl fnCallGuard(C: symbol, G: symbol, K: symbol)
+fnCallGuard(C, G, K) :- reachableIn(C, G), callSite(K, S, G, "external", _, _), S != "", alwaysExecuted(S), !inTryCall(K).
+fnCallGuard(C, G, K) :- alwaysCalls(C, G, H), fnCallGuard(C, H, K).
+.decl inTryCall(K: symbol)
+inTryCall(K) :- tryCall(K, _).
+
+// Every completing execution that performs E also completes function G: E's own function, everything it
+// always calls, and the functions called in a statement that covers E's statement.
+.decl requiresFn(C: symbol, E: symbol, G: symbol)
+requiresFn(C, E, F) :- effect(C, E, F, _).
+requiresFn(C, E, G) :- effect(C, E, F, _), alwaysCalls(C, F, G).
+requiresFn(C, E, G) :- effect(C, E, F, _), at(E, S), callSite(_, SX, F, Kind, G0, _), internalKind(Kind), SX != "", (covers(SX, S) ; SX = S), dispatch(C, F, G0, G).
+requiresFn(C, E, H) :- requiresFn(C, E, G), alwaysCalls(C, G, H).
+
+// Anchors: statements whose surroundings guard E. E's own statement, and the `_` of every modifier that
+// must complete (the body runs where the placeholder stands, so what guards the placeholder guards E).
+.decl anchor(C: symbol, E: symbol, S: symbol, F: symbol)
+anchor(C, E, S, F) :- effect(C, E, F, _), at(E, S).
+anchor(C, E, Ph, M) :- requiresFn(C, E, M), stmt(Ph, M, "PlaceholderStatement", _, _).
+
+// ---------------------------------------------------------------------------
+// 2g-d. Guards of an effect
+// ---------------------------------------------------------------------------
+
+// Condition X (a require/assert call or an if/loop statement) must be Pol ("true"/"false") on every
+// completing execution that performs E. Why names the shape, for the reader:
+//   require        a require/assert covering an anchor, or guarding the completion of a required function
+//   if-abort       `if (c) <revert>` (c false) or `if (c) {..} else <revert>` (c true), same positions
+//   if-return      `if (c) return;` (or break/continue) before an anchor: the anchor is reached only when c is false
+//   branch         the anchor sits in a branch of the if
+//   loop           the anchor sits in the body of a for/while loop: the condition held on entry
+//   try            X is a call site: the anchor sits in its success clause ("true") or a catch clause ("false")
+.decl guard(C: symbol, E: symbol, X: symbol, Pol: symbol, Why: symbol)
+guard(C, E, X, Pol, Why) :- requiresFn(C, E, G), fnGuard(C, G, X, Pol, Why).
+guard(C, E, K, "true", "require") :- anchor(C, E, S, F), callSite(K, SX, F, "builtin", B, _), (B = "require" ; B = "assert"), SX != "", (covers(SX, S) ; SX = S).
+guard(C, E, If, "false", "if-abort") :- anchor(C, E, S, F), stmt(If, F, "IfStatement", _, _), covers(If, S), exitBranch(If, "true", "abort").
+guard(C, E, If, "true", "if-abort")  :- anchor(C, E, S, F), stmt(If, F, "IfStatement", _, _), covers(If, S), exitBranch(If, "false", "abort"), !exitBranch(If, "true", "abort").
+guard(C, E, If, "false", "if-return") :- anchor(C, E, S, F), stmt(If, F, "IfStatement", _, _), covers(If, S), before(If, S), exitBranch(If, "true", K), K != "abort", !exitBranch(If, "true", "abort").
+guard(C, E, If, "true", "if-return")  :- anchor(C, E, S, F), stmt(If, F, "IfStatement", _, _), covers(If, S), before(If, S), exitBranch(If, "false", K), K != "abort", !exitBranch(If, "false", "abort"), !exitBranch(If, "true", _).
+guard(C, E, If, Pol, "branch") :- anchor(C, E, S, _), inBranch(S, If, Pol).
+guard(C, E, L, "true", "loop") :- anchor(C, E, S, _), inLoop(S, L, K), K != "DoWhileStatement".
+guard(C, E, K, "true", "try")  :- anchor(C, E, S, _), inTry(S, Try, 0), tryCall(K, Try).
+guard(C, E, K, "false", "try") :- anchor(C, E, S, _), inTry(S, Try, I), I > 0, tryCall(K, Try).
+
+// External call K must complete normally on every completing execution that performs E: it sits in a
+// statement covering an anchor (or the anchor's own statement), or guards the completion of a required
+// function, and its failure is not caught by a try. Low-level calls never revert by themselves: what
+// guards E is the `require(success)` after them, which is a `guard` above; see lowLevelIgnored.
+.decl callGuard(C: symbol, E: symbol, K: symbol)
+callGuard(C, E, K) :- requiresFn(C, E, G), fnCallGuard(C, G, K).
+callGuard(C, E, K) :- anchor(C, E, S, F), callSite(K, SX, F, "external", _, _), SX != "", (covers(SX, S) ; SX = S), !inTryCall(K).
+
+// A low-level call whose result is dropped (`target.call(data);` as a statement): failure changes nothing.
+.decl lowLevelIgnored(K: symbol)
+lowLevelIgnored(K) :- lowLevelCall(KN, _), child(P, "expression", 0, KN), node(P, "ExpressionStatement"), siteId(KN, K).
+
+// ---------------------------------------------------------------------------
+// 2g-e. Where paths fork, and what the structure cannot follow
+// ---------------------------------------------------------------------------
+
+// Where the executions performing E fork: an `if` straight in a block enclosing anchor S, not containing
+// S, whose branches both go on (neither aborts; a return/break after S also goes on, with the write
+// done), or a try statement in the same position. The solve stage enumerates the paths (bounded).
+.decl pathSplit(C: symbol, E: symbol, X: symbol)
+pathSplit(C, E, If) :- anchor(C, E, S, _), stmt(If, _, "IfStatement", _, _), straightIn(If, B), region(S, B), !within(If, S), If != S, !exitsSomewhere(If).
+pathSplit(C, E, If) :- anchor(C, E, S, _), stmt(If, _, "IfStatement", _, _), straightIn(If, B), region(S, B), !within(If, S), before(S, If), !abortsSomewhere(If).
+pathSplit(C, E, Try) :- anchor(C, E, S, _), stmt(Try, _, "TryStatement", _, _), straightIn(Try, B), region(S, B), !within(Try, S), Try != S.
+
+// A loop around or beside anchor S (straight in a block enclosing S, or containing S): its iterations
+// may add guards and calls. The solve stage unrolls it (bounded); loopBoundFrom names an exact bound.
+.decl loopAround(C: symbol, E: symbol, L: symbol)
+loopAround(C, E, L) :- anchor(C, E, S, _), stmt(L, _, K, _, _), loopPart(K, _), straightIn(L, B), region(S, B), !within(L, S), L != S.
+loopAround(C, E, L) :- anchor(C, E, S, _), inLoop(S, L, _).
+// The loop condition compares with `<V>.length` for a state variable array V: the recorded array gives the bound.
+.decl loopBoundFrom(L: symbol, V: symbol)
+loopBoundFrom(L, V) :- condDesc(LN, D), node(D, "MemberAccess"), attr(D, "memberName", "length"), child(D, "expression", 0, B),
+                       node(B, "Identifier"), refOf(B, DV), isStateVar(DV), name(DV, V), siteId(LN, L), stmt(L, _, K, _, _), loopPart(K, _).
+
+// Function F contains something the structure cannot follow; every effect that requires F is unknown
+// past it (the solve stage reports a residual, never a verdict):
+//   assembly          inline assembly that stores, calls, or ends the execution (pure computation is not opaque:
+//                     the solver treats its results as unknown values)
+//   delegatecall      the callee runs with this contract's storage
+//   unresolved-call   a call whose callee the concept layer could not resolve
+//   function-pointer  a call through a function pointer with no visible target
+.decl opaque(F: symbol, K: symbol, Why: symbol)
+opaque(F, A, "assembly") :- assembly(A, F, 0).
+opaque(F, A, "assembly") :- assembly(A, F, _), asmSstore(_, A, _, _, _).
+opaque(F, A, "assembly") :- assembly(A, F, _), asmCall(_, A, _).
+opaque(F, A, "assembly") :- assembly(A, F, _), asmSite(N, A), yulCall(_, N, Name), (Name = "revert" ; Name = "return" ; Name = "stop" ; Name = "invalid" ; Name = "selfdestruct").
+opaque(F, K, "delegatecall") :- callSite(K, _, F, "lowLevel", M, _), (M = "delegatecall" ; M = "callcode").
+opaque(F, K, "unresolved-call") :- callSite(K, _, F, "unknown", _, _).
+opaque(F, K, "function-pointer") :- pointerCall(K, F, _), !pointerResolved(K).
+// ...and per effect: the opaque sites in the functions E requires.
+.decl opaqueFor(C: symbol, E: symbol, K: symbol, Why: symbol)
+opaqueFor(C, E, K, Why) :- requiresFn(C, E, G), opaque(G, K, Why).
+
+// E never persists: an unconditional abort covers it after it, or a function it requires always reverts.
+.decl writeThenRevert(C: symbol, E: symbol)
+writeThenRevert(C, E) :- effect(C, E, F, _), at(E, S), aborts(A), stmt(A, F, _, _, _), covers(A, S), before(S, A).
+writeThenRevert(C, E) :- requiresFn(C, E, G), aborts(A), stmt(A, G, _, _, _), alwaysExecuted(A).
+
+// ---------------------------------------------------------------------------
+// 2g-f. Identity: which conditions and arguments talk about who is calling (descriptive: the solver decides
+// what a comparison means; these rows let a reader find the identity tests among the guards)
+// ---------------------------------------------------------------------------
+
+// Condition X tests an identity: the sender (msg.sender, a getter returning it, or a parameter every
+// call site fills with it), the transaction origin, or a recovered signer.
+.decl testsIdentity(X: symbol, Kind: symbol)
+testsIdentity(X, "sender") :- condition(X, _), mentionsSender(X).
+testsIdentity(X, "origin") :- condition(X, _), refs(X, "tx.origin").
+testsIdentity(X, "signer") :- condition(X, _), refsRecover(X).
+
+// Argument Index of call K carries an identity into the callee: `msg.sender` or a getter returning it, a
+// parameter that is the sender at every call site, or `tx.origin`. A chain of contracts is this, repeated.
+.decl argIdentity(K: symbol, Index: number, Kind: symbol)
+argIdentity(K, I, "sender") :- argSender(K, I).
+argIdentity(K, I, "sender") :- callArg(KN, I, A), node(A, "Identifier"), refOf(A, PN), name(PN, P), senderParam(P), siteId(KN, K).
+argIdentity(K, I, "origin") :- argGlobal(K, I, "tx.origin").

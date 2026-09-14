@@ -1,0 +1,81 @@
+// =============================================================================
+// Layer 9: verdicts — who can change what, from the solver's answers and the structure.
+//
+// Three verdicts per (sender, deployed contract, state variable), never a default:
+//   canChange      the sender can make some write persist (a witness or a robust proof exists);
+//                  "anyone" is a proven claim (solvedOpen), never the absence of a check
+//   cannotChange   the sender is excluded on every path of every write, with what is unrecorded free
+//   unknownFor     neither: a residual (unrecorded state, a budget, opaque code) is in the way
+// and the closure: who can change the storage the guards read (indirectlyCanChange).
+//
+// A write reaches storage V at Addr by calling entry H of address Via: Via = Addr for the contract's own
+// entry functions, another deployed contract when the write happens inside a call it makes (the solver
+// walked that call with the caller's address as msg.sender). So "who can make contract S call" needs
+// no rule of its own: a sender admitted through Via = S is one.
+// =============================================================================
+
+// Write site E can change state variable V at Addr through entry H of Via, per the solver (which has a
+// row for every write it met, reverting ones included: those have zero paths and exclude everyone).
+.decl writer(Addr: symbol, V: symbol, E: symbol, Via: symbol, H: symbol)
+writer(Addr, V, E, Via, H) :- solvedEffect(Addr, Via, H, E, _, _), codeOf(Addr, _, C), effect(C, E, _, V).
+// ...and per the structure alone: the code at Addr performs E in a function its own entry H reaches
+// (the solver's rows normally cover these; the difference is what the solver did not get to).
+.decl structuralWriter(Addr: symbol, V: symbol, E: symbol, H: symbol)
+structuralWriter(Addr, V, E, H) :- codeOf(Addr, Role, C), effect(C, E, F, V), entryAt(Addr, H, Role), reachesFrom(C, H, F).
+// Some write of V at Addr exists (the variables a verdict is about).
+.decl writerVar(Addr: symbol, V: symbol)
+writerVar(Addr, V) :- writer(Addr, V, _, _, _).
+writerVar(Addr, V) :- structuralWriter(Addr, V, _, _).
+
+// The senders a verdict is about: every discovered address, and "outsider" for every other address.
+.decl actorAddr(A: symbol)
+actorAddr(A) :- dEntry(A, _, _, _, _).
+actorAddr("outsider").
+
+// Sender A can change V at Addr by calling H at Via, through write E. How: witness | robust (see
+// solvedAdmits), open (every address: solvedOpen), or "signer of <Safe>" (A is a signer of an admitted
+// Safe, per discovery's snapshot of its members and threshold).
+.decl canChange(A: symbol, Addr: symbol, V: symbol, E: symbol, Via: symbol, H: symbol, How: symbol)
+canChange(A, Addr, V, E, Via, H, How) :- writer(Addr, V, E, Via, H), solvedAdmits(Addr, Via, H, E, A, How).
+canChange("anyone", Addr, V, E, Via, H, "open") :- writer(Addr, V, E, Via, H), solvedOpen(Addr, Via, H, E, _).
+canChange(A, Addr, V, E, Via, H, cat("signer of ", S)) :- canChange(S, Addr, V, E, Via, H, _), acts(A, S, _, _).
+// Sender A can change V at Addr by some write through some entry (canChange without the how).
+.decl canChangeAny(A: symbol, Addr: symbol, V: symbol)
+canChangeAny(A, Addr, V) :- canChange(A, Addr, V, _, _, _, _).
+
+// A residual on a write of V at Addr: what stands between the solver and a verdict, and where.
+.decl unknownChange(Addr: symbol, V: symbol, E: symbol, Via: symbol, H: symbol, Kind: symbol, Where: symbol)
+unknownChange(Addr, V, E, Via, H, Kind, Where) :- writer(Addr, V, E, Via, H), solvedResidual(Addr, Via, H, E, Kind, Where).
+// ...and a write the solver has no row for at all (it did not run, or found no code).
+unknownChange(Addr, V, E, Addr, H, "unsolved", "the solve stage has no result for this write") :- structuralWriter(Addr, V, E, H), !solvedFor(Addr, Addr, H, E).
+// The solver has a row for write E on Addr through H at Via.
+.decl solvedFor(Addr: symbol, Via: symbol, H: symbol, E: symbol)
+solvedFor(Addr, Via, H, E) :- solvedEffect(Addr, Via, H, E, _, _).
+// Some write of V at Addr has no solver result: no exclusion for V can be complete.
+.decl unsolvedSomewhere(Addr: symbol, V: symbol)
+unsolvedSomewhere(Addr, V) :- unknownChange(Addr, V, _, _, _, "unsolved", _).
+
+// Sender A cannot change V at Addr: excluded on every write of V through every entry of every address.
+// Holds whatever the unrecorded state is (exclusions are proven with the unknowns free), only when every
+// write was solved and fully explored (an unexplored execution excludes nobody), and never next to a
+// canChange for the same sender (a Safe signer is excluded as a direct sender yet can, as a signer).
+.decl cannotChange(A: symbol, Addr: symbol, V: symbol)
+cannotChange(A, Addr, V) :- actorAddr(A), writerVar(Addr, V), !notExcludedSomewhere(A, Addr, V), !unsolvedSomewhere(Addr, V), !canChangeAny(A, Addr, V), !canChangeAny("anyone", Addr, V).
+// Some write of V at Addr does not exclude A (it admits A, or it is unknown for A).
+.decl notExcludedSomewhere(A: symbol, Addr: symbol, V: symbol)
+notExcludedSomewhere(A, Addr, V) :- actorAddr(A), writer(Addr, V, E, Via, H), !solvedExcludes(Addr, Via, H, E, A).
+
+// Neither verdict for A: something is unknown on the way (see unknownChange for what).
+.decl unknownFor(A: symbol, Addr: symbol, V: symbol)
+unknownFor(A, Addr, V) :- actorAddr(A), writerVar(Addr, V), !canChangeAny(A, Addr, V), !cannotChange(A, Addr, V), !canChangeAny("anyone", Addr, V).
+
+// The closure: A can change V2 at Addr2, which the conditions on the way to some write of V at Addr read.
+// Changing it changes who can change V (reported apart, never merged into canChange).
+.decl indirectlyCanChange(A: symbol, Addr: symbol, V: symbol, Addr2: symbol, V2: symbol)
+indirectlyCanChange(A, Addr, V, Addr2, V2) :- writer(Addr, V, E, Via, H), solvedReads(Addr, Via, H, E, Addr2, V2), canChangeAny(A, Addr2, V2), (Addr2 != Addr ; V2 != V).
+
+// One line per (Addr, V, sender): the verdict a reader sees first. Kind: can | cannot | unknown.
+.decl verdict(Addr: symbol, V: symbol, Kind: symbol, Who: symbol)
+verdict(Addr, V, "can", A) :- canChangeAny(A, Addr, V).
+verdict(Addr, V, "cannot", A) :- cannotChange(A, Addr, V).
+verdict(Addr, V, "unknown", A) :- unknownFor(A, Addr, V).

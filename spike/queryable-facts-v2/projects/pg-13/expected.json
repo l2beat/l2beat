@@ -1,0 +1,11 @@
+{
+  "case": "everything renamed, nested ifs that revert on failure, the check behind an if/else on recorded state: only the warden passes",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "level"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": []
+}

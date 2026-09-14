@@ -1,15 +1,19 @@
-// The rule library: five files, one list of layers, two Soufflé programs.
+// The rule library: eight files, one list of layers, two Soufflé programs.
 //
 //   0-solidity.dl    layer 0, unit stage: what solc said (the .input relations of a unit program)
 //   1-syntax.dl      layer 1: from syntax to concepts
 //   2-analysis.dl    layers 2-6: structure, calls, writes, sender checks, findings, answer tables
+//   2-guards.dl      layer 2g: guard structure per effect (what must hold for a write to persist)
 //   2-proposed-unit.dl  unit-level rules promoted from questions (interpretations), reviewed later
 //   0-discovery.dl   layer 0, project stage: what discovery said
-//   3-project.dl     layers 7-9: deployment, values, authority
+//   3-project.dl     layers 7-8: deployment, values, cross-contract calls, actors
 //   4-proposed.dl    project-level rules promoted from questions (compositions)
+//   0-solved.dl      layer 0, verdict stage: what the solver said (src/solve.ts)
+//   5-verdict.dl     layer 9: canChange / cannotChange / unknownFor, the closure
 //
 // A run evaluates the unit program once per source file, then the project program once over the
-// union of the units' *exported* relations plus discovery. A unit relation is exported when it is
+// union of the units' *exported* relations plus discovery, then the solve stage (Z3), then the
+// verdict program once over everything the project stage saw plus the solver's facts. A unit relation is exported when it is
 // keyed by names rather than by solc node ids (node ids restart at 0 in every file, names carry the
 // `<unit>:` prefix), which is decided from its declaration: every column is a symbol or one of the
 // numeric columns that are not ids (Index, Slot, Line, ...). Queries read the same union.
@@ -28,12 +32,14 @@ export const UNIT_FILES = [
   '0-solidity.dl',
   '1-syntax.dl',
   '2-analysis.dl',
+  '2-guards.dl',
   '2-proposed-unit.dl',
 ]
 export const PROJECT_FILES = ['0-discovery.dl', '3-project.dl', '4-proposed.dl']
-export const RULE_FILES = [...UNIT_FILES, ...PROJECT_FILES]
+export const VERDICT_FILES = ['0-solved.dl', '5-verdict.dl']
+export const RULE_FILES = [...UNIT_FILES, ...PROJECT_FILES, ...VERDICT_FILES]
 
-export type Stage = 'unit' | 'project'
+export type Stage = 'unit' | 'project' | 'verdict'
 
 export interface RuleFile {
   name: string
@@ -59,11 +65,12 @@ export interface Library {
   files: RuleFile[]
   unit: Program
   project: Program
+  verdict: Program
   relations: Map<string, RelationRecord>
   exported: string[]
   /** The program run once per source file. */
   unitProgram: string
-  /** The program run once per project: imports of the exported unit relations + discovery + layers 7-9. */
+  /** The program run once per project: imports of the exported unit relations + discovery + layers 7-8. */
   projectProgram: string
 }
 
@@ -103,7 +110,13 @@ export function formatDecl(name: string, columns: Column[]): string {
 }
 
 /** Files that may be absent (runs made before they existed): read as empty. */
-const OPTIONAL_FILES = new Set(['2-proposed-unit.dl', '4-proposed.dl'])
+const OPTIONAL_FILES = new Set([
+  '2-guards.dl',
+  '2-proposed-unit.dl',
+  '4-proposed.dl',
+  '0-solved.dl',
+  '5-verdict.dl',
+])
 
 export function readRuleFiles(dir: string, names = RULE_FILES): RuleFile[] {
   return names.map((name) => ({
@@ -151,6 +164,7 @@ export function loadLibrary(dir: string): Library {
     names.map((n) => byName.get(n)).filter((f): f is RuleFile => Boolean(f))
   const unit = parseProgram(concat(pick(UNIT_FILES)))
   const project = parseProgram(concat(pick(PROJECT_FILES)))
+  const verdict = parseProgram(concat(pick(VERDICT_FILES)))
   const relations = new Map<string, RelationRecord>()
   const add = (program: Program, stage: Stage) => {
     for (const item of program.items) {
@@ -173,6 +187,7 @@ export function loadLibrary(dir: string): Library {
   }
   add(unit, 'unit')
   add(project, 'project')
+  add(verdict, 'verdict')
   const exported = [...relations.values()]
     .filter((r) => r.exported)
     .map((r) => r.name)
@@ -187,6 +202,7 @@ export function loadLibrary(dir: string): Library {
     files,
     unit,
     project,
+    verdict,
     relations,
     exported,
     unitProgram,
@@ -194,10 +210,42 @@ export function loadLibrary(dir: string): Library {
   }
 }
 
-/** The relations a query at the project stage can read: exported unit relations, discovery, project relations. */
+/** Where a relation of the project or verdict stage is written in a run folder. */
+export function stagePath(runDir: string, r: RelationRecord): string {
+  if (r.stage === 'verdict')
+    return r.kind === 'input'
+      ? join(runDir, 'facts', 'solved', `${r.name}.facts`)
+      : join(runDir, 'derived', `${r.name}.csv`)
+  if (r.stage === 'project' && r.kind !== 'input')
+    return join(runDir, 'derived', `${r.name}.csv`)
+  return join(runDir, 'facts', `${r.name}.facts`)
+}
+
+/**
+ * The verdict program for one run folder: everything the project stage saw or derived, imported by
+ * absolute file name (Soufflé prepends its fact directory to relative names), the solver's facts from
+ * facts/solved (its fact directory), and layer 9.
+ */
+export function verdictProgram(lib: Library, runDir: string): string {
+  const lines = [
+    '// ----- imported from the units and the project stage -----',
+    '// Relations another program derived, read back from disk.',
+  ]
+  for (const r of lib.relations.values()) {
+    if (r.stage === 'verdict') continue
+    if (!(r.exported || r.stage === 'project')) continue
+    lines.push(
+      formatDecl(r.name, r.columns),
+      `.input ${r.name}(IO=file, filename=${JSON.stringify(stagePath(runDir, r))})`,
+    )
+  }
+  return `${lines.join('\n')}\n\n${lib.verdict.text}\n${outputBlock(lib.verdict)}`
+}
+
+/** The relations a query at the project stage can read: exported unit relations, discovery, project and verdict relations. */
 export function availableAtProject(lib: Library): RelationRecord[] {
   return [...lib.relations.values()].filter(
-    (r) => r.exported || r.stage === 'project',
+    (r) => r.exported || r.stage === 'project' || r.stage === 'verdict',
   )
 }
 
@@ -245,5 +293,6 @@ export function catalog(lib: Library, all = false): string {
   }
   emit(lib.unit, 'unit')
   emit(lib.project, 'project')
+  emit(lib.verdict, 'verdict')
   return out.join('\n').trim()
 }

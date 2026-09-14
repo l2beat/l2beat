@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.20;
+
+/// A gate decides whether a caller may go ahead. Which contract stands behind the gate
+/// is only known from the deployed state.
+interface IGate {
+    function authorize(address caller) external;
+}
+
+contract Playground {
+    address public owner;
+    uint256 public score;
+    IGate public gate;
+
+    constructor(address _owner, IGate _gate) {
+        owner = _owner;
+        gate = _gate;
+    }
+
+    modifier onlyAuthorized() {
+        _authorize();
+        _;
+    }
+
+    function _authorize() internal {
+        gate.authorize(msg.sender);
+    }
+
+    function setScore(uint256 next) external onlyAuthorized {
+        score = next;
+    }
+}

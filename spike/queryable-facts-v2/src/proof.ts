@@ -9,7 +9,14 @@ import type { QueryResult } from './query'
 import type { Library } from './rules'
 import { explainAtom, formatAtom, type ProofNode, splitAtom } from './souffle'
 
-export type HomeStage = 'query' | 'project' | 'unit' | 'discovery' | 'solidity'
+export type HomeStage =
+  | 'query'
+  | 'verdict'
+  | 'solve'
+  | 'project'
+  | 'unit'
+  | 'discovery'
+  | 'solidity'
 
 /** Where a tuple lives: which program derives it (or which input file states it). */
 export interface Home {
@@ -103,6 +110,21 @@ export function locate(
   const rec = lib.relations.get(relation)
   if (!rec) return undefined
   const atom = formatAtom(relation, cols, rec.columns)
+  if (rec.stage === 'verdict') {
+    // the solver's own rows are facts here; their proof is the solve artefact
+    if (rec.kind === 'input')
+      return { relation, cols, atom, home: { stage: 'solve' } }
+    return {
+      relation,
+      cols,
+      atom,
+      home: {
+        stage: 'verdict',
+        program: join(runDir, 'program-verdict.dl'),
+        facts: join(runDir, 'facts', 'solved'),
+      },
+    }
+  }
   if (rec.stage === 'project') {
     if (rec.kind === 'input')
       return { relation, cols, atom, home: { stage: 'discovery' } }
@@ -151,7 +173,12 @@ function annotate(node: ProofNode, lib: Library, here: Home): void {
       return
     }
     if (rec.kind === 'input')
-      node.stage = rec.stage === 'project' ? 'discovery' : 'solidity'
+      node.stage =
+        rec.stage === 'project'
+          ? 'discovery'
+          : rec.stage === 'verdict'
+            ? 'solve'
+            : 'solidity'
     else if (here.stage === 'query' || rec.stage !== here.stage)
       node.stage = rec.stage
     else node.stage = here.stage

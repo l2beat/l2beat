@@ -83,18 +83,19 @@ export function runSouffle(opts: {
 /**
  * Runs a command with stdin/stdout/stderr bound to files instead of pipes. Node's pipes are Unix
  * socket pairs, which a sandbox (codex's) forbids; files are always allowed. The outputs are kept in
- * `dir` (souffle.stdout, souffle.stderr) next to what Soufflé wrote.
+ * `dir` (<prefix>.stdin/.stdout/.stderr) next to what the command wrote.
  */
-function spawnToFiles(
+export function spawnToFiles(
   bin: string,
   args: string[],
   dir: string,
   input?: string,
+  prefix = 'souffle',
 ): { status: number | null; stdout: string; stderr: string; error?: Error } {
   mkdirSync(dir, { recursive: true })
-  const outPath = join(dir, 'souffle.stdout')
-  const errPath = join(dir, 'souffle.stderr')
-  const inPath = join(dir, 'souffle.stdin')
+  const outPath = join(dir, `${prefix}.stdout`)
+  const errPath = join(dir, `${prefix}.stderr`)
+  const inPath = join(dir, `${prefix}.stdin`)
   writeFileSync(inPath, input ?? '')
   const fdIn = openSync(inPath, 'r')
   const fdOut = openSync(outPath, 'w')

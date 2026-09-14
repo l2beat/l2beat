@@ -7,12 +7,12 @@
 // layers continue where rules/2-analysis.dl stopped:
 //
 //   layer 7  deployment   which contract of which unit is the code at an address; proxies and their implementations
-//   layer 8  values       a state variable's discovered value; references from one contract to another
-//   layer 9  authority    who passes an entry point's checks (one hop), how actors drive each other, reachability,
-//                         and finally: who can change which variable of which deployed contract
+//   layer 8  values       a state variable's discovered value; references from one contract to another;
+//                         calls between contracts resolved through values; actors (EOAs, Safes and their signers)
 //
-// A row here is only as good as its inputs: the unit findings carry their tiers, and every value comes
-// from discovery's snapshot at one block. Rows that rest on a discovered value say so in their Tier.
+// Who can change which variable is not decided here: the solve stage (src/solve.ts) walks every entry
+// function with these values substituted and asks Z3; rules/5-verdict.dl (layer 9) states its answers.
+// Every value comes from discovery's snapshot at one block.
 // =============================================================================
 
 // ---------------------------------------------------------------------------
@@ -71,6 +71,9 @@ fieldAlias("$threshold", "threshold").
 fieldAlias("GnosisSafe_modules", "modules").
 fieldAlias("$implementation", "singleton").
 fieldAlias("$implementation", "masterCopy").
+// discovery's AccessControl handler (roles by name, with their members) stands for OpenZeppelin's private
+// `_roles` mapping; src/solve.ts translates the names into the role ids the code computes.
+fieldAlias("accessControl", "_roles").
 
 // The base contracts whose members the code at Addr has (its linearization, itself included).
 .decl baseOf(Addr: symbol, B: symbol)
@@ -126,85 +129,20 @@ fieldMatched(A, Field) :- baseOf(A, B), function(_, B, Field, _, "function", _, 
 .decl metaField(Field: symbol)
 metaField(F) :- dValue(_, F, _, _, _), strlen(F) >= 1, substr(F, 0, 1) = "$".
 
-// A delay or expiry: entry H of Addr reaches a condition comparing block.timestamp with V, whose value is known.
-.decl delayAt(Addr: symbol, H: symbol, X: symbol, V: symbol, Value: symbol)
-delayAt(A, H, X, V, Val) :- entryAt(A, H, Role), codeOf(A, Role, C), reachesFrom(C, H, F), timeCheck(X, F, V), valueOf(A, V, "number", Val).
-
 // ---------------------------------------------------------------------------
-// Layer 9: authority
+// Layer 8b: across contracts — selectors, actors, calls resolved through values
 // ---------------------------------------------------------------------------
 
 // Two functions with the same ABI selector: an interface declaration and the implementation it names.
 .decl sameSelector(G: symbol, H: symbol)
 sameSelector(G, H) :- function(G, _, _, _, _, _, _, Sel), Sel != "", function(H, _, _, _, _, _, _, Sel).
 
-// The condition of a check, quoted.
-.decl condText(X: symbol, T: symbol)
-condText(X, cat("`", Cond, "`")) :- condition(X, Cond).
-
 // The plain name of a state variable or function.
 .decl shortName(Id: symbol, Name: symbol)
 shortName(V, N) :- stateVariable(V, _, N, _, _, _).
 shortName(F, N) :- function(F, _, N, _, _, _, _, _).
 
-// --- 9a. One hop: who passes the checks of entry H at Addr.
-// Tier says what the row rests on:
-//   checked      a guaranteed unit finding (the check runs on every completing execution) + a discovered value
-//   checked-or   the same, but the sender test is one side of an OR
-//   signature    a guaranteed signature check + a discovered value: the holder of a signature by A passes
-//   lead         a check that runs only on some paths (heuristic at the unit level)
-//   discovered   discovery's proxy admin slot, for a proxy's own functions (their check reads the same slot in assembly)
-//   open         no sender or signature check the rules recognise: "anyone"
-.decl allowed(A: symbol, Addr: symbol, H: symbol, How: symbol, Tier: symbol)
-// What check X compares the sender (or the recovered signer) with, resolved to an address through the values:
-// a state variable, a zero-argument getter, an external getter called in the condition, or the contract itself.
-.decl comparesWith(Addr: symbol, X: symbol, A: symbol, Name: symbol)
-comparesWith(Addr, X, A, Name) :- checkAt(Addr, _, X), checkPrincipal(X, P), valueOf(Addr, P, "address", A), shortName(P, Name).
-comparesWith(Addr, X, A, cat(Name, "()")) :- checkAt(Addr, _, X), checkGetter(X, G), getterValue(Addr, G, "address", A), shortName(G, Name).
-comparesWith(Addr, X, A, cat(Name, "()")) :- checkAt(Addr, _, X), condCall(X, K), remoteCallValue(Addr, K, "address", A), extCall(K, _, G, _, _), shortName(G, Name).
-comparesWith(Addr, X, Addr, "address(this)") :- checkAt(Addr, _, X), checkSelf(X).
-// Every check on the way to an entry point of Addr.
-.decl checkAt(Addr: symbol, H: symbol, X: symbol)
-checkAt(Addr, H, X) :- entryAt(Addr, H, Role), codeOf(Addr, Role, C), (alwaysChecks(C, H, X) ; sometimesChecks(C, H, X) ; alwaysSigner(C, H, X) ; sometimesSigner(C, H, X)).
-
-// the sender is compared with something whose discovered value is A
-allowed(A, Addr, H, cat("sender check ", T, " compares with `", Name, "` = ", A), "checked") :-
-    entryAt(Addr, H, Role), codeOf(Addr, Role, C), alwaysChecks(C, H, X), !weakCheck(X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
-allowed(A, Addr, H, cat("sender check ", T, " (the sender test is one side of an OR) compares with `", Name, "` = ", A), "checked-or") :-
-    entryAt(Addr, H, Role), codeOf(Addr, Role, C), alwaysChecks(C, H, X), weakCheck(X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
-allowed(A, Addr, H, cat("sender check ", T, " runs only on some paths; compares with `", Name, "` = ", A), "lead") :-
-    entryAt(Addr, H, Role), codeOf(Addr, Role, C), sometimesChecks(C, H, X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
-// a signature by A is required
-allowed(A, Addr, H, cat("signature check ", T, " recovers a signer compared with `", Name, "` = ", A), "signature") :-
-    entryAt(Addr, H, Role), codeOf(Addr, Role, C), alwaysSigner(C, H, X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
-allowed(A, Addr, H, cat("signature check ", T, " runs only on some paths (a loop or branch); recovers a signer compared with `", Name, "` = ", A), "signature-lead") :-
-    entryAt(Addr, H, Role), codeOf(Addr, Role, C), sometimesSigner(C, H, X), comparesWith(Addr, X, A, Name), !zeroAddress(A), condText(X, T).
-// a proxy's own functions: the proxy checks the admin slot in assembly, which discovery read for us
-allowed(Admin, Addr, H, "proxy function: the proxy admits the admin stored in its EIP-1967 admin slot, which discovery read", "discovered") :-
-    codeOf(Addr, "proxy", C), entryPoint(C, H), function(H, _, _, _, "function", _, _, _), proxyAdminOf(Addr, Admin).
-// nothing the rules recognise as a check: anyone
-allowed("anyone", Addr, H, "no sender check and no signature check found on the way", "open") :-
-    entryAt(Addr, H, Role), codeOf(Addr, Role, C), !hasAnyCheck(C, H), !hasSignerCheck(C, H), !proxyOwnFunction(Addr, H).
-.decl proxyOwnFunction(Addr: symbol, H: symbol)
-proxyOwnFunction(Addr, H) :- codeOf(Addr, "proxy", C), entryPoint(C, H), function(H, _, _, _, "function", _, _, _), proxyAdminOf(Addr, _).
-
-// Checks the rules saw but could not resolve to an address: the principal has no discovered value, or the
-// condition names nothing the rules recognise. These are the places where "who" is not answered.
-.decl unresolvedCheck(Addr: symbol, H: symbol, X: symbol, Why: symbol)
-unresolvedCheck(Addr, H, X, cat("compares with `", Name, "`, which has no discovered value")) :-
-    checkAt(Addr, H, X), !resolved(Addr, X), !proxyOwnFunction(Addr, H), checkPrincipal(X, P), !hasValue(Addr, P), shortName(P, Name), stateVariable(P, _, _, _, Mut, _), Mut != "constant".
-unresolvedCheck(Addr, H, X, cat("compares with `", Name, "()`, which has no discovered value")) :-
-    checkAt(Addr, H, X), !resolved(Addr, X), !proxyOwnFunction(Addr, H), checkGetter(X, G), !hasGetterValue(Addr, G), shortName(G, Name).
-unresolvedCheck(Addr, H, X, cat("compares with `", Name, "` = the zero address: nobody passes until it is set")) :-
-    checkAt(Addr, H, X), comparesWith(Addr, X, A, Name), zeroAddress(A).
-unresolvedCheck(Addr, H, X, "the condition names no state variable, getter or address(this) the rules recognise") :-
-    checkAt(Addr, H, X), !proxyOwnFunction(Addr, H), !checkPrincipal(X, _), !checkGetter(X, _), !checkSelf(X), !condCall(X, _).
-.decl resolved(Addr: symbol, X: symbol)
-resolved(Addr, X) :- comparesWith(Addr, X, _, _).
-.decl hasGetterValue(Addr: symbol, G: symbol)
-hasGetterValue(A, G) :- getterValue(A, G, _, _).
-
-// --- 9b. Actors: what an address is, and who can make it act.
+// --- Actors: what an address is, and who can make it act.
 
 // A Safe, with its signers and threshold as discovery read them.
 .decl safe(Addr: symbol)
@@ -231,20 +169,19 @@ actor("anyone", "anyone", "anyone").
 acts(M, S, cat("signer of ", Name, " (", to_string(K), " of ", to_string(N), " must sign)"), "discovered") :-
     safeMember(S, M), safeThreshold(S, K), safeSize(S, N), deployed(S, Name, _).
 
-// --- 9c. Calls between contracts, resolved through values.
+// --- Calls between contracts, resolved through values.
 
 // Code at Addr, from entry E, calls entry H of deployed T. The receiver is a state variable, or a getter,
 // whose discovered value is T (Tier "resolved"); or a parameter, so the caller picks the target: then every
-// deployed contract exposing that function *and admitting Addr as the sender* is a possible target
-// (Tier "caller-chosen"). K is the call site.
+// deployed contract exposing that function is a possible target (Tier "caller-chosen"). K is the call site.
+// The solve stage follows resolved calls into the callee's code; caller-chosen ones it reports as a residual.
 .decl crossCall(Addr: symbol, E: symbol, T: symbol, H: symbol, K: symbol, Tier: symbol)
 crossCall(Addr, E, T, H, K, "resolved") :-
     codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "stateVar", X), valueOf(Addr, X, "address", T), entryAt(T, H, _), sameSelector(G, H).
 crossCall(Addr, E, T, H, K, "resolved") :-
     codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "getter", GG), getterTarget(Addr, GG, T), entryAt(T, H, _), sameSelector(G, H).
 crossCall(Addr, E, T, H, K, "caller-chosen") :-
-    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "param", _), entryAt(T, H, _), sameSelector(G, H), T != Addr,
-    allowed(Addr, T, H, _, Tier), Tier != "open".
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "param", _), entryAt(T, H, _), sameSelector(G, H), T != Addr.
 // What a getter used as a receiver resolves to: the state variable it returns, or its own recorded value.
 .decl getterTarget(Addr: symbol, G: symbol, T: symbol)
 getterTarget(A, G, T) :- returnsStateVar(G, X), valueOf(A, X, "address", T).
@@ -256,95 +193,35 @@ crossCallGap(Addr, E, K, G, "receiver expression not understood") :-
     codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "unknown", _).
 crossCallGap(Addr, E, K, G, cat("receiver `", Name, "` has no discovered address value")) :-
     codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "stateVar", X), !hasAddressValue(Addr, X), shortName(X, Name).
-crossCallGap(Addr, E, K, G, "receiver is a parameter and no deployed contract admits this caller") :-
-    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "param", _), !crossCallAt(Addr, E, K).
+crossCallGap(Addr, E, K, G, "receiver is a parameter: the caller picks the target") :-
+    codeOf(Addr, _, C), reachesFrom(C, E, F), extCall(K, F, G, "param", _).
 .decl hasAddressValue(Addr: symbol, X: symbol)
 hasAddressValue(A, X) :- valueOf(A, X, "address", _).
 .decl crossCallAt(Addr: symbol, E: symbol, K: symbol)
 crossCallAt(Addr, E, K) :- crossCall(Addr, E, _, _, K, _).
 
 // A Safe module relaying a call: code at Mod, from entry E, calls S's execTransactionFromModule(ReturnData)
-// with calldata for function G aimed at T (both taken from the module's state), and S admits Mod as a module.
-// The Safe then calls T.H as itself.
+// with calldata for function G aimed at T (both taken from the module's state), and discovery lists Mod
+// among S's modules. The Safe then calls T.H as itself. Descriptive: the solve stage does not follow
+// calldata built with abi.encode*, so such relays show up as residuals of the module's entry.
 .decl relayed(Mod: symbol, E: symbol, S: symbol, T: symbol, H: symbol, K: symbol)
 // the target `to` is a state variable of the module (or the Safe itself, named by the same variable)
 relayed(Mod, E, S, T, H, K) :-
-    crossCall(Mod, E, S, HS, K, _), moduleEntry(HS), allowed(Mod, S, HS, _, _),
+    crossCall(Mod, E, S, HS, K, _), moduleEntry(HS), safeModule(S, Mod),
     encodedCall(K, G), argDenotes(K, 0, "stateVar", XT), valueOf(Mod, XT, "address", T), entryAt(T, H, _), sameSelector(G, H).
 // the Safe is a parameter and the target is that same parameter: the module makes the (caller-chosen) Safe call itself
 relayed(Mod, E, S, S, H, K) :-
-    crossCall(Mod, E, S, HS, K, "caller-chosen"), moduleEntry(HS), allowed(Mod, S, HS, _, _),
+    crossCall(Mod, E, S, HS, K, "caller-chosen"), moduleEntry(HS), safeModule(S, Mod),
     encodedCall(K, G), argDenotes(K, 0, "param", XT), extCall(K, _, _, "param", XT), entryAt(S, H, _), sameSelector(G, H).
 .decl moduleEntry(H: symbol)
 moduleEntry(H) :- function(H, _, Name, _, _, _, _, _), (Name = "execTransactionFromModule" ; Name = "execTransactionFromModuleReturnData").
 // A module relaying calls whose calldata the rules could not read: it may make S call anything S can.
 .decl relayedAny(Mod: symbol, E: symbol, S: symbol, K: symbol)
-relayedAny(Mod, E, S, K) :- crossCall(Mod, E, S, HS, K, _), moduleEntry(HS), allowed(Mod, S, HS, _, _), !hasEncoded(K).
+relayedAny(Mod, E, S, K) :- crossCall(Mod, E, S, HS, K, _), moduleEntry(HS), safeModule(S, Mod), !hasEncoded(K).
 .decl hasEncoded(K: symbol)
 hasEncoded(K) :- encodedCall(K, _).
 
-// --- 9d. Reachability: A can cause entry H of T to run.
-
-// Who passes H's checks at T (directly), including "anyone".
-.decl passes(A: symbol, T: symbol, H: symbol)
-passes(A, T, H) :- allowed(A, T, H, _, _).
-.decl passesAnyone(T: symbol, H: symbol)
-passesAnyone(T, H) :- allowed("anyone", T, H, _, _).
-
-.decl canCall(A: symbol, T: symbol, H: symbol)
-// directly
-canCall(A, T, H) :- allowed(A, T, H, _, _).
-// as a signer of a Safe that can
-canCall(A, T, H) :- acts(A, S, _, _), canCall(S, T, H).
-// through a contract call: A can run Mid.E, which calls T.H, and T admits Mid (or anyone)
-canCall(A, T, H) :- canCall(A, Mid, E), crossCall(Mid, E, T, H, _, _), (passes(Mid, T, H) ; passesAnyone(T, H)).
-// through a Safe module: A can run the module's entry E, which makes Safe S call T.H, and T admits S (or anyone)
-canCall(A, T, H) :- canCall(A, Mod, E), relayed(Mod, E, S, T, H, _), (passes(S, T, H) ; passesAnyone(T, H)).
-canCall(A, T, H) :- canCall(A, Mod, E), relayedAny(Mod, E, S, _), canCall(S, T, H).
-
-// The hops behind canCall, for printing a path: A reaches (T, H) in one step from (Mid, E) or from S.
-.decl hop(A: symbol, T: symbol, H: symbol, Via: symbol, ViaEntry: symbol, How: symbol)
-hop(A, T, H, "", "", How) :- allowed(A, T, H, How, _).
-hop(A, T, H, S, "", How) :- acts(A, S, How, _), canCall(S, T, H).
-hop(A, T, H, Mid, E, "call from the contract") :- canCall(A, Mid, E), crossCall(Mid, E, T, H, _, _), (passes(Mid, T, H) ; passesAnyone(T, H)).
-hop(A, T, H, Mod, E, cat("relayed through the Safe ", S)) :- canCall(A, Mod, E), relayed(Mod, E, S, T, H, _), (passes(S, T, H) ; passesAnyone(T, H)).
-hop(A, T, H, Mod, E, cat("may relay any call through the Safe ", S)) :- canCall(A, Mod, E), relayedAny(Mod, E, S, _), canCall(S, T, H).
-
-// Terminal actors: keys (EOAs) and "anyone". Everything else is a contract someone else drives.
-.decl ultimately(A: symbol, T: symbol, H: symbol)
-ultimately(A, T, H) :- canCall(A, T, H), eoa(A, _).
-ultimately("anyone", T, H) :- canCall("anyone", T, H).
-// A contract nobody known drives: its authority ends there (an unresolved check, or an EOA-less Safe).
-ultimately(A, T, H) :- canCall(A, T, H), deployed(A, _, _), !driven(A).
-.decl driven(A: symbol)
-driven(S) :- acts(_, S, _, _).
-driven(Mid) :- canCall(_, Mid, E), (crossCall(Mid, E, _, _, _, _) ; relayed(Mid, E, _, _, _, _) ; relayedAny(Mid, E, _, _)).
-
-// --- 9e. The question: who can change which variable of which deployed contract.
-
-// Entry H of the code at Addr may write storage variable V (after deployment).
-.decl mayWrite(Addr: symbol, V: symbol, H: symbol, Role: symbol)
-mayWrite(A, V, H, Role) :- codeOf(A, Role, C), storageWriters(C, V, _, H), H != "constructor".
-
-// ...and A can make H run: A can change V at Addr.
-.decl whoCanWrite(Addr: symbol, V: symbol, H: symbol, A: symbol)
-whoCanWrite(A, V, H, Who) :- mayWrite(A, V, H, _), canCall(Who, A, H).
-
-// A proxy's own administrative functions (upgradeTo, changeAdmin, setStorage, ...): they change the proxy's
-// hashed slots, which the unit pipeline reports as unresolved stores rather than as named variables, so they
-// are listed on their own. Read-only ones (admin(), implementation()) are left out.
-.decl proxyAdminFunction(Addr: symbol, H: symbol)
-proxyAdminFunction(A, H) :- codeOf(A, "proxy", C), entryPoint(C, H), function(H, _, _, _, "function", _, Mut, _), Mut != "view", Mut != "pure".
-.decl whoCanUpgrade(Addr: symbol, H: symbol, A: symbol)
-whoCanUpgrade(Addr, H, Who) :- proxyAdminFunction(Addr, H), canCall(Who, Addr, H).
-
-// A writer nobody known can reach: every check on the way is unresolved, so "who" is not answered.
-.decl writerUnreached(Addr: symbol, V: symbol, H: symbol)
-writerUnreached(A, V, H) :- mayWrite(A, V, H, _), !reached(A, H).
-.decl reached(Addr: symbol, H: symbol)
-reached(A, H) :- canCall(_, A, H).
-
-// Unknown effects in the code at Addr (from the unit pipeline), minus a proxy's own forwarding delegatecall,
+// --- Unknown effects in the code at Addr (from the unit pipeline), minus a proxy's own forwarding delegatecall,
 // which layer 7 resolved to the implementation.
 .decl unknownAt(Addr: symbol, E: symbol, Kind: symbol, Detail: symbol, K: symbol)
 unknownAt(A, E, Kind, Detail, K) :- codeOf(A, Role, C), opaqueWrites(C, E, _, Kind, Detail, _, K), !forwarding(A, Role, Kind).

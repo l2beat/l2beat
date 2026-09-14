@@ -1,0 +1,18 @@
+{
+  "case": "gate call under if (checked), checked recorded true: as pg-01, and the owner can change what the guard reads",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": [],
+  "indirect": [
+    {
+      "actor": "eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "address": "eth:0x1111111111111111111111111111111111111111",
+      "variable": "checked"
+    }
+  ]
+}

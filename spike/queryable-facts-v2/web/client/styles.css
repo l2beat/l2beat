@@ -1914,3 +1914,59 @@ button.linkish {
   padding-top: 8px;
   border-top: 1px dashed var(--border);
 }
+
+/* verdict-stage relations and the solver card in the proof drawer */
+.tag.verdict {
+  background: #eef2ff;
+  color: #3730a3;
+}
+.st.stage-verdict {
+  color: #3730a3;
+}
+.solve-card {
+  margin: 6px 0 8px 22px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fbfbf9;
+  padding: 8px 10px;
+  font-size: 12.5px;
+}
+.solve-head {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.solve-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 12px;
+  align-items: start;
+}
+.solve-k {
+  color: var(--muted);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 2px;
+}
+.solve-trace {
+  margin: 4px 0 4px 16px;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #444;
+}
+.solve-trace li {
+  margin: 1px 0;
+}
+.solve-foot {
+  margin-top: 6px;
+}
+.solve-scripts pre.source {
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre;
+  font-size: 11px;
+}

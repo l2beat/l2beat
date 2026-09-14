@@ -1,0 +1,11 @@
+{
+  "case": "pg-01 behind an EIP-1967 proxy: the write lands on the proxy's storage and the gate sees the proxy as msg.sender; only the OwnerGate owner passes",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": []
+}

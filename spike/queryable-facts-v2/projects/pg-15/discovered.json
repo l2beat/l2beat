@@ -1,0 +1,53 @@
+{
+  "name": "pg-15",
+  "timestamp": 1789000000,
+  "entries": [
+    {
+      "name": "Scores",
+      "address": "eth:0x1111111111111111111111111111111111111111",
+      "type": "Contract",
+      "proxyType": "immutable",
+      "description": "Synthetic. AccessControl: setScore needs SCORER_ROLE; the DEFAULT_ADMIN_ROLE holder grants it.",
+      "values": {
+        "$immutable": true,
+        "score": 42,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]
+          },
+          "SCORER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "eth:0xcccccccccccccccccccccccccccccccccccccccc"
+            ]
+          }
+        }
+      },
+      "implementationNames": {
+        "eth:0x1111111111111111111111111111111111111111": "Scores"
+      }
+    },
+    {
+      "address": "eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcccccccccccccccccccccccccccccccccccccccc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xdddddddddddddddddddddddddddddddddddddddd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "case": "owner gate: setScore calls gate.authorize(msg.sender) before writing; gate is OwnerGate, whose owner is cccc",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": []
+}

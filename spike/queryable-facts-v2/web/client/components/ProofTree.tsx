@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import type { ProofNode } from '../../shared/types'
+import type { ProofNode, SolveInfo } from '../../shared/types'
 import { api } from '../api'
 import { isPlumbing, useApp } from '../lib/context'
 import { AtomText } from './Atom'
 import { DatalogView } from './DatalogView'
+import { SolveCard } from './SolveCard'
 
 function relationOf(text: string): string {
   return /^!?(\w+)\(/.exec(text)?.[1] ?? ''
@@ -16,9 +17,20 @@ function countNodes(node: ProofNode): number {
 const STAGE_LABEL: Record<string, string> = {
   solidity: 'solc fact',
   discovery: 'discovery fact',
+  solve: "the solver's answer",
   unit: 'derived in the unit stage',
   project: 'derived in the project stage',
+  verdict: 'derived in the verdict stage',
   query: 'derived by a query',
+}
+
+/** The quoted columns of an atom as Soufflé prints it. */
+function atomColumns(text: string): string[] {
+  const inner = text.slice(text.indexOf('(') + 1, text.lastIndexOf(')'))
+  const cols: string[] = []
+  for (const m of inner.matchAll(/"((?:[^"\\]|\\.)*)"|(-?\d+)/g))
+    cols.push(m[1] !== undefined ? m[1].replace(/\\"/g, '"') : (m[2] ?? ''))
+  return cols
 }
 
 /**
@@ -40,6 +52,7 @@ export function ProofTree({
   const [showRule, setShowRule] = useState(false)
   const [open, setOpen] = useState(false)
   const [expanded, setExpanded] = useState<ProofNode | undefined>()
+  const [solve, setSolve] = useState<SolveInfo | undefined>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>()
   if (node.kind === 'missing')
@@ -62,6 +75,7 @@ export function ProofTree({
 
   if (node.kind === 'fact') {
     const derivedElsewhere = rec?.kind === 'derived' || node.stage === 'query'
+    const solved = node.stage === 'solve'
     return (
       <div className="pn fact">
         <div className="line">
@@ -70,6 +84,36 @@ export function ProofTree({
             {STAGE_LABEL[node.stage ?? ''] ?? node.stage ?? 'fact'}
           </span>
           <AtomText text={node.text} ask={ask} plain />
+          {solved && !solve && (
+            <button
+              type="button"
+              className="rule-toggle"
+              disabled={loading}
+              onClick={() => {
+                setLoading(true)
+                setError(undefined)
+                const [addr, via, h, e] = atomColumns(node.text)
+                api
+                  .solve(app.runId, via ?? '', h ?? '', e ?? '', addr)
+                  .then(setSolve)
+                  .catch((err: unknown) =>
+                    setError(err instanceof Error ? err.message : String(err)),
+                  )
+                  .finally(() => setLoading(false))
+              }}
+            >
+              {loading ? 'reading the solver…' : 'the solver ▸'}
+            </button>
+          )}
+          {solved && solve && (
+            <button
+              type="button"
+              className="rule-toggle"
+              onClick={() => setSolve(undefined)}
+            >
+              fold ▾
+            </button>
+          )}
           {derivedElsewhere && (
             <button
               type="button"
@@ -92,6 +136,7 @@ export function ProofTree({
           )}
         </div>
         {error && <div className="err small">{error}</div>}
+        {solve && <SolveCard info={solve} />}
       </div>
     )
   }

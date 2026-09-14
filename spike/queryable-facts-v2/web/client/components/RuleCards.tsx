@@ -87,7 +87,9 @@ export function RuleCard({
           : 'unit-internal'
         : rec?.stage === 'project'
           ? 'project'
-          : ''
+          : rec?.stage === 'verdict'
+            ? 'verdict'
+            : ''
   return (
     <div
       className={`rule-card ${focus ? 'focus' : ''}`}

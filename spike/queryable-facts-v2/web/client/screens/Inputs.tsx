@@ -107,7 +107,15 @@ function StartPanel({
           setStage(
             e.status === 'facts'
               ? 'putting the files together with discovery…'
-              : 'running the project rules…',
+              : e.status === 'souffle'
+                ? 'running the project rules…'
+                : e.status === 'solve'
+                  ? 'solving who can drive each write (Z3)…'
+                  : 'running the verdict rules…',
+          )
+        else if (e.type === 'solve')
+          setStage(
+            `solving who can drive each write (Z3): ${e.done + 1}/${e.total} · ${e.what}`,
           )
         else if (e.type === 'done') {
           setStage('done')
@@ -379,7 +387,7 @@ function UnitView({ runId, unit }: { runId: string; unit: UnitSummary }) {
             <Stat value={s.baseRows ?? 0} label="facts" />
             <Stat
               value={s.derivedRows ?? 0}
-              label="tuples derived (layers 1–6)"
+              label="tuples derived per file (unit layers)"
             />
             <Stat
               value={

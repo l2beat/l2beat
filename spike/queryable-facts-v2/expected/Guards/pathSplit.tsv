@@ -1,0 +1,4 @@
+Guards.sol:Guards	Guards.sol:Guards.loops(uint256)@2095:5	Guards.sol:Guards.loops(uint256)@2114:17
+Guards.sol:Guards	Guards.sol:Guards.nested(uint256)@3851:5	Guards.sol:Guards.nested(uint256)@3718:124
+Guards.sol:Guards	Guards.sol:Guards.returnBetween(uint256)@1228:5	Guards.sol:Guards.returnBetween(uint256)@1243:17
+Guards.sol:Guards	Guards.sol:Guards.viaTry(uint256)@3148:9	Guards.sol:Guards.viaTry(uint256)@3041:98

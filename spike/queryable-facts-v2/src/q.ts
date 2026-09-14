@@ -6,6 +6,7 @@
 //   ./q rows <relation> [text...] [--unit s] [--limit N]   rows containing every text, printed as atoms
 //   ./q run <file.dl> [--name n] [--limit N]  run rules against the run; print the tuples they derive
 //   ./q why '<atom>' [--depth N]              the proof tree of a tuple; leaves say where to continue
+//   ./q solve <addr> <entry> [<write>]        the solver's paths, formula, witnesses and residuals for the writes of one entry
 //   ./q source <id> | <unit> [<a>-<b>]        source lines
 //   ./q units                                 the source files of the run
 //
@@ -30,6 +31,7 @@ import {
   type Library,
   type RelationRecord,
 } from './rules'
+import { type EffectResult, loadEffectResult } from './solve'
 import { formatAtom, type ProofNode, readTsv } from './souffle'
 
 type Flags = Record<string, string | boolean>
@@ -222,7 +224,12 @@ function printProof(
     let note = ''
     if (node.stage === 'solidity') note = 'solc fact'
     else if (node.stage === 'discovery') note = 'discovery fact'
-    else if (rec?.kind === 'derived')
+    else if (node.stage === 'solve') {
+      const cols = atomColumns(node.text)
+      const [addr, via, h, e] = cols
+      note = `the solver's answer — see ./q solve ${via ?? ''} '${h ?? ''}'${addr && via && addr !== via ? ` (write on ${addr})` : ''}`
+      void e
+    } else if (rec?.kind === 'derived')
       note = `derived in the ${node.stage ?? rec.stage} stage — continue with ./q why '${node.text}'`
     print(`${pad}● ${node.text}   ← ${note}`)
     return
@@ -254,6 +261,111 @@ function cmdWhy(ctx: Ctx, args: string[], flags: Flags): void {
     `# ${explained.located.atom} · ${h.stage === 'query' ? `query ${h.query}` : `${h.stage} stage`}${h.slug ? ` · unit ${h.slug}` : ''} · ${Math.round(explained.ms)} ms`,
   )
   printProof(explained.proof, 0, ctx)
+}
+
+/** The quoted columns of an atom as printed by Soufflé (`rel("a", "b", 3)`). */
+function atomColumns(text: string): string[] {
+  const inner = text.slice(text.indexOf('(') + 1, text.lastIndexOf(')'))
+  const cols: string[] = []
+  for (const m of inner.matchAll(/"((?:[^"\\]|\\.)*)"|(-?\d+)/g))
+    cols.push(m[1] !== undefined ? m[1].replace(/\\"/g, '"') : (m[2] ?? ''))
+  return cols
+}
+
+/**
+ * The solver's account of the writes one entry function performs: for each, the paths (what ran), the
+ * formula Φ (when a sender passes), the witnesses (who, with which inputs), the exclusions and the
+ * residuals. The evidence behind canChange / cannotChange / unknownFor for that entry.
+ */
+function cmdSolve(ctx: Ctx, args: string[]): void {
+  const [addr, entryText, effectText] = args
+  if (!addr || !entryText)
+    fail(
+      'usage: q solve <address> <entry function> [<write site>]   (names as in entryAt / effect; ./q rows entryAt <address>)',
+    )
+  const entries = readRelation(ctx.runDir, 'entryAt').filter(
+    (r) =>
+      r[0] === addr &&
+      (r[1] === entryText ||
+        (r[1] ?? '').endsWith(`.${entryText}`) ||
+        (r[1] ?? '').includes(`.${entryText}(`)),
+  )
+  if (entries.length === 0)
+    fail(
+      `no entry function ${entryText} at ${addr} (see ./q rows entryAt ${addr})`,
+    )
+  const solved = readRelation(ctx.runDir, 'solvedEffect').filter(
+    (r) =>
+      r[1] === addr &&
+      entries.some((en) => en[1] === r[2]) &&
+      (!effectText || r[3] === effectText || (r[3] ?? '').endsWith(effectText)),
+  )
+  if (solved.length === 0)
+    fail(
+      `the solver has no rows for ${entryText} at ${addr}${effectText ? ` and write ${effectText}` : ''} (see ./q rows solvedEffect ${addr})`,
+    )
+  for (const row of solved) {
+    const [wAddr, via, h, e] = row
+    const loaded = loadEffectResult(
+      ctx.runDir,
+      via ?? '',
+      h ?? '',
+      e ?? '',
+      wAddr,
+    )
+    if (!loaded) {
+      print(`# no result.json for ${e} (Via ${via}, entry ${h})`)
+      continue
+    }
+    printEffect(loaded.result, loaded.dir, ctx.runDir)
+    print()
+  }
+}
+
+function short(text: string): string {
+  return text.replace(/^[^:]*:/, '').replace(/^[^.]*\./, '')
+}
+
+function printEffect(r: EffectResult, dir: string, runDir: string): void {
+  print(
+    `# write ${r.effect}${r.variable ? ` of ${short(r.variable)}` : ''} on ${r.addr}`,
+  )
+  print(
+    `# by calling ${r.entry} at ${r.via} · ${r.paths.length} completing path${r.paths.length === 1 ? '' : 's'} perform it · ${r.explored ? 'every execution explored' : 'NOT every execution explored'} · ${r.checks} Z3 checks`,
+  )
+  print(
+    `# evidence: ${dir.replace(`${runDir}/`, '')}/ (a.smt2: who passes; b.smt2: robustness; result.json)`,
+  )
+  r.paths.forEach((p, i) => print(`  path p${i + 1}: ${p}`))
+  if (r.admits.length > 0) {
+    print('  can:')
+    for (const a of r.admits) {
+      const inputs = Object.entries(a.inputs)
+        .map(([k, v]) => `${k}=${v}`)
+        .join(' ')
+      print(`    ${a.actor}   ${a.how}${inputs ? ` with ${inputs}` : ''}`)
+    }
+  } else print('  can: nobody among the discovered addresses')
+  if (r.open)
+    print('  anyone: every address outside the discovered set passes (proven)')
+  print(
+    `  cannot: ${r.excludes.length > 0 ? r.excludes.join(', ') : r.explored ? 'none' : 'unknown (not every execution was explored)'}`,
+  )
+  if (r.residuals.length > 0) {
+    print('  residuals:')
+    for (const x of r.residuals) print(`    ${x.kind}: ${x.where}`)
+  }
+  if (r.reads.length > 0)
+    print(
+      `  the conditions read: ${r.reads
+        .map((x) => {
+          const [a, v] = x.split('|')
+          return `${short(v ?? '')} at ${a}`
+        })
+        .join(', ')}`,
+    )
+  if (r.unknownSymbols.length > 0)
+    print(`  unknown symbols in Φ: ${r.unknownSymbols.join(', ')}`)
 }
 
 function allQueryDirsOf(askDir: string): string[] {
@@ -311,6 +423,7 @@ const HELP = `./q catalog [--all]                       the relations, one line 
 ./q rows <relation> [text...] [--unit s] [--limit N]   rows containing every text, printed as atoms
 ./q run <file.dl> [--name n] [--limit N]  run rules against the run; print the tuples they derive
 ./q why '<atom>' [--depth N]              the proof tree of a tuple; leaves say where to continue
+./q solve <addr> <entry> [<write>]        the solver's paths, formula, witnesses and residuals for one entry's writes
 ./q source <id> | <unit> [<a>-<b>]        source lines
 ./q units                                 the source files of the run`
 
@@ -353,6 +466,9 @@ export function qMain(positional: string[], flags: Flags): void {
       break
     case 'why':
       cmdWhy(ctx, args, flags)
+      break
+    case 'solve':
+      cmdSolve(ctx, args)
       break
     case 'source':
       cmdSource(ctx, args)

@@ -36,3 +36,8 @@ where work stopped.
 Update: P3 done (dev server on 5179 answers every endpoint; client bundle builds). README written. Second agent test (upgrade question, through the web API) running → out/ask-test2.ndjson. Left: lint/format, read the second agent run, final recap to the user.
 
 Final: lint, format, typecheck clean; semantic ok (3 fixtures, 78 rows); differential vs v1 ok (5,927 relations, 0 diffs). Dev server: `pnpm dev` → http://localhost:5179.
+
+## Next
+
+The permission layer built here is unsound (a permissive default); its replacement is specified in
+[PLAN2.md](PLAN2.md).

@@ -1,0 +1,11 @@
+{
+  "case": "chain of three contracts: Playground → Relay.check(msg.sender) → OwnerGate.authorize(who); the identity travels through the arguments",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": []
+}

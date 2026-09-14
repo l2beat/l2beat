@@ -20,6 +20,7 @@ import {
   listRunItems,
   rowsPage,
   runInfo,
+  solveInfo,
   startRun,
   unitInfo,
   unitSolcOutput,
@@ -121,6 +122,18 @@ export async function handleApi(
       res.end()
       return
     }
+    if (req.method === 'GET' && p === '/api/run/solve')
+      return send(
+        res,
+        200,
+        solveInfo(
+          url.searchParams.get('id') ?? '',
+          url.searchParams.get('via') ?? '',
+          url.searchParams.get('entry') ?? '',
+          url.searchParams.get('effect') ?? '',
+          url.searchParams.get('addr') ?? undefined,
+        ),
+      )
     if (req.method === 'POST' && p === '/api/explain') {
       const body = JSON.parse(await readBody(req)) as ExplainRequest
       const runDir = runDirOf(body.id)

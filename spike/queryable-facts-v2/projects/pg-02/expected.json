@@ -1,0 +1,11 @@
+{
+  "case": "closed gate: same code as pg-01, gate is ClosedGate, whose authorize always reverts",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": [],
+  "cannot": "all-others",
+  "unknown": [],
+  "residuals": []
+}

@@ -1,5 +1,6 @@
 // =============================================================================
-// Rule library (spike). Layers, bottom to top: structure → call graph → writes → sender checks → findings.
+// Rule library (spike). Layers, bottom to top: structure → call graph → writes → completion → answer tables.
+// Which conditions guard a write is rules/2-guards.dl; who passes them is the solve stage (src/solve.ts).
 // These rules never look at the raw tree: they read the concept relations that rules/1-syntax.dl
 // derives from it (function, stmt, callSite, writeSite, ...). Every relation below is *derived*:
 // Soufflé computes it from the base facts, and can explain any tuple back down to those facts.
@@ -221,11 +222,11 @@ possibleTargets(K, V) :- opaqueWrite(_, K, "assembly", _), asmSstore(K, A, _, _,
 containsAssembly(C, E, F) :- reachesFrom(C, E, F), assembly(_, F, _).
 
 // ---------------------------------------------------------------------------
-// Layer 5: sender checks — where msg.sender is tested on the way to a write.
-// Still the statement tree, not a control-flow graph (L2B-14860). "Runs on every completing
-// execution" is decided by straight-line position: no branch or loop above the statement, and
-// no `return` anywhere before it. A check is a condition that mentions the sender, directly
-// (`msg.sender`) or through a getter that returns it (`_msgSender()`).
+// Layer 5: completion — what runs on every completing execution, what never completes.
+// Still the statement tree, not a control-flow graph. "Runs on every completing execution" is decided
+// by straight-line position: no branch or loop above the statement, and no `return` anywhere before it.
+// What a condition means, and who passes it, is not decided here: rules/2-guards.dl states which
+// conditions guard a write, and the solve stage (src/solve.ts) decides them with the recorded values.
 // ---------------------------------------------------------------------------
 
 // Inner is nested anywhere inside statement Outer (Parent "" is the function body itself).
@@ -273,12 +274,13 @@ returnsWithin(S) :- within(S, T), stmt(T, _, "Return", _, _).
 alwaysReverts(F) :- aborts(S), stmt(S, F, _, _, _), alwaysExecuted(S).
 
 // The condition of X talks about the sender: `msg.sender` itself, or a call to a function whose
-// `return` hands back msg.sender (OpenZeppelin's `_msgSender()`).
+// `return` hands back msg.sender (OpenZeppelin's `_msgSender()`). Descriptive (see testsIdentity in
+// rules/2-guards.dl): what the comparison means is the solver's business.
 .decl mentionsSender(X: symbol)
 mentionsSender(X) :- refs(X, "msg.sender").
 mentionsSender(X) :- refs(X, G), returnsGlobal(G, "msg.sender").
 // ... or a parameter that every caller fills with the sender: `_checkRole(role, _msgSender())` then
-// `if (!hasRole(role, account)) revert` checks the sender under the name `account`.
+// `if (!hasRole(role, account)) revert` tests the sender under the name `account`.
 mentionsSender(X) :- refsParam(X, P, _), senderParam(P).
 
 // Argument I of call K carries the sender: `msg.sender` itself, or a getter returning it.
@@ -291,236 +293,12 @@ senderParam(P) :- param(G, I, P, _, _), callSite(K, _, _, _, G, _), argSender(K,
 .decl nonSenderArg(P: symbol)
 nonSenderArg(P) :- param(G, I, P, _, _), callSite(K, _, _, Kind, G, _), (Kind = "internal" ; Kind = "internalExplicit"), !argSender(K, I).
 
-// A *check*: require/assert on the sender, or `if (<sender ...>) { ... revert ... }`. A check anywhere
-// in F protects every write in F, even earlier ones: a revert rolls the whole transaction back.
-.decl senderCheck(X: symbol, F: symbol)
-senderCheck(K, F) :- callSite(K, _, F, "builtin", B, _), (B = "require" ; B = "assert"), mentionsSender(K).
-senderCheck(S, F) :- stmt(S, F, "IfStatement", _, _), mentionsSender(S), abortsWithin(S).
-// In a modifier, `if (<sender ...>) { _; } else { <something else> }`: the function body runs only when the
-// sender condition holds (a proxy's `proxyCallIfNotAdmin`: the else branch forwards to the implementation
-// instead, which is reported on its own as an unknown effect).
-senderCheck(S, M) :- stmt(S, M, "IfStatement", _, _), function(M, _, _, _, "modifier", _, _, _), mentionsSender(S), placeholderIn(S), !placeholderInElse(S).
-.decl placeholderIn(S: symbol)
-placeholderIn(S) :- stmt(S, _, "PlaceholderStatement", _, _).
-placeholderIn(S) :- within(S, T), stmt(T, _, "PlaceholderStatement", _, _).
-.decl placeholderInElse(S: symbol)
-placeholderInElse(S) :- stmt(E, _, _, S, 1), stmt(S, _, "IfStatement", _, _), placeholderIn(E).
-
-// A *signature check*: the condition tests a recovered signer (`ecrecover`, ECDSA.recover, or a local that
-// holds one) and aborts when it does not match. Whoever holds a signature by the compared address passes,
-// whatever msg.sender is. A condition that also mentions the sender is a sender check, not this.
-.decl signerCheck(X: symbol, F: symbol)
-signerCheck(K, F) :- callSite(K, _, F, "builtin", B, _), (B = "require" ; B = "assert"), refsRecover(K), !mentionsSender(K).
-signerCheck(S, F) :- stmt(S, F, "IfStatement", _, _), refsRecover(S), abortsWithin(S), !mentionsSender(S).
-
-// A *gate*: `if (<sender ...>) return;` — protects only what comes after it; a return undoes nothing.
-.decl senderGate(S: symbol, F: symbol)
-senderGate(S, F) :- stmt(S, F, "IfStatement", _, _), mentionsSender(S), returnsWithin(S), !abortsWithin(S).
-
-// What the sender is compared with: a state variable named in the condition, or one returned by a
-// getter the condition calls (`owner()` → `_owner`). This names the principal; it does not say the
-// comparison grants access — `msg.sender != owner` lands here too, so findings quote the condition.
-.decl checkPrincipal(X: symbol, P: symbol)
-checkPrincipal(X, P) :- (senderCheck(X, _) ; senderGate(X, _) ; signerCheck(X, _)), refs(X, P), stateVariable(P, _, _, _, _, _).
-checkPrincipal(X, P) :- (senderCheck(X, _) ; senderGate(X, _) ; signerCheck(X, _)), refs(X, G), returnsStateVar(G, P).
-// ...or with the result of a zero-argument getter that does not return a state variable directly
-// (`proxyAdminOwner()`, which asks another contract): the project layer looks its value up by name.
-.decl checkGetter(X: symbol, G: symbol)
-checkGetter(X, G) :- (senderCheck(X, _) ; senderGate(X, _)), refs(X, G), getterFn(G), !returnsGlobal(G, "msg.sender"), !returnsAnyStateVar(G).
-.decl returnsAnyStateVar(G: symbol)
-returnsAnyStateVar(G) :- returnsStateVar(G, _).
-// ...or with the contract itself (`msg.sender == address(this)`: only a call the contract makes to itself passes).
-.decl checkSelf(X: symbol)
-checkSelf(X) :- (senderCheck(X, _) ; senderGate(X, _)), refsThis(X).
-
-// A condition in F that compares block.timestamp with a state variable: a delay or expiry whose value matters.
-.decl timeCheck(X: symbol, F: symbol, V: symbol)
-timeCheck(X, F, V) :- checkerIn(X, F), refs(X, "block.timestamp"), refs(X, V), stateVariable(V, _, _, _, _, _).
-.decl checkerIn(X: symbol, F: symbol)
-checkerIn(X, F) :- condition(X, _), stmt(X, F, _, _, _).
-checkerIn(X, F) :- condition(X, _), callSite(X, _, F, _, _, _).
-
-// The condition is a disjunction (`open || msg.sender == owner`): the sender test is one way to pass.
-.decl weakCheck(X: symbol)
-weakCheck(X) :- (senderCheck(X, _) ; senderGate(X, _)), condShape(X, "or").
-
-// Check X sits inside `if (<param> ...)` with no else, and the parameter is never reassigned: the
-// caller decides whether the check runs at all (the playground's `conditionalGuard(bool enforce, ..)`).
-.decl callerSelectable(X: symbol, F: symbol, Guard: symbol, ParamName: symbol)
-callerSelectable(X, F, Guard, Name) :-
-    senderCheck(X, F), stmtOf(X, XS), stmt(Guard, F, "IfStatement", _, _), within(Guard, XS),
-    !hasElse(Guard), refsParam(Guard, P, Name), !reassigned(P).
-.decl reassigned(P: symbol)
-reassigned(P) :- writeSite(_, _, _, P, _), param(_, _, P, _, _).
-
-// Inside deployable C, F checks the sender on every completing execution: an always-executed check
-// in its own body, in one of its modifiers, or in a function it always calls. Callees are resolved
-// through dispatch, so an override that drops the check is seen for what it is.
-.decl alwaysChecks(C: symbol, F: symbol, X: symbol)
-alwaysChecks(C, F, X) :- reachableIn(C, F), senderCheck(X, F), stmtOf(X, S), alwaysExecuted(S).
-alwaysChecks(C, F, X) :- reachableIn(C, F), callSite(_, "", F, "modifier", M0, _), dispatch(C, F, M0, M), alwaysChecks(C, M, X).
-alwaysChecks(C, F, X) :-
-    reachableIn(C, F), callSite(_, S, F, Kind, G0, _), (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
-    S != "", alwaysExecuted(S), dispatch(C, F, G0, G), alwaysChecks(C, G, X).
-
-// F checks the sender only on some paths: the check sits under a branch, after a possible early
-// return, or in a callee that is not always called. Imprecise on purpose: `if (a) require(owner)
-// else require(guardian)` lands here although every path is checked — telling those apart needs a CFG.
-.decl sometimesChecks(C: symbol, F: symbol, X: symbol)
-sometimesChecks(C, F, X) :- reachableIn(C, F), senderCheck(X, F), !alwaysChecks(C, F, X).
-sometimesChecks(C, F, X) :-
-    reachableIn(C, F), callSite(_, _, F, Kind, G0, _), (Kind = "modifier" ; Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
-    dispatch(C, F, G0, G), (sometimesChecks(C, G, X) ; alwaysChecks(C, G, X)), !alwaysChecks(C, F, X).
-
-// F has some sender check or gate on the way (used to conclude "no check found" by negation).
-.decl hasAnyCheck(C: symbol, F: symbol)
-hasAnyCheck(C, F) :- alwaysChecks(C, F, _).
-hasAnyCheck(C, F) :- sometimesChecks(C, F, _).
-hasAnyCheck(C, F) :- reachableIn(C, F), senderGate(_, F).
-
-// The same two notions for signature checks: on every completing execution, or only on some paths.
-.decl alwaysSigner(C: symbol, F: symbol, X: symbol)
-alwaysSigner(C, F, X) :- reachableIn(C, F), signerCheck(X, F), stmtOf(X, S), alwaysExecuted(S).
-alwaysSigner(C, F, X) :- reachableIn(C, F), callSite(_, "", F, "modifier", M0, _), dispatch(C, F, M0, M), alwaysSigner(C, M, X).
-alwaysSigner(C, F, X) :-
-    reachableIn(C, F), callSite(_, S, F, Kind, G0, _), (Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
-    S != "", alwaysExecuted(S), dispatch(C, F, G0, G), alwaysSigner(C, G, X).
-.decl sometimesSigner(C: symbol, F: symbol, X: symbol)
-sometimesSigner(C, F, X) :- reachableIn(C, F), signerCheck(X, F), !alwaysSigner(C, F, X).
-sometimesSigner(C, F, X) :-
-    reachableIn(C, F), callSite(_, _, F, Kind, G0, _), (Kind = "modifier" ; Kind = "internal" ; Kind = "internalExplicit" ; Kind = "library"),
-    dispatch(C, F, G0, G), (sometimesSigner(C, G, X) ; alwaysSigner(C, G, X)), !alwaysSigner(C, F, X).
-.decl hasSignerCheck(C: symbol, F: symbol)
-hasSignerCheck(C, F) :- alwaysSigner(C, F, _).
-hasSignerCheck(C, F) :- sometimesSigner(C, F, _).
-
-// Statements of E (running in C) where V may change: a write site of V, direct or through a storage
-// reference; a call statement whose dispatched callee writes V; an assembly block that stores to V.
-.decl effectStmt(C: symbol, E: symbol, V: symbol, S: symbol)
-effectStmt(C, E, V, S) :- reachableIn(C, E), writeSite(_, S, E, V, _), stateVariable(V, _, _, _, _, _), S != "".
-effectStmt(C, E, V, S) :- reachableIn(C, E), writeSite(_, S, E, R, _), aliases(R, V), S != "".
-effectStmt(C, E, V, S) :- reachableIn(C, E), callSite(_, S, E, _, G0, _), S != "", dispatch(C, E, G0, G), writesIn(C, G, V).
-effectStmt(C, E, V, A) :- reachableIn(C, E), assembly(A, E, _), asmSstore(_, A, _, T, _), yulSlotOf(C, A, T, V).
-// V changes in one of E's modifiers, which run before the body: no gate in the body comes first.
-.decl modifierEffect(C: symbol, E: symbol, V: symbol)
-modifierEffect(C, E, V) :- reachableIn(C, E), callSite(_, "", E, "modifier", M0, _), dispatch(C, E, M0, M), writesIn(C, M, V).
-// Some statement that may change V comes before gate S (byte offsets stand in for control flow).
-.decl effectBefore(C: symbol, E: symbol, V: symbol, S: symbol)
-effectBefore(C, E, V, S) :- senderGate(S, E), effectStmt(C, E, V, T), sourceLoc(T, _, _, _, PT, _), sourceLoc(S, _, _, _, PS, _), PT < PS.
-// Gate S runs on every completing execution of E and before every statement that may change V.
-.decl gateCovers(C: symbol, E: symbol, V: symbol, S: symbol)
-gateCovers(C, E, V, S) :- senderGate(S, E), alwaysExecuted(S), entryWrites(C, E, V), V != "*", !modifierEffect(C, E, V), !effectBefore(C, E, V, S).
-
 // ---------------------------------------------------------------------------
-// Layer 6: findings — one row per observation about (deployable C, entry point E, variable V).
-// Tier says what kind of statement the row is (README, "Tiers"):
-//   structural   read off the tree: a check with this condition sits here, a write precedes it
-//   may          over-approximation: E may write V (paths that can never run are included)
-//   guaranteed   holds on every completing execution, under the model — structured control flow,
-//                internal calls resolved by dispatch, no unknown effect on the path
-//   heuristic    pattern-based: path coverage from straight-line position, "no check" relative to
-//                what the rules recognise as a check
-//   unknown      an effect the analysis cannot follow; nothing universal holds past it
-// Detail says what was found, in the words of the code. Whether a check *authorises* anyone is
-// left to the reader: the condition is quoted, so `!=` stays visible. Evidence is the id to point at.
-// ---------------------------------------------------------------------------
-
-// Entry E of C may change V, including through calls (may). Unknown effects are claimed under "*".
-.decl entryWrites(C: symbol, E: symbol, V: symbol)
-entryWrites(C, E, V) :- entryPoint(C, E), writesIn(C, E, V).
-entryWrites(C, E, "*") :- entryPoint(C, E), reachesFrom(C, E, F), opaqueWrite(F, _, _, _).
-
-// The condition of check or gate X, quoted.
-.decl checkText(X: symbol, T: symbol)
-checkText(X, cat("`", Cond, "`")) :- (senderCheck(X, _) ; senderGate(X, _) ; signerCheck(X, _)), condition(X, Cond).
-
-.decl finding(C: symbol, E: symbol, V: symbol, Kind: symbol, Detail: symbol, Tier: symbol, Evidence: symbol)
-
-// The function can never complete, so the write never persists.
-finding(C, E, V, "never-persists", "the function always reverts before it can complete: this write never persists", "guaranteed", S) :-
-    entryWrites(C, E, V), alwaysReverts(E), aborts(S), stmt(S, E, _, _, _), alwaysExecuted(S).
-
-// A check that runs whenever the call completes.
-finding(C, E, V, "always-checked", cat("sender check ", T, " runs on every completing execution"), "guaranteed", X) :-
-    entryWrites(C, E, V), !alwaysReverts(E), alwaysChecks(C, E, X), !weakCheck(X), checkText(X, T).
-// Same, but the sender test is one side of an OR: the other side passes without it.
-finding(C, E, V, "or-check", cat("sender check ", T, " runs on every completing execution, but the sender test is only one side of an OR"), "guaranteed", X) :-
-    entryWrites(C, E, V), !alwaysReverts(E), alwaysChecks(C, E, X), weakCheck(X), checkText(X, T).
-// The branch around the check is decided by a parameter of the entry point.
-finding(C, E, V, "caller-selectable",
-        cat("sender check ", T, " runs only inside `if (", GCond, ")` with no else; `", Name, "` is a parameter of this function, so the caller decides whether the check runs"),
-        "structural", X) :-
-    entryWrites(C, E, V), !alwaysReverts(E), sometimesChecks(C, E, X), callerSelectable(X, E, Guard, Name), condition(Guard, GCond), checkText(X, T).
-// A straight-line check that an earlier `return` can skip.
-finding(C, E, V, "check-after-return",
-        cat("sender check ", T, " is straight-line but comes after the `return` at line ", to_string(L), ", which can leave the function before the check"),
-        "structural", X) :-
-    entryWrites(C, E, V), !alwaysReverts(E), sometimesChecks(C, E, X), senderCheck(X, E), stmtOf(X, S), unconditional(S),
-    returnBefore(S, R), sourceLoc(R, _, L, _, _, _), checkText(X, T).
-// A check exists, but only some paths run it (and neither case above applies).
-finding(C, E, V, "some-paths", cat("sender check ", T, " runs only on some paths"), "heuristic", X) :-
-    entryWrites(C, E, V), !alwaysReverts(E), sometimesChecks(C, E, X), !callerSelectableCheck(X, E), !checkAfterReturn(X, E), checkText(X, T).
-.decl callerSelectableCheck(X: symbol, E: symbol)
-callerSelectableCheck(X, E) :- callerSelectable(X, E, _, _).
-.decl checkAfterReturn(X: symbol, E: symbol)
-checkAfterReturn(X, E) :- senderCheck(X, E), stmtOf(X, S), unconditional(S), exitBefore(S).
-
-// An early return on the sender that comes before every statement where V may change.
-finding(C, E, V, "gate-covers", cat("early return on the sender ", T, " runs on every completing execution, before every statement that can change this variable"), "guaranteed", S) :-
-    entryWrites(C, E, V), !alwaysReverts(E), gateCovers(C, E, V, S), checkText(S, T).
-// An early return on the sender that some change of V precedes: that change persists for any caller.
-finding(C, E, V, "write-before-gate", cat("early return on the sender ", T, " comes after a statement that changes this variable: that change persists for any caller"), "structural", S) :-
-    entryWrites(C, E, V), V != "*", !alwaysReverts(E), senderGate(S, E), alwaysExecuted(S), !gateCovers(C, E, V, S), checkText(S, T).
-// An early return on the sender that itself runs only on some paths.
-finding(C, E, V, "gate-some-paths", cat("early return on the sender ", T, " runs only on some paths"), "heuristic", S) :-
-    entryWrites(C, E, V), V != "*", !alwaysReverts(E), senderGate(S, E), !alwaysExecuted(S), checkText(S, T).
-
-// A signature check that runs whenever the call completes: the caller must present a signature by the
-// address the recovered signer is compared with. Who sent the transaction does not matter.
-finding(C, E, V, "signature-check", cat("signature check ", T, " runs on every completing execution: the caller must hold a signature by the address it compares with"), "guaranteed", X) :-
-    entryWrites(C, E, V), !alwaysReverts(E), alwaysSigner(C, E, X), checkText(X, T).
-finding(C, E, V, "signature-some-paths", cat("signature check ", T, " runs only on some paths"), "heuristic", X) :-
-    entryWrites(C, E, V), !alwaysReverts(E), sometimesSigner(C, E, X), checkText(X, T).
-
-// Nothing on the way tests the sender (or a signature) — relative to what the rules recognise as a check.
-finding(C, E, V, "no-check", "no sender check found: no require/assert/if on msg.sender (or on a getter returning it) in the function, its modifiers, or anything it calls", "heuristic", "") :-
-    entryWrites(C, E, V), !alwaysReverts(E), !hasAnyCheck(C, E), !hasSignerCheck(C, E).
-
-// Something on the way from E that the analysis cannot follow. Never dropped: a universal claim
-// ("only the owner can change anything") must see these.
-finding(C, E, "*", "unknown-effect", Detail, "unknown", K) :-
-    entryPoint(C, E), reachesFrom(C, E, F), opaqueWrite(F, K, Kind, D), unknownText(Kind, D, Detail).
-.decl unknownText(Kind: symbol, D: symbol, Text: symbol)
-unknownText("delegatecall", D, cat("delegatecall `", D, "`: the callee runs with this contract's storage and may write anything")) :- opaqueWrite(_, _, "delegatecall", D).
-unknownText("callcode", D, cat("callcode `", D, "`: the callee runs with this contract's storage and may write anything")) :- opaqueWrite(_, _, "callcode", D).
-unknownText("asm-delegatecall", D, cat(D, " in inline assembly: the callee runs with this contract's storage and may write anything")) :- opaqueWrite(_, _, "asm-delegatecall", D).
-unknownText("assembly", D, cat("inline assembly stores to slot `", D, "`, which the rules could not tie to a variable")) :- opaqueWrite(_, _, "assembly", D), !preYulAssembly(D).
-unknownText("assembly", D, D) :- opaqueWrite(_, _, "assembly", D), preYulAssembly(D).
-unknownText("storageRef", D, cat("write through storage reference `", D, "`, which the rules could not tie to a variable")) :- opaqueWrite(_, _, "storageRef", D).
-unknownText("functionPointer", D, cat("call through a function pointer whose target is not visible here: `", D, "`")) :- opaqueWrite(_, _, "functionPointer", D).
-unknownText("unresolvedCall", D, cat("call whose target the rules could not resolve: `", D, "`")) :- opaqueWrite(_, _, "unresolvedCall", D).
-.decl preYulAssembly(D: symbol)
-preYulAssembly(D) :- opaqueWrite(_, _, "assembly", D), strlen(D) >= 16, substr(D, 0, 16) = "assembly without".
-
-// Inline assembly on the path that stores to storage (every slot named) or runs foreign code: the
-// names may be right, but nothing universal is guaranteed past it. Blocks that only compute or read
-// (chain id, immutable args, signature splitting) cap nothing and get no row.
-finding(C, E, "*", "assembly", "reaches inline assembly that writes storage: statements about every execution are not guaranteed past this point", "unknown", A) :-
-    entryPoint(C, E), reachesFrom(C, E, F), assembly(A, F, _), asmEffectful(A), !asmOpaque(A).
-.decl asmEffectful(A: symbol)
-asmEffectful(A) :- asmSstore(_, A, _, _, _).
-asmEffectful(A) :- asmCall(_, A, N), (N = "delegatecall" ; N = "callcode").
-asmEffectful(A) :- assembly(A, _, 0).
-.decl asmOpaque(A: symbol)
-asmOpaque(A) :- opaqueWrite(_, K, "assembly", _), asmSstore(K, A, _, _, _).
-asmOpaque(A) :- opaqueWrite(_, K, "asm-delegatecall", _), asmCall(K, A, _).
-asmOpaque(A) :- opaqueWrite(_, A, "assembly", _), assembly(A, _, 0).
-
-// ---------------------------------------------------------------------------
-// Layer 6b: answer tables — the rows a report, a question or a query reads first.
+// Layer 6: answer tables — the rows a report, a question or a query reads first.
 //
-// Everything above is derived per relation; these four put the pieces together per (contract,
-// variable, entry point) with the line of the evidence, so that one row says one thing.
+// Everything above is derived per relation; these put the pieces together per (contract, variable,
+// entry point) with the line of the evidence, so that one row says one thing. Who can *make* a write
+// happen is not here: that is the verdict stage (rules/5-verdict.dl).
 // ---------------------------------------------------------------------------
 
 // The storage-writers table (may): for each storage variable of each deployable contract, the entry
@@ -545,7 +323,3 @@ writerDetail(C, V, "constructor", "", "declaration initializer", L) :-
 opaqueWrites(C, E, F, Kind, Detail, Line, K) :-
     reachesFrom(C, E, F), opaqueWrite(F, K, Kind, Detail), sourceLoc(K, _, Line, _, _, _).
 
-// Findings with the line of their evidence (0 when there is none).
-.decl findings(C: symbol, E: symbol, V: symbol, Kind: symbol, Detail: symbol, Tier: symbol, Line: number)
-findings(C, E, V, K, D, T, Line) :- finding(C, E, V, K, D, T, X), X != "", sourceLoc(X, _, Line, _, _, _).
-findings(C, E, V, K, D, T, 0)    :- finding(C, E, V, K, D, T, "").

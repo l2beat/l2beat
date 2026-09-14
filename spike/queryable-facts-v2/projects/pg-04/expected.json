@@ -1,0 +1,18 @@
+{
+  "case": "gate call under if (checked), checked not recorded: cccc passes whichever value checked has; everyone else depends on it",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["eth:0xcccccccccccccccccccccccccccccccccccccccc"],
+  "cannot": [],
+  "unknown": "all-others",
+  "residuals": ["depends-on"],
+  "indirect": [
+    {
+      "actor": "eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "address": "eth:0x1111111111111111111111111111111111111111",
+      "variable": "checked"
+    }
+  ]
+}

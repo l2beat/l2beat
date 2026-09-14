@@ -1,0 +1,17 @@
+Guards.sol:Guards	Guards.sol:Guards.branches(uint256)@1854:5	Guards.sol:Guards.branches(uint256)@1815:95	true	branch
+Guards.sol:Guards	Guards.sol:Guards.branches(uint256)@1890:9	Guards.sol:Guards.branches(uint256)@1815:95	false	branch
+Guards.sol:Guards	Guards.sol:Guards.ifAbort(uint256)@1467:5	Guards.sol:Guards.ifAbort(uint256)@1404:26	false	if-abort
+Guards.sol:Guards	Guards.sol:Guards.ifAbort(uint256)@1467:5	Guards.sol:Guards.ifAbort(uint256)@1440:87	true	branch
+Guards.sol:Guards	Guards.sol:Guards.ifAbort(uint256)@1467:5	Guards.sol:Guards.ifAbort(uint256)@1440:87	true	if-abort
+Guards.sol:Guards	Guards.sol:Guards.ifReturn(uint256)@1694:5	Guards.sol:Guards.ifReturn(uint256)@1666:19	false	if-return
+Guards.sol:Guards	Guards.sol:Guards.loops(uint256)@2095:5	Guards.sol:Guards.loops(uint256)@2036:161	true	loop
+Guards.sol:Guards	Guards.sol:Guards.lowLevel(uint256,bytes)@3609:5	Guards.sol:Guards.lowLevel(uint256,bytes)@3573:26	true	require
+Guards.sol:Guards	Guards.sol:Guards.requireAround(uint256)@1040:5	Guards.sol:Guards.requireAround(uint256)@1008:22	true	require
+Guards.sol:Guards	Guards.sol:Guards.requireAround(uint256)@1040:5	Guards.sol:Guards.requireAround(uint256)@1055:22	true	require
+Guards.sol:Guards	Guards.sol:Guards.viaAfterModifier(uint256)@2582:5	Guards.sol:Guards.afterCheck()@753:27	true	require
+Guards.sol:Guards	Guards.sol:Guards.viaBranchModifier(uint256)@2497:5	Guards.sol:Guards.ownerOrForward()@597:101	true	branch
+Guards.sol:Guards	Guards.sol:Guards.viaBranchModifier(uint256)@2497:5	Guards.sol:Guards.ownerOrForward()@597:101	true	if-abort
+Guards.sol:Guards	Guards.sol:Guards.viaHelper(uint256)@2739:5	Guards.sol:Guards._mustBeAdmin()@841:41	true	require
+Guards.sol:Guards	Guards.sol:Guards.viaModifier(uint256)@2407:5	Guards.sol:Guards.onlyOwner()@496:41	true	require
+Guards.sol:Guards	Guards.sol:Guards.viaTry(uint256)@3086:5	Guards.sol:Guards.viaTry(uint256)@3045:26	true	try
+Guards.sol:Guards	Guards.sol:Guards.viaTry(uint256)@3123:5	Guards.sol:Guards.viaTry(uint256)@3045:26	false	try

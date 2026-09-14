@@ -1,0 +1,11 @@
+{
+  "case": "low-level call to the gate with the success flag dropped: nothing reverts, every sender writes",
+  "target": {
+    "address": "eth:0x1111111111111111111111111111111111111111",
+    "variable": "score"
+  },
+  "can": ["anyone"],
+  "cannot": [],
+  "unknown": [],
+  "residuals": []
+}

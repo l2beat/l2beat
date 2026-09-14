@@ -82,11 +82,21 @@ async function cmdRun(args: Args): Promise<void> {
       else if (e.type === 'unit' && e.status === 'failed')
         console.log(`  FAIL ${e.unit}: ${e.error.split('\n')[0]}`)
       else if (e.type === 'project')
-        console.log(e.status === 'facts' ? 'project facts…' : 'project rules…')
+        console.log(
+          e.status === 'facts'
+            ? 'project facts…'
+            : e.status === 'souffle'
+              ? 'project rules…'
+              : e.status === 'solve'
+                ? 'solving who can drive each write (Z3)…'
+                : 'verdict rules…',
+        )
+      else if (e.type === 'solve')
+        console.log(`  solve ${e.done + 1}/${e.total} ${e.what}`)
     },
   })
   console.log(
-    `\n${meta.units.filter((u) => u.status === 'ok').length}/${meta.units.length} units, ${meta.counts.baseRows} base facts, ${meta.counts.unitDerivedRows} unit tuples, ${meta.counts.projectDerivedRows} project tuples in ${(meta.timings.totalMs / 1000).toFixed(1)} s`,
+    `\n${meta.units.filter((u) => u.status === 'ok').length}/${meta.units.length} units, ${meta.counts.baseRows} base facts, ${meta.counts.unitDerivedRows} unit tuples, ${meta.counts.projectDerivedRows} project tuples, ${meta.solve?.effects ?? 0} writes solved with ${meta.solve?.checks ?? 0} Z3 checks (${((meta.timings.solveMs ?? 0) / 1000).toFixed(1)} s), ${meta.counts.verdictDerivedRows ?? 0} verdict tuples, in ${(meta.timings.totalMs / 1000).toFixed(1)} s`,
   )
   console.log(`→ ${out}`)
 }
