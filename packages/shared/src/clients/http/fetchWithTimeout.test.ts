@@ -88,18 +88,15 @@ describe(fetchWithTimeout.name, () => {
     )
   })
 
-  it('explains connection failures with the url and reason', async () => {
+  it('throws the underlying network error instead of "fetch failed"', async () => {
     // withServer closes the server, so the port is refused afterwards
     const closedUrl = await withServer(
       () => {},
       async (url) => url,
     )
-    const error = await fetchWithTimeout(`${closedUrl}/x?key=s`, {}).catch(
-      (e: unknown) => e,
-    )
-    expect((error as Error).message).toInclude(`${closedUrl}/x?key=REDACTED`)
+    const error = await fetchWithTimeout(closedUrl, {}).catch((e: unknown) => e)
+    expect(error).toBeA(Error)
     expect((error as Error).message).toInclude('ECONNREFUSED')
-    expect((error as Error).cause).toBeA(Error)
   })
 
   it('handles responses without a body', async () => {

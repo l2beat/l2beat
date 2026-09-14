@@ -56,36 +56,31 @@ async function fetchWithReadableErrors(url: string, init: RequestInit) {
   try {
     return await fetch(url, init)
   } catch (error) {
-    if (!isBareFetchFailed(error)) {
-      throw error
-    }
-    const reason = describeCause(error.cause)
-    throw new Error(`Request to ${sanitizeUrl(url)} failed: ${reason}`, {
-      cause: error.cause,
-    })
+    throw unwrapFetchFailed(error)
   }
 }
 
-// undici reports every network failure as this one TypeError, hiding the reason in `cause`
-function isBareFetchFailed(
-  error: unknown,
-): error is TypeError & { cause: unknown } {
-  return (
-    error instanceof TypeError &&
-    error.message === 'fetch failed' &&
-    error.cause !== undefined
-  )
+// undici reports every network failure as this one TypeError and hides the reason in `cause`
+function unwrapFetchFailed(error: unknown): unknown {
+  if (
+    !(error instanceof TypeError) ||
+    error.message !== 'fetch failed' ||
+    !(error.cause instanceof Error)
+  ) {
+    return error
+  }
+  return withReadableMessage(error.cause)
 }
 
-// happy-eyeballs connects fail with an AggregateError whose detail lives in `errors`
-function describeCause(cause: unknown): string {
-  if (cause instanceof AggregateError && cause.errors.length > 0) {
-    return cause.errors.map(describeCause).join('; ')
+// happy-eyeballs connects fail with an AggregateError whose message is empty
+function withReadableMessage(cause: Error): Error {
+  if (cause instanceof AggregateError && !cause.message) {
+    const messages = cause.errors.map((e) =>
+      e instanceof Error ? e.message : String(e),
+    )
+    return new AggregateError(cause.errors, messages.join('; '))
   }
-  if (cause instanceof Error) {
-    return cause.message || cause.name
-  }
-  return String(cause)
+  return cause
 }
 
 // unref: a request nobody is reading anymore must not keep a CLI alive
