@@ -8,8 +8,6 @@ import {
   ATTESTATION_NETWORKS,
   ATTESTATION_SCHEMA_UID,
   CROP_ATTESTATIONS,
-  getAttestationUrl,
-  getSchemaUrl,
 } from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
@@ -21,6 +19,8 @@ import {
   createSigner,
   encodePayload,
   getAttestations,
+  getAttestationUrl,
+  getSchemaUrl,
   isSchemaRegistered,
   multiAttest,
   multiRevoke,

@@ -52,6 +52,22 @@ export const SCHEMA_REGISTRY_ABI = parseAbi([
 /** Parsed from the one schema string config registers, so the codec cannot disagree with it. */
 export const ATTESTATION_PARAMS = parseAbiParameters(ATTESTATION_SCHEMA)
 
+/** Case-insensitive: EAS returns uids in lowercase, config may not. */
+export function isCurrentSchema(schema: string): boolean {
+  return schema.toLowerCase() === ATTESTATION_SCHEMA_UID.toLowerCase()
+}
+
+export function getAttestationUrl(
+  network: AttestationNetworkConfig,
+  uid: string,
+): string {
+  return `${network.explorer}/attestation/view/${uid}`
+}
+
+export function getSchemaUrl(network: AttestationNetworkConfig): string {
+  return `${network.explorer}/schema/view/${ATTESTATION_SCHEMA_UID}`
+}
+
 export interface CropPayload {
   /** Sorted. */
   projectIds: string[]

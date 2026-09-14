@@ -1,11 +1,11 @@
-import {
-  ATTESTATION_NETWORKS,
-  CROP_ATTESTATIONS,
-  getAttestationUrl,
-} from '@l2beat/config'
+import { ATTESTATION_NETWORKS, CROP_ATTESTATIONS } from '@l2beat/config'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
-import { createReader, getAttestations } from '../implementations/crops/eas'
+import {
+  createReader,
+  getAttestations,
+  getAttestationUrl,
+} from '../implementations/crops/eas'
 import {
   describePlan,
   findLedgerDrift,
