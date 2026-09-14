@@ -1,9 +1,7 @@
 import type { ProjectDiscoveryUpdate } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import {
-  UPDATES_PAGE_SIZE,
-  type UpdatesSectionProps,
-} from '~/components/projects/sections/UpdatesSection'
+import type { UpdatesSectionProps } from '~/components/projects/sections/UpdatesSection'
+import { UPDATES_PAGE_SIZE } from '~/components/projects/sections/updatesPageSize'
 import type { SsrHelpers } from '~/trpc/server'
 
 // Diff bodies are the bulk of a project's update history. Only the first

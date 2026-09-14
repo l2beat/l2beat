@@ -27,6 +27,7 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
+import { UPDATES_PAGE_SIZE } from './updatesPageSize'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
   projectId: ProjectId
@@ -46,8 +47,6 @@ const SECTION_TITLES = {
   'initial-discovery': 'Initial discovery',
   'watched-changes': null,
 } satisfies Record<ProjectDiscoveryUpdateSectionKind, string | null>
-
-export const UPDATES_PAGE_SIZE = 5
 
 export function UpdatesSection({
   projectId,
