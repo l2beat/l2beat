@@ -1,7 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import express from 'express'
 import { env } from '~/env'
-import type { RenderData, RenderFunction } from '~/ssr/types'
+import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getGardenData } from './getGardenData'
 import { getIntegrateCropsData } from './integrate/getIntegrateCropsData'
@@ -23,16 +23,14 @@ export function createGardenRouter(
 
   const router = express.Router()
 
-  /** The garden and its docs read the database and the TVS breakdown, so they are cached like the other data-backed pages. */
-  const cached = (url: string, load: () => Promise<RenderData>) =>
-    cache.get(
-      { key: ['garden', url], ttl: 5 * 60, staleWhileRevalidate: 25 * 60 },
-      load,
-    )
-
   router.get(GARDEN_PATH, async (req, res) => {
-    const data = await cached(req.originalUrl, () =>
-      getGardenData(manifest, req.originalUrl),
+    const data = await cache.get(
+      {
+        key: ['garden', req.originalUrl],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getGardenData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
@@ -45,8 +43,13 @@ export function createGardenRouter(
   })
 
   router.get(INTEGRATE_CROPS_PATH, async (req, res) => {
-    const data = await cached(req.originalUrl, () =>
-      getIntegrateCropsData(manifest, req.originalUrl),
+    const data = await cache.get(
+      {
+        key: ['garden-integrate', req.originalUrl],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getIntegrateCropsData(manifest, req.originalUrl),
     )
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
