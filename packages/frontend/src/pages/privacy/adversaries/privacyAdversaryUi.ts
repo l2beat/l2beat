@@ -30,13 +30,17 @@ export const EXPOSURE_TEXT_CLASS: Record<PrivacyExposure, string> = {
   unverifiable: 'text-[#6A5DB5] dark:text-[#AA9DEA]',
 }
 
-/** What the protocol promises to hide, as the subtext under the dots. */
+/**
+ * The field the dots grade, as the subtext under them. A noun phrase, not a
+ * claim: the dots say how well the promise holds, so a caption asserting that
+ * it does would contradict every yellow or red dot.
+ */
 export const PRIVACY_PROMISE_LABEL: Record<PrivacyField, string> = {
-  sender: 'Hides the sender',
-  recipient: 'Hides the recipient',
-  amount: 'Hides amounts',
-  asset: 'Hides the asset',
-  linkage: 'Hides the link',
+  sender: 'Sender privacy',
+  recipient: 'Recipient privacy',
+  amount: 'Amount privacy',
+  asset: 'Asset privacy',
+  linkage: 'Link privacy',
 }
 
 /** Title of the interior field chips; entry and exit are public and have none. */
