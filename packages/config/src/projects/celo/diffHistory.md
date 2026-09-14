@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x1ea77caa6c42e54c55201b2a59267fa9a19c02f6
+
+# Diff at Thu, 10 Sep 2026 12:48:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1784282840
+- current timestamp: 1789044398
+
+## Description
+
+Optimism Security Council: Member rotated.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      values.$members.9:
+-        "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7"
++        "eth:0xd91530dB01c60C6B3b824707D33fb0771aB85930"
+    }
+```
+
 Generated with discovered.json: 0xca88120255ff4af90ace53d199a198649d596016
 
 # Diff at Mon, 07 Sep 2026 08:37:43 GMT:
