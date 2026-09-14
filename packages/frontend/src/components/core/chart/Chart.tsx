@@ -116,23 +116,11 @@ function ChartContainer<T extends { timestamp: number }>({
   size?: 'regular' | 'small'
   noDataSourceMessage?: string
 }) {
-  const ref = React.useRef<HTMLDivElement>(null)
   // Recharts renders nothing until it has measured its container, and every
   // chart measuring and re-rendering right after hydration was the longest
   // main-thread task on project pages. Mount each chart only when it is
   // about to be seen.
-  const [observeNearViewport, shouldMountChart] = useIsNearViewport()
-  const setRef: React.RefCallback<HTMLDivElement> = React.useCallback(
-    (element) => {
-      ref.current = element
-      const stopObserving = observeNearViewport(element)
-      return () => {
-        ref.current = null
-        stopObserving?.()
-      }
-    },
-    [observeNearViewport],
-  )
+  const [ref, shouldMountChart] = useIsNearViewport()
 
   const hasData = data && data.length > 1
 
@@ -142,7 +130,7 @@ function ChartContainer<T extends { timestamp: number }>({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div ref={setRef} className="group relative">
+      <div ref={ref} className="group relative">
         <Slot
           className={cn(
             chartContainerClassNames,
@@ -203,7 +191,7 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!isLoading && milestones && (
-          <ChartMilestones data={data} milestones={milestones} ref={ref} />
+          <ChartMilestones data={data} milestones={milestones} />
         )}
       </div>
     </ChartContext.Provider>

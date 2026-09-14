@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
@@ -26,14 +26,13 @@ import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
   milestones: Milestone[]
-  ref: React.RefObject<HTMLDivElement | null>
 }
 
 export function ChartMilestones<T extends { timestamp: number }>({
   data,
   milestones,
-  ref,
 }: Props<T>) {
+  const ref = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState<number>()
   const timestampedMilestones = useMemo(
     () => getTimestampedMilestones(data, milestones),
@@ -43,19 +42,19 @@ export function ChartMilestones<T extends { timestamp: number }>({
   useEffect(() => {
     if (!ref.current) return
     setWidth(ref.current.getBoundingClientRect().width)
-  }, [ref])
+  }, [])
 
   useEventListener('resize', () => {
     if (!ref.current) return
     setWidth(ref.current.getBoundingClientRect().width)
   })
 
-  if (width === undefined || timestampedMilestones.length < 2) return null
+  if (timestampedMilestones.length < 2) return null
 
   return (
-    <div data-role="milestones">
+    <div data-role="milestones" ref={ref}>
       {timestampedMilestones.map((data, index) => {
-        if (data.milestones.length === 0) return null
+        if (width === undefined || data.milestones.length === 0) return null
         const x = index / (timestampedMilestones.length - 1)
 
         return (
