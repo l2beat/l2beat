@@ -13,8 +13,10 @@ export interface PrivacyAnonymitySetSeries {
   projectId: string
   bucketId: string
   chain: string
+  bucketType: 'pool' | 'denomination'
   label: string
   token: string
+  formattedAmount: string
   minimumAmount: string
   sinceTimestamp: number
 }
@@ -51,11 +53,13 @@ export function getPrivacyAnonymitySetSeries(
           projectId: project.id,
           bucketId: bucket.id,
           chain,
+          bucketType: bucket.type,
           label:
             bucket.type === 'denomination'
               ? `${formattedAmount} ${token.token.symbol}`
               : `≥${formattedAmount} ${token.token.symbol}`,
           token: token.token.symbol,
+          formattedAmount,
           minimumAmount,
           sinceTimestamp: bucket.sinceTimestamp,
         }

@@ -76,7 +76,6 @@ export async function getPrivacySummaryEntries(
     .filter((project) => project.tvsConfig !== undefined)
     .map((project) => project.id)
 
-  const now = UnixTime.now()
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
   const [totals, daily30d, tvl, anonymitySets] = await Promise.all([
