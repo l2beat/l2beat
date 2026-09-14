@@ -43,12 +43,9 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
   )
 
   const { addresses, events } = buildPrivacyLogFilter(configurations)
-  const logs = await deps.logsProvider.getLogs(
-    blockFrom,
-    blockTo,
-    addresses,
+  const logs = await deps.logsProvider.getLogs(blockFrom, blockTo, addresses, [
     events,
-  )
+  ])
 
   const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
     logs,

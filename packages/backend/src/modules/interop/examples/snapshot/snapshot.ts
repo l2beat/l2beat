@@ -9,6 +9,7 @@ import {
   type EVMLog,
   type EVMTransaction,
   Http,
+  type LogsTopicFilter,
   type MulticallV3Client,
   type MulticallV3Response,
   type Receipt,
@@ -161,7 +162,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
     const addressKey = addresses?.join(',') ?? 'all'
     const topicsKey = topics?.join(',') ?? 'all'

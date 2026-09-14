@@ -101,7 +101,7 @@ describe(PrivacyFlowIndexer.name, () => {
         50,
         150,
         [ADDRESS_A.toString()],
-        [TOPIC_A],
+        [[TOPIC_A]],
       )
 
       expect(blockProvider.getBlockTimestamps).not.toHaveBeenCalled()
@@ -768,7 +768,9 @@ describe(PrivacyFlowIndexer.name, () => {
       expect(new Set(getLogsCall?.[2])).toEqual(
         new Set([ADDRESS_A.toString(), ADDRESS_B.toString()]),
       )
-      expect(new Set(getLogsCall?.[3])).toEqual(new Set([TOPIC_A, TOPIC_B]))
+      expect(new Set(getLogsCall?.[3]?.[0])).toEqual(
+        new Set([TOPIC_A, TOPIC_B]),
+      )
 
       const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
       expect(records?.length).toEqual(2)
