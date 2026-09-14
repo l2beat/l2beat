@@ -11,7 +11,7 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('superposition')
-const archivedAt = UnixTime(1788868800) // 2026-09-08T12:00:00Z
+const archivedAt = UnixTime(1788865200) // 2026-09-08T11:00:00Z, last hour rpc.superposition.so resolved
 
 export const superposition: ScalingProject = orbitStackL3({
   capability: 'universal',
