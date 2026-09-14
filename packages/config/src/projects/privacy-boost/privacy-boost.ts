@@ -12,7 +12,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
-import type { BaseProject } from '../../types'
+import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('privacy-boost')
@@ -50,14 +50,70 @@ function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
 }
 
+// topic0 of the standard ERC-20 Transfer(address,address,uint256)
+const TRANSFER_EVENT =
+  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+
+const poolAddress = ChainSpecificAddress.address(pool.address)
+
 const registeredTokens = discovery
   .getContractValue<{ tokenAddress: string }[]>('TokenRegistry', 'tokens')
   .map((token) => {
     const address = ChainSpecificAddress.address(
       token.tokenAddress as ChainSpecificAddress,
     )
-    return getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID).symbol
+    return {
+      address,
+      info: getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID),
+    }
   })
+
+// The pool's own events carry no usable amounts: epoch withdrawals settle in
+// batches without per-withdrawal events, and the deposit event signature
+// changed with the September 2026 upgrade. Flows are therefore tracked as
+// gross ERC-20 transfers across the pool boundary. Every deposit request,
+// portal deposit and withdrawal moves tokens this way, but so do deposit
+// cancellation refunds, treasury fee legs and gateway DeFi round trips, which
+// are all counted as they cross.
+const privacyTokens: ProjectPrivacyToken[] = registeredTokens.map(
+  ({ address, info }) => {
+    // Prices must cover the whole bucket range, so never start before listing.
+    const sinceTimestamp = Math.max(
+      PRIVACY_BOOST_SINCE_TIMESTAMP,
+      info.coingeckoListingTimestamp,
+    )
+
+    return {
+      token: {
+        address: address.toString(),
+        iconUrl: info.iconUrl,
+        symbol: info.symbol,
+        decimals: info.decimals,
+        priceId: info.coingeckoId,
+        sinceTimestamp,
+      },
+      buckets: [
+        {
+          id: `privacy-boost-${info.symbol}`,
+          type: 'pool',
+          label: info.symbol,
+          address: pool.address,
+          sinceTimestamp,
+          deposit: {
+            event: TRANSFER_EVENT,
+            extractor: 'erc20Transfer',
+            params: { to: poolAddress },
+          },
+          withdrawal: {
+            event: TRANSFER_EVENT,
+            extractor: 'erc20Transfer',
+            params: { from: poolAddress },
+          },
+        },
+      ],
+    }
+  },
+)
 
 export const privacyBoost: BaseProject = {
   id: ProjectId('privacy-boost'),
@@ -106,7 +162,7 @@ export const privacyBoost: BaseProject = {
       address: ChainSpecificAddress.address(pool.address),
       chain: ChainSpecificAddress.longChain(pool.address),
       sinceTimestamp: PRIVACY_BOOST_SINCE_TIMESTAMP,
-      tokens: registeredTokens,
+      tokens: registeredTokens.map((token) => token.info.symbol),
     },
   ],
   tvsInfo: {
@@ -248,12 +304,7 @@ export const privacyBoost: BaseProject = {
     ],
   },
   privacyInfo: {
-    // TODO: Proposed tracking: deposits from DepositRequested (has tokenId + totalAmount),
-    // withdrawals from ERC-20 Transfer logs with from == pool (epoch withdrawals emit no pool event).
-    // Needs: (1) indexed-topic (topic1/2) filter support in LogsProvider/PrivacyFlowIndexerConfig,
-    // (2) new extractors: privacyBoostDeposit (params: tokenId) and generic erc20TransferOut (params: pool).
-    // Accepted errors: cancelled deposits overcounted; refunds/fee legs/relay fee exits count as withdrawals.
-    tokens: [],
+    tokens: privacyTokens,
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
