@@ -1,82 +1,152 @@
 import { definePrivacyAdversaries } from '../../common/privacyAdversaries'
 
-const STEALTH = 'https://github.com/cloakedxyz/clkd-stealth'
-const ORCHESTRATOR =
-  'https://etherscan.io/address/0x36a7cd5b1f475122a2b52580fc8e170a2cd312ef'
-const DELEGATE =
-  'https://etherscan.io/address/0x7c27e3aecbf42879b64d76f604dc3430f4886462'
+const STEALTH =
+  'https://github.com/cloakedxyz/clkd-stealth/blob/9eb359efdd4ea31f5504bf81e57dcfe6f966dc14/src/'
+const RECOVERY =
+  'https://github.com/cloakedxyz/clkd-recovery/blob/b432a33873e2cfa4769807f8c95ed20a67234eed/src/'
+const HOW_IT_WORKS = 'https://clkd.xyz/docs/how-it-works'
+const API = 'https://clkd.xyz/openapi.json'
+const PRIVACY = 'https://clkd.xyz/docs/privacy'
 
 export const cloakedAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'recipient',
-    text: 'Hides which account owns a receiving address. Sender, amount and the address itself are public.',
+    text: 'Hides the link between a receiving address and the recipient account from the public. The payer knows the address it was given. Sender, asset, amount and subsequent fund movements remain public.',
   },
   cells: {
     publicObserver: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposure:
-        'Nobody can tell who owns the address: the derivation is never published, and a payment is a plain transfer to a fresh address. What is public is that the address belongs to this service, because spending from it first points the account at one shared implementation that every user shares, and everyone sees the sender and the amount.',
+        'A fresh receiving address has no public derivation linking it to the recipient account, but anyone can follow its funds through later sends and change outputs. Combining addresses exposes their joint use, while EIP-7702 delegation reveals the chosen account implementation without proving who owns the address or that only Cloaked uses that implementation.',
       advice:
-        'Spend one address at a time. Every address you bundle into one exit is publicly marked as yours.',
+        'Generate a fresh address for each receive, select separate address-held balances with Advanced Control when sending, and use destinations that have no public link to you.',
       sources: [
         {
-          contract: 'OffchainResolver',
-          title: 'ENS resolver (only onchain component)',
+          title: 'Address derivation from server-held ephemeral material',
+          url: STEALTH + 'shared/genStealthAddress.ts#L17-L58',
         },
         {
-          title: 'Shared account delegation that marks a used address',
-          url: DELEGATE,
+          title: 'Input selection, visible change and EIP-7702 execution',
+          url: HOW_IT_WORKS + '#sending-funds',
         },
-        { title: 'Stealth derivation (clkd-stealth)', url: STEALTH },
+        {
+          title:
+            'Quote API: spendableAddresses and reusable singleAddress mode',
+          url: API,
+        },
       ],
     },
     chainAnalyst: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposure:
-        'Each address receives once and is spent once, change goes to another address of the same account, and every exit is relayed through one shared contract by few submitters, so the set of exits is trivially enumerable. The anonymity set is small.',
+        'No public recipient registry or announcement supplies an account-to-address mapping, but timing, distinctive amounts, recurring counterparties and consolidation can identify or cluster recipients.',
       advice:
-        'Wait before spending, exit one address at a time, and send to destinations that have no link to you.',
+        'Space out related payments and check whether amounts or recurring payment patterns identify you. Follow change outputs when assessing what a counterparty can trace.',
       sources: [
         {
-          title: 'Exit transactions run through one orchestrator',
-          url: ORCHESTRATOR,
+          title: 'Documented transaction links and change handling',
+          url: HOW_IT_WORKS + '#what-is-visible-onchain',
         },
-        { title: 'Shared account delegation', url: DELEGATE },
+        {
+          title: 'Deterministic ephemeral keys stay offchain',
+          url: STEALTH + 'shared/deriveDeterministicEphemeralKey.ts#L35-L68',
+        },
+        {
+          title:
+            'API permits repeated use; receive-once/spend-once is not enforced',
+          url: API,
+        },
       ],
     },
     networkObserver: {
-      sentiment: 'good',
+      sentiment: 'bad',
       exposure:
-        "Every action goes to Cloaked's servers. On the wire there is nothing but encrypted traffic to Cloaked.",
+        'Privacy against outside service providers remains unverified because the hosted client and backend are closed source, while the privacy policy lists RPC, hosting and analytics providers.',
+      advice:
+        'For independent recovery, derive keys locally and use your own node for address-specific reads, with Tor for broadcasts. A wallet RPC setting alone does not control hosted-service requests.',
       sources: [
-        { title: 'Server-bound keys (clkd-stealth)', url: STEALTH },
         {
-          title: 'Recovery tool (exit path)',
-          url: 'https://github.com/cloakedxyz/clkd-recovery',
+          contract: 'OffchainResolver',
+          title:
+            'CCIP-Read forwards the ENS query and verifies the returned answer',
+        },
+        {
+          title:
+            'Disclosed metadata, relay data and external service providers',
+          url: PRIVACY,
+        },
+        {
+          title:
+            'Recovery derives address keys locally without Cloaked API calls',
+          url: RECOVERY + 'lib/deriveKeys.ts#L31-L68',
         },
       ],
     },
     privilegedInsider: {
       sentiment: 'bad',
       exposure:
-        'Cloaked generates every address for your account and stores the keys to regenerate them all, so it knows all your addresses, past and future. Address generation, balances, quotes and broadcasts pass through its servers under a fixed account identifier, and every payer who resolves your name hits its server. It cannot spend your funds. For the pool option it records which deposit became which withdrawal.',
+        'Cloaked receives the viewing capability and public spending key needed to regenerate past and future addresses within the shared derivation branch, associates quotes and activity with an account identifier, and states that its Incognito relay retains deposit-to-withdrawal associations. Users of the hosted wallet must trust its code with their client-side spending secrets.',
       advice:
-        'Run a local client so the spending key never reaches the hosted app, and check the transactions it hands you before signing.',
+        'Use an inspected local client to verify receiving-address derivations and transaction contents before signing. This protects the spending-key boundary but does not hide the shared address history from Cloaked.',
       sources: [
         {
-          title: 'Account creation stores keys (OpenAPI)',
-          url: 'https://api.clkd.xyz/openapi.json',
+          title:
+            'Viewing branch and public spending key shared with the server',
+          url: STEALTH + 'client/deriveServerBoundKeys.ts#L16-L53',
         },
-        { title: 'Server-bound keys (clkd-stealth)', url: STEALTH },
+        {
+          title: 'Account-scoped addresses, quotes, submissions and pool state',
+          url: API,
+        },
+        {
+          title: 'Privacy policy: retained pool associations and account data',
+          url: PRIVACY,
+        },
+        {
+          contract: 'OffchainResolver',
+          title: 'Signature and expiry checks do not prove recipient control',
+        },
+        {
+          section: 'permissions',
+          title: 'Owner can replace gateway and signer',
+        },
+        {
+          section: 'upgrades-and-governance',
+          title: 'Hosted-client trust boundary',
+        },
       ],
     },
     futureAdversary: {
       sentiment: 'warning',
       exposure:
-        "No key material is published onchain, so a quantum computer cannot link your addresses, unless your account was created from a wallet signature plus PIN, which reduces to that wallet's key. Stealth address protocols, by not breaking the link between deposit and withdrawal address, are questionably future-proof because they create obscurity rather than privacy.",
+        'The public chain lacks the ephemeral announcements needed to replay every address derivation, so breaking an individual stealth signing key does not by itself identify its parent account. Retained operator viewing material or address mappings still expose that history. Where account creation uses a deterministic wallet signature, recovering the login wallet key from an exposed public key permits reproducing signatures and trying all four-digit PINs, whereas independent passkey PRF secrets do not follow from breaking the passkey authentication public key.',
       advice:
-        'Create your account with a passkey, not with a wallet signature.',
-      sources: [{ title: 'Key derivation (clkd-stealth)', url: STEALTH }],
+        'Use the passkey PRF setup to avoid the wallet-signature dependency, while treating the address history shared with Cloaked as permanently disclosed to the service.',
+      sources: [
+        {
+          title:
+            'Stealth signing keys mix the spending key with a hashed secret',
+          url: STEALTH + 'client/genStealthPrivateKey.ts#L17-L34',
+        },
+        {
+          title:
+            'Four-digit PIN and wallet address determine the signed message',
+          url: STEALTH + 'client/genCloakedMessage.ts#L15-L48',
+        },
+        {
+          title: 'Signature components are hashed into the account keys',
+          url: STEALTH + 'client/genKeysFromSignature.ts#L23-L42',
+        },
+        {
+          title: 'Independent secrets, including two WebAuthn PRF outputs',
+          url: STEALTH + 'client/genKeys.ts#L7-L67',
+        },
+        {
+          title: 'FIDO hmac-secret uses a separate random credential secret',
+          url: 'https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-hmac-secret-extension',
+        },
+        { title: 'Operator data and retention', url: PRIVACY },
+      ],
     },
   },
 })
