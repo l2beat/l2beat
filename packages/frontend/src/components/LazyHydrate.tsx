@@ -1,4 +1,4 @@
-import { type ReactNode, useRef } from 'react'
+import type { ReactNode } from 'react'
 import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 
 interface Props {
@@ -14,8 +14,7 @@ interface Props {
  * below-the-fold sections cost nothing on the hydration task.
  */
 export function LazyHydrate({ children, eager = false }: Props) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isNear = useIsNearViewport(ref)
+  const [ref, isNear] = useIsNearViewport()
   const isServer = typeof window === 'undefined'
 
   if (isServer || eager || isNear) {

@@ -99,6 +99,24 @@ export class AggregatedL2CostRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async checkIfExists(
+    projectId: ProjectId,
+    fromInclusive?: UnixTime,
+  ): Promise<boolean> {
+    let query = this.db
+      .selectFrom('AggregatedL2Cost')
+      .select('projectId')
+      .where('projectId', '=', projectId.toString())
+      .limit(1)
+
+    if (fromInclusive !== undefined) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    const result = await query.executeTakeFirst()
+    return result !== undefined
+  }
+
   async getByProjectAndTimeRange(
     projectId: ProjectId,
     timeRange: [UnixTime | null, UnixTime],
