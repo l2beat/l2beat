@@ -432,6 +432,39 @@ describe('getProjects', () => {
         }
       })
     }
+
+    it('configures comparable ETH and stablecoin anonymity-set thresholds', () => {
+      const expected = {
+        railgun: {
+          WETH: ['100000000000000000', '10000000000000000000'],
+          DAI: ['200000000000000000000', '20000000000000000000000'],
+          USDC: ['200000000', '20000000000'],
+          USDT: ['200000000', '20000000000'],
+        },
+        'privacy-pools': {
+          ETH: ['100000000000000000', '10000000000000000000'],
+          DAI: ['200000000000000000000', '20000000000000000000000'],
+          USDC: ['200000000', '20000000000'],
+          USDT: ['200000000', '20000000000'],
+        },
+      }
+
+      for (const [projectId, expectedTokens] of Object.entries(expected)) {
+        const project = projects.find((project) => project.id === projectId)
+        assert(project?.privacyInfo !== undefined)
+
+        for (const [symbol, minimumAmounts] of Object.entries(expectedTokens)) {
+          const token = project.privacyInfo.tokens.find(
+            (token) => token.token.symbol === symbol,
+          )
+          assert(token !== undefined, `${projectId} is missing ${symbol}`)
+          expect(token.buckets).toHaveLength(1)
+          expect(token.buckets[0]?.anonymitySet?.minimumAmounts).toEqual(
+            minimumAmounts,
+          )
+        }
+      }
+    })
   })
 
   describe('contracts', () => {

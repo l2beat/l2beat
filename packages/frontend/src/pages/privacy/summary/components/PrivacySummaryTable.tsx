@@ -28,6 +28,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { AnonymitySetCell } from './AnonymitySetCell'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
@@ -195,6 +196,28 @@ const columns = [
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
+  columnHelper.accessor(
+    (entry) =>
+      entry.anonymitySet.status === 'available'
+        ? entry.anonymitySet.value
+        : undefined,
+    {
+      id: 'anonymitySet',
+      header: '30D anon. set',
+      cell: (ctx) => (
+        <AnonymitySetCell
+          anonymitySet={ctx.row.original.anonymitySet}
+          projectName={ctx.row.original.name}
+        />
+      ),
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'Largest configured anonymity set: unique deposit senders during the last 30 complete UTC days.',
+      },
+    },
+  ),
   columnHelper.display({
     id: 'trustedSetup',
     header: 'Setup',

@@ -53,6 +53,7 @@ export interface PrivacyProjectDetails {
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
+  hasAnonymitySet: boolean
   hasTvl: boolean
   detailedDescription?: string
   noteDiscovery?: PrivacyNoteDiscovery
@@ -264,6 +265,9 @@ export async function getPrivacyProjectDetails(
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
+    hasAnonymitySet: project.privacyInfo.tokens.some((token) =>
+      token.buckets.some((bucket) => bucket.anonymitySet !== undefined),
+    ),
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??
