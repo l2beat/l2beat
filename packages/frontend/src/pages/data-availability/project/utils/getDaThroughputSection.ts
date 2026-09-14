@@ -3,8 +3,8 @@ import { getThroughputSyncWarning } from '~/server/features/data-availability/th
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { toChartProject } from '~/utils/project/toChartProject'
 import { optionToRange } from '~/utils/range/range'
-import { withProjectIcon } from '~/utils/withProjectIcon'
 
 export async function getDaThroughputSection(
   helpers: SsrHelpers,
@@ -36,7 +36,7 @@ export async function getDaThroughputSection(
   })
 
   return {
-    project: withProjectIcon(project),
+    project: toChartProject(project),
     throughput: project.daLayer.throughput ?? [],
     syncStatus: {
       warning: syncWarning,

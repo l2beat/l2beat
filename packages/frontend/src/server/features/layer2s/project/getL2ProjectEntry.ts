@@ -22,6 +22,7 @@ import { env } from '~/env'
 import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
 import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
+import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -51,12 +52,12 @@ import { getOtherConsiderationsSection } from '~/utils/project/technology/getOth
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
 import { getStateValidationSection } from '~/utils/project/technology/state-validation/getStateValidationSection'
+import { toChartProject } from '~/utils/project/toChartProject'
 import { getL2TvsSection } from '~/utils/project/tvs/getL2TvsSection'
 import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
-import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
@@ -398,7 +399,7 @@ export async function getL2ProjectEntry(
         }
       : undefined
 
-  const projectWithIcon = withProjectIcon(project)
+  const chartProject = toChartProject(project)
 
   const gardenCropsSection = getGardenCropsSection(project.crops)
   if (gardenCropsSection) {
@@ -416,7 +417,7 @@ export async function getL2ProjectEntry(
         milestones: sortedMilestones,
         tokens,
         tvsInfo: project.tvsInfo,
-        project: projectWithIcon,
+        project: chartProject,
         ...l2TvsSection,
       },
     })
@@ -445,7 +446,7 @@ export async function getL2ProjectEntry(
         title: 'Activity',
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
-        project: projectWithIcon,
+        project: chartProject,
         compareUrl: getProjectCompareUrl(project, 'activity'),
         ...activitySection,
       },
@@ -459,7 +460,7 @@ export async function getL2ProjectEntry(
         id: 'onchain-costs',
         title: 'Onchain costs',
         milestones: sortedMilestones,
-        project: projectWithIcon,
+        project: chartProject,
         compareUrl: getProjectCompareUrl(project, 'costs'),
         ...costsSection,
       },
@@ -473,7 +474,7 @@ export async function getL2ProjectEntry(
         id: 'data-posted',
         title: 'Data posted',
         milestones: sortedMilestones,
-        project: projectWithIcon,
+        project: chartProject,
         compareUrl: getProjectCompareUrl(project, 'data-posted'),
         ...dataPostedSection,
       },
@@ -493,7 +494,7 @@ export async function getL2ProjectEntry(
         id: 'liveness',
         title: 'Liveness',
         milestones: sortedMilestones,
-        project: projectWithIcon,
+        project: chartProject,
         ...livenessSection,
       },
     })
@@ -715,7 +716,11 @@ export async function getL2ProjectEntry(
       props: {
         id: 'updates',
         title: 'Updates',
-        updates: discoveryUpdates,
+        ...(await getUpdatesSectionProps(
+          helpers,
+          project.id,
+          discoveryUpdates,
+        )),
       },
     })
   }

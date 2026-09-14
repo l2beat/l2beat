@@ -1,10 +1,14 @@
 import type {
   ProjectDiscoveryUpdate,
+  ProjectDiscoveryUpdateSection,
   ProjectDiscoveryUpdateSectionKind,
 } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { type MouseEvent, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { CopyButton } from '~/components/CopyButton'
+import { Skeleton } from '~/components/core/Skeleton'
 import { DiffBody } from '~/components/discovery/DiffBody'
 import { Markdown } from '~/components/markdown/Markdown'
 import {
@@ -18,15 +22,24 @@ import {
   PaginationPrevious,
 } from '~/components/Pagination'
 import { ChevronIcon } from '~/icons/Chevron'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
-  updates: ProjectDiscoveryUpdate[]
+  projectId: ProjectId
+  updates: ProjectDiscoveryUpdateSummary[]
   selectedUpdateId?: string
 }
+
+/** Everything but the diff bodies, which are loaded per page via
+ *  `projects.discoveryUpdateSections`. */
+export type ProjectDiscoveryUpdateSummary = Omit<
+  ProjectDiscoveryUpdate,
+  'sections'
+>
 
 const SECTION_TITLES = {
   'config-related-changes': 'New and verified contracts',
@@ -34,9 +47,10 @@ const SECTION_TITLES = {
   'watched-changes': null,
 } satisfies Record<ProjectDiscoveryUpdateSectionKind, string | null>
 
-const PAGE_SIZE = 5
+export const UPDATES_PAGE_SIZE = 5
 
 export function UpdatesSection({
+  projectId,
   updates,
   selectedUpdateId,
   ...sectionProps
@@ -47,15 +61,19 @@ export function UpdatesSection({
     )
     return selectedUpdateIndex === -1
       ? 0
-      : Math.floor(selectedUpdateIndex / PAGE_SIZE)
+      : Math.floor(selectedUpdateIndex / UPDATES_PAGE_SIZE)
   })
+
+  const pageCount = Math.ceil(updates.length / UPDATES_PAGE_SIZE)
+  const entries = updates.slice(
+    page * UPDATES_PAGE_SIZE,
+    (page + 1) * UPDATES_PAGE_SIZE,
+  )
+  const sections = usePageSections(projectId, entries)
 
   if (updates.length === 0) {
     return null
   }
-
-  const pageCount = Math.ceil(updates.length / PAGE_SIZE)
-  const entries = updates.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
   return (
     <ProjectSection {...sectionProps}>
@@ -64,6 +82,8 @@ export function UpdatesSection({
           <UpdateCard
             key={update.id}
             update={update}
+            sections={sections.data?.[update.id]}
+            sectionsFailed={sections.isError}
             isSelected={update.id === selectedUpdateId}
           />
         ))}
@@ -76,6 +96,19 @@ export function UpdatesSection({
         )}
       </div>
     </ProjectSection>
+  )
+}
+
+function usePageSections(
+  projectId: ProjectId,
+  entries: ProjectDiscoveryUpdateSummary[],
+) {
+  const trpc = useTRPC()
+  return useQuery(
+    trpc.projects.discoveryUpdateSections.queryOptions({
+      projectId,
+      updateIds: entries.map((update) => update.id),
+    }),
   )
 }
 
@@ -138,10 +171,15 @@ function UpdatesPagination({
 
 export function UpdateCard({
   update,
+  sections,
+  sectionsFailed = false,
   isSelected,
   copyLinkPath,
 }: {
-  update: ProjectDiscoveryUpdate
+  update: ProjectDiscoveryUpdateSummary
+  /** `undefined` while the diff bodies are still loading. */
+  sections: ProjectDiscoveryUpdateSection[] | undefined
+  sectionsFailed?: boolean
   isSelected: boolean
   copyLinkPath?: string
 }) {
@@ -232,7 +270,12 @@ export function UpdateCard({
             </Markdown>
           </div>
         )}
-        {update.sections.map((section, index) => {
+        {sectionsFailed ? (
+          <p className="text-secondary text-xs">Failed to load changes.</p>
+        ) : (
+          sections === undefined && <SectionsSkeleton />
+        )}
+        {sections?.map((section, index) => {
           const title = SECTION_TITLES[section.kind]
           return (
             <div key={index} className="flex min-w-0 flex-col gap-2">
@@ -250,7 +293,17 @@ export function UpdateCard({
   )
 }
 
-function formatUpdateDate(update: ProjectDiscoveryUpdate): string {
+function SectionsSkeleton() {
+  return (
+    <div className="flex flex-col gap-2" aria-busy="true">
+      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-5/6" />
+    </div>
+  )
+}
+
+function formatUpdateDate(update: ProjectDiscoveryUpdateSummary): string {
   if (update.timestamp === null) {
     return update.date
   }
