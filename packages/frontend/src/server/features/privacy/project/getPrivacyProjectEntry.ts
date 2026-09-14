@@ -21,7 +21,7 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import {
   EMPTY_TVS_BREAKDOWN,
   get7dTvsBreakdown,
@@ -99,7 +99,6 @@ export async function getPrivacyProjectEntry(
       ],
     }),
     get7dTvsBreakdown({ type: 'all' }),
-    prefetchCharts(details, helpers, defaultChartRange),
   ])
 
   const permissionsSection = getPermissionsSection(
@@ -357,36 +356,4 @@ export async function getPrivacyProjectEntry(
     },
     sections,
   }
-}
-
-async function prefetchCharts(
-  details: PrivacyProjectDetails,
-  helpers: SsrHelpers,
-  range: ChartRange,
-): Promise<void> {
-  const flowsPrefetch =
-    details.assets.length > 0
-      ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.privacy.flowsChart.queryOptions({
-            projectIds: [details.id],
-            range,
-          }),
-        )
-      : undefined
-
-  if (!details.hasTvl) {
-    await flowsPrefetch
-    return undefined
-  }
-
-  // The flows chart prefetch rides along so both charts are dehydrated for the client
-  await Promise.all([
-    helpers.queryClient.fetchQuery(
-      helpers.trpc.tvs.chartByProjects.queryOptions({
-        projectIds: [details.id],
-        range,
-      }),
-    ),
-    flowsPrefetch,
-  ])
 }

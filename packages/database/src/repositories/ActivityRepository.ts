@@ -118,6 +118,26 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  // Answers "would the activity chart be empty" without loading the chart.
+  async checkIfExists(
+    projectId: ProjectId,
+    fromInclusive?: UnixTime,
+  ): Promise<boolean> {
+    let query = this.db
+      .selectFrom('Activity')
+      .select('projectId')
+      .where('projectId', '=', projectId.toString())
+      .where('count', '>', 0)
+      .limit(1)
+
+    if (fromInclusive !== undefined) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    const result = await query.executeTakeFirst()
+    return result !== undefined
+  }
+
   async getByProjectAndTimeRange(
     projectId: ProjectId,
     timeRange: [UnixTime | null, UnixTime],
