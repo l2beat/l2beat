@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import { CropFindings, CropNote } from '~/components/garden/CropFindings'
 import { CropPlant } from '~/components/garden/CropPlant'
 import {
@@ -33,18 +32,11 @@ export function CropsBed({
   inGarden: boolean
 }) {
   const entries = toCropEntries(crops)
-  const { ref, grown } = useGrowOnView()
 
   return (
-    <div
-      className={cn(
-        '@container',
-        !grown && '**:[animation-play-state:paused]!',
-      )}
-    >
+    <div className="@container">
       <Verdict inGarden={inGarden} entries={entries} />
       <div
-        ref={ref}
         className={cn(
           'relative mt-4 overflow-hidden rounded-t-xl border border-b-0',
           inGarden
@@ -74,34 +66,6 @@ export function CropsBed({
       </div>
     </div>
   )
-}
-
-/**
- * The section sits below the charts, so an entrance that plays on load is
- * over before anyone scrolls to it. Every animation in the section is held
- * until half of the plant bed is on screen, then released once. The bed is
- * observed rather than the whole section, which is taller than a short
- * viewport and would never reach the threshold.
- */
-function useGrowOnView() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [grown, setGrown] = useState(false)
-  useEffect(() => {
-    const bed = ref.current
-    if (!bed) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setGrown(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.5 },
-    )
-    observer.observe(bed)
-    return () => observer.disconnect()
-  }, [])
-  return { ref, grown }
 }
 
 function Plant({ entry, index }: { entry: CropEntry; index: number }) {
