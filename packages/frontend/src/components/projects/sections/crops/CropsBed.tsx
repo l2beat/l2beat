@@ -71,8 +71,8 @@ export function CropsBed({
 function Plant({ entry, index }: { entry: CropEntry; index: number }) {
   const { definition, evaluation } = entry
   return (
-    <a
-      href={`#crop-${definition.key}`}
+    <div
+      role="img"
       aria-label={`${definition.label}: ${getCropStatusText(evaluation.status, evaluation.sentiment)}`}
       className="flex flex-col items-center gap-1.5 pb-2"
     >
@@ -88,7 +88,7 @@ function Plant({ entry, index }: { entry: CropEntry; index: number }) {
         delay={index * 0.12}
         className="size-7 text-[11px]"
       />
-    </a>
+    </div>
   )
 }
 
@@ -129,9 +129,7 @@ function Findings({ entry, index }: { entry: CropEntry; index: number }) {
   const { definition, evaluation } = entry
   return (
     <div
-      id={`crop-${definition.key}`}
       className={cn(
-        'scroll-mt-24',
         '@min-[720px]:px-3 @min-[720px]:pt-5 @min-[720px]:pb-2 @min-[720px]:first:pl-0 @min-[720px]:last:pr-0',
         '@min-[900px]:px-5',
       )}
