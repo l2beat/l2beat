@@ -1,0 +1,26 @@
+// Compiler observations. Numbers are AST node IDs, not source-code names.
+.decl functionDefinition(id: number, name: symbol)
+.decl stateVariable(id: number, name: symbol)
+.decl child(parent: number, node: number)
+.decl assignment(node: number, left: number)
+.decl reference(node: number, declaration: number)
+.input functionDefinition
+.input stateVariable
+.input child
+.input assignment
+.input reference
+
+// Walk the syntax tree inside each function. This is NOT a call graph.
+.decl withinFunction(function: number, node: number)
+withinFunction(F, N) :- functionDefinition(F, _), child(F, N).
+withinFunction(F, N) :- withinFunction(F, P), child(P, N).
+
+// Match an assignment whose left side refers directly to a state declaration.
+// This says nothing about reachability, guards, callers, or transaction success.
+.decl directWrite(function: number, variable: number, assignment: number)
+directWrite(F, V, A) :-
+    withinFunction(F, A),
+    assignment(A, L),
+    reference(L, V),
+    stateVariable(V, _).
+.output directWrite

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Queryable facts · Astra</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header><a href="/" class="brand">astra <span>/ queryable facts</span></a><span class="stage">STAGE 01 · DIRECT WRITES</span></header>
+    <main>
+      <section class="intro">
+        <p class="eyebrow">A SMALL, INSPECTABLE ANALYSIS</p>
+        <h1>Find the write.<br /><span>Keep the claim precise.</span></h1>
+        <p class="lede">Turn Solidity syntax into facts, then ask one small rule which functions contain assignments to state variables.</p>
+      </section>
+      <nav class="flow" aria-label="The pipeline">
+        <a href="#source-section"><b>01</b> Solidity source</a><span>→</span>
+        <a href="#facts-section"><b>02</b> Compiler → facts</a><span>→</span>
+        <a href="#rules-section"><b>03</b> Soufflé rules</a><span>→</span>
+        <a href="#findings-section"><b>04</b> Observations</a>
+      </nav>
+      <section id="source-section" class="card source-card">
+        <div class="section-top"><div><p class="eyebrow">01 / INPUT</p><h2>Start with the source</h2></div><label>Example<select id="example" aria-label="Example"></select></label></div>
+        <p id="example-description"></p>
+        <div class="file-label">Playground.sol <span>solc 0.8.34 <button type="button" id="edit-source" class="secondary" aria-controls="source" aria-expanded="false">Edit source</button></span></div>
+        <pre id="source-preview" class="source-code" aria-label="Solidity source, highlighted"></pre>
+        <textarea id="source" spellcheck="false" aria-label="Solidity source" hidden></textarea>
+        <div class="actions"><button id="run">Run this stage <span>→</span></button><button class="secondary" id="reset">Reset example</button><span id="status" role="status" aria-live="polite">Loading examples…</span></div>
+        <pre id="error" role="alert" hidden></pre>
+      </section>
+      <div id="empty" class="empty"><span>Source → facts → rule → result</span><p>Run the stage to inspect real compiler and Soufflé outputs. Then change the example and run it again.</p></div>
+      <div id="results" hidden>
+        <section id="facts-section" class="card">
+          <div class="section-top"><div><p class="eyebrow">02 / OBSERVATIONS FROM THE COMPILER</p><h2>Syntax becomes facts</h2></div><span class="badge" id="fact-count"></span></div>
+          <p>The compiler supplies the AST and storage layout. A small adapter copies five kinds of observation from the AST. It does not decide what can execute.</p>
+          <div class="explanation"><b>Readable labels, same IDs.</b> For example, <code>12_use_score</code> means “the use of score at AST node 12”; <code>3_state_score</code> means “the state declaration at node 3”. A <code>reference</code> connects the use to its declaration. The number identifies the node; the suffix is a display label, not Soufflé syntax. Compiler JSON and downloaded facts retain the original numeric IDs.
+            <label class="id-toggle"><input type="checkbox" id="raw-ids" /> Show raw numeric IDs in the tree, facts, and evidence</label></div>
+          <section class="ast-panel" aria-labelledby="ast-heading">
+            <div class="section-top"><h3 id="ast-heading">The AST, as a tree</h3><button id="collapse-tree" class="secondary">Collapse branches</button></div>
+            <p>Each branch is a <code>child(parent, node)</code> fact. Expand a node to see its direct children. These are syntax relationships, not execution order.</p>
+            <p class="caption">Try expanding ContractDefinition → setScore → Block → ExpressionStatement → Assignment. The assignment contains the identifiers for score and next.</p>
+            <div id="ast-tree" aria-label="Compiler abstract syntax tree"></div>
+          </section>
+          <details><summary>See the compiler JSON</summary><p id="compiler-version"></p><h3>Assignment nodes · unchanged excerpts from the AST</h3><pre id="compiler-excerpts" class="code"></pre><details><summary>Full AST</summary><pre id="ast" class="code long"></pre></details><details><summary>Storage layout · produced, not used by this rule</summary><pre id="storage" class="code"></pre></details><div id="warnings"></div></details>
+          <div id="facts"></div>
+        </section>
+        <div class="analysis-grid">
+          <section id="rules-section" class="card">
+            <div class="section-top"><div><p class="eyebrow">03 / DERIVATION</p><h2>One small rule file</h2></div><span class="badge">3 clauses</span></div>
+            <p><code>withinFunction</code> walks AST children. <code>directWrite</code> joins an assignment with the state declaration its left side refers to.</p>
+            <p>A comma means <b>and</b>. <code>:-</code> means <b>if</b>. Repeated variables connect the tuples. <code>_</code> means “any value”.</p>
+            <pre id="rules" class="code"></pre>
+            <p class="caption">These are the actual rules executed for this run. The recursion follows syntax-tree children, not function calls.</p>
+          </section>
+          <section id="findings-section" class="card">
+            <div class="section-top"><div><p class="eyebrow">04 / WHAT WE FOUND</p><h2>Direct write sites</h2></div><span class="badge" id="finding-count"></span></div>
+            <div id="findings"></div>
+            <div class="boundary"><h3>Certain about syntax.<br />Open about execution.</h3><p>The tuple establishes where an assignment appears. Calling its function may fail, the assignment may be unreachable, or the transaction may later revert.</p><p><b>Potential writer ≠ anyone can write.</b></p></div>
+            <details open><summary>The boundary of this lesson</summary><ul id="scope"></ul></details>
+            <div class="next"><p class="eyebrow">THE NEXT QUESTION</p><p>Now that we have found the assignment, what source code would a researcher or AI need to read before explaining who can execute it?</p><p class="caption">That analysis is the next stage. There is no AI or solver verdict here.</p></div>
+          </section>
+        </div>
+        <footer><div><b>Every output is inspectable.</b><p id="artifact-path"></p></div><button id="download" class="secondary">Download run JSON</button></footer>
+      </div>
+    </main>
+  </body>
+</html>

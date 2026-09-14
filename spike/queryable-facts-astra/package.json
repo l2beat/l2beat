@@ -1,0 +1,13 @@
+{
+  "name": "queryable-facts-astra",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.mjs",
+    "pipeline": "node src/cli.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": { "node": ">=22" },
+  "dependencies": { "solc": "0.8.34" }
+}
