@@ -16,6 +16,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
+import type { OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -256,6 +257,9 @@ export interface BaseProject {
 
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
+
+  // crops data
+  crops?: ProjectCrops
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1248,6 +1252,69 @@ export type PrivacyFlowExtractorConfig =
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
 export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
+
+// #endregion
+
+// #region crops data
+
+export type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
+
+export const PROJECT_CROP_SENTIMENTS = ['good', 'warning', 'bad'] as const
+/** Narrower than `Sentiment`: "not graded" is a status, not a colour. */
+export type ProjectCropSentiment = (typeof PROJECT_CROP_SENTIMENTS)[number]
+
+export const GRADED_CROP_STATUSES = ['reviewed', 'partiallyReviewed'] as const
+/**
+ * `fullyTransparent` is a finished answer, not a gap: the protocol makes no
+ * claim to the property. Neither ungraded status carries a sentiment.
+ */
+export const UNGRADED_CROP_STATUSES = [
+  'notReviewed',
+  'fullyTransparent',
+] as const
+export type ProjectCropStatus =
+  | (typeof GRADED_CROP_STATUSES)[number]
+  | (typeof UNGRADED_CROP_STATUSES)[number]
+
+export interface ProjectCropFindings {
+  /** What the evaluation rests on - one finding per bullet. */
+  points?: string[]
+  /** Checked, and the criterion is not met. */
+  missing?: string[]
+  /** Neutral caveats and context - neither a positive finding nor a miss. */
+  additionalConsiderations?: string[]
+  /** Criteria we have not assessed yet. Never a claim about the protocol. */
+  notReviewed?: string[]
+}
+
+export interface ProjectGradedCrop extends ProjectCropFindings {
+  /** Defaults to `reviewed`. */
+  status?: (typeof GRADED_CROP_STATUSES)[number]
+  sentiment: ProjectCropSentiment
+}
+
+export interface ProjectUngradedCrop extends ProjectCropFindings {
+  status: (typeof UNGRADED_CROP_STATUSES)[number]
+  sentiment?: undefined
+}
+
+/** A graded crop must say how it fares; an ungraded one cannot. */
+export type ProjectCropEvaluation = ProjectGradedCrop | ProjectUngradedCrop
+
+export type ProjectOpenSourceCropEvaluation = ProjectCropEvaluation & {
+  /**
+   * SPDX id of an OSI-approved license - see `OSI_LICENSES`. The name and the
+   * link are rendered from the list, so the prose cannot drift from the id.
+   */
+  license?: OsiLicenseId
+}
+
+export interface ProjectCrops {
+  censorshipResistance: ProjectCropEvaluation
+  openSource: ProjectOpenSourceCropEvaluation
+  privacy: ProjectCropEvaluation
+  security: ProjectCropEvaluation
+}
 
 // #endregion
 

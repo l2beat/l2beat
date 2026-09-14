@@ -27,7 +27,8 @@
     "coingecko:platforms": "tsx scripts/getCoingeckoPlatforms.ts",
     "stargatev2-pools": "tsx scripts/stargatev2-pools/index.ts",
     "diff": "./scripts/diff/diff.sh",
-    "tvs:update-schema": "tsx ./scripts/tvs/update-schema.ts"
+    "tvs:update-schema": "tsx ./scripts/tvs/update-schema.ts",
+    "crops:generate-licenses": "tsx scripts/crops/generateOsiLicenses.ts"
   },
   "dependencies": {
     "@l2beat/discovery": "workspace:*",
