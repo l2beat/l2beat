@@ -1,5 +1,4 @@
 import type {
-  ProjectDiscoveryUpdate,
   ProjectDiscoveryUpdateSection,
   ProjectDiscoveryUpdateSectionKind,
 } from '@l2beat/config'
@@ -27,6 +26,10 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
+import {
+  type ProjectDiscoveryUpdateSummary,
+  UPDATES_PAGE_SIZE,
+} from './updatesPaging'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
   projectId: ProjectId
@@ -34,20 +37,11 @@ export interface UpdatesSectionProps extends ProjectSectionProps {
   selectedUpdateId?: string
 }
 
-/** Everything but the diff bodies, which are loaded per page via
- *  `projects.discoveryUpdateSections`. */
-export type ProjectDiscoveryUpdateSummary = Omit<
-  ProjectDiscoveryUpdate,
-  'sections'
->
-
 const SECTION_TITLES = {
   'config-related-changes': 'New and verified contracts',
   'initial-discovery': 'Initial discovery',
   'watched-changes': null,
 } satisfies Record<ProjectDiscoveryUpdateSectionKind, string | null>
-
-export const UPDATES_PAGE_SIZE = 5
 
 export function UpdatesSection({
   projectId,
