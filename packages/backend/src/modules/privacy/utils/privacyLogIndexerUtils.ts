@@ -13,6 +13,8 @@ import type { Configuration } from '../../../tools/uif/multi/types'
 interface PrivacyLogIndexerConfig {
   address: EthereumAddress
   event: string
+  /** Filters on indexed event args starting at topic1, null = wildcard. */
+  topics?: (string | null)[]
 }
 
 export interface PrivacyLogMatch<T extends PrivacyLogIndexerConfig> {
@@ -42,33 +44,59 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
     deps.to,
   )
 
-  const { addresses, events } = buildPrivacyLogFilter(configurations)
-  const logs = await deps.logsProvider.getLogs(blockFrom, blockTo, addresses, [
-    events,
-  ])
+  // eth_getLogs ANDs the topic positions of a single filter, so
+  // configurations with different indexed-arg filters cannot share a query.
+  // Each group is fetched and matched on its own.
+  const groups: { configurations: Configuration<T>[]; logs: Log[] }[] = []
+  for (const group of groupByTopics(configurations)) {
+    const { addresses, events } = buildPrivacyLogFilter(group)
+    const topics = group[0].properties.topics ?? []
+    const logs = await deps.logsProvider.getLogs(
+      blockFrom,
+      blockTo,
+      addresses,
+      [events, ...topics],
+    )
+    groups.push({ configurations: group, logs })
+  }
 
   const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
-    logs,
+    groups.flatMap((group) => group.logs),
     deps.blockProvider,
     deps.logger,
   )
-  const configMap = buildPrivacyLogConfigMap(configurations)
   const matches: PrivacyLogMatch<T>[] = []
 
-  for (const log of logs) {
-    const key = getPrivacyLogKey(log)
-    const matching = configMap.get(key) ?? []
-    if (matching.length === 0) continue
+  for (const group of groups) {
+    const configMap = buildPrivacyLogConfigMap(group.configurations)
+    for (const log of group.logs) {
+      const key = getPrivacyLogKey(log)
+      const matching = configMap.get(key) ?? []
+      if (matching.length === 0) continue
 
-    const timestamp = blockTimestampLookup.get(log.blockNumber)
-    assert(timestamp, `Missing block timestamp for block ${log.blockNumber}`)
+      const timestamp = blockTimestampLookup.get(log.blockNumber)
+      assert(timestamp, `Missing block timestamp for block ${log.blockNumber}`)
 
-    for (const configuration of matching) {
-      matches.push({ log, timestamp, configuration })
+      for (const configuration of matching) {
+        matches.push({ log, timestamp, configuration })
+      }
     }
   }
 
   return matches
+}
+
+function groupByTopics<T extends PrivacyLogIndexerConfig>(
+  configurations: Configuration<T>[],
+): Configuration<T>[][] {
+  const groups = new Map<string, Configuration<T>[]>()
+  for (const configuration of configurations) {
+    const key = JSON.stringify(configuration.properties.topics ?? [])
+    const group = groups.get(key) ?? []
+    group.push(configuration)
+    groups.set(key, group)
+  }
+  return Array.from(groups.values())
 }
 
 async function resolvePrivacyBlockRange(

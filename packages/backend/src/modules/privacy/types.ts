@@ -44,6 +44,11 @@ export type PrivacyFlowIndexerConfig = {
   chain: string
   address: EthereumAddress
   event: string
+  /**
+   * Filters on the indexed event args starting at topic1, null matching
+   * anything at that position. Derived from the extractor params.
+   */
+  topics?: (string | null)[]
   sinceTimestamp: UnixTime
   priceId: string
   decimals: number

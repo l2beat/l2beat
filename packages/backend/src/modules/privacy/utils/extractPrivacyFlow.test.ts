@@ -21,6 +21,10 @@ const umbraInterface = new utils.Interface([
   'event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)',
 ])
 
+const erc20Interface = new utils.Interface([
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+])
+
 const zamaInterface = new utils.Interface([
   'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
@@ -64,6 +68,48 @@ function encodeLog(
 }
 
 describe(extractPrivacyFlow.name, () => {
+  describe('erc20Transfer', () => {
+    const config: PrivacyFlowIndexerConfig = {
+      ...baseFlowConfig,
+      event: 'Transfer',
+      extractor: 'erc20Transfer',
+      params: { to: ADDRESS },
+    }
+
+    it('returns the transferred value with count=1', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual({
+        count: 1,
+        amount: 1500n,
+      })
+    })
+
+    it('ignores zero-value transfers', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        ADDRESS,
+        0n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores self transfers', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        ADDRESS,
+        ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+  })
+
   describe('fixedAmount', () => {
     it('returns the configured fixed amount with count=1', () => {
       const config: PrivacyFlowIndexerConfig = {

@@ -16,6 +16,7 @@ import {
   EthereumAddress,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import { PrivacyAnonymitySetIndexer } from '../../modules/privacy/indexers/PrivacyAnonymitySetIndexer'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
@@ -298,12 +299,48 @@ function toFlowConfig(
     }
   }
 
+  if (source.extractor === 'erc20Transfer') {
+    // Transfer logs are emitted by the token contract, not by the pool.
+    const config = {
+      ...base,
+      ...source,
+      address: EthereumAddress(token.address),
+      topics: getErc20TransferTopics(source.params),
+    }
+    return { id: PrivacyFlowIndexer.idToConfigurationId(config), ...config }
+  }
+
   const config = {
     ...base,
     address: EthereumAddress(privacyAddress.address),
     ...source,
   }
   return { id: PrivacyFlowIndexer.idToConfigurationId(config), ...config }
+}
+
+/**
+ * Transfer(address indexed from, address indexed to, uint256 value): the
+ * from/to params become topic1/topic2 filters so the query returns only
+ * transfers touching the pool instead of every transfer of the token.
+ */
+function getErc20TransferTopics(params: {
+  from?: EthereumAddress
+  to?: EthereumAddress
+}): (string | null)[] {
+  assert(
+    params.from !== undefined || params.to !== undefined,
+    'erc20Transfer source needs a from or to filter',
+  )
+  const topics = [addressTopic(params.from), addressTopic(params.to)]
+  while (topics.length > 0 && topics[topics.length - 1] === null) {
+    topics.pop()
+  }
+  return topics
+}
+
+function addressTopic(address: EthereumAddress | undefined): string | null {
+  if (address === undefined) return null
+  return utils.hexZeroPad(address, 32).toLowerCase()
 }
 
 function getPrivacyBucketAddress(address: PrivacyBucketAddress): {

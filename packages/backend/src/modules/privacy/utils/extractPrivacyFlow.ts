@@ -23,6 +23,10 @@ const umbraInterface = new utils.Interface([
   'event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)',
 ])
 
+const erc20Interface = new utils.Interface([
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+])
+
 const zamaInterface = new utils.Interface([
   'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
@@ -38,6 +42,8 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
         count: 1,
         amount: BigInt(source.params.amount),
       }
+    case 'erc20Transfer':
+      return extractErc20Transfer(log)
     case 'privacyPoolsValue':
       return {
         count: 1,
@@ -56,6 +62,21 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
     default:
       return undefined
   }
+}
+
+// Zero-value and self transfers move nothing across the pool boundary, so
+// they do not count as flows.
+function extractErc20Transfer(
+  log: PrivacyRpcLog,
+): PrivacyFlowExtractResult | undefined {
+  const parsedLog = erc20Interface.parseLog(log)
+  const amount = BigInt(parsedLog.args.value.toString())
+
+  if (amount === 0n || parsedLog.args.from === parsedLog.args.to) {
+    return undefined
+  }
+
+  return { count: 1, amount }
 }
 
 function extractRailgunShield(
