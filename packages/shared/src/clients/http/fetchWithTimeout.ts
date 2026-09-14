@@ -63,13 +63,13 @@ async function fetchWithReadableErrors(url: string, init: RequestInit) {
 // undici reports every network failure as this one TypeError and hides the reason in `cause`
 function unwrapFetchFailed(error: unknown): unknown {
   if (
-    !(error instanceof TypeError) ||
-    error.message !== 'fetch failed' ||
-    !(error.cause instanceof Error)
+    error instanceof TypeError &&
+    error.message === 'fetch failed' &&
+    error.cause instanceof Error
   ) {
-    return error
+    return withReadableMessage(error.cause)
   }
-  return withReadableMessage(error.cause)
+  return error
 }
 
 // happy-eyeballs connects fail with an AggregateError whose message is empty
