@@ -12,6 +12,7 @@ import {
   getCropStatusText,
   toCropEntries,
 } from '~/components/garden/crops'
+import { useEntranceHold } from '~/components/garden/useEntranceHold'
 import { cn } from '~/utils/cn'
 
 // Layout follows the section's own width (container queries), because the
@@ -32,9 +33,10 @@ export function CropsBed({
   inGarden: boolean
 }) {
   const entries = toCropEntries(crops)
+  const entranceHold = useEntranceHold()
 
   return (
-    <div className="@container">
+    <div className={cn('@container', entranceHold)}>
       <Verdict inGarden={inGarden} entries={entries} />
       <div
         className={cn(

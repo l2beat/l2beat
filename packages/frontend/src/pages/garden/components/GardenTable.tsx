@@ -7,14 +7,16 @@ import {
   type CropDefinition,
   getCropStatusText,
 } from '~/components/garden/crops'
+import { useEntranceHold } from '~/components/garden/useEntranceHold'
 import { PercentChange } from '~/components/PercentChange'
 import { Table, TableBody, TableCell, TableRow } from '~/components/table/Table'
 import { cn } from '~/utils/cn'
 import type { GardenEntry } from '../getGardenData'
 
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
+  const entranceHold = useEntranceHold()
   return (
-    <Table className="min-w-[680px]">
+    <Table className={cn('min-w-[680px]', entranceHold)}>
       <TableBody>
         {entries.map((entry, rowIndex) => (
           <TableRow key={entry.slug} highlightId={undefined}>
