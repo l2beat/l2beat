@@ -2,6 +2,10 @@ import { expect } from 'earl'
 import { fetchWithTimeout, HttpTimeoutError } from './fetchWithTimeout'
 import { withServer } from './testServer'
 
+// Why: CI runners are slow enough that a loopback round trip can take tens of
+// milliseconds, so every timeout that must NOT fire gets this much headroom.
+const SLACK_MS = 250
+
 describe(fetchWithTimeout.name, () => {
   it('aborts when no headers arrive in time', async () => {
     await withServer(
@@ -23,25 +27,27 @@ describe(fetchWithTimeout.name, () => {
         res.write('{"a":')
       },
       async (url) => {
-        const response = await fetchWithTimeout(url, { timeout: 20 })
+        const response = await fetchWithTimeout(url, { timeout: SLACK_MS })
         const error = await response.text().catch((e: unknown) => e)
         expect(error).toBeA(HttpTimeoutError)
       },
     )
   })
 
-  // How: the body drips in 10 chunks spaced wider apart than half the timeout,
+  // How: the body drips in chunks whose total duration exceeds the timeout,
   // so a wall-clock timeout would fail while an idle timeout survives.
+  // The gap stays far below the timeout so a busy CI runner cannot stall it.
   it('restarts the clock on every chunk instead of measuring wall clock', async () => {
-    const gapMs = 15
-    const timeout = 25
+    const chunks = 10
+    const gapMs = SLACK_MS / 5
+    const timeout = SLACK_MS
     await withServer(
       (_, res) => {
         res.writeHead(200)
         let sent = 0
         const drip = setInterval(() => {
           res.write('x')
-          if (++sent === 10) {
+          if (++sent === chunks) {
             clearInterval(drip)
             res.end()
           }
@@ -49,7 +55,7 @@ describe(fetchWithTimeout.name, () => {
       },
       async (url) => {
         const response = await fetchWithTimeout(url, { timeout })
-        expect(await response.text()).toEqual('x'.repeat(10))
+        expect(await response.text()).toEqual('x'.repeat(chunks))
       },
     )
   })
@@ -121,9 +127,9 @@ describe(`${fetchWithTimeout.name} with an unread body`, () => {
           res.write('partial')
         },
         async (url) => {
-          const response = await fetchWithTimeout(url, { timeout: 10 })
+          const response = await fetchWithTimeout(url, { timeout: SLACK_MS })
           expect(response.ok).toEqual(true)
-          await new Promise((resolve) => setTimeout(resolve, 40))
+          await new Promise((resolve) => setTimeout(resolve, SLACK_MS * 2))
         },
       )
       await new Promise((resolve) => setImmediate(resolve))
