@@ -201,9 +201,9 @@ export async function getL2ProjectEntry(
     getLiveness(project.id),
     getContractUtils(),
     getL2TvsSection(project),
-    getActivitySection(helpers, project),
-    getCostsSection(helpers, project),
-    getDataPostedSection(helpers, project),
+    getActivitySection(project),
+    getCostsSection(project),
+    getDataPostedSection(project),
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
@@ -235,11 +235,7 @@ export async function getL2ProjectEntry(
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  const interopData = await getProjectInteropData(
-    project.id,
-    interopProjects,
-    helpers,
-  )
+  const interopData = await getProjectInteropData(project.id, interopProjects)
   const header: ProjectL2Entry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
@@ -482,7 +478,6 @@ export async function getL2ProjectEntry(
   }
 
   const livenessSection = await getLivenessSection(
-    helpers,
     project,
     projectLiveness,
     projectsChangeReport.projects[project.id],

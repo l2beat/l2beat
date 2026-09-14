@@ -289,11 +289,7 @@ export async function getEthereumDaProjectEntry(
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
-  const interopData = await getProjectInteropData(
-    layer.id,
-    interopProjects,
-    helpers,
-  )
+  const interopData = await getProjectInteropData(layer.id, interopProjects)
 
   const [economicSecurity, tvsPerProject, sections, validators] =
     await Promise.all([

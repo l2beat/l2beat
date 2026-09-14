@@ -135,7 +135,6 @@ export async function getRegularDaProjectSections({
 
   const livenessSection = bridge
     ? await getLivenessSection(
-        helpers,
         bridge,
         projectLiveness,
         projectsChangeReport.projects[bridge.id],
