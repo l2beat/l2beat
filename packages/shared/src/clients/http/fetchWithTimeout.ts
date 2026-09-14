@@ -1,6 +1,7 @@
+import { pipeBody } from './pipeBody'
 import { sanitizeUrl } from './sanitizeUrl'
 
-export const DEFAULT_TIMEOUT_MS = 10_000
+const DEFAULT_TIMEOUT_MS = 10_000
 
 export type FetchInit = RequestInit & {
   /**
@@ -13,10 +14,7 @@ export type FetchInit = RequestInit & {
 }
 
 export class HttpTimeoutError extends Error {
-  constructor(
-    readonly url: string,
-    readonly timeoutMs: number,
-  ) {
+  constructor(url: string, timeoutMs: number) {
     super(`Timeout: no data from ${sanitizeUrl(url)} for ${timeoutMs}ms`)
     this.name = 'HttpTimeoutError'
   }
@@ -36,7 +34,7 @@ export async function fetchWithTimeout(
 ): Promise<Response> {
   const { timeout = DEFAULT_TIMEOUT_MS, ...rest } = init
   if (timeout === 0) {
-    return await fetchOrDescribe(url, rest)
+    return await fetchWithReadableErrors(url, rest)
   }
 
   const controller = new AbortController()
@@ -47,46 +45,47 @@ export async function fetchWithTimeout(
     ? AbortSignal.any([rest.signal, controller.signal])
     : controller.signal
 
-  const response = await fetchOrDescribe(url, { ...rest, signal })
+  const response = await fetchWithReadableErrors(url, { ...rest, signal })
   if (!response.body) {
     timer.stop()
-    return response
   }
-  return new Response(response.body.pipeThrough(timer.resetOnChunk()), response)
+  return pipeBody(response, timer.restartPerChunk())
 }
 
-/** Replaces undici's bare `TypeError: fetch failed` with the url and reason. */
-async function fetchOrDescribe(url: string, init: RequestInit) {
+async function fetchWithReadableErrors(url: string, init: RequestInit) {
   try {
     return await fetch(url, init)
   } catch (error) {
-    throw describeFetchError(url, error)
+    if (!isBareFetchFailed(error)) {
+      throw error
+    }
+    const reason = describeCause(error.cause)
+    throw new Error(`Request to ${sanitizeUrl(url)} failed: ${reason}`, {
+      cause: error.cause,
+    })
   }
 }
 
-function describeFetchError(url: string, error: unknown): unknown {
-  if (
-    !(error instanceof TypeError) ||
-    error.message !== 'fetch failed' ||
-    !(error.cause instanceof Error)
-  ) {
-    return error
-  }
-  const reason = describeCause(error.cause)
-  return new Error(`Request to ${sanitizeUrl(url)} failed: ${reason}`, {
-    cause: error.cause,
-  })
+// undici reports every network failure as this one TypeError, hiding the reason in `cause`
+function isBareFetchFailed(
+  error: unknown,
+): error is TypeError & { cause: unknown } {
+  return (
+    error instanceof TypeError &&
+    error.message === 'fetch failed' &&
+    error.cause !== undefined
+  )
 }
 
-// AggregateError (happy-eyeballs connects) carries the detail in `errors`, not `message`
-function describeCause(cause: Error): string {
+// happy-eyeballs connects fail with an AggregateError whose detail lives in `errors`
+function describeCause(cause: unknown): string {
   if (cause instanceof AggregateError && cause.errors.length > 0) {
-    return cause.errors
-      .map((e: unknown) => describeCause(e as Error))
-      .join('; ')
+    return cause.errors.map(describeCause).join('; ')
   }
-  const { code, message, name } = cause as Error & { code?: string }
-  return message || code || name
+  if (cause instanceof Error) {
+    return cause.message || cause.name
+  }
+  return String(cause)
 }
 
 class IdleTimer {
@@ -99,7 +98,7 @@ class IdleTimer {
     this.handle = this.start()
   }
 
-  resetOnChunk(): TransformStream<Uint8Array, Uint8Array> {
+  restartPerChunk(): TransformStream<Uint8Array, Uint8Array> {
     return new TransformStream({
       transform: (chunk, controller) => {
         this.restart()
@@ -110,7 +109,7 @@ class IdleTimer {
   }
 
   restart() {
-    clearTimeout(this.handle)
+    this.stop()
     this.handle = this.start()
   }
 

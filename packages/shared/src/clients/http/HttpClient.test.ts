@@ -1,6 +1,7 @@
 import { expect } from 'earl'
-import { HttpClient, sanitizeUrl } from './HttpClient'
-import { withServer } from './testServer'
+import { withServer } from '../../test/withServer'
+import { HttpClient } from './HttpClient'
+import { sanitizeUrl } from './sanitizeUrl'
 
 describe(HttpClient.name, () => {
   describe(HttpClient.prototype.fetch.name, () => {
@@ -26,17 +27,16 @@ describe(HttpClient.name, () => {
 
     it('attaches the sanitized url as the error cause', async () => {
       const http = new HttpClient()
-      const error = await withServer(
+      await withServer(
         (_, res) => res.writeHead(404).end(),
-        (url) =>
-          http.fetch(`${url}/feed?key=secret`, {}).catch((e: unknown) => e),
-      )
-
-      expect((error as Error).cause).toEqual({
-        url: expect.a(String),
-      })
-      expect(((error as Error).cause as { url: string }).url).toInclude(
-        '/feed?key=REDACTED',
+        async (url) => {
+          const error = await http
+            .fetch(`${url}/feed?key=secret`, {})
+            .catch((e: unknown) => e)
+          expect((error as Error).cause).toEqual({
+            url: `${url}/feed?key=REDACTED`,
+          })
+        },
       )
     })
 

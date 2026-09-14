@@ -1,6 +1,6 @@
 import { expect } from 'earl'
+import { withServer } from '../../test/withServer'
 import { fetchWithTimeout, HttpTimeoutError } from './fetchWithTimeout'
-import { withServer } from './testServer'
 
 // Why: CI runners are slow enough that a loopback round trip can take tens of
 // milliseconds, so every timeout that must NOT fire gets this much headroom.
@@ -111,9 +111,7 @@ describe(fetchWithTimeout.name, () => {
       },
     )
   })
-})
 
-describe(`${fetchWithTimeout.name} with an unread body`, () => {
   // Why: callers like DiscordClient.deleteMessage only look at the status.
   // The idle timer then aborts the dangling body, which must stay quiet.
   it('aborts the dangling body without an unhandled rejection', async () => {

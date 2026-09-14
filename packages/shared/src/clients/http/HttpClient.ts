@@ -2,8 +2,6 @@ import type { json } from '@l2beat/shared-pure'
 import { type FetchInit, fetchWithTimeout } from './fetchWithTimeout'
 import { sanitizeUrl } from './sanitizeUrl'
 
-export { sanitizeUrl }
-
 export class HttpClient {
   /**
    * Sends request to the provided url with init params.
@@ -11,7 +9,7 @@ export class HttpClient {
    * Default timeout is 10_000ms
    */
   async fetch(url: string, init: FetchInit): Promise<json> {
-    const res = await fetchWithTimeout(url, init)
+    const res = await this.fetchRaw(url, init)
 
     if (!res.ok) {
       // Release the socket back to the pool instead of leaving it pinned
@@ -26,7 +24,7 @@ export class HttpClient {
     return (await res.json()) as json
   }
 
-  async fetchRaw(url: string, init: FetchInit) {
+  async fetchRaw(url: string, init: FetchInit): Promise<Response> {
     return await fetchWithTimeout(url, init)
   }
 }
