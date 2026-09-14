@@ -8,10 +8,11 @@ import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolDashboardData } from '~/server/features/layer2s/interop/getInteropProtocolData'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
-import { toUpdatesSectionProps } from '~/server/features/projects/discovery-updates/toUpdatesSectionProps'
+import { getUpdatesSectionProps } from '~/server/features/projects/discovery-updates/getUpdatesSectionProps'
 import { countRecentDiscoveryUpdates } from '~/server/features/projects/recent-changes/discoveryUpdates'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -51,6 +52,7 @@ export async function getInteropProtocolEntry(
   apiSelection: InteropSelection,
   interopChains: InteropChainWithIcon[],
   data: InteropProtocolDashboardData,
+  helpers: SsrHelpers,
 ): Promise<InteropProtocolEntry> {
   const isUnderReview = !!project.statuses?.reviewStatus
   const discoveryUpdates = project.discoveryUpdates ?? []
@@ -129,7 +131,11 @@ export async function getInteropProtocolEntry(
       props: {
         id: 'updates',
         title: 'Updates',
-        ...toUpdatesSectionProps(project.id, discoveryUpdates),
+        ...(await getUpdatesSectionProps(
+          helpers,
+          project.id,
+          discoveryUpdates,
+        )),
       },
     })
   }

@@ -30,14 +30,16 @@ import type { ProjectSectionProps } from './types'
 
 export interface UpdatesSectionProps extends ProjectSectionProps {
   projectId: ProjectId
-  updates: DiscoveryUpdateListItem[]
+  updates: ProjectDiscoveryUpdateSummary[]
   selectedUpdateId?: string
 }
 
-/** Diff sections are absent for updates whose page was not rendered on the
- *  server. They are fetched when the page is shown. */
-export type DiscoveryUpdateListItem = Omit<ProjectDiscoveryUpdate, 'sections'> &
-  Partial<Pick<ProjectDiscoveryUpdate, 'sections'>>
+/** Everything but the diff bodies, which are loaded per page via
+ *  `projects.discoveryUpdateSections`. */
+export type ProjectDiscoveryUpdateSummary = Omit<
+  ProjectDiscoveryUpdate,
+  'sections'
+>
 
 const SECTION_TITLES = {
   'config-related-changes': 'New and verified contracts',
@@ -67,7 +69,7 @@ export function UpdatesSection({
     page * UPDATES_PAGE_SIZE,
     (page + 1) * UPDATES_PAGE_SIZE,
   )
-  const fetchedSections = useMissingSections(projectId, entries)
+  const sections = usePageSections(projectId, entries)
 
   if (updates.length === 0) {
     return null
@@ -80,7 +82,8 @@ export function UpdatesSection({
           <UpdateCard
             key={update.id}
             update={update}
-            sections={update.sections ?? fetchedSections?.[update.id]}
+            sections={sections.data?.[update.id]}
+            sectionsFailed={sections.isError}
             isSelected={update.id === selectedUpdateId}
           />
         ))}
@@ -96,21 +99,17 @@ export function UpdatesSection({
   )
 }
 
-function useMissingSections(
+function usePageSections(
   projectId: ProjectId,
-  entries: DiscoveryUpdateListItem[],
+  entries: ProjectDiscoveryUpdateSummary[],
 ) {
   const trpc = useTRPC()
-  const updateIds = entries
-    .filter((update) => update.sections === undefined)
-    .map((update) => update.id)
-  const { data } = useQuery(
-    trpc.projects.discoveryUpdateSections.queryOptions(
-      { projectId, updateIds },
-      { enabled: updateIds.length > 0 },
-    ),
+  return useQuery(
+    trpc.projects.discoveryUpdateSections.queryOptions({
+      projectId,
+      updateIds: entries.map((update) => update.id),
+    }),
   )
-  return data
 }
 
 function UpdatesPagination({
@@ -173,11 +172,14 @@ function UpdatesPagination({
 export function UpdateCard({
   update,
   sections,
+  sectionsFailed = false,
   isSelected,
   copyLinkPath,
 }: {
-  update: DiscoveryUpdateListItem
+  update: ProjectDiscoveryUpdateSummary
+  /** `undefined` while the diff bodies are still loading. */
   sections: ProjectDiscoveryUpdateSection[] | undefined
+  sectionsFailed?: boolean
   isSelected: boolean
   copyLinkPath?: string
 }) {
@@ -268,7 +270,11 @@ export function UpdateCard({
             </Markdown>
           </div>
         )}
-        {sections === undefined && <SectionsSkeleton />}
+        {sectionsFailed ? (
+          <p className="text-secondary text-xs">Failed to load changes.</p>
+        ) : (
+          sections === undefined && <SectionsSkeleton />
+        )}
         {sections?.map((section, index) => {
           const title = SECTION_TITLES[section.kind]
           return (
@@ -297,7 +303,7 @@ function SectionsSkeleton() {
   )
 }
 
-function formatUpdateDate(update: DiscoveryUpdateListItem): string {
+function formatUpdateDate(update: ProjectDiscoveryUpdateSummary): string {
   if (update.timestamp === null) {
     return update.date
   }

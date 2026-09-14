@@ -1,19 +1,19 @@
 import type { ProjectDiscoveryUpdateSection } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 
-export async function getDiscoveryUpdateSections(input: {
-  projectId: string
-  updateIds: string[]
-}): Promise<Record<string, ProjectDiscoveryUpdateSection[]>> {
+export async function getDiscoveryUpdateSections(
+  projectId: ProjectId,
+  updateIds: string[],
+): Promise<Record<string, ProjectDiscoveryUpdateSection[]>> {
   const project = await ps.getProject({
-    id: ProjectId(input.projectId),
+    id: projectId,
     select: ['discoveryUpdates'],
   })
-  const wanted = new Set(input.updateIds)
+  const sectionsById = new Map(
+    project?.discoveryUpdates.map((update) => [update.id, update.sections]),
+  )
   return Object.fromEntries(
-    (project?.discoveryUpdates ?? [])
-      .filter((update) => wanted.has(update.id))
-      .map((update) => [update.id, update.sections]),
+    updateIds.map((id) => [id, sectionsById.get(id) ?? []]),
   )
 }

@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getL2BadgeDialogData } from '~/server/features/projects/badges/getL2BadgeDialogData'
 import { getDiscoveryUpdateSections } from '~/server/features/projects/discovery-updates/getDiscoveryUpdateSections'
@@ -11,5 +12,7 @@ export const projectsRouter = router({
   recentChanges: procedure.query(() => getRecentChangesOverview()),
   discoveryUpdateSections: procedure
     .input(v.object({ projectId: v.string(), updateIds: v.array(v.string()) }))
-    .query(({ input }) => getDiscoveryUpdateSections(input)),
+    .query(({ input }) =>
+      getDiscoveryUpdateSections(ProjectId(input.projectId), input.updateIds),
+    ),
 })
