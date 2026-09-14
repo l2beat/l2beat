@@ -121,7 +121,18 @@ function ChartContainer<T extends { timestamp: number }>({
   // chart measuring and re-rendering right after hydration was the longest
   // main-thread task on project pages. Mount each chart only when it is
   // about to be seen.
-  const shouldMountChart = useIsNearViewport(ref)
+  const [observeNearViewport, shouldMountChart] = useIsNearViewport()
+  const setRef: React.RefCallback<HTMLDivElement> = React.useCallback(
+    (element) => {
+      ref.current = element
+      const stopObserving = observeNearViewport(element)
+      return () => {
+        ref.current = null
+        stopObserving?.()
+      }
+    },
+    [observeNearViewport],
+  )
 
   const hasData = data && data.length > 1
 
@@ -131,7 +142,7 @@ function ChartContainer<T extends { timestamp: number }>({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div ref={ref} className="group relative">
+      <div ref={setRef} className="group relative">
         <Slot
           className={cn(
             chartContainerClassNames,
