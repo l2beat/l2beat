@@ -45,7 +45,7 @@ export const fluidkeyAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'good',
       exposure:
-        'Module events and deployment parameters help identify candidate Fluidkey activity, but cover only particular deployed configurations and do not map Safes to user accounts. Timing, amounts, common destinations and reuse across chains can still cluster them. Optional Hide Trail routes through Houdini and two exchanges, adding an offchain break in the transfer path whose resistance to correlation cannot be inferred from the stealth-address derivation.',
+        'Service use can become recognizable at Safe deployment or during auto-earn, which can substantially narrow the anonymity set. Module events and deployment parameters help identify candidate Fluidkey activity, but cover only particular deployed configurations and do not map Safes to user accounts. Timing, amounts, common destinations and reuse across chains can still cluster them. Optional Hide Trail routes through Houdini and two exchanges, adding an offchain break in the transfer path whose resistance to correlation cannot be inferred from the stealth-address derivation.',
       advice:
         'Check related activity across chains and space out distinctive payments. Evaluate Hide Trail as a separate service with different trust assumptions.',
       sources: [

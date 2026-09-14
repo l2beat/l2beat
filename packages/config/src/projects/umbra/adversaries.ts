@@ -34,9 +34,9 @@ export const umbraAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      sentiment: 'good',
+      sentiment: 'warning',
       exposure:
-        'Withdrawals to registered recipients, round trips to the sender and a shared collecting address can reveal or cluster recipients, but protocol membership alone does not identify them.',
+        'Protocol use is public as soon as a payment is announced, which can substantially narrow the anonymity set. Withdrawals to registered recipients, round trips to the sender and a shared collecting address can reveal or cluster recipients, but protocol membership alone does not identify them.',
       advice:
         'Keep withdrawal destinations separate across payments and chains, and check whether timing, amounts or recurring counterparties reconnect them to an identified account.',
       sources: [

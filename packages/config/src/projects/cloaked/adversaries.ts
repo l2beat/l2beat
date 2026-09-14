@@ -37,9 +37,9 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      sentiment: 'good',
+      sentiment: 'warning',
       exposure:
-        'No public recipient registry or announcement supplies an account-to-address mapping, but timing, distinctive amounts, recurring counterparties and consolidation can identify or cluster recipients.',
+        'Service use can become recognizable when spending through shared execution infrastructure, which can substantially narrow the anonymity set. No public recipient registry or announcement supplies an account-to-address mapping, but timing, distinctive amounts, recurring counterparties and consolidation can identify or cluster recipients.',
       advice:
         'Space out related payments and check whether amounts or recurring payment patterns identify you. Follow change outputs when assessing what a counterparty can trace.',
       sources: [
