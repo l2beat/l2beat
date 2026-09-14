@@ -1166,7 +1166,11 @@ export type ProjectPrivacyBucket = ProjectPrivacyBucketBase &
   (
     | {
         anonymitySet: {
-          /** Minimum deposit amounts in token base units. */
+          /**
+           * Public deposit-amount thresholds in token base units. Each value
+           * defines a cohort of depositors whose deposit was at least that
+           * amount. These are analytical thresholds, not protocol minimums.
+           */
           minimumAmounts: string[]
         }
         address: ChainSpecificAddress

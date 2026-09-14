@@ -23,10 +23,14 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
-const ETH_ANONYMITY_SET_MINIMUM_AMOUNTS = [
-  '100000000000000000',
-  '10000000000000000000',
-]
+const ANONYMITY_SET_MINIMUM_AMOUNTS_BY_SYMBOL: Partial<
+  Record<string, string[]>
+> = {
+  ETH: ['100000000000000000', '10000000000000000000'],
+  DAI: ['200000000000000000000', '20000000000000000000000'],
+  USDC: ['200000000', '20000000000'],
+  USDT: ['200000000', '20000000000'],
+}
 
 interface PrivacyPoolsAssetConfig {
   minimumDepositAmount: string | number
@@ -298,9 +302,7 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
       },
       sinceTimestamp: UnixTime(pool.sinceTimestamp ?? 0),
       feeConfig,
-      minimumAmounts: isNativeEth
-        ? ETH_ANONYMITY_SET_MINIMUM_AMOUNTS
-        : undefined,
+      minimumAmounts: ANONYMITY_SET_MINIMUM_AMOUNTS_BY_SYMBOL[resolved.symbol],
       depositEvent: PRIVACY_POOLS_DEPOSIT_EVENT,
       withdrawalEvent: PRIVACY_POOLS_WITHDRAWAL_EVENT,
     }
