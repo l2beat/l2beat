@@ -14,8 +14,8 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
+import { toChartProject } from '~/utils/project/toChartProject'
 import { optionToRange } from '~/utils/range/range'
-import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection'
 import { getDaThroughputSection } from './getDaThroughputSection'
 
@@ -147,7 +147,7 @@ export async function getRegularDaProjectSections({
       type: 'LivenessSection',
       props: {
         milestones: [],
-        project: withProjectIcon(bridge),
+        project: toChartProject(bridge),
         ...livenessSection,
         id: 'da-bridge-liveness',
         title: 'Liveness',
@@ -352,7 +352,7 @@ export async function getEthereumDaProjectSections({
       title: 'Activity',
       dataSource: undefined,
       defaultRange: optionToRange('1y'),
-      project: withProjectIcon(layer),
+      project: toChartProject(layer),
       milestones: layer.milestones ?? [],
     },
   })
