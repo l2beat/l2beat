@@ -4,7 +4,7 @@ import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
-import { useIsClient } from '~/hooks/useIsClient'
+import { useIsNearViewport } from '~/hooks/useIsNearViewport'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../OverflowWrapper'
@@ -116,8 +116,11 @@ function ChartContainer<T extends { timestamp: number }>({
   size?: 'regular' | 'small'
   noDataSourceMessage?: string
 }) {
-  const ref = React.useRef<HTMLDivElement>(null)
-  const isClient = useIsClient()
+  // Recharts renders nothing until it has measured its container, and every
+  // chart measuring and re-rendering right after hydration was the longest
+  // main-thread task on project pages. Mount each chart only when it is
+  // about to be seen.
+  const [ref, shouldMountChart] = useIsNearViewport()
 
   const hasData = data && data.length > 1
 
@@ -141,9 +144,9 @@ function ChartContainer<T extends { timestamp: number }>({
             (isLoading || !hasData) && 'pointer-events-none',
           )}
         >
-          {children}
+          {shouldMountChart ? children : <div />}
         </Slot>
-        {(!!isLoading || !isClient) && (
+        {(!!isLoading || !shouldMountChart) && (
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
@@ -152,13 +155,15 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!hasData && !isLoading && !(noDataSourcesSelected && isClient) && (
-          <ChartNoDataState size={size} />
-        )}
-        {noDataSourcesSelected && !isLoading && isClient && (
+        {!hasData &&
+          !isLoading &&
+          !(noDataSourcesSelected && shouldMountChart) && (
+            <ChartNoDataState size={size} />
+          )}
+        {noDataSourcesSelected && !isLoading && shouldMountChart && (
           <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
-        {isClient && size !== 'small' && (
+        {shouldMountChart && size !== 'small' && (
           <Logo
             animated={false}
             className={cn(
@@ -172,7 +177,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {isClient && size !== 'small' && project && (
+        {shouldMountChart && size !== 'small' && project && (
           <ChartProjectLogo
             project={project}
             className={cn(
@@ -186,7 +191,7 @@ function ChartContainer<T extends { timestamp: number }>({
           />
         )}
         {!isLoading && milestones && (
-          <ChartMilestones data={data} milestones={milestones} ref={ref} />
+          <ChartMilestones data={data} milestones={milestones} />
         )}
       </div>
     </ChartContext.Provider>
