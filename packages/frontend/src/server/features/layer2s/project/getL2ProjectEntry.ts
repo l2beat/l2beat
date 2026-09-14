@@ -192,7 +192,7 @@ export async function getL2ProjectEntry(
     zkCatalogProjects,
     allProjectsWithContracts,
     allProjects,
-    interopProjects,
+    interopData,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -201,9 +201,9 @@ export async function getL2ProjectEntry(
     getLiveness(project.id),
     getContractUtils(),
     getL2TvsSection(project),
-    getActivitySection(helpers, project),
-    getCostsSection(helpers, project),
-    getDataPostedSection(helpers, project),
+    getActivitySection(project),
+    getCostsSection(project),
+    getDataPostedSection(project),
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
@@ -220,9 +220,7 @@ export async function getL2ProjectEntry(
         'defiInfo',
       ],
     }),
-    ps.getProjects({
-      select: ['interopConfig'],
-    }),
+    getL2ProjectInteropData(project.id),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -235,11 +233,6 @@ export async function getL2ProjectEntry(
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  const interopData = await getProjectInteropData(
-    project.id,
-    interopProjects,
-    helpers,
-  )
   const header: ProjectL2Entry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
@@ -482,7 +475,6 @@ export async function getL2ProjectEntry(
   }
 
   const livenessSection = await getLivenessSection(
-    helpers,
     project,
     projectLiveness,
     projectsChangeReport.projects[project.id],
@@ -822,4 +814,11 @@ function getProjectCompareUrl(
 ): string | undefined {
   if (project.archivedAt) return undefined
   return getCompareEntryUrl({ metric, projectSlug: project.slug })
+}
+
+// Interop flows are the slowest independent loader after the ecosystem-wide
+// TVS query, so they must run inside the parallel block rather than after it.
+async function getL2ProjectInteropData(projectId: ProjectId) {
+  const interopProjects = await ps.getProjects({ select: ['interopConfig'] })
+  return getProjectInteropData(projectId, interopProjects)
 }

@@ -101,6 +101,24 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async checkIfExists(
+    projectId: string,
+    fromInclusive?: UnixTime,
+  ): Promise<boolean> {
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select('projectId')
+      .where('projectId', '=', projectId)
+      .limit(1)
+
+    if (fromInclusive !== undefined) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    const result = await query.executeTakeFirst()
+    return result !== undefined
+  }
+
   async getByProjectIdsAndTimeRange(
     projectIds: string[],
     timeRange: [UnixTime | null, UnixTime],
@@ -164,6 +182,28 @@ export class DataAvailabilityRepository extends BaseRepository {
     let query = this.db
       .selectFrom('DataAvailability')
       .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('daLayer', 'in', daLayers)
+      .whereRef('projectId', '!=', 'daLayer')
+
+    if (excludedProjectIds && excludedProjectIds.length > 0) {
+      query = query.where('projectId', 'not in', excludedProjectIds)
+    }
+
+    const row = await query.executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
+  // Mirrors the filter of getSummedProjectsByDaLayersAndTimeRange, so the result
+  // is the syncedUntil of that series without loading it.
+  async getLastTimestampOfSummedProjectsByDaLayers(
+    daLayers: string[],
+    excludedProjectIds?: string[],
+  ): Promise<UnixTime | undefined> {
+    if (daLayers.length === 0) return undefined
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select((eb) => eb.fn.max('timestamp').as('timestamp'))
       .where('daLayer', 'in', daLayers)
       .whereRef('projectId', '!=', 'daLayer')
 
