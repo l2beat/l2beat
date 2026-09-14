@@ -1,20 +1,32 @@
 import type {
   OsiLicense,
   OsiLicenseId,
+  ProjectCropSentiment,
+  ProjectCropStatus,
   ProjectCrops,
   ProjectOpenSourceCropEvaluation,
 } from '@l2beat/config'
-import {
-  CROP_KEYS,
-  CROP_SENTIMENTS,
-  CROP_STATUSES,
-  OSI_LICENSES,
-  OsiLicenseSchema,
-} from '@l2beat/config'
+import { OSI_LICENSES, OsiLicenseSchema } from '@l2beat/config'
 import { v } from '@l2beat/validate'
 
-export const CropSentimentSchema = v.enum(CROP_SENTIMENTS)
-export const CropStatusSchema = v.enum(CROP_STATUSES)
+// Config leaves a crop's defaults implicit; the API serves a fully resolved
+// one. The frontend resolves the same way in its own copy of this file, so a
+// change here is a change there.
+
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export const CropSentimentSchema = v.enum([
+  'good',
+  'warning',
+  'bad',
+  'neutral',
+] as const satisfies readonly (ProjectCropSentiment | 'neutral')[])
+
+export const CropStatusSchema = v.enum([
+  'reviewed',
+  'partiallyReviewed',
+  'notReviewed',
+  'fullyTransparent',
+] as const satisfies readonly ProjectCropStatus[])
 
 /**
  * An evaluation with every optional field resolved to a concrete value. The
@@ -67,11 +79,12 @@ export function resolveCropEvaluation(
 }
 
 export function resolveProjectCrops(crops: ProjectCrops): ResolvedCrops {
-  const resolved = {} as ResolvedCrops
-  for (const key of CROP_KEYS) {
-    resolved[key] = resolveCropEvaluation(crops[key])
+  return {
+    censorshipResistance: resolveCropEvaluation(crops.censorshipResistance),
+    openSource: resolveCropEvaluation(crops.openSource),
+    privacy: resolveCropEvaluation(crops.privacy),
+    security: resolveCropEvaluation(crops.security),
   }
-  return resolved
 }
 
 /**
@@ -79,7 +92,7 @@ export function resolveProjectCrops(crops: ProjectCrops): ResolvedCrops {
  * still reviewed, and its project page still shows the evaluation.
  */
 export function qualifiesForGarden(crops: ResolvedCrops): boolean {
-  return CROP_KEYS.every((key) => crops[key].sentiment !== 'bad')
+  return Object.values(crops).every((crop) => crop.sentiment !== 'bad')
 }
 
 /** Throws rather than serve a green Open source crop nothing backs. */

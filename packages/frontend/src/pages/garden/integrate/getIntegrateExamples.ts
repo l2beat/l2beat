@@ -3,8 +3,8 @@ import type {
   ProjectPrivacyInfo,
   ProjectScalingInfo,
 } from '@l2beat/config'
-import { CROP_KEYS } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { ResolvedCrops } from '~/components/garden/crops'
 import {
   type CropsAttestationsMeta,
   getAttestationsMeta,
@@ -12,7 +12,6 @@ import {
 import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import {
   qualifiesForGarden,
-  type ResolvedCrops,
   resolveProjectCrops,
 } from '~/server/features/garden/resolveCrops'
 import { ps } from '~/server/projects'
@@ -174,9 +173,9 @@ function toApiProject(
 /** Sentiment and status only - the prose lives on the per-project endpoint. */
 function toCropsSummary(crops: ResolvedCrops) {
   return Object.fromEntries(
-    CROP_KEYS.map((key) => [
+    Object.entries(crops).map(([key, crop]) => [
       key,
-      { sentiment: crops[key].sentiment, status: crops[key].status },
+      { sentiment: crop.sentiment, status: crop.status },
     ]),
   )
 }

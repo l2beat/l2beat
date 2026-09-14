@@ -1,4 +1,4 @@
-import type { CropKey } from '@l2beat/config'
+import type { CropKey } from '~/components/garden/crops'
 
 /** Marks where `reference` is linked inside a minimum. */
 export const REFERENCE_SLOT = '{{reference}}'

@@ -1,7 +1,8 @@
-import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import type { ProjectCropStatus } from '@l2beat/config'
 import type { ComponentType, CSSProperties } from 'react'
 import { cn } from '~/utils/cn'
 import { CROP_PLANT_COLOR } from './cropPalette'
+import type { CropSentiment } from './crops'
 
 type PlantKind = 'flower' | 'bud' | 'wilt' | 'ghost' | 'transparent'
 

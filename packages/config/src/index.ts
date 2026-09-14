@@ -9,14 +9,6 @@ export {
   type HexString,
   type RevokedCropAttestation,
 } from './crops/attestations'
-export {
-  CROP_KEYS,
-  CROP_SENTIMENTS,
-  CROP_STATUSES,
-  type CropKey,
-  type CropSentiment,
-  type CropStatus,
-} from './crops/crops'
 export { GARDEN_ORDER } from './crops/gardenOrder'
 export { OSI_LICENSES, OsiLicenseSchema } from './crops/osiLicenses'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'

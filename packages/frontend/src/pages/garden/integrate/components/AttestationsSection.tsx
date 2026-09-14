@@ -25,9 +25,7 @@ export function AttestationsSection({
           </Constant>
           <Constant label="EAS contract">{attestations.eas}</Constant>
           <Constant label="Schema uid">{attestations.schemaUid}</Constant>
-          <Constant label="Attester">
-            {attestations.attester}
-          </Constant>
+          <Constant label="Attester">{attestations.attester}</Constant>
           <Constant label="Attestation">
             {current ? (
               <a

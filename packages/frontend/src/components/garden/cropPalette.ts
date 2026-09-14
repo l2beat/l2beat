@@ -1,4 +1,4 @@
-import type { CropSentiment } from '@l2beat/config'
+import type { CropSentiment } from './crops'
 
 // The one place a sentiment becomes a colour, so the garden badge, the
 // legend and the project page cannot drift apart.

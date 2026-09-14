@@ -1,6 +1,6 @@
+import type { ResolvedCrops } from '~/components/garden/crops'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { GARDEN_PATH } from '~/pages/garden/paths'
-import type { ResolvedCrops } from '~/server/features/garden/resolveCrops'
 import { CropsBed } from './crops/CropsBed'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'

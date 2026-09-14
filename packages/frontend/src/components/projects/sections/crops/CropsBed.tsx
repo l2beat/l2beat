@@ -6,12 +6,12 @@ import {
   CROP_SWATCH,
   CROP_TINT,
 } from '~/components/garden/cropPalette'
+import type { ResolvedCrops } from '~/components/garden/crops'
 import {
   type CropEntry,
   getCropStatusText,
   toCropEntries,
 } from '~/components/garden/crops'
-import type { ResolvedCrops } from '~/server/features/garden/resolveCrops'
 import { cn } from '~/utils/cn'
 
 // Layout follows the section's own width (container queries), because the

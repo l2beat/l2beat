@@ -1,4 +1,4 @@
-import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import type { ProjectCropStatus } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import {
   Tooltip,
@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { CropPlant } from './CropPlant'
+import type { CropSentiment } from './crops'
 
 /** A plant with whatever explains it behind a tooltip. */
 export function CropBadge({

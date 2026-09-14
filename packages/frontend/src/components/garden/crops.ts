@@ -1,13 +1,34 @@
-import type { CropKey, CropSentiment, ProjectCropStatus } from '@l2beat/config'
 import type {
-  ResolvedCropEvaluation,
-  ResolvedCrops,
-} from '~/server/features/garden/resolveCrops'
+  OsiLicense,
+  ProjectCropSentiment,
+  ProjectCropStatus,
+  ProjectCrops,
+} from '@l2beat/config'
 
-// Kept here rather than in @l2beat/config: client components import this,
-// and the browser cannot load a value from the CommonJS config build (it
-// broke hydration once, see the history of this file). crops.test.ts pins
-// the set and order of CROP_COLUMNS to config's CROP_KEYS instead.
+// The site's vocabulary for a crop. Config declares a crop with optional
+// fields; resolveCrops.ts on the server fills them in to the shapes below.
+// Values live here rather than in @l2beat/config because client components
+// import this file and the browser cannot load a value from the CommonJS
+// config build (it broke hydration once, see the history of this file).
+
+export type CropKey = keyof ProjectCrops
+
+/** `neutral` is never declared in config: it is what an ungraded crop resolves to. */
+export type CropSentiment = ProjectCropSentiment | 'neutral'
+
+/** An evaluation with every optional field resolved to a concrete value. */
+export interface ResolvedCropEvaluation {
+  sentiment: CropSentiment
+  status: ProjectCropStatus
+  /** Only on the open source crop, once the license is confirmed. */
+  license?: OsiLicense
+  points: string[]
+  missing: string[]
+  additionalConsiderations: string[]
+  notReviewed: string[]
+}
+
+export type ResolvedCrops = Record<CropKey, ResolvedCropEvaluation>
 
 export interface CropDefinition {
   key: CropKey

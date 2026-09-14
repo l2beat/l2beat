@@ -1,8 +1,8 @@
 import type { OsiLicense } from '@l2beat/config'
 import type { ReactNode } from 'react'
-import type { ResolvedCropEvaluation } from '~/server/features/garden/resolveCrops'
 import { cn } from '~/utils/cn'
 import { CROP_INK } from './cropPalette'
+import type { ResolvedCropEvaluation } from './crops'
 import { getCropStatusText } from './crops'
 
 /** The verdict in the crop's colour, the standing caveat, then the findings. */

@@ -2,13 +2,13 @@ import type { Project } from '@l2beat/config'
 import { GARDEN_ORDER } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getAttestationsMeta } from '~/server/features/garden/getAttestationsMeta'
 import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import {
   qualifiesForGarden,
-  type ResolvedCrops,
   resolveProjectCrops,
 } from '~/server/features/garden/resolveCrops'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'

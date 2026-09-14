@@ -1,9 +1,16 @@
-import { CROP_KEYS } from '@l2beat/config'
 import { expect } from 'earl'
-import { CROP_COLUMNS } from './crops'
+import { CROP_COLUMNS, type CropKey } from './crops'
 
 describe('CROP_COLUMNS', () => {
-  it('names every crop once, in the order config serves them, checked key by key', () => {
-    expect(CROP_COLUMNS.map((x) => x.key)).toEqual([...CROP_KEYS])
+  it('names every crop once, checked against a record the type system keeps complete', () => {
+    const every: Record<CropKey, null> = {
+      censorshipResistance: null,
+      openSource: null,
+      privacy: null,
+      security: null,
+    }
+    expect(CROP_COLUMNS.map((x) => x.key as string).sort()).toEqual(
+      Object.keys(every).sort(),
+    )
   })
 })

@@ -1,5 +1,6 @@
-import type { CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import type { ProjectCropStatus } from '@l2beat/config'
 import { CropPlant } from '~/components/garden/CropPlant'
+import type { CropSentiment } from '~/components/garden/crops'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { SectionHeading } from './SectionHeading'
 

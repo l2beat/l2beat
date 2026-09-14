@@ -1,5 +1,6 @@
-import type { CropKey, CropSentiment, ProjectCropStatus } from '@l2beat/config'
+import type { ProjectCropStatus } from '@l2beat/config'
 import { CropPlant } from '~/components/garden/CropPlant'
+import type { CropKey, CropSentiment } from '~/components/garden/crops'
 import { CROP_COLUMNS } from '~/components/garden/crops'
 
 const SAMPLE: Record<

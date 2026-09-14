@@ -3,7 +3,7 @@ import type {
   ProjectPrivacyInfo,
   ProjectScalingInfo,
 } from '@l2beat/config'
-import { CROP_ATTESTATIONS, CROP_KEYS } from '@l2beat/config'
+import { CROP_ATTESTATIONS } from '@l2beat/config'
 import { type Validator, v } from '@l2beat/validate'
 import {
   CropSentimentSchema,
@@ -305,12 +305,14 @@ function getGardenProjectPath(project: CropsSourceProject): string | null {
 }
 
 export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {
-  const summary = {} as CropsApiSummary
-  for (const key of CROP_KEYS) {
-    summary[key] = {
-      sentiment: crops[key].sentiment,
-      status: crops[key].status,
-    }
+  const summarise = (key: keyof ResolvedCrops) => ({
+    sentiment: crops[key].sentiment,
+    status: crops[key].status,
+  })
+  return {
+    censorshipResistance: summarise('censorshipResistance'),
+    openSource: summarise('openSource'),
+    privacy: summarise('privacy'),
+    security: summarise('security'),
   }
-  return summary
 }

@@ -1,40 +1,26 @@
 import type {
-  CropSentiment,
-  CropStatus,
   OsiLicense,
   OsiLicenseId,
   ProjectCrops,
   ProjectOpenSourceCropEvaluation,
 } from '@l2beat/config'
-import { CROP_KEYS, OSI_LICENSES } from '@l2beat/config'
+import { OSI_LICENSES } from '@l2beat/config'
+import type {
+  ResolvedCropEvaluation,
+  ResolvedCrops,
+} from '~/components/garden/crops'
 
-// Config declares a crop with optional fields and defaults left implicit; the
-// site renders a fully resolved one. crops-api resolves the same way in its
-// own copy of this file, so a change here is a change there.
-
-/** An evaluation with every optional field resolved to a concrete value. */
-export interface ResolvedCropEvaluation {
-  sentiment: CropSentiment
-  status: CropStatus
-  /** Only on the open source crop, once the license is confirmed. */
-  license?: OsiLicense
-  points: string[]
-  missing: string[]
-  additionalConsiderations: string[]
-  notReviewed: string[]
-}
-
-export type ResolvedCrops = Record<
-  (typeof CROP_KEYS)[number],
-  ResolvedCropEvaluation
->
+// Config leaves a crop's defaults implicit; the site renders a fully resolved
+// one. crops-api resolves the same way in its own copy of this file, so a
+// change here is a change there.
 
 export function resolveProjectCrops(crops: ProjectCrops): ResolvedCrops {
-  const resolved = {} as ResolvedCrops
-  for (const key of CROP_KEYS) {
-    resolved[key] = resolveCropEvaluation(crops[key])
+  return {
+    censorshipResistance: resolveCropEvaluation(crops.censorshipResistance),
+    openSource: resolveCropEvaluation(crops.openSource),
+    privacy: resolveCropEvaluation(crops.privacy),
+    security: resolveCropEvaluation(crops.security),
   }
-  return resolved
 }
 
 export function resolveCropEvaluation(
@@ -60,7 +46,7 @@ export function resolveCropEvaluation(
  * still reviewed, and its project page still shows the evaluation.
  */
 export function qualifiesForGarden(crops: ResolvedCrops): boolean {
-  return CROP_KEYS.every((key) => crops[key].sentiment !== 'bad')
+  return Object.values(crops).every((crop) => crop.sentiment !== 'bad')
 }
 
 /** Throws rather than render a green Open source crop nothing backs. */
