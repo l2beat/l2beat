@@ -66,5 +66,19 @@ export function hasUnresolvedMajorFinding(unit: AuditsUnitEntry): boolean {
   )
 }
 
+/** Unique finding identifiers of the units with an unresolved major finding, in order. */
+export function collectFindingIds(units: AuditsUnitEntry[]): string[] {
+  const ids = new Set<string>()
+  for (const unit of units) {
+    if (!hasUnresolvedMajorFinding(unit)) continue
+    for (const id of unit.match?.findingIds ?? []) ids.add(id)
+  }
+  return [...ids]
+}
+
+export function formatFindingIds(ids: string[] | undefined): string {
+  return ids && ids.length > 0 ? ` (${ids.join(', ')})` : ''
+}
+
 export const MAJOR_FINDING_DESCRIPTION =
   'The deployed code is identical to an audited revision for which the audit report recorded major findings. Because the code is unchanged, the fix for those findings is not present in the deployed unit. Open the audit report to check the finding.'

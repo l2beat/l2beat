@@ -208,6 +208,141 @@
       "reportFile": "formal-verification__fv__reports__2022-05.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/openzeppelin/reports/formal-verification__fv__reports__2022-05.pdf"
     },
+    "optimism/base-mt64cannon-2025-02": {
+      "id": "optimism/base-mt64cannon-2025-02",
+      "collection": "optimism",
+      "title": "MT64Cannon Security Review (Coinbase Protocol Security)",
+      "auditor": "Base",
+      "reportDate": "2025-02-06",
+      "reportFile": "2025_01-MT-Cannon-Base.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_01-MT-Cannon-Base.pdf"
+    },
+    "optimism/cantina-eip7702-2025-02": {
+      "id": "optimism/cantina-eip7702-2025-02",
+      "collection": "optimism",
+      "title": "Optimism Security Review (Cantina, EIP-7702 / Pectra impact)",
+      "auditor": "Cantina",
+      "reportDate": "2025-03-09",
+      "reportFile": "2025_02-EIP7702-Cantina.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_02-EIP7702-Cantina.pdf"
+    },
+    "optimism/cantina-interop-l2-rereview-2026-06": {
+      "id": "optimism/cantina-interop-l2-rereview-2026-06",
+      "collection": "optimism",
+      "title": "Optimism L2 Interop Re-review (Cantina Managed)",
+      "auditor": "Cantina",
+      "reportDate": "2026-06-18",
+      "reportFile": "2026_06-Interop-L2-Contracts.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2026_06-Interop-L2-Contracts.pdf"
+    },
+    "optimism/cantina-mcp-l1-2024-02": {
+      "id": "optimism/cantina-mcp-l1-2024-02",
+      "collection": "optimism",
+      "title": "Optimism Cycle 19 Security Review (Cantina, MCP L1)",
+      "auditor": "Cantina",
+      "reportDate": "2024-02-15",
+      "reportFile": "2024_02-MCP_L1-Cantina.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2024_02-MCP_L1-Cantina.pdf"
+    },
+    "optimism/cantina-u17-2025-10": {
+      "id": "optimism/cantina-u17-2025-10",
+      "collection": "optimism",
+      "title": "Optimism u17 Security Review",
+      "auditor": "Cantina",
+      "reportDate": "2025-10-27",
+      "reportFile": "2025_10-U17-Spearbit.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_10-U17-Spearbit.pdf"
+    },
+    "optimism/cantina-u18-2026-01": {
+      "id": "optimism/cantina-u18-2026-01",
+      "collection": "optimism",
+      "title": "Optimism PBC U18 Security Review (Cantina)",
+      "auditor": "Cantina",
+      "reportDate": "2026-01-12",
+      "reportFile": "2026_01-U18-Cantina.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2026_01-U18-Cantina.pdf"
+    },
+    "optimism/cantina-upgrade20-2026-08": {
+      "id": "optimism/cantina-upgrade20-2026-08",
+      "collection": "optimism",
+      "title": "Optimism Upgrade 20 Security Review (Cantina Managed)",
+      "auditor": "Cantina",
+      "reportDate": "2026-08-20",
+      "reportFile": "2026_08-U20-Cantina.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2026_08-U20-Cantina.pdf"
+    },
+    "optimism/code4rena-base-2023-08": {
+      "id": "optimism/code4rena-base-2023-08",
+      "collection": "optimism",
+      "title": "BASE Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "reportDate": "2023-08-10",
+      "reportFile": "2023_08-OP-Stack-Base-Code4rena.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2023_08-OP-Stack-Base-Code4rena.html"
+    },
+    "optimism/code4rena-superchain-2024-08": {
+      "id": "optimism/code4rena-superchain-2024-08",
+      "collection": "optimism",
+      "title": "Optimism Superchain Findings & Analysis Report (Code4rena)",
+      "auditor": "Code4rena",
+      "reportDate": "2024-08-16",
+      "reportFile": "2024_08-Superchain-Code4rena.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2024_08-Superchain-Code4rena.html"
+    },
+    "optimism/openzeppelin-bedrock-bridge-2022-05": {
+      "id": "optimism/openzeppelin-bedrock-bridge-2022-05",
+      "collection": "optimism",
+      "title": "Optimism Bridge Audit (OpenZeppelin, May 2022)",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2022-05-16",
+      "reportFile": "2022_05-Bedrock_Contracts-Zeppelin.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2022_05-Bedrock_Contracts-Zeppelin.pdf"
+    },
+    "optimism/openzeppelin-bedrock-periphery-2022-09": {
+      "id": "optimism/openzeppelin-bedrock-periphery-2022-09",
+      "collection": "optimism",
+      "title": "Optimism Bedrock and Periphery Audit (OpenZeppelin)",
+      "auditor": "OpenZeppelin",
+      "reportDate": "2022-09-02",
+      "reportFile": "2022_09-Bedrock_and_Periphery-Zeppelin.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2022_09-Bedrock_and_Periphery-Zeppelin.pdf"
+    },
+    "optimism/spearbit-fault-proofs-no-mips-2024-08": {
+      "id": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+      "collection": "optimism",
+      "title": "Base Fault Proofs no MIPS Security Review (Spearbit)",
+      "auditor": "Spearbit",
+      "reportDate": "2024-08-14",
+      "reportFile": "2024_08_Fault-Proofs-No-MIPS_Spearbit.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf"
+    },
+    "optimism/spearbit-interop-portal-2025-05": {
+      "id": "optimism/spearbit-interop-portal-2025-05",
+      "collection": "optimism",
+      "title": "Optimism Security Review",
+      "auditor": "Spearbit",
+      "reportDate": "2025-05-20",
+      "reportFile": "2025_05-Interop-Portal-Spearbit.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_05-Interop-Portal-Spearbit.pdf"
+    },
+    "optimism/spearbit-u16a-2025-09": {
+      "id": "optimism/spearbit-u16a-2025-09",
+      "collection": "optimism",
+      "title": "Optimism u16 Security Review - U16a (Spearbit)",
+      "auditor": "Spearbit",
+      "reportDate": "2025-10-07",
+      "reportFile": "2025_09-U16a-Spearbit.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_09-U16a-Spearbit.pdf"
+    },
+    "optimism/spearbit-upgrade16-2025-05": {
+      "id": "optimism/spearbit-upgrade16-2025-05",
+      "collection": "optimism",
+      "title": "Optimism Security Review - Upgrade 16 (Spearbit)",
+      "auditor": "Spearbit",
+      "reportDate": "2025-05-20",
+      "reportFile": "2025_05-Upgrade16-Spearbit.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
+    },
     "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03": {
       "id": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
       "collection": "privacy-pools",

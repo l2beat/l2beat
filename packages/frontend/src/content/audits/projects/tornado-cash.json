@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "projectId": "tornado-cash",
   "slug": "tornado-cash",
-  "generatedAt": 1789405786,
-  "datasetRevision": "00b5fb798e522283538f147a70fa900cf419fa41-dirty",
+  "generatedAt": 1789490342,
+  "datasetRevision": "558a14f6d9bcb7f8f0517a0b4a3ccd1558023c21-dirty",
   "discoveryTimestamp": 1787307944,
   "contractSelection": "all",
   "context": {
@@ -174,6 +174,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -218,6 +219,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -664,6 +666,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -708,6 +711,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -2118,6 +2122,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -2162,6 +2167,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -2897,6 +2903,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -2941,6 +2948,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -3375,6 +3383,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -3419,6 +3428,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -4227,6 +4237,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["CVF-4"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -4351,6 +4362,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 2,
+                "findingIds": ["CVF-31", "CVF-32"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -5138,6 +5150,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 2,
+                "findingIds": ["CVF-31", "CVF-32"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -5919,6 +5932,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 2,
+                "findingIds": ["CVF-31", "CVF-32"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -10003,6 +10017,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -10047,6 +10062,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -11157,6 +11173,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["CVF-4"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -11281,6 +11298,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 2,
+                "findingIds": ["CVF-31", "CVF-32"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -15033,6 +15051,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -15077,6 +15096,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -15600,6 +15620,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -15644,6 +15665,7 @@
                 "reviewPhase": "final commit / fix review",
                 "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
                 "majorFindings": 1,
+                "findingIds": ["C-03"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2

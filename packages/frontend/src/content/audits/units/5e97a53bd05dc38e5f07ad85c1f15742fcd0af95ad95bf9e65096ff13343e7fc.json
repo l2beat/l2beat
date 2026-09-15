@@ -6,7 +6,7 @@
   "lines": 3,
   "source": "interface IInitializable {\n    function initialize() external payable;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 3,
       "match": {

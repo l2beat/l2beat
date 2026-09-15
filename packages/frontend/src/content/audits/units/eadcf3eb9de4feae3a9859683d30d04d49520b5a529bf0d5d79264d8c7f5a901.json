@@ -6,7 +6,7 @@
   "lines": 27,
   "source": "contract SignatureDecoder {\n    /// @dev divides bytes signature into `uint8 v, bytes32 r, bytes32 s`.\n    /// @notice Make sure to peform a bounds check for @param pos, to avoid out of bounds access on @param signatures\n    /// @param pos which signature to read. A prior bounds check of this parameter should be performed, to avoid out of bounds access\n    /// @param signatures concatenated rsv signatures\n    function signatureSplit(bytes memory signatures, uint256 pos)\n        internal\n        pure\n        returns (uint8 v, bytes32 r, bytes32 s)\n    {\n        // The signature format is a compact form of:\n        //   {bytes32 r}{bytes32 s}{uint8 v}\n        // Compact means, uint8 is not padded to 32 bytes.\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            let signaturePos := mul(0x41, pos)\n            r := mload(add(signatures, add(signaturePos, 0x20)))\n            s := mload(add(signatures, add(signaturePos, 0x40)))\n            // Here we are loading the last 32 bytes, including 31 bytes\n            // of 's'. There is no 'mload8' to do this.\n            //\n            // 'byte' is not working due to the Solidity parser, so lets\n            // use the second best option, 'and'\n            v := and(mload(add(signatures, add(signaturePos, 0x41))), 0xff)\n        }\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 27,
       "match": {
@@ -99,7 +99,7 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 27,
       "match": {

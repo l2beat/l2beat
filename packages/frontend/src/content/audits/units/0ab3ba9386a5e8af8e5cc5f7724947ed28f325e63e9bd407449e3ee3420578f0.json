@@ -6,7 +6,7 @@
   "lines": 9,
   "source": "interface IOwnable {\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    function owner() external view returns (address);\n    function renounceOwnership() external;\n    function transferOwnership(address newOwner) external; // nosemgrep\n\n    function __constructor__() external;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "differs",
       "coveredLines": 5,
       "match": {

@@ -15,6 +15,7 @@ import { UnitStatusBar } from '../../components/AuditCoverageBar'
 import {
   AUDIT_STATUS_META,
   AUDIT_STATUS_ORDER,
+  collectFindingIds,
   hasUnresolvedMajorFinding,
   MAJOR_FINDING_DESCRIPTION,
   totalUnits,
@@ -133,9 +134,11 @@ export function ContractCoverageList({ contracts }: Props) {
           const key = rowKey(contract)
           const isOpen = open.has(key)
           const visibleUnits = files.reduce((n, f) => n + f.units.length, 0)
-          const majorFindingUnits = contract.files
-            .flatMap((f) => f.units)
-            .filter(hasUnresolvedMajorFinding).length
+          const allUnits = contract.files.flatMap((f) => f.units)
+          const majorFindingUnits = allUnits.filter(
+            hasUnresolvedMajorFinding,
+          ).length
+          const findingIds = collectFindingIds(allUnits)
           return (
             <div
               key={key}
@@ -187,7 +190,10 @@ export function ContractCoverageList({ contracts }: Props) {
                             {majorFindingUnits}{' '}
                             {majorFindingUnits === 1 ? 'unit' : 'units'} of this
                             contract {majorFindingUnits === 1 ? 'has' : 'have'}{' '}
-                            an unresolved major finding.
+                            an unresolved major finding
+                            {findingIds.length > 0 &&
+                              `: ${findingIds.join(', ')}`}
+                            .
                           </div>
                           {MAJOR_FINDING_DESCRIPTION}
                         </TooltipContent>

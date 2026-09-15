@@ -29,6 +29,8 @@ export interface AuditedUnitVersion extends PreparedUnit {
   reviewPhase: string
   coverage: string
   majorFindings: number
+  /** Report identifiers of the open major findings, as printed in the report. */
+  findingIds: string[]
   /** Sort key, larger is newer. */
   order: number
 }
@@ -161,6 +163,7 @@ export class EvidenceIndex {
                   reviewPhase: version.review_phase,
                   coverage: version.coverage,
                   majorFindings: version.major_findings,
+                  findingIds: version.finding_ids ?? [],
                   order,
                 }
                 getOrCreate(this.hashIndex, unit.unitHash, []).push(audited)

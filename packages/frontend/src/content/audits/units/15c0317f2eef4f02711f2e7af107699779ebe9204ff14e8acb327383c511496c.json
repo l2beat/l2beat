@@ -6,7 +6,7 @@
   "lines": 4,
   "source": "interface ISP1VerifierWithHash is ISP1Verifier {\n    /// @notice Returns the hash of the verifier.\n    function VERIFIER_HASH() external pure returns (bytes32);\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 4,
       "match": {

@@ -6,9 +6,34 @@
   "lines": 113,
   "source": "contract L1ERC721Bridge is ERC721Bridge, ProxyAdminOwnedBase, ReinitializableBase, ISemver {\n    /// @notice Mapping of L1 token to L2 token to ID to boolean, indicating if the given L1 token\n    ///         by ID was deposited for a given L2 token.\n    mapping(address => mapping(address => mapping(uint256 => bool))) public deposits;\n\n    /// @custom:legacy\n    /// @custom:spacer superchainConfig\n    /// @notice Spacer taking up the legacy `superchainConfig` slot.\n    address private spacer_50_0_20;\n\n    /// @notice Semantic version.\n    /// @custom:semver 2.9.0\n    string public constant version = \"2.9.0\";\n\n    /// @notice Address of the SystemConfig contract.\n    ISystemConfig public systemConfig;\n\n    /// @notice Constructs the L1ERC721Bridge contract.\n    constructor() ERC721Bridge() ReinitializableBase(3) {\n        _disableInitializers();\n    }\n\n    /// @notice Initializes the contract.\n    /// @param _messenger   Contract of the CrossDomainMessenger on this network.\n    /// @param _systemConfig Contract of the SystemConfig contract on this network.\n    function initialize(ICrossDomainMessenger _messenger, ISystemConfig _systemConfig)\n        external\n        reinitializer(initVersion())\n    {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        systemConfig = _systemConfig;\n        __ERC721Bridge_init({_messenger: _messenger, _otherBridge: ERC721Bridge(payable(Predeploys.L2_ERC721_BRIDGE))});\n    }\n\n    /// @inheritdoc ERC721Bridge\n    function paused() public view override returns (bool) {\n        return systemConfig.paused();\n    }\n\n    /// @notice Returns the SuperchainConfig contract.\n    /// @return ISuperchainConfig The SuperchainConfig contract.\n    function superchainConfig() public view returns (ISuperchainConfig) {\n        return systemConfig.superchainConfig();\n    }\n\n    /// @notice Completes an ERC721 bridge from the other domain and sends the ERC721 token to the\n    ///         recipient on this domain.\n    /// @param _localToken  Address of the ERC721 token on this domain.\n    /// @param _remoteToken Address of the ERC721 token on the other domain.\n    /// @param _from        Address that triggered the bridge on the other domain.\n    /// @param _to          Address to receive the token on this domain.\n    /// @param _tokenId     ID of the token being deposited.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function finalizeBridgeERC721(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _tokenId,\n        bytes calldata _extraData\n    ) external onlyOtherBridge {\n        require(paused() == false, \"L1ERC721Bridge: paused\");\n        require(_localToken != address(this), \"L1ERC721Bridge: local token cannot be self\");\n\n        // Checks that the L1/L2 NFT pair has a token ID that is escrowed in the L1 Bridge.\n        require(\n            deposits[_localToken][_remoteToken][_tokenId] == true,\n            \"L1ERC721Bridge: Token ID is not escrowed in the L1 Bridge\"\n        );\n\n        // Mark that the token ID for this L1/L2 token pair is no longer escrowed in the L1\n        // Bridge.\n        deposits[_localToken][_remoteToken][_tokenId] = false;\n\n        // When a withdrawal is finalized on L1, the L1 Bridge transfers the NFT to the\n        // withdrawer.\n        IERC721(_localToken).safeTransferFrom({from: address(this), to: _to, tokenId: _tokenId});\n\n        // slither-disable-next-line reentrancy-events\n        emit ERC721BridgeFinalized(_localToken, _remoteToken, _from, _to, _tokenId, _extraData);\n    }\n\n    /// @inheritdoc ERC721Bridge\n    function _initiateBridgeERC721(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _tokenId,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) internal override {\n        require(_remoteToken != address(0), \"L1ERC721Bridge: remote token cannot be address(0)\");\n\n        // Construct calldata for _l2Token.finalizeBridgeERC721(_to, _tokenId)\n        bytes memory message = abi.encodeCall(\n            IL2ERC721Bridge.finalizeBridgeERC721, (_remoteToken, _localToken, _from, _to, _tokenId, _extraData)\n        );\n\n        // Lock token into bridge\n        deposits[_localToken][_remoteToken][_tokenId] = true;\n        IERC721(_localToken).transferFrom({from: _from, to: address(this), tokenId: _tokenId});\n\n        // Send calldata into L2\n        messenger.sendMessage({_target: address(otherBridge), _message: message, _minGasLimit: _minGasLimit});\n        emit ERC721BridgeInitiated(_localToken, _remoteToken, _from, _to, _tokenId, _extraData);\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
-      "status": "unaudited",
-      "coveredLines": 0,
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 113,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "L1ERC721Bridge",
+        "similarity": 1,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/L1ERC721Bridge.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/L1/L1ERC721Bridge.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
       "warnings": []
     }
   }

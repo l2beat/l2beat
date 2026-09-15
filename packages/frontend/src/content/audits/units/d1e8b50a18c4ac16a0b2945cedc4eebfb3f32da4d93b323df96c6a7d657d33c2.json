@@ -6,7 +6,7 @@
   "lines": 8,
   "source": "interface IReinitializableBase {\n    error ReinitializableBase_ZeroInitVersion();\n\n    function initVersion() external view returns (uint8);\n\n    // ReinitializerBase is abstract, so it has no constructor in its interface.\n    function __constructor__() external;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

@@ -6,7 +6,7 @@
   "lines": 24,
   "source": "interface IResourceMetering {\n    struct ResourceParams {\n        uint128 prevBaseFee;\n        uint64 prevBoughtGas;\n        uint64 prevBlockNum;\n    }\n\n    struct ResourceConfig {\n        uint32 maxResourceLimit;\n        uint8 elasticityMultiplier;\n        uint8 baseFeeMaxChangeDenominator;\n        uint32 minimumBaseFee;\n        uint32 systemTxMaxGas;\n        uint128 maximumBaseFee;\n    }\n\n    error OutOfGas();\n\n    event Initialized(uint8 version);\n\n    function params() external view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum); // nosemgrep\n\n    function __constructor__() external;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

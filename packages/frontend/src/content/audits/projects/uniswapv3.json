@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "projectId": "uniswapv3",
   "slug": "uniswapv3",
-  "generatedAt": 1789405787,
-  "datasetRevision": "00b5fb798e522283538f147a70fa900cf419fa41-dirty",
+  "generatedAt": 1789490343,
+  "datasetRevision": "558a14f6d9bcb7f8f0517a0b4a3ccd1558023c21-dirty",
   "discoveryTimestamp": 1786913047,
   "contractSelection": "all",
   "context": {
@@ -460,6 +460,10 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Full manual line-by-line review of all 22 Solidity files under contracts/ (root, lifecycle, ownership, payment, token).",
                 "majorFindings": 2,
+                "findingIds": [
+                  "Stuck Ether in Crowdsale contract",
+                  "Recursive Call in MultisigWallet"
+                ],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 9
@@ -817,6 +821,7 @@
                 "reviewPhase": "Initial audit",
                 "coverage": "File referenced by the report's findings; the report states a review of the Solady repository at this commit without a file-level scope list, so full-file coverage is not established.",
                 "majorFindings": 1,
+                "findingIds": ["5.1.2"],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 4
@@ -2031,6 +2036,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -2183,6 +2189,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-005"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -2688,6 +2695,10 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Full manual line-by-line review of all 22 Solidity files under contracts/ (root, lifecycle, ownership, payment, token).",
                 "majorFindings": 2,
+                "findingIds": [
+                  "Stuck Ether in Crowdsale contract",
+                  "Recursive Call in MultisigWallet"
+                ],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 9
@@ -4917,6 +4928,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -7230,6 +7242,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -7382,6 +7395,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-005"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -8134,7 +8148,12 @@
                 "auditStatus": "audited_with_major_findings",
                 "reviewPhase": "initial audit",
                 "coverage": "Full manual review of all smart contracts under contracts/ for the OpenZeppelin v2.0 release.",
-                "majorFindings": 1,
+                "majorFindings": 3,
+                "findingIds": [
+                  "Avoid frontrunning by a malicious actor or the contract owner",
+                  "Stop crowdsale manipulation via reentrancy by adding the nonReentrant modifier to the buyTokens() function",
+                  "Allow for safe changes to allowances through the SafeERC20 interface"
+                ],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 9
@@ -8747,6 +8766,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -9143,6 +9163,7 @@
                 "reviewPhase": "fix review",
                 "coverage": "verification of the fix for the Critical decreaseLiquidity finding; the Major missing-token-existence-check finding remains open",
                 "majorFindings": 1,
+                "findingIds": ["CVF-24"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -10264,6 +10285,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -10416,6 +10438,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-005"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -10537,10 +10560,10 @@
                 "commit": "5a3766115b55dd3471ca981a26c8b8381f12fae7",
                 "commitTimestamp": "2022-05-31T09:01:24Z",
                 "url": "https://github.com/AztecProtocol/aztec-connect-bridges/blob/5a3766115b55dd3471ca981a26c8b8381f12fae7/src/bridges/liquity/interfaces/ISwapRouter.sol",
-                "auditStatus": "audited_with_major_findings",
+                "auditStatus": "audited_with_no_major_findings",
                 "reviewPhase": "initial audit",
                 "coverage": "full directory",
-                "majorFindings": 3,
+                "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -10797,6 +10820,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2

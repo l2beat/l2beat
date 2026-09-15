@@ -6,7 +6,7 @@
   "lines": 18,
   "source": "using LPPMetadataLib for LPPMetaData global;\ntype LPPMetaData is bytes32;\nerror PartOffsetOOB();\nerror InsufficientBond();\nerror NotEOA();\nerror InvalidInputSize();\nerror AlreadyInitialized();\nerror NotInitialized();\nerror AlreadyFinalized();\nerror WrongStartingBlock();\nerror TreeSizeOverflow();\nerror InvalidProof();\nerror InvalidPreimage();\nerror StatesNotContiguous();\nerror PostStateMatches();\nerror BadProposal();\nerror ActiveProposal();\nerror BondTransferFailed();",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

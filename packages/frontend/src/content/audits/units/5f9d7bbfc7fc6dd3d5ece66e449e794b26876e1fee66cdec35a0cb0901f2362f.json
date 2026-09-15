@@ -6,7 +6,7 @@
   "lines": 15,
   "source": "interface KailuaVerifier is ISemver {\n    function faultProofPermitBeneficiary(IKailuaTournament proposalParent, bytes32 proposalSignature)\n        external\n        view\n        returns (address);\n    function verify(\n        address payoutRecipient,\n        bytes32 preconditionHash,\n        bytes32 l1Head,\n        bytes32 agreedL2OutputRoot,\n        bytes32 claimedL2OutputRoot,\n        uint64 claimedL2BlockNumber,\n        bytes calldata encodedSeal\n    ) external view;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "differs",
       "coveredLines": 11,
       "match": {

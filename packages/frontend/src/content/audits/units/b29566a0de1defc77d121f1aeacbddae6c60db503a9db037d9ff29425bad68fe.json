@@ -6,7 +6,7 @@
   "lines": 11,
   "source": "interface ISP1VerifierGatewayEvents {\n    /// @notice Emitted when a verifier route is added.\n    /// @param selector The verifier selector that was added.\n    /// @param verifier The address of the verifier contract.\n    event RouteAdded(bytes4 selector, address verifier);\n\n    /// @notice Emitted when a verifier route is frozen.\n    /// @param selector The verifier selector that was frozen.\n    /// @param verifier The address of the verifier contract.\n    event RouteFrozen(bytes4 selector, address verifier);\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 11,
       "match": {

@@ -6,9 +6,34 @@
   "lines": 114,
   "source": "contract OptimismMintableERC20Factory is ISemver, Initializable, IOptimismERC20Factory {\n    /// @custom:spacer OptimismMintableERC20Factory's initializer slot spacing\n    /// @notice Spacer to avoid packing into the initializer slot\n    bytes30 private spacer_0_2_30;\n\n    /// @notice Address of the StandardBridge on this chain.\n    /// @custom:network-specific\n    address public bridge;\n\n    /// @notice Mapping of local token address to remote token address.\n    ///         This is used to keep track of the token deployments.\n    mapping(address => address) public deployments;\n\n    /// @notice Reserve extra slots in the storage layout for future upgrades.\n    ///         A gap size of 48 was chosen here, so that the first slot used in a child contract\n    ///         would be a multiple of 50.\n    uint256[48] private __gap;\n\n    /// @custom:legacy\n    /// @notice Emitted whenever a new OptimismMintableERC20 is created. Legacy version of the newer\n    ///         OptimismMintableERC20Created event. We recommend relying on that event instead.\n    /// @param remoteToken Address of the token on the remote chain.\n    /// @param localToken  Address of the created token on the local chain.\n    event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken);\n\n    /// @notice Emitted whenever a new OptimismMintableERC20 is created.\n    /// @param localToken  Address of the created token on the local chain.\n    /// @param remoteToken Address of the corresponding token on the remote chain.\n    /// @param deployer    Address of the account that deployed the token.\n    event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer);\n\n    /// @notice The semver MUST be bumped any time that there is a change in\n    ///         the OptimismMintableERC20 token contract since this contract\n    ///         is responsible for deploying OptimismMintableERC20 contracts.\n    /// @notice Semantic version.\n    /// @custom:semver 1.10.2\n    string public constant version = \"1.10.2\";\n\n    /// @notice Constructs the OptimismMintableERC20Factory contract.\n    constructor() {\n        _disableInitializers();\n    }\n\n    /// @notice Initializes the contract.\n    /// @param _bridge Address of the StandardBridge on this chain.\n    function initialize(address _bridge) external initializer {\n        bridge = _bridge;\n    }\n\n    /// @notice Getter function for the address of the StandardBridge on this chain.\n    ///         Public getter is legacy and will be removed in the future. Use `bridge` instead.\n    /// @return Address of the StandardBridge on this chain.\n    /// @custom:legacy\n    function BRIDGE() external view returns (address) {\n        return bridge;\n    }\n\n    /// @custom:legacy\n    /// @notice Creates an instance of the OptimismMintableERC20 contract. Legacy version of the\n    ///         newer createOptimismMintableERC20 function, which has a more intuitive name.\n    /// @param _remoteToken Address of the token on the remote chain.\n    /// @param _name        ERC20 name.\n    /// @param _symbol      ERC20 symbol.\n    /// @return Address of the newly created token.\n    function createStandardL2Token(address _remoteToken, string memory _name, string memory _symbol)\n        external\n        returns (address)\n    {\n        return createOptimismMintableERC20(_remoteToken, _name, _symbol);\n    }\n\n    /// @notice Creates an instance of the OptimismMintableERC20 contract.\n    /// @param _remoteToken Address of the token on the remote chain.\n    /// @param _name        ERC20 name.\n    /// @param _symbol      ERC20 symbol.\n    /// @return Address of the newly created token.\n    function createOptimismMintableERC20(address _remoteToken, string memory _name, string memory _symbol)\n        public\n        returns (address)\n    {\n        return createOptimismMintableERC20WithDecimals(_remoteToken, _name, _symbol, 18);\n    }\n\n    /// @notice Creates an instance of the OptimismMintableERC20 contract, with specified decimals.\n    /// @param _remoteToken Address of the token on the remote chain.\n    /// @param _name        ERC20 name.\n    /// @param _symbol      ERC20 symbol.\n    /// @param _decimals    ERC20 decimals\n    /// @return Address of the newly created token.\n    function createOptimismMintableERC20WithDecimals(\n        address _remoteToken,\n        string memory _name,\n        string memory _symbol,\n        uint8 _decimals\n    ) public returns (address) {\n        require(_remoteToken != address(0), \"OptimismMintableERC20Factory: must provide remote token address\");\n\n        bytes32 salt = keccak256(abi.encode(_remoteToken, _name, _symbol, _decimals));\n\n        address localToken =\n            address(new OptimismMintableERC20{salt: salt}(bridge, _remoteToken, _name, _symbol, _decimals));\n\n        deployments[localToken] = _remoteToken;\n\n        // Emit the old event too for legacy support.\n        emit StandardL2TokenCreated(_remoteToken, localToken);\n\n        // Emit the updated event. The arguments here differ from the legacy event, but\n        // are consistent with the ordering used in StandardBridge events.\n        emit OptimismMintableERC20Created(localToken, _remoteToken, msg.sender);\n\n        return localToken;\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
-      "status": "unaudited",
-      "coveredLines": 0,
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 114,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "OptimismMintableERC20Factory",
+        "similarity": 1,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
       "warnings": []
     }
   }

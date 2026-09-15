@@ -6,7 +6,7 @@
   "lines": 16,
   "source": "library RiscZeroSetVerifierLib {\n    function selector(bytes32 imageId) internal pure returns (bytes4) {\n        return bytes4(\n            sha256(\n                abi.encodePacked(\n                    // tag\n                    sha256(\"risc0.SetInclusionReceiptVerifierParameters\"),\n                    // down\n                    imageId,\n                    // down length\n                    uint16(1) << 8\n                )\n            )\n        );\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 16,
       "match": {

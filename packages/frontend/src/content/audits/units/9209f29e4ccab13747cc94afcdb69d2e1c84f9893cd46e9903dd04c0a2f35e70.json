@@ -27,6 +27,10 @@
         "reviewPhase": "initial audit",
         "coverage": "Full manual line-by-line review of all 22 Solidity files under contracts/ (root, lifecycle, ownership, payment, token).",
         "majorFindings": 2,
+        "findingIds": [
+          "Stuck Ether in Crowdsale contract",
+          "Recursive Call in MultisigWallet"
+        ],
         "isLatestVersion": false,
         "laterAuditedVersionExists": true,
         "totalVersions": 9

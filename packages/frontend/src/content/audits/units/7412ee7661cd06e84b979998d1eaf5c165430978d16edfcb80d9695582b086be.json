@@ -6,7 +6,7 @@
   "lines": 17,
   "source": "interface ISP1VerifierGatewayErrors {\n    /// @notice Thrown when the verifier route is not found.\n    /// @param selector The verifier selector that was specified.\n    error RouteNotFound(bytes4 selector);\n\n    /// @notice Thrown when the verifier route is found, but is frozen.\n    /// @param selector The verifier selector that was specified.\n    error RouteIsFrozen(bytes4 selector);\n\n    /// @notice Thrown when adding a verifier route and the selector already contains a route.\n    /// @param verifier The address of the verifier contract in the existing route.\n    error RouteAlreadyExists(address verifier);\n\n    /// @notice Thrown when adding a verifier route and the selector returned by the verifier is\n    /// zero.\n    error SelectorCannotBeZero();\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 17,
       "match": {

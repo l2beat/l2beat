@@ -6,7 +6,7 @@
   "lines": 10,
   "source": "library LibGameType {\n    /// @notice Get the value of a `GameType` type in the form of the underlying uint32.\n    /// @param _gametype The `GameType` type to get the value of.\n    /// @return gametype_ The value of the `GameType` type as a uint32 type.\n    function raw(GameType _gametype) internal pure returns (uint32 gametype_) {\n        assembly {\n            gametype_ := _gametype\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 10,
       "match": {

@@ -6,7 +6,7 @@
   "lines": 4,
   "source": "struct Receipt {\n    bytes seal;\n    bytes32 claimDigest;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

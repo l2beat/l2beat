@@ -6,7 +6,7 @@
   "lines": 8,
   "source": "interface IAddressManager is IOwnable {\n    event AddressSet(string indexed name, address newAddress, address oldAddress);\n\n    function getAddress(string memory _name) external view returns (address);\n    function setAddress(string memory _name, address _address) external;\n\n    function __constructor__() external;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

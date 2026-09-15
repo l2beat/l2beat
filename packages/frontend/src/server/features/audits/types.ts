@@ -81,6 +81,8 @@ export interface AuditsUnitMatchEntry {
   reviewPhase: string
   coverage: string
   majorFindings: number
+  /** Identifiers of those findings as printed in the report, for navigation. */
+  findingIds?: string[]
   laterAuditedVersionExists: boolean
   totalVersions: number
 }

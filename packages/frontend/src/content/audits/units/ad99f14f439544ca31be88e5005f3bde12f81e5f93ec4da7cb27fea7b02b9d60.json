@@ -6,7 +6,7 @@
   "lines": 26,
   "source": "all:\n\tmake build-circuits\n\tmake release-circuits\n\nbuild-circuits:\n\trm -rf build && \\\n\tmkdir -p build && \\\n\tmkdir -p build/groth16 && \\\n\tmkdir -p build/plonk && \\\n\tRUST_LOG=debug RUSTFLAGS='-C target-cpu=native' \\\n\tcargo run -p sp1-prover --release --bin build_groth16_bn254 --features native-gnark -- \\\n\t--build-dir=./build/groth16 && \\\n\tRUST_LOG=debug RUSTFLAGS='-C target-cpu=native' \\\n\tcargo run -p sp1-prover --release --bin build_plonk_bn254 --features native-gnark -- \\\n\t--build-dir=./build/plonk\n\nrelease-circuits:\n\t@read -p \"Release version (ex. v1.0.0-testnet)? \" version; \\\n\tbash release.sh $$version\n\nrelease-shapes:\n\tbash shapes.sh\n\ntest-e2e:\n\tRUSTFLAGS='-C target-cpu=native' \\\n\tcargo test --package sp1-prover --lib --release -- tests::test_e2e --exact --show-output",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 26,
       "match": {

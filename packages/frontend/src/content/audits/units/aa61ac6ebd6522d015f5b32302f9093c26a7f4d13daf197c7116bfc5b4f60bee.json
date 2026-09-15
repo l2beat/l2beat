@@ -6,7 +6,7 @@
   "lines": 23,
   "source": "using LibGameType for GameType global;\ntype GameType is uint32;\nusing LibPosition for Position global;\ntype Position is uint128;\nusing LibHash for Hash global;\ntype Hash is bytes32;\nusing LibClaim for Claim global;\ntype Claim is bytes32;\nusing LibTimestamp for Timestamp global;\ntype Timestamp is uint64;\nusing LibGameId for GameId global;\ntype GameId is bytes32;\nenum GameStatus {\n    // The game is currently in progress, and has not been resolved.\n    IN_PROGRESS,\n    // The game has concluded, and the `rootClaim` was challenged successfully.\n    CHALLENGER_WINS,\n    // The game has concluded, and the `rootClaim` could not be contested.\n    DEFENDER_WINS\n}\nerror NoImplementation(GameType gameType);\nerror IncorrectBondAmount();\nerror GameAlreadyExists(Hash uuid);",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

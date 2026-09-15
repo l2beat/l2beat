@@ -6,7 +6,7 @@
   "lines": 16,
   "source": "interface IERC721Metadata is IERC721 {\n    /**\n     * @dev Returns the token collection name.\n     */\n    function name() external view returns (string memory);\n\n    /**\n     * @dev Returns the token collection symbol.\n     */\n    function symbol() external view returns (string memory);\n\n    /**\n     * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.\n     */\n    function tokenURI(uint256 tokenId) external view returns (string memory);\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 16,
       "match": {

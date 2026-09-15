@@ -6,7 +6,7 @@
   "lines": 11,
   "source": "interface IProxyAdminOwnedBase {\n    error ProxyAdminOwnedBase_NotSharedProxyAdminOwner();\n    error ProxyAdminOwnedBase_NotProxyAdminOwner();\n    error ProxyAdminOwnedBase_NotProxyAdmin();\n    error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner();\n    error ProxyAdminOwnedBase_ProxyAdminNotFound();\n    error ProxyAdminOwnedBase_NotResolvedDelegateProxy();\n\n    function proxyAdmin() external view returns (IProxyAdmin);\n    function proxyAdminOwner() external view returns (address);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

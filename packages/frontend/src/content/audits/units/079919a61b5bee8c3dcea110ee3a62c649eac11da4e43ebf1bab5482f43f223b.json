@@ -6,14 +6,14 @@
   "lines": 13,
   "source": "abstract contract Context {\n    function _msgSender() internal view virtual returns (address) {\n        return msg.sender;\n    }\n\n    function _msgData() internal view virtual returns (bytes calldata) {\n        return msg.data;\n    }\n\n    function _contextSuffixLength() internal view virtual returns (uint256) {\n        return 0;\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 13,
       "match": {
-        "origin": "other",
+        "origin": "own",
         "collection": "bob",
-        "relation": { "type": "name" },
-        "rank": 4,
+        "relation": { "type": "own" },
+        "rank": 0,
         "matchedBy": "identity",
         "auditedName": "Context",
         "similarity": 1,
@@ -33,14 +33,14 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "identical",
       "coveredLines": 13,
       "match": {
-        "origin": "own",
+        "origin": "other",
         "collection": "bob",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "relation": { "type": "name" },
+        "rank": 4,
         "matchedBy": "identity",
         "auditedName": "Context",
         "similarity": 1,

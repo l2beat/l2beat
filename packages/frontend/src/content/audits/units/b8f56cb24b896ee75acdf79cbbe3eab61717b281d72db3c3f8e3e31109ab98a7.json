@@ -6,7 +6,7 @@
   "lines": 9,
   "source": "interface ICrossDomainMessenger {\n    function xDomainMessageSender() external view returns (address);\n\n    /// Sends a cross domain message to the target messenger.\n    /// @param _target Target contract address.\n    /// @param _message Message to send to the target.\n    /// @param _gasLimit Gas limit for the provided message.\n    function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

@@ -156,6 +156,8 @@ export const UnitMatch = v.object({
   reviewPhase: v.string(),
   coverage: v.string(),
   majorFindings: v.number(),
+  /** Identifiers of those findings as printed in the report; only when majorFindings > 0. */
+  findingIds: v.array(v.string()).optional(),
   isLatestVersion: v.boolean(),
   laterAuditedVersionExists: v.boolean(),
   totalVersions: v.number(),

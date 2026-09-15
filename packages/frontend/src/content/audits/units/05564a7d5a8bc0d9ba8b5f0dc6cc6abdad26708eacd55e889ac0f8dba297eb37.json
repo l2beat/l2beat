@@ -4,9 +4,110 @@
   "name": "IERC165",
   "kind": "interface",
   "lines": 11,
-  "source": "interface IERC165 {\n    /**\n     * @dev Returns true if this contract implements the interface defined by\n     * `interfaceId`. See the corresponding\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section]\n     * to learn more about how these ids are created.\n     *\n     * This function call must use less than 30 000 gas.\n     */\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\n}",
+  "source": "interface IERC165 {\n    /**\n     * @dev Returns true if this contract implements the interface defined by\n     * `interfaceId`. See the corresponding\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\n     * to learn more about how these ids are created.\n     *\n     * This function call must use less than 30 000 gas.\n     */\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 11,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 8,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC165 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by `interfaceId`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * See the corresponding EIP section",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * `interfaceId`. See the corresponding",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * to learn more about how these ids are created."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * This function call must use less than 30 000 gas."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 11,
       "match": {
@@ -113,107 +214,6 @@
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 3
-      },
-      "warnings": []
-    },
-    "827d4d19b493dbb6": {
-      "status": "identical",
-      "coveredLines": 11,
-      "match": {
-        "origin": "own",
-        "collection": "bob",
-        "relation": { "type": "own" },
-        "rank": 0,
-        "matchedBy": "identity",
-        "auditedName": "IERC165",
-        "similarity": 1,
-        "reportId": "bob/veridise-kailua-2025-02",
-        "repository": "boundless-xyz/kailua",
-        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-        "commitTimestamp": "2025-02-06T07:42:16Z",
-        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix commit",
-        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
-        "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 3
-      },
-      "diff": {
-        "added": 0,
-        "removed": 0,
-        "ignoredAdded": 3,
-        "ignoredRemoved": 3,
-        "unchanged": 11,
-        "ignoredOnly": true,
-        "hunks": [
-          {
-            "oldStart": 1,
-            "oldLines": 8,
-            "newStart": 1,
-            "newLines": 8,
-            "lines": [
-              {
-                "type": " ",
-                "oldLine": 1,
-                "newLine": 1,
-                "text": "interface IERC165 {"
-              },
-              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
-              {
-                "type": "-",
-                "oldLine": 3,
-                "text": "     * @dev Returns true if this contract implements the interface defined by `interfaceId`.",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 4,
-                "text": "     * See the corresponding EIP section",
-                "ignored": true
-              },
-              {
-                "type": "-",
-                "oldLine": 5,
-                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 3,
-                "text": "     * @dev Returns true if this contract implements the interface defined by",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 4,
-                "text": "     * `interfaceId`. See the corresponding",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 5,
-                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
-                "ignored": true
-              },
-              {
-                "type": " ",
-                "oldLine": 6,
-                "newLine": 6,
-                "text": "     * to learn more about how these ids are created."
-              },
-              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
-              {
-                "type": " ",
-                "oldLine": 8,
-                "newLine": 8,
-                "text": "     * This function call must use less than 30 000 gas."
-              }
-            ]
-          }
-        ]
       },
       "warnings": []
     }

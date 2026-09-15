@@ -6,7 +6,7 @@
   "lines": 22,
   "source": "abstract contract ReinitializableBase {\n    /// @notice Thrown when the initialization version is zero.\n    error ReinitializableBase_ZeroInitVersion();\n\n    /// @notice Current initialization version.\n    uint8 internal immutable INIT_VERSION;\n\n    /// @param _initVersion Current initialization version.\n    constructor(uint8 _initVersion) {\n        // Sanity check, we should never have a zero init version.\n        if (_initVersion == 0) {\n            revert ReinitializableBase_ZeroInitVersion();\n        }\n        INIT_VERSION = _initVersion;\n    }\n\n    /// @notice Getter for the current initialization version.\n    /// @return The current initialization version.\n    function initVersion() public view returns (uint8) {\n        return INIT_VERSION;\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

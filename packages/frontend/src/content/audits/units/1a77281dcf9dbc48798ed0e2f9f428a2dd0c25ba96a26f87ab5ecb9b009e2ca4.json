@@ -6,7 +6,7 @@
   "lines": 12,
   "source": "abstract contract ERC165Upgradeable is Initializable, IERC165 {\n    function __ERC165_init() internal onlyInitializing {}\n\n    function __ERC165_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n\n    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {\n        return interfaceId == type(IERC165).interfaceId;\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

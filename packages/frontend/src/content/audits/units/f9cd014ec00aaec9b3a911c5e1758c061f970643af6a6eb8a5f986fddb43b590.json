@@ -27,6 +27,7 @@
         "reviewPhase": "final commit / fix review",
         "coverage": "Final audited commit; C-03 remains acknowledged and unfixed.",
         "majorFindings": 1,
+        "findingIds": ["C-03"],
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 2

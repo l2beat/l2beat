@@ -6,7 +6,7 @@
   "lines": 27,
   "source": "library LibClaim {\n    /// @notice Get the value of a `Claim` type in the form of the underlying bytes32.\n    /// @param _claim The `Claim` type to get the value of.\n    /// @return claim_ The value of the `Claim` type as a bytes32 type.\n    function raw(Claim _claim) internal pure returns (bytes32 claim_) {\n        assembly {\n            claim_ := _claim\n        }\n    }\n\n    /// @notice Hashes a claim and a position together.\n    /// @param _claim A Claim type.\n    /// @param _position The position of `claim`.\n    /// @param _challengeIndex The index of the claim being moved against.\n    /// @return claimHash_ A hash of abi.encodePacked(claim, position|challengeIndex);\n    function hashClaimPos(Claim _claim, Position _position, uint256 _challengeIndex)\n        internal\n        pure\n        returns (Hash claimHash_)\n    {\n        assembly {\n            mstore(0x00, _claim)\n            mstore(0x20, or(shl(128, _position), and(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, _challengeIndex)))\n            claimHash_ := keccak256(0x00, 0x40)\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 27,
       "match": {

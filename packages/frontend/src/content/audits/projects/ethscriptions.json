@@ -2,12 +2,12 @@
   "schemaVersion": 2,
   "projectId": "ethscriptions",
   "slug": "ethscriptions",
-  "generatedAt": 1789405786,
-  "datasetRevision": "00b5fb798e522283538f147a70fa900cf419fa41-dirty",
+  "generatedAt": 1789490341,
+  "datasetRevision": "558a14f6d9bcb7f8f0517a0b4a3ccd1558023c21-dirty",
   "discoveryTimestamp": 1769601454,
   "contractSelection": "all",
   "context": {
-    "key": "522759382dcd98c2",
+    "key": "eea968a44e5d263a",
     "collections": [
       {
         "id": "ethscriptions",
@@ -15,6 +15,15 @@
         "origin": "own",
         "relation": {
           "type": "own"
+        }
+      },
+      {
+        "id": "optimism",
+        "rank": 1,
+        "origin": "upstream",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
         }
       },
       {
@@ -84,31 +93,32 @@
     "units": {
       "identical": 2,
       "library": 50,
-      "differs": 41,
-      "unaudited": 44
+      "differs": 43,
+      "unaudited": 42
     },
     "uniqueUnits": {
       "identical": 2,
       "library": 41,
-      "differs": 31,
-      "unaudited": 31
+      "differs": 32,
+      "unaudited": 30
     },
     "lines": {
       "total": 22851,
-      "covered": 11406,
-      "uncovered": 11445
+      "covered": 11662,
+      "uncovered": 11189
     }
   },
   "reportIds": [
     "bob/veridise-kailua-2025-02",
-    "celo/trail-of-bits-celo-l2-2024-12-19",
     "ethscriptions/cantina-facet-zk-fault-proof-rollup-2025-08-05",
     "ethscriptions/zellic-facet-bridge-2024-11-04",
-    "ethscriptions/zellic-facet-node-2024-11-05",
     "openzeppelin/contracts__audits__2023-10-v5.0",
     "openzeppelin/contracts__audits__2024-10-v5.1",
     "openzeppelin/contracts__audits__2025-04-v5.3",
     "openzeppelin/contracts__audits__2026-02-v5.6",
+    "optimism/cantina-u18-2026-01",
+    "optimism/openzeppelin-bedrock-bridge-2022-05",
+    "optimism/openzeppelin-bedrock-periphery-2022-09",
     "safe/certora-safe-1-3-0",
     "safe/nethermind-safe-allowance-v1-0-0",
     "solmate/solmate-v6__audits__v6-Fixed-Point-Solutions",
@@ -151,7 +161,7 @@
           "units": [
             {
               "unitHash": "b5b3b5723467bb5d5a2e1bf9e045f9002d50d249554fbff6195f291a7dffba31",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "PlonkVerifier",
               "kind": "contract",
               "startLine": 4,
@@ -196,7 +206,7 @@
             },
             {
               "unitHash": "7ec81775a58108eefaa8876d51ec0c399cc8d80a7b40e6f0325ebae2e80f9295",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1Verifier",
               "kind": "interface",
               "startLine": 1249,
@@ -233,7 +243,7 @@
             },
             {
               "unitHash": "15c0317f2eef4f02711f2e7af107699779ebe9204ff14e8acb327383c511496c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1VerifierWithHash",
               "kind": "interface",
               "startLine": 1259,
@@ -270,7 +280,7 @@
             },
             {
               "unitHash": "bb5c99faa5387170f2f41fa177f3f592fbb97e9653aeed00f607ad4120b5858a",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SP1Verifier",
               "kind": "contract",
               "startLine": 1267,
@@ -352,7 +362,7 @@
           "units": [
             {
               "unitHash": "b29566a0de1defc77d121f1aeacbddae6c60db503a9db037d9ff29425bad68fe",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1VerifierGatewayEvents",
               "kind": "interface",
               "startLine": 4,
@@ -389,7 +399,7 @@
             },
             {
               "unitHash": "7412ee7661cd06e84b979998d1eaf5c165430978d16edfcb80d9695582b086be",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1VerifierGatewayErrors",
               "kind": "interface",
               "startLine": 16,
@@ -426,7 +436,7 @@
             },
             {
               "unitHash": "7ec81775a58108eefaa8876d51ec0c399cc8d80a7b40e6f0325ebae2e80f9295",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1Verifier",
               "kind": "interface",
               "startLine": 37,
@@ -463,7 +473,7 @@
             },
             {
               "unitHash": "80de1d8b0cc85cfc8c811f8e145598def02a4baf4aee01e92f86c8532f0faa4d",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1VerifierGateway",
               "kind": "interface",
               "startLine": 50,
@@ -500,7 +510,7 @@
             },
             {
               "unitHash": "079919a61b5bee8c3dcea110ee3a62c649eac11da4e43ebf1bab5482f43f223b",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Context",
               "kind": "abstract",
               "startLine": 84,
@@ -536,7 +546,7 @@
             },
             {
               "unitHash": "e3974fed159e811cd0ee7a5c980c751996bba5b54ba2293aeb22930550ca9014",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Ownable",
               "kind": "abstract",
               "startLine": 110,
@@ -572,7 +582,7 @@
             },
             {
               "unitHash": "15c0317f2eef4f02711f2e7af107699779ebe9204ff14e8acb327383c511496c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1VerifierWithHash",
               "kind": "interface",
               "startLine": 199,
@@ -609,7 +619,7 @@
             },
             {
               "unitHash": "0fc157ab44f9a61ba9440f46fb695cd3bd96bbf9e3b70173fb23dbafb8cda459",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SP1VerifierGateway",
               "kind": "contract",
               "startLine": 209,
@@ -646,7 +656,7 @@
             },
             {
               "unitHash": "0f25e4699255e32573f59676ffc96bfbc00231cab9984d02ab96ec3146670d3b",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "(file-level declarations)",
               "kind": "file-level",
               "startLine": 194,
@@ -695,7 +705,7 @@
           "units": [
             {
               "unitHash": "ac48753dcfe005cd6ab91927f90e3721cf38f887010789c1778cab1e18af0fe1",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Context",
               "kind": "abstract",
               "startLine": 14,
@@ -731,7 +741,7 @@
             },
             {
               "unitHash": "d1d209d6c026f601bd7ae36929abccee9cf955a954ff48162ca7b55cd08bb2fb",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Ownable",
               "kind": "abstract",
               "startLine": 36,
@@ -775,7 +785,7 @@
             },
             {
               "unitHash": "d26f41fc30bc52700eefb1c5ac09ca9b9f341548afc37ecb08bc93957ed43058",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ReentrancyGuard",
               "kind": "abstract",
               "startLine": 117,
@@ -819,7 +829,7 @@
             },
             {
               "unitHash": "7a65297d75211634ffa6ae4093f2b580b8e389e876d4315c5d6e22644df1c695",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SafeCastLib",
               "kind": "library",
               "startLine": 163,
@@ -863,7 +873,7 @@
             },
             {
               "unitHash": "7ec81775a58108eefaa8876d51ec0c399cc8d80a7b40e6f0325ebae2e80f9295",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISP1Verifier",
               "kind": "interface",
               "startLine": 679,
@@ -900,7 +910,7 @@
             },
             {
               "unitHash": "d2d170674b4787cf102d33369589ea0630aa6b45c752370be19587caaa7d836f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Rollup",
               "kind": "contract",
               "startLine": 699,
@@ -973,7 +983,7 @@
           "units": [
             {
               "unitHash": "9ceefb0859bf4f06f2cf6f485b96be94e9d4a4a2bba6e6805638dfa2b7e06512",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "EtherPaymentFallback",
               "kind": "contract",
               "startLine": 6,
@@ -1010,7 +1020,7 @@
             },
             {
               "unitHash": "5760971320dc20cc1011b97cfb03c3f1f8e76c4b81209669feda7dd1f153c141",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Singleton",
               "kind": "contract",
               "startLine": 18,
@@ -1047,7 +1057,7 @@
             },
             {
               "unitHash": "b30c0d8009479d7c283959f68e1aa549965b5121dfcc7170816385036ab102a2",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SelfAuthorized",
               "kind": "contract",
               "startLine": 26,
@@ -1084,7 +1094,7 @@
             },
             {
               "unitHash": "031c50a36b347b6078cf43517becc7bdc04240d1dde87ed828d73b6e61fb40ed",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Enum",
               "kind": "interface",
               "startLine": 39,
@@ -1129,7 +1139,7 @@
             },
             {
               "unitHash": "54e1232f487718883a0eb40f8d9e1b619c6c9a08035ebaeaa86a84d9119ad397",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Executor",
               "kind": "contract",
               "startLine": 48,
@@ -1166,7 +1176,7 @@
             },
             {
               "unitHash": "74092e60ce931bc8cf59750fd1ac04f8830c46557e73e599a9d1a9158dbcb763",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ModuleManager",
               "kind": "contract",
               "startLine": 70,
@@ -1203,7 +1213,7 @@
             },
             {
               "unitHash": "88a24a15eaef07622458d741caff0d808122cf817525e8417a7260c76cc52a21",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "OwnerManager",
               "kind": "contract",
               "startLine": 203,
@@ -1240,7 +1250,7 @@
             },
             {
               "unitHash": "eadcf3eb9de4feae3a9859683d30d04d49520b5a529bf0d5d79264d8c7f5a901",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SignatureDecoder",
               "kind": "contract",
               "startLine": 347,
@@ -1285,7 +1295,7 @@
             },
             {
               "unitHash": "87ec25dfb8afbc2ea29f9a17156522463cd541c0b79b6713e334343b0f57aac6",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SecuredTokenTransfer",
               "kind": "contract",
               "startLine": 377,
@@ -1322,7 +1332,7 @@
             },
             {
               "unitHash": "0becb25af1c69fa3bc33da476d53f469c3e01616f86d62779d07b896c70c70dc",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISignatureValidatorConstants",
               "kind": "contract",
               "startLine": 398,
@@ -1359,7 +1369,7 @@
             },
             {
               "unitHash": "8d330617c17b3682a2f4ede22b59cdab4be0f3d3b26623a32439200d77f9720d",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "FallbackManager",
               "kind": "contract",
               "startLine": 405,
@@ -1396,7 +1406,7 @@
             },
             {
               "unitHash": "bbd397cf92e400c7851481f7192e3ca748483bf82f95ba68deda42e9db44cb38",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "StorageAccessible",
               "kind": "contract",
               "startLine": 451,
@@ -1433,7 +1443,7 @@
             },
             {
               "unitHash": "b99702c0d2f7d4c6dd7aa3ece0f7be48e509fcae1d1b4e4d9d1614ee69139645",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "GuardManager",
               "kind": "contract",
               "startLine": 496,
@@ -1470,7 +1480,7 @@
             },
             {
               "unitHash": "2397292d9fd6220adcd22cb0c8a102ccb99207a597c3937653e73ffef544fc3b",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "GnosisSafeMath",
               "kind": "library",
               "startLine": 528,
@@ -1507,7 +1517,7 @@
             },
             {
               "unitHash": "832c01759a98a77182470ab8f08f67a927224dfb461144a7a757647dd302f353",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Guard",
               "kind": "interface",
               "startLine": 574,
@@ -1544,7 +1554,7 @@
             },
             {
               "unitHash": "74fb5483896e77e5b76bd9afa8591a9f0f0303a0c3f5a80e3b9a7aea1c1fd216",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ISignatureValidator",
               "kind": "abstract",
               "startLine": 592,
@@ -1581,7 +1591,7 @@
             },
             {
               "unitHash": "da8ce486c006cc0fb621652e6a88f6bf6489ab5d09c2903070ae16294b5e6243",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "GnosisSafe",
               "kind": "contract",
               "startLine": 608,
@@ -1625,7 +1635,7 @@
           "units": [
             {
               "unitHash": "1e775c90ddb7b5b80ade68fba2227adf7ccc284a027da50055c64dc3c0d5f4c3",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "GnosisSafeProxy",
               "kind": "contract",
               "startLine": 7,
@@ -1675,19 +1685,19 @@
         "units": {
           "identical": 0,
           "library": 6,
-          "differs": 6,
-          "unaudited": 14
+          "differs": 7,
+          "unaudited": 13
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 6,
-          "differs": 6,
-          "unaudited": 14
+          "differs": 7,
+          "unaudited": 13
         },
         "lines": {
           "total": 4653,
-          "covered": 637,
-          "uncovered": 4016
+          "covered": 727,
+          "uncovered": 3926
         }
       },
       "files": [
@@ -1698,7 +1708,7 @@
           "units": [
             {
               "unitHash": "444a808109efa704fe154926e0f0d44b3ca2346c5fa4bb7a0e48d01cf61545aa",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Initializable",
               "kind": "abstract",
               "startLine": 54,
@@ -1734,7 +1744,7 @@
             },
             {
               "unitHash": "f46b1fd12e9aa9bf335b5035cc3b56dd82c49edbc60e6b53c9a870a55216e38b",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ContextUpgradeable",
               "kind": "abstract",
               "startLine": 248,
@@ -1778,7 +1788,7 @@
             },
             {
               "unitHash": "05564a7d5a8bc0d9ba8b5f0dc6cc6abdad26708eacd55e889ac0f8dba297eb37",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC165",
               "kind": "interface",
               "startLine": 275,
@@ -1823,7 +1833,7 @@
             },
             {
               "unitHash": "1a77281dcf9dbc48798ed0e2f9f428a2dd0c25ba96a26f87ab5ecb9b009e2ca4",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ERC165Upgradeable",
               "kind": "abstract",
               "startLine": 299,
@@ -1835,7 +1845,7 @@
             },
             {
               "unitHash": "b8bb735bfe35376ad842b0387e691d1490558c4803a379b26f9072167ac172ea",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721",
               "kind": "interface",
               "startLine": 315,
@@ -1879,7 +1889,7 @@
             },
             {
               "unitHash": "103305badcc6cd57ddb1f72e8031921bdebea350e2b5da3f64a01dc2d00672d0",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721Metadata",
               "kind": "interface",
               "startLine": 445,
@@ -1915,7 +1925,7 @@
             },
             {
               "unitHash": "9739deb8bd35ca92164e165591a2cbaf6ce392fd701962b612b39f959c3131ba",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721Errors",
               "kind": "interface",
               "startLine": 466,
@@ -1959,7 +1969,7 @@
             },
             {
               "unitHash": "2b3b13e8aec842fba4b8f9580355eecb9e5ce0c13332b32fca87a360299a4723",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ERC721EthscriptionsUpgradeable",
               "kind": "abstract",
               "startLine": 532,
@@ -1971,7 +1981,7 @@
             },
             {
               "unitHash": "ef2b45087bd0c0bf9d0e2ad583d6cfc4d274c9d06f33ba450504da134438e230",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721Enumerable",
               "kind": "interface",
               "startLine": 938,
@@ -2007,7 +2017,7 @@
             },
             {
               "unitHash": "ebb65161945bda1d512f9e658fa6d3793ae41144a9ae126211b1f298185ccda6",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ERC721EthscriptionsSequentialEnumerableUpgradeable",
               "kind": "abstract",
               "startLine": 961,
@@ -2019,7 +2029,7 @@
             },
             {
               "unitHash": "5c73b83f1fa890714bd5f320ba300ea193fb1e7a7de3be2a2e81e30c3de7b68f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "LibBytes",
               "kind": "library",
               "startLine": 1045,
@@ -2031,7 +2041,7 @@
             },
             {
               "unitHash": "d244d7d4d4056b8ef769520bcb012772d1a849d35d6ff8c8077d13ba41b73d18",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "LibString",
               "kind": "library",
               "startLine": 1866,
@@ -2043,7 +2053,7 @@
             },
             {
               "unitHash": "c91cf37e20d60fec1be430d7e772ca562364253bfe1b5457d7784be03d9bd338",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Constants",
               "kind": "library",
               "startLine": 2784,
@@ -2087,19 +2097,52 @@
             },
             {
               "unitHash": "d40db8929e0cb0ad83bc415b63ac6736203b076450289a5f5189d3f4fe7522eb",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Predeploys",
               "kind": "library",
               "startLine": 2806,
               "endLine": 2874,
               "lines": 69,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
+              "status": "differs",
+              "coveredLines": 52,
+              "match": {
+                "origin": "upstream",
+                "collection": "optimism",
+                "relation": {
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
+                },
+                "rank": 1,
+                "matchedBy": "name",
+                "auditedName": "Predeploys",
+                "similarity": 0.141,
+                "reportId": "optimism/cantina-u18-2026-01",
+                "repository": "ethereum-optimism/optimism",
+                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+                "commitTimestamp": "2025-11-24T03:04:45Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "initial audit",
+                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 1
+              },
+              "diffStats": {
+                "added": 17,
+                "removed": 152,
+                "ignoredAdded": 21,
+                "ignoredRemoved": 74,
+                "unchanged": 52,
+                "ignoredOnly": false
+              },
+              "warnings": ["low-similarity"]
             },
             {
               "unitHash": "330a740334c8d4647450818dd10c36f6eb291abd9f975875030075d027559ac3",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "L1Block",
               "kind": "interface",
               "startLine": 2877,
@@ -2108,34 +2151,35 @@
               "status": "differs",
               "coveredLines": 1,
               "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
+                "origin": "upstream",
+                "collection": "optimism",
                 "relation": {
-                  "type": "own"
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
                 },
-                "rank": 0,
+                "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "L1Block",
-                "similarity": 0.024,
-                "reportId": "ethscriptions/zellic-facet-node-2024-11-05",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/L2/L1Block.sol",
-                "commit": "7bd9331b24e23879ebe5f6ebcb85447aaea7baac",
-                "commitTimestamp": "2024-10-30T14:14:02Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/7bd9331b24e23879ebe5f6ebcb85447aaea7baac/packages/contracts-bedrock/src/L2/L1Block.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "scope extension: FCT mint mechanism updates",
-                "coverage": "in-scope file evaluated at the head of branch facetv1.9.1",
+                "similarity": 0.087,
+                "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
+                "repository": "ethereum-optimism/optimistic-specs",
+                "path": "packages/contracts/contracts/L2/L1Block.sol",
+                "commit": "0c054885a6fd2011503784464da1e94997251fe3",
+                "commitTimestamp": "2022-04-30T00:17:29Z",
+                "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/0c054885a6fd2011503784464da1e94997251fe3/packages/contracts/contracts/L2/L1Block.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "initial audit",
+                "coverage": "All production contracts reviewed for the majority of the audit. Findings are reported against the later commits; issues no longer relevant after the rewrite were disregarded.",
                 "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 10
               },
               "diffStats": {
                 "added": 5,
-                "removed": 77,
+                "removed": 16,
                 "ignoredAdded": 0,
-                "ignoredRemoved": 78,
+                "ignoredRemoved": 7,
                 "unchanged": 1,
                 "ignoredOnly": false
               },
@@ -2143,7 +2187,7 @@
             },
             {
               "unitHash": "c519aaa7ed20bcbc8863dcf3ba52120b5c4be174eefa35c2c96106c06f30a9e3",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "EthscriptionsProver",
               "kind": "interface",
               "startLine": 2885,
@@ -2155,7 +2199,7 @@
             },
             {
               "unitHash": "4b68118b5b12c9ca3e05ba43e1346b1cbc1a562c2428afea88b88ec9568f9f0c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "BytePackLib",
               "kind": "library",
               "startLine": 2893,
@@ -2167,7 +2211,7 @@
             },
             {
               "unitHash": "3ee2b3b9869237e8a42337e7ee651c970a48e6158e1bda4dd0c18c1e9a2ea764",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SSTORE2Unlimited",
               "kind": "library",
               "startLine": 2986,
@@ -2179,7 +2223,7 @@
             },
             {
               "unitHash": "c7813805812a9b96cac9d20df49c3ab9742fbfdde9f2aa453e112664691b0cf9",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "DedupedBlobStore",
               "kind": "library",
               "startLine": 3073,
@@ -2191,7 +2235,7 @@
             },
             {
               "unitHash": "454a8389fd5f2ec2581b8a76e09efeca91f583c9399b04b32d5af0797485e572",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "MetaStoreLib",
               "kind": "library",
               "startLine": 3179,
@@ -2203,7 +2247,7 @@
             },
             {
               "unitHash": "06601b15cf6de2f36142bd60191a1687747188278c9e6a797f70e10d5b6c5c4d",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Base64",
               "kind": "library",
               "startLine": 3409,
@@ -2247,7 +2291,7 @@
             },
             {
               "unitHash": "def1b2d5917d23438b3a73acf8322bb244c2b131b9cd4dd9de8f0d1581651760",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "EthscriptionsRendererLib",
               "kind": "library",
               "startLine": 3573,
@@ -2259,7 +2303,7 @@
             },
             {
               "unitHash": "496b6cb44732675d0bac9615d6794a568f942dc92169eb774ee3e4efebeb7928",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IProtocolHandler",
               "kind": "interface",
               "startLine": 3782,
@@ -2271,7 +2315,7 @@
             },
             {
               "unitHash": "f092c057ad75c7710f16c9e8f124bd0630c9a00cd060d82f886e44b90b3208d8",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Ethscriptions",
               "kind": "contract",
               "startLine": 3797,
@@ -2290,7 +2334,7 @@
           "units": [
             {
               "unitHash": "514588449fac3fdc4cd94a717055cc04190116512a6a7449a52548571ebea736",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Constants",
               "kind": "library",
               "startLine": 8,
@@ -2334,47 +2378,48 @@
             },
             {
               "unitHash": "ff8be4ddc0b6495e0e0b81e5797a285a3a89e5d8aa9578b5fc7ae7b2c682fd0c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Proxy",
               "kind": "contract",
               "startLine": 32,
               "endLine": 180,
               "lines": 149,
               "status": "differs",
-              "coveredLines": 96,
+              "coveredLines": 134,
               "match": {
-                "origin": "other",
-                "collection": "celo",
+                "origin": "upstream",
+                "collection": "optimism",
                 "relation": {
-                  "type": "name"
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
                 },
-                "rank": 4,
+                "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.289,
-                "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
-                "repository": "celo-org/celo-monorepo",
-                "path": "packages/protocol/contracts/common/Proxy.sol",
-                "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-                "commitTimestamp": "2024-10-17T11:21:11Z",
-                "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/common/Proxy.sol",
-                "auditStatus": "partially_audited_without_major_findings",
+                "similarity": 0.812,
+                "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+                "repository": "ethereum-optimism/optimism",
+                "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+                "commitTimestamp": "2022-07-21T16:50:18Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "auditStatus": "audited_with_no_major_findings",
                 "reviewPhase": "initial audit",
-                "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
+                "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 5
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 53,
-                "removed": 51,
-                "ignoredAdded": 62,
-                "ignoredRemoved": 57,
-                "unchanged": 96,
+                "added": 15,
+                "removed": 16,
+                "ignoredAdded": 38,
+                "ignoredRemoved": 91,
+                "unchanged": 134,
                 "ignoredOnly": false
               },
-              "warnings": ["low-similarity"]
+              "warnings": []
             }
           ]
         }
@@ -2391,19 +2436,19 @@
         "units": {
           "identical": 0,
           "library": 12,
-          "differs": 8,
-          "unaudited": 15
+          "differs": 9,
+          "unaudited": 14
         },
         "uniqueUnits": {
           "identical": 0,
           "library": 12,
-          "differs": 8,
-          "unaudited": 15
+          "differs": 9,
+          "unaudited": 14
         },
         "lines": {
           "total": 7818,
-          "covered": 3626,
-          "uncovered": 4192
+          "covered": 3716,
+          "uncovered": 4102
         }
       },
       "files": [
@@ -2414,7 +2459,7 @@
           "units": [
             {
               "unitHash": "ac16a00a8e415e8a8ccbc5ebadb8c8e875342dceb8915d848eda1add489a781c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SlotDerivation",
               "kind": "library",
               "startLine": 38,
@@ -2450,7 +2495,7 @@
             },
             {
               "unitHash": "03cf28e05e25501df861047eeba1c5e506b8865a102a0790cfd9ef67e7a865a7",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "StorageSlot",
               "kind": "library",
               "startLine": 181,
@@ -2494,7 +2539,7 @@
             },
             {
               "unitHash": "adc681e206e83d0ad2fd1c994dbc0e55746149116b55cb64874ecf609eded1e6",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Comparators",
               "kind": "library",
               "startLine": 297,
@@ -2506,7 +2551,7 @@
             },
             {
               "unitHash": "ad002da5d6ea87063891c181ad802d0fd350e478e75b9334c51adf3c161831dc",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SafeCast",
               "kind": "library",
               "startLine": 319,
@@ -2550,7 +2595,7 @@
             },
             {
               "unitHash": "5d444061608935c83551c726b28f52e2fa3d3e55b9db31509cb2bd640f318b81",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Panic",
               "kind": "library",
               "startLine": 1484,
@@ -2586,7 +2631,7 @@
             },
             {
               "unitHash": "3e6c5c2f134878b31b42e6ad3c8a3f5b41a987c422cf1ea20f1b2a7ea4e075cf",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Math",
               "kind": "library",
               "startLine": 1520,
@@ -2622,7 +2667,7 @@
             },
             {
               "unitHash": "e3a33418abd03ee4dbcd877e7d8f3e2f0b2e8b5f9aa505472a1466cc6fc23a2f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Arrays",
               "kind": "library",
               "startLine": 2271,
@@ -2666,7 +2711,7 @@
             },
             {
               "unitHash": "1eafe51e86200664140ee8ab0bdecfefa7140f0748401551f7c2650bb103ef3e",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "EnumerableSet",
               "kind": "library",
               "startLine": 2784,
@@ -2702,19 +2747,52 @@
             },
             {
               "unitHash": "d40db8929e0cb0ad83bc415b63ac6736203b076450289a5f5189d3f4fe7522eb",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Predeploys",
               "kind": "library",
               "startLine": 3166,
               "endLine": 3234,
               "lines": 69,
-              "status": "unaudited",
-              "coveredLines": 0,
-              "warnings": []
+              "status": "differs",
+              "coveredLines": 52,
+              "match": {
+                "origin": "upstream",
+                "collection": "optimism",
+                "relation": {
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
+                },
+                "rank": 1,
+                "matchedBy": "name",
+                "auditedName": "Predeploys",
+                "similarity": 0.141,
+                "reportId": "optimism/cantina-u18-2026-01",
+                "repository": "ethereum-optimism/optimism",
+                "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+                "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+                "commitTimestamp": "2025-11-24T03:04:45Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "initial audit",
+                "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 1
+              },
+              "diffStats": {
+                "added": 17,
+                "removed": 152,
+                "ignoredAdded": 21,
+                "ignoredRemoved": 74,
+                "unchanged": 52,
+                "ignoredOnly": false
+              },
+              "warnings": ["low-similarity"]
             },
             {
               "unitHash": "adca093c3101c5b38590e99c1fbc6907a89531034dee3dce9000b2b1da22b34c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "L2ToL1MessagePasser",
               "kind": "interface",
               "startLine": 3237,
@@ -2758,7 +2836,7 @@
             },
             {
               "unitHash": "444a808109efa704fe154926e0f0d44b3ca2346c5fa4bb7a0e48d01cf61545aa",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Initializable",
               "kind": "abstract",
               "startLine": 3291,
@@ -2794,7 +2872,7 @@
             },
             {
               "unitHash": "f46b1fd12e9aa9bf335b5035cc3b56dd82c49edbc60e6b53c9a870a55216e38b",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ContextUpgradeable",
               "kind": "abstract",
               "startLine": 3485,
@@ -2838,7 +2916,7 @@
             },
             {
               "unitHash": "05564a7d5a8bc0d9ba8b5f0dc6cc6abdad26708eacd55e889ac0f8dba297eb37",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC165",
               "kind": "interface",
               "startLine": 3512,
@@ -2883,7 +2961,7 @@
             },
             {
               "unitHash": "1a77281dcf9dbc48798ed0e2f9f428a2dd0c25ba96a26f87ab5ecb9b009e2ca4",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ERC165Upgradeable",
               "kind": "abstract",
               "startLine": 3536,
@@ -2895,7 +2973,7 @@
             },
             {
               "unitHash": "b8bb735bfe35376ad842b0387e691d1490558c4803a379b26f9072167ac172ea",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721",
               "kind": "interface",
               "startLine": 3552,
@@ -2939,7 +3017,7 @@
             },
             {
               "unitHash": "103305badcc6cd57ddb1f72e8031921bdebea350e2b5da3f64a01dc2d00672d0",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721Metadata",
               "kind": "interface",
               "startLine": 3682,
@@ -2975,7 +3053,7 @@
             },
             {
               "unitHash": "9739deb8bd35ca92164e165591a2cbaf6ce392fd701962b612b39f959c3131ba",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721Errors",
               "kind": "interface",
               "startLine": 3703,
@@ -3019,7 +3097,7 @@
             },
             {
               "unitHash": "2b3b13e8aec842fba4b8f9580355eecb9e5ce0c13332b32fca87a360299a4723",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ERC721EthscriptionsUpgradeable",
               "kind": "abstract",
               "startLine": 3769,
@@ -3031,7 +3109,7 @@
             },
             {
               "unitHash": "ef2b45087bd0c0bf9d0e2ad583d6cfc4d274c9d06f33ba450504da134438e230",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IERC721Enumerable",
               "kind": "interface",
               "startLine": 4175,
@@ -3067,7 +3145,7 @@
             },
             {
               "unitHash": "ebb65161945bda1d512f9e658fa6d3793ae41144a9ae126211b1f298185ccda6",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "ERC721EthscriptionsSequentialEnumerableUpgradeable",
               "kind": "abstract",
               "startLine": 4198,
@@ -3079,7 +3157,7 @@
             },
             {
               "unitHash": "5c73b83f1fa890714bd5f320ba300ea193fb1e7a7de3be2a2e81e30c3de7b68f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "LibBytes",
               "kind": "library",
               "startLine": 4282,
@@ -3091,7 +3169,7 @@
             },
             {
               "unitHash": "d244d7d4d4056b8ef769520bcb012772d1a849d35d6ff8c8077d13ba41b73d18",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "LibString",
               "kind": "library",
               "startLine": 5103,
@@ -3103,7 +3181,7 @@
             },
             {
               "unitHash": "c91cf37e20d60fec1be430d7e772ca562364253bfe1b5457d7784be03d9bd338",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Constants",
               "kind": "library",
               "startLine": 6021,
@@ -3147,7 +3225,7 @@
             },
             {
               "unitHash": "330a740334c8d4647450818dd10c36f6eb291abd9f975875030075d027559ac3",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "L1Block",
               "kind": "interface",
               "startLine": 6042,
@@ -3156,34 +3234,35 @@
               "status": "differs",
               "coveredLines": 1,
               "match": {
-                "origin": "own",
-                "collection": "ethscriptions",
+                "origin": "upstream",
+                "collection": "optimism",
                 "relation": {
-                  "type": "own"
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
                 },
-                "rank": 0,
+                "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "L1Block",
-                "similarity": 0.024,
-                "reportId": "ethscriptions/zellic-facet-node-2024-11-05",
-                "repository": "0xFacet/facet-optimism",
-                "path": "packages/contracts-bedrock/src/L2/L1Block.sol",
-                "commit": "7bd9331b24e23879ebe5f6ebcb85447aaea7baac",
-                "commitTimestamp": "2024-10-30T14:14:02Z",
-                "url": "https://github.com/0xFacet/facet-optimism/blob/7bd9331b24e23879ebe5f6ebcb85447aaea7baac/packages/contracts-bedrock/src/L2/L1Block.sol",
-                "auditStatus": "partially_audited_without_major_findings",
-                "reviewPhase": "scope extension: FCT mint mechanism updates",
-                "coverage": "in-scope file evaluated at the head of branch facetv1.9.1",
+                "similarity": 0.087,
+                "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
+                "repository": "ethereum-optimism/optimistic-specs",
+                "path": "packages/contracts/contracts/L2/L1Block.sol",
+                "commit": "0c054885a6fd2011503784464da1e94997251fe3",
+                "commitTimestamp": "2022-04-30T00:17:29Z",
+                "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/0c054885a6fd2011503784464da1e94997251fe3/packages/contracts/contracts/L2/L1Block.sol",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "initial audit",
+                "coverage": "All production contracts reviewed for the majority of the audit. Findings are reported against the later commits; issues no longer relevant after the rewrite were disregarded.",
                 "majorFindings": 0,
-                "isLatestVersion": true,
-                "laterAuditedVersionExists": false,
-                "totalVersions": 2
+                "isLatestVersion": false,
+                "laterAuditedVersionExists": true,
+                "totalVersions": 10
               },
               "diffStats": {
                 "added": 5,
-                "removed": 77,
+                "removed": 16,
                 "ignoredAdded": 0,
-                "ignoredRemoved": 78,
+                "ignoredRemoved": 7,
                 "unchanged": 1,
                 "ignoredOnly": false
               },
@@ -3191,7 +3270,7 @@
             },
             {
               "unitHash": "4b68118b5b12c9ca3e05ba43e1346b1cbc1a562c2428afea88b88ec9568f9f0c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "BytePackLib",
               "kind": "library",
               "startLine": 6052,
@@ -3203,7 +3282,7 @@
             },
             {
               "unitHash": "3ee2b3b9869237e8a42337e7ee651c970a48e6158e1bda4dd0c18c1e9a2ea764",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "SSTORE2Unlimited",
               "kind": "library",
               "startLine": 6145,
@@ -3215,7 +3294,7 @@
             },
             {
               "unitHash": "c7813805812a9b96cac9d20df49c3ab9742fbfdde9f2aa453e112664691b0cf9",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "DedupedBlobStore",
               "kind": "library",
               "startLine": 6232,
@@ -3227,7 +3306,7 @@
             },
             {
               "unitHash": "454a8389fd5f2ec2581b8a76e09efeca91f583c9399b04b32d5af0797485e572",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "MetaStoreLib",
               "kind": "library",
               "startLine": 6338,
@@ -3239,7 +3318,7 @@
             },
             {
               "unitHash": "06601b15cf6de2f36142bd60191a1687747188278c9e6a797f70e10d5b6c5c4d",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Base64",
               "kind": "library",
               "startLine": 6568,
@@ -3283,7 +3362,7 @@
             },
             {
               "unitHash": "def1b2d5917d23438b3a73acf8322bb244c2b131b9cd4dd9de8f0d1581651760",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "EthscriptionsRendererLib",
               "kind": "library",
               "startLine": 6732,
@@ -3295,7 +3374,7 @@
             },
             {
               "unitHash": "496b6cb44732675d0bac9615d6794a568f942dc92169eb774ee3e4efebeb7928",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "IProtocolHandler",
               "kind": "interface",
               "startLine": 6941,
@@ -3307,7 +3386,7 @@
             },
             {
               "unitHash": "f092c057ad75c7710f16c9e8f124bd0630c9a00cd060d82f886e44b90b3208d8",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Ethscriptions",
               "kind": "contract",
               "startLine": 6956,
@@ -3319,7 +3398,7 @@
             },
             {
               "unitHash": "d1eb5e759344825d0061fac3b3baa1e2b210afd63c2141d5c06f2ebd1a57f83f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "EthscriptionsProver",
               "kind": "contract",
               "startLine": 7831,
@@ -3338,7 +3417,7 @@
           "units": [
             {
               "unitHash": "514588449fac3fdc4cd94a717055cc04190116512a6a7449a52548571ebea736",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Constants",
               "kind": "library",
               "startLine": 8,
@@ -3382,47 +3461,48 @@
             },
             {
               "unitHash": "ff8be4ddc0b6495e0e0b81e5797a285a3a89e5d8aa9578b5fc7ae7b2c682fd0c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Proxy",
               "kind": "contract",
               "startLine": 32,
               "endLine": 180,
               "lines": 149,
               "status": "differs",
-              "coveredLines": 96,
+              "coveredLines": 134,
               "match": {
-                "origin": "other",
-                "collection": "celo",
+                "origin": "upstream",
+                "collection": "optimism",
                 "relation": {
-                  "type": "name"
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
                 },
-                "rank": 4,
+                "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.289,
-                "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
-                "repository": "celo-org/celo-monorepo",
-                "path": "packages/protocol/contracts/common/Proxy.sol",
-                "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-                "commitTimestamp": "2024-10-17T11:21:11Z",
-                "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/common/Proxy.sol",
-                "auditStatus": "partially_audited_without_major_findings",
+                "similarity": 0.812,
+                "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+                "repository": "ethereum-optimism/optimism",
+                "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+                "commitTimestamp": "2022-07-21T16:50:18Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "auditStatus": "audited_with_no_major_findings",
                 "reviewPhase": "initial audit",
-                "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
+                "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 5
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 53,
-                "removed": 51,
-                "ignoredAdded": 62,
-                "ignoredRemoved": 57,
-                "unchanged": 96,
+                "added": 15,
+                "removed": 16,
+                "ignoredAdded": 38,
+                "ignoredRemoved": 91,
+                "unchanged": 134,
                 "ignoredOnly": false
               },
-              "warnings": ["low-similarity"]
+              "warnings": []
             }
           ]
         }
@@ -3450,8 +3530,8 @@
         },
         "lines": {
           "total": 264,
-          "covered": 187,
-          "uncovered": 77
+          "covered": 225,
+          "uncovered": 39
         }
       },
       "files": [
@@ -3462,7 +3542,7 @@
           "units": [
             {
               "unitHash": "cf00fe9d60bc796506aad38434eec1e6ee7fafbb83ec339cb6f83647c52481ca",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "L2ToL1MessagePasser",
               "kind": "contract",
               "startLine": 10,
@@ -3513,7 +3593,7 @@
           "units": [
             {
               "unitHash": "514588449fac3fdc4cd94a717055cc04190116512a6a7449a52548571ebea736",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Constants",
               "kind": "library",
               "startLine": 8,
@@ -3557,47 +3637,48 @@
             },
             {
               "unitHash": "ff8be4ddc0b6495e0e0b81e5797a285a3a89e5d8aa9578b5fc7ae7b2c682fd0c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Proxy",
               "kind": "contract",
               "startLine": 32,
               "endLine": 180,
               "lines": 149,
               "status": "differs",
-              "coveredLines": 96,
+              "coveredLines": 134,
               "match": {
-                "origin": "other",
-                "collection": "celo",
+                "origin": "upstream",
+                "collection": "optimism",
                 "relation": {
-                  "type": "name"
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
                 },
-                "rank": 4,
+                "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.289,
-                "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
-                "repository": "celo-org/celo-monorepo",
-                "path": "packages/protocol/contracts/common/Proxy.sol",
-                "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-                "commitTimestamp": "2024-10-17T11:21:11Z",
-                "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/common/Proxy.sol",
-                "auditStatus": "partially_audited_without_major_findings",
+                "similarity": 0.812,
+                "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+                "repository": "ethereum-optimism/optimism",
+                "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+                "commitTimestamp": "2022-07-21T16:50:18Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "auditStatus": "audited_with_no_major_findings",
                 "reviewPhase": "initial audit",
-                "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
+                "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 5
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 53,
-                "removed": 51,
-                "ignoredAdded": 62,
-                "ignoredRemoved": 57,
-                "unchanged": 96,
+                "added": 15,
+                "removed": 16,
+                "ignoredAdded": 38,
+                "ignoredRemoved": 91,
+                "unchanged": 134,
                 "ignoredOnly": false
               },
-              "warnings": ["low-similarity"]
+              "warnings": []
             }
           ]
         }
@@ -3625,8 +3706,8 @@
         },
         "lines": {
           "total": 168,
-          "covered": 113,
-          "uncovered": 55
+          "covered": 151,
+          "uncovered": 17
         }
       },
       "files": [
@@ -3637,7 +3718,7 @@
           "units": [
             {
               "unitHash": "514588449fac3fdc4cd94a717055cc04190116512a6a7449a52548571ebea736",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Constants",
               "kind": "library",
               "startLine": 8,
@@ -3681,47 +3762,48 @@
             },
             {
               "unitHash": "ff8be4ddc0b6495e0e0b81e5797a285a3a89e5d8aa9578b5fc7ae7b2c682fd0c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Proxy",
               "kind": "contract",
               "startLine": 32,
               "endLine": 180,
               "lines": 149,
               "status": "differs",
-              "coveredLines": 96,
+              "coveredLines": 134,
               "match": {
-                "origin": "other",
-                "collection": "celo",
+                "origin": "upstream",
+                "collection": "optimism",
                 "relation": {
-                  "type": "name"
+                  "type": "fork_of",
+                  "repository": "ethereum-optimism/optimism"
                 },
-                "rank": 4,
+                "rank": 1,
                 "matchedBy": "name",
                 "auditedName": "Proxy",
-                "similarity": 0.289,
-                "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
-                "repository": "celo-org/celo-monorepo",
-                "path": "packages/protocol/contracts/common/Proxy.sol",
-                "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-                "commitTimestamp": "2024-10-17T11:21:11Z",
-                "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/common/Proxy.sol",
-                "auditStatus": "partially_audited_without_major_findings",
+                "similarity": 0.812,
+                "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+                "repository": "ethereum-optimism/optimism",
+                "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+                "commitTimestamp": "2022-07-21T16:50:18Z",
+                "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Proxy.sol",
+                "auditStatus": "audited_with_no_major_findings",
                 "reviewPhase": "initial audit",
-                "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
+                "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
                 "majorFindings": 0,
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
-                "totalVersions": 5
+                "totalVersions": 1
               },
               "diffStats": {
-                "added": 53,
-                "removed": 51,
-                "ignoredAdded": 62,
-                "ignoredRemoved": 57,
-                "unchanged": 96,
+                "added": 15,
+                "removed": 16,
+                "ignoredAdded": 38,
+                "ignoredRemoved": 91,
+                "unchanged": 134,
                 "ignoredOnly": false
               },
-              "warnings": ["low-similarity"]
+              "warnings": []
             }
           ]
         }
@@ -3766,7 +3848,7 @@
           "units": [
             {
               "unitHash": "cbdc98315fbc0084a03e10ab0119ddba4c0159bac54e24ac3c37f6d8b1e987e5",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "CHANGELOG.md",
               "kind": "program",
               "startLine": 1,
@@ -3810,7 +3892,7 @@
           "units": [
             {
               "unitHash": "361771baaefb5c124e8416746dfa36466863f24d1acada5e900b0b254fb98dd6",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Cargo.toml",
               "kind": "program",
               "startLine": 1,
@@ -3862,7 +3944,7 @@
           "units": [
             {
               "unitHash": "ad99f14f439544ca31be88e5005f3bde12f81e5f93ec4da7cb27fea7b02b9d60",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Makefile",
               "kind": "program",
               "startLine": 1,
@@ -3906,7 +3988,7 @@
           "units": [
             {
               "unitHash": "935384aad36299994ce175cb4e9a8d4b54d8437834c0b44602a5263823fc5cd9",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "TRUSTED_SETUP.md",
               "kind": "program",
               "startLine": 1,
@@ -3950,7 +4032,7 @@
           "units": [
             {
               "unitHash": "3c744aa26750eb3ca10b373800d2fdc4fb3059e2944ed62a488810d1636e62b6",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "build.rs",
               "kind": "program",
               "startLine": 1,
@@ -3969,7 +4051,7 @@
           "units": [
             {
               "unitHash": "39d39de8c74e6904bcde1441a59f07970d12a1d4bae0b653b7fa205229eee92f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "collect.sh",
               "kind": "program",
               "startLine": 1,
@@ -3988,7 +4070,7 @@
           "units": [
             {
               "unitHash": "932981d359c4d9f8f8c036a1c9f4e97c73487be39e56a5e3b1252ee41a60e8fc",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "release.sh",
               "kind": "program",
               "startLine": 1,
@@ -4040,7 +4122,7 @@
           "units": [
             {
               "unitHash": "09ff827bace883baf87e7c93495061d30b0953c740646e1bd1c4f972f7333ec4",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "build_compress_vks.rs",
               "kind": "program",
               "startLine": 1,
@@ -4092,7 +4174,7 @@
           "units": [
             {
               "unitHash": "2de1e74e900be69e58d5d6292fdddce6f36428b221828a29fcbf458fbdbe6915",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "build_groth16_bn254.rs",
               "kind": "program",
               "startLine": 1,
@@ -4144,7 +4226,7 @@
           "units": [
             {
               "unitHash": "ff8412502cbe2a0f5bc51b3b6a1ef76822100ecd921c087da5e5343fdfd6b3f9",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "build_plonk_bn254.rs",
               "kind": "program",
               "startLine": 1,
@@ -4196,7 +4278,7 @@
           "units": [
             {
               "unitHash": "cbbb88ee8a438b2026dbff06ed26129909c02380be14ec5d0c9f0bee2ccbcd1f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "build_recursion_vks.rs",
               "kind": "program",
               "startLine": 1,
@@ -4215,7 +4297,7 @@
           "units": [
             {
               "unitHash": "1d9eadd20601f4221a43ecd11f6eab3559eff34c6477b53dddb0713a9d5b7b98",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "fibonacci_groth16.rs",
               "kind": "program",
               "startLine": 1,
@@ -4267,7 +4349,7 @@
           "units": [
             {
               "unitHash": "2b071e0758f0c9907cfc9b2b960ddf5149d9b76e73cb84ae554b28d3d229ce5c",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "fibonacci_sweep.rs",
               "kind": "program",
               "startLine": 1,
@@ -4319,7 +4401,7 @@
           "units": [
             {
               "unitHash": "08960ebfedf9ad53d439000dc2d0eeb096b20ac53d2be5c6605502555670ee23",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "find_maximal_shapes.rs",
               "kind": "program",
               "startLine": 1,
@@ -4338,7 +4420,7 @@
           "units": [
             {
               "unitHash": "ebf9ab214f2e9b9683c5d3054e798f817a6880833e12558461ee25cdcc0bc796",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "find_oom_shapes.rs",
               "kind": "program",
               "startLine": 1,
@@ -4357,7 +4439,7 @@
           "units": [
             {
               "unitHash": "59e80eb28145d38b1986e51ebde86ad8086d51d9c849f7d361e60b80fc1def67",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "find_recursion_shapes.rs",
               "kind": "program",
               "startLine": 1,
@@ -4376,7 +4458,7 @@
           "units": [
             {
               "unitHash": "a5e4f3ef4bc54cb1a9625a310a4a47e837ea4deeabd1bd2ef292cbdc206ca74d",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "find_small_shapes.rs",
               "kind": "program",
               "startLine": 1,
@@ -4395,7 +4477,7 @@
           "units": [
             {
               "unitHash": "01bc011fc4385f6337f2328e17f3bc21fa910219f174c7c2820f6b4633763209",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "post_trusted_setup.rs",
               "kind": "program",
               "startLine": 1,
@@ -4447,7 +4529,7 @@
           "units": [
             {
               "unitHash": "514434d3247eac50debbf82d9479b10673d07ee38272b518d5c54f3a58d2f824",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "tendermint_sweep.rs",
               "kind": "program",
               "startLine": 1,
@@ -4499,7 +4581,7 @@
           "units": [
             {
               "unitHash": "89e7e22314091b1730a8d84beedd6ca9b0d7a24309a71ba89ae668db9cdbd201",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "test_shape_fixing.rs",
               "kind": "program",
               "startLine": 1,
@@ -4518,7 +4600,7 @@
           "units": [
             {
               "unitHash": "cf6b339d919a3c4939bf1da64d195b9d6bb0dc929cfb71895ec3a5aad6611d27",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "shapes.sh",
               "kind": "program",
               "startLine": 1,
@@ -4562,7 +4644,7 @@
           "units": [
             {
               "unitHash": "9916bafe0d88c0b97f6a843111ceba19e12dc5f28098298105ad1f85cb404ba7",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "build.rs",
               "kind": "program",
               "startLine": 1,
@@ -4614,7 +4696,7 @@
           "units": [
             {
               "unitHash": "551b1e3d121ec0bacabefe31247ad61a73f406fb171aaf8ca974a6c7ef740611",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "components.rs",
               "kind": "program",
               "startLine": 1,
@@ -4666,7 +4748,7 @@
           "units": [
             {
               "unitHash": "1ac79ceb1e1f93a442975a0642145f9e805e353822cb17c0f1b1241eb5bf04e0",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "mod.rs",
               "kind": "program",
               "startLine": 1,
@@ -4685,7 +4767,7 @@
           "units": [
             {
               "unitHash": "0b052d66a92f0ac0fb50feb3c71c0e3c8d9aebee521e657b32db075729ed1b4a",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "model.rs",
               "kind": "program",
               "startLine": 1,
@@ -4704,7 +4786,7 @@
           "units": [
             {
               "unitHash": "6afa14f3051f3afdb86a543cce443ce29e244065908f888046fb766d8a3038fb",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "lib.rs",
               "kind": "program",
               "startLine": 1,
@@ -4756,7 +4838,7 @@
           "units": [
             {
               "unitHash": "74c1f9afe15654142eb992d66f24bc83c938a9d867611d910cc07e266320b6cd",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "shapes.rs",
               "kind": "program",
               "startLine": 1,
@@ -4808,7 +4890,7 @@
           "units": [
             {
               "unitHash": "b483c5fe7380120724d5c19b67a49ec17bf7aee0ac44ac711a72a6588fc4c839",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "types.rs",
               "kind": "program",
               "startLine": 1,
@@ -4860,7 +4942,7 @@
           "units": [
             {
               "unitHash": "ad93e0a521088526ea8144898c3f8e30a233891a9a91064a0cb7928c578eea63",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "utils.rs",
               "kind": "program",
               "startLine": 1,
@@ -4912,7 +4994,7 @@
           "units": [
             {
               "unitHash": "7e863ce404ddab8769c14e17a2ce62e1a6e3955ff6ddba357403a2adf20925b6",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "verify.rs",
               "kind": "program",
               "startLine": 1,
@@ -4998,7 +5080,7 @@
           "units": [
             {
               "unitHash": "8b9f6584e9a73531d0299949b64622696eece22ef64ee30958349b4f82fcf5c1",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Cargo.toml",
               "kind": "program",
               "startLine": 1,
@@ -5017,7 +5099,7 @@
           "units": [
             {
               "unitHash": "2d006dcc09db3e82027239763d91383ff1cd2727603accdf71f6acc030a0f41f",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "main.rs",
               "kind": "program",
               "startLine": 1,
@@ -5070,7 +5152,7 @@
           "units": [
             {
               "unitHash": "ca195a8bd2cbc33bacccaeabac4309f510edf6baae9723163d0514b91ad9e504",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "Cargo.toml",
               "kind": "program",
               "startLine": 1,
@@ -5089,7 +5171,7 @@
           "units": [
             {
               "unitHash": "83297516802499cec7b4feac0bd97e7a9f914997f6f7c1a89b3f8e32d1addb68",
-              "contextKey": "522759382dcd98c2",
+              "contextKey": "eea968a44e5d263a",
               "name": "main.rs",
               "kind": "program",
               "startLine": 1,

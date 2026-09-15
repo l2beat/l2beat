@@ -6,10 +6,1599 @@
   "lines": 69,
   "source": "library Predeploys {\n    // ============ OP Stack Predeploys ============\n\n    /// @notice L1Block predeploy (stores L1 block information)\n    address constant L1_BLOCK_ATTRIBUTES = 0x4200000000000000000000000000000000000015;\n\n    /// @notice Depositor Account (system address that can make deposits)\n    address constant DEPOSITOR_ACCOUNT = 0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001;\n\n    /// @notice L2ToL1MessagePasser predeploy (for L2->L1 messages)\n    address constant L2_TO_L1_MESSAGE_PASSER = 0x4200000000000000000000000000000000000016;\n\n    /// @notice ProxyAdmin predeploy (manages all proxy upgrades)\n    address constant PROXY_ADMIN = 0x4200000000000000000000000000000000000018;\n\n    address constant MultiCall3 = 0xcA11bde05977b3631167028862bE2a173976CA11;\n\n    // ============ Ethscriptions System Predeploys ============\n    // Using 0x3300… namespace for Ethscriptions contracts\n\n    /// @notice Ethscriptions NFT contract\n    /// @dev Moved to the 0x3300… namespace to align with other Ethscriptions predeploys\n    address constant ETHSCRIPTIONS = 0x3300000000000000000000000000000000000001;\n\n    /// @notice ERC20 fixed denomination manager for managed ERC-20 semantics\n    address constant ERC20_FIXED_DENOMINATION_MANAGER = 0x3300000000000000000000000000000000000002;\n\n    /// @notice EthscriptionsProver for L1 provability\n    address constant ETHSCRIPTIONS_PROVER = 0x3300000000000000000000000000000000000003;\n\n    /// @notice Implementation address for the ERC20 fixed denomination template (actual logic contract)\n    address constant ERC20_FIXED_DENOMINATION_IMPLEMENTATION = 0xc0D3c0D3c0D3c0d3c0d3C0d3C0d3c0D3C0D30004;\n\n    /// @notice Implementation address for the ERC721 Ethscriptions collection template (actual logic contract)\n    address constant ERC721_ETHSCRIPTIONS_COLLECTION_IMPLEMENTATION = 0xc0d3C0d3c0D3c0d3C0D3C0D3c0D3C0D3c0d30005;\n\n    /// @notice ERC721 Ethscriptions collection manager\n    address constant ERC721_ETHSCRIPTIONS_COLLECTION_MANAGER = 0x3300000000000000000000000000000000000006;\n\n    // ============ Helper Functions ============\n\n    /// @notice Returns true if the address is an OP Stack predeploy (0x4200… namespace)\n    function isOPPredeployNamespace(address _addr) internal pure returns (bool) {\n        return uint160(_addr) >> 11 == uint160(0x4200000000000000000000000000000000000000) >> 11;\n    }\n\n    /// @notice Returns true if the address is an Ethscriptions predeploy (0x3300… namespace)\n    function isEthscriptionsPredeployNamespace(address _addr) internal pure returns (bool) {\n        return uint160(_addr) >> 11 == uint160(0x3300000000000000000000000000000000000000) >> 11;\n    }\n\n    /// @notice Returns true if the address is a recognized predeploy (OP or Ethscriptions)\n    function isPredeployNamespace(address _addr) internal pure returns (bool) {\n        return isOPPredeployNamespace(_addr) || isEthscriptionsPredeployNamespace(_addr);\n    }\n\n    /// @notice Converts a predeploy address to its code namespace equivalent\n    function predeployToCodeNamespace(address _addr) internal pure returns (address) {\n        require(\n            isPredeployNamespace(_addr), \"Predeploys: can only derive code-namespace address for predeploy addresses\"\n        );\n        return address(\n            uint160(uint256(uint160(_addr)) & 0xffff | uint256(uint160(0xc0D3C0d3C0d3C0D3c0d3C0d3c0D3C0d3c0d30000)))\n        );\n    }\n\n    bytes internal constant MultiCall3Code =\n        hex\"6080604052600436106100f35760003560e01c80634d2301cc1161008a578063a8b0574e11610059578063a8b0574e1461025a578063bce38bd714610275578063c3077fa914610288578063ee82ac5e1461029b57600080fd5b80634d2301cc146101ec57806372425d9d1461022157806382ad56cb1461023457806386d516e81461024757600080fd5b80633408e470116100c65780633408e47014610191578063399542e9146101a45780633e64a696146101c657806342cbb15c146101d957600080fd5b80630f28c97d146100f8578063174dea711461011a578063252dba421461013a57806327e86d6e1461015b575b600080fd5b34801561010457600080fd5b50425b6040519081526020015b60405180910390f35b61012d610128366004610a85565b6102ba565b6040516101119190610bbe565b61014d610148366004610a85565b6104ef565b604051610111929190610bd8565b34801561016757600080fd5b50437fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0140610107565b34801561019d57600080fd5b5046610107565b6101b76101b2366004610c60565b610690565b60405161011193929190610cba565b3480156101d257600080fd5b5048610107565b3480156101e557600080fd5b5043610107565b3480156101f857600080fd5b50610107610207366004610ce2565b73ffffffffffffffffffffffffffffffffffffffff163190565b34801561022d57600080fd5b5044610107565b61012d610242366004610a85565b6106ab565b34801561025357600080fd5b5045610107565b34801561026657600080fd5b50604051418152602001610111565b61012d610283366004610c60565b61085a565b6101b7610296366004610a85565b610a1a565b3480156102a757600080fd5b506101076102b6366004610d18565b4090565b60606000828067ffffffffffffffff8111156102d8576102d8610d31565b60405190808252806020026020018201604052801561031e57816020015b6040805180820190915260008152606060208201528152602001906001900390816102f65790505b5092503660005b8281101561047757600085828151811061034157610341610d60565b6020026020010151905087878381811061035d5761035d610d60565b905060200281019061036f9190610d8f565b6040810135958601959093506103886020850185610ce2565b73ffffffffffffffffffffffffffffffffffffffff16816103ac6060870187610dcd565b6040516103ba929190610e32565b60006040518083038185875af1925050503d80600081146103f7576040519150601f19603f3d011682016040523d82523d6000602084013e6103fc565b606091505b50602080850191909152901515808452908501351761046d577f08c379a000000000000000000000000000000000000000000000000000000000600052602060045260176024527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060445260846000fd5b5050600101610325565b508234146104e6576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601a60248201527f4d756c746963616c6c333a2076616c7565206d69736d6174636800000000000060448201526064015b60405180910390fd5b50505092915050565b436060828067ffffffffffffffff81111561050c5761050c610d31565b60405190808252806020026020018201604052801561053f57816020015b606081526020019060019003908161052a5790505b5091503660005b8281101561068657600087878381811061056257610562610d60565b90506020028101906105749190610e42565b92506105836020840184610ce2565b73ffffffffffffffffffffffffffffffffffffffff166105a66020850185610dcd565b6040516105b4929190610e32565b6000604051808303816000865af19150503d80600081146105f1576040519150601f19603f3d011682016040523d82523d6000602084013e6105f6565b606091505b5086848151811061060957610609610d60565b602090810291909101015290508061067d576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601760248201527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060448201526064016104dd565b50600101610546565b5050509250929050565b43804060606106a086868661085a565b905093509350939050565b6060818067ffffffffffffffff8111156106c7576106c7610d31565b60405190808252806020026020018201604052801561070d57816020015b6040805180820190915260008152606060208201528152602001906001900390816106e55790505b5091503660005b828110156104e657600084828151811061073057610730610d60565b6020026020010151905086868381811061074c5761074c610d60565b905060200281019061075e9190610e76565b925061076d6020840184610ce2565b73ffffffffffffffffffffffffffffffffffffffff166107906040850185610dcd565b60405161079e929190610e32565b6000604051808303816000865af19150503d80600081146107db576040519150601f19603f3d011682016040523d82523d6000602084013e6107e0565b606091505b506020808401919091529015158083529084013517610851577f08c379a000000000000000000000000000000000000000000000000000000000600052602060045260176024527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060445260646000fd5b50600101610714565b6060818067ffffffffffffffff81111561087657610876610d31565b6040519080825280602002602001820160405280156108bc57816020015b6040805180820190915260008152606060208201528152602001906001900390816108945790505b5091503660005b82811015610a105760008482815181106108df576108df610d60565b602002602001015190508686838181106108fb576108fb610d60565b905060200281019061090d9190610e42565b925061091c6020840184610ce2565b73ffffffffffffffffffffffffffffffffffffffff1661093f6020850185610dcd565b60405161094d929190610e32565b6000604051808303816000865af19150503d806000811461098a576040519150601f19603f3d011682016040523d82523d6000602084013e61098f565b606091505b506020830152151581528715610a07578051610a07576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601760248201527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060448201526064016104dd565b506001016108c3565b5050509392505050565b6000806060610a2b60018686610690565b919790965090945092505050565b60008083601f840112610a4b57600080fd5b50813567ffffffffffffffff811115610a6357600080fd5b6020830191508360208260051b8501011115610a7e57600080fd5b9250929050565b60008060208385031215610a9857600080fd5b823567ffffffffffffffff811115610aaf57600080fd5b610abb85828601610a39565b90969095509350505050565b6000815180845260005b81811015610aed57602081850181015186830182015201610ad1565b81811115610aff576000602083870101525b50601f017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0169290920160200192915050565b600082825180855260208086019550808260051b84010181860160005b84811015610bb1578583037fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe001895281518051151584528401516040858501819052610b9d81860183610ac7565b9a86019a9450505090830190600101610b4f565b5090979650505050505050565b602081526000610bd16020830184610b32565b9392505050565b600060408201848352602060408185015281855180845260608601915060608160051b870101935082870160005b82811015610c52577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa0888703018452610c40868351610ac7565b95509284019290840190600101610c06565b509398975050505050505050565b600080600060408486031215610c7557600080fd5b83358015158114610c8557600080fd5b9250602084013567ffffffffffffffff811115610ca157600080fd5b610cad86828701610a39565b9497909650939450505050565b838152826020820152606060408201526000610cd96060830184610b32565b95945050505050565b600060208284031215610cf457600080fd5b813573ffffffffffffffffffffffffffffffffffffffff81168114610bd157600080fd5b600060208284031215610d2a57600080fd5b5035919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b600082357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81833603018112610dc357600080fd5b9190910192915050565b60008083357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe1843603018112610e0257600080fd5b83018035915067ffffffffffffffff821115610e1d57600080fd5b602001915036819003821315610a7e57600080fd5b8183823760009101908152919050565b600082357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc1833603018112610dc357600080fd5b600082357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa1833603018112610dc357600080fdfea2646970667358221220bb2b5c71a328032f97c676ae39a1ec2148d3e5d6f73d95e9b17910152d61f16264736f6c634300080c0033\";\n}",
   "resolutions": {
-    "522759382dcd98c2": {
-      "status": "unaudited",
-      "coveredLines": 0,
-      "warnings": []
+    "eea968a44e5d263a": {
+      "status": "differs",
+      "coveredLines": 52,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "Predeploys",
+        "similarity": 0.141,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 17,
+        "removed": 152,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 74,
+        "unchanged": 52,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 251,
+            "newStart": 1,
+            "newLines": 60,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Predeploys {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Number of predeploy-namespace addresses reserved for protocol usage.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    uint256 internal constant PREDEPLOY_COUNT = 2048;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // ============ OP Stack Predeploys ============",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @notice Address of the LegacyMessagePasser predeploy. Deprecate. Use the updated",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    ///         L2ToL1MessagePasser contract instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    address internal constant LEGACY_MESSAGE_PASSER = 0x4200000000000000000000000000000000000000;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @notice L1Block predeploy (stores L1 block information)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    address constant L1_BLOCK_ATTRIBUTES = 0x4200000000000000000000000000000000000015;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 6, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @notice Address of the L1MessageSender predeploy. Deprecated. Use L2CrossDomainMessenger",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    ///         or access tx.origin (or msg.sender) in a L1 to L2 transaction instead.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    ///         Not embedded into new OP-Stack chains.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    address internal constant L1_MESSAGE_SENDER = 0x4200000000000000000000000000000000000001;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// @notice Depositor Account (system address that can make deposits)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    address constant DEPOSITOR_ACCOUNT = 0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 9, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @notice Address of the DeployerWhitelist predeploy. No longer active.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    address internal constant DEPLOYER_WHITELIST = 0x4200000000000000000000000000000000000002;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @notice L2ToL1MessagePasser predeploy (for L2->L1 messages)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    address constant L2_TO_L1_MESSAGE_PASSER = 0x4200000000000000000000000000000000000016;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @notice Address of the canonical WETH contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    address internal constant WETH = 0x4200000000000000000000000000000000000006;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @notice ProxyAdmin predeploy (manages all proxy upgrades)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    address constant PROXY_ADMIN = 0x4200000000000000000000000000000000000018;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 15, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @notice Address of the L2CrossDomainMessenger predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    address internal constant L2_CROSS_DOMAIN_MESSENGER = 0x4200000000000000000000000000000000000007;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    address constant MultiCall3 = 0xcA11bde05977b3631167028862bE2a173976CA11;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @notice Address of the GasPriceOracle predeploy. Includes fee information",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    ///         and helpers for computing the L1 portion of the transaction fee.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    address internal constant GAS_PRICE_ORACLE = 0x420000000000000000000000000000000000000F;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    // ============ Ethscriptions System Predeploys ============",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    // Using 0x3300… namespace for Ethscriptions contracts",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 29, "newLine": 20, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @notice Address of the L2StandardBridge predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    address internal constant L2_STANDARD_BRIDGE = 0x4200000000000000000000000000000000000010;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @notice Ethscriptions NFT contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @dev Moved to the 0x3300… namespace to align with other Ethscriptions predeploys",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    address constant ETHSCRIPTIONS = 0x3300000000000000000000000000000000000001;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 24, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    //// @notice Address of the SequencerFeeWallet predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    address internal constant SEQUENCER_FEE_WALLET = 0x4200000000000000000000000000000000000011;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @notice ERC20 fixed denomination manager for managed ERC-20 semantics",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    address constant ERC20_FIXED_DENOMINATION_MANAGER = 0x3300000000000000000000000000000000000002;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 35, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @notice Address of the OptimismMintableERC20Factory predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    address internal constant OPTIMISM_MINTABLE_ERC20_FACTORY = 0x4200000000000000000000000000000000000012;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @notice EthscriptionsProver for L1 provability",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    address constant ETHSCRIPTIONS_PROVER = 0x3300000000000000000000000000000000000003;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 38, "newLine": 30, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @notice Address of the L1BlockNumber predeploy. Deprecated. Use the L1Block predeploy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    ///         instead, which exposes more information about the L1 state.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    address internal constant L1_BLOCK_NUMBER = 0x4200000000000000000000000000000000000013;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    /// @notice Implementation address for the ERC20 fixed denomination template (actual logic contract)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    address constant ERC20_FIXED_DENOMINATION_IMPLEMENTATION = 0xc0D3c0D3c0D3c0d3c0d3C0d3C0d3c0D3C0D30004;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 43, "newLine": 33, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @notice Address of the L2ERC721Bridge predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    address internal constant L2_ERC721_BRIDGE = 0x4200000000000000000000000000000000000014;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    /// @notice Implementation address for the ERC721 Ethscriptions collection template (actual logic contract)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    address constant ERC721_ETHSCRIPTIONS_COLLECTION_IMPLEMENTATION = 0xc0d3C0d3c0D3c0d3C0D3C0D3c0D3C0D3c0d30005;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 46, "newLine": 36, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /// @notice Address of the L1Block predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    address internal constant L1_BLOCK_ATTRIBUTES = 0x4200000000000000000000000000000000000015;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    /// @notice ERC721 Ethscriptions collection manager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    address constant ERC721_ETHSCRIPTIONS_COLLECTION_MANAGER = 0x3300000000000000000000000000000000000006;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @notice Address of the L2ToL1MessagePasser predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    address internal constant L2_TO_L1_MESSAGE_PASSER = 0x4200000000000000000000000000000000000016;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    // ============ Helper Functions ============",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 52, "newLine": 41, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @notice Address of the OptimismMintableERC721Factory predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    address internal constant OPTIMISM_MINTABLE_ERC721_FACTORY = 0x4200000000000000000000000000000000000017;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// @notice Address of the ProxyAdmin predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    address internal constant PROXY_ADMIN = 0x4200000000000000000000000000000000000018;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 58, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /// @notice Address of the BaseFeeVault predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    address internal constant BASE_FEE_VAULT = 0x4200000000000000000000000000000000000019;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 61, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    /// @notice Address of the L1FeeVault predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    address internal constant L1_FEE_VAULT = 0x420000000000000000000000000000000000001A;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 64, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    /// @notice Address of the OperatorFeeVault predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    address internal constant OPERATOR_FEE_VAULT = 0x420000000000000000000000000000000000001b;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 67, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    /// @notice Address of the SchemaRegistry predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    address internal constant SCHEMA_REGISTRY = 0x4200000000000000000000000000000000000020;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 70, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    /// @notice Address of the EAS predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "    address internal constant EAS = 0x4200000000000000000000000000000000000021;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 73, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    /// @notice Address of the GovernanceToken predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    address internal constant GOVERNANCE_TOKEN = 0x4200000000000000000000000000000000000042;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 76, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /// @notice Address of the LegacyERC20ETH predeploy. Deprecated. Balances are migrated to the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    ///         state trie as of the Bedrock upgrade. Contract has been locked and write functions",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    ///         can no longer be accessed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    address internal constant LEGACY_ERC20_ETH = 0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 82, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    /// @notice Address of the CrossL2Inbox predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    address internal constant CROSS_L2_INBOX = 0x4200000000000000000000000000000000000022;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 85, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /// @notice Address of the L2ToL2CrossDomainMessenger predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    address internal constant L2_TO_L2_CROSS_DOMAIN_MESSENGER = 0x4200000000000000000000000000000000000023;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 88, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    /// @notice Address of the SuperchainETHBridge predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    address internal constant SUPERCHAIN_ETH_BRIDGE = 0x4200000000000000000000000000000000000024;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 91, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    /// @notice Address of the ETHLiquidity predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    address internal constant ETH_LIQUIDITY = 0x4200000000000000000000000000000000000025;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 94, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @notice Address of the OptimismSuperchainERC20Factory predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    address internal constant OPTIMISM_SUPERCHAIN_ERC20_FACTORY = 0x4200000000000000000000000000000000000026;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 97, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "    /// @notice Address of the OptimismSuperchainERC20Beacon predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "    address internal constant OPTIMISM_SUPERCHAIN_ERC20_BEACON = 0x4200000000000000000000000000000000000027;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 100, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "    // TODO: Precalculate the address of the implementation contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "    /// @notice Arbitrary address of the OptimismSuperchainERC20 implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    address internal constant OPTIMISM_SUPERCHAIN_ERC20 = 0xB9415c6cA93bdC545D4c5177512FCC22EFa38F28;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 104, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    /// @notice Address of the SuperchainTokenBridge predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    address internal constant SUPERCHAIN_TOKEN_BRIDGE = 0x4200000000000000000000000000000000000028;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 107, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    /// @notice Address of the NativeAssetLiquidity predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    address internal constant NATIVE_ASSET_LIQUIDITY = 0x4200000000000000000000000000000000000029;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 110, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @notice Address of the LiquidityController predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    address internal constant LIQUIDITY_CONTROLLER = 0x420000000000000000000000000000000000002a;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 113, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    /// @notice Address of the FeeSplitter predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    address internal constant FEE_SPLITTER = 0x420000000000000000000000000000000000002B;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 116, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "    /// @notice Returns the name of the predeploy at the given address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "    function getName(address _addr) internal pure returns (string memory out_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        require(isPredeployNamespace(_addr), \"Predeploys: address must be a predeploy\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        if (_addr == LEGACY_MESSAGE_PASSER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "            return \"LegacyMessagePasser\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        if (_addr == L1_MESSAGE_SENDER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "            return \"L1MessageSender\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "        if (_addr == DEPLOYER_WHITELIST) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "            return \"DeployerWhitelist\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "        if (_addr == WETH) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "            return \"WETH\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "        if (_addr == L2_CROSS_DOMAIN_MESSENGER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "            return \"L2CrossDomainMessenger\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "        if (_addr == GAS_PRICE_ORACLE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "            return \"GasPriceOracle\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "        if (_addr == L2_STANDARD_BRIDGE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "            return \"L2StandardBridge\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "        if (_addr == SEQUENCER_FEE_WALLET) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "            return \"SequencerFeeVault\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "        if (_addr == OPTIMISM_MINTABLE_ERC20_FACTORY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "            return \"OptimismMintableERC20Factory\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "        if (_addr == L1_BLOCK_NUMBER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "            return \"L1BlockNumber\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "        if (_addr == L2_ERC721_BRIDGE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "            return \"L2ERC721Bridge\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "        if (_addr == L1_BLOCK_ATTRIBUTES) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "            return \"L1Block\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "        if (_addr == L2_TO_L1_MESSAGE_PASSER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "            return \"L2ToL1MessagePasser\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "        if (_addr == OPTIMISM_MINTABLE_ERC721_FACTORY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "            return \"OptimismMintableERC721Factory\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "        if (_addr == PROXY_ADMIN) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "            return \"ProxyAdmin\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "        if (_addr == BASE_FEE_VAULT) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "            return \"BaseFeeVault\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "        if (_addr == L1_FEE_VAULT) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "            return \"L1FeeVault\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "        if (_addr == OPERATOR_FEE_VAULT) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            return \"OperatorFeeVault\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "        if (_addr == SCHEMA_REGISTRY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "            return \"SchemaRegistry\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "        if (_addr == EAS) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "            return \"EAS\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "        if (_addr == GOVERNANCE_TOKEN) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "            return \"GovernanceToken\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "        if (_addr == LEGACY_ERC20_ETH) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "            return \"LegacyERC20ETH\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        if (_addr == CROSS_L2_INBOX) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "            return \"CrossL2Inbox\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "        if (_addr == L2_TO_L2_CROSS_DOMAIN_MESSENGER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "            return \"L2ToL2CrossDomainMessenger\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "        if (_addr == SUPERCHAIN_ETH_BRIDGE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "            return \"SuperchainETHBridge\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "        if (_addr == ETH_LIQUIDITY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "            return \"ETHLiquidity\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "        if (_addr == OPTIMISM_SUPERCHAIN_ERC20_FACTORY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "            return \"OptimismSuperchainERC20Factory\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "        if (_addr == OPTIMISM_SUPERCHAIN_ERC20_BEACON) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "            return \"OptimismSuperchainERC20Beacon\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "        if (_addr == SUPERCHAIN_TOKEN_BRIDGE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "            return \"SuperchainTokenBridge\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "        if (_addr == LIQUIDITY_CONTROLLER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "            return \"LiquidityController\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "        if (_addr == NATIVE_ASSET_LIQUIDITY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "            return \"NativeAssetLiquidity\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "        if (_addr == FEE_SPLITTER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "            return \"FeeSplitter\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 216,
+                "text": "        revert(\"Predeploys: unnamed predeploy\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @notice Returns true if the address is an OP Stack predeploy (0x4200… namespace)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function isOPPredeployNamespace(address _addr) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        return uint160(_addr) >> 11 == uint160(0x4200000000000000000000000000000000000000) >> 11;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 217, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 218, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "    /// @notice Returns true if the predeploy is not proxied.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "    function notProxied(address _addr) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "        return _addr == GOVERNANCE_TOKEN || _addr == WETH;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @notice Returns true if the address is an Ethscriptions predeploy (0x3300… namespace)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    function isEthscriptionsPredeployNamespace(address _addr) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        return uint160(_addr) >> 11 == uint160(0x3300000000000000000000000000000000000000) >> 11;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 222, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 223, "newLine": 51, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "    /// @notice Returns true if the address is a defined predeploy that is embedded into new OP-Stack chains.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "    function isSupportedPredeploy(address _addr, uint256 _fork, bool _enableCrossL2Inbox, bool _isCustomGasToken)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "        returns (bool)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "        return _addr == LEGACY_MESSAGE_PASSER || _addr == DEPLOYER_WHITELIST || _addr == WETH",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "            || _addr == L2_CROSS_DOMAIN_MESSENGER || _addr == GAS_PRICE_ORACLE || _addr == L2_STANDARD_BRIDGE",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "            || _addr == SEQUENCER_FEE_WALLET || _addr == OPTIMISM_MINTABLE_ERC20_FACTORY || _addr == L1_BLOCK_NUMBER",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "            || _addr == L2_ERC721_BRIDGE || _addr == L1_BLOCK_ATTRIBUTES || _addr == L2_TO_L1_MESSAGE_PASSER",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "            || _addr == OPTIMISM_MINTABLE_ERC721_FACTORY || _addr == PROXY_ADMIN || _addr == BASE_FEE_VAULT",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 235,
+                "text": "            || _addr == L1_FEE_VAULT || _addr == OPERATOR_FEE_VAULT || _addr == SCHEMA_REGISTRY || _addr == EAS",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "            || _addr == GOVERNANCE_TOKEN || _addr == FEE_SPLITTER",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "            || (_fork >= uint256(Fork.INTEROP) && _enableCrossL2Inbox && _addr == CROSS_L2_INBOX)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 238,
+                "text": "            || (_fork >= uint256(Fork.INTEROP) && _addr == L2_TO_L2_CROSS_DOMAIN_MESSENGER)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 239,
+                "text": "            || (_isCustomGasToken && _addr == LIQUIDITY_CONTROLLER)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "            || (_isCustomGasToken && _addr == NATIVE_ASSET_LIQUIDITY);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 242, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    /// @notice Returns true if the address is a recognized predeploy (OP or Ethscriptions)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 53,
+                "text": "    function isPredeployNamespace(address _addr) internal pure returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "        return uint160(_addr) >> 11 == uint160(0x4200000000000000000000000000000000000000) >> 11;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        return isOPPredeployNamespace(_addr) || isEthscriptionsPredeployNamespace(_addr);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 245, "newLine": 55, "text": "    }" },
+              { "type": " ", "oldLine": 246, "newLine": 56, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "    /// @notice Function to compute the expected address of the predeploy implementation",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 248,
+                "text": "    ///         in the genesis state.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /// @notice Converts a predeploy address to its code namespace equivalent",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 58,
+                "text": "    function predeployToCodeNamespace(address _addr) internal pure returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 59,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 60,
+                "text": "            isPredeployNamespace(_addr), \"Predeploys: can only derive code-namespace address for predeploy addresses\""
+              }
+            ]
+          },
+          {
+            "oldStart": 254,
+            "oldLines": 4,
+            "newStart": 63,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 63,
+                "text": "            uint160(uint256(uint160(_addr)) & 0xffff | uint256(uint160(0xc0D3C0d3C0d3C0D3c0d3C0d3c0D3C0d3c0d30000)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 64,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 256, "newLine": 65, "text": "    }" },
+              { "type": "+", "newLine": 66, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    bytes internal constant MultiCall3Code =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        hex\"6080604052600436106100f35760003560e01c80634d2301cc1161008a578063a8b0574e11610059578063a8b0574e1461025a578063bce38bd714610275578063c3077fa914610288578063ee82ac5e1461029b57600080fd5b80634d2301cc146101ec57806372425d9d1461022157806382ad56cb1461023457806386d516e81461024757600080fd5b80633408e470116100c65780633408e47014610191578063399542e9146101a45780633e64a696146101c657806342cbb15c146101d957600080fd5b80630f28c97d146100f8578063174dea711461011a578063252dba421461013a57806327e86d6e1461015b575b600080fd5b34801561010457600080fd5b50425b6040519081526020015b60405180910390f35b61012d610128366004610a85565b6102ba565b6040516101119190610bbe565b61014d610148366004610a85565b6104ef565b604051610111929190610bd8565b34801561016757600080fd5b50437fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0140610107565b34801561019d57600080fd5b5046610107565b6101b76101b2366004610c60565b610690565b60405161011193929190610cba565b3480156101d257600080fd5b5048610107565b3480156101e557600080fd5b5043610107565b3480156101f857600080fd5b50610107610207366004610ce2565b73ffffffffffffffffffffffffffffffffffffffff163190565b34801561022d57600080fd5b5044610107565b61012d610242366004610a85565b6106ab565b34801561025357600080fd5b5045610107565b34801561026657600080fd5b50604051418152602001610111565b61012d610283366004610c60565b61085a565b6101b7610296366004610a85565b610a1a565b3480156102a757600080fd5b506101076102b6366004610d18565b4090565b60606000828067ffffffffffffffff8111156102d8576102d8610d31565b60405190808252806020026020018201604052801561031e57816020015b6040805180820190915260008152606060208201528152602001906001900390816102f65790505b5092503660005b8281101561047757600085828151811061034157610341610d60565b6020026020010151905087878381811061035d5761035d610d60565b905060200281019061036f9190610d8f565b6040810135958601959093506103886020850185610ce2565b73ffffffffffffffffffffffffffffffffffffffff16816103ac6060870187610dcd565b6040516103ba929190610e32565b60006040518083038185875af1925050503d80600081146103f7576040519150601f19603f3d011682016040523d82523d6000602084013e6103fc565b606091505b50602080850191909152901515808452908501351761046d577f08c379a000000000000000000000000000000000000000000000000000000000600052602060045260176024527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060445260846000fd5b5050600101610325565b508234146104e6576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601a60248201527f4d756c746963616c6c333a2076616c7565206d69736d6174636800000000000060448201526064015b60405180910390fd5b50505092915050565b436060828067ffffffffffffffff81111561050c5761050c610d31565b60405190808252806020026020018201604052801561053f57816020015b606081526020019060019003908161052a5790505b5091503660005b8281101561068657600087878381811061056257610562610d60565b90506020028101906105749190610e42565b92506105836020840184610ce2565b73ffffffffffffffffffffffffffffffffffffffff166105a66020850185610dcd565b6040516105b4929190610e32565b6000604051808303816000865af19150503d80600081146105f1576040519150601f19603f3d011682016040523d82523d6000602084013e6105f6565b606091505b5086848151811061060957610609610d60565b602090810291909101015290508061067d576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601760248201527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060448201526064016104dd565b50600101610546565b5050509250929050565b43804060606106a086868661085a565b905093509350939050565b6060818067ffffffffffffffff8111156106c7576106c7610d31565b60405190808252806020026020018201604052801561070d57816020015b6040805180820190915260008152606060208201528152602001906001900390816106e55790505b5091503660005b828110156104e657600084828151811061073057610730610d60565b6020026020010151905086868381811061074c5761074c610d60565b905060200281019061075e9190610e76565b925061076d6020840184610ce2565b73ffffffffffffffffffffffffffffffffffffffff166107906040850185610dcd565b60405161079e929190610e32565b6000604051808303816000865af19150503d80600081146107db576040519150601f19603f3d011682016040523d82523d6000602084013e6107e0565b606091505b506020808401919091529015158083529084013517610851577f08c379a000000000000000000000000000000000000000000000000000000000600052602060045260176024527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060445260646000fd5b50600101610714565b6060818067ffffffffffffffff81111561087657610876610d31565b6040519080825280602002602001820160405280156108bc57816020015b6040805180820190915260008152606060208201528152602001906001900390816108945790505b5091503660005b82811015610a105760008482815181106108df576108df610d60565b602002602001015190508686838181106108fb576108fb610d60565b905060200281019061090d9190610e42565b925061091c6020840184610ce2565b73ffffffffffffffffffffffffffffffffffffffff1661093f6020850185610dcd565b60405161094d929190610e32565b6000604051808303816000865af19150503d806000811461098a576040519150601f19603f3d011682016040523d82523d6000602084013e61098f565b606091505b506020830152151581528715610a07578051610a07576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601760248201527f4d756c746963616c6c333a2063616c6c206661696c656400000000000000000060448201526064016104dd565b506001016108c3565b5050509392505050565b6000806060610a2b60018686610690565b919790965090945092505050565b60008083601f840112610a4b57600080fd5b50813567ffffffffffffffff811115610a6357600080fd5b6020830191508360208260051b8501011115610a7e57600080fd5b9250929050565b60008060208385031215610a9857600080fd5b823567ffffffffffffffff811115610aaf57600080fd5b610abb85828601610a39565b90969095509350505050565b6000815180845260005b81811015610aed57602081850181015186830182015201610ad1565b81811115610aff576000602083870101525b50601f017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0169290920160200192915050565b600082825180855260208086019550808260051b84010181860160005b84811015610bb1578583037fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe001895281518051151584528401516040858501819052610b9d81860183610ac7565b9a86019a9450505090830190600101610b4f565b5090979650505050505050565b602081526000610bd16020830184610b32565b9392505050565b600060408201848352602060408185015281855180845260608601915060608160051b870101935082870160005b82811015610c52577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa0888703018452610c40868351610ac7565b95509284019290840190600101610c06565b509398975050505050505050565b600080600060408486031215610c7557600080fd5b83358015158114610c8557600080fd5b9250602084013567ffffffffffffffff811115610ca157600080fd5b610cad86828701610a39565b9497909650939450505050565b838152826020820152606060408201526000610cd96060830184610b32565b95945050505050565b600060208284031215610cf457600080fd5b813573ffffffffffffffffffffffffffffffffffffffff81168114610bd157600080fd5b600060208284031215610d2a57600080fd5b5035919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b600082357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81833603018112610dc357600080fd5b9190910192915050565b60008083357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe1843603018112610e0257600080fd5b83018035915067ffffffffffffffff821115610e1d57600080fd5b602001915036819003821315610a7e57600080fd5b8183823760009101908152919050565b600082357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc1833603018112610dc357600080fd5b600082357fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa1833603018112610dc357600080fdfea2646970667358221220bb2b5c71a328032f97c676ae39a1ec2148d3e5d6f73d95e9b17910152d61f16264736f6c634300080c0033\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 257, "newLine": 69, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": ["low-similarity"]
     }
   }
 }

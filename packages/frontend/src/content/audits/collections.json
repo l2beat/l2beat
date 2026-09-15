@@ -41,6 +41,11 @@
       "name": "openzeppelin",
       "kind": "library"
     },
+    "optimism": {
+      "id": "optimism",
+      "name": "optimism",
+      "kind": "project"
+    },
     "privacy-pools": {
       "id": "privacy-pools",
       "name": "privacy-pools",

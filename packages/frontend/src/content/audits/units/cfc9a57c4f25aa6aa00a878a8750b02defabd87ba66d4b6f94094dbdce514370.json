@@ -6,7 +6,7 @@
   "lines": 17,
   "source": "library SystemStateLib {\n    bytes32 constant TAG_DIGEST = sha256(\"risc0.SystemState\");\n\n    function digest(SystemState memory state) internal pure returns (bytes32) {\n        return sha256(\n            abi.encodePacked(\n                TAG_DIGEST,\n                // down\n                state.merkle_root,\n                // data\n                reverseByteOrderUint32(state.pc),\n                // down.length\n                uint16(1) << 8\n            )\n        );\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 17,
       "match": {

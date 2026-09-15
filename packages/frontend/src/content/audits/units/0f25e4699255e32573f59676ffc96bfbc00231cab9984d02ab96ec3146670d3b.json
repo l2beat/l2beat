@@ -6,7 +6,7 @@
   "lines": 4,
   "source": "struct VerifierRoute {\n    address verifier;\n    bool frozen;\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

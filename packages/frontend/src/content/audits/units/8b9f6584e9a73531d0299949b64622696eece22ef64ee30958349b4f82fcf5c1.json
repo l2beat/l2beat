@@ -6,7 +6,7 @@
   "lines": 19,
   "source": "[package]\nname = \"aggregation\"\nversion = \"0.1.0\"\nlicense.workspace = true\nedition.workspace = true\nauthors.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\n\n[dependencies]\nsha2.workspace = true\nsp1-zkvm.workspace = true\nsp1-lib.workspace = true\nop-succinct-client-utils.workspace = true\nalloy-consensus.workspace = true\nalloy-primitives.workspace = true\nalloy-sol-types.workspace = true\nserde_cbor.workspace = true\nbincode.workspace = true",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

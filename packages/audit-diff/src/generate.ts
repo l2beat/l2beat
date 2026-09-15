@@ -285,6 +285,7 @@ function classify(
     reviewPhase: version.reviewPhase,
     coverage: version.coverage,
     majorFindings: version.majorFindings,
+    findingIds: version.findingIds.length > 0 ? version.findingIds : undefined,
     isLatestVersion: version === resolution.versions[0],
     laterAuditedVersionExists: selection.laterAuditedVersionExists,
     totalVersions: resolution.versions.length,

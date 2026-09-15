@@ -6,7 +6,7 @@
   "lines": 5,
   "source": "contract Burner {\n    constructor() payable {\n        selfdestruct(payable(address(this)));\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 5,
       "match": {

@@ -6,7 +6,7 @@
   "lines": 9,
   "source": "interface Proxy {\n    receive() external payable;\n    fallback() external payable;\n    function upgradeTo(address _implementation) external;\n    function upgradeToAndCall(address _implementation, bytes calldata _data) external payable returns (bytes memory);\n    function changeAdmin(address _admin) external;\n    function admin() external returns (address);\n    function implementation() external returns (address);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "differs",
       "coveredLines": 1,
       "match": {

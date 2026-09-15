@@ -9,6 +9,7 @@ import type { AuditsUnitEntry } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 import {
   AUDIT_STATUS_META,
+  formatFindingIds,
   hasUnresolvedMajorFinding,
   MAJOR_FINDING_DESCRIPTION,
 } from '../../components/auditStatus'
@@ -71,7 +72,8 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
                   {match && (
                     <div className="mt-1 text-secondary">
                       {match.majorFindings} major{' '}
-                      {match.majorFindings === 1 ? 'finding' : 'findings'} in{' '}
+                      {match.majorFindings === 1 ? 'finding' : 'findings'}
+                      {formatFindingIds(match.findingIds)} in{' '}
                       {match.reportTitle} ({match.auditor}).
                     </div>
                   )}
@@ -80,6 +82,15 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
             ) : (
               meta.label
             )}
+            {majorFinding &&
+              match?.findingIds?.map((id) => (
+                <span
+                  key={id}
+                  className="ml-1 rounded border border-negative px-1 font-mono text-[10px] text-negative"
+                >
+                  {id}
+                </span>
+              ))}
             {match && match.origin !== 'own' && (
               <Tooltip>
                 <TooltipTrigger className="text-secondary">
@@ -148,7 +159,7 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
                 <div>
                   Status: {match.auditStatus.replaceAll('_', ' ')}
                   {match.majorFindings > 0 &&
-                    ` (${match.majorFindings} major findings)`}
+                    ` · ${match.majorFindings} major ${match.majorFindings === 1 ? 'finding' : 'findings'}${formatFindingIds(match.findingIds)}`}
                 </div>
                 <div>Review phase: {match.reviewPhase}</div>
                 <div>Coverage: {match.coverage}</div>
@@ -202,6 +213,10 @@ export function UnitRow({ unit }: { unit: AuditsUnitEntry }) {
               <TooltipContent>
                 Open the audit report that covered this exact revision:{' '}
                 {match.reportTitle}
+                {majorFinding &&
+                  match.findingIds &&
+                  match.findingIds.length > 0 &&
+                  `. Search it for ${match.findingIds.join(', ')}.`}
               </TooltipContent>
             </Tooltip>
           )}

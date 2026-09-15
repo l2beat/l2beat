@@ -6,7 +6,7 @@
   "lines": 26,
   "source": "abstract contract ERC1155Holder is ERC165, IERC1155Receiver {\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {\n        return interfaceId == type(IERC1155Receiver).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    function onERC1155Received(address, address, uint256, uint256, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155Received.selector;\n    }\n\n    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155BatchReceived.selector;\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 26,
       "match": {

@@ -6,7 +6,7 @@
   "lines": 10,
   "source": "library LibHash {\n    /// @notice Get the value of a `Hash` type in the form of the underlying bytes32.\n    /// @param _hash The `Hash` type to get the value of.\n    /// @return hash_ The value of the `Hash` type as a bytes32 type.\n    function raw(Hash _hash) internal pure returns (bytes32 hash_) {\n        assembly {\n            hash_ := _hash\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 10,
       "match": {

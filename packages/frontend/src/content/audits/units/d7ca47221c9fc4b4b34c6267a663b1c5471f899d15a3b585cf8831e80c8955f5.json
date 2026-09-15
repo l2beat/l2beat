@@ -6,7 +6,7 @@
   "lines": 16,
   "source": "library OutputLib {\n    bytes32 constant TAG_DIGEST = sha256(\"risc0.Output\");\n\n    function digest(Output memory output) internal pure returns (bytes32) {\n        return sha256(\n            abi.encodePacked(\n                TAG_DIGEST,\n                // down\n                output.journalDigest,\n                output.assumptionsDigest,\n                // down.length\n                uint16(2) << 8\n            )\n        );\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 16,
       "match": {

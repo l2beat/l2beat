@@ -6,7 +6,7 @@
   "lines": 32,
   "source": "library Panic {\n    /// @dev generic / unspecified error\n    uint256 internal constant GENERIC = 0x00;\n    /// @dev used by the assert() builtin\n    uint256 internal constant ASSERT = 0x01;\n    /// @dev arithmetic underflow or overflow\n    uint256 internal constant UNDER_OVERFLOW = 0x11;\n    /// @dev division or modulo by zero\n    uint256 internal constant DIVISION_BY_ZERO = 0x12;\n    /// @dev enum conversion error\n    uint256 internal constant ENUM_CONVERSION_ERROR = 0x21;\n    /// @dev invalid encoding in storage\n    uint256 internal constant STORAGE_ENCODING_ERROR = 0x22;\n    /// @dev empty array pop\n    uint256 internal constant EMPTY_ARRAY_POP = 0x31;\n    /// @dev array out of bounds access\n    uint256 internal constant ARRAY_OUT_OF_BOUNDS = 0x32;\n    /// @dev resource error (too large allocation or too large array)\n    uint256 internal constant RESOURCE_ERROR = 0x41;\n    /// @dev calling invalid internal function\n    uint256 internal constant INVALID_INTERNAL_FUNCTION = 0x51;\n\n    /// @dev Reverts with a panic code. Recommended to use with\n    /// the internal constants with predefined codes.\n    function panic(uint256 code) internal pure {\n        assembly (\"memory-safe\") {\n            mstore(0x00, 0x4e487b71)\n            mstore(0x20, code)\n            revert(0x1c, 0x24)\n        }\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 32,
       "match": {

@@ -23,10 +23,10 @@
         "commit": "5a3766115b55dd3471ca981a26c8b8381f12fae7",
         "commitTimestamp": "2022-05-31T09:01:24Z",
         "url": "https://github.com/AztecProtocol/aztec-connect-bridges/blob/5a3766115b55dd3471ca981a26c8b8381f12fae7/src/bridges/liquity/interfaces/ISwapRouter.sol",
-        "auditStatus": "audited_with_major_findings",
+        "auditStatus": "audited_with_no_major_findings",
         "reviewPhase": "initial audit",
         "coverage": "full directory",
-        "majorFindings": 3,
+        "majorFindings": 0,
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 1

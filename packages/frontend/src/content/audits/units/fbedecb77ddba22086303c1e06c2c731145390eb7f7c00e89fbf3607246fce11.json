@@ -6,7 +6,7 @@
   "lines": 9,
   "source": "library KailuaPayLib {\n    /// @notice Transfers ETH from the contract's balance to the recipient\n    function pay(uint256 amount, address recipient) internal {\n        (bool success,) = recipient.call{value: amount}(hex\"\");\n        if (!success) {\n            revert BondTransferFailed();\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 9,
       "match": {

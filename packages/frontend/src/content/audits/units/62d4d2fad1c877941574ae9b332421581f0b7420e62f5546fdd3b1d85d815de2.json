@@ -6,7 +6,7 @@
   "lines": 21,
   "source": "struct Receipt {\n    bytes seal;\n    bytes32 claimDigest;\n}\nusing LibDuration for Duration global;\ntype Duration is uint64;\nenum ProofStatus {\n    NONE,\n    FAULT,\n    VALIDITY\n}\nusing LibTimestamp for Timestamp global;\ntype Timestamp is uint64;\nerror BadTarget();\nerror ProvenFaulty();\nerror IncorrectBondAmount();\nerror ClockNotExpired();\nerror NotProven();\nerror NoCreditToClaim();\nerror AlreadyEliminated();\nerror BondTransferFailed();",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

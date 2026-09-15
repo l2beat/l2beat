@@ -6,7 +6,7 @@
   "lines": 11,
   "source": "abstract contract SelfAuthorized {\n    function requireSelfCall() private view {\n        require(msg.sender == address(this), \"GS031\");\n    }\n\n    modifier authorized() {\n        // Modifiers are copied around during compilation. This is a function call as it minimized the bytecode size\n        requireSelfCall();\n        _;\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 11,
       "match": {

@@ -27,6 +27,7 @@
         "reviewPhase": "recheck of changed contracts",
         "coverage": "full file",
         "majorFindings": 1,
+        "findingIds": ["CVF-4"],
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 1

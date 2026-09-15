@@ -6,7 +6,7 @@
   "lines": 16,
   "source": "interface IDisputeGame is IInitializable {\n    event Resolved(GameStatus indexed status);\n\n    function createdAt() external view returns (Timestamp);\n    function resolvedAt() external view returns (Timestamp);\n    function status() external view returns (GameStatus);\n    function gameType() external view returns (GameType gameType_);\n    function gameCreator() external pure returns (address creator_);\n    function rootClaim() external pure returns (Claim rootClaim_);\n    function l1Head() external pure returns (Hash l1Head_);\n    function l2SequenceNumber() external pure returns (uint256 l2SequenceNumber_);\n    function extraData() external pure returns (bytes memory extraData_);\n    function resolve() external returns (GameStatus status_);\n    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_);\n    function wasRespectedGameTypeWhenCreated() external view returns (bool);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "differs",
       "coveredLines": 11,
       "match": {

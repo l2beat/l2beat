@@ -6,7 +6,7 @@
   "lines": 15,
   "source": "interface IRiscZeroSetVerifier is IRiscZeroVerifier {\n    error VerificationFailed();\n\n    /// A new root has been added to the set.\n    event VerifiedRoot(bytes32 indexed root, bytes seal);\n\n    /// Publishes a new root of a proof aggregation.\n    function submitMerkleRoot(bytes32 root, bytes calldata seal) external;\n\n    /// Returns whether `root` has been submitted.\n    function containsRoot(bytes32 root) external view returns (bool);\n\n    /// Returns the set builder imageId and its url.\n    function imageInfo() external view returns (bytes32, string memory);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "differs",
       "coveredLines": 13,
       "match": {

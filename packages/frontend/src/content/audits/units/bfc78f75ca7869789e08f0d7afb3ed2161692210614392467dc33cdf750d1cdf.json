@@ -6,7 +6,7 @@
   "lines": 17,
   "source": "interface IKailuaTournament {\n    /// @notice Emitted when a proof is submitted.\n    /// @param signature The proposal signature\n    /// @param status The proven status\n    event Proven(bytes32 indexed signature, ProofStatus indexed status);\n\n    /// @notice Returns the KailuaTreasury of this tournament\n    function KAILUA_TREASURY() external view returns (IKailuaTreasury);\n    /// @notice The timestamp of when the first proof for a proposal signature was made\n    function provenAt(bytes32) external view returns (Timestamp);\n    /// @notice Returns the hash of the output claim and all blob hashes associated with this proposal\n    function signature() external view returns (bytes32);\n    /// @notice Returns whether a child can be considered valid\n    function isViableSignature(bytes32 childSignature) external view returns (bool);\n    /// @notice Returns the signature of the child proven valid\n    function validChildSignature() external view returns (bytes32);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 17,
       "match": {

@@ -6,7 +6,7 @@
   "lines": 16,
   "source": "interface IRiscZeroVerifier {\n    /// @notice Verify that the given seal is a valid RISC Zero proof of execution with the\n    ///     given image ID and journal digest. Reverts on failure.\n    /// @dev This method additionally ensures that the input hash is all-zeros (i.e. no\n    /// committed input), the exit code is (Halted, 0), and there are no assumptions (i.e. the\n    /// receipt is unconditional).\n    /// @param seal The encoded cryptographic proof (i.e. SNARK).\n    /// @param imageId The identifier for the guest program.\n    /// @param journalDigest The SHA-256 digest of the journal bytes.\n    function verify(bytes calldata seal, bytes32 imageId, bytes32 journalDigest) external view;\n\n    /// @notice Verify that the given receipt is a valid RISC Zero receipt, ensuring the `seal` is\n    /// valid a cryptographic proof of the execution with the given `claim`. Reverts on failure.\n    /// @param receipt The receipt to be verified.\n    function verifyIntegrity(Receipt calldata receipt) external view;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 16,
       "match": {

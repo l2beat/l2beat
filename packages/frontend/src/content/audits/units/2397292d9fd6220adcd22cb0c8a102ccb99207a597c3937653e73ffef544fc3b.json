@@ -6,7 +6,7 @@
   "lines": 45,
   "source": "library GnosisSafeMath {\n    /**\n     * @dev Multiplies two numbers, reverts on overflow.\n     */\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\n        // benefit is lost if 'b' is also tested.\n        // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522\n        if (a == 0) {\n            return 0;\n        }\n\n        uint256 c = a * b;\n        require(c / a == b);\n\n        return c;\n    }\n\n    /**\n     * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).\n     */\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n        require(b <= a);\n        uint256 c = a - b;\n\n        return c;\n    }\n\n    /**\n     * @dev Adds two numbers, reverts on overflow.\n     */\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\n        uint256 c = a + b;\n        require(c >= a);\n\n        return c;\n    }\n\n    /**\n     * @dev Returns the largest of two numbers.\n     */\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a >= b ? a : b;\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 45,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 45,
       "match": {

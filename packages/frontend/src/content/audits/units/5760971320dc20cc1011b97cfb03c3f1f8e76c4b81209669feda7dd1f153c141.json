@@ -6,7 +6,7 @@
   "lines": 5,
   "source": "contract Singleton {\n    // singleton always needs to be first declared variable, to ensure that it is at the same location as in the Proxy contract.\n    // It should also always be ensured that the address is stored alone (uses a full word)\n    address private singleton;\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 5,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 5,
       "match": {

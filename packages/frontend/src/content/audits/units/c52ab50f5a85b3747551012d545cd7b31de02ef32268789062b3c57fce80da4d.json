@@ -6,7 +6,7 @@
   "lines": 11,
   "source": "abstract contract NativeCurrencyPaymentFallback {\n    event SafeReceived(address indexed sender, uint256 value);\n\n    /**\n     * @notice Receive function accepts native currency transactions.\n     * @dev Emits an event with sender and received value.\n     */\n    receive() external payable {\n        emit SafeReceived(msg.sender, msg.value);\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 11,
       "match": {

@@ -6,7 +6,7 @@
   "lines": 3,
   "source": "interface L2ToL1MessagePasser {\n    function initiateWithdrawal(address _target, uint256 _gasLimit, bytes calldata _data) external payable;\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "differs",
       "coveredLines": 1,
       "match": {

@@ -26,7 +26,12 @@
         "auditStatus": "audited_with_major_findings",
         "reviewPhase": "initial audit",
         "coverage": "Full manual review of all smart contracts under contracts/ for the OpenZeppelin v2.0 release.",
-        "majorFindings": 1,
+        "majorFindings": 3,
+        "findingIds": [
+          "Avoid frontrunning by a malicious actor or the contract owner",
+          "Stop crowdsale manipulation via reentrancy by adding the nonReentrant modifier to the buyTokens() function",
+          "Allow for safe changes to allowances through the SafeERC20 interface"
+        ],
         "isLatestVersion": false,
         "laterAuditedVersionExists": true,
         "totalVersions": 9

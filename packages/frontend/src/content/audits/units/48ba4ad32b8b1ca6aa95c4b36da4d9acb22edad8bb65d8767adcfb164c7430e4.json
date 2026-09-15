@@ -27,6 +27,7 @@
         "reviewPhase": "Initial audit",
         "coverage": "File referenced by the report's findings; the report states a review of the Solady repository at this commit without a file-level scope list, so full-file coverage is not established.",
         "majorFindings": 1,
+        "findingIds": ["5.1.2"],
         "isLatestVersion": false,
         "laterAuditedVersionExists": true,
         "totalVersions": 4

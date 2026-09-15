@@ -6,7 +6,7 @@
   "lines": 13,
   "source": "library VMStatuses {\n    /// @notice The VM has executed successfully and the outcome is valid.\n    VMStatus internal constant VALID = VMStatus.wrap(0);\n\n    /// @notice The VM has executed successfully and the outcome is invalid.\n    VMStatus internal constant INVALID = VMStatus.wrap(1);\n\n    /// @notice The VM has paniced.\n    VMStatus internal constant PANIC = VMStatus.wrap(2);\n\n    /// @notice The VM execution is still in progress.\n    VMStatus internal constant UNFINISHED = VMStatus.wrap(3);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 13,
       "match": {

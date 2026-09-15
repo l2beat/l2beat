@@ -6,7 +6,7 @@
   "lines": 8,
   "source": "contract EtherPaymentFallback {\n    event SafeReceived(address indexed sender, uint256 value);\n\n    /// @dev Fallback function accepts Ether transactions.\n    receive() external payable {\n        emit SafeReceived(msg.sender, msg.value);\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 8,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 8,
       "match": {

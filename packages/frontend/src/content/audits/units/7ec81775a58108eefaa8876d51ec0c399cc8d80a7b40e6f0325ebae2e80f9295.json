@@ -6,7 +6,7 @@
   "lines": 9,
   "source": "interface ISP1Verifier {\n    /// @notice Verifies a proof with given public values and vkey.\n    /// @dev It is expected that the first 4 bytes of proofBytes must match the first 4 bytes of\n    /// target verifier's VERIFIER_HASH.\n    /// @param programVKey The verification key for the RISC-V program.\n    /// @param publicValues The public values encoded as bytes.\n    /// @param proofBytes The proof of the program execution the SP1 zkVM encoded as bytes.\n    function verifyProof(bytes32 programVKey, bytes calldata publicValues, bytes calldata proofBytes) external view;\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 9,
       "match": {

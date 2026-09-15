@@ -6,7 +6,7 @@
   "lines": 10,
   "source": "library LibTimestamp {\n    /// @notice Get the value of a `Timestamp` type in the form of the underlying uint64.\n    /// @param _timestamp The `Timestamp` type to get the value of.\n    /// @return timestamp_ The value of the `Timestamp` type as a uint64 type.\n    function raw(Timestamp _timestamp) internal pure returns (uint64 timestamp_) {\n        assembly {\n            timestamp_ := _timestamp\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 10,
       "match": {

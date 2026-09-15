@@ -6,14 +6,14 @@
   "lines": 9,
   "source": "abstract contract Context {\n    function _msgSender() internal view virtual returns (address) {\n        return msg.sender;\n    }\n\n    function _msgData() internal view virtual returns (bytes calldata) {\n        return msg.data;\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 9,
       "match": {
-        "origin": "library",
+        "origin": "stack",
         "collection": "openzeppelin",
-        "relation": { "type": "library" },
-        "rank": 3,
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
         "matchedBy": "identity",
         "auditedName": "Context",
         "similarity": 1,
@@ -33,14 +33,14 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 9,
       "match": {
-        "origin": "stack",
+        "origin": "library",
         "collection": "openzeppelin",
-        "relation": { "type": "template", "template": "global/ProxyAdmin" },
-        "rank": 2,
+        "relation": { "type": "library" },
+        "rank": 3,
         "matchedBy": "identity",
         "auditedName": "Context",
         "similarity": 1,

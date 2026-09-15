@@ -27,6 +27,7 @@
         "reviewPhase": "fix review",
         "coverage": "verification of the fix for the Critical decreaseLiquidity finding; the Major missing-token-existence-check finding remains open",
         "majorFindings": 1,
+        "findingIds": ["CVF-24"],
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 2

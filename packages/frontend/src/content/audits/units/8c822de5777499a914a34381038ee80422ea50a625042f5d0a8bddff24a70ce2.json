@@ -6,7 +6,7 @@
   "lines": 16,
   "source": "library LocalPreimageKey {\n    /// @notice The identifier for the L1 head hash.\n    uint256 internal constant L1_HEAD_HASH = 0x01;\n\n    /// @notice The identifier for the starting output root.\n    uint256 internal constant STARTING_OUTPUT_ROOT = 0x02;\n\n    /// @notice The identifier for the disputed output root.\n    uint256 internal constant DISPUTED_OUTPUT_ROOT = 0x03;\n\n    /// @notice The identifier for the disputed L2 block number.\n    uint256 internal constant DISPUTED_L2_BLOCK_NUMBER = 0x04;\n\n    /// @notice The identifier for the chain ID.\n    uint256 internal constant CHAIN_ID = 0x05;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 16,
       "match": {

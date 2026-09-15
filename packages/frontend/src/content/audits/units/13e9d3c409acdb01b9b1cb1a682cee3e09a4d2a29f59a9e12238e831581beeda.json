@@ -6,7 +6,7 @@
   "lines": 33,
   "source": "library LibGameId {\n    /// @notice Packs values into a 32 byte GameId type.\n    /// @param _gameType The game type.\n    /// @param _timestamp The timestamp of the game's creation.\n    /// @param _gameProxy The game proxy address.\n    /// @return gameId_ The packed GameId.\n    function pack(GameType _gameType, Timestamp _timestamp, address _gameProxy)\n        internal\n        pure\n        returns (GameId gameId_)\n    {\n        assembly {\n            gameId_ := or(or(shl(224, _gameType), shl(160, _timestamp)), _gameProxy)\n        }\n    }\n\n    /// @notice Unpacks values from a 32 byte GameId type.\n    /// @param _gameId The packed GameId.\n    /// @return gameType_ The game type.\n    /// @return timestamp_ The timestamp of the game's creation.\n    /// @return gameProxy_ The game proxy address.\n    function unpack(GameId _gameId)\n        internal\n        pure\n        returns (GameType gameType_, Timestamp timestamp_, address gameProxy_)\n    {\n        assembly {\n            gameType_ := shr(224, _gameId)\n            timestamp_ := and(shr(160, _gameId), 0xFFFFFFFFFFFFFFFF)\n            gameProxy_ := and(_gameId, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 33,
       "match": {

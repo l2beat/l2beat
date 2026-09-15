@@ -27,6 +27,7 @@
         "reviewPhase": "initial audit",
         "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
         "majorFindings": 1,
+        "findingIds": ["TOB-UNI-005"],
         "isLatestVersion": true,
         "laterAuditedVersionExists": false,
         "totalVersions": 2

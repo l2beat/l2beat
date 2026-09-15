@@ -6,7 +6,7 @@
   "lines": 7,
   "source": "interface ISemver {\n    /// @notice Getter for the semantic version of the contract. This is not\n    ///         meant to be used onchain but instead meant to be used by offchain\n    ///         tooling.\n    /// @return Semver contract version as a string.\n    function version() external view returns (string memory);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 7,
       "match": {

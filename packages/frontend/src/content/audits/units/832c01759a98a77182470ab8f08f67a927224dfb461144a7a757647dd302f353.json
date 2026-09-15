@@ -6,7 +6,7 @@
   "lines": 17,
   "source": "interface Guard {\n    function checkTransaction(\n        address to,\n        uint256 value,\n        bytes memory data,\n        Enum.Operation operation,\n        uint256 safeTxGas,\n        uint256 baseGas,\n        uint256 gasPrice,\n        address gasToken,\n        address payable refundReceiver,\n        bytes memory signatures,\n        address msgSender\n    ) external;\n\n    function checkAfterExecution(bytes32 txHash, bool success) external;\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 17,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 17,
       "match": {

@@ -6,7 +6,7 @@
   "lines": 11,
   "source": "enum Fork {\n    NONE,\n    DELTA,\n    ECOTONE,\n    FJORD,\n    GRANITE,\n    HOLOCENE,\n    ISTHMUS,\n    JOVIAN,\n    INTEROP\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

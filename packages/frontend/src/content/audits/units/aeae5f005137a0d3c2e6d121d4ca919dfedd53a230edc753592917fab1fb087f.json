@@ -6,44 +6,47 @@
   "lines": 44,
   "source": "library Constants {\n    /// @notice Special address to be used as the tx origin for gas estimation calls in the\n    ///         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if\n    ///         the minimum gas limit specified by the user is not actually enough to execute the\n    ///         given message and you're attempting to estimate the actual necessary gas limit. We\n    ///         use address(1) because it's the ecrecover precompile and therefore guaranteed to\n    ///         never have any code on any EVM chain.\n    address internal constant ESTIMATION_ADDRESS = address(1);\n\n    /// @notice Value used for the L2 sender storage slot in both the OptimismPortal and the\n    ///         CrossDomainMessenger contracts before an actual sender is set. This value is\n    ///         non-zero to reduce the gas cost of message passing transactions.\n    address internal constant DEFAULT_L2_SENDER = 0x000000000000000000000000000000000000dEaD;\n\n    /// @notice The storage slot that holds the address of a proxy implementation.\n    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)`\n    bytes32 internal constant PROXY_IMPLEMENTATION_ADDRESS =\n        0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\n\n    /// @notice The storage slot that holds the address of the owner.\n    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)`\n    bytes32 internal constant PROXY_OWNER_ADDRESS = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;\n\n    /// @notice The address that represents ether when dealing with ERC20 token addresses.\n    address internal constant ETHER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;\n\n    /// @notice The address that represents the system caller responsible for L1 attributes\n    ///         transactions.\n    address internal constant DEPOSITOR_ACCOUNT = 0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001;\n\n    /// @notice Returns the default values for the ResourceConfig. These are the recommended values\n    ///         for a production network.\n    function DEFAULT_RESOURCE_CONFIG() internal pure returns (IResourceMetering.ResourceConfig memory) {\n        IResourceMetering.ResourceConfig memory config = IResourceMetering.ResourceConfig({\n            maxResourceLimit: 20_000_000,\n            elasticityMultiplier: 10,\n            baseFeeMaxChangeDenominator: 8,\n            minimumBaseFee: 1 gwei,\n            systemTxMaxGas: 1_000_000,\n            maximumBaseFee: type(uint128).max\n        });\n        return config;\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "differs",
-      "coveredLines": 40,
+      "coveredLines": 44,
       "match": {
-        "origin": "own",
-        "collection": "bob",
-        "relation": { "type": "own" },
-        "rank": 0,
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
         "matchedBy": "name",
         "auditedName": "Constants",
-        "similarity": 0.842,
-        "reportId": "bob/veridise-kailua-2025-02",
-        "repository": "boundless-xyz/kailua",
-        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
-        "commitTimestamp": "2025-02-06T07:42:16Z",
-        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
-        "auditStatus": "partially_audited_without_major_findings",
-        "reviewPhase": "fix commit",
-        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "similarity": 0.976,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Constants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
         "majorFindings": 0,
-        "isLatestVersion": true,
-        "laterAuditedVersionExists": false,
-        "totalVersions": 3
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
       },
       "diff": {
-        "added": 4,
-        "removed": 2,
-        "ignoredAdded": 5,
-        "ignoredRemoved": 0,
-        "unchanged": 40,
+        "added": 0,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 3,
+        "unchanged": 44,
         "ignoredOnly": false,
         "hunks": [
           {
             "oldStart": 21,
             "oldLines": 10,
             "newStart": 21,
-            "newLines": 17,
+            "newLines": 6,
             "lines": [
               {
                 "type": " ",
@@ -59,91 +62,37 @@
               },
               { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
               {
-                "type": "+",
-                "newLine": 24,
-                "text": "    /// @notice The address that represents ether when dealing with ERC20 token addresses.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 25,
-                "text": "    address internal constant ETHER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 26, "text": "", "ignored": true },
-              {
-                "type": "+",
-                "newLine": 27,
-                "text": "    /// @notice The address that represents the system caller responsible for L1 attributes",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 28,
-                "text": "    ///         transactions.",
-                "ignored": true
-              },
-              {
-                "type": "+",
-                "newLine": 29,
-                "text": "    address internal constant DEPOSITOR_ACCOUNT = 0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001;",
-                "ignored": false
-              },
-              { "type": "+", "newLine": 30, "text": "", "ignored": true },
-              {
-                "type": " ",
+                "type": "-",
                 "oldLine": 24,
-                "newLine": 31,
-                "text": "    /// @notice Returns the default values for the ResourceConfig. These are the recommended values"
+                "text": "    /// @notice The storage slot that holds the guard address in Safe contracts.",
+                "ignored": true
               },
               {
-                "type": " ",
+                "type": "-",
                 "oldLine": 25,
-                "newLine": 32,
-                "text": "    ///         for a production network."
+                "text": "    /// @dev `keccak256(\"guard_manager.guard.address\")`",
+                "ignored": true
               },
               {
                 "type": "-",
                 "oldLine": 26,
-                "text": "    function DEFAULT_RESOURCE_CONFIG() internal pure returns (ResourceMetering.ResourceConfig memory) {",
+                "text": "    bytes32 internal constant GUARD_STORAGE_SLOT = 0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8;",
                 "ignored": false
               },
-              {
-                "type": "-",
-                "oldLine": 27,
-                "text": "        ResourceMetering.ResourceConfig memory config = ResourceMetering.ResourceConfig({",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 33,
-                "text": "    function DEFAULT_RESOURCE_CONFIG() internal pure returns (IResourceMetering.ResourceConfig memory) {",
-                "ignored": false
-              },
-              {
-                "type": "+",
-                "newLine": 34,
-                "text": "        IResourceMetering.ResourceConfig memory config = IResourceMetering.ResourceConfig({",
-                "ignored": false
-              },
+              { "type": "-", "oldLine": 27, "text": "", "ignored": true },
               {
                 "type": " ",
                 "oldLine": 28,
-                "newLine": 35,
-                "text": "            maxResourceLimit: 20_000_000,"
+                "newLine": 24,
+                "text": "    /// @notice The address that represents ether when dealing with ERC20 token addresses."
               },
               {
                 "type": " ",
                 "oldLine": 29,
-                "newLine": 36,
-                "text": "            elasticityMultiplier: 10,"
+                "newLine": 25,
+                "text": "    address internal constant ETHER = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;"
               },
-              {
-                "type": " ",
-                "oldLine": 30,
-                "newLine": 37,
-                "text": "            baseFeeMaxChangeDenominator: 8,"
-              }
+              { "type": " ", "oldLine": 30, "newLine": 26, "text": "" }
             ]
           }
         ]

@@ -6,7 +6,7 @@
   "lines": 30,
   "source": "//! A program to verify a Optimism L2 block STF with Ethereum DA in the zkVM.\n//!\n//! This binary contains the client program for executing the Optimism rollup state transition\n//! across a range of blocks, which can be used to generate an on chain validity proof. Depending on\n//! the compilation pipeline, it will compile to be run either in native mode or in zkVM mode. In\n//! native mode, the data for verifying the batch validity is fetched from RPC, while in zkVM mode,\n//! the data is supplied by the host binary to the verifiable program.\n\n#![no_main]\nsp1_zkvm::entrypoint!(main);\n\nuse op_succinct_client_utils::witness::DefaultWitnessData;\nuse op_succinct_ethereum_client_utils::executor::ETHDAWitnessExecutor;\nuse op_succinct_range_utils::run_range_program;\n#[cfg(feature = \"tracing-subscriber\")]\nuse op_succinct_range_utils::setup_tracing;\nuse rkyv::rancor::Error;\n\nfn main() {\n    #[cfg(feature = \"tracing-subscriber\")]\n    setup_tracing();\n\n    kona_proof::block_on(async move {\n        let witness_rkyv_bytes: Vec<u8> = sp1_zkvm::io::read_vec();\n        let witness_data = rkyv::from_bytes::<DefaultWitnessData, Error>(&witness_rkyv_bytes)\n            .expect(\"Failed to deserialize witness data.\");\n\n        run_range_program(ETHDAWitnessExecutor::new(), witness_data).await;\n    });\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

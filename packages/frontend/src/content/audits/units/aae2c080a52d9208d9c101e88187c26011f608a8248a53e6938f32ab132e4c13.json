@@ -6,7 +6,7 @@
   "lines": 30,
   "source": "interface IETHLockbox is IProxyAdminOwnedBase, ISemver, IReinitializableBase {\n    error ETHLockbox_Unauthorized();\n    error ETHLockbox_Paused();\n    error ETHLockbox_InsufficientBalance();\n    error ETHLockbox_NoWithdrawalTransactions();\n    error ETHLockbox_DifferentSuperchainConfig();\n\n    event Initialized(uint8 version);\n    event ETHLocked(IOptimismPortal2 indexed portal, uint256 amount);\n    event ETHUnlocked(IOptimismPortal2 indexed portal, uint256 amount);\n    event PortalAuthorized(IOptimismPortal2 indexed portal);\n    event LockboxAuthorized(IETHLockbox indexed lockbox);\n    event LiquidityMigrated(IETHLockbox indexed lockbox, uint256 amount);\n    event LiquidityReceived(IETHLockbox indexed lockbox, uint256 amount);\n\n    function initialize(ISystemConfig _systemConfig, IOptimismPortal2[] calldata _portals) external;\n    function systemConfig() external view returns (ISystemConfig);\n    function paused() external view returns (bool);\n    function authorizedPortals(IOptimismPortal2) external view returns (bool);\n    function authorizedLockboxes(IETHLockbox) external view returns (bool);\n    function receiveLiquidity() external payable;\n    function lockETH() external payable;\n    function unlockETH(uint256 _value) external;\n    function authorizePortal(IOptimismPortal2 _portal) external;\n    function authorizeLockbox(IETHLockbox _lockbox) external;\n    function migrateLiquidity(IETHLockbox _lockbox) external;\n    function superchainConfig() external view returns (ISuperchainConfig);\n\n    function __constructor__() external;\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []

@@ -41,6 +41,8 @@ export interface AuditVersion {
   review_phase: string
   coverage: string
   major_findings: number
+  /** Identifiers of the open Major/Critical findings; present iff major_findings > 0. */
+  finding_ids?: string[]
 }
 
 export interface ManifestJson {

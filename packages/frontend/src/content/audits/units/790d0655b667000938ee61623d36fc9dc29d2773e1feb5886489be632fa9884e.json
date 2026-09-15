@@ -6,7 +6,7 @@
   "lines": 14,
   "source": "interface IRiscZeroSelectable {\n    /// @notice A short key attached to the seal to select the correct verifier implementation.\n    /// @dev The selector is taken from the hash of the verifier parameters. If two\n    ///      receipts have different selectors (i.e. different verifier parameters), then it can\n    ///      generally be assumed that they need distinct verifier implementations. This is used as\n    ///      part of the RISC Zero versioning mechanism.\n    ///\n    ///      A selector is not intended to be collision resistant, in that it is possible to find\n    ///      two preimages that result in the same selector. This is acceptable since it's purpose\n    ///      to a route a request among a set of trusted verifiers, and to make errors of sending a\n    ///      receipt to a mismatching verifiers easier to debug. It is analogous to the ABI\n    ///      function selectors.\n    function SELECTOR() external view returns (bytes4);\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 14,
       "match": {

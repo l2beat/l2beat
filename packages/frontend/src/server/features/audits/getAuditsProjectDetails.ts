@@ -157,6 +157,7 @@ function toUnitEntry(
       reviewPhase: match.reviewPhase,
       coverage: match.coverage,
       majorFindings: match.majorFindings,
+      findingIds: match.findingIds,
       laterAuditedVersionExists: match.laterAuditedVersionExists,
       totalVersions: match.totalVersions,
     },

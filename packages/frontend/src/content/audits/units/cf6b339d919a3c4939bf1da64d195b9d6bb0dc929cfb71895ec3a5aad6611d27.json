@@ -6,7 +6,7 @@
   "lines": 26,
   "source": "#!/bin/bash\n\n# S3 bucket name.\nS3_BUCKET=\"sp1-circuits\"\n\n# Check for unstaged changes in the Git repository\nif ! git diff --quiet; then\n    echo \"Error: There are unstaged changes. Please commit or stash them before running this script.\"\n    exit 1\nfi\n\n# Get the current short Git reference.\nGIT_REF=$(git rev-parse --short HEAD)\n\n# Upload allowed_vk_map.bin.\naws s3 cp allowed_vk_map.bin \"s3://${S3_BUCKET}/shapes-${GIT_REF}/allowed_vk_map.bin\"\n\n# Upload dummy_vk_map.bin.\naws s3 cp dummy_vk_map.bin \"s3://${S3_BUCKET}/shapes-${GIT_REF}/dummy_vk_map.bin\"\n\n# Print the uploaded shapes.\necho \"\\n\"\necho \"Successfully uploaded shapes to s3:\"\necho \"- https://${S3_BUCKET}.s3.us-east-2.amazonaws.com/shapes-${GIT_REF}/allowed_vk_map.bin\"\necho \"- https://${S3_BUCKET}.s3.us-east-2.amazonaws.com/shapes-${GIT_REF}/dummy_vk_map.bin\"\necho \"Shape Version: ${GIT_REF}\"",
   "resolutions": {
-    "522759382dcd98c2": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 26,
       "match": {

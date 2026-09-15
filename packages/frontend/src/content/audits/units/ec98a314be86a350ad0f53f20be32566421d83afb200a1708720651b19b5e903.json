@@ -6,7 +6,7 @@
   "lines": 10,
   "source": "library LibDuration {\n    /// @notice Get the value of a `Duration` type in the form of the underlying uint64.\n    /// @param _duration The `Duration` type to get the value of.\n    /// @return duration_ The value of the `Duration` type as a uint64 type.\n    function raw(Duration _duration) internal pure returns (uint64 duration_) {\n        assembly {\n            duration_ := _duration\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 10,
       "match": {

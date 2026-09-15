@@ -6,7 +6,7 @@
   "lines": 11,
   "source": "contract SelfAuthorized {\n    function requireSelfCall() private view {\n        require(msg.sender == address(this), \"GS031\");\n    }\n\n    modifier authorized() {\n        // This is a function call as it minimized the bytecode size\n        requireSelfCall();\n        _;\n    }\n}",
   "resolutions": {
-    "522759382dcd98c2": {
+    "ba5b6c9584fb78fd": {
       "status": "library",
       "coveredLines": 11,
       "match": {
@@ -33,7 +33,7 @@
       },
       "warnings": []
     },
-    "827d4d19b493dbb6": {
+    "eea968a44e5d263a": {
       "status": "library",
       "coveredLines": 11,
       "match": {

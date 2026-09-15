@@ -6,7 +6,7 @@
   "lines": 17,
   "source": "library Burn {\n    /// @notice Burns a given amount of ETH.\n    /// @param _amount Amount of ETH to burn.\n    function eth(uint256 _amount) internal {\n        new Burner{value: _amount}();\n    }\n\n    /// @notice Burns a given amount of gas.\n    /// @param _amount Amount of gas to burn.\n    function gas(uint256 _amount) internal view {\n        uint256 i = 0;\n        uint256 initialGas = gasleft();\n        while (initialGas - gasleft() < _amount) {\n            ++i;\n        }\n    }\n}",
   "resolutions": {
-    "827d4d19b493dbb6": {
+    "ba5b6c9584fb78fd": {
       "status": "identical",
       "coveredLines": 17,
       "match": {
