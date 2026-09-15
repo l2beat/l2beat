@@ -1,20 +1,12 @@
 import type { Database, IndexerConfigurationRecord } from '@l2beat/database'
 import { type UnixTime, unique } from '@l2beat/shared-pure'
-import {
-  getPrivacyAnonymitySetSeries,
-  type PrivacyAnonymitySetProject,
-  type PrivacyAnonymitySetSeries,
-} from './getPrivacyAnonymitySetSeries'
+import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 
 export async function getPrivacyAnonymitySetConfigurations(
   db: Database,
-  projects: PrivacyAnonymitySetProject[],
+  series: PrivacyAnonymitySetSeries[],
 ): Promise<IndexerConfigurationRecord[]> {
-  const configurationIds = unique(
-    projects
-      .flatMap(getPrivacyAnonymitySetSeries)
-      .map((series) => series.configurationId),
-  )
+  const configurationIds = unique(series.map((item) => item.configurationId))
   return await db.indexerConfiguration.getByConfigurationIds(configurationIds)
 }
 
@@ -44,6 +36,6 @@ export function getPrivacyAnonymitySetSyncStatus(
   return {
     syncedSeries,
     syncingSeries,
-    syncingTokens: unique(syncingSeries.map((item) => item.token)),
+    syncingLabels: syncingSeries.map((item) => item.label),
   }
 }

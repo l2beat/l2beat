@@ -2,6 +2,9 @@ import type { PrivacyAnonymitySetSenderDayRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { PrivacyAnonymitySetSeries } from './getPrivacyAnonymitySetSeries'
 
+/** Length of the rolling distinct-depositor window, in UTC days. */
+export const ANONYMITY_SET_WINDOW_DAYS = 30
+
 export type PrivacyAnonymitySetHistoryPoint = [
   timestamp: number,
   ...values: number[],
@@ -16,10 +19,9 @@ export function calculateAnonymitySetHistory(
   rows: PrivacyAnonymitySetSenderDayRecord[],
   series: PrivacyAnonymitySetSeries[],
   endpoints: number[],
-  windowDays = 30,
 ): PrivacyAnonymitySetHistoryPoint[] {
   const valuesBySeries = series.map((item) =>
-    calculateSeriesHistory(rows, item, endpoints, windowDays),
+    calculateSeriesHistory(rows, item, endpoints),
   )
 
   return endpoints.map((timestamp, index) => [
@@ -84,7 +86,6 @@ function calculateSeriesHistory(
   rows: PrivacyAnonymitySetSenderDayRecord[],
   series: PrivacyAnonymitySetSeries,
   endpoints: number[],
-  windowDays: number,
 ): number[] {
   const threshold = BigInt(series.minimumAmount)
   const qualifyingRows = rows
@@ -110,7 +111,7 @@ function calculateSeriesHistory(
       addIndex++
     }
 
-    const windowStart = endpoint - windowDays * UnixTime.DAY
+    const windowStart = endpoint - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
     while (removeIndex < addIndex) {
       const row = qualifyingRows[removeIndex]
       if (row === undefined || row.timestamp >= windowStart) break

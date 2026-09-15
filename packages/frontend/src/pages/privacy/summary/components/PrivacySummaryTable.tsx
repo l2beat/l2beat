@@ -26,6 +26,7 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { AnonymitySetCell } from './AnonymitySetCell'
@@ -203,7 +204,7 @@ const columns = [
         : undefined,
     {
       id: 'anonymitySet',
-      header: '30D anon. set',
+      header: `${ANONYMITY_SET_WINDOW_DAYS}D anon. set`,
       cell: (ctx) => (
         <AnonymitySetCell
           anonymitySet={ctx.row.original.anonymitySet}
@@ -213,8 +214,7 @@ const columns = [
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip:
-          'Largest configured anonymity set: unique deposit senders during the last 30 complete UTC days.',
+        tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
       },
     },
   ),

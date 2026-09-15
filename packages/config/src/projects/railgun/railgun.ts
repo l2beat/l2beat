@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { formatBasisPoints } from '../../common/formatBasisPoints'
+import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
@@ -31,30 +32,13 @@ const RAILGUN_WITHDRAWAL_EVENT =
 interface TrackedToken {
   address: string
   symbol: string
-  minimumAmounts?: string[]
 }
 
 const TRACKED_TOKENS: TrackedToken[] = [
-  {
-    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    symbol: 'WETH',
-    minimumAmounts: ['100000000000000000', '10000000000000000000'],
-  },
-  {
-    address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-    symbol: 'USDT',
-    minimumAmounts: ['200000000', '20000000000'],
-  },
-  {
-    address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-    symbol: 'USDC',
-    minimumAmounts: ['200000000', '20000000000'],
-  },
-  {
-    address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-    symbol: 'DAI',
-    minimumAmounts: ['200000000000000000000', '20000000000000000000000'],
-  },
+  { address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH' },
+  { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', symbol: 'USDT' },
+  { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', symbol: 'USDC' },
+  { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', symbol: 'DAI' },
   { address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', symbol: 'WBTC' },
   { address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4', symbol: 'NEAR' },
   { address: '0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb', symbol: 'FLUID' },
@@ -127,6 +111,7 @@ const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   const resolved = getTokenByAddress(token.address)
+  const minimumAmounts = PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS[resolved.symbol]
 
   return {
     token: {
@@ -148,9 +133,7 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
           resolved.coingeckoListingTimestamp,
         ),
         anonymitySet:
-          token.minimumAmounts === undefined
-            ? undefined
-            : { minimumAmounts: token.minimumAmounts },
+          minimumAmounts === undefined ? undefined : { minimumAmounts },
         deposit: {
           event: RAILGUN_DEPOSIT_EVENT,
           extractor: 'railgunShield',

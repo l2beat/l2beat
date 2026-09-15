@@ -6,6 +6,7 @@ import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyAnonymitySetChart } from '~/pages/privacy/project/components/PrivacyAnonymitySetChart'
 import { PrivacyAnonymitySetChartRangeControls } from '~/pages/privacy/project/components/PrivacyAnonymitySetChartRangeControls'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
@@ -50,20 +51,20 @@ export function PrivacyAnonymitySetSection({
       ) : (
         <>
           <h3 className="mb-2 font-bold text-heading-20">
-            30 day historic anonymity set
+            {ANONYMITY_SET_WINDOW_DAYS} day historic anonymity set
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
             How many unique addresses you could have blended in with if you
-            withdrew on a particular day after depositing during the previous 30
-            days. This metric is a proxy for the historic anonymity set and
-            shows how it developed over time.
+            withdrew on a particular day after depositing during the previous{' '}
+            {ANONYMITY_SET_WINDOW_DAYS} days. This metric is a proxy for the
+            historic anonymity set and shows how it developed over time.
           </p>
-          {data !== undefined && data.syncingTokens.length > 0 && (
+          {data !== undefined && data.syncingLabels.length > 0 && (
             <div className="mb-4 rounded bg-surface-secondary px-4 py-3 text-paragraph-15 text-secondary">
-              Some configured token series are still being indexed and are
-              excluded until their history is complete:{' '}
+              Some configured series are still being indexed and are excluded
+              until their history is complete:{' '}
               <span className="font-medium text-primary">
-                {data.syncingTokens.join(', ')}
+                {data.syncingLabels.join(', ')}
               </span>
               .
             </div>
@@ -97,9 +98,10 @@ export function PrivacyAnonymitySetSection({
             An estimate of how many unique addresses you blend in with,
             depending on how long you leave your deposit in the pool. It is
             based on historic data of past deposits: each point counts
-            depositors from the preceding period, so holding for up to 30 days
-            effectively means blending in with everyone who deposited during the
-            last 30 days.
+            depositors from the preceding period, so holding for up to{' '}
+            {ANONYMITY_SET_WINDOW_DAYS} days effectively means blending in with
+            everyone who deposited during the last {ANONYMITY_SET_WINDOW_DAYS}{' '}
+            days.
             {data?.syncedUntil !== undefined && (
               <>
                 {' '}

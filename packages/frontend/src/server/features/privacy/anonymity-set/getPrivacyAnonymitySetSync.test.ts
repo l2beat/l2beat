@@ -31,7 +31,7 @@ describe(getPrivacyAnonymitySetSyncStatus.name, () => {
     expect(result.syncingSeries.map((item) => item.bucketId)).toEqual([
       'second',
     ])
-    expect(result.syncingTokens).toEqual(['ETH'])
+    expect(result.syncingLabels).toEqual([series[1]!.label])
   })
 
   it('requires an active, started configuration', () => {

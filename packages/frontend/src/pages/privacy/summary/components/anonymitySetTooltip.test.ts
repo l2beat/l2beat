@@ -33,30 +33,30 @@ describe(getAnonymitySetSteps.name, () => {
     ])
   })
 
-  it('explains which token series are excluded while syncing', () => {
+  it('explains which series are excluded while syncing', () => {
     const summary = makeSummary({
       bucketType: 'pool',
-      syncingTokens: ['DAI', 'USDC'],
+      syncingLabels: ['≥200 DAI', '≥20000 DAI'],
     })
 
     expect(getAnonymitySetSyncingNote(summary)).toEqual(
-      'The displayed value excludes token series still being indexed: DAI, USDC.',
+      'The displayed value excludes series still being indexed: ≥200 DAI, ≥20000 DAI.',
     )
   })
 })
 
 function makeSummary({
   bucketType,
-  syncingTokens = [],
+  syncingLabels = [],
 }: {
   bucketType: 'pool' | 'denomination'
-  syncingTokens?: string[]
+  syncingLabels?: string[]
 }): Extract<PrivacyAnonymitySetSummary, { status: 'available' }> {
   return {
     status: 'available',
     value: 69,
     label: bucketType === 'pool' ? '≥0.1 ETH' : '0.1 ETH',
-    syncingTokens,
+    syncingLabels,
     bucketType,
     chain: 'ethereum',
     formattedAmount: '0.1',

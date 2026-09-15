@@ -6,11 +6,9 @@ import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { ChartRange } from '~/utils/range/range'
-import {
-  calculateAnonymitySetHistory,
-  calculateAnonymitySetHoldingDuration,
-  type PrivacyAnonymitySetHistoryPoint,
-  type PrivacyAnonymitySetHoldingDurationPoint,
+import type {
+  PrivacyAnonymitySetHistoryPoint,
+  PrivacyAnonymitySetHoldingDurationPoint,
 } from './anonymity-set/calculateAnonymitySets'
 import {
   getPrivacyAnonymitySetSeries,
@@ -21,6 +19,10 @@ import {
   getPrivacyAnonymitySetConfigurations,
   getPrivacyAnonymitySetSyncStatus,
 } from './anonymity-set/getPrivacyAnonymitySetSync'
+import {
+  HOLDING_DURATIONS,
+  loadAnonymitySetCharts,
+} from './anonymity-set/loadAnonymitySetCharts'
 
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
@@ -38,11 +40,11 @@ export interface PrivacyAnonymitySetChartResponse {
   >[]
   history: PrivacyAnonymitySetHistoryPoint[]
   holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[]
-  syncingTokens: string[]
+  /** Labels of configured series excluded from the charts while their history is indexed. */
+  syncingLabels: string[]
   syncedUntil: number | undefined
 }
 
-const HOLDING_DURATIONS = Array.from({ length: 359 }, (_, index) => index + 7)
 const cache = new FrontendInMemoryCache('getPrivacyAnonymitySetChart')
 
 export async function getPrivacyAnonymitySetChart(
@@ -62,7 +64,11 @@ export async function getPrivacyAnonymitySetChart(
     ? getMockResponse(series, currentDay)
     : await cache.get(
         {
-          key: ['privacy-anonymity-set-chart', project.id],
+          key: [
+            'privacy-anonymity-set-chart',
+            project.id,
+            currentDay.toString(),
+          ],
           ttl: 10 * UnixTime.MINUTE,
           staleWhileRevalidate: 15 * UnixTime.MINUTE,
         },
@@ -78,10 +84,8 @@ async function getPrivacyAnonymitySetSnapshot(
   currentDay: UnixTime,
 ): Promise<PrivacyAnonymitySetChartResponse> {
   const db = getDb()
-  const configurations = await getPrivacyAnonymitySetConfigurations(db, [
-    project,
-  ])
-  const { syncedSeries, syncingTokens } = getPrivacyAnonymitySetSyncStatus(
+  const configurations = await getPrivacyAnonymitySetConfigurations(db, series)
+  const { syncedSeries, syncingLabels } = getPrivacyAnonymitySetSyncStatus(
     series,
     configurations,
     currentDay,
@@ -89,7 +93,7 @@ async function getPrivacyAnonymitySetSnapshot(
   if (syncedSeries.length === 0) {
     return {
       ...emptyResponse(),
-      syncingTokens,
+      syncingLabels,
     }
   }
 
@@ -102,7 +106,7 @@ async function getPrivacyAnonymitySetSnapshot(
     return {
       ...emptyResponse(),
       series: toResponseSeries(syncedSeries),
-      syncingTokens,
+      syncingLabels,
       syncedUntil: holdingEndpoint,
     }
   }
@@ -111,24 +115,22 @@ async function getPrivacyAnonymitySetSnapshot(
     [UnixTime(firstSeriesDay), UnixTime(holdingEndpoint)],
     'day',
   )
-  const rows = await db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
-    [project.id],
-    UnixTime(firstSeriesDay),
-    holdingEndpoint,
+  const { history, holdingDuration } = await loadAnonymitySetCharts(
+    syncedSeries,
+    historyEndpoints,
+    (from, to) =>
+      db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
+        [project.id],
+        from,
+        to,
+      ),
   )
 
   return {
     series: toResponseSeries(syncedSeries),
-    history: trimLeadingEmptyAnonymitySetHistory(
-      calculateAnonymitySetHistory(rows, syncedSeries, historyEndpoints),
-    ),
-    holdingDuration: calculateAnonymitySetHoldingDuration(
-      rows,
-      syncedSeries,
-      holdingEndpoint,
-      HOLDING_DURATIONS,
-    ),
-    syncingTokens,
+    history: trimLeadingEmptyAnonymitySetHistory(history),
+    holdingDuration,
+    syncingLabels,
     syncedUntil: holdingEndpoint,
   }
 }
@@ -145,18 +147,18 @@ export function trimLeadingEmptyAnonymitySetHistory(
 
 export function selectPrivacyAnonymitySetChartRange(
   snapshot: PrivacyAnonymitySetChartResponse,
-  range: ChartRange,
+  requested: ChartRange,
 ): PrivacyAnonymitySetChartResponse {
-  const from = range[0]
-  const fromDay = from === null ? null : UnixTime.toStartOf(from, 'day')
-  const toDay = UnixTime.toStartOf(range[1], 'day')
+  // The snapshot already ends at the latest complete UTC day, so only the
+  // start of the range is applied. The requested end is derived from the
+  // current hour and would drop that day's point shortly after midnight.
+  const from = requested[0]
+  if (from === null) return snapshot
 
+  const fromDay = UnixTime.toStartOf(from, 'day')
   return {
     ...snapshot,
-    history: snapshot.history.filter(
-      ([timestamp]) =>
-        (fromDay === null || timestamp >= fromDay) && timestamp <= toDay,
-    ),
+    history: snapshot.history.filter(([timestamp]) => timestamp >= fromDay),
   }
 }
 
@@ -174,7 +176,7 @@ function emptyResponse(): PrivacyAnonymitySetChartResponse {
     series: [],
     history: [],
     holdingDuration: [],
-    syncingTokens: [],
+    syncingLabels: [],
     syncedUntil: undefined,
   }
 }
@@ -202,7 +204,7 @@ function getMockResponse(
         ),
       ]
     }),
-    syncingTokens: [],
+    syncingLabels: [],
     syncedUntil: endpoint,
   }
 }

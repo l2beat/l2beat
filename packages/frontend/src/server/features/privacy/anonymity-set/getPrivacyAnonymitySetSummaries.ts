@@ -1,10 +1,18 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type {
+  IndexerConfigurationRecord,
+  PrivacyAnonymitySetSenderDayRecord,
+} from '@l2beat/database'
+import { UnixTime, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { PrivacyProject } from '../types'
-import { calculateAnonymitySetHistory } from './calculateAnonymitySets'
+import {
+  ANONYMITY_SET_WINDOW_DAYS,
+  calculateAnonymitySetHistory,
+} from './calculateAnonymitySets'
 import {
   getPrivacyAnonymitySetSeries,
+  type PrivacyAnonymitySetProject,
   type PrivacyAnonymitySetSeries,
 } from './getPrivacyAnonymitySetSeries'
 import {
@@ -17,7 +25,8 @@ export type PrivacyAnonymitySetSummary =
       status: 'available'
       value: number
       label: string
-      syncingTokens: string[]
+      /** Labels of configured series excluded from the value while their history is indexed. */
+      syncingLabels: string[]
     } & Pick<
       PrivacyAnonymitySetSeries,
       'bucketType' | 'chain' | 'formattedAmount' | 'token'
@@ -33,17 +42,21 @@ export async function getPrivacyAnonymitySetSummaries(
   projects: PrivacyProject[],
   currentDay: UnixTime,
 ): Promise<Map<string, PrivacyAnonymitySetSummary>> {
-  if (env.MOCK) return getMockSummaries(projects)
+  const seriesByProject = new Map(
+    projects.map((project) => [
+      project.id,
+      getPrivacyAnonymitySetSeries(project),
+    ]),
+  )
+  if (env.MOCK) return getMockSummaries(projects, seriesByProject)
 
   const db = getDb()
-  const trackedProjects = projects.filter(
-    (project) => getPrivacyAnonymitySetSeries(project).length > 0,
-  )
-  const trackedProjectIds = trackedProjects.map((project) => project.id)
-  const cutoff = currentDay - 30 * UnixTime.DAY
+  const allSeries = [...seriesByProject.values()].flat()
+  const trackedProjectIds = unique(allSeries.map((item) => item.projectId))
+  const cutoff = currentDay - ANONYMITY_SET_WINDOW_DAYS * UnixTime.DAY
 
   const [configurations, rows] = await Promise.all([
-    getPrivacyAnonymitySetConfigurations(db, trackedProjects),
+    getPrivacyAnonymitySetConfigurations(db, allSeries),
     db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
       trackedProjectIds,
       cutoff,
@@ -51,67 +64,81 @@ export async function getPrivacyAnonymitySetSummaries(
     ),
   ])
 
-  return new Map<string, PrivacyAnonymitySetSummary>(
-    projects.map((project): [string, PrivacyAnonymitySetSummary] => {
-      const state = project.privacyInfo.anonymitySet
-      if (state?.type === 'not-applicable') {
-        return [
-          project.id,
-          { status: 'not-applicable', description: state.description },
-        ]
-      }
-
-      const series = getPrivacyAnonymitySetSeries(project)
-      if (series.length === 0) {
-        return [project.id, { status: 'unavailable' }]
-      }
-
-      const { syncedSeries, syncingTokens } = getPrivacyAnonymitySetSyncStatus(
-        series,
+  return new Map(
+    projects.map((project) => [
+      project.id,
+      getPrivacyAnonymitySetSummary(
+        project,
+        seriesByProject.get(project.id) ?? [],
         configurations,
+        rows,
         currentDay,
-      )
-      const firstSeries = syncedSeries[0]
-      if (firstSeries === undefined) {
-        return [project.id, { status: 'syncing' }]
-      }
-
-      const point = calculateAnonymitySetHistory(rows, syncedSeries, [
-        currentDay,
-      ])[0]
-      const values = point?.slice(1) ?? []
-      let bestSeries = firstSeries
-      let bestValue = values[0] ?? 0
-      for (let i = 1; i < values.length; i++) {
-        const value = values[i] ?? 0
-        const candidate = syncedSeries[i]
-        if (candidate !== undefined && value > bestValue) {
-          bestSeries = candidate
-          bestValue = value
-        }
-      }
-
-      return [
-        project.id,
-        {
-          status: 'available',
-          value: bestValue,
-          label: bestSeries.label,
-          syncingTokens,
-          bucketType: bestSeries.bucketType,
-          chain: bestSeries.chain,
-          formattedAmount: bestSeries.formattedAmount,
-          token: bestSeries.token,
-        },
-      ]
-    }),
+      ),
+    ]),
   )
+}
+
+export function getPrivacyAnonymitySetSummary(
+  project: PrivacyAnonymitySetProject,
+  series: PrivacyAnonymitySetSeries[],
+  configurations: IndexerConfigurationRecord[],
+  rows: PrivacyAnonymitySetSenderDayRecord[],
+  currentDay: UnixTime,
+): PrivacyAnonymitySetSummary {
+  const state = project.privacyInfo.anonymitySet
+  if (state?.type === 'not-applicable') {
+    return { status: 'not-applicable', description: state.description }
+  }
+  if (series.length === 0) {
+    return { status: 'unavailable' }
+  }
+
+  const { syncedSeries, syncingLabels } = getPrivacyAnonymitySetSyncStatus(
+    series,
+    configurations,
+    currentDay,
+  )
+  const [point] = calculateAnonymitySetHistory(rows, syncedSeries, [currentDay])
+  const largest = pickLargestSeries(syncedSeries, point?.slice(1) ?? [])
+  if (largest === undefined) {
+    return { status: 'syncing' }
+  }
+
+  return {
+    status: 'available',
+    value: largest.value,
+    label: largest.series.label,
+    syncingLabels,
+    bucketType: largest.series.bucketType,
+    chain: largest.series.chain,
+    formattedAmount: largest.series.formattedAmount,
+    token: largest.series.token,
+  }
+}
+
+/**
+ * The headline is the series with the most distinct depositors. Ties keep the
+ * earlier series, so the configuration order decides between equal sets.
+ */
+function pickLargestSeries(
+  series: PrivacyAnonymitySetSeries[],
+  values: number[],
+): { series: PrivacyAnonymitySetSeries; value: number } | undefined {
+  let best: { series: PrivacyAnonymitySetSeries; value: number } | undefined
+  for (const [index, item] of series.entries()) {
+    const value = values[index] ?? 0
+    if (best === undefined || value > best.value) {
+      best = { series: item, value }
+    }
+  }
+  return best
 }
 
 function getMockSummaries(
   projects: PrivacyProject[],
+  seriesByProject: Map<string, PrivacyAnonymitySetSeries[]>,
 ): Map<string, PrivacyAnonymitySetSummary> {
-  return new Map<string, PrivacyAnonymitySetSummary>(
+  return new Map(
     projects.map((project): [string, PrivacyAnonymitySetSummary] => {
       const state = project.privacyInfo.anonymitySet
       if (state?.type === 'not-applicable') {
@@ -120,19 +147,19 @@ function getMockSummaries(
           { status: 'not-applicable', description: state.description },
         ]
       }
-      const series = getPrivacyAnonymitySetSeries(project)
-      if (series[0]) {
+      const series = seriesByProject.get(project.id)?.[0]
+      if (series) {
         return [
           project.id,
           {
             status: 'available',
             value: Math.round(Math.random() * 1_000),
-            label: series[0].label,
-            syncingTokens: [],
-            bucketType: series[0].bucketType,
-            chain: series[0].chain,
-            formattedAmount: series[0].formattedAmount,
-            token: series[0].token,
+            label: series.label,
+            syncingLabels: [],
+            bucketType: series.bucketType,
+            chain: series.chain,
+            formattedAmount: series.formattedAmount,
+            token: series.token,
           },
         ]
       }

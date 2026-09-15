@@ -1,3 +1,4 @@
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 
 type AvailableAnonymitySetSummary = Extract<
@@ -9,18 +10,18 @@ export function getAnonymitySetDescription(
   anonymitySet: AvailableAnonymitySetSummary,
 ): string {
   if (anonymitySet.bucketType === 'denomination') {
-    return `Number of unique depositors in the ${anonymitySet.formattedAmount} ${anonymitySet.token} bucket during the last 30 complete UTC days.`
+    return `Number of unique depositors in the ${anonymitySet.formattedAmount} ${anonymitySet.token} bucket during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`
   }
 
-  return `Number of unique depositors who deposited at least ${anonymitySet.formattedAmount} ${anonymitySet.token} during the last 30 complete UTC days.`
+  return `Number of unique depositors who deposited at least ${anonymitySet.formattedAmount} ${anonymitySet.token} during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`
 }
 
 export function getAnonymitySetSyncingNote(
   anonymitySet: AvailableAnonymitySetSummary,
 ): string | undefined {
-  if (anonymitySet.syncingTokens.length === 0) return undefined
+  if (anonymitySet.syncingLabels.length === 0) return undefined
 
-  return `The displayed value excludes token series still being indexed: ${anonymitySet.syncingTokens.join(', ')}.`
+  return `The displayed value excludes series still being indexed: ${anonymitySet.syncingLabels.join(', ')}.`
 }
 
 export function getAnonymitySetSteps(
@@ -39,7 +40,7 @@ export function getAnonymitySetSteps(
 
   return [
     firstStep,
-    'Wait for a randomized duration of time up to 30 days. Do not rely on human judgement to pick a random number.',
+    `Wait for a randomized duration of time up to ${ANONYMITY_SET_WINDOW_DAYS} days. Do not rely on human judgement to pick a random number.`,
     finalStep,
   ]
 }

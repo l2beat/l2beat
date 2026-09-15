@@ -36,6 +36,23 @@ describe(selectPrivacyAnonymitySetChartRange.name, () => {
     })
   })
 
+  it('keeps the latest day when the requested end is earlier that day', () => {
+    const snapshot = makeSnapshot()
+
+    const result = selectPrivacyAnonymitySetChartRange(snapshot, [
+      DAY_2,
+      DAY_3 - 2 * UnixTime.HOUR,
+    ])
+
+    expect(result).toEqual({
+      ...snapshot,
+      history: [
+        [DAY_2, 2],
+        [DAY_3, 3],
+      ],
+    })
+  })
+
   it('returns no history when the requested range does not overlap', () => {
     const snapshot = makeSnapshot()
 
@@ -81,7 +98,7 @@ function makeSnapshot(): PrivacyAnonymitySetChartResponse {
       [DAY_3, 3],
     ],
     holdingDuration: [[7, 3]],
-    syncingTokens: [],
+    syncingLabels: [],
     syncedUntil: DAY_3,
   }
 }

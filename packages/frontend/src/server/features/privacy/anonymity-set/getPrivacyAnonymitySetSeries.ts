@@ -68,6 +68,12 @@ export function getPrivacyAnonymitySetSeries(
   )
 }
 
+export function hasPrivacyAnonymitySet(
+  project: PrivacyAnonymitySetProject,
+): boolean {
+  return getPrivacyAnonymitySetSeries(project).length > 0
+}
+
 function formatTokenAmount(amount: string, decimals: number): string {
   const padded = amount.padStart(decimals + 1, '0')
   const whole = decimals === 0 ? padded : padded.slice(0, -decimals) || '0'

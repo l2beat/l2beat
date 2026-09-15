@@ -23,6 +23,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { hasPrivacyAnonymitySet } from './anonymity-set/getPrivacyAnonymitySetSeries'
 import { getPrivacyProject } from './getPrivacyProjects'
 import type {
   PrivacyAsset,
@@ -265,9 +266,7 @@ export async function getPrivacyProjectDetails(
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
-    hasAnonymitySet: project.privacyInfo.tokens.some((token) =>
-      token.buckets.some((bucket) => bucket.anonymitySet !== undefined),
-    ),
+    hasAnonymitySet: hasPrivacyAnonymitySet(project),
     hasTvl: project.tvsConfig !== undefined,
     detailedDescription:
       project.privacyInfo.detailedDescription ??
