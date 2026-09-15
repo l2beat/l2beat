@@ -1,11 +1,9 @@
 import type { Project } from '@l2beat/config'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
-import { isActivityChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
-import type { SsrHelpers } from '~/trpc/server'
+import { checkIfActivityExists } from '~/server/features/layer2s/activity/utils/checkIfActivityExists'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getActivitySection(
-  helpers: SsrHelpers,
   project: Project<never, 'archivedAt' | 'activityConfig'>,
 ): Promise<
   Pick<ActivitySectionProps, 'defaultRange' | 'dataSource'> | undefined
@@ -14,14 +12,8 @@ export async function getActivitySection(
 
   const rangeOption = project.archivedAt ? 'max' : '1y'
   const range = optionToRange(rangeOption)
-  const data = await helpers.queryClient.fetchQuery(
-    helpers.trpc.activity.chart.queryOptions({
-      range,
-      filter: { type: 'projects', projectIds: [project.id] },
-    }),
-  )
-
-  if (isActivityChartDataEmpty(data)) {
+  const hasData = await checkIfActivityExists(project.id, range[0] ?? undefined)
+  if (!hasData) {
     return undefined
   }
 

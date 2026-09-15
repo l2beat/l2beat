@@ -25,51 +25,60 @@ export function linkGlossaryTerms(
   )
 
   return (sourceText: string) => {
-    let text = sourceText
+    const ignoredOffsets = getIgnoredAndLinkOffsets(sourceText)
+    const isWithinIgnoredOffset = (position: number) =>
+      ignoredOffsets.some(
+        (link) => position >= link.start && position <= link.end,
+      )
+    const isIgnored = (start: number, end: number) =>
+      sourceText.at(start - 1) === ignoreDelimiter &&
+      sourceText.at(end) === ignoreDelimiter
+
+    // Longer terms claim their text first; a shorter term never links inside
+    // a longer one, and nothing links inside an existing link or code span.
+    // Working on offsets into the untouched source keeps this a single scan
+    // per term instead of rebuilding the text once per term.
+    const links: { start: number; end: number; markdown: string }[] = []
+    const overlapsLink = (start: number, end: number) =>
+      links.some((link) => start < link.end && end > link.start)
 
     for (const term of glossaryTerms) {
       const pattern = new RegExp(`(?<!\\w)(${escapeRegExp(term)})(?!\\w)`, 'gi')
-
-      const ignoredOffsets = getIgnoredAndLinkOffsets(text)
-
-      const isWithinIgnoredOffset = (position: number) => {
-        return ignoredOffsets.some(
-          (link) => position >= link.start && position <= link.end,
-        )
-      }
-
-      const isIgnored = (position: number) => {
-        return (
-          text.at(position - 1) === ignoreDelimiter &&
-          text.at(position + term.length) === ignoreDelimiter
-        )
-      }
-
-      // Replace glossary terms with links, avoiding existing markdown links
-      text = text.replace(pattern, (matchedTerm, ...maybeOffset) => {
-        // Since we are using a regex with a single capture group, the last two arguments are the offset and the full string, rest of the arguments are the matched term where the amount of terms is unknown and potentially empty
-        const offset = maybeOffset.at(-2)
-
-        if (isWithinIgnoredOffset(offset) || isIgnored(offset)) {
-          return matchedTerm // Don't replace if within an existing link
+      for (const match of sourceText.matchAll(pattern)) {
+        const start = match.index
+        const end = start + match[0].length
+        if (
+          isWithinIgnoredOffset(start) ||
+          isIgnored(start, end) ||
+          overlapsLink(start, end)
+        ) {
+          continue
         }
-
-        const glossaryTermData = termToData.get(matchedTerm.toLowerCase())
-
-        return glossaryTermData
-          ? createGlossaryLink(
-              glossaryTermData.id,
-              matchedTerm,
-              glossaryTermData.description,
-            )
-          : matchedTerm
-      })
+        const glossaryTermData = termToData.get(match[0].toLowerCase())
+        if (!glossaryTermData) continue
+        links.push({
+          start,
+          end,
+          markdown: createGlossaryLink(
+            glossaryTermData.id,
+            match[0],
+            glossaryTermData.description,
+          ),
+        })
+      }
     }
 
-    // Get rid of the ignore delimiters
-    text = text.replace(ignorePattern, '$1')
+    links.sort((a, b) => a.start - b.start)
+    let text = ''
+    let cursor = 0
+    for (const link of links) {
+      text += sourceText.slice(cursor, link.start) + link.markdown
+      cursor = link.end
+    }
+    text += sourceText.slice(cursor)
 
-    return text
+    // Get rid of the ignore delimiters
+    return text.replace(ignorePattern, '$1')
   }
 }
 

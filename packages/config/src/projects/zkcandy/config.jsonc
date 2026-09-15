@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "zkcandy",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xF2704433d11842d15aa76BBF0E00407267a99C92"],

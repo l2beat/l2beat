@@ -1,4 +1,5 @@
 import type {
+  PrivacyAnonymitySetDepositSource,
   PrivacyFlowExtractorConfig,
   ProjectPrivacyInfo,
   ProjectPrivacyOnchainRelayerSource,
@@ -12,6 +13,7 @@ export interface PrivacyProjectConfig {
 
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
+  anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
   starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
   relayerConfigs: PrivacyRelayerActivityIndexerConfig[]
@@ -20,6 +22,19 @@ export interface PrivacyConfig {
   blockTimestampConfigs: PrivacyBlockTimestampConfig[]
   chains: string[]
 }
+
+export type PrivacyAnonymitySetIndexerConfigProperties = {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: EthereumAddress
+  event: string
+  sinceTimestamp: UnixTime
+} & PrivacyAnonymitySetDepositSource
+
+export type PrivacyAnonymitySetIndexerConfig = {
+  id: string
+} & PrivacyAnonymitySetIndexerConfigProperties
 
 export type PrivacyFlowIndexerConfig = {
   id: string

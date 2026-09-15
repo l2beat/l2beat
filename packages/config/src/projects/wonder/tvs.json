@@ -16,7 +16,8 @@
         "address": "0x000000000000000000000000000000000000800A",
         "chain": "wonder",
         "decimals": 18,
-        "sinceTimestamp": 1741634331
+        "sinceTimestamp": 1741634331,
+        "untilTimestamp": 1771369200
       },
       "isAssociated": false
     },
@@ -35,7 +36,8 @@
         "address": "0x5B3a8e694765Ef08304034ce2283aE31684ba6C2",
         "chain": "wonder",
         "decimals": 6,
-        "sinceTimestamp": 1741634331
+        "sinceTimestamp": 1741634331,
+        "untilTimestamp": 1771369200
       }
     }
   ]

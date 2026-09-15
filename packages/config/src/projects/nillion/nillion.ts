@@ -55,7 +55,7 @@ export const nillion: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.nillion.network',
-        callsPerMinute: 300,
+        callsPerMinute: 100,
       },
       {
         type: 'blockscout',

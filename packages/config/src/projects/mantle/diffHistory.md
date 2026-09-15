@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4b02df58462b0ceecd334fa1b6ba8f45ab1669fc
+
+# Diff at Thu, 10 Sep 2026 12:53:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1786359758
+- current timestamp: 1789044747
+
+## Description
+
+OPSuccinctL2OutputOracle: `aggregationVkey` and `rangeVkeyCommitment` updated to the [mantle-v1.6.0](https://github.com/mantle-xyz/op-succinct/releases/tag/mantle-v1.6.0) op-succinct release keys.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x0063d017f049d215e2cda7f7826d7c1a8176a678203d6f74a731fc331cc16377"
++        "0x005ec5d81cbc4a9a70334f16cb0078d55ae20da550819bd0dc9c5ed12913b407"
+      values.rangeVkeyCommitment:
+-        "0x1dc938274cd550224002662e765b50c838b6fcb3234308b847ece2ce0e4a5631"
++        "0x2a928ed475bd7d8b7a54fac7666c68eb62d36fa15fafa8006b885b3237a7bd21"
+    }
+```
+
 Generated with discovered.json: 0x7a7ec18362dee9633bbf65ab9c1cd03ce0bc39ee
 
 # Diff at Mon, 07 Sep 2026 08:37:52 GMT:

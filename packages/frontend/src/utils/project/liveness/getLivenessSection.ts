@@ -6,14 +6,13 @@ import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
 import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
 import type { LivenessProject } from '~/server/features/layer2s/liveness/types'
+import { checkIfLivenessExists } from '~/server/features/layer2s/liveness/utils/checkIfLivenessExists'
 import { getHasTrackedContractChanged } from '~/server/features/layer2s/liveness/utils/getHasTrackedContractChanged'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import type { SsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
-  helpers: SsrHelpers,
   project: Project<
     never,
     'archivedAt' | 'trackedTxsConfig' | 'livenessConfig' | 'livenessInfo'
@@ -59,15 +58,12 @@ export async function getLivenessSection(
     : optionToRange('30d')
   const subtype = getDefaultSubtype(configuredSubtypes)
 
-  const data = await helpers.queryClient.fetchQuery(
-    helpers.trpc.liveness.projectChart.queryOptions({
-      projectId: project.id,
-      range: defaultRange,
-      subtype,
-    }),
+  const hasData = await checkIfLivenessExists(
+    project.id,
+    getSourceSubtype(subtype, project.livenessConfig?.duplicateData),
+    defaultRange[0] ?? undefined,
   )
-
-  if (data.data.length === 0) return undefined
+  if (!hasData) return undefined
 
   const hasTrackedContractsChanged = project.trackedTxsConfig
     ? getHasTrackedContractChanged(
@@ -85,4 +81,15 @@ export async function getLivenessSection(
     defaultRange,
     isArchived: project.archivedAt !== undefined,
   }
+}
+
+// A subtype configured to duplicate another one has no records of its own;
+// the chart reads the source subtype, so the existence check must as well.
+function getSourceSubtype(
+  subtype: TrackedTxsConfigSubtype,
+  duplicateData:
+    | { from: TrackedTxsConfigSubtype; to: TrackedTxsConfigSubtype }
+    | undefined,
+): TrackedTxsConfigSubtype {
+  return duplicateData?.to === subtype ? duplicateData.from : subtype
 }

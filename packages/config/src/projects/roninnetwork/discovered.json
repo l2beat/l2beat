@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1787834376,
-  "configHash": "0x48cefa8eb6ab8681425d8dffe01eaa5a457aa85ed6656cae61166abce612651e",
+  "timestamp": 1789077777,
+  "configHash": "0x8e4668a830779226b945560f36f44890fcfc2b0071f418fd2d3404a9b3a83509",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -86,7 +86,7 @@
         "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "ignoreInWatchMode": [
         "anchorGame",
         "getAnchorRoot",
@@ -128,8 +128,8 @@
         "paused": false,
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "RespectedGameString": "KailuaGame",
-        "respectedGameType": 1337,
+        "RespectedGameString": "PermissionedDisputeGame",
+        "respectedGameType": 1,
         "retirementTimestamp": 1771964639,
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
@@ -668,7 +668,7 @@
         "game1337": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 214,
+        "gameCount": 243,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -683,7 +683,7 @@
         "initVersion": 1,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c6463dee3828677f6270d83d45408044fc5edb9080b95ff1d1b113bac3e29ac0bbf2089126c9ae81a69fcd2e75af364295eaf48dc058338f80cffb43400000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 33,
+        "permissionedGamesTotal": 40,
         "proposerFromDGF": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
@@ -757,7 +757,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 305,
+        "nonce": 311,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1173,7 +1173,7 @@
         "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0x60ebFE5cc71a39D877CA1F40D1Cb3c57d6D64523",
       "sinceTimestamp": 1771964639,
@@ -1199,14 +1199,14 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 25136888
+          "prevBlockNum": 25888775
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
-        "RespectedGameString": "KailuaGame",
-        "respectedGameType": 1337,
+        "RespectedGameString": "PermissionedDisputeGame",
+        "respectedGameType": 1,
         "respectedGameTypeUpdatedAt": 1771964639,
         "superchainConfig": "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c",
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
@@ -1692,7 +1692,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2037784277857463146069301"
+        "totalSupply": "2055298261968915885332449"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1860,7 +1860,7 @@
         "L2_BLOCK_NUMBER": 56278374,
         "l2BlockNumber": 0,
         "l2SequenceNumber": 0,
-        "lastResolved": "eth:0xf33330b0821D8486DA75fc3eB70282915202a9bE",
+        "lastResolved": "eth:0x9CbE4D43A3333399Cda5501A96FA74a9467e11c5",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
@@ -2006,7 +2006,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 6 (83%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3881,8 +3881,8 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25846615 },
-  "permissionsConfigHash": "0x731608dd98d3f47c7a5cc1f65e1dfe520c00ec03ebdf539ff496e3875d7e214c",
+  "usedBlockNumbers": { "ethereum": 25949849 },
+  "permissionsConfigHash": "0xe7f778f90e5c483761921eb71fa7aa6a25d5ab458fb16f790082a12ea13967f7",
   "permissions": {
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       "directlyReceivedPermissions": [
@@ -3993,6 +3993,16 @@
         }
       ]
     },
+    "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengerFromDGF"
+        }
+      ]
+    },
     "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34": {
       "directlyReceivedPermissions": [
         {
@@ -4079,6 +4089,12 @@
     },
     "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposerFromDGF"
+        },
         {
           "permission": "interact",
           "from": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",

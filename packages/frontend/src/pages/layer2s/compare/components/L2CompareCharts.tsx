@@ -44,7 +44,6 @@ import {
   toCompareUrlState,
 } from '../utils/compareChartState'
 import { parseCompareStateFromSearchParams } from '../utils/parseCompareStateFromSearchParams'
-import { CompareChartHoveredProvider } from './CompareChartHoverContext'
 import { CompareProjectPicker } from './CompareProjectPicker'
 import { CompareSeriesProvider } from './CompareSeriesContext'
 
@@ -66,10 +65,6 @@ export function L2CompareCharts({
   const [state, setState] = useState(() =>
     toCompareClientState(initialState, initialChartRange),
   )
-  // The chart card under the pointer, if any. Recharts syncs the hover to
-  // every chart; only this one renders the full tooltip.
-  const [hoveredChartId, setHoveredChartId] = useState<number>()
-
   const validSlugs = useMemo(
     () => allProjects.map((project) => project.slug),
     [allProjects],
@@ -182,14 +177,6 @@ export function L2CompareCharts({
               projects={selectedProjects}
               queryProjects={queryProjects}
               setConfig={setChartConfig(index)}
-              isHovered={
-                hoveredChartId === undefined || hoveredChartId === index
-              }
-              onHoverChange={(hovered) =>
-                setHoveredChartId((prev) =>
-                  hovered ? index : prev === index ? undefined : prev,
-                )
-              }
               onRemove={
                 state.charts.length > 1 ? () => removeChart(index) : undefined
               }
@@ -212,8 +199,6 @@ function CompareChartCard({
   projects,
   queryProjects,
   setConfig,
-  isHovered,
-  onHoverChange,
   onRemove,
 }: {
   chartId: number
@@ -222,9 +207,6 @@ function CompareChartCard({
   projects: CompareProjectEntry[]
   queryProjects: CompareProjectEntry[]
   setConfig: Dispatch<SetStateAction<CompareChartConfig>>
-  /** False while another card is hovered, so this card's tooltip hides. */
-  isHovered: boolean
-  onHoverChange: (hovered: boolean) => void
   onRemove: (() => void) | undefined
 }) {
   const metric = COMPARE_METRICS[config.metric]
@@ -248,23 +230,12 @@ function CompareChartCard({
           </button>
         )}
       </div>
-      <CompareChartHoveredProvider isHovered={isHovered}>
-        {/* Touch fires no mouseenter while dragging and Recharts keeps the
-            tooltip open after touchend, so the touched card is registered
-            explicitly and stays the hovered one until another is touched. */}
-        <div
-          onMouseEnter={() => onHoverChange(true)}
-          onMouseLeave={() => onHoverChange(false)}
-          onTouchStart={() => onHoverChange(true)}
-        >
-          <metric.Chart
-            projects={projects}
-            queryProjects={queryProjects}
-            config={config}
-            chartRange={chartRange}
-          />
-        </div>
-      </CompareChartHoveredProvider>
+      <metric.Chart
+        projects={projects}
+        queryProjects={queryProjects}
+        config={config}
+        chartRange={chartRange}
+      />
       {metric.Controls && (
         <div className="mt-3 flex flex-wrap items-center gap-1">
           <metric.Controls config={config} setConfig={setConfig} />

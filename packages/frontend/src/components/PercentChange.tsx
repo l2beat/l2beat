@@ -11,6 +11,7 @@ const COMPARISON_PERIOD_LABELS: Record<PercentageChangePeriod, string> = {
   '1D': 'one day ago',
   '7D': 'seven days ago',
   last24h: 'the previous 24 hours',
+  last7d: 'the previous seven days',
   last30d: 'the previous 30 days',
 }
 

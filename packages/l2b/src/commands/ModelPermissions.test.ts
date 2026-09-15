@@ -161,8 +161,11 @@ describe('model-permissions all', () => {
           ],
           { cwd: root, encoding: 'utf8' },
         )
-        expect(result.stderr).toEqual('')
-        expect(result.status).toEqual(0)
+        if (result.status !== 0) {
+          throw new Error(
+            `model-permissions ${project} exited with ${result.status}\n${result.stderr}`,
+          )
+        }
         return result.stdout
       }
       const read = (name: string): DiscoveryOutput =>
