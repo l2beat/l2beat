@@ -255,7 +255,12 @@ describe(getPrivacyConfig.name, () => {
     it('rejects a source without any filter', async () => {
       await expect(
         getFlowConfigs(
-          { event: TRANSFER_EVENT, extractor: 'erc20Transfer', params: {} },
+          {
+            event: TRANSFER_EVENT,
+            extractor: 'erc20Transfer',
+            // The type forbids this, so bypass it to exercise the runtime guard.
+            params: {} as { from: typeof POOL },
+          },
           {
             event: TRANSFER_EVENT,
             extractor: 'erc20Transfer',

@@ -47,18 +47,19 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
   // eth_getLogs ANDs the topic positions of a single filter, so
   // configurations with different indexed-arg filters cannot share a query.
   // Each group is fetched and matched on its own.
-  const groups: { configurations: Configuration<T>[]; logs: Log[] }[] = []
-  for (const group of groupByTopics(configurations)) {
-    const { addresses, events } = buildPrivacyLogFilter(group)
-    const topics = group[0].properties.topics ?? []
-    const logs = await deps.logsProvider.getLogs(
-      blockFrom,
-      blockTo,
-      addresses,
-      [events, ...topics],
-    )
-    groups.push({ configurations: group, logs })
-  }
+  const groups = await Promise.all(
+    groupByTopics(configurations).map(async (group) => {
+      const { addresses, events } = buildPrivacyLogFilter(group)
+      const topics = group[0].properties.topics ?? []
+      const logs = await deps.logsProvider.getLogs(
+        blockFrom,
+        blockTo,
+        addresses,
+        [events, ...topics],
+      )
+      return { configurations: group, logs }
+    }),
+  )
 
   const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
     groups.flatMap((group) => group.logs),

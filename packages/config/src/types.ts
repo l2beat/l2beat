@@ -1214,10 +1214,9 @@ export type PrivacyFlowExtractorConfig =
        * server-side as indexed-topic filters.
        */
       extractor: 'erc20Transfer'
-      params: {
-        from?: EthereumAddress
-        to?: EthereumAddress
-      }
+      params:
+        | { from: EthereumAddress; to?: EthereumAddress }
+        | { from?: EthereumAddress; to: EthereumAddress }
     }
   | {
       extractor: 'privacyPoolsValue'
