@@ -30,6 +30,7 @@ import type {
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
+  PrivacyLogTopicFilter,
   PrivacyPriceIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
   PrivacyRelayerSampleConfig,
@@ -326,12 +327,14 @@ function toFlowConfig(
 function getErc20TransferTopics(params: {
   from?: EthereumAddress
   to?: EthereumAddress
-}): (string | null)[] {
+}): PrivacyLogTopicFilter {
   assert(
     params.from !== undefined || params.to !== undefined,
     'erc20Transfer source needs a from or to filter',
   )
   const topics = [addressTopic(params.from), addressTopic(params.to)]
+  // Trailing wildcards do not change the query, so drop them to keep one
+  // canonical shape per filter: `[pool]` rather than `[pool, null]`.
   while (topics.length > 0 && topics[topics.length - 1] === null) {
     topics.pop()
   }

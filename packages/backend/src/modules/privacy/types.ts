@@ -36,6 +36,12 @@ export type PrivacyAnonymitySetIndexerConfig = {
   id: string
 } & PrivacyAnonymitySetIndexerConfigProperties
 
+/**
+ * Filters on the indexed event args starting at topic1, null matching
+ * anything at that position. topic0 is added by the indexer from `event`.
+ */
+export type PrivacyLogTopicFilter = (string | null)[]
+
 export type PrivacyFlowIndexerConfig = {
   id: string
   projectId: string
@@ -44,11 +50,8 @@ export type PrivacyFlowIndexerConfig = {
   chain: string
   address: EthereumAddress
   event: string
-  /**
-   * Filters on the indexed event args starting at topic1, null matching
-   * anything at that position. Derived from the extractor params.
-   */
-  topics?: (string | null)[]
+  /** Derived from the extractor params. */
+  topics?: PrivacyLogTopicFilter
   sinceTimestamp: UnixTime
   priceId: string
   decimals: number

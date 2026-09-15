@@ -9,7 +9,7 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
-import type { PrivacyFlowIndexerConfig } from '../types'
+import type { PrivacyFlowIndexerConfig, PrivacyLogTopicFilter } from '../types'
 import { PrivacyFlowIndexer } from './PrivacyFlowIndexer'
 
 const ADDRESS_A = EthereumAddress('0x1111111111111111111111111111111111111111')
@@ -1083,7 +1083,7 @@ function transferConfig(opts: {
     PrivacyFlowExtractorConfig,
     { extractor: 'erc20Transfer' }
   >['params']
-  topics: (string | null)[]
+  topics: PrivacyLogTopicFilter
 }): Configuration<PrivacyFlowIndexerConfig> {
   return {
     id: opts.id,

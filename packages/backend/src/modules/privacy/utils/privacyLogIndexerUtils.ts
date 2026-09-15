@@ -9,12 +9,12 @@ import {
   unique,
 } from '@l2beat/shared-pure'
 import type { Configuration } from '../../../tools/uif/multi/types'
+import type { PrivacyLogTopicFilter } from '../types'
 
 interface PrivacyLogIndexerConfig {
   address: EthereumAddress
   event: string
-  /** Filters on indexed event args starting at topic1, null = wildcard. */
-  topics?: (string | null)[]
+  topics?: PrivacyLogTopicFilter
 }
 
 export interface PrivacyLogMatch<T extends PrivacyLogIndexerConfig> {
@@ -46,19 +46,19 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
 
   // eth_getLogs ANDs the topic positions of a single filter, so
   // configurations with different indexed-arg filters cannot share a query.
-  // Each group is fetched and matched on its own.
   const groups = await Promise.all(
-    groupByTopics(configurations).map(async (group) => {
-      const { addresses, events } = buildPrivacyLogFilter(group)
-      const topics = group[0].properties.topics ?? []
-      const logs = await deps.logsProvider.getLogs(
-        blockFrom,
-        blockTo,
-        addresses,
-        [events, ...topics],
-      )
-      return { configurations: group, logs }
-    }),
+    groupByTopics(configurations).map(
+      async ({ topics, configurations: group }) => {
+        const { addresses, events } = buildPrivacyLogFilter(group)
+        const logs = await deps.logsProvider.getLogs(
+          blockFrom,
+          blockTo,
+          addresses,
+          [events, ...topics],
+        )
+        return { configurations: group, logs }
+      },
+    ),
   )
 
   const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
@@ -89,12 +89,16 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
 
 function groupByTopics<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
-): Configuration<T>[][] {
-  const groups = new Map<string, Configuration<T>[]>()
+): { topics: PrivacyLogTopicFilter; configurations: Configuration<T>[] }[] {
+  const groups = new Map<
+    string,
+    { topics: PrivacyLogTopicFilter; configurations: Configuration<T>[] }
+  >()
   for (const configuration of configurations) {
-    const key = JSON.stringify(configuration.properties.topics ?? [])
-    const group = groups.get(key) ?? []
-    group.push(configuration)
+    const topics = configuration.properties.topics ?? []
+    const key = JSON.stringify(topics)
+    const group = groups.get(key) ?? { topics, configurations: [] }
+    group.configurations.push(configuration)
     groups.set(key, group)
   }
   return Array.from(groups.values())

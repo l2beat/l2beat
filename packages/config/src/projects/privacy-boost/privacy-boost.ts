@@ -64,7 +64,7 @@ const registeredTokens = discovery
     )
     return {
       address,
-      info: getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID),
+      tokenInfo: getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID),
     }
   })
 
@@ -76,27 +76,27 @@ const registeredTokens = discovery
 // cancellation refunds, treasury fee legs and gateway DeFi round trips, which
 // are all counted as they cross.
 const privacyTokens: ProjectPrivacyToken[] = registeredTokens.map(
-  ({ address, info }) => {
+  ({ address, tokenInfo }) => {
     // Prices must cover the whole bucket range, so never start before listing.
     const sinceTimestamp = Math.max(
       PRIVACY_BOOST_SINCE_TIMESTAMP,
-      info.coingeckoListingTimestamp,
+      tokenInfo.coingeckoListingTimestamp,
     )
 
     return {
       token: {
         address: address.toString(),
-        iconUrl: info.iconUrl,
-        symbol: info.symbol,
-        decimals: info.decimals,
-        priceId: info.coingeckoId,
+        iconUrl: tokenInfo.iconUrl,
+        symbol: tokenInfo.symbol,
+        decimals: tokenInfo.decimals,
+        priceId: tokenInfo.coingeckoId,
         sinceTimestamp,
       },
       buckets: [
         {
-          id: `privacy-boost-${info.symbol}`,
+          id: `privacy-boost-${tokenInfo.symbol}`,
           type: 'pool',
-          label: info.symbol,
+          label: tokenInfo.symbol,
           address: pool.address,
           sinceTimestamp,
           deposit: {
@@ -162,7 +162,7 @@ export const privacyBoost: BaseProject = {
       address: poolAddress,
       chain: ChainSpecificAddress.longChain(pool.address),
       sinceTimestamp: PRIVACY_BOOST_SINCE_TIMESTAMP,
-      tokens: registeredTokens.map((token) => token.info.symbol),
+      tokens: registeredTokens.map((token) => token.tokenInfo.symbol),
     },
   ],
   tvsInfo: {
