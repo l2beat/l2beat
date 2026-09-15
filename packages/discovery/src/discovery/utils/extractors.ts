@@ -49,11 +49,8 @@ export function toAddressArray(
     return Object.values(value).flatMap((v) => toAddressArray(v))
   }
   if (typeof value === 'string') {
-    try {
-      return [ChainSpecificAddress(value)]
-    } catch {
-      return []
-    }
+    const address = ChainSpecificAddress.tryFrom(value)
+    return address ? [address] : []
   }
   return []
 }

@@ -13,14 +13,15 @@ import {
 type FormulaTest = (formula: Formula) => void
 
 describe('tvs', () => {
-  const projects = getProjects().filter((p) => p.tvsConfig)
+  const allProjects = getProjects()
+  const projects = allProjects.filter((p) => p.tvsConfig)
   const chainSinceTimestamps = new Map(
-    getProjects()
+    allProjects
       .filter((p) => p.chainConfig)
       .map((c) => [c.chainConfig!.name, c.chainConfig!.sinceTimestamp]),
   )
   const chainUntilTimestamps = new Map(
-    getProjects()
+    allProjects
       .filter((p) => p.chainConfig?.untilTimestamp)
       .map((c) => [c.chainConfig!.name, c.chainConfig!.untilTimestamp!]),
   )

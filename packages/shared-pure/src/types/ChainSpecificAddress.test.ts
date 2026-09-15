@@ -58,6 +58,47 @@ describe(ChainSpecificAddress.name, () => {
     })
   })
 
+  describe(ChainSpecificAddress.tryFrom.name, () => {
+    it('returns the checksummed address for valid input', () => {
+      expect(
+        ChainSpecificAddress.tryFrom(
+          'eth:0xabcdabcd12345678abcdabcd12345678abcdabcd',
+        ),
+      ).toEqual(
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as ChainSpecificAddress,
+      )
+    })
+
+    it('returns undefined for every input the constructor rejects', () => {
+      for (const value of [
+        'foo',
+        'kk:foo',
+        '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
+        'unknown:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      ]) {
+        expect(() => ChainSpecificAddress(value)).toThrow(TypeError)
+        expect(ChainSpecificAddress.tryFrom(value)).toEqual(undefined)
+      }
+    })
+  })
+
+  describe(ChainSpecificAddress.check.name, () => {
+    it('accepts only already-checksummed addresses', () => {
+      expect(
+        ChainSpecificAddress.check(
+          'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        ),
+      ).toEqual(true)
+      expect(
+        ChainSpecificAddress.check(
+          'eth:0xabcdabcd12345678abcdabcd12345678abcdabcd',
+        ),
+      ).toEqual(false)
+      expect(ChainSpecificAddress.check('foo')).toEqual(false)
+    })
+  })
+
   describe(ChainSpecificAddress.random.name, () => {
     it('creates a random address', () => {
       const address = ChainSpecificAddress.random()
