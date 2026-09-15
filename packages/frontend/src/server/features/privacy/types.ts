@@ -16,6 +16,7 @@ export type PrivacyProject = Project<
   | 'permissions'
   | 'discoveryInfo'
   | 'discoveryUpdates'
+  | 'crops'
   | 'zkCatalogInfo'
 > & {
   /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */

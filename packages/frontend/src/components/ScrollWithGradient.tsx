@@ -44,11 +44,13 @@ export function ScrollWithGradient({
         }
 
         if (!node) return
-        updateFades(node)
 
         const update = () => updateFades(node)
 
         node.addEventListener('scroll', update)
+        // observe() delivers an initial notification once layout is settled,
+        // which covers the first fade update. Reading scroll metrics here
+        // instead would force a layout in the middle of React's commit.
         const resizeObserver = new ResizeObserver(update)
         resizeObserver.observe(node)
 

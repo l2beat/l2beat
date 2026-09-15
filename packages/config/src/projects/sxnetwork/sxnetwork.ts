@@ -47,7 +47,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc-rollup.sx.technology',
-        callsPerMinute: 150,
+        callsPerMinute: 100,
       },
     ],
     gasTokens: ['SX'],
