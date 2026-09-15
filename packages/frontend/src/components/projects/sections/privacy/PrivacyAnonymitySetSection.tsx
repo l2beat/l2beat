@@ -91,7 +91,7 @@ export function PrivacyAnonymitySetSection({
             cannot be known in advance.
           </p>
 
-          <h3 className="mt-8 mb-2 font-bold text-heading-20">
+          <h3 className="mt-4 mb-2 font-bold text-heading-20">
             Estimated anonymity set by holding duration
           </h3>
           <p className="mb-4 text-paragraph-15 text-secondary">
