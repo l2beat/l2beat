@@ -14,7 +14,7 @@ export function createReader({ escape, highlight }) {
     }).join('')}</pre>`
   }
   function materialView(material, selected = []) {
-    if (material.kind === 'fact') return `<div class="fact-evidence"><span class="evidence-kind">SOUFFLÉ OBSERVATION</span><h4>${escape(material.title)}</h4><p>${escape(material.text)}</p><p class="caption">Potential write site. This does not establish whether the write can execute.</p></div>`
+    if (material.kind === 'fact') return `<div class="fact-evidence"><span class="evidence-kind">${material.relation === 'snapshotAddress' ? 'SUPPLIED SNAPSHOT VALUE' : 'SOUFFLÉ OBSERVATION'}</span><h4>${escape(material.title)}</h4><p>${escape(material.text)}</p><p class="caption">An observation under the selected rules and supplied inputs. This does not establish permission or successful execution.</p></div>`
     return `<div class="source-evidence"><div class="evidence-heading"><b>${escape(material.title)}</b><span>Playground.sol · lines ${material.start}–${material.end}</span></div>${source(material, selected)}</div>`
   }
   function clearAnswer() {
@@ -47,7 +47,7 @@ export function createReader({ escape, highlight }) {
   function show() {
     $('reader-section').hidden = !run || !$('enable-reader').checked
     $('reader-link').hidden = !$('enable-reader').checked
-    $('lesson-badge').textContent = run?.followCalls ? 'LESSON 03 · FOLLOW INTERNAL CALLS' : $('enable-reader').checked ? 'LESSON 02 · READ WITH AI' : 'LESSON 01 · DIRECT WRITES'
+    $('lesson-badge').textContent = run?.connectContracts ? 'LESSON 04 · CONNECT CONTRACTS' : run?.followCalls ? 'LESSON 03 · FOLLOW INTERNAL CALLS' : $('enable-reader').checked ? 'LESSON 02 · READ WITH AI' : 'LESSON 01 · DIRECT WRITES'
     if (!$('enable-reader').checked) clearAnswer()
     else prepare()
   }
@@ -59,7 +59,7 @@ export function createReader({ escape, highlight }) {
       <p class="inspection-purpose">${prose(step.why)}</p>
       ${step.error ? `<p class="missing">${escape(step.error)}</p>` : ''}
       ${step.evidence.map((e) => materialView(e)).join('')}
-      ${['writers', 'entrypoints'].includes(step.tool) && !step.error && !step.evidence.length ? '<p>No results matched these rules. Other call or write forms may still exist.</p>' : ''}
+      ${['writers', 'entrypoints', 'dependencies', 'values'].includes(step.tool) && !step.error && !step.evidence.length ? '<p>No results matched these rules. Other call or write forms may still exist.</p>' : ''}
       ${step.note ? `<p class="caption">${escape(step.note)}</p>` : ''}</details>`
     $('investigation-steps').append(li)
     $('investigation-count').textContent = `${$('investigation-steps').children.length} requests`

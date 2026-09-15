@@ -1,0 +1,28 @@
+// Source observations and supplied deployment values are separate inputs.
+.decl contractDefinition(contract: number, name: symbol)
+.decl contractVariable(contract: number, variable: number)
+.decl contractFunction(contract: number, function: number, selector: symbol)
+.decl externalCall(call: number, variable: number, selector: symbol)
+.decl snapshotDeployment(address: symbol, contract: number)
+.decl snapshotAddress(address: symbol, variable: number, value: symbol)
+.input contractDefinition
+.input contractVariable
+.input contractFunction
+.input externalCall
+.input snapshotDeployment
+.input snapshotAddress
+
+// An external dependency exists even without a snapshot.
+.decl externalDependency(function: number, call: number, variable: number, selector: symbol)
+externalDependency(F, Call, V, Selector) :-
+    withinFunction(F, Call), externalCall(Call, V, Selector).
+.output externalDependency
+
+// Resolve an ABI selector at the address supplied for this deployment's variable.
+// This locates code; it does not establish authorization or successful execution.
+.decl resolvedCall(caller: symbol, call: number, target: symbol, function: number)
+resolvedCall(From, Call, To, G) :-
+    externalCall(Call, V, Selector), contractVariable(C, V),
+    snapshotDeployment(From, C), snapshotAddress(From, V, To),
+    snapshotDeployment(To, Target), contractFunction(Target, G, Selector).
+.output resolvedCall

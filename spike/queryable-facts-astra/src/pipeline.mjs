@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 import solc from 'solc'
 import { atoms, extractFacts, inputText, schema } from './facts.mjs'
+import { snapshotFacts, snapshotSchema } from './snapshot.mjs'
 
 export const root = fileURLToPath(new URL('../', import.meta.url))
 const exec = promisify(execFile)
@@ -16,7 +17,7 @@ export const scope = [
   'An absent tuple is not a general proof that a function cannot affect storage. No permissions, call graph, or whole-transaction analysis is performed.',
 ]
 
-export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs'), followCalls = false } = {}) {
+export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs'), followCalls = false, connectContracts = false, snapshot = null } = {}) {
   const started = performance.now()
   const input = {
     language: 'Solidity',
@@ -29,9 +30,11 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
   if (errors.length) throw new Error(errors.map((error) => error.formattedMessage).join('\n'))
   const ast = output.sources['Playground.sol'].ast
   const { facts, locations } = extractFacts(ast, source)
+  if (connectContracts) Object.assign(facts, snapshotFacts(ast, snapshot))
+  const connectionRules = connectContracts ? await readFile(join(root, 'rules', '04-snapshot.dl'), 'utf8') : ''
   const directRules = await readFile(join(root, 'rules', '01-direct-writes.dl'), 'utf8')
   const callRules = followCalls ? await readFile(join(root, 'rules', '03-entry-writers.dl'), 'utf8') : ''
-  const rules = directRules + '\n' + callRules
+  const rules = directRules + '\n' + callRules + '\n' + connectionRules
 
   await mkdir(outputRoot, { recursive: true })
   const runDir = await mkdtemp(join(outputRoot, 'stage-01-'))
@@ -72,6 +75,12 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
       derived[name] = csv ? csv.split('\n').map((line) => line.split('\t').map(Number)) : []
     }
   }
+  if (connectContracts) {
+    for (const [name, numeric] of [['externalDependency', [0, 1, 2]], ['resolvedCall', [1, 3]]]) {
+      const csv = (await readFile(join(derivedDir, `${name}.csv`), 'utf8')).trim()
+      derived[name] = csv ? csv.split('\n').map((line) => line.split('\t').map((v, i) => numeric.includes(i) ? Number(v) : v)) : []
+    }
+  }
   const analysisScope = followCalls ? [
     ...scope.slice(0, 2),
     'Recursive potential writers follow plain, compiler-resolved internal calls to implemented non-virtual functions. Public/external functions, fallback and receive are entry points; constructors are initialization, not entry points.',
@@ -79,21 +88,27 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
     'Coverage remains partial: unsupported writes from lesson 01, modifier call bodies, member calls (including this/super/library calls), function pointers, virtual dispatch, assembly, external calls and callbacks are not followed. Inheritance/deployed dispatch is not modeled; declarations are shown, not a deployed ABI.',
     'No path found is not a no-write proof. No guard inference or permission verdict is performed.',
     'The assignment matcher still only covers bare-identifier assignments (=, +=, etc.), not ++, --, delete, array/member writes, aliases or initializers.',
-  ] : scope
+  ] : [...scope]
+  if (connectContracts) analysisScope.push(
+    'External dependency facts cover high-level member calls directly through a state variable. Resolution joins the supplied snapshot with locally implemented ABI selectors; it is not a permission or execution verdict.',
+    'Snapshot values and deployment/source associations are supplied assumptions, not bytecode-verified chain observations. Missing addresses or implementations remain unresolved. Proxies, delegatecall, inherited implementation dispatch, aliases and callbacks are not modeled.',
+    'Resolved targets describe the supplied snapshot, not future states. Read declarations and writers before deciding whether references can change. A normal external call changes msg.sender to the calling contract; explicit arguments are separate.',
+  )
   const result = {
-    stage: followCalls ? '03-entry-writers' : '01-direct-writes',
-    followCalls, derived, directRules, callRules,
+    stage: connectContracts ? '04-snapshot' : followCalls ? '03-entry-writers' : '01-direct-writes',
+    followCalls, connectContracts, snapshot: connectContracts ? snapshot : null, connectionRules, derived, directRules, callRules,
     source,
     compilerVersion: solc.version(),
     compilerInput: input,
     compilerOutput: output,
-    schema, facts, locations, rules, tuples, findings, scope: analysisScope,
+    schema: connectContracts ? { ...schema, ...snapshotSchema } : schema, facts, locations, rules, tuples, findings, scope: analysisScope,
     warnings: (output.errors ?? []).map((error) => error.formattedMessage),
     runDir,
     elapsedMs: Math.round(performance.now() - started),
   }
   for (const [file, contents] of Object.entries({
     'source.sol': source,
+    ...(connectContracts && snapshot ? { 'discovery.json': JSON.stringify(snapshot, null, 2) } : {}),
     'compiler-input.json': JSON.stringify(input, null, 2),
     'compiler-output.json': JSON.stringify(output, null, 2),
     'facts.dl': Object.entries(facts).map(([name, rows]) => atoms(name, rows)).join('\n'),

@@ -12,6 +12,7 @@ const examples = [
   { id: '03-owner', title: 'A write guarded by an owner check', description: 'The rule still finds a potential writer. Read the condition to understand who can use it.' },
   { id: '04-external-gate', title: 'A write delegated to an unknown gate', description: 'The interface is present, but the gate implementation and deployed address are not. What can we conclude?' },
   { id: '05-internal-chain', title: 'An entry point with a guard in a helper', description: 'updateScore calls checkAndSetScore, which calls setScore. Enable lesson 03 to follow the chain and find the intermediate code to read.' },
+  { id: '06-known-gate', title: 'An external gate with a discovery snapshot', description: 'First resolve nothing: the gate is a source dependency. Then attach the synthetic snapshot to locate OwnerGate and its owner.' },
 ]
 const assets = { '/': ['index.html', 'text/html'], '/app.js': ['app.js', 'text/javascript'], '/reader.js': ['reader.js', 'text/javascript'], '/briefing.mjs': ['../src/briefing.mjs', 'text/javascript'], '/id-labels.js': ['id-labels.js', 'text/javascript'], '/ast-tree.js': ['ast-tree.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] }
 let busy = false
@@ -30,7 +31,7 @@ const server = createServer(async (req, res) => {
     }
     if (req.method === 'GET' && path === '/api/examples') {
       const items = await Promise.all(examples.map(async (example) => ({
-        ...example, source: await readFile(join(root, 'examples', `${example.id}.sol`), 'utf8'),
+        ...example, snapshot: example.id === '06-known-gate' ? JSON.parse(await readFile(join(root, 'examples/06-known-gate.discovery.json'), 'utf8')) : null, source: await readFile(join(root, 'examples', `${example.id}.sol`), 'utf8'),
       })))
       return send(res, 200, items)
     }
@@ -67,7 +68,7 @@ const server = createServer(async (req, res) => {
           return res.end()
         }
         if (typeof body?.source !== 'string') return send(res, 400, { error: 'Expected Solidity source.' })
-        return send(res, 200, await runPipeline(body.source, { followCalls: body.followCalls === true }))
+        return send(res, 200, await runPipeline(body.source, { followCalls: body.followCalls === true, connectContracts: body.connectContracts === true, snapshot: body.snapshot ?? null }))
       } finally { busy = false }
     }
     send(res, 404, { error: 'Not found' })

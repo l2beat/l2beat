@@ -151,3 +151,7 @@ footer p { color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
 .call-tree li { padding: .65rem 0; min-width: 0; }
 .call-tree pre { max-height: 24rem; overflow: auto; }
 .path-write { color: #126b58; font-weight: 600; }
+
+#snapshot { min-height: 280px; }
+#connection-section, .fact-evidence { overflow-wrap: anywhere; }
+.snapshot-value { padding: 12px 16px; background: #eff5ef; border-radius: 5px; }

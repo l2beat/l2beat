@@ -8,6 +8,12 @@ let currentRun
 let idLabels = new Map()
 
 const descriptions = {
+  contractDefinition: 'A contract or interface declaration.',
+  contractVariable: 'A state variable declared in a contract.',
+  contractFunction: 'A locally implemented ABI function and its compiler selector.',
+  externalCall: 'A high-level external call directly through a state variable.',
+  snapshotDeployment: 'A supplied address-to-source-contract association.',
+  snapshotAddress: 'A supplied address value for a deployment’s variable.',
   functionDefinition: 'A function declaration and its name.',
   stateVariable: 'A declaration marked stateVariable by the compiler.',
   child: 'An AST node directly contains another AST node.',
@@ -60,6 +66,8 @@ function invalidate() {
 function selectExample() {
   const example = examples.find((item) => item.id === $('example').value)
   $('source').value = example.source
+  $('snapshot').value = JSON.stringify(example.snapshot ?? { label: 'Synthetic snapshot', deployments: [] }, null, 2)
+  $('attach-snapshot').checked = false
   setEditing(false)
   $('example-description').textContent = example.description
   invalidate()
@@ -93,6 +101,7 @@ function render(result) {
     </details>`).join('')
   code('rules', result.directRules ?? result.rules)
   renderCalls(result)
+  renderConnections(result)
   $('findings').innerHTML = result.findings.map((finding) => {
     const [fn, variable, assignment] = finding.tuple
     const lhs = result.facts.assignment.find(([id]) => id === assignment)[1]
@@ -149,8 +158,39 @@ function renderCalls(result) {
       <pre class="code">${highlight(atom('entryWrite', [entry, variable]))}</pre>
       <p class="caption">Read every function along the path, including intermediate helpers. Guards are interpreted from source, not inferred by these rules.</p></article>`
   }).join('') || '<p>No entry-point writer matched the supported call and assignment forms. This is not a proof that storage cannot change.</p>'
-  $('call-tuples').innerHTML = Object.entries(result.derived).map(([name, rows]) => `<h3>${escape(name)} · ${rows.length}</h3><pre class="code long">${highlight(rows.map((row) => atom(name, row)).join('\n') || '// No tuples')}</pre>`).join('')
+  $('call-tuples').innerHTML = Object.entries(result.derived).filter(([name]) => !['externalDependency', 'resolvedCall'].includes(name)).map(([name, rows]) => `<h3>${escape(name)} · ${rows.length}</h3><pre class="code long">${highlight(rows.map((row) => atom(name, row)).join('\n') || '// No tuples')}</pre>`).join('')
 }
+
+function renderConnections(result) {
+  $('connection-section').hidden = !result.connectContracts
+  if (!result.connectContracts) return
+  code('connection-rules', result.connectionRules)
+  $('snapshot-status').textContent = result.snapshot ? `Snapshot attached: ${result.snapshot.label}. Deployment/source matching is supplied, not verified against bytecode.` : 'No snapshot attached. Source identifies the dependency, but does not select a deployed implementation.'
+  const names = new Map(result.facts.functionDefinition)
+  const vars = new Map(result.facts.stateVariable)
+  const contracts = new Map(result.facts.contractDefinition)
+  const fnLabel = (fn) => {
+    const c = result.facts.contractFunction.find(([, f]) => f === fn)?.[0]
+    return `${c === undefined ? '' : contracts.get(c) + '.'}${names.get(fn)}`
+  }
+  $('connection-findings').innerHTML = result.derived.externalDependency.map(([fn, call, variable]) => {
+    const targets = result.derived.resolvedCall.filter(([, c]) => c === call)
+    return `<article class="finding"><h3>${escape(fnLabel(fn))} → ${escape(vars.get(variable))}</h3>
+      <pre class="code">${highlight(result.locations[call].source)}</pre>
+      ${targets.length ? targets.map(([from, , to, target]) => `<ul class="call-tree"><li>${escape(from)}<ul><li>${escape(vars.get(variable))} = ${escape(to)}<ul><li><b>${escape(fnLabel(target))}</b><details open><summary>Read target function · line ${result.locations[target].line}</summary><pre class="code">${highlight(result.locations[target].source)}</pre></details></li></ul></li></ul></li></ul>`).join('') : '<p><b>Target unresolved.</b> The interface describes a call signature, not the behavior of the deployed gate.</p>'}
+      <p class="caption">For a normal external call, the target sees the calling contract as msg.sender. Here the source also passes an explicit argument; read which identity the target checks.</p></article>`
+  }).join('') || '<p>No supported external calls found. Other call forms are outside this lesson.</p>'
+  $('connection-findings').innerHTML += result.facts.snapshotAddress.map(([address, variable, value]) => `<p class="snapshot-value"><b>${escape(vars.get(variable))}</b> at ${escape(address)}<br />→ <code>${escape(value)}</code></p>`).join('')
+  const relations = { snapshotDeployment: result.facts.snapshotDeployment, snapshotAddress: result.facts.snapshotAddress, externalDependency: result.derived.externalDependency, resolvedCall: result.derived.resolvedCall }
+  $('connection-tuples').innerHTML = Object.entries(relations).map(([name, rows]) => `<h3>${escape(name)}</h3><pre class="code">${highlight(rows.map((row) => atom(name, row)).join('\n') || '// No tuples')}</pre>`).join('')
+}
+
+$('connect-contracts').addEventListener('change', () => {
+  $('snapshot-input').hidden = !$('connect-contracts').checked
+  invalidate()
+})
+$('attach-snapshot').addEventListener('change', invalidate)
+$('snapshot').addEventListener('input', invalidate)
 
 $('edit-source').addEventListener('click', () => {
   setEditing($('source').hidden)
@@ -162,9 +202,9 @@ $('collapse-tree').addEventListener('click', () => {
 $('raw-ids').addEventListener('change', () => {
   if (!currentRun) return
   // Preserve the reader's expanded facts/evidence when changing notation.
-  const details = [...document.querySelectorAll('#ast-tree details, #facts details, #findings details, #call-section details')].map((item) => item.open)
+  const details = [...document.querySelectorAll('#ast-tree details, #facts details, #findings details, #call-section details, #connection-section details')].map((item) => item.open)
   render(currentRun)
-  document.querySelectorAll('#ast-tree details, #facts details, #findings details, #call-section details').forEach((item, index) => { item.open = details[index] })
+  document.querySelectorAll('#ast-tree details, #facts details, #findings details, #call-section details, #connection-section details').forEach((item, index) => { item.open = details[index] })
 })
 $('follow-calls').addEventListener('change', invalidate)
 $('source').addEventListener('input', invalidate)
@@ -174,9 +214,9 @@ $('run').addEventListener('click', async () => {
   invalidate()
   setEditing(false)
   $('status').textContent = 'Compiling Solidity and running Soufflé…'
-  for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls']) $(id).disabled = true
+  for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls', 'connect-contracts', 'attach-snapshot', 'snapshot']) $(id).disabled = true
   try {
-    const response = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: $('source').value, followCalls: $('follow-calls').checked }) })
+    const response = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: $('source').value, followCalls: $('follow-calls').checked, connectContracts: $('connect-contracts').checked, snapshot: $('connect-contracts').checked && $('attach-snapshot').checked ? JSON.parse($('snapshot').value) : null }) })
     const result = await response.json()
     if (!response.ok) throw new Error(result.error)
     render(result)
@@ -185,7 +225,7 @@ $('run').addEventListener('click', async () => {
     $('error').textContent = error.message
     $('status').textContent = 'Run failed · no results shown'
   } finally {
-    for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls']) $(id).disabled = false
+    for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls', 'connect-contracts', 'attach-snapshot', 'snapshot']) $(id).disabled = false
   }
 })
 $('download').addEventListener('click', () => {

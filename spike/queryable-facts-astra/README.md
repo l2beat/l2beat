@@ -4,7 +4,7 @@ An incremental teaching prototype for narrowing smart-contract analysis. Stage 0
 asks: **which functions contain bare-identifier assignments to state variables?**
 It runs the Solidity compiler and Soufflé, displaying actual inputs and outputs.
 Lesson 02 adds an optional AI explanation based on those observations and source
-reading. Lesson 03 adds optional internal-call propagation and an entry-point view. There is no discovery integration or solver.
+reading. Lesson 03 adds optional internal-call propagation and an entry-point view. Lesson 04 adds external dependencies and an optional synthetic discovery snapshot. There is no live discovery integration or solver.
 
 ## Run it
 
@@ -352,3 +352,69 @@ lesson, and invalidates the previous AI investigation until you rerun.
 helpers, multiple entry points, recursive cycles, disconnected helpers,
 constructors, overload resolution, unreachable calls, unsupported external/
 virtual/pointer calls, and fallback/receive entries using real solc and Soufflé.
+
+
+## Lesson 04: connect an external call to a snapshot
+
+Choose **An external gate with a discovery snapshot**. All three declarations
+(`IGate`, `Playground`, `OwnerGate`) live in one Solidity compilation unit to keep
+source navigation simple. The deployment values are separate JSON inputs.
+
+1. Enable **lesson 04**, leave **Attach snapshot values** unchecked, and run.
+   `setScore` is still a potential writer. The new `externalDependency` tuple
+   locates its call through `gate`, but the target remains unresolved. Having an
+   interface and a candidate implementation in source does not select a deployment.
+2. Inspect the two additional clauses. One identifies the external dependency;
+   the other joins the state-variable reference with deployment values and the
+   compiler's ABI function selector. There are no gate- or owner-specific rules.
+3. Inspect the synthetic snapshot JSON, check **Attach snapshot values**, and
+   rerun. The view now connects Playground at `0x1111…1111` through `gate` to
+   OwnerGate at `0x2222…2222`, and shows the target's complete function. It also
+   displays the supplied `owner` value, `0x3333…3333`.
+4. Enable **lesson 02** and ask “Who can change score in the current snapshot?”
+   AI starts with the symbol index, then retrieves writers, source, external
+   dependencies and snapshot values. Inspect the actual investigation above the
+   answer. Permission claims remain source interpretation, not formal proof.
+5. Explain the identity distinction: Playground passes its `msg.sender` as the
+   `caller` argument. Inside OwnerGate, `msg.sender` would be Playground, but the
+   shown check uses `caller`. This distinction is interpreted from source;
+   the connection rule does not symbolically execute argument passing.
+
+Lesson 03 can be enabled independently alongside lesson 04. It still follows only
+supported internal calls; the new external connections are a separate reading
+view, not automatic propagation of permissions across contracts. Both references
+in the example are immutable so that changing authorization policy is a later
+lesson. No source says who was deployed where: the snapshot supplies that mapping.
+
+### Small implementation boundary
+
+- `src/snapshot.mjs` extracts contract membership, implemented ABI selectors,
+  and high-level external calls directly through state variables. It translates
+  the small synthetic JSON format into `snapshotDeployment` and `snapshotAddress`.
+- `rules/04-snapshot.dl` derives `externalDependency` and `resolvedCall` with real
+  Soufflé joins. A resolved tuple includes both caller and target deployment
+  addresses; separate instances of the same source contract remain distinct.
+- AI's `dependencies(functionId)` request returns call sites and resolved target
+  function IDs. `values(variableId)` returns address values per deployment.
+  Both are authentic retrieved material; neither makes a permission claim.
+- This is a teaching snapshot format, **not an importer for production
+  discovery.json**. It supports only address/contract-valued fields. All addresses
+  are normalized; malformed addresses, duplicate deployments, missing declarations
+  and implementation inheritance are rejected. Missing targets/ABI functions stay
+  unresolved. Interface inheritance is supported.
+- Source-to-deployment matching is supplied, not checked against runtime bytecode.
+  Proxies, delegatecall, inherited implementation dispatch, indirect receivers,
+  callbacks and future states remain outside this lesson. An empty result is not
+  evidence of absent dependencies or authorization.
+
+Without the website:
+
+```sh
+npm run pipeline -- examples/06-known-gate.sol --connect-contracts
+npm run pipeline -- examples/06-known-gate.sol --connect-contracts --snapshot examples/06-known-gate.discovery.json
+```
+
+The run saves the exact snapshot as `discovery.json` when attached, as well as its
+input facts, combined rules and derived CSV outputs. Editing source, snapshot or
+lesson toggles invalidates previous results. Restart `pnpm dev` after updating the
+server code; no new dependency installation is needed for this lesson.

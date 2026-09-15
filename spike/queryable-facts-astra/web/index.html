@@ -18,6 +18,8 @@
         <p class="caption">Adds source reading and an AI explanation after the same rules. Leave it off to present lesson 01.</p>
         <label class="lesson-toggle"><input type="checkbox" id="follow-calls" /> Enable lesson 03 · Follow internal calls</label>
         <p class="caption">Adds recursive potential writers and an entry-point view. Toggle, then run the stage again to compare.</p>
+        <label class="lesson-toggle"><input type="checkbox" id="connect-contracts" /> Enable lesson 04 · Connect external contracts</label>
+        <p class="caption">Find external dependencies first, then attach a snapshot to resolve their targets.</p>
       </section>
       <nav class="flow" aria-label="The pipeline">
         <a href="#source-section"><b>01</b> Solidity source</a><span>→</span>
@@ -32,6 +34,12 @@
         <div class="file-label">Playground.sol <span>solc 0.8.34 <button type="button" id="edit-source" class="secondary" aria-controls="source" aria-expanded="false">Edit source</button></span></div>
         <pre id="source-preview" class="source-code" aria-label="Solidity source, highlighted"></pre>
         <textarea id="source" spellcheck="false" aria-label="Solidity source" hidden></textarea>
+        <div id="snapshot-input" hidden>
+          <h3>Discovery snapshot</h3>
+          <p>These synthetic values associate deployed addresses with source contracts and address-valued fields. They are inputs, not inferred from the source or fetched from a chain.</p>
+          <label><input type="checkbox" id="attach-snapshot" /> Attach snapshot values to this run</label>
+          <details><summary>Inspect or edit the snapshot JSON</summary><textarea id="snapshot" aria-label="Discovery snapshot JSON" spellcheck="false" rows="14"></textarea></details>
+        </div>
         <div class="actions"><button id="run">Run this stage <span>→</span></button><button class="secondary" id="reset">Reset example</button><span id="status" role="status" aria-live="polite">Loading examples…</span></div>
         <pre id="error" role="alert" hidden></pre>
       </section>
@@ -75,6 +83,15 @@
           <div id="entry-findings"></div>
           <details><summary>All derived call and writer facts</summary><div id="call-tuples"></div></details>
           <p class="boundary">These paths locate source to inspect. They do not establish that a call succeeds or that a guard protects every route. Missing paths are not exclusion proofs under this lesson’s limited coverage.</p>
+        </section>
+        <section id="connection-section" class="card" hidden>
+          <p class="eyebrow">LESSON 04 / SOURCE + SNAPSHOT</p>
+          <h2>Where does the external call go?</h2>
+          <p id="snapshot-status"></p>
+          <div id="connection-findings"></div>
+          <details><summary>The additional Soufflé rules</summary><pre id="connection-rules" class="code"></pre></details>
+          <details><summary>Snapshot facts and derived connections</summary><div id="connection-tuples"></div></details>
+          <p class="boundary">The join identifies source to read under the supplied deployment mapping. It does not prove that the call is required, succeeds, or authorizes anyone. Missing targets remain unknown. This lesson does not resolve proxies or inherited implementations.</p>
         </section>
         <section id="reader-section" class="card" hidden>
           <div class="section-top"><div><p class="eyebrow">05 / LESSON 02</p><h2>Ask a question. Follow the investigation.</h2></div><span class="badge">Selected rules · source on request</span></div>

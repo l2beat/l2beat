@@ -27,7 +27,17 @@ symbol index and a rule description, NOT the source. Choose what to inspect.
 Your requests are executed against this compiler/Soufflé run and shown to the user.
 
 AVAILABLE REQUESTS
-${run.followCalls ? `- entrypoints: target = state-variable ID. Returns externally callable potential
+${run.connectContracts ? `- dependencies: target = function ID. Returns external calls through state variables
+  in that function, plus snapshot-resolved target function IDs when available.
+  Read the target function and relevant declarations. Follow dependencies again
+  if that target calls another contract. Missing resolution means unknown, not success.
+- values: target = state-variable ID. Returns supplied address values per deployment.
+  Use these to connect references and identify the owner in the current snapshot.
+  Values are supplied assumptions, not independently verified chain data.
+  For ordinary external calls, the callee's msg.sender is the calling contract.
+  A caller passed explicitly as an argument may instead be the original user.
+  Read the actual argument and the callee's check; do not conflate these identities.
+` : ''}${run.followCalls ? `- entrypoints: target = state-variable ID. Returns externally callable potential
   writers with ALL relevant internal-call edges and function IDs. Prefer this for
   questions about who can change a variable. Read every function on the returned
   paths, not just the entry point and direct writer: intermediate helpers may
@@ -93,7 +103,7 @@ const array = (items) => ({ type: 'array', items })
 const object = (properties) => ({ type: 'object', additionalProperties: false, required: Object.keys(properties), properties })
 export const answerSchema = object({
   action: { enum: ['inspect', 'answer'], type: 'string' },
-  tool: { enum: ['writers', 'entrypoints', 'source', 'lines', 'none'], type: 'string' }, target: string, why: string,
+  tool: { enum: ['writers', 'entrypoints', 'dependencies', 'values', 'source', 'lines', 'none'], type: 'string' }, target: string, why: string,
   claims: array(object({ text: string, evidence: array(object({ reference: string, explanation: string, lines: array({ type: 'integer' }) })) })),
   unknowns: array(string),
 })
@@ -102,6 +112,31 @@ export function inspect(run, symbols, request) {
   const { tool, target, why } = request
   if (typeof target !== 'string' || typeof why !== 'string' || !why.trim()) throw new Error('An inspection needs a target and purpose.')
   const symbol = symbols.find((s) => s.id === target)
+  if (tool === 'dependencies' || tool === 'values') {
+    if (!run.connectContracts) throw new Error('Enable lesson 04 and rerun to query external dependencies and snapshot values.')
+    const label = (id) => symbols.find((s) => s.id === String(id))?.label ?? String(id)
+    if (tool === 'values') {
+      if (!run.facts.stateVariable.some(([id]) => String(id) === target)) throw new Error('Values requires a state-variable ID.')
+      return { tool, target, why, title: `Snapshot values of ${symbol.label}`,
+        note: 'Supplied snapshot values; missing entries are unknown. These are not promises about future states.',
+        evidence: run.facts.snapshotAddress.filter(([, v]) => String(v) === target).map(([address, variable, value]) => ({
+          id: `value:${address}:${variable}`, kind: 'fact', title: `${symbol.label} at ${address}`,
+          text: `The supplied snapshot records ${symbol.label} = ${value} at deployment ${address}. Deployment/source matching is assumed, not bytecode-verified.`,
+          relation: 'snapshotAddress', tuple: [address, variable, value],
+        })) }
+    }
+    if (!run.facts.functionDefinition.some(([id]) => String(id) === target)) throw new Error('Dependencies requires a function ID.')
+    return { tool, target, why, title: `External dependencies of ${symbol.label}`,
+      note: 'Syntactic calls, not conditions proven necessary for a write. Read surrounding branches and later code. Only direct state-variable receivers are covered.',
+      evidence: run.derived.externalDependency.filter(([f]) => String(f) === target).map(([f, call, variable, selector]) => {
+        const targets = run.derived.resolvedCall.filter(([, c]) => c === call)
+        return { id: `dependency:${call}`, kind: 'fact', title: `${symbol.label} → ${label(variable)}`,
+          text: `Call at line ${run.locations[call].line} through ${label(variable)} (ABI selector ${selector}). ${targets.length ? targets.map(([from, , to, fn]) => `At ${from}, target ${to} resolves to ${label(fn)}.`).join(' ') : 'No target function resolved from the supplied snapshot; implementation remains unknown.'} Resolution locates source, not proof that this call succeeds or must execute.`,
+          relation: 'externalDependency', tuple: [f, call, variable, selector], variableId: String(variable),
+          targets: targets.map(([from, , to, fn]) => ({ from, to, functionId: String(fn), label: label(fn) })),
+        }
+      }) }
+  }
   if (tool === 'entrypoints') {
     if (!run.followCalls) throw new Error('Enable lesson 03 and rerun to query entry points.')
     if (!run.facts.stateVariable.some(([id]) => String(id) === target)) throw new Error('Entry points requires a state-variable ID from the index.')

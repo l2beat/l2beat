@@ -1,5 +1,8 @@
 // Presentation only. Compiler IDs, input facts, and Soufflé tuples stay numeric.
 const idColumns = {
+  contractDefinition: [0], contractVariable: [0, 1], contractFunction: [0, 1],
+  externalCall: [0, 1], snapshotDeployment: [1], snapshotAddress: [1],
+  externalDependency: [0, 1, 2], resolvedCall: [1, 3],
   functionDefinition: [0], stateVariable: [0], child: [0, 1],
   assignment: [0, 1], reference: [0, 1],
   functionVisibility: [0], functionKind: [0], internalCall: [0, 1],
