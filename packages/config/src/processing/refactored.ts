@@ -72,6 +72,7 @@ import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zama } from '../projects/zama/zama'
 import { zamaCw } from '../projects/zama-cw/zama-cw'
+import { zcashNearIntents } from '../projects/zcash-near-intents/zcash-near-intents'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -159,5 +160,6 @@ export const refactored: BaseProject[] = [
   tornadoCash,
   umbra,
   zamaCw,
+  zcashNearIntents,
   privacyBoost,
 ]
