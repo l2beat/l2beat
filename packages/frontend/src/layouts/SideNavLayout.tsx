@@ -36,7 +36,7 @@ const bannerWrapperVariants = cva('hidden lg:block 2xl:mr-0', {
 })
 
 const contentWrapperVariants = cva(
-  'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:pt-0',
+  'flex min-w-0 flex-1 flex-col md:pt-5 lg:pt-0',
   {
     variants: {
       variant: {
@@ -96,7 +96,7 @@ export function SideNavLayout({
   const topChildren = <TopBanner className={topBannerVariants({ variant })} />
 
   return (
-    <SidebarProvider>
+    <SidebarProvider hasBackdrop={backdrop !== undefined}>
       {backdrop}
       <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>

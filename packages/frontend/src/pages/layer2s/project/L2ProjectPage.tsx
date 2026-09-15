@@ -15,6 +15,7 @@ import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { useSmoothScroll } from '~/hooks/useSmoothScroll'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -33,6 +34,7 @@ export function L2ProjectPage({
   selectedUpdateId,
   ...props
 }: Props) {
+  useSmoothScroll()
   const navigationSections = projectDetailsToNavigationSections(
     projectEntry.sections,
   )
@@ -58,7 +60,7 @@ export function L2ProjectPage({
             />
           )}
           <div
-            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            className="group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
             data-has-colors={
               !!projectEntry.colors?.project || !!projectEntry.colors?.ecosystem

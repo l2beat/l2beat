@@ -9,6 +9,7 @@ import { TokensControls } from '~/components/projects/sections/tvs/TokensControl
 import { TvsProjectStats } from '~/components/projects/sections/tvs/TvsProjectStats'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
+import { useSmoothScroll } from '~/hooks/useSmoothScroll'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -32,6 +33,7 @@ export function L2ProjectTvsBreakdownPage({
   defaultRange,
   ...props
 }: Props) {
+  useSmoothScroll()
   return (
     <AppLayout {...props}>
       <SideNavLayout>
@@ -42,7 +44,7 @@ export function L2ProjectTvsBreakdownPage({
           tvsBreakdownTimestamp={dataTimestamp}
         />
         <div
-          className="smooth-scroll group/section-wrapper md:space-y-6"
+          className="group/section-wrapper md:space-y-6"
           data-project-page={true}
         >
           <SelectedTokenContextProvider>

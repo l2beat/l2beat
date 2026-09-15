@@ -36,11 +36,13 @@ function SidebarProvider({
   className,
   style,
   children,
+  hasBackdrop,
   ...props
 }: React.ComponentProps<'div'> & {
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  hasBackdrop?: boolean
 }) {
   const [openMobile, setOpenMobile] = React.useState(false)
 
@@ -65,9 +67,10 @@ function SidebarProvider({
           'group/sidebar-wrapper flex min-h-svh w-full flex-col bg-background',
           // A page that brings a `PageBackdrop` gets a stacking context, so the
           // scenery stays above this background and the nav paints none of its own.
-          'has-data-backdrop:relative has-data-backdrop:isolate',
+          hasBackdrop && 'relative isolate',
           className,
         )}
+        data-backdrop={hasBackdrop || undefined}
         {...props}
       >
         {children}
@@ -117,7 +120,7 @@ function Sidebar({
         )}
         {...props}
       >
-        <div className="flex size-full flex-col gap-6 bg-background group-has-data-backdrop/sidebar-wrapper:bg-transparent">
+        <div className="flex size-full flex-col gap-6 bg-background group-data-backdrop/sidebar-wrapper:bg-transparent">
           {children}
         </div>
       </div>

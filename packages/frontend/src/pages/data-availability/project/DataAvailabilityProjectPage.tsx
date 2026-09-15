@@ -10,6 +10,7 @@ import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { useSmoothScroll } from '~/hooks/useSmoothScroll'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { EthereumDaProjectSummary } from '~/pages/data-availability/project/components/EthereumDaProjectSummary'
@@ -29,6 +30,7 @@ export function DataAvailabilityProjectPage({
   queryState,
   ...props
 }: Props) {
+  useSmoothScroll()
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -37,7 +39,7 @@ export function DataAvailabilityProjectPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div
-            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            className="group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
             data-has-colors={!!entry.colors}
           >

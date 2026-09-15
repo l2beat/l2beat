@@ -16,10 +16,7 @@ export function InteropTransferSizeCard({
   categoryAxisWidth?: number
 }) {
   return (
-    <PrimaryCard
-      className={cn('flex h-[230px] flex-col', className)}
-      data-hide-overflow-x
-    >
+    <PrimaryCard className={cn('flex h-[230px] flex-col', className)}>
       <div className="flex items-center gap-2">
         <h2 className="font-bold text-heading-20">
           Transfer size distribution

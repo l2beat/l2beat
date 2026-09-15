@@ -877,10 +877,10 @@
 
 /* Rubber-band overscroll reveals the root background, and only ever one flat
    colour of it, so both ends of a backdrop page get its canvas. */
-html:has([data-backdrop="garden"]) {
+html[data-backdrop="garden"] {
   background-color: var(--garden-canvas);
 }
-html:has([data-backdrop="plot"]) {
+html[data-backdrop="plot"] {
   background-color: var(--plot-canvas);
 }
 

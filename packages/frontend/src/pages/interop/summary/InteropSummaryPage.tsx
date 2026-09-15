@@ -58,7 +58,10 @@ export function InteropSummaryPage({
           interopChains={interopChains}
           initialSelection={initialSelection}
         >
-          <SideNavLayout variant="wide">
+          <SideNavLayout
+            variant="wide"
+            childrenWrapperClassName="overflow-x-clip"
+          >
             <MainPageHeader>Interoperability</MainPageHeader>
             <Content
               interopChains={interopChains}
@@ -120,10 +123,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const breakdown = getTransferTypeBreakdown(data?.entries ?? [])
 
   return (
-    <div
-      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
-      data-hide-overflow-x
-    >
+    <div className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5">
       <div className="z-10">
         <TopRoutesWidget isLoading={isLoading} flows={data?.flows} />
       </div>

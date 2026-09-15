@@ -1,6 +1,7 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
+import { useSmoothScroll } from '~/hooks/useSmoothScroll'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -13,12 +14,13 @@ interface Props extends AppLayoutProps {
 }
 
 export function L2TvsBreakdownPage({ entries, ...props }: Props) {
+  useSmoothScroll()
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>Global TVS Breakdown</MainPageHeader>
         <div
-          className="smooth-scroll group/section-wrapper md:space-y-6"
+          className="group/section-wrapper md:space-y-6"
           data-project-page={true}
         >
           <TableFilterContextProvider>

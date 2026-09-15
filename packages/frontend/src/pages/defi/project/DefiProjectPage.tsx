@@ -13,6 +13,7 @@ import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { useSmoothScroll } from '~/hooks/useSmoothScroll'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -24,6 +25,7 @@ interface Props extends AppLayoutProps {
 }
 
 export function DefiProjectPage({ entry, queryState, ...props }: Props) {
+  useSmoothScroll()
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -32,7 +34,7 @@ export function DefiProjectPage({ entry, queryState, ...props }: Props) {
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div
-            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            className="group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
           >
             {!isNavigationEmpty && (

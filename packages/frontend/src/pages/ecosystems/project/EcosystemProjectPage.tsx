@@ -44,8 +44,8 @@ export function EcosystemProjectPage({
             excludeRwaRestrictedTokens: true,
           }}
         >
-          <SideNavLayout>
-            <div className="relative z-0 max-md:px-4" data-hide-overflow-x>
+          <SideNavLayout childrenWrapperClassName="overflow-x-clip">
+            <div className="relative z-0 max-md:px-4">
               <CssVariables
                 variables={{
                   'ecosystem-primary': ecosystem.colors.primary,

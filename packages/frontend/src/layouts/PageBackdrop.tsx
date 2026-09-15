@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useHtmlAttribute } from '~/hooks/useHtmlElement'
 import { cn } from '~/utils/cn'
 
 /** Names the canvas colour the root takes for overscroll - see globals.css. */
@@ -18,10 +19,10 @@ export function PageBackdrop({
   children: ReactNode
   className?: string
 }) {
+  useHtmlAttribute('data-backdrop', name)
   return (
     <div
       aria-hidden
-      data-backdrop={name}
       className={cn(
         '-z-10 -mb-[100svh] pointer-events-none sticky top-0 h-svh overflow-hidden',
         className,

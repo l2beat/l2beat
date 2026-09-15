@@ -93,7 +93,7 @@ function TokenFrameworksContent({
   )
 
   return (
-    <SideNavLayout>
+    <SideNavLayout childrenWrapperClassName="overflow-x-clip">
       <MainPageHeader description="This dashboard provides a comprehensive overview of the major token frameworks - multichain standards that can be used for token creation. The page uses cross-chain transfers data to provide insights on volume, transfers, tokens and speed across different chains.">
         Token frameworks
       </MainPageHeader>

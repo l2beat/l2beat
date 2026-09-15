@@ -93,7 +93,7 @@ function IntentBridgesContent({
   )
 
   return (
-    <SideNavLayout>
+    <SideNavLayout childrenWrapperClassName="overflow-x-clip">
       <MainPageHeader description="This dashboard provides an overview of intent-based bridge protocols. It combines indexed transfer activity with curated intent-specific properties such as user recovery paths, solver access, settlement model, active tokens and active chain routes.">
         Intent bridges
       </MainPageHeader>
