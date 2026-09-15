@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiViewer",
+  "category": "core",
+  "description": "Stateless read-only aggregator for off-chain interfaces. Holds no funds or permissions.",
+  "ignoreMethods": [
+    "EtherFiNodesManager_aggregatedBalanceOfUnusedSafes",
+    "proxiableUUID"
+  ]
+}

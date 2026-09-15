@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiOperationParameters",
+  "category": "gov",
+  "description": "Holds tunable operational parameters and per-role operator addresses.",
+  "ignoreMethods": ["proxiableUUID"]
+}
