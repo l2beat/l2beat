@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
@@ -1078,7 +1079,10 @@ describe(PrivacyFlowIndexer.name, () => {
 function transferConfig(opts: {
   id: string
   direction: 'deposit' | 'withdrawal'
-  params: { from?: EthereumAddress; to?: EthereumAddress }
+  params: Extract<
+    PrivacyFlowExtractorConfig,
+    { extractor: 'erc20Transfer' }
+  >['params']
   topics: (string | null)[]
 }): Configuration<PrivacyFlowIndexerConfig> {
   return {
