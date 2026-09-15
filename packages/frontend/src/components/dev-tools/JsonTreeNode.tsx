@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { formatBytes } from '@l2beat/shared-pure'
+import { useMemo, useState } from 'react'
+import { getJsonByteSize } from './sizeMetrics'
 
 interface JsonTreeNodeProps {
   value: unknown
@@ -16,6 +18,7 @@ export function JsonTreeNode({
   trailingComma = false,
 }: JsonTreeNodeProps) {
   const [isCollapsed, setIsCollapsed] = useState(depth > 0)
+  const byteSize = useMemo(() => getJsonByteSize(value), [value])
   const isArray = Array.isArray(value)
   const isObject = typeof value === 'object' && value !== null
   const entries = isObject
@@ -32,6 +35,7 @@ export function JsonTreeNode({
         <PropertyKey propertyKey={propertyKey} kind={propertyKeyKind} />
         <PrimitiveValue value={value} />
         <span className="text-secondary">{comma}</span>
+        <ByteSize bytes={byteSize} />
       </div>
     )
   }
@@ -48,6 +52,7 @@ export function JsonTreeNode({
           {closingBracket}
         </span>
         <span className="text-secondary">{comma}</span>
+        <ByteSize bytes={byteSize} />
       </div>
     )
   }
@@ -73,6 +78,7 @@ export function JsonTreeNode({
             <span className="text-secondary">{comma}</span>
           </>
         )}
+        <ByteSize bytes={byteSize} />
       </button>
       {!isCollapsed && (
         <>
@@ -114,6 +120,18 @@ function PropertyKey({
   }
 
   return <span className="text-link">{`${JSON.stringify(propertyKey)}: `}</span>
+}
+
+function ByteSize({ bytes }: { bytes: number | undefined }) {
+  if (bytes === undefined) {
+    return null
+  }
+
+  return (
+    <span className="ml-2 text-secondary/70">
+      {formatBytes(bytes, { decimals: bytes < 1024 ? 0 : 1 })}
+    </span>
+  )
 }
 
 function PrimitiveValue({ value }: { value: unknown }) {
