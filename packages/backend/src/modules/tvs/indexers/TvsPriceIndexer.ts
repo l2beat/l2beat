@@ -20,6 +20,11 @@ export interface TvsPriceIndexerDeps
   priceProvider: PriceProvider
 }
 
+// If more than this ratio of all configurations is failing we assume the
+// problem is systemic (e.g. Coingecko outage) and rethrow to let the retry
+// strategy handle it instead of quarantining the configurations.
+const MAX_QUARANTINED_RATIO = 0.2
+
 export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   constructor(
     private readonly $: TvsPriceIndexerDeps,
@@ -51,15 +56,26 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       return () => Promise.resolve(to)
     }
 
+    const activeConfigurations = configurations.filter(
+      (c) => !this.isConfigurationQuarantined(c.id),
+    )
+    if (activeConfigurations.length < configurations.length) {
+      this.logger.info('Skipping quarantined configurations', {
+        skipped: configurations.length - activeConfigurations.length,
+      })
+    }
+
     this.logger.info('Fetching prices', {
       from,
       to: adjustedTo,
-      configurations: configurations.length,
+      configurations: activeConfigurations.length,
     })
+
+    const failures: { configurationId: string; error: unknown }[] = []
 
     const records = (
       await Promise.all(
-        configurations.map(async (configuration) => {
+        activeConfigurations.map(async (configuration) => {
           try {
             const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
               CoingeckoId(configuration.properties.priceId),
@@ -93,11 +109,35 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
               return []
             }
 
-            throw error
+            this.logger.error(
+              `Error fetching prices for ${configuration.properties.priceId}`,
+              {
+                priceId: configuration.properties.priceId,
+                error,
+              },
+            )
+
+            failures.push({ configurationId: configuration.id, error })
+            return []
           }
         }),
       )
     ).flat()
+
+    if (failures.length > 0) {
+      const maxQuarantined = Math.floor(
+        this.options.configurations.length * MAX_QUARANTINED_RATIO,
+      )
+      if (
+        this.quarantinedConfigurationsCount() + failures.length >
+        maxQuarantined
+      ) {
+        throw failures[0]?.error
+      }
+      for (const failure of failures) {
+        this.quarantineConfiguration(failure.configurationId)
+      }
+    }
 
     this.logger.info('Fetched prices', {
       from,
