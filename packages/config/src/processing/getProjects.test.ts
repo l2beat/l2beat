@@ -435,7 +435,7 @@ describe('getProjects', () => {
   })
 
   describe('contracts', () => {
-    for (const project of getProjects()) {
+    for (const project of projects) {
       describe(project.id, () => {
         const permissions = Object.values(project.permissions ?? {})
         const all = [
