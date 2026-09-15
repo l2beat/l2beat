@@ -1,4 +1,5 @@
 import { v } from '@l2beat/validate'
+import { createPublicClient, http, parseAbi } from 'viem'
 import type { Address, Chain } from '../config/types'
 import { JsonRpcClient } from './JsonRpcClient'
 
@@ -11,6 +12,31 @@ export class AlchemyClient {
   private client = new JsonRpcClient()
 
   constructor(private key: string) {}
+
+  async getSafeState(address: `0x${string}`, chain: Chain) {
+    const client = createPublicClient({
+      transport: http(this.url(chain), { timeout: 15_000, retryCount: 1 }),
+    })
+    const blockNumber = await client.getBlockNumber()
+    const abi = parseAbi([
+      'function nonce() view returns (uint256)',
+      'function VERSION() view returns (string)',
+    ])
+    const [nonce, version] = await Promise.all([
+      client.readContract({ address, abi, functionName: 'nonce', blockNumber }),
+      client.readContract({
+        address,
+        abi,
+        functionName: 'VERSION',
+        blockNumber,
+      }),
+    ])
+    return {
+      nonce: nonce.toString(),
+      version,
+      blockNumber: blockNumber.toString(),
+    }
+  }
 
   async hasNoCode(address: `0x${string}`, chain: Chain): Promise<boolean> {
     const code = await this.client.call(this.url(chain), {
