@@ -1650,5 +1650,7 @@
   "static/images/architecture/rocketpool-withdrawals.png": "bca20bfa51a7a6e129b222886c98008b",
   "static/icons/fluidkey.png": "f6a8a9273fd3fe83426071dbbd15fdae",
   "static/images/architecture/fluidkey.png": "ccb41fdbeb431ca8e807c4af88b6c906",
-  "static/meta-images/privacy/projects/fluidkey/opengraph-image.png": "b73a90fc5bdc75a3deca877b5ef6a9cf"
+  "static/meta-images/privacy/projects/fluidkey/opengraph-image.png": "b73a90fc5bdc75a3deca877b5ef6a9cf",
+  "static/icons/zcash-near-intents.png": "c0635cdba1122fc6c6ffbd23e275038e",
+  "static/meta-images/privacy/projects/zcash-near-intents/opengraph-image.png": "814cbb8355d3247aa0626b384bab186e"
 }
