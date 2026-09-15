@@ -1,5 +1,6 @@
+import type { VisibilityState } from '@tanstack/react-table'
 import type { Dispatch, SetStateAction } from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useEventCallback } from './useEventCallback'
 import { useEventListener } from './useEventListener'
@@ -15,7 +16,7 @@ declare global {
  * together with the type of the value stored under it.
  */
 type LocalStorageSchema = {
-  [K in `table-hidden-columns-${string}`]: string[]
+  [K in `table-column-visibility-${string}`]: VisibilityState
 } & {
   [K in `whats-new-${string}`]: boolean
 } & {
@@ -104,20 +105,13 @@ export function useLocalStorage<K extends LocalStorageKey>(
     }
   }, [initialValue, key, deserializer])
 
-  const [storedValue, setState] = useState(() => {
+  const [storedValue, setStoredValue] = useState(() => {
     if (initializeWithValue) {
       return readValue()
     }
 
     return initialValue instanceof Function ? initialValue() : initialValue
   })
-  const storedValueRef = useRef(storedValue)
-
-  const setStoredValue = useCallback((value: T) => {
-    // Keep consecutive updates in sync even before React renders again.
-    storedValueRef.current = value
-    setState(value)
-  }, [])
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
@@ -129,14 +123,15 @@ export function useLocalStorage<K extends LocalStorageKey>(
       )
     }
 
-    // Use in-memory state because storage can be stale after a failed write.
-    const newValue =
-      value instanceof Function ? value(storedValueRef.current) : value
-    setStoredValue(newValue)
-
     try {
+      // Allow value to be a function so we have the same API as useState
+      const newValue = value instanceof Function ? value(readValue()) : value
+
       // Save to local storage
       window.localStorage.setItem(key, serializer(newValue))
+
+      // Save state
+      setStoredValue(newValue)
 
       // We dispatch a custom event so every similar useLocalStorage hook is notified
       window.dispatchEvent(new StorageEvent('local-storage', { key }))
@@ -178,7 +173,7 @@ export function useLocalStorage<K extends LocalStorageKey>(
       }
       setStoredValue(readValue())
     },
-    [key, readValue, setStoredValue],
+    [key, readValue],
   )
 
   // this only works for other documents, not the current one

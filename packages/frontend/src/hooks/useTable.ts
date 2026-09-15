@@ -1,75 +1,38 @@
 import type {
   RowData,
   TableOptions,
-  Updater,
   VisibilityState,
 } from '@tanstack/react-table'
-import { functionalUpdate, useReactTable } from '@tanstack/react-table'
-import { useCallback, useMemo } from 'react'
+import { useReactTable } from '@tanstack/react-table'
 import { useLocalStorage } from './useLocalStorage'
 
-const NO_HIDDEN_COLUMNS: string[] = []
-
-const STORAGE_OPTIONS = {
-  initializeWithValue: false,
-  deserializer: parseHiddenColumns,
-}
+const ALL_VISIBLE: VisibilityState = {}
 
 export function useTable<TData extends RowData>(
   tableId: string,
   options: TableOptions<TData>,
 ) {
-  const [hiddenColumns, setHiddenColumns] = useLocalStorage(
-    `table-hidden-columns-${tableId}`,
-    NO_HIDDEN_COLUMNS,
-    STORAGE_OPTIONS,
+  // Read after mount so the first client render matches the server.
+  const [columnVisibility, setColumnVisibility] = useLocalStorage(
+    `table-column-visibility-${tableId}`,
+    ALL_VISIBLE,
+    { initializeWithValue: false },
   )
 
-  const columnVisibility = useMemo(
-    () => toVisibilityState(hiddenColumns),
-    [hiddenColumns],
-  )
-
-  const onColumnVisibilityChange = useCallback(
-    (updater: Updater<VisibilityState>) => {
-      setHiddenColumns((previous) =>
-        toHiddenColumns(functionalUpdate(updater, toVisibilityState(previous))),
-      )
-    },
-    [setHiddenColumns],
-  )
+  // Caller-controlled visibility takes precedence, so persistence is disabled
+  // entirely rather than writing values that would never be read back.
+  const isControlled = options.state?.columnVisibility !== undefined
 
   return useReactTable({
     enableSortingRemoval: false,
-    onColumnVisibilityChange,
+    onColumnVisibilityChange: isControlled ? undefined : setColumnVisibility,
     ...options,
-    state: {
-      columnVisibility,
-      ...options.state,
-    },
+    state: isControlled
+      ? options.state
+      : { ...options.state, columnVisibility },
     initialState: {
       sorting: [{ id: '#', desc: false }],
       ...options.initialState,
     },
   })
-}
-
-export function parseHiddenColumns(raw: string): string[] {
-  try {
-    const parsed: unknown = JSON.parse(raw)
-    if (Array.isArray(parsed) && parsed.every((id) => typeof id === 'string')) {
-      return parsed
-    }
-  } catch {
-    // fall through
-  }
-  return NO_HIDDEN_COLUMNS
-}
-
-export function toVisibilityState(hiddenColumns: string[]): VisibilityState {
-  return Object.fromEntries(hiddenColumns.map((id) => [id, false]))
-}
-
-export function toHiddenColumns(visibility: VisibilityState): string[] {
-  return Object.keys(visibility).filter((id) => visibility[id] === false)
 }
