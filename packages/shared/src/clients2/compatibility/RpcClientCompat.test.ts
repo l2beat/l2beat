@@ -27,7 +27,7 @@ describe(RpcClientCompat.name, () => {
   })
 
   describe(RpcClientCompat.prototype.getLogs.name, () => {
-    it('treats multiple event signatures as topic zero alternatives', async () => {
+    it('passes positional topic filters through unchanged', async () => {
       const getLogs = mockFn<EthRpcClient['getLogs']>().resolvesTo([])
       const client = new RpcClientCompat(
         mockObject<EthRpcClient>({ getLogs }),
@@ -36,7 +36,11 @@ describe(RpcClientCompat.name, () => {
       const addresses = [
         EthereumAddress('0x1111111111111111111111111111111111111111'),
       ]
-      const topics = [`0x${'aa'.repeat(32)}`, `0x${'bb'.repeat(32)}`]
+      const topics = [
+        [`0x${'aa'.repeat(32)}`, `0x${'bb'.repeat(32)}`],
+        null,
+        `0x${'cc'.repeat(32)}`,
+      ]
 
       await client.getLogs(100, 200, addresses, topics)
 
@@ -44,7 +48,7 @@ describe(RpcClientCompat.name, () => {
         fromBlock: 100n,
         toBlock: 200n,
         address: addresses,
-        topics: [topics],
+        topics,
       })
     })
   })

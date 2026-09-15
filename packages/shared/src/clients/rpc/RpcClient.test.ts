@@ -225,7 +225,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -296,7 +296,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -312,7 +312,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockMiddleBlock.toString(16)}`,
             },
@@ -328,7 +328,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${(mockMiddleBlock + 1).toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
