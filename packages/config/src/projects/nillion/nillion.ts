@@ -54,7 +54,7 @@ export const nillion: ScalingProject = opStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.nillion.network',
+        url: 'https://rpc-blacklight-x9da3b5afc.t.conduit.xyz',
         callsPerMinute: 100,
       },
       {
