@@ -18,7 +18,11 @@ import {
   withRetries,
 } from '@l2beat/shared'
 import type { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { buildSnapshotKey, type ExampleInputs } from './service'
+import {
+  buildLogsSnapshotKey,
+  buildSnapshotKey,
+  type ExampleInputs,
+} from './service'
 
 interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   url: string
@@ -164,15 +168,9 @@ export class RpcSnapshotClient extends RpcClientCompat {
     addresses?: string[],
     topics?: LogsTopicFilter,
   ): Promise<EVMLog[]> {
-    const addressKey = addresses?.join(',') ?? 'all'
-    const topicsKey = topics ? JSON.stringify(topics) : 'all'
-    const key = this.buildSnapshotKey([
-      'logs',
-      from.toString(),
-      to.toString(),
-      addressKey,
-      topicsKey,
-    ])
+    const key = this.buildSnapshotKey(
+      buildLogsSnapshotKey(from, to, addresses, topics),
+    )
 
     const logs = await super.getLogs(from, to, addresses, topics)
     await this.exampleInputs.writeRpc(key, logs)
