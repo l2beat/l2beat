@@ -14,8 +14,8 @@ export function createReader({ escape, highlight }) {
     }).join('')}</pre>`
   }
   function materialView(material, selected = []) {
-    if (material.kind === 'fact') return `<div class="fact-evidence"><span class="evidence-kind">${material.relation === 'snapshotAddress' ? 'SUPPLIED SNAPSHOT VALUE' : 'SOUFFLÉ OBSERVATION'}</span><h4>${escape(material.title)}</h4><p>${escape(material.text)}</p><p class="caption">An observation under the selected rules and supplied inputs. This does not establish permission or successful execution.</p></div>`
-    return `<div class="source-evidence"><div class="evidence-heading"><b>${escape(material.title)}</b><span>Playground.sol · lines ${material.start}–${material.end}</span></div>${source(material, selected)}</div>`
+    if (material.kind === 'fact') return `<div class="fact-evidence"><span class="evidence-kind">${material.relation === 'snapshotValue' ? 'SUPPLIED SNAPSHOT VALUE' : 'SOUFFLÉ OBSERVATION'}</span><h4>${escape(material.title)}</h4><p>${escape(material.text)}</p><p class="caption">An observation under the selected rules and supplied inputs. This does not establish permission or successful execution.</p></div>`
+    return `<div class="source-evidence"><div class="evidence-heading"><b>${escape(material.title)}</b><span>${escape(material.file ?? 'Playground.sol')} · lines ${material.start}–${material.end}</span></div>${source(material, selected)}</div>`
   }
   function clearAnswer() {
     revision++

@@ -1,5 +1,5 @@
 import { createServer } from 'node:http'
-import { readFile } from 'node:fs/promises'
+import { readFile, readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { root, runPipeline } from './pipeline.mjs'
 import { ask, aiConfig, loadRun } from './ask.mjs'
@@ -30,9 +30,14 @@ const server = createServer(async (req, res) => {
       return send(res, 200, await readFile(join(root, 'web', file), 'utf8'), type)
     }
     if (req.method === 'GET' && path === '/api/examples') {
-      const items = await Promise.all(examples.map(async (example) => ({
-        ...example, snapshot: example.id === '06-known-gate' ? JSON.parse(await readFile(join(root, 'examples/06-known-gate.discovery.json'), 'utf8')) : null, source: await readFile(join(root, 'examples', `${example.id}.sol`), 'utf8'),
-      })))
+      const items = await Promise.all(examples.map(async (example) => {
+        if (example.id !== '06-known-gate') return { ...example, source: await readFile(join(root, 'examples', `${example.id}.sol`), 'utf8') }
+        const project = join(root, 'examples/playground')
+        const files = (await readdir(join(project, '.flat'))).filter((f) => f.endsWith('.sol')).sort((a, b) => a === 'Playground.sol' ? -1 : b === 'Playground.sol' ? 1 : a.localeCompare(b))
+        return { ...example, snapshot: JSON.parse(await readFile(join(project, 'discovered.json'), 'utf8')),
+          sources: Object.fromEntries(await Promise.all(files.map(async (file) => [`.flat/${file}`, await readFile(join(project, '.flat', file), 'utf8')]))),
+        }
+      }))
       return send(res, 200, items)
     }
     if (req.method === 'GET' && path === '/api/ai-config') return send(res, 200, aiConfig())
@@ -67,8 +72,8 @@ const server = createServer(async (req, res) => {
           } catch (error) { emit({ type: 'error', message: error.message }) }
           return res.end()
         }
-        if (typeof body?.source !== 'string') return send(res, 400, { error: 'Expected Solidity source.' })
-        return send(res, 200, await runPipeline(body.source, { followCalls: body.followCalls === true, connectContracts: body.connectContracts === true, snapshot: body.snapshot ?? null }))
+        if (!body?.sources && typeof body?.source !== 'string') return send(res, 400, { error: 'Expected Solidity source.' })
+        return send(res, 200, await runPipeline(body.sources ?? body.source, { followCalls: body.followCalls === true, connectContracts: body.connectContracts === true, snapshot: body.snapshot ?? null }))
       } finally { busy = false }
     }
     send(res, 404, { error: 'Not found' })

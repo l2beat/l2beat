@@ -13,7 +13,8 @@ const descriptions = {
   contractFunction: 'A locally implemented ABI function and its compiler selector.',
   externalCall: 'A high-level external call directly through a state variable.',
   snapshotDeployment: 'A supplied address-to-source-contract association.',
-  snapshotAddress: 'A supplied address value for a deployment’s variable.',
+  addressVariable: 'A state variable whose Solidity type is an address or contract reference.',
+  snapshotValue: 'A supplied value with its Solidity type, tied to a specific deployment and variable.',
   functionDefinition: 'A function declaration and its name.',
   stateVariable: 'A declaration marked stateVariable by the compiler.',
   child: 'An AST node directly contains another AST node.',
@@ -65,8 +66,12 @@ function invalidate() {
 }
 function selectExample() {
   const example = examples.find((item) => item.id === $('example').value)
-  $('source').value = example.source
-  $('snapshot').value = JSON.stringify(example.snapshot ?? { label: 'Synthetic snapshot', deployments: [] }, null, 2)
+  const sources = Object.entries(example.sources ?? { 'Playground.sol': example.source })
+  $('source').value = sources[0][1]
+  $('source').dataset.file = sources[0][0]
+  $('source-file').textContent = sources[0][0]
+  $('additional-sources').innerHTML = sources.slice(1).map(([file, source]) => `<section class="additional-source"><div class="file-label"><b>${escape(file)}</b><button type="button" class="secondary extra-edit" aria-expanded="false">Edit source</button></div><pre class="source-code extra-preview">${highlight(source)}</pre><textarea class="extra-source" data-file="${escape(file)}" aria-label="${escape(file)} source" spellcheck="false" hidden>${escape(source)}</textarea></section>`).join('')
+  $('snapshot').value = JSON.stringify(example.snapshot ?? { name: 'synthetic', entries: [] }, null, 2)
   $('attach-snapshot').checked = false
   setEditing(false)
   $('example-description').textContent = example.description
@@ -82,7 +87,7 @@ function render(result) {
   $('fact-count').textContent = `${count} base facts`
   $('finding-count').textContent = `${result.findings.length} ${result.findings.length === 1 ? 'site' : 'sites'}`
   $('compiler-version').textContent = `Compiled with solc ${result.compilerVersion}`
-  const ast = result.compilerOutput.sources['Playground.sol'].ast
+  const ast = Object.values(result.compilerOutput.sources).map((s) => s.ast)
   idLabels = makeIdLabels(ast, result.locations)
   $('ast-tree').innerHTML = renderAstTree(result, idLabels, $('raw-ids').checked, escape)
   function assignments(value) {
@@ -91,7 +96,7 @@ function render(result) {
   }
   code('compiler-excerpts', JSON.stringify(assignments(ast), null, 2))
   code('ast', JSON.stringify(ast, null, 2))
-  code('storage', JSON.stringify(result.compilerOutput.contracts?.['Playground.sol'] ?? {}, null, 2))
+  code('storage', JSON.stringify(result.compilerOutput.contracts ?? {}, null, 2))
   $('warnings').innerHTML = result.warnings.length ? `<details><summary>Compiler diagnostics (${result.warnings.length})</summary><pre>${escape(result.warnings.join('\n'))}</pre></details>` : ''
   $('facts').innerHTML = Object.entries(result.facts).map(([name, rows]) => `
     <details class="relation-card" ${name === 'child' || name === 'reference' ? '' : 'open'}>
@@ -117,7 +122,7 @@ function render(result) {
     ].join('\n')
     return `<article class="finding"><span class="potential">POTENTIAL WRITER</span>
       <h3>${escape(finding.function)} → ${escape(finding.variable)}</h3>
-      <p>This function contains a direct assignment at line ${finding.line}.</p>
+      <p>This function contains a direct assignment in ${escape(finding.file)} · line ${finding.line}.</p>
       <pre class="code">${highlight(finding.assignment)}</pre>
       <p class="caption">Derived by Soufflé</p><pre class="code atom">${highlight(atom('directWrite', finding.tuple))}</pre>
       <details><summary>Input facts behind this tuple</summary><p>The child chain establishes <code>${escape(atom('withinFunction', [fn, assignment]).slice(0, -1))}</code>. The other facts complete the direct-write rule.</p><pre class="code">${highlight(premises)}</pre></details>
@@ -148,7 +153,7 @@ function renderCalls(result) {
       const children = edges.filter(([, , caller]) => caller === fn).map(([, , , callee, site]) => branch(callee, site)).join('')
       const location = result.locations[fn]
       return `<li><b>${escape(label)}</b>${callSite ? `<span class="caption"> · call at line ${result.locations[callSite].line}</span>` : ''}
-        <details><summary>Read ${escape(names.get(fn))} · line ${location.line}</summary><pre class="code">${highlight(location.source)}</pre></details>
+        <details><summary>Read ${escape(names.get(fn))} · ${escape(location.file)}:${location.line}</summary><pre class="code">${highlight(location.source)}</pre></details>
         ${writes.map((f) => `<p class="path-write">↳ assigns ${escape(f.variable)} at line ${f.line}</p>`).join('')}
         ${children ? `<ul>${children}</ul>` : ''}</li>`
     }
@@ -165,25 +170,55 @@ function renderConnections(result) {
   $('connection-section').hidden = !result.connectContracts
   if (!result.connectContracts) return
   code('connection-rules', result.connectionRules)
-  $('snapshot-status').textContent = result.snapshot ? `Snapshot attached: ${result.snapshot.label}. Deployment/source matching is supplied, not verified against bytecode.` : 'No snapshot attached. Source identifies the dependency, but does not select a deployed implementation.'
+  $('snapshot-status').textContent = result.snapshot ? `Using ${result.snapshot.name}/discovered.json (synthetic data). Entries associate each contract name with its deployed address and current values.` : 'No discovered.json attached. We can locate the call in source, but cannot select a deployed target from the available implementations.'
   const names = new Map(result.facts.functionDefinition)
   const vars = new Map(result.facts.stateVariable)
   const contracts = new Map(result.facts.contractDefinition)
+  const deployments = new Map(result.facts.snapshotDeployment)
+  const variableContract = (variable) => result.facts.contractVariable.find(([, v]) => v === variable)?.[0]
   const fnLabel = (fn) => {
     const c = result.facts.contractFunction.find(([, f]) => f === fn)?.[0]
     return `${c === undefined ? '' : contracts.get(c) + '.'}${names.get(fn)}`
   }
   $('connection-findings').innerHTML = result.derived.externalDependency.map(([fn, call, variable]) => {
     const targets = result.derived.resolvedCall.filter(([, c]) => c === call)
-    return `<article class="finding"><h3>${escape(fnLabel(fn))} → ${escape(vars.get(variable))}</h3>
-      <pre class="code">${highlight(result.locations[call].source)}</pre>
-      ${targets.length ? targets.map(([from, , to, target]) => `<ul class="call-tree"><li>${escape(from)}<ul><li>${escape(vars.get(variable))} = ${escape(to)}<ul><li><b>${escape(fnLabel(target))}</b><details open><summary>Read target function · line ${result.locations[target].line}</summary><pre class="code">${highlight(result.locations[target].source)}</pre></details></li></ul></li></ul></li></ul>`).join('') : '<p><b>Target unresolved.</b> The interface describes a call signature, not the behavior of the deployed gate.</p>'}
-      <p class="caption">For a normal external call, the target sees the calling contract as msg.sender. Here the source also passes an explicit argument; read which identity the target checks.</p></article>`
+    const location = result.locations[call]
+    const field = `${contracts.get(variableContract(variable))}.${vars.get(variable)}`
+    return `<article class="finding"><h3>${escape(fnLabel(fn))} calls ${escape(location.source.split('(')[0])}</h3>
+      <p class="caption">Call site · ${escape(location.file)}:${location.line}</p>
+      <pre class="code">${highlight(location.source)}</pre>
+      <details><summary>Read the calling function in context</summary><pre class="code">${highlight(result.locations[fn].source)}</pre></details>
+      ${targets.length ? targets.map(([from, , to, target]) => `<ol class="connection-path">
+        <li><span class="eyebrow">CALLING CONTRACT</span><h4>${escape(contracts.get(deployments.get(from)))}</h4><p>Deployed at <code>${escape(from)}</code></p></li>
+        <li><span class="eyebrow">REFERENCE VALUE FROM DISCOVERY</span><h4>${escape(field)}</h4><p>This variable holds <code>${escape(to)}</code>.</p><p>That address belongs to <b>${escape(contracts.get(deployments.get(to)))}</b> in discovered.json.</p></li>
+        <li><span class="eyebrow">MATCHING TARGET FUNCTION</span><h4>${escape(fnLabel(target))}</h4><p>${escape(result.locations[target].file)} · line ${result.locations[target].line}</p><pre class="code">${highlight(result.locations[target].source)}</pre></li>
+      </ol>`).join('') : '<p><b>Target unresolved.</b> The call signature is known, but no target implementation was resolved from discovery. Available source files alone do not establish the deployed target.</p>'}
+      <details><summary>How the rule connects these pieces</summary><p><code>externalDependency</code> locates the call in the function. <code>resolvedCall</code> joins the calling deployment, the value of <b>${escape(field)}</b>, the target deployment, and the compiler’s ABI selector. This is a source lookup, not an authorization check.</p></details>
+      <p class="caption">A normal external call makes the calling contract the target’s msg.sender. Explicit arguments are separate; read which identity the target checks.</p></article>`
   }).join('') || '<p>No supported external calls found. Other call forms are outside this lesson.</p>'
-  $('connection-findings').innerHTML += result.facts.snapshotAddress.map(([address, variable, value]) => `<p class="snapshot-value"><b>${escape(vars.get(variable))}</b> at ${escape(address)}<br />→ <code>${escape(value)}</code></p>`).join('')
-  const relations = { snapshotDeployment: result.facts.snapshotDeployment, snapshotAddress: result.facts.snapshotAddress, externalDependency: result.derived.externalDependency, resolvedCall: result.derived.resolvedCall }
+  if (result.snapshot) {
+    $('connection-findings').innerHTML += `<h3>Current values from discovered.json</h3><p>Each table belongs to one deployed contract. Omitted fields are unknown, not zero.</p>` + result.facts.snapshotDeployment.map(([address, contract]) => {
+      const values = result.facts.snapshotValue.filter(([a]) => a === address)
+      return `<section class="deployment-values"><h4>${escape(contracts.get(contract))}</h4><p>Deployed at <code>${escape(address)}</code> · source <code>.flat/${escape(contracts.get(contract))}.sol</code></p><div class="table-scroll"><table><thead><tr><th>State variable</th><th>Solidity type</th><th>Current value</th></tr></thead><tbody>${values.map(([, variable, type, value]) => `<tr><td>${escape(vars.get(variable))}</td><td><code>${escape(type)}</code></td><td><code>${escape(value)}</code></td></tr>`).join('')}</tbody></table></div></section>`
+    }).join('')
+  }
+  const relations = { snapshotDeployment: result.facts.snapshotDeployment, snapshotValue: result.facts.snapshotValue, externalDependency: result.derived.externalDependency, resolvedCall: result.derived.resolvedCall }
   $('connection-tuples').innerHTML = Object.entries(relations).map(([name, rows]) => `<h3>${escape(name)}</h3><pre class="code">${highlight(rows.map((row) => atom(name, row)).join('\n') || '// No tuples')}</pre>`).join('')
 }
+
+function sourceInputs() { return [$('source'), ...document.querySelectorAll('.extra-source')] }
+$('additional-sources').addEventListener('input', invalidate)
+$('additional-sources').addEventListener('click', (event) => {
+  const button = event.target.closest('.extra-edit')
+  if (!button) return
+  const section = button.closest('.additional-source')
+  const input = section.querySelector('textarea'), preview = section.querySelector('pre')
+  input.hidden = !input.hidden
+  preview.hidden = !input.hidden
+  preview.innerHTML = highlight(input.value)
+  button.textContent = input.hidden ? 'Edit source' : 'Done editing'
+  button.setAttribute('aria-expanded', String(!input.hidden))
+})
 
 $('connect-contracts').addEventListener('change', () => {
   $('snapshot-input').hidden = !$('connect-contracts').checked
@@ -215,8 +250,9 @@ $('run').addEventListener('click', async () => {
   setEditing(false)
   $('status').textContent = 'Compiling Solidity and running Soufflé…'
   for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls', 'connect-contracts', 'attach-snapshot', 'snapshot']) $(id).disabled = true
+  for (const input of document.querySelectorAll('.extra-source, .extra-edit')) input.disabled = true
   try {
-    const response = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: $('source').value, followCalls: $('follow-calls').checked, connectContracts: $('connect-contracts').checked, snapshot: $('connect-contracts').checked && $('attach-snapshot').checked ? JSON.parse($('snapshot').value) : null }) })
+    const response = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sources: Object.fromEntries(sourceInputs().map((input) => [input.dataset.file, input.value])), followCalls: $('follow-calls').checked, connectContracts: $('connect-contracts').checked, snapshot: $('connect-contracts').checked && $('attach-snapshot').checked ? JSON.parse($('snapshot').value) : null }) })
     const result = await response.json()
     if (!response.ok) throw new Error(result.error)
     render(result)
@@ -225,6 +261,7 @@ $('run').addEventListener('click', async () => {
     $('error').textContent = error.message
     $('status').textContent = 'Run failed · no results shown'
   } finally {
+    for (const input of document.querySelectorAll('.extra-source, .extra-edit')) input.disabled = false
     for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls', 'connect-contracts', 'attach-snapshot', 'snapshot']) $(id).disabled = false
   }
 })

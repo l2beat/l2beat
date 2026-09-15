@@ -31,14 +31,15 @@
       <section id="source-section" class="card source-card">
         <div class="section-top"><div><p class="eyebrow">01 / INPUT</p><h2>Start with the source</h2></div><label>Example<select id="example" aria-label="Example"></select></label></div>
         <p id="example-description"></p>
-        <div class="file-label">Playground.sol <span>solc 0.8.34 <button type="button" id="edit-source" class="secondary" aria-controls="source" aria-expanded="false">Edit source</button></span></div>
+        <div class="file-label"><b id="source-file">Playground.sol</b><span>solc 0.8.34 <button type="button" id="edit-source" class="secondary" aria-controls="source" aria-expanded="false">Edit source</button></span></div>
         <pre id="source-preview" class="source-code" aria-label="Solidity source, highlighted"></pre>
         <textarea id="source" spellcheck="false" aria-label="Solidity source" hidden></textarea>
+        <div id="additional-sources"></div>
         <div id="snapshot-input" hidden>
-          <h3>Discovery snapshot</h3>
-          <p>These synthetic values associate deployed addresses with source contracts and address-valued fields. They are inputs, not inferred from the source or fetched from a chain.</p>
+          <h3>discovered.json</h3>
+          <p>Synthetic discovery entries record contract names, deployed addresses and current values. For this lesson, an entry named ABC uses contract ABC in .flat/ABC.sol. Values are supplied inputs, not fetched from a chain.</p>
           <label><input type="checkbox" id="attach-snapshot" /> Attach snapshot values to this run</label>
-          <details><summary>Inspect or edit the snapshot JSON</summary><textarea id="snapshot" aria-label="Discovery snapshot JSON" spellcheck="false" rows="14"></textarea></details>
+          <details><summary>Inspect or edit discovered.json</summary><textarea id="snapshot" aria-label="Discovery snapshot JSON" spellcheck="false" rows="14"></textarea></details>
         </div>
         <div class="actions"><button id="run">Run this stage <span>→</span></button><button class="secondary" id="reset">Reset example</button><span id="status" role="status" aria-live="polite">Loading examples…</span></div>
         <pre id="error" role="alert" hidden></pre>

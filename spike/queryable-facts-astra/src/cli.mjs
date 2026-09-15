@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises'
+import { readFile, readdir, stat } from 'node:fs/promises'
 import { resolve, join } from 'node:path'
 import { root, runPipeline } from './pipeline.mjs'
 
@@ -12,7 +12,10 @@ try {
   if (snapshot && !connectContracts) throw new Error('Use --connect-contracts with --snapshot.')
   const sourceFile = args.find((arg, i) => !arg.startsWith('--') && (snapshotIndex < 0 || i !== snapshotIndex + 1))
   const file = sourceFile ? resolve(sourceFile) : join(root, 'examples', '01-direct.sol')
-  const result = await runPipeline(await readFile(file, 'utf8'), { followCalls, connectContracts, snapshot })
+  const source = (await stat(file)).isDirectory()
+    ? Object.fromEntries(await Promise.all((await readdir(join(file, '.flat'))).filter((name) => name.endsWith('.sol')).map(async (name) => [`.flat/${name}`, await readFile(join(file, '.flat', name), 'utf8')])))
+    : await readFile(file, 'utf8')
+  const result = await runPipeline(source, { followCalls, connectContracts, snapshot })
   console.log(`solc ${result.compilerVersion} → ${Object.values(result.facts).flat().length} base facts → Soufflé`)
   for (const finding of result.findings) {
     console.log(`${finding.function}: direct assignment to ${finding.variable} at line ${finding.line} (potential writer)`)

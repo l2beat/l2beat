@@ -19,18 +19,25 @@ export const scope = [
 
 export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs'), followCalls = false, connectContracts = false, snapshot = null } = {}) {
   const started = performance.now()
+  const sources = typeof source === 'string' ? { 'Playground.sol': source } : source
+  if (!sources || Array.isArray(sources) || typeof sources !== 'object' || !Object.keys(sources).length || Object.entries(sources).some(([file, text]) => !/^(?:[A-Za-z0-9_.-]+\/)*[A-Za-z0-9_.-]+\.sol$/.test(file) || file.split('/').some((part) => part === '..' || part === '.') || typeof text !== 'string')) throw new Error('Provide Solidity text or a map of relative .sol file names to source text.')
   const input = {
     language: 'Solidity',
-    sources: { 'Playground.sol': { content: source } },
+    sources: Object.fromEntries(Object.entries(sources).map(([file, content]) => [file, { content }])),
     settings: { outputSelection: { '*': { '': ['ast'], '*': ['storageLayout'] } } },
   }
   // Pinned compiler; solc itself rejects incompatible pragmas and unresolved imports.
   const output = JSON.parse(solc.compile(JSON.stringify(input)))
   const errors = (output.errors ?? []).filter((error) => error.severity === 'error')
   if (errors.length) throw new Error(errors.map((error) => error.formattedMessage).join('\n'))
-  const ast = output.sources['Playground.sol'].ast
-  const { facts, locations } = extractFacts(ast, source)
-  if (connectContracts) Object.assign(facts, snapshotFacts(ast, snapshot))
+  const facts = Object.fromEntries(Object.keys(schema).map((name) => [name, []]))
+  const locations = {}
+  for (const [file, { ast }] of Object.entries(output.sources)) {
+    const extracted = extractFacts(ast, sources[file], file)
+    Object.assign(locations, extracted.locations)
+    for (const [name, rows] of Object.entries(extracted.facts)) facts[name].push(...rows)
+  }
+  if (connectContracts) Object.assign(facts, snapshotFacts(Object.values(output.sources).map((s) => s.ast), snapshot, locations))
   const connectionRules = connectContracts ? await readFile(join(root, 'rules', '04-snapshot.dl'), 'utf8') : ''
   const directRules = await readFile(join(root, 'rules', '01-direct-writes.dl'), 'utf8')
   const callRules = followCalls ? await readFile(join(root, 'rules', '03-entry-writers.dl'), 'utf8') : ''
@@ -65,7 +72,7 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
     tuple: [fn, variable, assignment],
     function: functionNames.get(fn),
     variable: variableNames.get(variable),
-    line: locations[assignment].line,
+    file: locations[assignment].file, line: locations[assignment].line,
     assignment: locations[assignment].source,
   }))
   const derived = {}
@@ -97,7 +104,7 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
   const result = {
     stage: connectContracts ? '04-snapshot' : followCalls ? '03-entry-writers' : '01-direct-writes',
     followCalls, connectContracts, snapshot: connectContracts ? snapshot : null, connectionRules, derived, directRules, callRules,
-    source,
+    source: Object.values(sources)[0], sources,
     compilerVersion: solc.version(),
     compilerInput: input,
     compilerOutput: output,
@@ -107,12 +114,17 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
     elapsedMs: Math.round(performance.now() - started),
   }
   for (const [file, contents] of Object.entries({
-    'source.sol': source,
-    ...(connectContracts && snapshot ? { 'discovery.json': JSON.stringify(snapshot, null, 2) } : {}),
+    'sources.json': JSON.stringify(sources, null, 2),
+    ...(connectContracts && snapshot ? { 'discovered.json': JSON.stringify(snapshot, null, 2) } : {}),
     'compiler-input.json': JSON.stringify(input, null, 2),
     'compiler-output.json': JSON.stringify(output, null, 2),
     'facts.dl': Object.entries(facts).map(([name, rows]) => atoms(name, rows)).join('\n'),
     'result.json': JSON.stringify(result, null, 2),
   })) await writeFile(join(runDir, file), contents)
+  for (const [file, text] of Object.entries(sources)) {
+    const path = join(runDir, 'sources', file)
+    await mkdir(join(path, '..'), { recursive: true })
+    await writeFile(path, text)
+  }
   return result
 }

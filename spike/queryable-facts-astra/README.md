@@ -139,7 +139,7 @@ The rule alone cannot answer “who can change score?” An external call such a
 
 Each successful run saves a unique directory under `out/runs/`:
 
-- `source.sol`, `compiler-input.json`, and `compiler-output.json`;
+- `sources/`, `sources.json`, `compiler-input.json`, and `compiler-output.json`;
 - `facts/*.facts`: Soufflé's native tab-separated input;
 - `facts.dl`: the same tuples in readable Datalog notation;
 - `rules.dl`: the exact program executed;
@@ -354,67 +354,109 @@ constructors, overload resolution, unreachable calls, unsupported external/
 virtual/pointer calls, and fallback/receive entries using real solc and Soufflé.
 
 
-## Lesson 04: connect an external call to a snapshot
+## Lesson 04: connect source files using discovery
 
-Choose **An external gate with a discovery snapshot**. All three declarations
-(`IGate`, `Playground`, `OwnerGate`) live in one Solidity compilation unit to keep
-source navigation simple. The deployment values are separate JSON inputs.
+Choose **An external gate with a discovery snapshot**. The example now has the
+same simple directory shape used by discovery:
+
+```text
+examples/playground/
+  .flat/
+    Playground.sol     # Playground and its IGate interface
+    OwnerGate.sol      # the concrete gate implementation
+  discovered.json
+```
+
+The page shows both source files one below the other, each with its own editor.
+Compiler trees, source excerpts and AI citations retain their file names. Both
+files are compiled together in one solc invocation, so AST node IDs are globally
+unique within the run. This is still the pinned compiler, not production discovery's
+multi-version compiler setup.
+
+`discovered.json` uses `name` and `entries`. Each contract entry has `name`,
+`address`, `type: "Contract"`, and `values`; EOA entries use `type: "EOA"`.
+Addresses use the same chain-prefixed form as Zora's discovery, such as `eth:0x…`.
+For this lesson an entry named `ABC` maps to contract `ABC` in `.flat/ABC.sol`.
+That association is supplied input, not a bytecode check. Proxies, nested source
+folders, implementation-name overrides and inherited implementation dispatch
+are outside this lesson; it does not guess when the simple mapping fails.
+
+### Present the lesson
 
 1. Enable **lesson 04**, leave **Attach snapshot values** unchecked, and run.
-   `setScore` is still a potential writer. The new `externalDependency` tuple
-   locates its call through `gate`, but the target remains unresolved. Having an
-   interface and a candidate implementation in source does not select a deployment.
-2. Inspect the two additional clauses. One identifies the external dependency;
-   the other joins the state-variable reference with deployment values and the
-   compiler's ABI function selector. There are no gate- or owner-specific rules.
-3. Inspect the synthetic snapshot JSON, check **Attach snapshot values**, and
-   rerun. The view now connects Playground at `0x1111…1111` through `gate` to
-   OwnerGate at `0x2222…2222`, and shows the target's complete function. It also
-   displays the supplied `owner` value, `0x3333…3333`.
-4. Enable **lesson 02** and ask “Who can change score in the current snapshot?”
-   AI starts with the symbol index, then retrieves writers, source, external
-   dependencies and snapshot values. Inspect the actual investigation above the
-   answer. Permission claims remain source interpretation, not formal proof.
+   The panel says **Playground.setScore calls gate.authorize**, with its source
+   file and call site. The dependency is known, but its target is unresolved.
+   Having OwnerGate source available does not establish that it is deployed as
+   this particular gate.
+2. Inspect `discovered.json`. Playground is deployed at `eth:0x1111…1111`;
+   its current `score` is **42** and `gate` is `eth:0x2222…2222`. The second
+   contract entry identifies that address as OwnerGate, whose `owner` is
+   `eth:0x3333…3333`.
+3. Attach the snapshot and rerun. The connection panel explains each step:
+   **calling contract → reference value → matching target function**. Every
+   address has a role and contract name. Expand **How the rule connects these
+   pieces** to explain the join. Per-contract tables show all supplied values.
+4. Enable **lesson 02** and ask **“What is the current value of score, and who
+   can change it?”** AI retrieves values and source as needed. Its investigation
+   and final source excerpts identify `.flat/Playground.sol` and
+   `.flat/OwnerGate.sol` separately.
 5. Explain the identity distinction: Playground passes its `msg.sender` as the
    `caller` argument. Inside OwnerGate, `msg.sender` would be Playground, but the
-   shown check uses `caller`. This distinction is interpreted from source;
-   the connection rule does not symbolically execute argument passing.
+   check uses `caller`. This is interpreted from source, not symbolically executed
+   by the connection rule.
 
-Lesson 03 can be enabled independently alongside lesson 04. It still follows only
-supported internal calls; the new external connections are a separate reading
-view, not automatic propagation of permissions across contracts. Both references
-in the example are immutable so that changing authorization policy is a later
-lesson. No source says who was deployed where: the snapshot supplies that mapping.
+Lesson 03 remains independently selectable. Its rules propagate potential writes
+through supported internal calls; lesson 04 resolves external source dependencies.
+Neither proves permissions. The example's gate and owner are immutable so that
+changing authorization policy remains a later lesson.
 
-### Small implementation boundary
+### Facts and values
 
-- `src/snapshot.mjs` extracts contract membership, implemented ABI selectors,
-  and high-level external calls directly through state variables. It translates
-  the small synthetic JSON format into `snapshotDeployment` and `snapshotAddress`.
-- `rules/04-snapshot.dl` derives `externalDependency` and `resolvedCall` with real
-  Soufflé joins. A resolved tuple includes both caller and target deployment
-  addresses; separate instances of the same source contract remain distinct.
-- AI's `dependencies(functionId)` request returns call sites and resolved target
-  function IDs. `values(variableId)` returns address values per deployment.
-  Both are authentic retrieved material; neither makes a permission claim.
-- This is a teaching snapshot format, **not an importer for production
-  discovery.json**. It supports only address/contract-valued fields. All addresses
-  are normalized; malformed addresses, duplicate deployments, missing declarations
-  and implementation inheritance are rejected. Missing targets/ABI functions stay
-  unresolved. Interface inheritance is supported.
-- Source-to-deployment matching is supplied, not checked against runtime bytecode.
-  Proxies, delegatecall, inherited implementation dispatch, indirect receivers,
-  callbacks and future states remain outside this lesson. An empty result is not
-  evidence of absent dependencies or authorization.
+The adapter emits a single typed relation:
+
+```text
+snapshotValue(deployment, variableId, solidityType, value)
+```
+
+For example, score produces a `uint256` value of `"42"`, while gate produces a
+`contract IGate` value containing the target address. Numeric values are stored
+as decimal text to preserve the full Solidity integer range, not squeezed into
+Soufflé's numeric type. Booleans, strings and compound JSON values also use this
+relation. Compound contents are preserved as supplied JSON, not interpreted as
+individual storage slots. Unsafe JavaScript numbers are rejected; use decimal
+strings for large integers. Missing values remain unknown rather than zero.
+
+`addressVariable(variableId)` is a compiler observation about the declaration's
+type. The `resolvedCall` rule joins only those variables, so recording ordinary
+state such as score does not turn it into an address or an external dependency.
+
+- `src/snapshot.mjs` extracts contract membership, implemented ABI selectors and
+  external calls through state variables; it translates discovery entries to facts.
+- `rules/04-snapshot.dl` derives `externalDependency` and `resolvedCall`. The
+  latter retains both deployment addresses, keeping different instances distinct.
+- AI's `dependencies(functionId)` request returns call sites and target function
+  IDs with source file names. `values(variableId)` returns typed current values.
+- `source(symbolId)` reads the indexed file. `lines` accepts a target such as
+  `.flat/OwnerGate.sol:9-11`; an unqualified range is rejected for multi-file runs.
+
+This is a small supported subset of discovery's format. Ordinary provided values
+must match locally declared state variables. Production discovery's computed
+fields, `$` metadata inside values, formatted durations and proxy layouts need
+separate handling and are not silently interpreted as Solidity state here.
+Unknown contract/source mappings or malformed inputs fail explicitly. Missing
+external target entries or matching ABI functions remain unresolved. Address
+prefixes are preserved, so equal hex addresses on different chains do not join.
+Unprefixed reference values inherit their containing deployment's chain prefix.
 
 Without the website:
 
 ```sh
-npm run pipeline -- examples/06-known-gate.sol --connect-contracts
-npm run pipeline -- examples/06-known-gate.sol --connect-contracts --snapshot examples/06-known-gate.discovery.json
+npm run pipeline -- examples/playground --connect-contracts
+npm run pipeline -- examples/playground --connect-contracts --snapshot examples/playground/discovered.json
 ```
 
-The run saves the exact snapshot as `discovery.json` when attached, as well as its
-input facts, combined rules and derived CSV outputs. Editing source, snapshot or
-lesson toggles invalidates previous results. Restart `pnpm dev` after updating the
-server code; no new dependency installation is needed for this lesson.
+Runs save the exact `discovered.json` when attached, source files under `sources/`
+with their relative paths, `sources.json`, compiler outputs, input facts, rules
+and derived tuples. Editing either source, discovery JSON or lesson toggles
+invalidates the previous result. Restart `pnpm dev` after updating server code;
+this change needs no dependency installation.

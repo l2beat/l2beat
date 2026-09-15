@@ -155,3 +155,13 @@ footer p { color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
 #snapshot { min-height: 280px; }
 #connection-section, .fact-evidence { overflow-wrap: anywhere; }
 .snapshot-value { padding: 12px 16px; background: #eff5ef; border-radius: 5px; }
+
+.additional-source { margin-top: 24px; }
+.connection-path { list-style: decimal; padding-left: 24px; margin: 24px 0; }
+.connection-path > li { border-left: 3px solid #b8d4c7; padding: 12px 20px; margin: 14px 0; background: #f4f8f3; }
+.connection-path h4, .deployment-values h4 { margin: 4px 0; font-size: 18px; }
+.connection-path p { margin: 6px 0; }
+.deployment-values { padding: 16px; border: 1px solid var(--line); border-radius: 6px; margin: 16px 0; }
+.table-scroll { overflow-x: auto; }
+.deployment-values table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+.deployment-values th, .deployment-values td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }

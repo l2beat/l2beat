@@ -10,7 +10,7 @@ export const schema = {
   internalCall: ['call', 'callee'],
 }
 
-export function extractFacts(ast, source) {
+export function extractFacts(ast, source, file = 'Playground.sol') {
   const facts = Object.fromEntries(Object.keys(schema).map((name) => [name, []]))
   const locations = {}
   const definitions = new Map()
@@ -33,7 +33,7 @@ export function extractFacts(ast, source) {
       if (parent !== undefined) facts.child.push([parent, node.id])
       const [start, length] = node.src.split(':').map(Number)
       locations[node.id] = {
-        kind: node.nodeType,
+        file, kind: node.nodeType,
         line: bytes.subarray(0, start).toString('utf8').split('\n').length,
         source: bytes.subarray(start, start + length).toString('utf8'),
       }
