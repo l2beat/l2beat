@@ -43,7 +43,7 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
         amount: BigInt(source.params.amount),
       }
     case 'erc20Transfer':
-      return extractErc20Transfer(log)
+      return extractErc20Transfer(source, log)
     case 'privacyPoolsValue':
       return {
         count: 1,
@@ -67,12 +67,24 @@ export function extractPrivacyFlow<T extends PrivacyFlowSource>(
 // Zero-value and self transfers move nothing across the pool boundary, so
 // they do not count as flows.
 function extractErc20Transfer(
+  source: Extract<PrivacyFlowExtractorConfig, { extractor: 'erc20Transfer' }>,
   log: PrivacyRpcLog,
 ): PrivacyFlowExtractResult | undefined {
   const parsedLog = erc20Interface.parseLog(log)
-  const amount = BigInt(parsedLog.args.value.toString())
+  const from = EthereumAddress(parsedLog.args.from)
+  const to = EthereumAddress(parsedLog.args.to)
 
-  if (amount === 0n || parsedLog.args.from === parsedLog.args.to) {
+  // The query already filters on these topics; re-checking guards against a
+  // log source that does not honour positional topic filters.
+  if (source.params.from !== undefined && from !== source.params.from) {
+    return undefined
+  }
+  if (source.params.to !== undefined && to !== source.params.to) {
+    return undefined
+  }
+
+  const amount = BigInt(parsedLog.args.value.toString())
+  if (amount === 0n || from === to) {
     return undefined
   }
 

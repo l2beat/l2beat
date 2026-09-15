@@ -108,6 +108,28 @@ describe(extractPrivacyFlow.name, () => {
 
       expect(extractPrivacyFlow(config, log)).toEqual(undefined)
     })
+
+    it('ignores transfers whose recipient is not the configured `to`', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        OTHER_TOKEN_ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores transfers whose sender is not the configured `from`', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        OTHER_TOKEN_ADDRESS,
+        TOKEN_ADDRESS,
+        1500n,
+      ])
+
+      expect(
+        extractPrivacyFlow({ ...config, params: { from: ADDRESS } }, log),
+      ).toEqual(undefined)
+    })
   })
 
   describe('fixedAmount', () => {
