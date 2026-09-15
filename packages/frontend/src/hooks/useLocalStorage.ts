@@ -1,3 +1,4 @@
+import type { VisibilityState } from '@tanstack/react-table'
 import type { Dispatch, SetStateAction } from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -15,6 +16,8 @@ declare global {
  * together with the type of the value stored under it.
  */
 type LocalStorageSchema = {
+  [K in `table-column-visibility-${string}`]: VisibilityState
+} & {
   [K in `whats-new-${string}`]: boolean
 } & {
   [K in `top-banner-${string}-is-hidden`]: boolean
