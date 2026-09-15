@@ -13,6 +13,9 @@ const descriptions = {
   child: 'An AST node directly contains another AST node.',
   assignment: 'An assignment expression and its left-hand node.',
   reference: 'An identifier and the declaration it refers to.',
+  functionVisibility: 'The visibility written on a function declaration.',
+  functionKind: 'A regular function, constructor, fallback or receive.',
+  internalCall: 'A plain internal call and its compiler-resolved, implemented non-virtual function declaration.',
 }
 const escape = (text) => String(text).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character])
 
@@ -88,7 +91,8 @@ function render(result) {
       <p>${descriptions[name]} <code>${name}(${result.schema[name].join(', ')})</code></p>
       <pre class="code long">${highlight(rows.map((row) => atom(name, row)).join('\n') || '// No tuples in this relation.')}</pre>
     </details>`).join('')
-  code('rules', result.rules)
+  code('rules', result.directRules ?? result.rules)
+  renderCalls(result)
   $('findings').innerHTML = result.findings.map((finding) => {
     const [fn, variable, assignment] = finding.tuple
     const lhs = result.facts.assignment.find(([id]) => id === assignment)[1]
@@ -115,6 +119,39 @@ function render(result) {
   $('status').textContent = `Complete · ${count} base facts · ${result.findings.length} write sites · ${result.elapsedMs} ms`
 }
 
+// Render the returned graph once per entry/variable; cycles and shared helpers
+// link back to an already shown function instead of enumerating arbitrary paths.
+function renderCalls(result) {
+  $('call-section').hidden = !result.followCalls
+  if (!result.followCalls) return
+  code('call-rules', result.callRules)
+  const names = new Map(result.facts.functionDefinition)
+  const variables = new Map(result.facts.stateVariable)
+  const visibility = new Map(result.facts.functionVisibility)
+  $('entry-findings').innerHTML = result.derived.entryWrite.map(([entry, variable]) => {
+    const edges = result.derived.writePathEdge.filter(([e, v]) => e === entry && v === variable)
+    const seen = new Set()
+    function branch(fn, callSite) {
+      const label = `${names.get(fn)} · ${visibility.get(fn)}`
+      if (seen.has(fn)) return `<li><span>${escape(label)} · already shown (shared helper or cycle)</span></li>`
+      seen.add(fn)
+      const writes = result.findings.filter((f) => f.tuple[0] === fn && f.tuple[1] === variable)
+      const children = edges.filter(([, , caller]) => caller === fn).map(([, , , callee, site]) => branch(callee, site)).join('')
+      const location = result.locations[fn]
+      return `<li><b>${escape(label)}</b>${callSite ? `<span class="caption"> · call at line ${result.locations[callSite].line}</span>` : ''}
+        <details><summary>Read ${escape(names.get(fn))} · line ${location.line}</summary><pre class="code">${highlight(location.source)}</pre></details>
+        ${writes.map((f) => `<p class="path-write">↳ assigns ${escape(f.variable)} at line ${f.line}</p>`).join('')}
+        ${children ? `<ul>${children}</ul>` : ''}</li>`
+    }
+    return `<article class="finding"><span class="potential">EXTERNALLY CALLABLE POTENTIAL WRITER</span>
+      <h3>${escape(names.get(entry))} → ${escape(variables.get(variable))}</h3>
+      <ul class="call-tree">${branch(entry)}</ul>
+      <pre class="code">${highlight(atom('entryWrite', [entry, variable]))}</pre>
+      <p class="caption">Read every function along the path, including intermediate helpers. Guards are interpreted from source, not inferred by these rules.</p></article>`
+  }).join('') || '<p>No entry-point writer matched the supported call and assignment forms. This is not a proof that storage cannot change.</p>'
+  $('call-tuples').innerHTML = Object.entries(result.derived).map(([name, rows]) => `<h3>${escape(name)} · ${rows.length}</h3><pre class="code long">${highlight(rows.map((row) => atom(name, row)).join('\n') || '// No tuples')}</pre>`).join('')
+}
+
 $('edit-source').addEventListener('click', () => {
   setEditing($('source').hidden)
   if (!$('source').hidden) $('source').focus()
@@ -125,10 +162,11 @@ $('collapse-tree').addEventListener('click', () => {
 $('raw-ids').addEventListener('change', () => {
   if (!currentRun) return
   // Preserve the reader's expanded facts/evidence when changing notation.
-  const details = [...document.querySelectorAll('#ast-tree details, #facts details, #findings details')].map((item) => item.open)
+  const details = [...document.querySelectorAll('#ast-tree details, #facts details, #findings details, #call-section details')].map((item) => item.open)
   render(currentRun)
-  document.querySelectorAll('#ast-tree details, #facts details, #findings details').forEach((item, index) => { item.open = details[index] })
+  document.querySelectorAll('#ast-tree details, #facts details, #findings details, #call-section details').forEach((item, index) => { item.open = details[index] })
 })
+$('follow-calls').addEventListener('change', invalidate)
 $('source').addEventListener('input', invalidate)
 $('example').addEventListener('change', selectExample)
 $('reset').addEventListener('click', selectExample)
@@ -136,9 +174,9 @@ $('run').addEventListener('click', async () => {
   invalidate()
   setEditing(false)
   $('status').textContent = 'Compiling Solidity and running Soufflé…'
-  for (const id of ['run', 'reset', 'example', 'source', 'edit-source']) $(id).disabled = true
+  for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls']) $(id).disabled = true
   try {
-    const response = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: $('source').value }) })
+    const response = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: $('source').value, followCalls: $('follow-calls').checked }) })
     const result = await response.json()
     if (!response.ok) throw new Error(result.error)
     render(result)
@@ -147,7 +185,7 @@ $('run').addEventListener('click', async () => {
     $('error').textContent = error.message
     $('status').textContent = 'Run failed · no results shown'
   } finally {
-    for (const id of ['run', 'reset', 'example', 'source', 'edit-source']) $(id).disabled = false
+    for (const id of ['run', 'reset', 'example', 'source', 'edit-source', 'follow-calls']) $(id).disabled = false
   }
 })
 $('download').addEventListener('click', () => {
@@ -155,7 +193,7 @@ $('download').addEventListener('click', () => {
   const url = URL.createObjectURL(new Blob([JSON.stringify(currentRun, null, 2)], { type: 'application/json' }))
   const link = document.createElement('a')
   link.href = url
-  link.download = 'astra-stage-01.json'
+  link.download = `astra-${currentRun.stage}.json`
   link.click()
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 })

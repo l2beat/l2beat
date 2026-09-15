@@ -1,0 +1,36 @@
+// Extend the direct-write lesson with resolved internal function calls.
+.decl internalCall(call: number, callee: number)
+.decl functionVisibility(function: number, visibility: symbol)
+.decl functionKind(function: number, kind: symbol)
+.input internalCall
+.input functionVisibility
+.input functionKind
+
+.decl calls(caller: number, callee: number, site: number)
+calls(F, G, C) :- withinFunction(F, C), internalCall(C, G).
+
+// Least fixed point: start at assignments, propagate back through callers.
+.decl potentialWrite(function: number, variable: number)
+potentialWrite(F, V) :- directWrite(F, V, _).
+potentialWrite(F, V) :- calls(F, G, _), potentialWrite(G, V).
+
+// Initialization is separate. Public functions are externally callable too.
+.decl entryPoint(function: number)
+entryPoint(F) :- functionVisibility(F, "external"), functionKind(F, "function").
+entryPoint(F) :- functionVisibility(F, "public"), functionKind(F, "function").
+entryPoint(F) :- functionKind(F, "fallback").
+entryPoint(F) :- functionKind(F, "receive").
+
+.decl entryWrite(entry: number, variable: number)
+entryWrite(E, V) :- entryPoint(E), potentialWrite(E, V).
+
+// Keep every relevant edge, not just one selected path, for source inspection.
+.decl reaches(entry: number, function: number)
+reaches(E, E) :- entryPoint(E).
+reaches(E, G) :- reaches(E, F), calls(F, G, _).
+.decl writePathEdge(entry: number, variable: number, caller: number, callee: number, site: number)
+writePathEdge(E, V, F, G, C) :- reaches(E, F), calls(F, G, C), potentialWrite(G, V).
+.output calls
+.output potentialWrite
+.output entryWrite
+.output writePathEdge

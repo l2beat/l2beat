@@ -143,3 +143,11 @@ footer p { color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
 #investigation-steps > li { padding-left: 12px; }
 #investigation-steps > li > details { border-top: 0; padding-top: 4px; }
 .inspection-purpose { color: var(--ink); }
+
+/* Call paths are source-reading guides, not permission verdicts. */
+.call-tree, .call-tree ul { list-style: none; padding-left: 1.2rem; }
+.call-tree { padding-left: 0; }
+.call-tree ul { border-left: 2px solid #d8e5df; margin-left: .4rem; }
+.call-tree li { padding: .65rem 0; min-width: 0; }
+.call-tree pre { max-height: 24rem; overflow: auto; }
+.path-write { color: #126b58; font-weight: 600; }

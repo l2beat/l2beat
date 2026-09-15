@@ -2,6 +2,8 @@
 const idColumns = {
   functionDefinition: [0], stateVariable: [0], child: [0, 1],
   assignment: [0, 1], reference: [0, 1],
+  functionVisibility: [0], functionKind: [0], internalCall: [0, 1],
+  calls: [0, 1, 2], potentialWrite: [0, 1], entryWrite: [0, 1], writePathEdge: [0, 1, 2, 3, 4],
   withinFunction: [0, 1], directWrite: [0, 1, 2],
 }
 

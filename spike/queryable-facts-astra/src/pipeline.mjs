@@ -16,7 +16,7 @@ export const scope = [
   'An absent tuple is not a general proof that a function cannot affect storage. No permissions, call graph, or whole-transaction analysis is performed.',
 ]
 
-export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs') } = {}) {
+export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs'), followCalls = false } = {}) {
   const started = performance.now()
   const input = {
     language: 'Solidity',
@@ -29,7 +29,9 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
   if (errors.length) throw new Error(errors.map((error) => error.formattedMessage).join('\n'))
   const ast = output.sources['Playground.sol'].ast
   const { facts, locations } = extractFacts(ast, source)
-  const rules = await readFile(join(root, 'rules', '01-direct-writes.dl'), 'utf8')
+  const directRules = await readFile(join(root, 'rules', '01-direct-writes.dl'), 'utf8')
+  const callRules = followCalls ? await readFile(join(root, 'rules', '03-entry-writers.dl'), 'utf8') : ''
+  const rules = directRules + '\n' + callRules
 
   await mkdir(outputRoot, { recursive: true })
   const runDir = await mkdtemp(join(outputRoot, 'stage-01-'))
@@ -63,13 +65,29 @@ export async function runPipeline(source, { outputRoot = join(root, 'out', 'runs
     line: locations[assignment].line,
     assignment: locations[assignment].source,
   }))
+  const derived = {}
+  if (followCalls) {
+    for (const name of ['calls', 'potentialWrite', 'entryWrite', 'writePathEdge']) {
+      const csv = (await readFile(join(derivedDir, `${name}.csv`), 'utf8')).trim()
+      derived[name] = csv ? csv.split('\n').map((line) => line.split('\t').map(Number)) : []
+    }
+  }
+  const analysisScope = followCalls ? [
+    ...scope.slice(0, 2),
+    'Recursive potential writers follow plain, compiler-resolved internal calls to implemented non-virtual functions. Public/external functions, fallback and receive are entry points; constructors are initialization, not entry points.',
+    'Call paths describe syntax, not feasible execution. Read EVERY intermediate function, its modifiers, relevant dependencies and later code before interpreting permissions.',
+    'Coverage remains partial: unsupported writes from lesson 01, modifier call bodies, member calls (including this/super/library calls), function pointers, virtual dispatch, assembly, external calls and callbacks are not followed. Inheritance/deployed dispatch is not modeled; declarations are shown, not a deployed ABI.',
+    'No path found is not a no-write proof. No guard inference or permission verdict is performed.',
+    'The assignment matcher still only covers bare-identifier assignments (=, +=, etc.), not ++, --, delete, array/member writes, aliases or initializers.',
+  ] : scope
   const result = {
-    stage: '01-direct-writes',
+    stage: followCalls ? '03-entry-writers' : '01-direct-writes',
+    followCalls, derived, directRules, callRules,
     source,
     compilerVersion: solc.version(),
     compilerInput: input,
     compilerOutput: output,
-    schema, facts, locations, rules, tuples, findings, scope,
+    schema, facts, locations, rules, tuples, findings, scope: analysisScope,
     warnings: (output.errors ?? []).map((error) => error.formattedMessage),
     runDir,
     elapsedMs: Math.round(performance.now() - started),

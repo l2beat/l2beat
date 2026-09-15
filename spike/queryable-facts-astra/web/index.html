@@ -16,6 +16,8 @@
         <p class="lede">Turn Solidity syntax into facts, then ask one small rule which functions contain assignments to state variables.</p>
       <label class="lesson-toggle"><input type="checkbox" id="enable-reader" /> Enable lesson 02 · Read with AI</label>
         <p class="caption">Adds source reading and an AI explanation after the same rules. Leave it off to present lesson 01.</p>
+        <label class="lesson-toggle"><input type="checkbox" id="follow-calls" /> Enable lesson 03 · Follow internal calls</label>
+        <p class="caption">Adds recursive potential writers and an entry-point view. Toggle, then run the stage again to compare.</p>
       </section>
       <nav class="flow" aria-label="The pipeline">
         <a href="#source-section"><b>01</b> Solidity source</a><span>→</span>
@@ -37,7 +39,7 @@
       <div id="results" hidden>
         <section id="facts-section" class="card">
           <div class="section-top"><div><p class="eyebrow">02 / OBSERVATIONS FROM THE COMPILER</p><h2>Syntax becomes facts</h2></div><span class="badge" id="fact-count"></span></div>
-          <p>The compiler supplies the AST and storage layout. A small adapter copies five kinds of observation from the AST. It does not decide what can execute.</p>
+          <p>The compiler supplies the AST and storage layout. A small adapter copies observations from the AST. It does not decide what can execute.</p>
           <div class="explanation"><b>Readable labels, same IDs.</b> For example, <code>12_use_score</code> means “the use of score at AST node 12”; <code>3_state_score</code> means “the state declaration at node 3”. A <code>reference</code> connects the use to its declaration. The number identifies the node; the suffix is a display label, not Soufflé syntax. Compiler JSON and downloaded facts retain the original numeric IDs.
             <label class="id-toggle"><input type="checkbox" id="raw-ids" /> Show raw numeric IDs in the tree, facts, and evidence</label></div>
           <section class="ast-panel" aria-labelledby="ast-heading">
@@ -51,7 +53,7 @@
         </section>
         <div class="analysis-grid">
           <section id="rules-section" class="card">
-            <div class="section-top"><div><p class="eyebrow">03 / DERIVATION</p><h2>One small rule file</h2></div><span class="badge">3 clauses</span></div>
+            <div class="section-top"><div><p class="eyebrow">03 / DERIVATION</p><h2>Direct assignments</h2></div><span class="badge">3 clauses</span></div>
             <p><code>withinFunction</code> walks AST children. <code>directWrite</code> joins an assignment with the state declaration its left side refers to.</p>
             <p>A comma means <b>and</b>. <code>:-</code> means <b>if</b>. Repeated variables connect the tuples. <code>_</code> means “any value”.</p>
             <pre id="rules" class="code"></pre>
@@ -65,8 +67,17 @@
             <div class="next"><p class="eyebrow">THE NEXT QUESTION</p><p>Now that we have found the assignment, what source code would a researcher or AI need to read before explaining who can execute it?</p><p class="caption">Enable lesson 02 at the top to explore this question with source and AI. These observations remain syntax facts.</p></div>
           </section>
         </div>
+        <section id="call-section" class="card" hidden>
+          <p class="eyebrow">LESSON 03 / FOLLOW INTERNAL CALLS</p>
+          <h2>Which entry points lead to an assignment?</h2>
+          <p>The same recursive rule carries potential writes back through internal callers. Only externally callable entry points appear as results here; intermediate functions remain in the reading path.</p>
+          <details><summary>The additional rules, executed by Soufflé</summary><pre id="call-rules" class="code"></pre></details>
+          <div id="entry-findings"></div>
+          <details><summary>All derived call and writer facts</summary><div id="call-tuples"></div></details>
+          <p class="boundary">These paths locate source to inspect. They do not establish that a call succeeds or that a guard protects every route. Missing paths are not exclusion proofs under this lesson’s limited coverage.</p>
+        </section>
         <section id="reader-section" class="card" hidden>
-          <div class="section-top"><div><p class="eyebrow">05 / LESSON 02</p><h2>Ask a question. Follow the investigation.</h2></div><span class="badge">Same rules · source on request</span></div>
+          <div class="section-top"><div><p class="eyebrow">05 / LESSON 02</p><h2>Ask a question. Follow the investigation.</h2></div><span class="badge">Selected rules · source on request</span></div>
           <div class="reading-flow" aria-label="How this lesson works">
             <div><b>Your question</b><p>AI chooses where to start</p></div><span>→</span>
             <div><b>Facts and source</b><p>Fetched as the investigation unfolds</p></div><span>→</span>

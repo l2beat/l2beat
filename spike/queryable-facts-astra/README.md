@@ -4,7 +4,7 @@ An incremental teaching prototype for narrowing smart-contract analysis. Stage 0
 asks: **which functions contain bare-identifier assignments to state variables?**
 It runs the Solidity compiler and Soufflé, displaying actual inputs and outputs.
 Lesson 02 adds an optional AI explanation based on those observations and source
-reading. There is no discovery integration or solver.
+reading. Lesson 03 adds optional internal-call propagation and an entry-point view. There is no discovery integration or solver.
 
 ## Run it
 
@@ -81,7 +81,7 @@ examples/*.sol
     ↓ solc standard JSON
 src/pipeline.mjs       compiler AST + storage layout
     ↓
-src/facts.mjs          five small observation relations
+src/facts.mjs          compiler observation relations
     ↓
 rules/01-direct-writes.dl
     ↓ Soufflé
@@ -97,6 +97,9 @@ web/                  source, inputs, rules, findings, boundaries
 | `child(parent, node)` | A direct AST child relationship |
 | `assignment(node, left)` | An Assignment and its left-hand node |
 | `reference(node, declaration)` | An Identifier's referencedDeclaration |
+| `functionVisibility(function, visibility)` | Function visibility |
+| `functionKind(function, kind)` | Regular function, constructor, fallback or receive |
+| `internalCall(call, callee)` | Plain Identifier call referencing an implemented, non-virtual FunctionDefinition with compiler type `t_function_internal_*` |
 
 The browser labels IDs consistently in base facts, derived tuples, and supporting
 facts: for example, `reference(12_use_score, 3_state_score)` connects a variable
@@ -114,8 +117,7 @@ There is no general AST framework or plugin loader. CLI and server call the same
 pipeline. The browser is plain HTML, CSS, and JavaScript. The expandable AST uses native
 `details` elements built from the existing `child` facts, not another parser.
 Solidity, fact, rule, and JSON views use a small shared token highlighter. Lesson 02
-adds source reading, so it intentionally uses the same rules. Future rule-layer
-toggles must change the program executed, not just hide results.
+adds source reading, so it intentionally uses the same rules. The lesson 03 toggle changes the program executed, not just which results are visible.
 
 ## Exact boundary
 
@@ -125,7 +127,7 @@ syntactic containment under guards, branches, and unreachable code too.
 
 It does **not** find all possible storage writes. `++`, `--`, `delete`, array/member
 writes, storage aliases, initializers, assembly, modifier bodies, and writes through
-called functions need additional extraction/rules. An empty result is not a
+called functions need additional extraction/rules (lesson 03 adds a limited internal-call analysis). An empty result is not a
 general exclusion proof. Source editing supports exploring the lesson, not
 arbitrary-contract coverage. Scope is included in every run JSON and on the page.
 
@@ -170,18 +172,19 @@ Ask a free-form question. There is no state-variable selector. Try:
 
 The model starts with a symbol index (names, IDs, kinds, line ranges), the question,
 and the exact scope of the current rules. **Source is not pasted into the initial
-prompt.** The model chooses which of three requests to make:
+prompt.** The model chooses a request:
 
 | Request | Input | Returned material |
 | --- | --- | --- |
 | `writers` | State-variable declaration ID | Matching existing directWrite tuples and function IDs |
+| `entrypoints` (lesson 03 enabled) | State-variable declaration ID | Entry-point writers, all relevant internal-call edges, and function IDs to read |
 | `source` | Symbol ID | A declaration, function, modifier, or contract excerpt |
 | `lines` | Source line range | A bounded excerpt for additional context |
 
 Requests are executed against the saved compiler/Soufflé run. This is retrieval,
 not another analysis engine. A writers request does not run new rules or infer
-permissions. It can return internal functions and constructors too; we have not
-yet added transitive callers or an external-entry-point analysis.
+permissions. It can return internal functions and constructors too. With lesson 03 enabled,
+`entrypoints` provides a separate view of externally callable potential writers.
 
 Each request includes a short public purpose, such as “Inspect the caller check”.
 The website streams the actual request and result into the **Investigation** log.
@@ -238,7 +241,7 @@ else” requires broader source inspection and remains AI reasoning at this stag
 
 Read these files in order:
 
-1. `src/briefing.mjs`: build the symbol index and initial briefing; serve the three
+1. `src/briefing.mjs`: build the symbol index and initial briefing; serve the
    retrieval operations; resolve final evidence against material actually returned.
 2. `src/ask.mjs`: the small loop that asks the model for a request or an answer,
    executes requests, saves every turn, and emits progress events.
@@ -286,3 +289,66 @@ HTML escaping, partial failures, stale-answer prevention, and mobile layout.
 Live Codex checks exercise both variable-specific and broader questions. These
 checks validate the interaction; they do not certify future model answers. No
 server is started for the checks.
+
+
+## Lesson 03 · entry points and intermediate guards
+
+Restart `pnpm dev` for the backend changes. No new dependencies are required.
+
+1. Select **An entry point with a guard in a helper**. Leave lesson 03 disabled
+   and run. The direct-write rule finds `setScore → score` (and the constructor's
+   assignment to `owner`). It does not connect the external caller to the setter.
+2. Enable **lesson 03 · Follow internal calls**, then run again. This appends
+   `rules/03-entry-writers.dl` to the actual Soufflé program.
+3. Below the direct-write lesson, the entry-point view shows:
+
+   ```text
+   updateScore (external)
+       → checkAndSetScore (internal)
+           → setScore (internal)
+               → assigns score
+   ```
+
+4. Expand **Read checkAndSetScore**. The owner check is in an intermediate
+   function. Reading only the entry point and assignment would miss it.
+5. Expand the additional rules. `calls` joins AST containment with resolved call
+   observations. `potentialWrite` starts at direct assignments and propagates
+   backward through callers to a fixed point. `entryWrite` filters these results
+   to public/external functions, fallback and receive. Constructors remain in the
+   direct-write facts as initialization; they are not entry points.
+6. `writePathEdge` retains all relevant edges for each entry/variable pair. The
+   displayed graph includes intermediate helpers and handles shared helpers/cycles
+   without enumerating infinitely many paths. All derived tuples are inspectable.
+7. Enable **Read with AI** and ask “Who can change score, and where is access
+   checked?” Its `entrypoints` request returns the graph and IDs of all functions
+   to inspect. Source still arrives only when requested. The model is instructed
+   to read intermediate helpers as well as the entry point and assignment.
+
+The facts do not label the guard or prove it must execute. Interpreting the owner
+check remains source-based AI/human reasoning. In this example the deployed owner
+address is not supplied. The initial prompt contains neither source nor an answer.
+
+The new relation only follows plain Identifier calls to implemented, non-virtual
+functions using the compiler's resolved declaration ID and internal-function type.
+This handles ordinary public/internal/private calls, overloads, and recursive
+cycles, without matching names. It does not follow member calls (`this`, `super`,
+libraries), function pointers, virtual dispatch, modifier bodies, assembly,
+external calls or callbacks. Inherited/deployed dispatch is not modeled. The
+entry view shows declarations, not a reconstructed deployed ABI. Assignment
+coverage is unchanged. Missing edges/tuples are therefore never exclusion proofs.
+
+Run the same lesson without the UI:
+
+```sh
+npm run pipeline -- examples/05-internal-chain.sol --follow-calls
+```
+
+Saved runs include `followCalls`, the exact combined `rules.dl`, and separate
+`calls.csv`, `potentialWrite.csv`, `entryWrite.csv`, `writePathEdge.csv` outputs.
+Turning the toggle off removes those rules from execution, preserves the direct
+lesson, and invalidates the previous AI investigation until you rerun.
+
+`test/calls.test.mjs` checks the guarded chain, toggling, source retrieval for all
+helpers, multiple entry points, recursive cycles, disconnected helpers,
+constructors, overload resolution, unreachable calls, unsupported external/
+virtual/pointer calls, and fallback/receive entries using real solc and Soufflé.

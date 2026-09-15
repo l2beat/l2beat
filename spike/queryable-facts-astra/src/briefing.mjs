@@ -27,7 +27,13 @@ symbol index and a rule description, NOT the source. Choose what to inspect.
 Your requests are executed against this compiler/Soufflé run and shown to the user.
 
 AVAILABLE REQUESTS
-- writers: target = state-variable declaration ID from the index. Returns existing
+${run.followCalls ? `- entrypoints: target = state-variable ID. Returns externally callable potential
+  writers with ALL relevant internal-call edges and function IDs. Prefer this for
+  questions about who can change a variable. Read every function on the returned
+  paths, not just the entry point and direct writer: intermediate helpers may
+  introduce guards. Inspect dependencies/modifiers/later code too. An edge is
+  syntactic, not evidence that its call must execute.
+` : ''}- writers: target = state-variable declaration ID from the index. Returns existing
   directWrite tuples, with function IDs to read next. Includes internal functions
   and constructors; these are NOT necessarily callable external endpoints.
 - source: target = any symbol ID. Reads that declaration or function, including
@@ -87,7 +93,7 @@ const array = (items) => ({ type: 'array', items })
 const object = (properties) => ({ type: 'object', additionalProperties: false, required: Object.keys(properties), properties })
 export const answerSchema = object({
   action: { enum: ['inspect', 'answer'], type: 'string' },
-  tool: { enum: ['writers', 'source', 'lines', 'none'], type: 'string' }, target: string, why: string,
+  tool: { enum: ['writers', 'entrypoints', 'source', 'lines', 'none'], type: 'string' }, target: string, why: string,
   claims: array(object({ text: string, evidence: array(object({ reference: string, explanation: string, lines: array({ type: 'integer' }) })) })),
   unknowns: array(string),
 })
@@ -96,6 +102,23 @@ export function inspect(run, symbols, request) {
   const { tool, target, why } = request
   if (typeof target !== 'string' || typeof why !== 'string' || !why.trim()) throw new Error('An inspection needs a target and purpose.')
   const symbol = symbols.find((s) => s.id === target)
+  if (tool === 'entrypoints') {
+    if (!run.followCalls) throw new Error('Enable lesson 03 and rerun to query entry points.')
+    if (!run.facts.stateVariable.some(([id]) => String(id) === target)) throw new Error('Entry points requires a state-variable ID from the index.')
+    const label = (id) => symbols.find((s) => s.id === String(id))?.label ?? String(id)
+    return { tool, target, why, title: `Find entry points for ${symbol.label}`,
+      note: 'Syntactic internal-call paths under partial coverage. Read all listed functions; no permissions or guard dominance were inferred. Constructors are available via writers, separately from entry points.',
+      evidence: run.derived.entryWrite.filter(([, v]) => String(v) === target).map(([entry, variable]) => {
+        const edges = run.derived.writePathEdge.filter(([e, v]) => e === entry && v === variable)
+        const functionIds = [...new Set([entry, ...edges.flatMap(([, , f, g]) => [f, g])])]
+        const assignments = run.tuples.filter(([f, v]) => v === variable && functionIds.includes(f))
+        return { id: `entry:${entry}:${variable}`, kind: 'fact', title: `${label(entry)} → ${symbol.label}`,
+          text: `Externally callable potential writer. Internal call edges: ${edges.map(([, , f, g, c]) => `${label(f)} → ${label(g)} (line ${run.locations[c].line})`).join('; ') || 'none; direct assignment'}. Read all ${functionIds.length} listed function(s), including intermediate helpers.`,
+          tuple: [entry, variable], relation: 'entryWrite', edges, assignments,
+          functionIds: functionIds.map(String), variableId: target }
+      }),
+    }
+  }
   if (tool === 'writers') {
     if (!run.facts.stateVariable.some(([id]) => String(id) === target)) throw new Error('Writers requires a state-variable ID from the index.')
     const findings = run.findings.filter((f) => String(f.tuple[1]) === target)
