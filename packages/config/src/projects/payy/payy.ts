@@ -244,6 +244,7 @@ export const payy: ScalingProject = {
     }),
   },
   privacyInfo: {
+    deployedOn: ['ethereum'],
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
     // TODO: privacy flow tracking is not configured yet. Deposits could be
     // tracked via the Rollup's `MintAdded(bytes32 indexed mint_hash, uint256
