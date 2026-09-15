@@ -76,6 +76,26 @@ export class AggregatedLivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async checkIfExists(
+    projectId: ProjectId,
+    subtype: TrackedTxsConfigSubtype,
+    fromInclusive?: UnixTime,
+  ): Promise<boolean> {
+    let query = this.db
+      .selectFrom('AggregatedLiveness')
+      .select('projectId')
+      .where('projectId', '=', projectId)
+      .where('subtype', '=', subtype)
+      .limit(1)
+
+    if (fromInclusive !== undefined) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    const result = await query.executeTakeFirst()
+    return result !== undefined
+  }
+
   async getByProjectAndSubtypeInTimeRange(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,

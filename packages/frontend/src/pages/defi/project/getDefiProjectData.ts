@@ -14,7 +14,7 @@ export async function getDefiProjectData(
   const helpers = getSsrHelpers()
   const [appLayoutProps, entry] = await Promise.all([
     getAppLayoutProps(),
-    getDefiProjectEntry(slug, helpers),
+    getDefiProjectEntry(slug),
   ])
 
   if (!entry) {

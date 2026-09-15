@@ -1,4 +1,8 @@
 import { number, oneOf, option, optional, string } from 'cmd-ts'
+import {
+  ATTESTATION_NETWORK,
+  ATTESTATION_NETWORK_NAMES,
+} from '../implementations/crops/easConfig'
 import { ExistingPath, HttpUrl } from './types'
 
 export const discoveryPath = option({
@@ -12,6 +16,22 @@ export const rpcUrl = option({
   env: 'L2B_RPC_URL',
   long: 'rpc-url',
   short: 'u',
+})
+
+/** For commands that can fall back to a public rpc of the chosen network. */
+export const optionalRpcUrl = option({
+  type: optional(HttpUrl),
+  env: 'L2B_RPC_URL',
+  long: 'rpc-url',
+  short: 'u',
+  description: 'defaults to a public rpc for the chosen network.',
+})
+
+export const attestationNetwork = option({
+  type: oneOf(ATTESTATION_NETWORK_NAMES),
+  long: 'network',
+  description: 'which network the crop attestations live on.',
+  defaultValue: () => ATTESTATION_NETWORK,
 })
 
 export const chainName = option({

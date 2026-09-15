@@ -1,8 +1,8 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
-import type { RequestInit } from 'node-fetch'
 import { RetryHandler, type RetryHandlerVariant } from '../tools'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
+import type { FetchInit } from './http/fetchWithTimeout'
 import type { HttpClient } from './http/HttpClient'
 import { getRpcMetricsLabel } from './rpc/RpcMetricsContext'
 
@@ -39,10 +39,10 @@ export abstract class ClientCore {
    * Rate limiting and retry handling are built-in.
    *
    * @param url Address to which the request will be sent
-   * @param init Params for the request. We are using `node-fetch` RequestInit type
+   * @param init Params for the request, `timeout` is an idle timeout in ms
    * @returns Parsed JSON object
    */
-  async fetch(url: string, init: RequestInit): Promise<json> {
+  async fetch(url: string, init: FetchInit): Promise<json> {
     // Resolved here, synchronously in the caller's async context. The rate
     // limiter dispatches later from a timer or another call's completion, so
     // the context is not reliable inside `_fetch`.
@@ -62,7 +62,7 @@ export abstract class ClientCore {
 
   private async _fetch(
     url: string,
-    init: RequestInit,
+    init: FetchInit,
     label: string,
   ): Promise<json> {
     const start = Date.now()

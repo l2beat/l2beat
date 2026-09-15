@@ -8,6 +8,8 @@ import { CompareFlatSources } from './CompareFlatSources'
 import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
+import { CropsAttest } from './CropsAttest'
+import { CropsVerify } from './CropsVerify'
 import { DecodeEigenDACommitment } from './DecodeEigenDACommitment'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
@@ -60,6 +62,8 @@ export function getSubcommands() {
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
+    CropsAttest,
+    CropsVerify,
     DecodeEigenDACommitment,
     DeploymentTimestamp,
     DetectProxy,

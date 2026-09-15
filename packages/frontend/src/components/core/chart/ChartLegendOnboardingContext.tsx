@@ -1,17 +1,14 @@
 import {
   createContext,
   type ReactNode,
-  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
-  useState,
 } from 'react'
-import { useEventListener } from '~/hooks/useEventListener'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 
 interface ChartLegendOnboardingContextType {
-  currentLegendOnboardingId: string | null
   hasFinishedOnboarding: boolean
   hasFinishedOnboardingInitial: boolean
   setHasFinishedOnboarding: (value: boolean) => void
@@ -21,6 +18,15 @@ const ChartLegendOnboardingContext = createContext<
   ChartLegendOnboardingContextType | undefined
 >(undefined)
 
+/**
+ * Hints are marked with `data-legend-onboarding-hint`; the provider sets
+ * `data-current` on whichever is closest to the viewport centre.
+ */
+export const legendOnboardingHintClassName =
+  'opacity-0 data-current:opacity-100'
+const HINT_SELECTOR = '[data-legend-onboarding-hint]'
+const CURRENT_ATTRIBUTE = 'data-current'
+
 interface ChartLegendOnboardingProviderProps {
   children: ReactNode
 }
@@ -28,10 +34,6 @@ interface ChartLegendOnboardingProviderProps {
 export function ChartLegendOnboardingProvider({
   children,
 }: ChartLegendOnboardingProviderProps) {
-  const [currentLegendOnboardingId, setCurrentLegendOnboardingId] = useState<
-    string | null
-  >(null)
-
   const [hasFinishedOnboarding, setHasFinishedOnboarding] = useLocalStorage(
     'has-finished-legend-onboarding',
     false,
@@ -43,46 +45,52 @@ export function ChartLegendOnboardingProvider({
     hasFinishedOnboardingInitial.current = hasFinishedOnboarding
   }, [])
 
-  const onScroll = useCallback(() => {
-    const legends = document.querySelectorAll('[data-role="legend-onboarding"]')
-    if (legends.length === 0) {
-      return
-    }
+  // Done in the DOM rather than React state: a scroll-driven context value
+  // re-rendered every chart on the page, and each chart re-render makes
+  // recharts re-measure itself with forced layouts.
+  useEffect(() => {
+    if (hasFinishedOnboarding) return
+    window.addEventListener('scroll', markHintClosestToViewportCenter, {
+      passive: true,
+    })
+    return () =>
+      window.removeEventListener('scroll', markHintClosestToViewportCenter)
+  }, [hasFinishedOnboarding])
 
-    const viewportCenter = window.innerHeight / 2
-    let closestLegend = null
-    let minDistance = Number.POSITIVE_INFINITY
-
-    for (const legend of legends) {
-      const rect = legend.getBoundingClientRect()
-      const legendCenter = rect.top + rect.height / 2
-      const distance = Math.abs(viewportCenter - legendCenter)
-
-      if (distance < minDistance) {
-        minDistance = distance
-        closestLegend = legend
-      }
-    }
-
-    if (closestLegend?.id) {
-      setCurrentLegendOnboardingId(closestLegend.id)
-    }
-  }, [])
-
-  useEventListener('scroll', onScroll)
+  const value = useMemo(
+    () => ({
+      hasFinishedOnboarding,
+      setHasFinishedOnboarding,
+      hasFinishedOnboardingInitial: hasFinishedOnboardingInitial.current,
+    }),
+    [hasFinishedOnboarding, setHasFinishedOnboarding],
+  )
 
   return (
-    <ChartLegendOnboardingContext.Provider
-      value={{
-        currentLegendOnboardingId,
-        hasFinishedOnboarding,
-        setHasFinishedOnboarding,
-        hasFinishedOnboardingInitial: hasFinishedOnboardingInitial.current,
-      }}
-    >
+    <ChartLegendOnboardingContext.Provider value={value}>
       {children}
     </ChartLegendOnboardingContext.Provider>
   )
+}
+
+function markHintClosestToViewportCenter() {
+  const hints = document.querySelectorAll(HINT_SELECTOR)
+  const viewportCenter = window.innerHeight / 2
+  let closest: Element | undefined
+  let minDistance = Number.POSITIVE_INFINITY
+
+  for (const hint of hints) {
+    const rect = hint.getBoundingClientRect()
+    const distance = Math.abs(viewportCenter - (rect.top + rect.height / 2))
+    if (distance < minDistance) {
+      minDistance = distance
+      closest = hint
+    }
+  }
+
+  for (const hint of hints) {
+    hint.toggleAttribute(CURRENT_ATTRIBUTE, hint === closest)
+  }
 }
 
 export function useChartLegendOnboarding() {

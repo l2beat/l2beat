@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xb9af5c546d75b043689729ae7f53fcddf1770aee
+
+# Diff at Tue, 15 Sep 2026 09:32:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@24f869586e8e8385e009b6c9ee143df521270ecb block: 1788787273
+- current timestamp: 1789464689
+
+## Description
+
+Added a new member to the admin ms: 2/3 -> 3/4.
+
+## Watched changes
+
+```diff
+    contract AdminMultisig (oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "oeth:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683"
+      values.$members.1:
+-        "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244"
++        "oeth:0xB30347E816B525453468cC95C17231Ab04a0C0A9"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0xc76ccb0fee3a5b19ee4d7ec47ec000263a8103bb
 
 # Diff at Mon, 07 Sep 2026 13:24:41 GMT:

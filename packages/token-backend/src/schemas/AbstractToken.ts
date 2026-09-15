@@ -2,9 +2,9 @@ import type {
   AbstractTokenRecord as DbAbstractTokenRecord,
   AbstractTokenUpdateable as DbAbstractTokenUpdateable,
 } from '@l2beat/database'
+import type { Equal, Expect } from '@l2beat/shared-pure'
 import { TOKEN_CATEGORIES } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { Equal, Expect } from '../utils/expectEqual'
 
 export const CoingeckoEntry = v.object({
   coingeckoId: v.string(),

@@ -1,13 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
+import { checkIfDataPostedExists } from '~/server/features/data-availability/throughput/utils/checkIfDataPostedExists'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
 import { getDaLayersInfo } from './getDaLayersInfo'
 
 export async function getDataPostedSection(
-  helpers: SsrHelpers,
   project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
 ): Promise<
   | Pick<
@@ -19,18 +18,13 @@ export async function getDataPostedSection(
   if (!project.daTrackingConfig) return undefined
 
   const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
-  const [data, daLayers] = await Promise.all([
-    helpers.queryClient.fetchQuery(
-      helpers.trpc.da.l2ProjectChart.queryOptions({
-        range,
-        projectId: project.id,
-      }),
-    ),
+  const [hasData, daLayers] = await Promise.all([
+    checkIfDataPostedExists(project.id, range[0] ?? undefined),
     ps.getProjects({
       select: ['daLayer'],
     }),
   ])
-  if (!data || data.chart.length === 0) return undefined
+  if (!hasData) return undefined
 
   const { currentDaLayers, pastDaLayers } = getDaLayersInfo(
     project.daTrackingConfig,
