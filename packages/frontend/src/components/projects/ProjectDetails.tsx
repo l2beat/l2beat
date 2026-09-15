@@ -1,4 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { LazyHydrate } from '~/components/LazyHydrate'
 import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
@@ -52,346 +53,363 @@ interface ProjectDetailsProps {
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <div>
-      {props.items.map((item, index) => {
-        const { nested } = props
-        const sectionOrder = props.parentSection
-          ? `${props.parentSection}.${index + 1}`
-          : `${index + 1}`
-
-        switch (item.type) {
-          case 'L2TvsSection':
-            return (
-              <L2TvsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'ZkCatalogTvsSection':
-            return (
-              <ZkCatalogTvsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'ActivitySection':
-            return (
-              <ActivitySection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'CostsSection':
-            return (
-              <CostsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'DataPostedSection':
-            return (
-              <DataPostedSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'LivenessSection':
-            return (
-              <LivenessSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'ThroughputSection':
-            return (
-              <ThroughputSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'DetailedDescriptionSection':
-            return (
-              <DetailedDescriptionSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'MilestonesAndIncidentsSection':
-            return (
-              <MilestonesAndIncidentsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'RiskSummarySection':
-            return (
-              <RiskSummarySection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'DaRiskSummarySection':
-            return (
-              <DaRiskSummarySection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'RiskAnalysisSection':
-            return (
-              <RiskAnalysisSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'L3RiskAnalysisSection':
-            return (
-              <L3RiskAnalysisSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'StageSection':
-            return (
-              <StageSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'TechnologyChoicesSection':
-            return (
-              <TechnologyChoicesSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'StateDerivationSection':
-            return (
-              <StateDerivationSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'StateValidationSection':
-            return (
-              <StateValidationSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'ProgramHashesSection':
-            return (
-              <ProgramHashesSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropVolumeSection':
-            return (
-              <InteropVolumeSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropFlowsSection':
-            return (
-              <InteropFlowsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropTokensSection':
-            return (
-              <InteropTokensSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropTokenVolumeSection':
-            return (
-              <InteropTokenVolumeSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropTokenProtocolsSection':
-            return (
-              <InteropTokenProtocolsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropTokenOnchainDeploymentsSection':
-            return (
-              <InteropTokenOnchainDeploymentsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropTokenTransfersSection':
-            return (
-              <InteropTokenTransfersSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'InteropTransfersSection':
-            return (
-              <InteropTransfersSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'TrustedSetupSection':
-            return (
-              <TrustedSetupSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'VerifiersSection':
-            return (
-              <VerifiersSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'MarkdownSection':
-            return (
-              <MarkdownSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'SequencingSection':
-            return (
-              <SequencingSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'PermissionsSection':
-            return (
-              <PermissionsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'ContractsSection':
-            return (
-              <ContractsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'Group':
-            return (
-              <GroupSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'GardenCropsSection':
-            return (
-              <GardenCropsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'GrissiniRiskAnalysisSection':
-            return (
-              <GrissiniRiskAnalysisSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'UpgradesAndGovernanceSection':
-            return (
-              <UpgradesAndGovernanceSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'UpdatesSection':
-            return (
-              <UpdatesSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-                selectedUpdateId={props.selectedUpdateId}
-              />
-            )
-          case 'TvsValueSection':
-            return (
-              <TvsValueSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'PrivacyFlowsSection':
-            return (
-              <PrivacyFlowsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'PrivacyAssetsBreakdownSection':
-            return (
-              <PrivacyAssetsBreakdownSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'ExternalDependenciesSection':
-            return (
-              <ExternalDependenciesSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          default:
-            assertUnreachable(item)
-        }
-      })}
+      {props.items.map((item, index) => (
+        <LazyHydrate
+          key={item.props.id}
+          className="max-md:border-divider max-md:border-b max-md:last:border-none"
+          eager={
+            props.nested ||
+            (item.type === 'UpdatesSection' && !!props.selectedUpdateId)
+          }
+        >
+          {renderSection(props, item, index)}
+        </LazyHydrate>
+      ))}
     </div>
   )
+}
+
+function renderSection(
+  props: ProjectDetailsProps,
+  item: ProjectDetailsSection,
+  index: number,
+) {
+  const { nested } = props
+  const sectionOrder = props.parentSection
+    ? `${props.parentSection}.${index + 1}`
+    : `${index + 1}`
+
+  switch (item.type) {
+    case 'L2TvsSection':
+      return (
+        <L2TvsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'ZkCatalogTvsSection':
+      return (
+        <ZkCatalogTvsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'ActivitySection':
+      return (
+        <ActivitySection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'CostsSection':
+      return (
+        <CostsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'DataPostedSection':
+      return (
+        <DataPostedSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'LivenessSection':
+      return (
+        <LivenessSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'ThroughputSection':
+      return (
+        <ThroughputSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'DetailedDescriptionSection':
+      return (
+        <DetailedDescriptionSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'MilestonesAndIncidentsSection':
+      return (
+        <MilestonesAndIncidentsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'RiskSummarySection':
+      return (
+        <RiskSummarySection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'DaRiskSummarySection':
+      return (
+        <DaRiskSummarySection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'RiskAnalysisSection':
+      return (
+        <RiskAnalysisSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'L3RiskAnalysisSection':
+      return (
+        <L3RiskAnalysisSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'StageSection':
+      return (
+        <StageSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'TechnologyChoicesSection':
+      return (
+        <TechnologyChoicesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'StateDerivationSection':
+      return (
+        <StateDerivationSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'StateValidationSection':
+      return (
+        <StateValidationSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'ProgramHashesSection':
+      return (
+        <ProgramHashesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropVolumeSection':
+      return (
+        <InteropVolumeSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropFlowsSection':
+      return (
+        <InteropFlowsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropTokensSection':
+      return (
+        <InteropTokensSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropTokenVolumeSection':
+      return (
+        <InteropTokenVolumeSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropTokenProtocolsSection':
+      return (
+        <InteropTokenProtocolsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropTokenOnchainDeploymentsSection':
+      return (
+        <InteropTokenOnchainDeploymentsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropTokenTransfersSection':
+      return (
+        <InteropTokenTransfersSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'InteropTransfersSection':
+      return (
+        <InteropTransfersSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'TrustedSetupSection':
+      return (
+        <TrustedSetupSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'VerifiersSection':
+      return (
+        <VerifiersSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'MarkdownSection':
+      return (
+        <MarkdownSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'SequencingSection':
+      return (
+        <SequencingSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PermissionsSection':
+      return (
+        <PermissionsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'ContractsSection':
+      return (
+        <ContractsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'Group':
+      return (
+        <GroupSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'GardenCropsSection':
+      return (
+        <GardenCropsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'GrissiniRiskAnalysisSection':
+      return (
+        <GrissiniRiskAnalysisSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'UpgradesAndGovernanceSection':
+      return (
+        <UpgradesAndGovernanceSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'UpdatesSection':
+      return (
+        <UpdatesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+          selectedUpdateId={props.selectedUpdateId}
+        />
+      )
+    case 'TvsValueSection':
+      return (
+        <TvsValueSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyFlowsSection':
+      return (
+        <PrivacyFlowsSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyAssetsBreakdownSection':
+      return (
+        <PrivacyAssetsBreakdownSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'ExternalDependenciesSection':
+      return (
+        <ExternalDependenciesSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    default:
+      assertUnreachable(item)
+  }
 }
